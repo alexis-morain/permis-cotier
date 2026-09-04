@@ -11,7 +11,6 @@ const ADRESSE = 'alexis@morain.fr';
 
 <Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
   <div class="page page--etroite" style="padding-block:3rem 0">
-    <p class="chapitre">Signalement</p>
     <h1>Une question te paraît fausse ?</h1>
     <p>
       Dis-moi laquelle et pourquoi. Chaque signalement est relu contre le texte cité, et la
@@ -23,12 +22,12 @@ const ADRESSE = 'alexis@morain.fr';
       action={`mailto:${ADRESSE}`} data-adresse={ADRESSE}>
       <p>
         <label for="question">Identifiant de la question</label>
-        <input id="question" name="question" required readonly />
+        <input id="question" name="question" class="champ" required readonly />
         <span class="discret">Rempli automatiquement depuis la question d’où tu viens.</span>
       </p>
       <p>
         <label for="motif">Qu’est-ce qui ne va pas ?</label>
-        <select id="motif" name="motif" required>
+        <select id="motif" name="motif" class="champ" required>
           <option value="reponse">La bonne réponse indiquée est fausse</option>
           <option value="explication">L’explication est fausse ou incomplète</option>
           <option value="source">La source ne dit pas ça</option>
@@ -39,7 +38,7 @@ const ADRESSE = 'alexis@morain.fr';
       </p>
       <p>
         <label for="details">Précise, si tu peux</label>
-        <textarea id="details" name="details" rows="5" maxlength="1200"
+        <textarea id="details" name="details" class="champ" rows="5" maxlength="1200"
           placeholder="La règle 26 parle du chalutier, pas du navire à la traîne."></textarea>
       </p>
       <p class="discret">
@@ -128,31 +127,17 @@ const ADRESSE = 'alexis@morain.fr';
 
 <style>
   .signalement { margin-top: 2rem; max-width: 34rem; }
-  .signalement label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
-  .signalement input,
-  .signalement select,
-  .signalement textarea {
-    font: inherit;
-    width: 100%;
-    min-height: 2.9rem;
-    padding: 0.6rem 0.7rem;
-    border: 1px solid var(--filet);
-    border-radius: 0;
-    background: var(--fond-carte);
-    color: inherit;
-  }
+  .signalement label { display: block; font-weight: 700; margin-bottom: 0.35rem; }
   .signalement textarea { min-height: 7rem; resize: vertical; }
   .signalement .discret { display: block; margin-top: 0.3rem; }
 
   .confirmation {
     margin-top: 2rem;
     max-width: 34rem;
-    border: var(--filet-epaisseur) solid var(--filet);
-    border-left-width: 3px;
-    border-left-color: var(--vert);
+    border-radius: var(--rayon);
     padding: 1.25rem;
-    background: var(--fond-carte);
+    background: var(--vert-pale);
   }
-  .confirmation__titre { font-weight: 700; margin-top: 0; }
+  .confirmation__titre { font-weight: 800; font-stretch: var(--large); color: var(--vert-texte); margin-top: 0; }
   .confirmation p:last-child { margin-bottom: 0; }
 </style>
