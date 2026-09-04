@@ -658,12 +658,23 @@ export const NOTIONS: readonly Notion[] = [
 
   // --------------------------------------------------------------------- vhf
   {
+    code: 'vhf-emport',
+    theme: 'vhf',
+    nom: 'Quelle VHF emporter',
+    resume:
+      "L'emport suit la distance à l'abri : rien d'imposé en basique, une VHF fixe dès le semi-hauturier, et en hauturier une VHF portative étanche et une balise de détresse en plus. Le chef de bord répond de l'adéquation de sa station à la zone où il navigue.",
+    ordre: 1,
+    cible: 3,
+    ancrage:
+      'le matériel d’armement et de sécurité des navires de plaisance de la catégorie côtière et ses compléments',
+  },
+  {
     code: 'vhf-licence-mmsi',
     theme: 'vhf',
     nom: 'Licence de station et MMSI',
     resume:
       "L'ANFR délivre la licence d'exploitation de la station et attribue le numéro MMSI à neuf chiffres qui identifie le navire en appel sélectif numérique.",
-    ordre: 1,
+    ordre: 2,
     cible: 2,
     ancrage: 'connaissances élémentaires du service mobile maritime',
   },
@@ -673,7 +684,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: "Certificat d'opérateur",
     resume:
       "Le certificat restreint de radiotéléphoniste est exigé pour exploiter une VHF fixe hors des eaux territoriales françaises. Le chef de bord répond de l'usage de la station.",
-    ordre: 2,
+    ordre: 3,
     cible: 2,
     ancrage: 'bon usage d’une station radioélectrique VHF',
   },
@@ -683,7 +694,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Canaux et puissances',
     resume:
       "Le canal 16 est celui de la détresse et de l'appel, le 70 celui de l'ASN. On appelle sur 16 puis on dégage sur un canal de travail. La puissance se réduit à 1 watt en portée courte.",
-    ordre: 3,
+    ordre: 4,
     cible: 2,
     ancrage: 'fréquences, voies',
   },
@@ -693,7 +704,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Alphabet phonétique',
     resume:
       "L'alphabet international épelle les indicatifs et les noms : Alpha, Bravo, Charlie, Delta… Il évite la confusion sur une liaison brouillée.",
-    ordre: 4,
+    ordre: 5,
     cible: 2,
     ancrage: 'alphabet phonétique et notions de langue anglaise de base',
   },
@@ -703,7 +714,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Zones du SMDSM',
     resume:
       "A1 est couverte par la VHF depuis une station côtière, A2 par la MF, A3 par le satellite géostationnaire, A4 par les régions polaires. La plaisance côtière navigue en A1.",
-    ordre: 5,
+    ordre: 6,
     cible: 2,
     ancrage: 'zones du système mondial de détresse et de sécurité en mer',
   },
@@ -713,7 +724,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Appel sélectif numérique',
     resume:
       "L'ASN transmet en une pression une alerte numérique portant l'identité du navire et, si la VHF reçoit le GPS, sa position. L'alerte part sur le canal 70, la conversation suit sur le 16.",
-    ordre: 6,
+    ordre: 7,
     cible: 2,
     ancrage: 'appel sélectif numérique (ASN)',
   },
@@ -723,7 +734,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Message de détresse',
     resume:
       "MAYDAY répété trois fois, l'identité du navire, sa position, la nature de la détresse, l'assistance demandée et le nombre de personnes à bord. Il ne s'emploie qu'en danger grave et imminent.",
-    ordre: 7,
+    ordre: 8,
     cible: 3,
     ancrage: 'communications liées à la détresse et à la sécurité',
   },
@@ -733,7 +744,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Urgence et sécurité',
     resume:
       "PAN PAN annonce un message urgent sans danger imminent, SÉCURITÉ un avis de navigation ou de météo. Les trois niveaux ne se confondent pas.",
-    ordre: 8,
+    ordre: 9,
     cible: 2,
     ancrage: 'communications liées à la détresse et à la sécurité',
   },
@@ -743,7 +754,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Relayer une détresse',
     resume:
       "Un navire qui entend une détresse sans réponse d'une station côtière la relaie par MAYDAY RELAY, en donnant l'identité du navire en détresse et sa position.",
-    ordre: 9,
+    ordre: 10,
     cible: 1,
     ancrage: 'communications liées à la détresse et à la sécurité',
   },
@@ -753,7 +764,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Protection des fréquences',
     resume:
       "Le canal 16 est veillé et réservé. Une fausse alerte se corrige immédiatement par un message annulant l'appel, et les essais se font sur un canal de travail.",
-    ordre: 10,
+    ordre: 11,
     cible: 2,
     ancrage: 'protection des fréquences de détresse',
   },
@@ -763,7 +774,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Organisation du sauvetage',
     resume:
       "Le CROSS coordonne le sauvetage dans sa zone, engage les moyens et reste l'interlocuteur du navire en détresse. La convention SAR découpe les responsabilités entre États.",
-    ordre: 11,
+    ordre: 12,
     cible: 2,
     ancrage: 'organisation du sauvetage en mer',
   },
