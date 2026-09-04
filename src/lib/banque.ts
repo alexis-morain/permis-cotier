@@ -6,6 +6,8 @@ import { THEMES, themeParCode } from './themes';
 
 /** Une question telle que la page la donne à l'îlot React. */
 export interface QuestionAffichable extends QuestionJouable {
+  /** Notion du programme couverte, quand la question a été classée. */
+  notion?: string;
   enonce: string;
   explication: string;
   difficulte: number;
@@ -26,6 +28,7 @@ function versAffichable(donnees: Question): QuestionAffichable {
   return {
     id: donnees.id,
     theme: donnees.theme,
+    notion: donnees.notion,
     enonce: donnees.enonce,
     explication: donnees.explication,
     difficulte: donnees.difficulte,

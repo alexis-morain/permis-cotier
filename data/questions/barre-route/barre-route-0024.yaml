@@ -1,0 +1,33 @@
+id: barre-route-0024
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu hésites : tu n'arrives pas à décider s'il existe un risque d'abordage avec un navire
+  qui s'approche. Que dit la règle 7 ?
+propositions:
+  - id: a
+    texte: Tu dois considérer que ce risque existe.
+  - id: b
+    texte: Tu maintiens ta route jusqu'à pouvoir en juger.
+  - id: c
+    texte: Tu considères qu'il n'existe pas tant que le relèvement varie.
+  - id: d
+    texte: Tu demandes à l'autre navire ses intentions avant de conclure.
+reponses:
+  - a
+explication: >-
+  La règle 7 a) tranche le doute dans le sens de la prudence : s'il y a doute quant au
+  risque d'abordage, on doit considérer que ce risque existe. Le doute n'est pas une
+  raison d'attendre, c'est une raison d'agir. On retrouve la même logique à la règle 14 c)
+  pour les routes directement opposées.
+sources:
+  - texte: RIPAM, règle 7 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

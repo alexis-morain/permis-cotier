@@ -11,8 +11,10 @@ describe('table des thèmes', () => {
     expect(new Set(codes).size).toBe(codes.length);
   });
 
-  it('totalise 120 questions à la cible J1', () => {
-    expect(cibleTotaleJ1()).toBe(120);
+  it('totalise 124 questions à la cible J1', () => {
+    // 120 au cadrage, puis 124 : la carte marine est passée de 4 à 8 quand la
+    // marée y a été rattachée, l'arrêté la mettant au programme de ce thème.
+    expect(cibleTotaleJ1()).toBe(124);
   });
 
   it('retrouve un thème par son code', () => {
