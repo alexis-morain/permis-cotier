@@ -1,0 +1,34 @@
+id: carburant-0006
+option: cotier
+theme: carburant
+statut: publie
+difficulte: 1
+enonce: >-
+  L'autonomie en carburant figure-t-elle au programme de l'épreuve théorique de l'option
+  côtière ?
+propositions:
+  - id: a
+    texte: Non, elle relève de l'extension hauturière
+  - id: b
+    texte: Oui, le programme demande des notions d'autonomie en matière de carburant
+  - id: c
+    texte: Non, aucun texte ne s'en occupe
+  - id: d
+    texte: Oui, mais seulement pour les navires de plus de 6 mètres
+reponses:
+  - b
+explication: >-
+  L'article 1er de l'arrêté du 28 septembre 2007 énumère le programme de l'épreuve théorique
+  de l'option côtière, et l'un de ses tirets porte des notions d'autonomie en matière
+  de carburant. En revanche, aucun texte ne fixe la règle des tiers : c'est un usage de
+  bonne pratique maritime, enseigné et interrogé, mais qui ne relève pas du droit.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 1er, point 1.2
+    ref: arrete-2007-09-28
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

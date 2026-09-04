@@ -1,0 +1,33 @@
+id: ecluses-0004
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es à bord d'une menue embarcation dans le garage d'une écluse, avec une péniche qui
+  attend elle aussi. Comment se règle le passage ?
+propositions:
+  - id: a
+    texte: Le passage se fait dans l'ordre d'arrivée dans les garages, et tu entres dans
+      le sas après la péniche
+  - id: b
+    texte: Les menues embarcations passent d'abord, elles manœuvrent plus vite
+  - id: c
+    texte: Tu peux exiger un éclusage spécial pour ne pas gêner la péniche
+  - id: d
+    texte: La péniche te cède le passage, la plaisance est prioritaire dans les écluses
+reponses:
+  - a
+explication: >-
+  Trois règles se cumulent. Le passage se fait dans l'ordre d'arrivée dans les garages.
+  Une menue embarcation ne peut pas exiger d'éclusage spécial. Et lorsqu'elle est éclusée
+  en commun avec d'autres bateaux, elle ne pénètre dans le sas qu'après eux, et seulement
+  après y avoir été invitée par le personnel de l'écluse.
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

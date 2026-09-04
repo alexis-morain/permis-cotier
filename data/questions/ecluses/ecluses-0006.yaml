@@ -1,0 +1,31 @@
+id: ecluses-0006
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 1
+enonce: >-
+  Dans quel état doivent être les ancres de ton bateau à l'intérieur d'une écluse ?
+propositions:
+  - id: a
+    texte: Mouillées, pour tenir le bateau pendant le remplissage
+  - id: b
+    texte: En position complètement relevée
+  - id: c
+    texte: Prêtes à mouiller, pendues au davier
+  - id: d
+    texte: Peu importe, l'article ne vise que les bateaux de commerce
+reponses:
+  - b
+explication: >-
+  Dans les écluses, les ancres doivent être en position complètement relevée. Une ancre
+  qui pend accroche le radier, le seuil ou les dispositifs de protection. La même exigence
+  vaut dans les garages, dès lors que les ancres n'y sont pas utilisées. Le même article
+  impose aussi des défenses, qui doivent être flottantes lorsqu'elles sont amovibles.
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

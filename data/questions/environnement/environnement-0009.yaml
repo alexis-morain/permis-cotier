@@ -1,0 +1,32 @@
+id: environnement-0009
+option: cotier
+theme: environnement
+statut: publie
+difficulte: 1
+enonce: >-
+  Que faire de tes déchets pendant une sortie à la journée ?
+propositions:
+  - id: a
+    texte: Les jeter par-dessus bord s'ils sont biodégradables
+  - id: b
+    texte: Les rapporter à terre et les déposer dans les bacs du port
+  - id: c
+    texte: Les jeter au-delà de trois milles des côtes
+  - id: d
+    texte: Les brûler à bord
+reponses:
+  - b
+explication: >-
+  Le principe est simple et sans seuil de distance : ce qui est monté à bord en redescend.
+  Le code de l'environnement punit le fait de jeter, déverser ou laisser écouler en mer
+  des substances nuisibles pour la faune et la flore marines ou de nature à les rendre
+  impropres à la consommation. Les ports mettent des bacs à disposition, y compris pour
+  les huiles usagées et les batteries.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

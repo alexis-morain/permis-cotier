@@ -1,0 +1,31 @@
+id: vhf-0005
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 1
+enonce: >-
+  À quoi sert le canal 16 de la VHF marine ?
+propositions:
+  - id: a
+    texte: À la conversation entre navires, une fois le contact établi
+  - id: b
+    texte: À la détresse, à l'urgence et à l'appel
+  - id: c
+    texte: À l'appel sélectif numérique
+  - id: d
+    texte: Aux communications avec les capitaineries
+reponses:
+  - b
+explication: >-
+  Le canal 16, sur 156,800 MHz, est la voie internationale de détresse, d'urgence et d'appel.
+  On y lance l'appel, puis on bascule aussitôt sur une voie de travail pour la conversation
+  : le 16 doit rester libre. Les voies portuaires sont les canaux 9, 12, 14 et voisins
+  ; les voies de travail entre navires les canaux 72, 77 et voisins.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

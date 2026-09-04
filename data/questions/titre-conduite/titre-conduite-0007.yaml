@@ -1,0 +1,31 @@
+id: titre-conduite-0007
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 1
+enonce: >-
+  Jusqu'où l'option « côtière » permet-elle de naviguer ?
+propositions:
+  - id: a
+    texte: Jusqu'à 2 milles d'un abri
+  - id: b
+    texte: Jusqu'à 6 milles d'un abri
+  - id: c
+    texte: Jusqu'à 12 milles d'un abri
+  - id: d
+    texte: Sans limite de distance
+reponses:
+  - b
+explication: >-
+  En eaux maritimes, l'option côtière vaut pour une navigation jusqu'à 6 milles d'un abri,
+  et l'extension hauturière pour une navigation au-delà. Ce seuil de 6 milles est le même
+  que celui de la division 240 : c'est là que l'armement passe de côtier à semi-hauturier,
+  et que la VHF fixe devient obligatoire.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

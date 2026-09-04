@@ -1,0 +1,31 @@
+id: meteo-0006
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Quelle portée couvre le bulletin météo dit « de côte » ?
+propositions:
+  - id: a
+    texte: Jusqu'à 5 milles des côtes
+  - id: b
+    texte: Jusqu'à 20 milles des côtes
+  - id: c
+    texte: Jusqu'à 200 milles des côtes
+  - id: d
+    texte: Toute la zone de navigation de l'option côtière, sans limite de distance
+reponses:
+  - b
+explication: >-
+  Météo-France publie trois portées de bulletin marine : le bulletin côte jusqu'à 20 milles
+  des côtes, le bulletin large jusqu'à 200 milles, le bulletin grand large au-delà. La
+  navigation en option côtière, limitée à 6 milles d'un abri, se tient donc entièrement
+  dans la zone du bulletin de côte.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

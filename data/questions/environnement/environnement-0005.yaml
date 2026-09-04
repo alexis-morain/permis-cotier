@@ -1,0 +1,33 @@
+id: environnement-0005
+option: cotier
+theme: environnement
+statut: publie
+difficulte: 2
+enonce: >-
+  Peux-tu embarquer un vire-casier électrique pour remonter tes casiers plus facilement
+  ?
+propositions:
+  - id: a
+    texte: Oui, sans limite de puissance
+  - id: b
+    texte: Non, tout vire-casier et vire-filet est interdit à la pêche de loisir
+  - id: c
+    texte: Oui, à condition de ne pas dépasser 800 watts
+  - id: d
+    texte: Oui, dans la limite de trois par navire
+reponses:
+  - b
+explication: >-
+  À bord, la détention et l'utilisation de tout vire-casier, vire-filet, treuil, potence
+  mécanisée ou mécanisme d'assistance électrique ou hydraulique permettant de remonter
+  les lignes et engins sont interdites. La seule exception concerne les vire-lignes ou
+  moulinets électriques, dans la limite de trois par navire et de 800 watts chacun : ce
+  sont eux, et non les vire-casiers, que vise cette tolérance.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-89
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

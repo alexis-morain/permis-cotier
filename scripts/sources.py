@@ -7,6 +7,10 @@ Deux origines, deux traitements :
   2007 et tout texte consolidé. Licence Ouverte 2.0, redistribuable, cité.
   Le site legifrance.gouv.fr bloque les scripts : on passe par l'API, jamais
   par le site.
+- Un code, via la même API mais un autre fond. Un arrêté qui crée des articles
+  de code n'en porte pas le texte : son annexe se borne à en lister les
+  numéros. Le règlement des écluses est dans ce cas, écrit au code des
+  transports par l'arrêté du 28 juin 2013.
 - Le RIPAM. Légifrance n'en publie qu'un fac-similé PDF. Le texte de travail
   est le PDF du ministère chargé de la mer ; la référence juridique reste le
   décret n° 77-733 du 6 juillet 1977.
@@ -16,6 +20,8 @@ Deux origines, deux traitements :
     python3 scripts/sources.py legifrance --texte JORFTEXT000000841523 --ref division-240 \\
         --section "division 240"
     python3 scripts/sources.py ripam --pdf data/sources/_brut/texte-colreg.pdf --regles 20-31
+    python3 scripts/sources.py code --code transports \\
+        --articles A4241-53-26..32 --ref rgpni-ecluses
 
 Un texte consolidé garde ses articles abrogés à côté de ceux qui les
 remplacent, parfois sous le même numéro : l'extraction ne prend que la
@@ -398,6 +404,135 @@ def commande_legifrance(args) -> int:
     return 0
 
 
+# Codes utiles. L'API veut le nom exact du code, tel qu'il sert de facette de
+# recherche : « Code des transports », pas « transports ».
+CODES = {
+    "transports": "Code des transports",
+    "environnement": "Code de l'environnement",
+    "rural": "Code rural et de la pêche maritime",
+}
+
+
+def invite_article(numero: str, nom_code: str) -> dict:
+    """Charge utile d'une recherche d'article par son numéro, dans un code.
+
+    Le fond CODE_DATE cherche dans tous les codes à la fois : sans la facette
+    NOM_CODE, « A4241-53-26 » ramènerait aussi les articles homonymes des
+    autres codes."""
+    return {
+        "recherche": {
+            "champs": [
+                {
+                    "typeChamp": "NUM_ARTICLE",
+                    "criteres": [
+                        {"typeRecherche": "EXACTE", "valeur": numero, "operateur": "ET"}
+                    ],
+                    "operateur": "ET",
+                }
+            ],
+            "filtres": [{"facette": "NOM_CODE", "valeurs": [nom_code]}],
+            "pageNumber": 1,
+            "pageSize": 10,
+            "sort": "PERTINENCE",
+            "typePagination": "ARTICLE",
+        },
+        "fond": "CODE_DATE",
+    }
+
+
+def etendre_numeros(demande: str) -> list[str]:
+    """Développe « A4241-53-26..32 » en la suite des articles demandés.
+
+    Les articles d'un code se suivent par leur dernier groupe de chiffres :
+    on borne dessus, le reste du numéro est le préfixe commun. Un numéro seul
+    passe tel quel, et la virgule sépare plusieurs demandes."""
+    numeros: list[str] = []
+    for morceau in demande.split(","):
+        morceau = morceau.strip()
+        if not morceau:
+            continue
+        if ".." not in morceau:
+            numeros.append(morceau)
+            continue
+        gauche, _, droite = morceau.partition("..")
+        depart = re.search(r"(\d+)$", gauche.strip())
+        if not depart:
+            raise SystemExit(f"intervalle illisible : « {morceau} » ne finit pas par un nombre")
+        prefixe = gauche.strip()[: depart.start(1)]
+        # La borne haute peut être écrite en entier ou réduite au dernier nombre.
+        arrivee = re.search(r"(\d+)$", droite.strip())
+        if not arrivee:
+            raise SystemExit(f"intervalle illisible : « {morceau} » ne finit pas par un nombre")
+        premier, dernier = int(depart.group(1)), int(arrivee.group(1))
+        if dernier < premier:
+            raise SystemExit(f"intervalle à l'envers : « {morceau} »")
+        numeros.extend(f"{prefixe}{n}" for n in range(premier, dernier + 1))
+    return numeros
+
+
+def identifiant_article(numero: str, nom_code: str, acces: str, api: str) -> str | None:
+    """L'identifiant LEGIARTI de l'article en vigueur, ou None s'il n'existe pas.
+
+    La recherche rend une entrée par version du code : le même article
+    revient autant de fois qu'il y a de dates de consolidation. On garde le
+    premier en vigueur, ils portent tous le même identifiant."""
+    reponse = appeler("/search", invite_article(numero, nom_code), acces, api)
+    for resultat in reponse.get("results") or []:
+        for section in resultat.get("sections") or []:
+            for extrait in section.get("extracts") or []:
+                if (extrait.get("num") or "").strip() != numero:
+                    continue
+                if (extrait.get("legalStatus") or "").upper() in ETATS_MORTS:
+                    continue
+                return extrait.get("id")
+    return None
+
+
+def commande_code(args) -> int:
+    """Extrait des articles d'un code, par leur numéro.
+
+    Un arrêté qui crée des articles de code ne porte pas leur texte : son
+    annexe n'en liste que les numéros. C'est le cas de l'arrêté du 28 juin
+    2013, qui a écrit le règlement des écluses aux articles A. 4241-53-26 et
+    suivants du code des transports. Pour ces textes-là, `legifrance` ne rend
+    rien d'exploitable et il faut passer par le code lui-même."""
+    oauth, api = ENVIRONNEMENTS["sandbox" if args.sandbox else "prod"]
+    nom_code = CODES.get(args.code, args.code)
+    acces = jeton(charger_env(), oauth)
+
+    dossier = SOURCES / args.ref
+    ecrits, manquants = 0, []
+    for numero in etendre_numeros(args.articles):
+        identifiant = identifiant_article(numero, nom_code, acces, api)
+        if not identifiant:
+            manquants.append(numero)
+            continue
+        donnees = appeler("/consult/getArticle", {"id": identifiant}, acces, api)
+        article = donnees.get("article") or donnees
+        corps = sans_balises(article.get("texte") or article.get("content") or "")
+        if not corps:
+            manquants.append(numero)
+            continue
+        chemin = ecrire(
+            dossier, nom_article(numero, identifiant),
+            f"{nom_code}, article {numero}", args.ref, corps,
+            f"https://www.legifrance.gouv.fr/codes/article_lc/{identifiant}",
+        )
+        print(f"écrit {chemin.relative_to(RACINE)} ({len(corps)} caractères)")
+        ecrits += 1
+
+    if manquants:
+        print(
+            "sans article en vigueur : " + ", ".join(manquants),
+            file=sys.stderr,
+        )
+    if not ecrits:
+        print("aucun article écrit ; vérifie le nom du code et les numéros", file=sys.stderr)
+        return 1
+    print(f"\n{ecrits} article(s) dans data/sources/{args.ref}/")
+    return 0
+
+
 def texte_du_pdf(pdf: Path) -> str:
     """Extrait le texte du PDF. Utilise pdftotext s'il est là, sinon pypdf."""
     import shutil
@@ -460,6 +595,46 @@ def nettoyer(texte: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", sans_mobilier).strip()
 
 
+
+# Les quatre annexes vivent à la queue du PDF, derrière la règle 38. Le nom de
+# l'annexe sert à la fois d'onglet latéral, répété sur chaque page, et de titre
+# à sa première page : la première occurrence d'un numéro ouvre donc l'annexe,
+# les suivantes sont du mobilier que `nettoyer` enlève. Le PDF écrit les trois
+# premières en capitales et la quatrième en bas de casse, d'où le sans-casse.
+MARQUE_ANNEXE = re.compile(r"^[^\S\n]*ANNEXE[^\S\n]+([IVX]+)\b", flags=re.MULTILINE | re.IGNORECASE)
+
+TITRES_ANNEXES = {
+    "I": "Emplacement et caractéristiques techniques des feux et marques",
+    "II": "Signaux supplémentaires des navires de pêche pêchant à proximité les uns des autres",
+    "III": "Caractéristiques techniques du matériel de signalisation sonore",
+    "IV": "Signaux de détresse",
+}
+
+
+def annexes_du_ripam(texte: str) -> dict[str, str]:
+    """Découpe la queue du PDF en annexes, par numéro romain.
+
+    Le sommaire cite les mêmes numéros en tête de document : on ne garde que
+    ce qui suit la dernière règle, sinon la table des matières passerait pour
+    le corps de l'annexe I."""
+    derniere_regle = 0
+    for coupe in re.finditer(r"^[ \t]*R[èéÈÉ]gle\s*38\s*[-–—]", texte, flags=re.MULTILINE):
+        derniere_regle = coupe.start()
+
+    premieres: dict[str, int] = {}
+    for marque in MARQUE_ANNEXE.finditer(texte, derniere_regle):
+        premieres.setdefault(marque.group(1).upper(), marque.start())
+
+    bornes = sorted(premieres.items(), key=lambda paire: paire[1])
+    decoupe: dict[str, str] = {}
+    for i, (numero, debut) in enumerate(bornes):
+        fin = bornes[i + 1][1] if i + 1 < len(bornes) else len(texte)
+        corps = nettoyer(texte[debut:fin])
+        if corps:
+            decoupe[numero] = corps
+    return decoupe
+
+
 def commande_ripam(args) -> int:
     if not args.pdf.is_file():
         raise SystemExit(
@@ -520,10 +695,26 @@ def commande_ripam(args) -> int:
             )
         ecrits += 1
 
+    for numero in (args.annexes or "").replace(",", " ").split():
+        romain = numero.upper()
+        corps = annexes_du_ripam(texte).get(romain)
+        if not corps:
+            print(f"annexe {romain} introuvable dans le PDF", file=sys.stderr)
+            continue
+        titre = TITRES_ANNEXES.get(romain, "")
+        chemin = ecrire(
+            dossier, f"annexe-{romain.lower()}",
+            f"RIPAM, annexe {romain}" + (f" — {titre}" if titre else ""),
+            args.ref, corps,
+            "https://www.mer.gouv.fr/sites/default/files/2020-11/texte-colreg.pdf",
+        )
+        print(f"écrit {chemin.relative_to(RACINE)} ({len(corps)} caractères)")
+        ecrits += 1
+
     if not ecrits:
         print(f"aucune règle entre {debut} et {fin} trouvée", file=sys.stderr)
         return 1
-    print(f"\n{ecrits} règle(s) dans data/sources/{args.ref}/")
+    print(f"\n{ecrits} fichier(s) dans data/sources/{args.ref}/")
     return 0
 
 
@@ -559,10 +750,29 @@ def main(argv: list[str] | None = None) -> int:
     ch.add_argument("--sandbox", action="store_true")
     ch.set_defaults(fonction=commande_chercher)
 
+    co = sous.add_parser("code", help="extrait des articles d'un code, par leur numéro")
+    co.add_argument(
+        "--code", required=True,
+        help="nom du code, ou une clé de CODES comme « transports »",
+    )
+    co.add_argument(
+        "--articles", required=True,
+        help="numéros séparés par des virgules, intervalle avec « .. », "
+             "par exemple « A4241-53-26..32 »",
+    )
+    co.add_argument("--ref", required=True, help="clé du dossier dans data/sources/")
+    co.add_argument("--sandbox", action="store_true")
+    co.set_defaults(fonction=commande_code)
+
     ri = sous.add_parser("ripam", help="découpe le PDF du RIPAM en règles")
     ri.add_argument("--pdf", type=Path, default=SOURCES / "_brut" / "texte-colreg.pdf")
     ri.add_argument("--ref", default="decret-77-733")
     ri.add_argument("--regles", default="1-38", help="intervalle, par exemple 20-31")
+    ri.add_argument(
+        "--annexes", default="",
+        help="numéros romains des annexes à extraire en plus, par exemple « IV » "
+             "pour les signaux de détresse",
+    )
     ri.set_defaults(fonction=commande_ripam)
 
     args = parseur.parse_args(argv)

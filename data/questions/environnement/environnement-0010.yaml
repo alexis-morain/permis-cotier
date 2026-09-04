@@ -1,0 +1,32 @@
+id: environnement-0010
+option: cotier
+theme: environnement
+statut: publie
+difficulte: 2
+enonce: >-
+  La pêche de loisir peut-elle être soumise à autorisation ?
+propositions:
+  - id: a
+    texte: Non, elle est libre par nature
+  - id: b
+    texte: Oui, pour les activités qui affectent l'état des ressources halieutiques
+  - id: c
+    texte: Oui, mais uniquement pour la pêche à pied
+  - id: d
+    texte: Oui, uniquement pour les membres d'une organisation sportive
+reponses:
+  - b
+explication: >-
+  Peuvent être soumises à un régime d'autorisations les activités de pêche maritime de
+  loisir qui affectent l'état des ressources halieutiques, ou qui répondent à d'autres
+  critères posés par une réglementation internationale ou européenne. L'autorisation peut
+  alors limiter les quantités détenues à bord, l'effort de pêche, les types d'engins et
+  les conditions d'exercice. Le thon rouge en est l'exemple le plus connu.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-85
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

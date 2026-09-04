@@ -1,0 +1,32 @@
+id: meteo-0001
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 1
+enonce: >-
+  Le bulletin annonce un vent de force 8 Beaufort. Comment s'appelle ce vent et que vaut-il
+  en nœuds ?
+propositions:
+  - id: a
+    texte: Un grand frais, 28 à 33 nœuds
+  - id: b
+    texte: Un coup de vent, 34 à 40 nœuds
+  - id: c
+    texte: Un vent frais, 22 à 27 nœuds
+  - id: d
+    texte: Une tempête, 48 à 55 nœuds
+reponses:
+  - b
+explication: >-
+  Force 8 est le coup de vent, 34 à 40 nœuds de vent moyen. Les trois degrés à ne pas
+  confondre autour : force 6 est le vent frais, 22 à 27 nœuds ; force 7 le grand frais,
+  28 à 33 nœuds ; force 10 la tempête, 48 à 55 nœuds. À force 8, une sortie en plaisance
+  côtière n'est plus raisonnable.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

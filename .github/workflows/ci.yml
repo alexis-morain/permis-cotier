@@ -38,6 +38,12 @@ jobs:
       - name: Vérifier les marques de balisage
         run: python scripts/balisage.py --verifier
 
+      - name: Vérifier les signaux d'écluse
+        run: python scripts/ecluses.py --verifier
+
+      - name: Vérifier les planches de carte marine
+        run: python scripts/carte.py --verifier
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 

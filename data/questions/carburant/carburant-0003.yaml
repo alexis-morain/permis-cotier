@@ -1,0 +1,31 @@
+id: carburant-0003
+option: cotier
+theme: carburant
+statut: publie
+difficulte: 1
+enonce: >-
+  À quoi sert le troisième tiers de la règle des tiers ?
+propositions:
+  - id: a
+    texte: À la consommation du moteur auxiliaire
+  - id: b
+    texte: À l'aller, le deuxième tiers étant pour le retour et le premier pour le démarrage
+  - id: c
+    texte: À constituer une réserve pour l'imprévu
+  - id: d
+    texte: À rien, c'est la marge d'erreur de la jauge
+reponses:
+  - c
+explication: >-
+  Un tiers pour aller, un tiers pour revenir, un tiers de réserve. Le dernier tiers n'est
+  pas une marge de calcul, c'est ce qui couvre ce qui n'était pas prévu : un vent contraire
+  au retour, un courant, une mer formée qui fait monter la consommation, un détour pour
+  éviter un grain, une recherche de mouillage, ou l'assistance à un autre bateau.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

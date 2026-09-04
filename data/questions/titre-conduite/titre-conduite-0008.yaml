@@ -1,0 +1,33 @@
+id: titre-conduite-0008
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 2
+enonce: >-
+  Quel âge faut-il avoir pour obtenir l'option « côtière » ?
+propositions:
+  - id: a
+    texte: Quatorze ans
+  - id: b
+    texte: Seize ans
+  - id: c
+    texte: Dix-huit ans
+  - id: d
+    texte: Aucun âge minimal n'est fixé
+reponses:
+  - b
+explication: >-
+  L'âge minimum requis pour obtenir le permis est de seize ans, sauf pour l'extension
+  grande plaisance eaux intérieures, où il est de dix-huit ans. Il existe une dérogation
+  à ne pas confondre avec l'obtention du titre : dès quatorze ans et jusqu'à seize ans,
+  les personnes appartenant à un organisme affilié à une fédération sportive agréée peuvent
+  conduire de jour un bateau de moins de 20 mètres dans le cadre des activités de cet
+  organisme.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 3
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

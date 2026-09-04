@@ -70,6 +70,31 @@ export async function themesAvecComptes(): Promise<ThemeCompte[]> {
   }));
 }
 
+/**
+ * Les relecteurs qui ne sont pas des personnes. Une question relue par le seul
+ * modèle qui l'a écrite est publiée, mais elle ne vaut pas celle qu'un humain a
+ * reprise derrière : le pied de page fait la différence.
+ */
+const RELECTEURS_MACHINE: ReadonlySet<string> = new Set(['claude']);
+
+export interface CompteRelecture {
+  total: number;
+  parUnePersonne: number;
+}
+
+/**
+ * Combien de questions publiées ont été relues par une personne. Le pied de
+ * page l'affiche, et le compte se calcule au build : une phrase écrite à la
+ * main deviendrait fausse au prochain lot sans que rien ne le signale.
+ */
+export async function comptesDeRelecture(): Promise<CompteRelecture> {
+  const entrees = await getCollection('questions', ({ data }) => data.statut === 'publie');
+  const parUnePersonne = entrees.filter(
+    (e) => !RELECTEURS_MACHINE.has(e.data.meta.relu_par ?? ''),
+  ).length;
+  return { total: entrees.length, parUnePersonne };
+}
+
 export function nomDuTheme(code: string): string {
   return themeParCode(code)?.nom ?? code;
 }

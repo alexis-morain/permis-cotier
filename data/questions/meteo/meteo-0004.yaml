@@ -1,0 +1,32 @@
+id: meteo-0004
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Que mesure exactement le degré Beaufort annoncé dans un bulletin ?
+propositions:
+  - id: a
+    texte: La vitesse des rafales
+  - id: b
+    texte: Le vent moyen sur dix minutes, mesuré à dix mètres au-dessus de la surface
+  - id: c
+    texte: La hauteur des vagues
+  - id: d
+    texte: La vitesse du vent au moment précis de l'émission du bulletin
+reponses:
+  - b
+explication: >-
+  Le degré Beaufort décrit le vent moyen, pris sur dix minutes à dix mètres au-dessus
+  de la surface. Il ne dit rien des rafales, qui dépassent couramment le vent moyen d'un
+  tiers : un force 6 annoncé, c'est 22 à 27 nœuds de moyenne, et des pointes qui peuvent
+  approcher 35 nœuds. L'état de la mer, lui, se note séparément, sur sa propre échelle
+  de 0 à 9.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'
