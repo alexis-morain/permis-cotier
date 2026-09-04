@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      # La banque d'abord : une question fausse de forme casse le déploiement.
+      - name: Valider la banque
+        run: python scripts/valider.py
+
+      - name: Vérifier les crédits des visuels
+        run: python scripts/credits.py --verifier
+
+      - name: Tests du validateur
+        run: python -m pytest tests -q
+
+      - name: Tests du moteur
+        run: npm test
+
+      - name: Types
+        run: npx astro check --minimumSeverity error
+
+      - name: Build
+        run: npx astro build

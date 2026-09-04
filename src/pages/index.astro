@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import DateExamen from '../components/DateExamen.tsx';
+import Reprise from '../components/Reprise.tsx';
+import { themesAvecComptes, questionsPubliees } from '../lib/banque';
+
+const themes = await themesAvecComptes();
+const total = (await questionsPubliees()).length;
+const couverts = themes.filter((t) => t.publiees > 0).length;
+---
+
+<Base
+  titre="Réviser le permis côtier : examens blancs au format de l’épreuve"
+  description="Examens blancs de 40 questions, chronométrés comme à l’épreuve, et entraînement par thème. Gratuit, sans inscription, chaque question cite le texte dont elle est tirée."
+>
+  <section class="page ouverture">
+    <div class="ouverture__texte">
+      <h1>Passe des examens blancs, au format de l’épreuve.</h1>
+      <p class="ouverture__promesse">
+        Quarante questions, vingt secondes chacune, cinq erreurs admises. Comme le jour J,
+        sauf que tu peux recommencer autant que tu veux. Gratuit, sans compte, et chaque
+        réponse renvoie au texte dont elle est tirée.
+      </p>
+
+      <div class="ouverture__actions">
+        <a class="bouton bouton--principal" href="/examen" data-umami-event="accueil-examen">
+          Commencer un examen blanc
+        </a>
+        <a class="bouton bouton--discret" href="/entrainement">ou s’entraîner thème par thème</a>
+      </div>
+
+      <Reprise client:only="react" />
+    </div>
+
+    <aside class="ouverture__cote">
+      <p class="chapitre">Où en est la banque</p>
+      <p class="compteur">
+        <b>{total}</b> question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}
+      </p>
+      <p class="discret">
+        {couverts} thème{couverts > 1 ? 's' : ''} sur 14 couvert{couverts > 1 ? 's' : ''}.
+        Objectif 400 d’ici décembre. Rien n’est publié avant relecture.
+      </p>
+      <hr />
+      <DateExamen client:only="react" />
+    </aside>
+  </section>
+
+  <section class="page page--etroite methode">
+    <h2>Comment c’est fait</h2>
+    <p>
+      Chaque question part d’un article : le RIPAM pour les feux, les marques et les règles de
+      barre, l’arrêté du 28 septembre 2007 pour le programme et le format, les textes de la
+      division 240 pour l’armement. On lit l’article, on écrit la question, on relit. Jamais
+      l’inverse, et jamais en recopiant un éditeur.
+    </p>
+    <p>
+      Résultat : sous chaque explication, tu as la règle exacte et son numéro. Si une question
+      te paraît fausse, le bouton de signalement est juste dessous, et la correction arrive dans
+      la semaine. Le site est ouvert, le code et la banque sont sur GitHub.
+    </p>
+    <p class="discret">
+      Ce site prépare au format de l’épreuve. Il n’est ni officiel, ni agréé, et l’administration
+      ne publie aucune banque de questions.
+    </p>
+  </section>
+
+  <section class="page themes">
+    <h2>Les quatorze thèmes du programme</h2>
+    <p class="discret" style="margin-bottom:2rem">
+      Dans l’ordre de l’arrêté. Le nombre entre parenthèses est ce qui est publié aujourd’hui,
+      pas ce qui est promis.
+    </p>
+    <ul class="listeThemes">
+      {themes.map((t) => (
+        <li>
+          <a href={`/theme/${t.code}`}>
+            <span class="listeThemes__nom">{t.nom}</span>
+            <span class="listeThemes__compte">
+              {t.publiees > 0 ? `${t.publiees} question${t.publiees > 1 ? 's' : ''}` : 'à venir'}
+            </span>
+          </a>
+          <p class="discret">{t.intitule}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .ouverture {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 3rem 4rem;
+  }
+  .ouverture__promesse { font-size: 1.15rem; max-width: 42ch; }
+  .ouverture__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .ouverture__cote {
+    border-top: 2px solid var(--encre);
+    padding-top: 1.25rem;
+    align-self: start;
+  }
+  .compteur { font-family: var(--serif); font-size: 1.35rem; margin: 0 0 0.35rem; }
+  .compteur b { font-size: 2.4rem; font-weight: 600; line-height: 1; }
+
+  .methode { padding-block: 1rem 2rem; }
+  .methode h2 { margin-bottom: 1rem; }
+
+  .themes { padding-top: 3rem; }
+  .listeThemes { list-style: none; margin: 0; padding: 0; }
+  .listeThemes li {
+    border-top: 1px solid var(--filet);
+    padding: 1rem 0 1.1rem;
+  }
+  .listeThemes li:last-child { border-bottom: 1px solid var(--filet); }
+  .listeThemes a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    text-decoration: none;
+  }
+  .listeThemes a:hover .listeThemes__nom { text-decoration: underline; text-decoration-color: var(--accent); }
+  .listeThemes__nom { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; }
+  .listeThemes__compte { color: var(--texte-doux); font-size: 0.9rem; white-space: nowrap; }
+  .listeThemes p { margin: 0.2rem 0 0; max-width: 60ch; }
+
+  @media (min-width: 52rem) {
+    .ouverture {
+      grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.85fr);
+      gap: 4rem;
+      padding-block: 5rem 5rem;
+    }
+    .themes { padding-top: 4rem; }
+    .listeThemes { column-count: 2; column-gap: 3rem; }
+    .listeThemes li { break-inside: avoid; }
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Quiz from '../components/Quiz.tsx';
+import { questionsPubliees } from '../lib/banque';
+
+const questions = await questionsPubliees();
+---
+
+<Base
+  titre="Examen blanc, permis côtier"
+  description="Quarante questions tirées au sort, vingt secondes chacune, cinq erreurs admises."
+  indexable={false}
+>
+  <div class="page page--etroite">
+    <Quiz client:only="react" mode="examen" questions={questions} />
+  </div>
+</Base>

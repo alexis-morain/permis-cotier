@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import { questionsDuTheme } from '../../lib/banque';
+import { THEMES } from '../../lib/themes';
+
+export async function getStaticPaths() {
+  return THEMES.map((theme) => ({ params: { theme: theme.code }, props: { theme } }));
+}
+
+const { theme } = Astro.props;
+const questions = await questionsDuTheme(theme.code);
+---
+
+<Base
+  titre={`${theme.nom} : réviser ce thème du permis côtier`}
+  description={`${theme.description.slice(0, 150)}`}
+>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <p class="chapitre"><a href="/themes">Programme</a></p>
+    <h1>{theme.nom}</h1>
+    <p class="intitule">{theme.intitule}</p>
+    <p class="chapo">{theme.description}</p>
+
+    {questions.length > 0 ? (
+      <p style="margin-top:2rem">
+        <a class="bouton bouton--principal" href={`/entrainement/${theme.code}`}>
+          S’entraîner sur ce thème
+        </a>
+      </p>
+    ) : (
+      <div class="encadre" style="margin-top:2rem">
+        <p style="margin:0"><strong>Pas encore de question publiée sur ce thème.</strong></p>
+        <p class="discret" style="margin:0.4rem 0 0">
+          Cible : {theme.cibleJ1} questions. En attendant, l’examen blanc tire dans les thèmes déjà écrits.
+        </p>
+      </div>
+    )}
+  </div>
+
+  {questions.length > 0 && (
+    <div class="page page--etroite" style="margin-top:3.5rem">
+      <h2>Les {questions.length} question{questions.length > 1 ? 's' : ''} de ce thème</h2>
+      <p class="discret">Réponse et source sous chacune. Pour t’entraîner sans voir les réponses, passe par le bouton ci-dessus.</p>
+      <ol class="listeQuestions">
+        {questions.map((q) => (
+          <li>
+            <h3><a href={`/question/${q.id}`}>{q.enonce}</a></h3>
+            <p class="discret">
+              {q.propositions.length} propositions, {q.reponses.length === 2 ? 'deux bonnes réponses' : 'une bonne réponse'}.
+              Source : {q.sources.map((s) => s.texte).join(', ')}.
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+</Base>
+
+<style>
+  .intitule { color: var(--texte-doux); font-size: 1rem; margin-top: -0.4rem; }
+  .chapo { font-size: 1.1rem; }
+  .listeQuestions { padding-left: 1.4rem; margin-top: 1.5rem; }
+  .listeQuestions li { margin-bottom: 1.6rem; }
+  .listeQuestions h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+  .listeQuestions h3 a { text-decoration: none; }
+  .listeQuestions h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+</style>

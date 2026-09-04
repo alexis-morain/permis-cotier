@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import { themesAvecComptes } from '../../lib/banque';
+
+const themes = await themesAvecComptes();
+const disponibles = themes.filter((t) => t.publiees > 0);
+const aVenir = themes.filter((t) => t.publiees === 0);
+---
+
+<Base
+  titre="Entraînement par thème, permis côtier"
+  description="Révise un thème à la fois, sans chrono, avec la correction et la source après chaque réponse."
+>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <p class="chapitre">Entraînement</p>
+    <h1>Un thème à la fois, sans chrono</h1>
+    <p>
+      La correction tombe après chaque réponse, avec l’explication et le texte dont elle vient.
+      Les questions ratées repassent en premier la fois suivante.
+    </p>
+
+    {disponibles.length === 0 ? (
+      <div class="encadre" style="margin-top:2rem">
+        <p style="margin:0"><strong>La banque est encore vide.</strong></p>
+        <p class="discret" style="margin:0.4rem 0 0">Les premiers thèmes arrivent : feux et marques, puis balisage.</p>
+      </div>
+    ) : (
+      <ul class="choix">
+        {disponibles.map((t) => (
+          <li>
+            <a href={`/entrainement/${t.code}`}>
+              <span class="choix__nom">{t.nom}</span>
+              <span class="discret">{t.publiees} question{t.publiees > 1 ? 's' : ''}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {aVenir.length > 0 && (
+      <p class="discret" style="margin-top:2rem">
+        Pas encore écrits : {aVenir.map((t) => t.nom).join(', ')}.
+      </p>
+    )}
+  </div>
+</Base>
+
+<style>
+  .choix { list-style: none; margin: 2rem 0 0; padding: 0; }
+  .choix li { border-top: 1px solid var(--filet); }
+  .choix li:last-child { border-bottom: 1px solid var(--filet); }
+  .choix a {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 1rem; padding: 1rem 0; min-height: 3.25rem; text-decoration: none;
+  }
+  .choix a:hover .choix__nom { text-decoration: underline; text-decoration-color: var(--accent); }
+  .choix__nom { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; }
+</style>
