@@ -10,7 +10,7 @@ import {
   calculerResultat,
   ordonnerEntrainement,
 } from './quiz';
-import { THEMES } from './themes';
+import { THEMES, cibleTotaleJ1 } from './themes';
 import type { QuestionJouable, Progression } from './quiz';
 
 function q(id: string, theme: string, reponses: string[] = ['a']): QuestionJouable {
@@ -46,7 +46,9 @@ describe('répartition des questions par thème', () => {
   });
 
   it('respecte les proportions du programme', () => {
-    const r = repartirParTheme(120, Object.fromEntries(THEMES.map((t) => [t.code, 99])));
+    // La taille demandée est la somme des cibles : chaque thème doit alors
+    // retrouver exactement la sienne, sans arrondi.
+    const r = repartirParTheme(cibleTotaleJ1(), Object.fromEntries(THEMES.map((t) => [t.code, 99])));
     for (const t of THEMES) expect(r[t.code]).toBe(t.cibleJ1);
   });
 
@@ -97,7 +99,7 @@ describe('tirage de l’examen blanc', () => {
       }
     }
     for (const t of THEMES) {
-      const attendu = (t.cibleJ1 / 120) * TAILLE_EXAMEN;
+      const attendu = (t.cibleJ1 / cibleTotaleJ1()) * TAILLE_EXAMEN;
       expect(Math.abs((cumul.get(t.code) ?? 0) / tirages - attendu)).toBeLessThan(0.25);
     }
   });

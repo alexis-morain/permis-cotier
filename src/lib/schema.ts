@@ -3,6 +3,7 @@
 // et le schéma reste l'unique source de vérité, partagée avec les tests.
 import { z } from 'astro/zod';
 import { CODES_THEMES } from './themes';
+import { NOTIONS } from './notions';
 
 /**
  * Règles de validation d'une question. Une violation casse le build.
@@ -68,6 +69,9 @@ export const schemaQuestion = z
     id: z.string().regex(ID_QUESTION, 'identifiant attendu : <theme>-<4 chiffres>'),
     option: z.literal('cotier'),
     theme: z.enum(CODES_THEMES as unknown as [string, ...string[]]),
+    /** Notion du programme couverte. Facultative tant que la banque n'est pas
+     *  entièrement reclassée ; le rapport de couverture compte les manquantes. */
+    notion: z.string().optional(),
     statut: z.enum(STATUTS),
     difficulte: z.number().int().min(1).max(3),
     enonce: texteNonVide(10),
@@ -99,6 +103,23 @@ export const schemaQuestion = z
     for (const r of q.reponses) {
       if (!ids.includes(r)) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['reponses'], message: `la réponse « ${r} » n'est pas dans les propositions` });
+      }
+    }
+
+    if (q.notion !== undefined) {
+      const notion = NOTIONS.find((n) => n.code === q.notion);
+      if (notion === undefined) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['notion'],
+          message: `notion inconnue : « ${q.notion} »`,
+        });
+      } else if (notion.theme !== q.theme) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['notion'],
+          message: `la notion « ${q.notion} » relève du thème « ${notion.theme} », pas de « ${q.theme} »`,
+        });
       }
     }
 

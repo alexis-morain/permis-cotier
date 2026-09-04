@@ -1,0 +1,32 @@
+id: vhf-0005
+option: cotier
+theme: vhf
+notion: vhf-licence-mmsi
+statut: brouillon
+difficulte: 1
+enonce: >-
+  Tu installes une VHF fixe à bord. À quelle formalité administrative son utilisation
+  est-elle soumise ?
+propositions:
+  - id: a
+    texte: À une licence de station de navire.
+  - id: b
+    texte: À une simple déclaration en capitainerie au premier départ.
+  - id: c
+    texte: À aucune formalité, la VHF étant un équipement de sécurité.
+  - id: d
+    texte: À l'inscription du poste sur l'acte de francisation.
+reponses:
+  - a
+explication: >-
+  La division 240 est explicite : l'utilisation des installations radioélectriques à bord
+  est soumise à une autorisation administrative, la licence de station de navire. C'est un
+  document distinct du titre de conduite et du certificat d'opérateur, et il fait partie
+  des pièces à présenter en cas de contrôle. Le piège est de croire qu'un équipement
+  destiné à la sécurité échappe pour cette raison à toute formalité.
+sources:
+  - texte: Division 240, article 240-2.20, I
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude

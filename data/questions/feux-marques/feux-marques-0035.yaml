@@ -1,0 +1,32 @@
+id: feux-marques-0035
+option: cotier
+theme: feux-marques
+notion: marques-jour
+statut: brouillon
+difficulte: 2
+enonce: >-
+  De jour, tu relèves un navire qui montre trois boules noires superposées. Dans quelle
+  situation se trouve-t-il ?
+propositions:
+  - id: a
+    texte: Il est échoué.
+  - id: b
+    texte: Il est au mouillage.
+  - id: c
+    texte: Il n'est pas maître de sa manœuvre.
+  - id: d
+    texte: Il effectue des opérations de dragage.
+reponses:
+  - a
+explication: >-
+  Les boules se comptent : une boule à l'avant, c'est le mouillage, trois boules
+  superposées, c'est l'échouement, prescrites l'une et l'autre par la règle 30. Le navire
+  non maître de sa manœuvre, lui, montre deux boules superposées au titre de la règle 27,
+  et c'est la confusion classique. Retiens la progression : une au mouillage, deux quand on
+  ne se gouverne plus, trois quand on ne flotte plus.
+sources:
+  - texte: RIPAM, règle 30 d) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
