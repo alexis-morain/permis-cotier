@@ -1,0 +1,33 @@
+id: titre-conduite-0004
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu passes l'épreuve théorique de navigation de l'extension « hauturière ». Quelles notes
+  te faut-il pour être reçu ?
+propositions:
+  - id: a
+    texte: Au moins 10 sur l'ensemble, quelle que soit la note de l'épreuve sur carte.
+  - id: b
+    texte: Au moins 10 sur l'ensemble et au moins 7 à l'épreuve sur carte.
+  - id: c
+    texte: Au moins 12 sur l'ensemble et au moins 7 à l'épreuve sur carte.
+  - id: d
+    texte: Au moins 10 sur l'ensemble et au moins 10 à l'épreuve sur carte.
+reponses:
+  - b
+explication: >-
+  Le point 4.1 pose deux conditions qui vont ensemble, une note d'au moins 10 sur l'ensemble
+  de l'épreuve et une note d'au moins 7 à l'épreuve sur carte, elle-même notée sur 12.
+  Le piège est d'oublier la seconde, un candidat qui atteint 10 au total grâce au calcul
+  de marée et aux QCM reste recalé si sa carte est en dessous de 7. La barre des 10 porte
+  sur le total, pas sur la carte prise à part.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 4, point 4.1
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

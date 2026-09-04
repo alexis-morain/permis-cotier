@@ -1,0 +1,35 @@
+id: titre-conduite-0003
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu veux t'inscrire à l'épreuve théorique de navigation de l'extension « hauturière ».
+  Que dois-tu déjà détenir ?
+propositions:
+  - id: a
+    texte: Rien de particulier, l'inscription est ouverte à tout candidat.
+  - id: b
+    texte: L'option côtière, le permis A de conduire en mer les navires de plaisance à
+      moteur ou le permis mer « côtier ».
+  - id: c
+    texte: L'option côtière obtenue depuis au moins un an.
+  - id: d
+    texte: L'option « eaux intérieures » du permis de conduire les bateaux de plaisance
+      à moteur.
+reponses:
+  - b
+explication: >-
+  Le point 4.1 subordonne l'inscription à l'épreuve théorique de navigation à la détention
+  préalable de l'option côtière, du permis A de conduire en mer les navires de plaisance
+  à moteur ou du permis mer « côtier ». L'extension hauturière ne se passe donc pas seule,
+  elle complète un titre côtier déjà obtenu. Le texte ne pose aucune condition d'ancienneté,
+  et l'option eaux intérieures ne donne pas accès à cette épreuve.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 4, point 4.1
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

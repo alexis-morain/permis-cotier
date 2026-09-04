@@ -1,0 +1,33 @@
+id: titre-conduite-0002
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu réussis l'épreuve théorique de l'option « côtière ». Pendant combien de temps en
+  conserves-tu le bénéfice ?
+propositions:
+  - id: a
+    texte: Six mois.
+  - id: b
+    texte: Douze mois.
+  - id: c
+    texte: Dix-huit mois.
+  - id: d
+    texte: Vingt-quatre mois.
+reponses:
+  - c
+explication: >-
+  Le point 1.1 de l'article 1 précise que le candidat conserve le bénéfice de la réussite
+  à l'épreuve théorique pendant dix-huit mois. Passé ce délai sans que la formation pratique
+  ait été validée par un établissement agréé, il faut repasser la théorie. Les autres
+  durées proposées sont des repères administratifs courants, mais aucune ne figure dans
+  le texte.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 1, point 1.1
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
