@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { questionsPubliees, nomDuTheme } from '../../lib/banque';
+import { SITE, quiz, titreQuestion, descriptionPage } from '../../lib/seo';
+import { notionParCode } from '../../lib/notions';
 
 export async function getStaticPaths() {
   const questions = await questionsPubliees();
@@ -10,9 +12,26 @@ export async function getStaticPaths() {
 const { q } = Astro.props;
 const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
+const theme = nomDuTheme(q.theme);
+const notion = q.notion ? notionParCode(q.notion) : undefined;
+const base = Astro.site ?? new URL(SITE.domaine);
+
+// Une question de la banque est un exercice, et Google sait l'afficher comme
+// tel. Le balisage `Quiz` donne l'énoncé, toutes les propositions et celles qui
+// sont justes : c'est exactement ce que la page montre déjà.
+const miettes = [
+  { nom: 'Programme', chemin: '/themes' },
+  { nom: theme, chemin: `/theme/${q.theme}` },
+  ...(notion ? [{ nom: notion.nom, chemin: `/notion/${notion.code}` }] : []),
+];
 ---
 
-<Base titre={`${q.enonce.slice(0, 70)} — permis côtier`} description={q.explication.slice(0, 155)}>
+<Base
+  titre={titreQuestion(q.enonce, q.visuel?.alt ?? notion?.nom)}
+  description={descriptionPage(q.explication)}
+  miettes={miettes}
+  jsonLd={[quiz(q, theme, base)]}
+>
   <article class="page page--etroite" style="padding-block:3rem 0">
     <p class="chapitre"><a href={`/theme/${q.theme}`}>{nomDuTheme(q.theme)}</a></p>
     <h1 class="question">{q.enonce}</h1>
@@ -48,8 +67,15 @@ const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
       ))}
     </ul>
 
+    {notion && (
+      <p class="versNotion">
+        Cette question porte sur <a href={`/notion/${notion.code}`}>{notion.nom.toLowerCase()}</a>.
+        La fiche donne la règle, et les autres questions qui la vérifient.
+      </p>
+    )}
+
     <p style="margin-top:2.5rem">
-      <a class="bouton" href={`/entrainement/${q.theme}`}>S’entraîner sur {nomDuTheme(q.theme).toLowerCase()}</a>
+      <a class="bouton" href={`/entrainement/${q.theme}`}>S’entraîner sur {theme.toLowerCase()}</a>
     </p>
     <p><a class="signaler" href={`/signaler?question=${q.id}`}>Signaler une erreur sur cette question</a></p>
   </article>
@@ -74,6 +100,7 @@ const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
   }
   .bonne .lettre { background: var(--vert); border-color: var(--vert); color: var(--papier-vif); }
   .sourcesListe { padding-left: 1.2rem; }
+  .versNotion { margin-top: 2rem; max-width: 58ch; }
   .signaler {
     font-size: 0.85rem; color: var(--texte-doux);
     text-decoration: underline; text-decoration-color: var(--filet);

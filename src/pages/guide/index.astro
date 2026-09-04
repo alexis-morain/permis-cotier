@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import { GUIDE } from '../../lib/guide';
+import { SITE, absolue } from '../../lib/seo';
+
+const base = Astro.site ?? new URL(SITE.domaine);
+---
+
+<Base
+  titre="Permis côtier : limites, examen et prix"
+  description="Les réponses aux questions qu’on se pose avant de réviser le permis plaisance option côtière, chacune tirée du décret du 2 août 2007 ou de l’arrêté du 28 septembre 2007, article cité."
+  miettes={[{ nom: 'Guide', chemin: '/guide' }]}
+  jsonLd={[
+    {
+      '@type': 'CollectionPage',
+      '@id': absolue('/guide#page', base),
+      name: 'Guide du permis côtier',
+      url: absolue('/guide', base),
+      isPartOf: { '@id': absolue('/#site', base) },
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: GUIDE.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: p.question,
+          url: absolue(`/guide/${p.slug}`, base),
+        })),
+      },
+    },
+  ]}
+>
+  <div class="page page--etroite" style="padding-block:2.5rem 0">
+    <p class="chapitre">Guide</p>
+    <h1>Le permis côtier, avant de réviser</h1>
+    <p class="chapo">
+      Jusqu’où on peut aller, ce que l’épreuve demande, ce que le titre coûte. Ces
+      réponses circulent d’un site à l’autre sans jamais citer le texte dont elles
+      sortent. Elles sont pourtant dans deux documents : le décret du 2 août 2007 et
+      l’arrêté du 28 septembre 2007. Chaque page ci-dessous donne l’article.
+    </p>
+  </div>
+
+  <div class="page page--etroite" style="margin-top:2.5rem">
+    <ul class="entrees">
+      {GUIDE.map((p) => (
+        <li>
+          <h2><a href={`/guide/${p.slug}`}>{p.question}</a></h2>
+          <p>{p.reponse}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="encadre" style="margin-top:3rem">
+      <p style="margin:0"><strong>Le programme, lui, est ailleurs.</strong></p>
+      <p class="discret" style="margin:0.4rem 0 0.8rem">
+        Ces pages disent le cadre. Ce qui tombe à l’épreuve se révise thème par thème.
+      </p>
+      <p style="margin:0">
+        <a class="bouton bouton--principal" href="/themes">Les quatorze thèmes</a>
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  /* Même chapô que sur une page thème, qui le définit aussi localement. */
+  .chapo { font-size: 1.1rem; }
+
+  .entrees { list-style: none; margin: 0; padding: 0; }
+  .entrees li { border-top: 1px solid var(--filet); padding: 1.4rem 0; }
+  .entrees li:last-child { border-bottom: 1px solid var(--filet); }
+  .entrees h2 { font-size: 1.25rem; margin: 0 0 0.5rem; }
+  .entrees h2 a { text-decoration: none; }
+  .entrees h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  .entrees p { margin: 0; max-width: 62ch; }
+</style>
