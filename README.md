@@ -58,8 +58,8 @@ npm run dev
 | `npm test` | tests du moteur (tirage, correction, chrono, progression) |
 | `npm run valider` | valide les fichiers YAML de la banque |
 | `npm run credits` | régénère `data/CREDITS.md` depuis les fiches de visuels |
+| `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
-| `npm run deploy` | construit et publie sur Cloudflare Pages |
 
 ## Ajouter une question
 
