@@ -240,7 +240,11 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
   }, []);
 
   const reprendre = useCallback(() => {
-    if (reprise) envoyer({ type: 'restaurer', session: reprise });
+    if (!reprise) return;
+    // Les réponses du journal repris ont déjà été comptées dans la progression
+    // avant l'interruption : sans ce décalage, elles y entreraient deux fois.
+    journalEcrit.current = reprise.journal.length;
+    envoyer({ type: 'restaurer', session: reprise });
   }, [reprise]);
 
   if (serie.length === 0) {
