@@ -341,7 +341,7 @@ def commande_chercher(args) -> int:
     """Retrouve l'identifiant d'un texte à partir de mots de son titre."""
     oauth, api = ENVIRONNEMENTS["sandbox" if args.sandbox else "prod"]
     acces = jeton(charger_env(), oauth)
-    reponse = appeler("/search", invite_recherche(args.mots, nombre=args.nombre), acces, api)
+    reponse = appeler("/search", invite_recherche(args.mots, args.fond, args.nombre), acces, api)
 
     resultats = reponse.get("results") or []
     if not resultats:
@@ -525,6 +525,11 @@ def main(argv: list[str] | None = None) -> int:
     ch = sous.add_parser("chercher", help="retrouve l'identifiant d'un texte par son titre")
     ch.add_argument("mots", help="mots du titre, par exemple « division 240 »")
     ch.add_argument("--nombre", type=int, default=10)
+    ch.add_argument(
+        "--fond", default="LODA_DATE", choices=("LODA_DATE", "JORF", "ALL"),
+        help="LODA_DATE ne porte que les textes consolidés ; les décrets anciens, "
+             "comme celui du 7 septembre 1983 sur le balisage, ne vivent que dans JORF",
+    )
     ch.add_argument("--sandbox", action="store_true")
     ch.set_defaults(fonction=commande_chercher)
 
