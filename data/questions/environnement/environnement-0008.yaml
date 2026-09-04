@@ -1,0 +1,33 @@
+id: environnement-0008
+option: cotier
+theme: environnement
+statut: publie
+difficulte: 3
+enonce: >-
+  Un rejet effectué depuis un navire est-il toujours punissable ?
+propositions:
+  - id: a
+    texte: Oui, sans exception
+  - id: b
+    texte: 'Non : un rejet effectué à des fins de sécurité, de sauvetage ou de lutte contre
+      la pollution ne l''est pas'
+  - id: c
+    texte: Non, à condition d'être effectué au-delà des eaux territoriales
+  - id: d
+    texte: Non, à condition d'avoir prévenu le CROSS
+reponses:
+  - b
+explication: >-
+  Le code de l'environnement prévoit une exception nette : un rejet effectué par un navire
+  à des fins de sécurité, de sauvetage ou de lutte contre la pollution n'est pas punissable,
+  dès lors qu'il remplit les conditions posées par les annexes de la convention MARPOL.
+  La logique est celle du choix du moindre mal : on n'oppose pas la protection du milieu
+  au sauvetage d'une vie.
+sources:
+  - texte: Code de l'environnement, article L. 218-20
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,31 @@
+id: meteo-0008
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 1
+enonce: >-
+  Le bulletin annonce un avis de tempête. À quelle force de vent cela correspond-il ?
+propositions:
+  - id: a
+    texte: Force 8
+  - id: b
+    texte: Force 9
+  - id: c
+    texte: Force 10
+  - id: d
+    texte: Force 12
+reponses:
+  - c
+explication: >-
+  L'avis de tempête est émis à partir de force 10, soit 48 à 55 nœuds. Les avis se nomment
+  par la force annoncée : grand frais à 7, coup de vent à 8, fort coup de vent à 9, tempête
+  à 10, violente tempête à 11, ouragan à 12. Confondre avis de coup de vent et avis de
+  tempête, c'est se tromper de deux degrés et de quinze nœuds.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

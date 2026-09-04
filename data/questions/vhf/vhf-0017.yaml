@@ -1,0 +1,33 @@
+id: vhf-0017
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu loues un bateau à moteur de 30 kW pour naviguer à trois milles d'un abri. Quel équipement
+  radio le loueur doit-il fournir ?
+propositions:
+  - id: a
+    texte: Aucun, la location ne change rien à l'armement
+  - id: b
+    texte: Un émetteur-récepteur VHF
+  - id: c
+    texte: Une radiobalise de localisation des sinistres
+  - id: d
+    texte: Un téléphone étanche
+reponses:
+  - b
+explication: >-
+  Les navires proposés à la location dont la puissance propulsive dépasse 4,5 kW, dès
+  lors qu'ils naviguent à plus de 2 milles d'un abri, sont équipés en supplément d'un
+  émetteur-récepteur VHF conforme à l'article 240-2.20, d'un moyen de positionnement électronique
+  et d'un document d'instructions. La location abaisse donc le seuil : à trois milles,
+  une VHF que l'armement côtier n'exigerait pas devient obligatoire.
+sources:
+  - texte: Division 240, article 240-3.03
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,33 @@
+id: vhf-0013
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Que faut-il pour utiliser légalement une installation radioélectrique à bord d'un navire
+  ?
+propositions:
+  - id: a
+    texte: Rien, l'appareil est libre dès lors qu'il est conforme
+  - id: b
+    texte: Une licence de station de navire
+  - id: c
+    texte: Une simple déclaration en capitainerie
+  - id: d
+    texte: L'inscription du poste sur l'acte de francisation
+reponses:
+  - b
+explication: >-
+  L'utilisation des installations radioélectriques à bord d'un navire est soumise à une
+  autorisation administrative appelée licence de station de navire, délivrée en France
+  par l'Agence nationale des fréquences. Elle ne se confond pas avec le certificat restreint
+  de radiotéléphoniste : la licence autorise la station, donc le navire, le certificat
+  autorise la personne qui manœuvre l'appareil.
+sources:
+  - texte: Division 240, article 240-2.20, I
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

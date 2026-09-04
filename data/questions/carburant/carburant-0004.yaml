@@ -1,0 +1,33 @@
+id: carburant-0004
+option: cotier
+theme: carburant
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton autonomie est de 5 heures et tu fais route à 18 nœuds. Quelle distance peux-tu couvrir
+  avec la totalité de ton carburant ?
+propositions:
+  - id: a
+    texte: 23 milles
+  - id: b
+    texte: 60 milles
+  - id: c
+    texte: 90 milles
+  - id: d
+    texte: 3,6 milles
+reponses:
+  - c
+explication: >-
+  La distance franchissable est l'autonomie multipliée par la vitesse. Le nœud étant un
+  mille par heure, 5 heures à 18 nœuds font 90 milles, sans conversion. Attention à ce
+  que recouvre le chiffre : ces 90 milles sont la route totale possible, pas la distance
+  à laquelle on peut s'éloigner. Avec la règle des tiers, l'éloignement se limite à 30
+  milles.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

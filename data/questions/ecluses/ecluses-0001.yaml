@@ -1,0 +1,37 @@
+id: ecluses-0001
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu te présentes à l'entrée d'une écluse et tu vois ce signal. Que t'indique-t-il ?
+visuel:
+  fichier: ecluses/acces-deux-rouges-superposes.svg
+  alt: Deux feux rouges allumés, l'un au-dessus de l'autre.
+  credit: code
+propositions:
+  - id: a
+    texte: L'accès est interdit et l'écluse est hors service
+  - id: b
+    texte: L'accès est interdit, mais l'écluse est en préparation pour l'ouverture
+  - id: c
+    texte: L'accès est interdit et l'écluse est simplement fermée, elle rouvrira à ton
+      tour
+  - id: d
+    texte: L'accès est autorisé, la superposition ne fait que doubler le signal
+reponses:
+  - a
+explication: >-
+  Les deux feux rouges superposés sont le seul signal qui annonce une écluse hors service
+  : inutile d'attendre, elle ne s'ouvrira pas. Le distinguo se joue sur la disposition.
+  Deux feux rouges juxtaposés, côte à côte, ou un feu rouge isolé disent seulement que
+  l'écluse est fermée, donc que ton tour viendra. Superposés, l'un au-dessus de l'autre,
+  ils disent que le service est interrompu.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

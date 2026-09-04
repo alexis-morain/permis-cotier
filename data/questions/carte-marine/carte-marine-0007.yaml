@@ -1,0 +1,32 @@
+id: carte-marine-0007
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 2
+enonce: >-
+  Quand le marnage est-il le plus fort ?
+propositions:
+  - id: a
+    texte: En morte-eau, aux quartiers de lune
+  - id: b
+    texte: En vive-eau, autour de la pleine et de la nouvelle lune
+  - id: c
+    texte: Toujours au solstice d'été
+  - id: d
+    texte: Le marnage ne varie pas d'un jour à l'autre
+reponses:
+  - b
+explication: >-
+  Le marnage est la différence de hauteur entre une pleine mer et la basse mer qui la
+  suit. Il est maximal en vive-eau, autour de la pleine et de la nouvelle lune, quand
+  le Soleil et la Lune tirent dans le même sens, et minimal en morte-eau, aux quartiers.
+  Le coefficient de marée, propre aux cartes françaises, chiffre le phénomène de 20 à
+  120 : 45 est une morte-eau moyenne, 95 une vive-eau moyenne.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

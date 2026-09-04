@@ -1,0 +1,32 @@
+id: vhf-0018
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Qu'est-ce qui détermine surtout la portée d'une VHF marine ?
+propositions:
+  - id: a
+    texte: La puissance d'émission de l'appareil
+  - id: b
+    texte: La hauteur des antennes
+  - id: c
+    texte: La qualité du câble d'antenne
+  - id: d
+    texte: L'état de la mer
+reponses:
+  - b
+explication: >-
+  La VHF porte à vue, un peu au-delà de l'horizon optique : c'est la hauteur des antennes
+  qui commande la portée, pas la puissance. D'un bateau à l'autre elle vaut quelques milles
+  ; vers une station côtière haut perchée, elle atteint plusieurs dizaines de milles.
+  C'est aussi pourquoi une portative tenue à la main porte beaucoup moins qu'une fixe
+  reliée à une antenne en tête de mât, à puissance pourtant proche.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,33 @@
+id: vhf-0007
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu entends trois signaux successifs sur le canal 16. Dans quel ordre de priorité se
+  rangent-ils ?
+propositions:
+  - id: a
+    texte: SÉCURITÉ, puis PAN PAN, puis MAYDAY
+  - id: b
+    texte: MAYDAY, puis PAN PAN, puis SÉCURITÉ
+  - id: c
+    texte: PAN PAN, puis MAYDAY, puis SÉCURITÉ
+  - id: d
+    texte: Ils ont tous la même priorité, seul l'ordre d'arrivée compte
+reponses:
+  - b
+explication: >-
+  MAYDAY est le signal de détresse : un danger grave et imminent, une assistance immédiate
+  demandée. Il prime sur tout et impose le silence radio à tous. PAN PAN est le signal
+  d'urgence : un message urgent pour la sécurité du navire ou d'une personne, sans danger
+  imminent. SÉCURITÉ est le signal de sécurité : un avertissement de navigation ou de
+  météo, celui que les CROSS émettent avant un bulletin ou un avis de coup de vent.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

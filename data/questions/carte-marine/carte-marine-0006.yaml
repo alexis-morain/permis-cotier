@@ -1,0 +1,35 @@
+id: carte-marine-0006
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu cherches un mouillage et la carte porte la lettre S à l'endroit visé. Que t'indique-t-elle
+  sur la nature du fond ?
+propositions:
+  - id: a
+    texte: Du sable
+  - id: b
+    texte: De la vase
+  - id: c
+    texte: De la roche
+  - id: d
+    texte: Une épave signalée
+reponses:
+  - a
+explication: >-
+  La nature du fond est notée en abréviations, utiles au mouillage : S pour le sable,
+  R pour la roche, G pour le gravier, Co pour le corail. Ces quatre-là sont les mêmes
+  sur une carte française et sur une carte à la norme internationale. D'autres changent
+  selon la convention, la vase étant V en français et M en anglais : devant une abréviation
+  inhabituelle, on lit la légende de la carte. Le sable tient bien l'ancre, la roche la
+  fait déraper ou la coince. En Méditerranée, on cherche les taches claires de sable et
+  l'on évite les herbiers de posidonie, qui sont protégés.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

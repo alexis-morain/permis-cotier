@@ -1,0 +1,39 @@
+id: carte-marine-0003
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 1
+enonce: >-
+  Sur cet extrait de carte, que représente la bande teintée en vert ?
+visuel:
+  fichier: carte/estran-et-sondes.svg
+  alt: 'Extrait de carte marine : une bande jaune de terre, puis une bande verte entre
+    le trait de côte plein et la laisse de basse mer en tireté, puis deux bleus qui s''éclaircissent
+    vers le large et enfin du blanc. Deux sondes soulignées sont portées dans la bande
+    verte, les autres dans le bleu et dans le blanc.'
+  credit: code
+propositions:
+  - id: a
+    texte: Les eaux profondes
+  - id: b
+    texte: Un herbier de posidonie
+  - id: c
+    texte: L'estran, la zone qui découvre entre haute et basse mer
+  - id: d
+    texte: Une zone de mouillage autorisé
+reponses:
+  - c
+explication: >-
+  La carte se lit d'abord à la couleur. Le blanc porte les eaux profondes, le bleu les
+  petits fonds avec une teinte qui s'assombrit vers la côte, le vert l'estran, cette bande
+  qui est sous l'eau à pleine mer et à sec à basse mer, et le jaune ou le beige la terre,
+  qui ne découvre jamais. Le vert est donc la zone à ne franchir qu'en connaissant la
+  marée.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
