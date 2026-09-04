@@ -1,0 +1,36 @@
+id: meteo-0011
+option: cotier
+theme: meteo
+notion: meteo-facteurs
+statut: publie
+difficulte: 3
+enonce: >-
+  Le bulletin annonce force 5 sur ta zone. Qu'est-ce qui peut te faire trouver nettement
+  plus de vent en pratique ?
+propositions:
+  - id: a
+    texte: Les rafales, qui dépassent couramment le vent moyen d'un tiers
+  - id: b
+    texte: Le passage devant un cap ou au débouché d'une vallée
+  - id: c
+    texte: L'éloignement de la côte, qui fait toujours tomber le vent
+  - id: d
+    texte: La marée montante, qui abaisse le degré Beaufort
+reponses:
+  - a
+  - b
+explication: >-
+  Le degré Beaufort du bulletin décrit un vent moyen sur dix minutes, et il vaut pour
+  une zone entière. Deux choses le font mentir localement : les rafales, qui dépassent
+  ce moyen d'un tiers et davantage sous un grain, et l'effet de site, où le relief accélère
+  le vent à la pointe d'un cap, au pied d'une falaise ou à la sortie d'une vallée. Un
+  force 5 annoncé se prépare comme un force 6 devant un cap.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « Ce qui
+      fait le vent local »'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

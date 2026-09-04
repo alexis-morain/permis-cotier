@@ -1,0 +1,36 @@
+id: ski-responsabilites-0011
+option: cotier
+theme: ski-responsabilites
+notion: conduite-homme-a-la-mer
+statut: publie
+difficulte: 1
+enonce: >-
+  Un équipier passe par-dessus bord. Quels sont tes deux tout premiers gestes, avant même
+  de manoeuvrer ?
+propositions:
+  - id: a
+    texte: Désigner un équipier qui ne quitte plus la personne des yeux, bras tendu vers elle
+  - id: b
+    texte: Jeter immédiatement la bouée de repérage
+  - id: c
+    texte: Lancer un MAYDAY sur le canal 16 avant toute autre chose
+  - id: d
+    texte: Couper le moteur et laisser le bateau dériver
+reponses:
+  - a
+  - b
+explication: >-
+  Une tête se perd de vue en quelques secondes dans le clapot : un équipier n'a plus que
+  ce rôle, montrer la personne du bras et ne plus la lâcher des yeux. La bouée part
+  aussitôt, même loin de la personne, parce qu'elle marque la zone et donne un point
+  flottant visible. Ensuite seulement on marque la position au GPS et on manoeuvre.
+  L'alerte vient si la personne n'est pas retrouvée tout de suite ; et couper le moteur
+  prive du seul moyen de revenir.
+sources:
+  - texte: Fiche conduite à tenir, section Homme à la mer
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

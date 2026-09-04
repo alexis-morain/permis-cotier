@@ -1,0 +1,39 @@
+id: barre-route-0029
+option: cotier
+theme: barre-route
+notion: barre-routes-opposees
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es le bateau du bas, tu fais route au moteur, et le navire qui vient à ta rencontre
+  est lui aussi à propulsion mécanique. Que prévoit la règle 14 a) pour cette rencontre ?
+visuel:
+  fichier: situations/routes-opposees.svg
+  alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image. Un navire à moteur vient droit sur lui, étrave contre étrave."
+  credit: code
+propositions:
+  - id: a
+    texte: Tu viens sur tribord.
+  - id: b
+    texte: L'autre navire vient sur tribord de son côté.
+  - id: c
+    texte: Le plus manœuvrant des deux s'écarte, l'autre garde sa route.
+  - id: d
+    texte: Vous vous croisez tribord contre tribord.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 14 a) ne désigne aucun privilégié. Quand deux navires à propulsion mécanique
+  font des routes directement opposées, chacun d'eux vient sur tribord et vous passez
+  bâbord contre bâbord. Retiens le geste symétrique, personne n'attend la manœuvre de
+  l'autre. Se croiser tribord contre tribord supposerait de venir sur bâbord, l'inverse
+  de ce que dit la règle.
+sources:
+  - texte: RIPAM, règle 14 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

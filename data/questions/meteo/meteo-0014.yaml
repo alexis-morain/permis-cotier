@@ -1,0 +1,34 @@
+id: meteo-0014
+option: cotier
+theme: meteo
+notion: meteo-bulletin
+statut: publie
+difficulte: 1
+enonce: >-
+  Après la situation générale, que donne le bulletin de côte pour chaque zone ?
+propositions:
+  - id: a
+    texte: Le vent, la mer, le temps et la visibilité
+  - id: b
+    texte: Le vent, la marée, la température et la pression
+  - id: c
+    texte: La mer, la visibilité et les heures de vacation VHF
+  - id: d
+    texte: Le vent et la mer, sans autre rubrique
+reponses:
+  - a
+explication: >-
+  Le bulletin de côte, qui couvre jusqu'à 20 milles des côtes, commence par la situation
+  générale, puis donne pour chaque zone quatre rubriques dans cet ordre : vent, mer,
+  temps, visibilité. La marée et la pression n'y figurent pas comme rubriques de prévision
+  de zone. La visibilité est celle qui se néglige le plus souvent, alors qu'une brume
+  annoncée change une sortie autant qu'un degré Beaufort.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « Bulletins
+      et avis »'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

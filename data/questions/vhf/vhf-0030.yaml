@@ -1,0 +1,32 @@
+id: vhf-0030
+option: cotier
+theme: vhf
+notion: vhf-fausses-alertes
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu appelles un autre bateau sur le canal 16 et il te répond. Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu poursuis la conversation sur le canal 16
+  - id: b
+    texte: Tu bascules sur une voie de travail, 72 ou 77
+  - id: c
+    texte: Tu bascules sur le canal 70
+  - id: d
+    texte: Tu bascules sur le canal 6
+reponses:
+  - b
+explication: >-
+  Le canal 16 sert à la détresse, à l'urgence et à l'appel : on y prend contact, puis
+  on dégage sur une voie de travail comme le 72 ou le 77. Le garder libre, c'est laisser
+  passer l'appel de celui qui en aura besoin. Le canal 70 ne porte que des données, et
+  le canal 6 est réservé à la coordination des opérations de recherche et de sauvetage.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

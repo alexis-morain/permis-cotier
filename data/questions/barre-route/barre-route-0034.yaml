@@ -1,0 +1,38 @@
+id: barre-route-0034
+option: cotier
+theme: barre-route
+notion: barre-voiliers
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu es le voilier du bas et tu approches un autre voilier de manière à faire craindre un
+  abordage. Vos voiles ne sont pas portées du même bord. Qui doit s'écarter ?
+visuel:
+  fichier: situations/voiliers-amures-contraires.svg
+  alt: "Vue de dessus. Deux voiliers convergent, vent venant de la droite de l'image. Ton voilier, en bas, porte sa voile à bâbord ; l'autre, qui vient de la droite, porte la sienne à tribord."
+  credit: code
+propositions:
+  - id: a
+    texte: L'autre voilier, il reçoit le vent de bâbord.
+  - id: b
+    texte: Toi, tu reçois le vent de bâbord.
+  - id: c
+    texte: Toi, tu le vois sur ta tribord.
+  - id: d
+    texte: Personne, chacun de vous vient sur tribord.
+reponses:
+  - a
+explication: >-
+  La règle 12 b) donne la clé : le côté d'où vient le vent est celui opposé au bord de
+  brassage de la grand-voile. Ta voile est à bâbord, tu reçois donc le vent de tribord ;
+  la sienne est à tribord, il reçoit le vent de bâbord. La règle 12 a) i) fait s'écarter
+  celui qui reçoit le vent de bâbord, c'est lui. Le piège est de prendre le côté de la
+  voile pour le côté du vent.
+sources:
+  - texte: RIPAM, règle 12 a) i) et 12 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

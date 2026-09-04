@@ -44,6 +44,14 @@ jobs:
       - name: Vérifier les planches de carte marine
         run: python scripts/carte.py --verifier
 
+      # Les rythmes et les situations sont animés : un motif retouché à la main
+      # dans le SVG livré sortirait du contrôle de la source qui le décrit.
+      - name: Vérifier les rythmes de feux
+        run: python scripts/rythmes.py --verifier
+
+      - name: Vérifier les situations de rencontre
+        run: python scripts/situations.py --verifier
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 

@@ -1,0 +1,34 @@
+id: securite-0017
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu pars en planche à pagaie depuis une plage. La division 240 t'autorise-t-elle à dépasser
+  deux milles d'un abri ?
+propositions:
+  - id: a
+    texte: Non, la navigation y est interdite aux planches à pagaie
+  - id: b
+    texte: Oui, jusqu'à six milles avec l'armement côtier spécifique
+  - id: c
+    texte: Oui, jusqu'à six milles si la pratique est encadrée
+  - id: d
+    texte: Oui, sans limite de distance tant que la mer est belle
+reponses:
+  - a
+explication: >-
+  La planche à pagaie est une embarcation propulsée par l'énergie humaine. Dans le tableau
+  du point 8 de l'article 240-2.01, la ligne de ces embarcations ouvre bien la tranche
+  de 2 à moins de 6 milles avec l'armement côtier spécifique de l'article 240-2.10, mais
+  la case ajoute aussitôt « Navigation interdite aux planches à pagaie ». La planche s'arrête
+  donc à 2 milles, là où un kayak de mer peut continuer.
+sources:
+  - texte: Division 240, article 240-2.01, point 8
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

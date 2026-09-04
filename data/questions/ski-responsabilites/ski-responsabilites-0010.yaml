@@ -1,0 +1,35 @@
+id: ski-responsabilites-0010
+option: cotier
+theme: ski-responsabilites
+notion: conduite-incendie-voie-eau
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu découvres de l'eau qui monte dans les fonds. Une fois les brassières enfilées, par
+  quoi commences-tu ?
+propositions:
+  - id: a
+    texte: Localiser l'entrée d'eau, puis l'aveugler
+  - id: b
+    texte: Écoper et pomper sans attendre, la fuite se cherchera après
+  - id: c
+    texte: Mettre le cap au large pour t'écarter des cailloux
+  - id: d
+    texte: Vider le réservoir pour alléger le bateau
+reponses:
+  - a
+explication: >-
+  L'ordre commande : localiser, aveugler, puis assécher. Presse-étoupe, passe-coque,
+  vanne, gouvernail et fixations de quille sont les points à regarder en premier, et une
+  simple fermeture de vanne suffit souvent. Écoper sans avoir bouché la voie d'eau ne fait
+  que retarder l'issue : c'est le piège de cette question. Une fois la fuite maîtrisée, on
+  vérifie que le niveau baisse, on alerte et on rallie l'abri le plus proche, pas le
+  large.
+sources:
+  - texte: Fiche conduite à tenir, section Voie d'eau
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

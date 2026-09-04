@@ -1,0 +1,37 @@
+id: barre-route-0032
+option: cotier
+theme: barre-route
+notion: barre-rattrapant
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu es le bateau du bas et tu fais route au moteur. Un navire à moteur plus rapide te
+  rejoint par l'arrière. Qui doit s'écarter ?
+visuel:
+  fichier: situations/tu-es-rattrape.svg
+  alt: "Vue de dessus. Ton bateau fait route vers le haut de l'image. Un navire à moteur plus rapide le rejoint par l'arrière, en le débordant légèrement sur sa gauche."
+  credit: code
+propositions:
+  - id: a
+    texte: Lui, il te rattrape.
+  - id: b
+    texte: Toi, il te déborde et tu dois lui ouvrir le passage.
+  - id: c
+    texte: Chacun de vous, en venant sur tribord.
+  - id: d
+    texte: Personne, il lui suffit de passer à distance suffisante.
+reponses:
+  - a
+explication: >-
+  La règle 13 a) est sans nuance : tout navire qui en rattrape un autre doit s'écarter de
+  la route de ce dernier. C'est celui qui arrive de l'arrière qui s'adapte, jamais celui
+  qui est devant, et le côté par lequel il déborde n'y change rien. Croire que le rattrapé
+  doit ouvrir le passage est l'erreur classique, héritée de la route.
+sources:
+  - texte: RIPAM, règle 13 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

@@ -1,0 +1,36 @@
+id: environnement-0014
+option: cotier
+theme: environnement
+notion: env-aires-protegees
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu prépares une sortie et tu vérifies si ta zone est protégée. Lesquelles de ces zones
+  l'article L. 334-1 range-t-il parmi les aires marines protégées ?
+propositions:
+  - id: a
+    texte: Les parcs naturels marins
+  - id: b
+    texte: Les sites Natura 2000 ayant une partie maritime
+  - id: c
+    texte: Les zones de mouillages et d'équipements légers
+  - id: d
+    texte: Les chenaux d'accès aux ports de plaisance
+reponses:
+  - a
+  - b
+explication: >-
+  L'article L. 334-1 du code de l'environnement dresse la liste des aires marines
+  protégées : parcs nationaux et réserves naturelles ayant une partie maritime, arrêtés
+  de protection de biotope, parcs naturels marins, sites Natura 2000 en mer, et
+  plusieurs autres catégories. Le point commun est la protection du milieu. Les zones
+  de mouillages et les chenaux organisent la circulation et le stationnement des
+  bateaux : ce sont des outils de police portuaire, pas des aires protégées.
+sources:
+  - texte: Code de l'environnement, article L. 334-1, 4° et 5°
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

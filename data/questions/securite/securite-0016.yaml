@@ -1,0 +1,34 @@
+id: securite-0016
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu veux emmener ton véhicule nautique à moteur à quatre milles d'un abri. Que demande
+  la division 240 en plus de l'armement ?
+propositions:
+  - id: a
+    texte: Que le véhicule compte au moins deux places
+  - id: b
+    texte: Que le véhicule compte au moins trois places
+  - id: c
+    texte: Que tu navigues de jour uniquement
+  - id: d
+    texte: Rien de plus, l'armement côtier spécifique suffit
+reponses:
+  - a
+explication: >-
+  Dans le tableau du point 8 de l'article 240-2.01, la tranche de 2 à moins de 6 milles
+  porte, pour les véhicules nautiques à moteur, la mention « Navigation réservée aux VNM
+  supérieurs ou égaux à 2 places », avec l'armement côtier spécifique de l'article 240-2.12.
+  Le matériel ne suffit donc pas, la place supplémentaire fait partie de la condition.
+  Au-delà de 6 milles, la navigation leur est interdite.
+sources:
+  - texte: Division 240, article 240-2.01, point 8
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

@@ -19,7 +19,7 @@ const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
 
     {q.visuel && (
       <figure style="margin:1.5rem 0">
-        <img src={`/visuels/${q.visuel.fichier}`} alt={q.visuel.alt} style="max-width:100%;border:1px solid var(--filet)" />
+        <img src={`/visuels/${q.visuel.fichier}`} alt={q.visuel.alt} style="width:min(100%,30rem);height:auto;border:1px solid var(--filet)" />
         <figcaption class="discret" style="margin-top:0.4rem">{q.visuel.alt}</figcaption>
       </figure>
     )}

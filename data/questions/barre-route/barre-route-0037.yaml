@@ -1,0 +1,37 @@
+id: barre-route-0037
+option: cotier
+theme: barre-route
+notion: barre-rattrapant
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu barres le navire du dessin et un autre navire s'approche de toi depuis le secteur
+  ouvert derrière toi. De nuit, que voit-il de tes feux, selon la règle 13 b) ?
+visuel:
+  fichier: situations/secteur-rattrapant.svg
+  alt: "Vue de dessus d'un navire et du secteur qui s'ouvre derrière lui, de part et d'autre, au-delà de 22,5 degrés sur l'arrière de son travers."
+  credit: code
+propositions:
+  - id: a
+    texte: Ton feu arrière seul, sans aucun de tes feux de côté.
+  - id: b
+    texte: Ton feu arrière et le feu de côté le plus proche de lui.
+  - id: c
+    texte: Tes deux feux de côté, sans ton feu arrière.
+  - id: d
+    texte: Ton feu de mât et ton feu arrière.
+reponses:
+  - a
+explication: >-
+  La règle 13 b) donne deux formulations de la même limite. Géométriquement, le rattrapant
+  vient de plus de 22,5 degrés sur l'arrière du travers. De nuit, cela se vérifie à l'œil :
+  depuis cette zone il ne voit que le feu arrière, aucun feu de côté. Dès qu'un feu de côté
+  apparaît, on n'est plus dans le rattrapage mais dans une route qui croise.
+sources:
+  - texte: RIPAM, règle 13 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

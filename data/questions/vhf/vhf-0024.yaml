@@ -1,0 +1,33 @@
+id: vhf-0024
+option: cotier
+theme: vhf
+notion: vhf-asn
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton alerte de détresse est partie par l'appel sélectif numérique. Que fais-tu ensuite
+  ?
+propositions:
+  - id: a
+    texte: Tu attends la réponse sans rien émettre d'autre
+  - id: b
+    texte: Tu passes sur le canal 16 et tu émets le message de détresse parlé
+  - id: c
+    texte: Tu restes sur le canal 70 et tu parles pour préciser ta situation
+  - id: d
+    texte: Tu renvoies l'alerte numérique toutes les minutes
+reponses:
+  - b
+explication: >-
+  L'alerte numérique ne remplace pas le message parlé : elle le précède. Une fois partie,
+  on enchaîne sur le canal 16 avec le MAYDAY, la position, la nature de la détresse et
+  le nombre de personnes à bord. Parler sur le 70 ne sert à rien, c'est une voie de données
+  où aucune phonie ne passe.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

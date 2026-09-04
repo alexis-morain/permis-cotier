@@ -1,0 +1,33 @@
+id: vhf-0022
+option: cotier
+theme: vhf
+notion: vhf-alphabet
+statut: publie
+difficulte: 1
+enonce: >-
+  Le CROSS te demande d'épeler le nom de ton bateau, ORQUE. Quelle épellation est exacte
+  ?
+propositions:
+  - id: a
+    texte: Oscar Romeo Quebec Uniform Echo
+  - id: b
+    texte: Oscar Romeo Queen Uniform Edward
+  - id: c
+    texte: Ocean Romeo Quebec Union Echo
+  - id: d
+    texte: Oscar Robert Quebec Uniform Espagne
+reponses:
+  - a
+explication: >-
+  Chaque lettre a son mot et un seul : Oscar, Romeo, Quebec, Uniform, Echo. Les autres
+  épellations glissent un mot inventé au milieu de mots justes, ce qui est le vrai risque
+  à la radio. Retiens la liste entière plutôt que quelques lettres : c'est elle qu'on
+  te demande d'appliquer d'un bout à l'autre d'un nom ou d'un indicatif.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

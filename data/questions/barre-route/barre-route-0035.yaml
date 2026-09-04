@@ -1,0 +1,37 @@
+id: barre-route-0035
+option: cotier
+theme: barre-route
+notion: barre-voiliers
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es le voilier du bas et vous recevez le vent du même bord. Vous vous rapprochez de
+  manière à faire craindre un abordage. Que fais-tu ?
+visuel:
+  fichier: situations/voiliers-memes-amures.svg
+  alt: "Vue de dessus. Deux voiliers font route au même cap, vent venant de la droite de l'image, voiles portées du même côté. Ton voilier est le plus proche du vent, l'autre est plus loin sous le vent."
+  credit: code
+propositions:
+  - id: a
+    texte: Tu t'écartes de sa route, tu es au vent de lui.
+  - id: b
+    texte: Tu maintiens ta route, c'est au voilier sous le vent de s'écarter.
+  - id: c
+    texte: Tu maintiens ta route tant qu'aucun de vous ne change d'amures.
+  - id: d
+    texte: Vous venez tous les deux sur tribord.
+reponses:
+  - a
+explication: >-
+  Quand deux voiliers reçoivent le vent du même bord, la règle 12 a) ii) fait s'écarter
+  celui qui est au vent. Ici c'est toi : tu es le plus près du vent, l'autre est sous le
+  vent de toi. La raison est concrète, le voilier au vent voit mieux la scène et garde
+  plus de manœuvre, celui qui est sous le vent est le plus contraint.
+sources:
+  - texte: RIPAM, règle 12 a) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

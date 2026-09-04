@@ -1,0 +1,38 @@
+id: carte-marine-0014
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce feu passe autant de temps allumé qu'éteint. Quelle abréviation la carte porte-t-elle
+  pour lui ?
+visuel:
+  fichier: rythmes/caractere-isophase.svg
+  alt: "Feu isophase, dont la lumière et l'obscurité durent exactement le même temps."
+  credit: code
+propositions:
+  - id: a
+    texte: Iso
+  - id: b
+    texte: Oc
+  - id: c
+    texte: LFl
+  - id: d
+    texte: Al
+reponses:
+  - a
+explication: >-
+  Le feu isophase s'abrège Iso : lumière et obscurité y durent le même temps, c'est le
+  cas d'égalité entre le feu à éclats et le feu à occultations. Oc désigne un feu dont
+  la lumière dure plus longtemps que l'obscurité. LFl est un éclat long, d'au moins deux
+  secondes, et Al un feu alternatif, qui change de couleur d'une phase à l'autre : ni
+  l'un ni l'autre ne dit quoi que ce soit d'une égalité de durées.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

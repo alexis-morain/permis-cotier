@@ -1,0 +1,37 @@
+id: barre-route-0033
+option: cotier
+theme: barre-route
+notion: barre-rattrapant
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es le bateau du bas et tu gagnes sur le navire qui te précède. Tu n'arrives pas à
+  décider si tu le rattrapes ou si vos routes se croisent. Que dit la règle 13 c) ?
+visuel:
+  fichier: situations/tu-rattrapes.svg
+  alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image et gagne sur un navire à moteur plus lent qui le précède, légèrement sur sa droite."
+  credit: code
+propositions:
+  - id: a
+    texte: Tu te considères comme le rattrapant et tu manœuvres en conséquence.
+  - id: b
+    texte: Tu appliques la règle des routes qui se croisent, le doute lui étant favorable.
+  - id: c
+    texte: Tu maintiens ton cap et ta vitesse jusqu'à ce que le doute se lève.
+  - id: d
+    texte: Tu lui demandes ses intentions au signal sonore avant de manœuvrer.
+reponses:
+  - a
+explication: >-
+  La règle 13 c) tranche le doute dans un seul sens, celui qui te contraint le plus : qui
+  ne sait pas s'il en rattrape un autre doit se considérer comme le rattrapant. Tu t'écartes
+  donc, sans attendre d'y voir clair. Le doute en mer ne se règle jamais en gardant sa route
+  et sa vitesse.
+sources:
+  - texte: RIPAM, règle 13 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

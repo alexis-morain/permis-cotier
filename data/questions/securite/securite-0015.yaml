@@ -1,0 +1,33 @@
+id: securite-0015
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu prends l'annexe de ton bateau pour rejoindre la plage. Jusqu'où la division 240 te
+  laisse-t-elle naviguer avec elle ?
+propositions:
+  - id: a
+    texte: Jusqu'à 300 mètres d'un abri
+  - id: b
+    texte: Jusqu'à 2 milles d'un abri
+  - id: c
+    texte: Jusqu'à 6 milles d'un abri
+  - id: d
+    texte: Sans limite de distance, dès lors qu'elle porte l'armement basique
+reponses:
+  - a
+explication: >-
+  Le tableau du point 8 de l'article 240-2.01 n'ouvre aux annexes que la première tranche,
+  jusqu'à 300 mètres d'un abri, avec le matériel spécifique de l'article 240-2.09. Toutes
+  les tranches suivantes portent la mention « Navigation interdite ». Embarquer plus de
+  matériel ne rachète donc rien : la limite tient à l'embarcation, pas à son armement.
+sources:
+  - texte: Division 240, article 240-2.01, point 8
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

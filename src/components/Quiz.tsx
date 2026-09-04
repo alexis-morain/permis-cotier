@@ -239,13 +239,21 @@ export default function Quiz({ mode, questions, theme }: Props) {
         quand il en faut deux.
       </p>
 
-      <h2 className="jeu__enonce">{affichee.enonce}</h2>
+      {/* `key` sur ces trois éléments : React les remonte à chaque question,
+          ce qui rejoue leur animation d'entrée. Sans lui, le DOM est réutilisé
+          et le passage d'une question à l'autre ne se voit plus. */}
+      <h2 className="jeu__enonce" key={`enonce-${question.id}`}>{affichee.enonce}</h2>
 
       {affichee.visuel && (
-        <img className="jeu__visuel" src={`/visuels/${affichee.visuel.fichier}`} alt={affichee.visuel.alt} />
+        <img
+          className="jeu__visuel"
+          key={`visuel-${question.id}`}
+          src={`/visuels/${affichee.visuel.fichier}`}
+          alt={affichee.visuel.alt}
+        />
       )}
 
-      <ul className="propositions">
+      <ul className="propositions" key={`propositions-${question.id}`}>
         {affichee.propositions.map((p) => {
           const cochee = selection.includes(p.id);
           const bonne = question.reponses.includes(p.id);

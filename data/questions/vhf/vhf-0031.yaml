@@ -1,0 +1,33 @@
+id: vhf-0031
+option: cotier
+theme: vhf
+notion: vhf-sauvetage
+statut: publie
+difficulte: 1
+enonce: >-
+  En France, qui reçoit l'alerte de détresse en mer et coordonne les moyens de secours
+  ?
+propositions:
+  - id: a
+    texte: La capitainerie du port le plus proche
+  - id: b
+    texte: Le CROSS
+  - id: c
+    texte: Le sémaphore le plus proche
+  - id: d
+    texte: La gendarmerie maritime
+reponses:
+  - b
+explication: >-
+  Les centres régionaux opérationnels de surveillance et de sauvetage, les CROSS, reçoivent
+  l'alerte et coordonnent les moyens engagés. Ils veillent le canal 16 en permanence et
+  répondent au 196 depuis un téléphone. Les capitaineries tiennent les voies portuaires,
+  pas le sauvetage : les appeler ferait perdre du temps.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

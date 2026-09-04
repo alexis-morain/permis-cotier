@@ -1,0 +1,39 @@
+id: barre-route-0030
+option: cotier
+theme: barre-route
+notion: barre-routes-croisees
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es le bateau du bas, tu fais route au moteur, et le navire qui approche est lui aussi
+  à propulsion mécanique. L'abordage est à craindre. Que t'impose la règle 15 ?
+visuel:
+  fichier: situations/routes-croisees-tribord.svg
+  alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image. Un navire à moteur vient de la droite, cap vers la gauche, et coupera ta route devant toi."
+  credit: code
+propositions:
+  - id: a
+    texte: T'écarter de sa route.
+  - id: b
+    texte: Éviter de croiser sa route sur l'avant, si les circonstances le permettent.
+  - id: c
+    texte: Venir sur tribord pour passer bâbord contre bâbord.
+  - id: d
+    texte: Maintenir ton cap et ta vitesse jusqu'à ce qu'il manœuvre.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 15 tient en une phrase qui porte deux obligations : celui qui voit l'autre sur
+  tribord s'écarte, et il évite en outre, si les circonstances le permettent, de couper
+  la route de l'autre devant lui. Passer sur son arrière est donc la manœuvre naturelle.
+  Venir sur tribord pour se croiser bâbord contre bâbord est la règle 14, celle des routes
+  opposées ; maintenir cap et vitesse est le devoir du navire privilégié, ce que tu n'es pas ici.
+sources:
+  - texte: RIPAM, règle 15
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

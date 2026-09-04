@@ -1,0 +1,33 @@
+id: securite-0014
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu prépares une sortie à quatre milles d'un abri sur ton navire de plaisance. Quel matériel
+  d'armement et de sécurité dois-tu embarquer ?
+propositions:
+  - id: a
+    texte: L'armement côtier
+  - id: b
+    texte: L'armement basique
+  - id: c
+    texte: L'armement semi-hauturier
+  - id: d
+    texte: L'armement hauturier
+reponses:
+  - a
+explication: >-
+  Le tableau du point 8 de l'article 240-2.01 découpe l'éloignement d'un abri en tranches.
+  De 2 à moins de 6 milles, un navire relève de l'armement côtier de l'article 240-2.04.
+  L'armement basique s'arrête à 2 milles, le semi-hauturier ne commence qu'à 6. Retiens
+  les trois bornes du tableau : 2, 6 et 60 milles.
+sources:
+  - texte: Division 240, article 240-2.01, point 8
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

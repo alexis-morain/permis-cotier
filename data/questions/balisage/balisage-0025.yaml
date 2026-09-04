@@ -1,0 +1,38 @@
+id: balisage-0025
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit tu relèves ce feu blanc. Quel voyant verras-tu au jour sur la marque qui le
+  porte ?
+visuel:
+  fichier: rythmes/danger-isole.svg
+  alt: "Feu blanc à deux éclats groupés, suivis d'une pause plus longue que l'intervalle qui sépare les deux éclats."
+  credit: code
+propositions:
+  - id: a
+    texte: Deux sphères noires superposées
+  - id: b
+    texte: Une sphère rouge
+  - id: c
+    texte: Deux cônes noirs superposés
+  - id: d
+    texte: Une croix jaune en forme de X
+reponses:
+  - a
+explication: >-
+  Le feu blanc à deux éclats groupés, Fl (2), est celui de la marque de danger isolé,
+  dont le voyant est fait de deux sphères noires superposées. Les deux éclats et les deux
+  sphères vont ensemble, c'est le moyen le plus simple de retenir ce feu. Les autres voyants
+  proposés sont ceux de la marque d'eaux saines, des marques cardinales et de la marque
+  spéciale.
+sources:
+  - texte: Balisage AISM région A, marque de danger isolé
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

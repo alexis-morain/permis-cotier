@@ -1,0 +1,35 @@
+id: environnement-0013
+option: cotier
+theme: environnement
+notion: env-equipement-sanitaire
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton bateau est équipé de toilettes. Quels dispositifs l'article 245-5.37 admet-il pour
+  les eaux usées ?
+propositions:
+  - id: a
+    texte: Un ensemble de capacités de rétention des eaux usées des toilettes
+  - id: b
+    texte: Une installation de traitement de ces eaux usées
+  - id: c
+    texte: Un broyeur dilacérateur rejetant directement à la mer
+  - id: d
+    texte: Un jeu de bidons portatifs vidés à terre après chaque sortie
+reponses:
+  - a
+  - b
+explication: >-
+  L'article 245-5.37, I, demande qu'un bateau équipé de toilettes comporte au moins l'un
+  des deux dispositifs : une rétention, ou un traitement des eaux usées. Les deux sont
+  admis, c'est un choix, pas un cumul. Si les réservoirs sont fixés à demeure, le même
+  alinéa exige en plus un raccord de vidange normalisé, pour que les installations de
+  réception à quai puissent s'y brancher.
+sources:
+  - texte: Division 245, article 245-5.37, I
+    ref: division-245
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

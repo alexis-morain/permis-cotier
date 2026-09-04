@@ -62,9 +62,13 @@
 
 .jeu__visuel {
   display: block;
+  /* `width` plutôt que `max-width` : les SVG sont dessinés à deux cent quarante
+     pixels et doivent grandir jusqu'à la mesure de lecture, pas seulement
+     rétrécir. La hauteur maximale reste une contrainte de téléphone ; quand elle
+     mord, le navigateur recalcule la largeur et le rapport des côtés tient. */
+  width: min(100%, 26rem);
+  height: auto;
   max-height: 34vh;
-  max-width: 100%;
-  width: auto;
   margin: 0;
   border: var(--filet-epaisseur) solid var(--filet);
   background: var(--fond-carte);
@@ -194,6 +198,86 @@
 .revue__item { border-top: var(--filet-epaisseur) solid var(--filet); padding-top: 1.25rem; }
 .revue__rang { font-size: 0.85rem; color: var(--texte-doux); margin-bottom: 0.35rem; }
 .revue__enonce { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; margin: 0 0 0.75rem; max-width: 40ch; }
+
+/* Mouvement.
+
+   Trois principes, tenus partout dans ce fichier. On n'anime que `transform` et
+   `opacity`, jamais une propriété qui met en page. Le mouvement marque un
+   changement d'état réel, il ne décore pas un chargement : rien ne bouge tant
+   que le candidat n'a pas agi. Et tout se coupe sous `prefers-reduced-motion`,
+   sans qu'aucune information ne disparaisse avec.
+
+   Le sélecteur `.jeu > …` est ce qui sépare le jeu de la revue. Les mêmes
+   classes servent aux deux, mais dans la revue les verdicts et les réponses
+   justes sont là dès l'affichage : les animer ferait clignoter toute la page
+   d'un coup. Dans le jeu, ce sont des enfants directs de `.jeu`, dans la revue
+   ils sont enfermés dans `.revue__item`. */
+
+@keyframes jeu-entree {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Passer à la question suivante remplace tout le bloc de lecture. Sans repère,
+   le changement se voit mal quand deux énoncés se ressemblent. Les trois
+   éléments entrent dans l'ordre où on les lit, décalés de quelques dizaines de
+   millisecondes : assez pour donner un sens de lecture, trop peu pour attendre.
+   L'animation se rejoue parce que React remonte ces éléments, `key` valant
+   l'identifiant de la question. */
+.jeu > .jeu__enonce { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) both; }
+.jeu > .jeu__visuel { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) 40ms both; }
+.jeu > .propositions { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) 70ms both; }
+
+/* Le verdict arrive sous les propositions au moment où on valide. Il descend de
+   quatre pixels, dans le sens où le regard va le chercher. */
+@keyframes verdict-entree {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.jeu > .verdict { animation: verdict-entree 160ms cubic-bezier(0.2, 0, 0, 1) both; }
+
+/* La correction repeint plusieurs pastilles à la fois. Un rappel d'échelle très
+   court fait que l'œil les trouve, au lieu de relire les quatre lignes. */
+@keyframes pastille-marquee {
+  from { transform: scale(0.8); }
+  to { transform: none; }
+}
+.jeu > .propositions .proposition--juste .proposition__lettre,
+.jeu > .propositions .proposition--fausse .proposition__lettre {
+  animation: pastille-marquee 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Les cinq dernières secondes de l'examen. Le chrono passe déjà au rouge ;
+   le battement le rend visible en vision périphérique, pendant qu'on lit les
+   propositions. L'opacité ne descend pas sous 0,5 : le chiffre reste lisible à
+   tout instant du cycle. */
+@keyframes chrono-battement {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.jeu__chrono--urgent { animation: chrono-battement 1s ease-in-out infinite; }
+
+/* L'écran de résultat n'apparaît qu'une fois, à la fin. Le score puis le
+   verdict, dans cet ordre. */
+.resultat__score { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) both; }
+.resultat__verdict { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) 90ms both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jeu > .jeu__enonce,
+  .jeu > .jeu__visuel,
+  .jeu > .propositions,
+  .jeu > .verdict,
+  .jeu > .propositions .proposition--juste .proposition__lettre,
+  .jeu > .propositions .proposition--fausse .proposition__lettre,
+  .jeu__chrono--urgent,
+  .resultat__score,
+  .resultat__verdict {
+    animation: none;
+  }
+  /* La barre du chrono descend d'une seconde à l'autre : sans transition elle
+     saute, ce qui reste juste et ne demande aucun mouvement continu. */
+  .jeu__barre span { transition: none; }
+}
 
 @media (min-width: 46rem) {
   .jeu { gap: 1.5rem; padding-block: 2rem 3rem; }

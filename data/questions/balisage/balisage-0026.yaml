@@ -1,0 +1,38 @@
+id: balisage-0026
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce feu blanc montre un éclat long isolé, sans groupe de scintillements devant lui. Quelle
+  marque te signale-t-il ?
+visuel:
+  fichier: rythmes/eaux-saines-eclat-long.svg
+  alt: "Feu blanc montrant un éclat long isolé, plus long que l'obscurité qui le sépare du suivant."
+  credit: code
+propositions:
+  - id: a
+    texte: Une marque d'eaux saines
+  - id: b
+    texte: Une cardinale Sud
+  - id: c
+    texte: Une marque de danger isolé
+  - id: d
+    texte: Une marque spéciale
+reponses:
+  - a
+explication: >-
+  Le feu blanc de la marque d'eaux saines peut être isophase, à occultations, à un éclat
+  long toutes les 10 s ou à la lettre A du Morse. L'éclat long tout seul est donc bien
+  une marque d'eaux saines, qui annonce des eaux saines tout autour, en milieu de chenal
+  ou en atterrissage. Le piège est la cardinale Sud, qui montre elle aussi un éclat long,
+  mais toujours derrière six scintillements : ici il n'y a rien devant.
+sources:
+  - texte: Balisage AISM région A, marque d'eaux saines
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'
