@@ -39,7 +39,13 @@ def avec(**patch):
     return q
 
 
-def codes(q, racine=Path("data")):
+RACINE = Path(__file__).resolve().parents[1]
+
+
+def codes(q, racine=RACINE):
+    """Les codes de problème d'une question. La racine par défaut est celle du
+    dépôt : le validateur y cherche `data/sources/<ref>/`, et une racine
+    factice ferait échouer toutes les questions sur une source introuvable."""
     return {p.code for p in valider_question(q, Path("data/questions/feux-marques/x.yaml"), racine)}
 
 
@@ -120,11 +126,13 @@ def test_champ_inconnu_refuse():
 
 
 def test_visuel_absent_du_disque(tmp_path):
+    _sources(tmp_path)
     q = avec(visuel={"fichier": "feux/absent.svg", "alt": "Un feu", "credit": "code"})
     assert "visuel.fichier" in {p.code for p in valider_question(q, Path("x.yaml"), tmp_path)}
 
 
 def test_visuel_present_sur_le_disque(tmp_path):
+    _sources(tmp_path)
     fichier = tmp_path / "public" / "visuels" / "feux" / "present.svg"
     fichier.parent.mkdir(parents=True)
     fichier.write_text("<svg/>")
@@ -144,7 +152,15 @@ def test_visuel_mal_credite(visuel):
     assert any(p.code.startswith("visuel") for p in valider_question(avec(visuel=visuel), Path("x.yaml"), Path("data")))
 
 
+def _sources(racine: Path, question: dict = VALIDE) -> None:
+    """Crée les dossiers de source que la question cite. Une racine temporaire
+    part vide, et le validateur exige que chaque `ref` existe."""
+    for source in question["sources"]:
+        (racine / "data" / "sources" / source["ref"]).mkdir(parents=True, exist_ok=True)
+
+
 def _ecrire(racine: Path, question: dict) -> None:
+    _sources(racine, question)
     dossier = racine / "data" / "questions" / question["theme"]
     dossier.mkdir(parents=True, exist_ok=True)
     (dossier / f"{question['id']}.yaml").write_text(yaml.safe_dump(question, allow_unicode=True))
@@ -196,3 +212,28 @@ def test_probleme_s_affiche_avec_son_fichier():
     p = Probleme(fichier=Path("data/questions/vhf/vhf-0001.yaml"), code="id", message="mal formé")
     assert "vhf-0001.yaml" in str(p)
     assert "mal formé" in str(p)
+
+
+def test_une_source_sans_dossier_est_refusee(tmp_path):
+    # Une référence bien formée mais qui ne pointe sur rien renvoie le candidat
+    # vers un texte introuvable : la citation cesse d'être vérifiable.
+    (tmp_path / "data" / "sources" / "ripam").mkdir(parents=True)
+    q = avec(sources=[{"texte": "RIPAM, regle 26", "ref": "texte-fantome"}])
+    assert "sources" in {p.code for p in valider_question(q, Path("q.yaml"), tmp_path)}
+
+
+def test_une_source_avec_son_dossier_passe(tmp_path):
+    (tmp_path / "data" / "sources" / "ripam").mkdir(parents=True)
+    q = avec(sources=[{"texte": "RIPAM, regle 26", "ref": "ripam"}])
+    assert valider_question(q, Path("q.yaml"), tmp_path) == []
+
+
+def test_chaque_source_citee_par_la_banque_existe():
+    # Contrôle de bout en bout : les refs de la vraie banque résolvent toutes.
+    manquantes = {
+        source["ref"]
+        for fichier in (RACINE / "data" / "questions").rglob("*.yaml")
+        for source in yaml.safe_load(fichier.read_text(encoding="utf-8"))["sources"]
+        if not (RACINE / "data" / "sources" / source["ref"]).is_dir()
+    }
+    assert manquantes == set()

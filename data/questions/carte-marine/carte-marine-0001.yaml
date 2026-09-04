@@ -22,7 +22,9 @@ explication: >-
   mers astronomiques, c'est-à-dire le plus bas que la marée puisse descendre. La sonde
   est donc la profondeur minimale que tu trouveras à cet endroit, et la hauteur de la
   marée du moment vient s'y ajouter. La convention joue dans le sens de la sécurité :
-  on ne peut être surpris que par plus d'eau que prévu, jamais par moins.
+  la marée astronomique ne descend jamais sous ce niveau. Une forte hausse de pression,
+  ou un vent de terre établi, peut en revanche faire une décote de quelques dizaines de
+  centimètres sous la hauteur prévue.
 sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
     ref: fiche-carte-marine

@@ -4,24 +4,25 @@ theme: environnement
 statut: publie
 difficulte: 1
 enonce: >-
-  Que faire de tes déchets pendant une sortie à la journée ?
+  Tu remontes dans ton filet un sac plastique et un bidon d'huile de vidange à moitié
+  plein. Que fais-tu du bidon ?
 propositions:
   - id: a
-    texte: Les jeter par-dessus bord s'ils sont biodégradables
+    texte: Tu le vides par-dessus bord, l'huile se disperse d'elle-même
   - id: b
-    texte: Les rapporter à terre et les déposer dans les bacs du port
+    texte: Tu le rapportes à terre et le déposes au bac à huiles usagées du port
   - id: c
-    texte: Les jeter au-delà de trois milles des côtes
+    texte: Tu le vides au-delà de trois milles des côtes
   - id: d
-    texte: Les brûler à bord
+    texte: Tu le remets à l'eau fermé, il sera récupéré par les services du port
 reponses:
   - b
 explication: >-
-  Le principe est simple et sans seuil de distance : ce qui est monté à bord en redescend.
-  Le code de l'environnement punit le fait de jeter, déverser ou laisser écouler en mer
-  des substances nuisibles pour la faune et la flore marines ou de nature à les rendre
-  impropres à la consommation. Les ports mettent des bacs à disposition, y compris pour
-  les huiles usagées et les batteries.
+  L'huile de vidange est nuisible pour la faune et la flore marines, et le code de l'environnement
+  punit le fait de la jeter, de la déverser ou de la laisser écouler en mer, sans aucun
+  seuil de distance. Le bidon redescend à terre, dans le bac à huiles usagées que le port
+  met à disposition. Le raisonnement vaut d'ailleurs pour tout ce qui est monté à bord
+  : ce qui n'est pas rejetable en mer en redescend.
 sources:
   - texte: Code de l'environnement, article L. 218-73
     ref: code-environnement

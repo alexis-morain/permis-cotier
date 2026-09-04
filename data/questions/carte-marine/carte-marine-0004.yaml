@@ -9,9 +9,9 @@ enonce: >-
 visuel:
   fichier: carte/estran-et-sondes.svg
   alt: 'Extrait de carte marine : une bande jaune de terre, puis une bande verte entre
-    le trait de côte plein et la laisse de basse mer en tireté, puis des bleus qui s''éclaircissent
+    le trait de côte plein et la laisse de basse mer en tireté, puis deux bleus qui s''éclaircissent
     vers le large et enfin du blanc. Deux sondes soulignées sont portées dans la bande
-    verte, les autres dans le bleu.'
+    verte, les autres dans le bleu et dans le blanc.'
   credit: code
 propositions:
   - id: a
