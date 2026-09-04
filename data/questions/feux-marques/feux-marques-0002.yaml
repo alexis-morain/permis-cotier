@@ -1,0 +1,32 @@
+id: feux-marques-0002
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, un navire te montre un feu rouge au-dessus d'un feu blanc, tous deux visibles
+  sur tout l'horizon : que fait-il ?
+propositions:
+  - id: a
+    texte: Il pêche, mais pas au chalut
+  - id: b
+    texte: Il chalute
+  - id: c
+    texte: Il chalute et son chalut est déployé sur plus de 150 mètres
+  - id: d
+    texte: Il n'est pas en train de pêcher
+reponses:
+  - a
+explication: >-
+  La règle 26 c) i) réserve le feu rouge surmontant le feu blanc au navire en train de
+  pêcher autrement qu'au chalut. Le chalutier, lui, montre du vert au-dessus du blanc,
+  règle 26 b) i). Un navire qui ne pêche pas ne montre aucun de ces feux, règle 26 e),
+  donc la dernière proposition tombe d'elle-même.
+sources:
+  - texte: RIPAM, règle 26 c) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

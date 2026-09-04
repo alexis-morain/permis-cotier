@@ -1,0 +1,32 @@
+id: feux-marques-0008
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Quelle est la couleur du feu de remorquage et quel arc d'horizon couvre-t-il ?
+propositions:
+  - id: a
+    texte: Jaune, sur un arc de 135 degrés.
+  - id: b
+    texte: Jaune, visible sur tout l'horizon.
+  - id: c
+    texte: Blanc, sur un arc de 135 degrés.
+  - id: d
+    texte: Jaune, sur un arc de 225 degrés.
+reponses:
+  - a
+explication: >-
+  La règle 21 d) définit le feu de remorquage comme un feu jaune ayant les mêmes caractéristiques
+  que le feu de poupe. Or la règle 21 c) donne au feu de poupe un arc de 135 degrés, soit
+  67,5 degrés de chaque bord à partir de l'arrière. Le piège est de garder la bonne couleur
+  mais de lui donner le secteur du feu de tête de mât, ou de retenir le bon secteur en
+  oubliant que la couleur passe du blanc au jaune.
+sources:
+  - texte: RIPAM, règle 21 c) et d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

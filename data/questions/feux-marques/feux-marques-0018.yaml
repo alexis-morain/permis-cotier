@@ -1,0 +1,31 @@
+id: feux-marques-0018
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu fais route à la voile de nuit, moteur arrêté : quels feux dois-tu montrer ?
+propositions:
+  - id: a
+    texte: Les feux de côté et un feu de poupe.
+  - id: b
+    texte: Les feux de côté et un feu de tête de mât.
+  - id: c
+    texte: Les feux de côté, un feu de poupe et un feu de tête de mât.
+  - id: d
+    texte: Un seul feu blanc visible sur tout l'horizon.
+reponses:
+  - a
+explication: >-
+  La règle 25 a) demande au navire à voile qui fait route les feux de côté et un feu de
+  poupe, rien d'autre. Le feu de tête de mât appartient au navire à propulsion mécanique
+  : dès que tu le montres à la voile, tu annonces autre chose que ce que tu fais. Le piège
+  est là, dans les propositions qui ajoutent ce feu de tête de mât aux feux du voilier.
+sources:
+  - texte: RIPAM, règle 25 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,33 @@
+id: feux-marques-0016
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton bateau est remorqué de nuit, il n'est ni partiellement submergé ni difficile à apercevoir
+  : quels feux montres-tu ?
+propositions:
+  - id: a
+    texte: Des feux de côté et un feu de poupe
+  - id: b
+    texte: Des feux de côté, un feu de poupe et un feu de remorquage
+  - id: c
+    texte: Un feu blanc visible sur tout l'horizon à l'avant et un autre à l'arrière
+  - id: d
+    texte: Deux feux de tête de mât superposés et des feux de côté
+reponses:
+  - a
+explication: >-
+  La règle 24 e) ne demande au navire remorqué que des feux de côté et un feu de poupe,
+  la marque biconique s'ajoutant seulement quand le train de remorque dépasse 200 mètres.
+  Le feu de remorquage appartient au navire remorquant, pas au remorqué. Les deux feux
+  blancs sur tout l'horizon sont réservés par la règle 24 g) i) aux objets remorqués partiellement
+  submergés et difficiles à apercevoir.
+sources:
+  - texte: RIPAM, règle 24 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

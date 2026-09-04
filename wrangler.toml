@@ -1,0 +1,4 @@
+# Cloudflare Pages. Le build sort dans dist/, les fonctions dans functions/.
+name = "permis-cotier"
+compatibility_date = "2026-09-04"
+pages_build_output_dir = "dist"

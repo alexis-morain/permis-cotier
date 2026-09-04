@@ -1,0 +1,32 @@
+id: barre-route-0005
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu barres un voilier et tu rattrapes un navire à moteur qui fait route devant toi. Qui
+  doit s'écarter ?
+propositions:
+  - id: a
+    texte: Le navire à moteur, il doit s'écarter de la route des voiliers.
+  - id: b
+    texte: Chacun vient sur tribord, comme pour une route directement opposée.
+  - id: c
+    texte: Toi, le voilier, parce que tu rattrapes ce navire.
+  - id: d
+    texte: Personne, tant que le relèvement entre vous ne change pas.
+reponses:
+  - c
+explication: >-
+  La règle 13 a) s'applique nonobstant toute disposition des sections I et II de la partie
+  B : tout navire qui en rattrape un autre doit s'écarter de la route de ce dernier. Le
+  fait d'être à la voile ne change rien, le rattrapage prime. Le piège est de raisonner
+  en priorité de la voile sur le moteur, qui ne joue pas ici.
+sources:
+  - texte: RIPAM, règle 13 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

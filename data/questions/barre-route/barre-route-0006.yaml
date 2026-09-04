@@ -1,0 +1,33 @@
+id: barre-route-0006
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu rattrapes un navire et, pendant le dépassement, le relèvement entre vous change nettement.
+  Es-tu libéré de ton obligation ?
+propositions:
+  - id: a
+    texte: Oui, vous êtes désormais en situation de routes qui se croisent.
+  - id: b
+    texte: Non, tu dois t'écarter jusqu'à être tout à fait paré et clair.
+  - id: c
+    texte: Oui, dès que tu arrives par le travers du navire rattrapé.
+  - id: d
+    texte: Non, mais le navire rattrapé doit alors manœuvrer pour t'aider.
+reponses:
+  - b
+explication: >-
+  La règle 13 d) est explicite : aucun changement ultérieur dans le relèvement ne fait
+  du navire qui rattrape un navire qui croise la route de l'autre, ni ne l'affranchit
+  de son obligation de s'écarter, et cela jusqu'à ce qu'il soit tout à fait paré et clair.
+  Le piège classique est de croire qu'en s'élevant sur l'avant du travers on change de
+  situation et qu'on récupère un droit de route.
+sources:
+  - texte: RIPAM, règle 13 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

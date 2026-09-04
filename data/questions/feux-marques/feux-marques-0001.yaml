@@ -1,0 +1,33 @@
+id: feux-marques-0001
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu chalutes de nuit : quels feux superposés visibles sur tout l'horizon dois-tu montrer
+  ?
+propositions:
+  - id: a
+    texte: Un feu vert au-dessus d'un feu blanc
+  - id: b
+    texte: Un feu blanc au-dessus d'un feu vert
+  - id: c
+    texte: Un feu rouge au-dessus d'un feu blanc
+  - id: d
+    texte: Un feu blanc au-dessus d'un feu rouge
+reponses:
+  - a
+explication: >-
+  La règle 26 b) i) impose au navire qui tire un chalut ou un autre engin deux feux superposés
+  visibles sur tout l'horizon, le supérieur vert et l'inférieur blanc. Le piège tient
+  en deux gestes : inverser les deux feux, ou prendre le rouge sur blanc qui appartient
+  au navire en train de pêcher autrement qu'au chalut, règle 26 c) i). Retiens que le
+  vert va au chalut, et qu'il est toujours en haut.
+sources:
+  - texte: RIPAM, règle 26 b) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

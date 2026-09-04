@@ -1,0 +1,35 @@
+id: feux-marques-0017
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu pousses un navire en avant de nuit, sans former avec lui une unité composite : quels
+  feux montres-tu ?
+propositions:
+  - id: a
+    texte: Deux feux de tête de mât superposés, des feux de côté et un feu de poupe
+  - id: b
+    texte: Deux feux de tête de mât superposés, des feux de côté, un feu de poupe et un
+      feu de remorquage
+  - id: c
+    texte: Trois feux de tête de mât superposés, des feux de côté et un feu de poupe
+  - id: d
+    texte: Les feux ordinaires d'un navire à propulsion mécanique de la règle 23
+reponses:
+  - a
+explication: >-
+  La règle 24 c) donne au navire qui pousse en avant ou qui remorque à couple deux feux
+  de tête de mât superposés, des feux de côté et un feu de poupe, sans feu de remorquage
+  : celui-ci n'est prévu qu'au paragraphe a), pour le remorquage à la traîne. Les trois
+  feux superposés relèvent du seul paragraphe a) i), au-delà de 200 mètres de train. Les
+  feux de la règle 23 seuls s'appliquent à l'unité composite du paragraphe b), c'est-à-dire
+  au pousseur et au poussé reliés par un raccordement rigide.
+sources:
+  - texte: RIPAM, règle 24 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

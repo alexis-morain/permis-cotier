@@ -1,0 +1,35 @@
+id: barre-route-0016
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu fais route au moteur et tu aperçois un navire qui montre les signaux du navire handicapé
+  par son tirant d'eau prévus à la règle 28. Que t'impose la règle 18 ?
+propositions:
+  - id: a
+    texte: Éviter de gêner son libre passage, si les circonstances le permettent.
+  - id: b
+    texte: T'écarter de sa route en toutes circonstances, comme devant un navire qui n'est
+      pas maître de sa manœuvre.
+  - id: c
+    texte: Rien de particulier, il navigue au moteur comme toi.
+  - id: d
+    texte: Garder ta route et ta vitesse, c'est à lui de naviguer avec une prudence particulière.
+reponses:
+  - a
+explication: >-
+  La règle 18 d) i) demande à tout navire, sauf s'il n'est pas maître de sa manœuvre ou
+  s'il est à capacité de manœuvre restreinte, d'éviter de gêner le libre passage du navire
+  handicapé par son tirant d'eau qui montre les signaux de la règle 28. Le piège est la
+  confusion de catégorie : « éviter de gêner » n'est pas « s'écarter de la route », qui
+  est réservé aux navires listés en 18 a). La prudence particulière imposée au navire
+  handicapé par la règle 18 d) ii) s'ajoute à ton obligation, elle ne la remplace pas.
+sources:
+  - texte: RIPAM, règle 18 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

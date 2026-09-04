@@ -1,0 +1,36 @@
+id: feux-marques-0004
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu pêches autrement qu'au chalut et ton engin s'étend à plus de 150 mètres du navire
+  : que montres-tu en plus ?
+propositions:
+  - id: a
+    texte: Un feu blanc visible sur tout l'horizon, ou un cône la pointe en haut, dans
+      l'alignement de l'engin
+  - id: b
+    texte: Un feu blanc visible sur tout l'horizon, ou un cône la pointe en bas, dans
+      l'alignement de l'engin
+  - id: c
+    texte: Un feu vert visible sur tout l'horizon, ou un cône la pointe en haut, dans
+      l'alignement de l'engin
+  - id: d
+    texte: Deux cônes superposés réunis par la pointe, dans l'alignement de l'engin
+reponses:
+  - a
+explication: >-
+  La règle 26 c) ii) demande, quand l'engin dépasse 150 mètres à l'horizontale, un feu
+  blanc visible sur tout l'horizon ou un cône la pointe en haut, placé du côté où l'engin
+  est déployé. Le signal indique aux autres navires de quel bord passer au large. Deux
+  erreurs guettent : retourner le cône, et le confondre avec la marque de pêche elle-même,
+  qui est faite de deux cônes réunis par la pointe.
+sources:
+  - texte: RIPAM, règle 26 c) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

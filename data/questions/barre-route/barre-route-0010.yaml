@@ -1,0 +1,33 @@
+id: barre-route-0010
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu barres un navire à propulsion mécanique. Un autre navire à propulsion mécanique fait
+  une route qui croise la tienne, tu le vois sur ta tribord et l'abordage est à craindre.
+  Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu maintiens ta route et ta vitesse, c'est à lui de s'écarter.
+  - id: b
+    texte: Tu t'écartes de sa route.
+  - id: c
+    texte: Vous manœuvrez tous les deux, chacun venant sur tribord.
+  - id: d
+    texte: Tu t'écartes seulement s'il t'adresse un signal sonore.
+reponses:
+  - b
+explication: >-
+  La règle 15 désigne comme privilégié le navire que l'on voit sur tribord : celui qui
+  voit l'autre sur sa droite doit s'écarter de sa route. Le piège est la confusion avec
+  la route directement opposée, où les deux navires viennent sur tribord ; ici un seul
+  manœuvre, l'autre garde sa route.
+sources:
+  - texte: RIPAM, règle 15
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

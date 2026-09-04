@@ -1,0 +1,33 @@
+id: feux-marques-0012
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu fais route au moteur sur un bateau de 9 mètres : quels feux peux-tu montrer au lieu
+  des feux ordinaires ?
+propositions:
+  - id: a
+    texte: Un feu blanc visible sur tout l'horizon et des feux de côté.
+  - id: b
+    texte: Un feu blanc visible sur tout l'horizon, seul.
+  - id: c
+    texte: Des feux de côté et un feu de poupe, sans feu blanc.
+  - id: d
+    texte: Un feu de tête de mât et un feu de poupe, sans feux de côté.
+reponses:
+  - a
+explication: >-
+  La règle 23 d) i) permet à un navire à propulsion mécanique de longueur inférieure à
+  12 mètres de remplacer les feux du paragraphe a) par un feu blanc visible sur tout l'horizon
+  accompagné de feux de côté. Les feux de côté restent dus : ce sont eux qui disent aux
+  autres de quel côté tu es vu. Le feu blanc seul relève d'une autre disposition, réservée
+  aux plus petites unités et lentes.
+sources:
+  - texte: RIPAM, règle 23 d) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
