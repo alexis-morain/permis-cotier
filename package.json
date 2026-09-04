@@ -1,0 +1,41 @@
+{
+  "name": "permis-cotier",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Révision au permis plaisance option côtière : examens blancs au format 2022 et entraînement par thème.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run valider && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "valider": "python3 scripts/valider.py",
+    "credits": "python3 scripts/credits.py",
+    "generer": "python3 scripts/generer.py"
+  },
+  "dependencies": {
+    "@astrojs/react": "^6.0.5",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^5.18.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vite-pwa/astro": "^1.2.0",
+    "@vitest/coverage-v8": "^5.0.0",
+    "jsdom": "^30.0.1",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.0",
+    "workbox-window": "^7.4.1"
+  }
+}
