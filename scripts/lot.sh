@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
-# Premier lot : les règles du RIPAM qui pèsent le plus à l'examen.
+# Le lot en cours. La table change à chaque session, git en garde l'histoire.
 # Usage : scripts/lot.sh
 set -u
 cd "$(dirname "$0")/.."
 PY=.venv/bin/python
 
 lancer() {
-  local regle="$1" theme="$2" n="$3"
-  local src="data/sources/decret-77-733/regle-${regle}.md"
+  local src="$1" theme="$2" n="$3"
   [ -f "$src" ] || { echo "manque $src"; return; }
-  echo "──── règle $regle → $theme (n=$n)"
+  echo "──── $(basename "$src" .md) → $theme (n=$n)"
   # Deux tentatives : les appels enchaînés à `claude -p` se font parfois
   # jeter par la limite de débit, et ça repasse à la fois suivante.
   for essai in 1 2; do
@@ -20,23 +19,36 @@ lancer() {
     echo "  échec, nouvelle tentative dans 20 s"
     sleep 20
   done
-  echo "  abandon sur la règle $regle"
+  echo "  abandon sur $src"
 }
 
-# Feux et marques : règles 21 à 31
-lancer 21 feux-marques 4   # définitions des feux, secteurs
-lancer 23 feux-marques 4   # navires à propulsion mécanique
-lancer 24 feux-marques 4   # remorquage et poussage
-lancer 25 feux-marques 4   # navires à voile et à l'aviron
-lancer 27 feux-marques 4   # non maîtres de leur manœuvre
-lancer 30 feux-marques 3   # au mouillage et échoués
+regle() { lancer "data/sources/decret-77-733/regle-$1.md" "$2" "$3"; }
 
-# Règles de barre et de route : règles 12 à 19
-lancer 12 barre-route 3    # navires à voile entre eux
-lancer 13 barre-route 3    # navire qui en rattrape un autre
-lancer 14 barre-route 3    # routes directement opposées
-lancer 15 barre-route 3    # routes qui se croisent
-lancer 18 barre-route 4    # responsabilités réciproques
+# Sécurité : la division 240, le plus gros trou de la banque (cible 12).
+lancer data/sources/division-240/article-240-2-01.md securite 4   # zones de navigation, coupe-circuit
+lancer data/sources/division-240/article-240-2-03.md securite 4   # armement basique, moins de 2 milles
+lancer data/sources/division-240/article-240-2-04.md securite 3   # armement côtier, 2 à 6 milles
+lancer data/sources/division-240/article-240-1-03.md securite 2   # rôle du chef de bord
+
+# Signaux : les règles 35 à 37 du RIPAM (cible 10, quatre déjà écrites).
+regle 35 signaux 4    # signaux par visibilité réduite
+regle 36 signaux 2    # signaux pour appeler l'attention
+regle 37 signaux 2    # signaux de détresse
+
+# Balisage : la bande des 300 mètres, les plages et les pictogrammes.
+lancer data/sources/arrete-1991-03-27/article-annexe-i.md balisage 4   # formes, tailles, chenaux
+lancer data/sources/arrete-1991-03-27/article-annexe-ii.md balisage 2  # pictogrammes
+lancer data/sources/arrete-1991-03-27/article-1.md balisage 1          # marques spéciales
+
+# VHF : qui doit un CRR, qui s'en passe.
+lancer data/sources/arrete-2005-05-18/article-1.md vhf 4
+
+# Ski et responsabilités du chef de bord.
+lancer data/sources/division-240/article-240-2-12.md ski-responsabilites 2
+
+# Règles de barre : ce qui manque pour la cible de 18.
+regle 09 barre-route 2    # chenaux étroits
+regle 19 barre-route 2    # conduite par visibilité réduite
 
 echo
 echo "════ total en attente de relecture ════"

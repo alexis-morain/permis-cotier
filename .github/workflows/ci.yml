@@ -30,6 +30,11 @@ jobs:
       - name: Vérifier les crédits des visuels
         run: python scripts/credits.py --verifier
 
+      # Les feux sont dessinés depuis leur description : si le dessin livré ne
+      # correspond plus, c'est la description qui a bougé sans être régénérée.
+      - name: Vérifier les visuels de feux
+        run: python scripts/feux.py --verifier
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 
