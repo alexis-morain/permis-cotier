@@ -12,7 +12,11 @@ export default function Reprise() {
   return (
     <p className="reprise">
       Tu as déjà vu <b>{stats.vues}</b> question{stats.vues > 1 ? 's' : ''}
-      {stats.aRevoir > 0 && <>, dont <b>{stats.aRevoir}</b> à revoir</>}.
+      {stats.aRevoir > 0 && (
+        <>
+          , dont <a href="/revoir" data-umami-event="accueil-revoir"><b>{stats.aRevoir}</b> à revoir</a>
+        </>
+      )}.
       {stats.dernierScore && (
         <>
           {' '}Dernier examen blanc&nbsp;: <b>{stats.dernierScore.bonnes} sur {stats.dernierScore.total}</b>,{' '}

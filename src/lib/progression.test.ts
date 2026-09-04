@@ -2,6 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   VERSION_STOCKAGE,
   etatInitial,
+  enregistrerEnCours,
+  effacerEnCours,
   enregistrerReponse,
   enregistrerExamen,
   statistiques,
@@ -28,6 +30,41 @@ describe('état initial', () => {
     expect(e.questions).toEqual({});
     expect(e.examens).toEqual([]);
     expect(e.dateExamen).toBeNull();
+    expect(e.enCours).toBeNull();
+  });
+});
+
+describe('session en cours', () => {
+  const sauvegarde = {
+    mode: 'examen' as const,
+    theme: null,
+    ids: ['vhf-0001', 'vhf-0002'],
+    index: 1,
+    selections: [['a'], []],
+    restant: 14,
+    journal: [{ id: 'vhf-0001', juste: true }],
+    majLe: 1_800_000_000_000,
+  };
+
+  it('garde la série interrompue, et la relit telle quelle', () => {
+    const e = enregistrerEnCours(etatInitial(), sauvegarde);
+    sauvegarder(e, memoire);
+    expect(charger(memoire).enCours).toEqual(sauvegarde);
+  });
+
+  it('l’oublie une fois la série finie', () => {
+    const e = effacerEnCours(enregistrerEnCours(etatInitial(), sauvegarde));
+    expect(e.enCours).toBeNull();
+  });
+
+  it('ne perd pas la progression d’un état écrit avant ce champ', () => {
+    memoire.setItem(
+      'permis-cotier:progression',
+      JSON.stringify({ version: VERSION_STOCKAGE, questions: { 'vhf-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' } }, examens: [] }),
+    );
+    const lu = charger(memoire);
+    expect(lu.questions['vhf-0001']?.vues).toBe(1);
+    expect(lu.enCours).toBeNull();
   });
 });
 
