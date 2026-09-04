@@ -18,6 +18,7 @@
     "valider": "python3 scripts/valider.py",
     "credits": "python3 scripts/credits.py",
     "feux": "python3 scripts/feux.py",
+    "balisage": "python3 scripts/balisage.py",
     "generer": "python3 scripts/generer.py",
     "build:pages": "astro build"
   },
