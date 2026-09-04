@@ -16,12 +16,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "valider": "python3 scripts/valider.py",
+    "audit:seo": "node scripts/audit-seo.mjs",
     "credits": "python3 scripts/credits.py",
     "feux": "python3 scripts/feux.py",
     "balisage": "python3 scripts/balisage.py",
     "ecluses": "python3 scripts/ecluses.py",
     "carte": "python3 scripts/carte.py",
     "generer": "python3 scripts/generer.py",
+    "partage": "node scripts/partage.mjs",
     "build:pages": "astro build"
   },
   "dependencies": {
