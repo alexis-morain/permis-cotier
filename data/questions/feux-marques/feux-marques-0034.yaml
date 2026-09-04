@@ -2,7 +2,7 @@ id: feux-marques-0034
 option: cotier
 theme: feux-marques
 notion: marques-jour
-statut: brouillon
+statut: publie
 difficulte: 2
 enonce: >-
   De jour, un navire montre à l'avant un cône noir pointe en bas. Que t'indique-t-il ?
@@ -29,3 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

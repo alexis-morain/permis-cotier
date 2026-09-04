@@ -2,7 +2,7 @@ id: signaux-0012
 option: cotier
 theme: signaux
 notion: signaux-coude
-statut: brouillon
+statut: publie
 difficulte: 2
 enonce: >-
   Tu t'approches d'un coude de chenal où un obstacle te masque la vue. Quel signal
@@ -31,3 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

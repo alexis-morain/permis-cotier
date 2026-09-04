@@ -2,7 +2,7 @@ id: barre-route-0021
 option: cotier
 theme: barre-route
 notion: barre-veille-vitesse
-statut: brouillon
+statut: publie
 difficulte: 1
 enonce: >-
   Tu navigues par beau temps, en plein jour, sur une mer vide. Quelle veille la règle 5
@@ -30,3 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
