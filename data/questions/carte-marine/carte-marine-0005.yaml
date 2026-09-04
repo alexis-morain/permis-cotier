@@ -1,0 +1,41 @@
+id: carte-marine-0005
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 2
+enonce: >-
+  Voici la rose des vents d'une carte marine, ses deux cercles et leurs flèches de nord.
+  Que donne le cercle intérieur, décalé par rapport à l'autre ?
+visuel:
+  fichier: carte/rose-des-vents.svg
+  alt: Deux cercles concentriques gradués tous les dix degrés. Le cercle extérieur porte
+    une flèche de nord verticale ; le cercle intérieur, plus petit, porte sa propre flèche,
+    tournée d'une quinzaine de degrés vers la droite. L'écart est accentué pour la lisibilité.
+  credit: code
+propositions:
+  - id: a
+    texte: Les directions par rapport au nord vrai
+  - id: b
+    texte: Les directions par rapport au nord magnétique
+  - id: c
+    texte: Les directions du vent dominant
+  - id: d
+    texte: Les relèvements corrigés de la dérive
+reponses:
+  - b
+explication: >-
+  Le cercle extérieur donne les directions par rapport au nord vrai, celui du méridien.
+  Le cercle intérieur, décalé, donne celles par rapport au nord magnétique, celui que
+  montre l'aiguille aimantée. L'écart entre les deux est la déclinaison magnétique, inscrite
+  au centre de la rose avec son sens, son année de mesure et sa variation annuelle : elle
+  bouge lentement, et une rose ancienne demande une correction. Sur ce dessin l'écart
+  est ouvert à quinze degrés pour qu'il se voie ; en France métropolitaine il est de l'ordre
+  du degré, presque invisible à l'échelle d'une rose.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

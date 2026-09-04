@@ -1,0 +1,36 @@
+id: ecluses-0002
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce signal est allumé à l'entrée d'une écluse. Que fais-tu ?
+visuel:
+  fichier: ecluses/acces-rouge-sur-vert.svg
+  alt: Un feu rouge allumé au-dessus d'un feu vert allumé.
+  credit: code
+propositions:
+  - id: a
+    texte: Tu entres, le vert autorise le passage
+  - id: b
+    texte: 'Tu attends : l''accès est encore interdit, mais l''écluse se prépare à ouvrir'
+  - id: c
+    texte: Tu fais demi-tour, l'écluse est hors service
+  - id: d
+    texte: Tu appelles l'éclusier, cette combinaison n'a pas de signification définie
+reponses:
+  - b
+explication: >-
+  Un feu rouge au-dessus d'un feu vert veut dire : accès encore interdit, écluse en préparation
+  pour l'ouverture. Deux autres signaux disent la même chose : l'extinction de l'un des
+  deux feux rouges juxtaposés, et un feu rouge et un feu vert juxtaposés. Dans les trois
+  cas la présence du rouge tranche, le vert n'annonce que la suite. Seul un feu vert isolé,
+  ou deux feux verts juxtaposés, autorisent l'accès.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

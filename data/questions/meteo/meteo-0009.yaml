@@ -1,0 +1,34 @@
+id: meteo-0009
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 3
+enonce: >-
+  Le bulletin annonce force 6 avec une mer agitée. Peux-tu déduire l'état de la mer de
+  la seule force du vent ?
+propositions:
+  - id: a
+    texte: Oui, chaque degré Beaufort correspond à un état de la mer déterminé
+  - id: b
+    texte: Non, l'état de la mer dépend aussi du fetch, de la durée du coup de vent, du
+      courant et de la profondeur
+  - id: c
+    texte: Oui, mais seulement en Méditerranée
+  - id: d
+    texte: Non, parce que l'état de la mer se mesure sur la même échelle que le vent
+reponses:
+  - b
+explication: >-
+  Les deux échelles sont indépendantes et le bulletin les donne séparément. À vent égal,
+  la mer n'est pas la même selon la distance sur laquelle le vent a soufflé, le fetch,
+  la durée pendant laquelle il a soufflé, la présence d'un courant contraire qui redresse
+  et creuse la houle, et la profondeur. Un force 6 établi depuis deux jours au large ne
+  fait pas la même mer qu'un force 6 qui vient de se lever sous la côte.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

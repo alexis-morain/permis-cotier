@@ -1,0 +1,35 @@
+id: titre-conduite-0006
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu navigues en mer sur un voilier de 10 mètres équipé d'un moteur auxiliaire de 20 kilowatts.
+  Te faut-il un permis ?
+propositions:
+  - id: a
+    texte: Oui, le moteur dépasse 4,5 kilowatts
+  - id: b
+    texte: Non, en eaux maritimes la conduite d'un bateau de plaisance à voile n'est pas
+      subordonnée au permis, même avec un moteur auxiliaire
+  - id: c
+    texte: Oui, dès que le voilier dépasse 8 mètres
+  - id: d
+    texte: Non, mais seulement si tu navigues à la voile
+reponses:
+  - b
+explication: >-
+  Le décret est explicite : en eaux maritimes, la conduite des bateaux de plaisance à
+  voile, même équipés d'un moteur auxiliaire, n'est pas subordonnée à la possession d'un
+  permis. La dispense tient au bateau, pas au mode de propulsion du moment : un voilier
+  qui avance au moteur reste un voilier au sens de ce texte. Attention, un bateau à propulsion
+  vélique dont le rapport entre voilure et masse est trop faible est classé bateau à moteur
+  par l'article 1er.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

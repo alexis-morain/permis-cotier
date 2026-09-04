@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { versionBanque } from '../lib/banque';
+import { comptesDeRelecture, versionBanque } from '../lib/banque';
 
 interface Props {
   titre: string;
@@ -14,6 +14,7 @@ const { titre, description, indexable = true, canonique } = Astro.props;
 const url = canonique ?? new URL(Astro.url.pathname, Astro.site ?? 'https://exemple.invalid').href;
 const version = versionBanque();
 const annee = new Date().getFullYear();
+const relecture = await comptesDeRelecture();
 ---
 
 <!doctype html>
@@ -61,8 +62,11 @@ const annee = new Date().getFullYear();
           Chaque question cite le texte dont elle est tirée.
         </p>
         <p class="discret">
-          Banque version {version}, relue par Alexis Morain seul à ce stade.
-          Une erreur ? Le bouton de signalement est sur chaque question.
+          Banque version {version}. {
+            relecture.parUnePersonne === relecture.total
+              ? 'Toutes les questions sont relues par Alexis Morain, seul à ce stade.'
+              : `${relecture.parUnePersonne} des ${relecture.total} questions sont relues par Alexis Morain ; les autres ne le sont, pour l’instant, que par le modèle qui les a écrites à partir de l’article cité.`
+          } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
         <p class="discret">
           Code sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>,

@@ -1,0 +1,36 @@
+id: ecluses-0011
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu attends ton tour dans le garage de l'écluse quand ce signal s'allume. Que fais-tu
+  ?
+visuel:
+  fichier: ecluses/acces-deux-verts-juxtaposes.svg
+  alt: Deux feux verts allumés, côte à côte.
+  credit: code
+propositions:
+  - id: a
+    texte: Tu entres, l'accès est autorisé
+  - id: b
+    texte: Tu attends, l'écluse se prépare seulement à ouvrir
+  - id: c
+    texte: Tu attends l'extinction de l'un des deux feux
+  - id: d
+    texte: Tu entres seulement si l'éclusier te fait signe, le vert ne suffit pas
+reponses:
+  - a
+explication: >-
+  Deux feux verts juxtaposés autorisent l'accès, tout comme un feu vert isolé. C'est le
+  seul cas où le règlement ouvre l'écluse par un feu : dès qu'un rouge est présent, quelle
+  que soit sa disposition et quel que soit ce qui l'accompagne, l'accès est interdit.
+  Le vert seul décide.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

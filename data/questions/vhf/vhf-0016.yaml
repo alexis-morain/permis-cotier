@@ -1,0 +1,34 @@
+id: vhf-0016
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es chef de bord. De quoi dois-tu t'assurer au sujet des installations radioélectriques
+  ?
+propositions:
+  - id: a
+    texte: Qu'elles sont couvertes par une assurance
+  - id: b
+    texte: Qu'elles présentent des caractéristiques suffisantes pour assurer le trafic
+      de détresse dans les zones où tu navigues
+  - id: c
+    texte: Qu'elles ont été vérifiées par un professionnel dans l'année
+  - id: d
+    texte: Qu'elles portent le marquage CE, ce qui suffit
+reponses:
+  - b
+explication: >-
+  Le chef de bord s'assure que les installations radioélectriques prescrites par la division
+  présentent des caractéristiques suffisantes pour assurer le trafic de détresse dans
+  les zones de navigation du navire. La formule renvoie la responsabilité sur celui qui
+  décide de la navigation : embarquer une portative pour une sortie côtière et compter
+  dessus à quarante milles serait une faute, quand bien même le matériel serait conforme.
+sources:
+  - texte: Division 240, article 240-2.20, VI
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

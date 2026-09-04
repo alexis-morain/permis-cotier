@@ -1,0 +1,36 @@
+id: ecluses-0005
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton bateau est amarré dans le sas et le remplissage commence. Que t'impose le règlement
+  jusqu'à l'autorisation de sortir ?
+propositions:
+  - id: a
+    texte: Rester amarré et manœuvrer les amarres pour éviter tout choc
+  - id: b
+    texte: Ne pas faire usage des moyens mécaniques de propulsion
+  - id: c
+    texte: Garder le moteur embrayé au ralenti pour tenir le bateau au milieu du sas
+  - id: d
+    texte: Débarquer un équipier à quai pour tenir les amarres
+reponses:
+  - a
+  - b
+explication: >-
+  Deux obligations distinctes se rejoignent pendant le remplissage et la vidange. Le bateau
+  reste amarré et la manœuvre des amarres est assurée de manière à empêcher tout choc
+  contre les bajoyers, les portes et les autres bateaux : le niveau monte, les amarres
+  doivent suivre. Et dès que le bateau est amarré, l'usage des moyens mécaniques de propulsion
+  est interdit jusqu'à l'autorisation de sortie. Le moteur ne sert donc pas à tenir la
+  position, ce sont les amarres qui la tiennent. Débarquer est par ailleurs interdit sauf
+  autorisation particulière du personnel.
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

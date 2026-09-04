@@ -1,0 +1,32 @@
+id: vhf-0020
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 1
+enonce: >-
+  Depuis un téléphone portable, quel numéro appeler pour une urgence en mer ?
+propositions:
+  - id: a
+    texte: Le 15
+  - id: b
+    texte: Le 18
+  - id: c
+    texte: Le 196
+  - id: d
+    texte: Le 112 uniquement
+reponses:
+  - c
+explication: >-
+  Le 196 est le numéro d'urgence maritime : il aboutit directement au CROSS, qui reçoit
+  l'alerte et coordonne les moyens de secours. Le 112 fonctionne aussi et sera réorienté,
+  mais il fait passer par un intermédiaire. En mer, le canal 16 de la VHF reste le premier
+  réflexe : les CROSS le veillent en permanence, et un appel radio est entendu des bateaux
+  alentour, ce qu'un appel téléphonique n'est pas.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

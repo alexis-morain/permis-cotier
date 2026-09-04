@@ -1,0 +1,36 @@
+id: meteo-0007
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu armes ton bateau pour une navigation de 6 à moins de 60 milles d'un abri. Que doit
+  prévoir ton armement en matière de météo ?
+propositions:
+  - id: a
+    texte: Rien, la consultation avant le départ suffit
+  - id: b
+    texte: Un dispositif permettant de recevoir les prévisions météorologiques marines
+      à bord
+  - id: c
+    texte: Un baromètre enregistreur
+  - id: d
+    texte: Un abonnement à un service de routage météorologique
+reponses:
+  - b
+explication: >-
+  Le matériel d'armement et de sécurité semi-hauturier comprend un dispositif permettant
+  de recevoir les prévisions météorologiques marines à bord. La division 240 ne dit pas
+  lequel : une VHF qui capte les bulletins des CROSS, un récepteur Navtex ou tout autre
+  moyen font l'affaire. En deçà de 6 milles, l'armement côtier ne l'exige pas, mais partir
+  sans avoir consulté la météo reste une faute de chef de bord.
+sources:
+  - texte: Division 240, article 240-2.05, point 7
+    ref: division-240
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

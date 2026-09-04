@@ -22,9 +22,10 @@ celle de l'examen. Le site prépare **au format de l'épreuve** : 40 questions,
 1 ou 2 bonnes réponses, 5 erreurs admises, 20 secondes par question.
 
 **Toutes les questions publiées à ce jour sont relues par une seule personne,
-Alexis Morain.** Une deuxième relecture par un tiers est prévue avant décembre
-2026. En attendant, une erreur est possible : le bouton de signalement est sur
-chaque question, et les signalements sont traités dans la semaine.
+Alexis Morain.** Le champ `meta.relu_par` de chaque fichier porte le nom de son
+relecteur. Une deuxième relecture par un tiers est prévue avant décembre 2026.
+En attendant, une erreur est possible : le bouton de signalement est sur chaque
+question, et les signalements sont traités dans la semaine.
 
 Le site n'est pas entièrement statique. Deux fonctions serveur tournent sur
 Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de
@@ -58,6 +59,8 @@ npm run dev
 | `npm test` | tests du moteur (tirage, correction, chrono, progression) |
 | `npm run valider` | valide les fichiers YAML de la banque |
 | `npm run credits` | régénère `data/CREDITS.md` depuis les fiches de visuels |
+| `npm run ecluses` | redessine les signaux d'écluse |
+| `npm run carte` | redessine les planches de carte marine |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
 

@@ -1,0 +1,33 @@
+id: environnement-0009
+option: cotier
+theme: environnement
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu remontes dans ton filet un sac plastique et un bidon d'huile de vidange à moitié
+  plein. Que fais-tu du bidon ?
+propositions:
+  - id: a
+    texte: Tu le vides par-dessus bord, l'huile se disperse d'elle-même
+  - id: b
+    texte: Tu le rapportes à terre et le déposes au bac à huiles usagées du port
+  - id: c
+    texte: Tu le vides au-delà de trois milles des côtes
+  - id: d
+    texte: Tu le remets à l'eau fermé, il sera récupéré par les services du port
+reponses:
+  - b
+explication: >-
+  L'huile de vidange est nuisible pour la faune et la flore marines, et le code de l'environnement
+  punit le fait de la jeter, de la déverser ou de la laisser écouler en mer, sans aucun
+  seuil de distance. Le bidon redescend à terre, dans le bac à huiles usagées que le port
+  met à disposition. Le raisonnement vaut d'ailleurs pour tout ce qui est monté à bord
+  : ce qui n'est pas rejetable en mer en redescend.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

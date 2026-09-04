@@ -1,0 +1,37 @@
+id: ecluses-0010
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 3
+enonce: >-
+  Deux feux rouges étaient allumés côte à côte à l'entrée de l'écluse, et l'un vient de
+  s'éteindre. Que fais-tu ?
+visuel:
+  fichier: ecluses/acces-un-rouge-eteint.svg
+  alt: Deux feux côte à côte, celui de gauche rouge et allumé, celui de droite éteint.
+  credit: code
+propositions:
+  - id: a
+    texte: Tu entres, l'extinction d'un feu vaut demi-autorisation
+  - id: b
+    texte: 'Tu attends : l''accès est encore interdit, mais l''écluse se prépare à ouvrir'
+  - id: c
+    texte: Tu fais demi-tour, un feu vient de tomber en panne
+  - id: d
+    texte: Tu entres avec prudence, en laissant la priorité aux bateaux qui sortent
+reponses:
+  - b
+explication: >-
+  L'extinction de l'un des deux feux rouges juxtaposés est l'un des trois signaux de préparation
+  à l'ouverture, avec le feu rouge et le feu vert juxtaposés et le feu rouge au-dessus
+  du feu vert. Dans les trois cas, l'accès reste interdit : le changement annonce la suite,
+  il ne l'autorise pas. Seul un feu vert isolé, ou deux feux verts juxtaposés, ouvrent
+  l'accès.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

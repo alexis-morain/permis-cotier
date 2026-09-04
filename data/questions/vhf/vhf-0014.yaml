@@ -1,0 +1,35 @@
+id: vhf-0014
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 3
+enonce: >-
+  Ta VHF fixe est munie de l'appel sélectif numérique. Avec quoi doit-elle être programmée
+  ?
+propositions:
+  - id: a
+    texte: Le numéro d'immatriculation du navire
+  - id: b
+    texte: Le MMSI attribué par l'autorité compétente pour les licences de stations
+  - id: c
+    texte: Le numéro de la licence de station
+  - id: d
+    texte: L'indicatif d'appel du chef de bord
+reponses:
+  - b
+explication: >-
+  Les installations radioélectriques munies de l'ASN, fixes ou portatives, doivent être
+  programmées avec le Mobile Maritime Service Identity, ou MMSI, attribué par l'autorité
+  compétente pour l'attribution des licences de stations mobiles maritimes. Ce numéro
+  de neuf chiffres identifie la station : ses trois premiers chiffres forment le MID,
+  indicatif du pays, 226, 227 et 228 pour la France métropolitaine.
+sources:
+  - texte: Division 240, article 240-2.20, III
+    ref: division-240
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

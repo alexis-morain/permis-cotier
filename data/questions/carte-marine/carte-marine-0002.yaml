@@ -1,0 +1,32 @@
+id: carte-marine-0002
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu veux mesurer une distance sur une carte marine. Quelle échelle utilises-tu ?
+propositions:
+  - id: a
+    texte: L'échelle des longitudes, sur les bords horizontaux
+  - id: b
+    texte: L'échelle des latitudes, sur les bords verticaux
+  - id: c
+    texte: Indifféremment l'une ou l'autre, elles portent la même graduation
+  - id: d
+    texte: L'échelle graphique en kilomètres portée dans le cartouche
+reponses:
+  - b
+explication: >-
+  Une minute de latitude vaut un mille marin, soit 1 852 mètres, et cette égalité tient
+  à toute latitude. La minute de longitude, elle, rétrécit à mesure qu'on s'éloigne de
+  l'équateur : mesurer dessus donnerait une distance fausse, d'autant plus fausse qu'on
+  est plus au nord. Les distances se prennent donc toujours sur les bords verticaux de
+  la carte.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

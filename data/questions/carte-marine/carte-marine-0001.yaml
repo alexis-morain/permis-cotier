@@ -1,0 +1,35 @@
+id: carte-marine-0001
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 2
+enonce: >-
+  Une sonde de 3,5 mètres est portée sur la carte à l'endroit où tu comptes passer. Que
+  t'annonce-t-elle ?
+propositions:
+  - id: a
+    texte: La profondeur moyenne de l'endroit
+  - id: b
+    texte: 'La profondeur minimale : la hauteur de la marée du moment s''y ajoute'
+  - id: c
+    texte: La profondeur maximale, atteinte à pleine mer
+  - id: d
+    texte: La hauteur d'eau à l'instant du levé hydrographique
+reponses:
+  - b
+explication: >-
+  Les sondes sont comptées depuis le zéro des cartes, qui est le niveau des plus basses
+  mers astronomiques, c'est-à-dire le plus bas que la marée puisse descendre. La sonde
+  est donc la profondeur minimale que tu trouveras à cet endroit, et la hauteur de la
+  marée du moment vient s'y ajouter. La convention joue dans le sens de la sécurité :
+  la marée astronomique ne descend jamais sous ce niveau. Une forte hausse de pression,
+  ou un vent de terre établi, peut en revanche faire une décote de quelques dizaines de
+  centimètres sous la hauteur prévue.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

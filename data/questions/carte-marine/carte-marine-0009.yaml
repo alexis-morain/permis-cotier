@@ -1,0 +1,32 @@
+id: carte-marine-0009
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 3
+enonce: >-
+  Sur la carte, un feu est décrit par « Fl(2) R 10s 12m 9M ». Que vaut le dernier chiffre
+  ?
+propositions:
+  - id: a
+    texte: La hauteur du feu au-dessus du niveau de la mer
+  - id: b
+    texte: La portée du feu, neuf milles
+  - id: c
+    texte: Le nombre d'éclats par période
+  - id: d
+    texte: La période du feu, neuf secondes
+reponses:
+  - b
+explication: >-
+  La description se lit dans l'ordre : Fl(2) pour deux éclats groupés, R pour rouge, 10s
+  pour la période de dix secondes, 12m pour la hauteur du feu au-dessus du niveau de la
+  mer, et 9M pour la portée de neuf milles. Le M majuscule marque les milles, le m minuscule
+  les mètres : c'est la seule chose qui distingue les deux derniers champs.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
