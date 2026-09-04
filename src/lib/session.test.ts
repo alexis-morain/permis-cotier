@@ -17,9 +17,12 @@ function q(id: string, reponses: string[] = ['a']): QuestionJouable {
 
 const trois = [q('vhf-0001', ['a']), q('vhf-0002', ['b', 'c']), q('vhf-0003', ['d'])];
 
+/** Une horloge fixe : le chrono est une durée réelle, pas un compteur de tics. */
+const T0 = 1_800_000_000_000;
+
 /** Examen déjà commencé : l'écran de départ est franchi. */
 function examen(): Session {
-  return reduire(creerSession('examen', trois), { type: 'commencer' });
+  return reduire(creerSession('examen', trois), { type: 'commencer', maintenant: T0 });
 }
 function entrainement(): Session {
   return creerSession('entrainement', trois);
@@ -93,18 +96,32 @@ describe('examen blanc', () => {
 
   it('remet le chrono à vingt secondes à chaque question', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic' });
-    s = reduire(s, { type: 'tic' });
+    s = reduire(s, { type: 'tic', maintenant: T0 + 2_000 });
     expect(s.restant).toBe(18);
-    s = reduire(s, { type: 'valider' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 2_000 });
     expect(s.restant).toBe(20);
   });
 
   it('valide tout seul quand le chrono tombe à zéro', () => {
     let s = examen();
-    for (let i = 0; i < 20; i++) s = reduire(s, { type: 'tic' });
+    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
     expect(s.index).toBe(1);
     expect(s.selections[0]).toEqual([]);
+  });
+
+  it('compte le temps réel, pas les battements reçus', () => {
+    // Un onglet en arrière-plan reçoit un tic toutes les minutes au lieu d'un
+    // par seconde : le compte à rebours doit avoir couru quand même.
+    let s = examen();
+    s = reduire(s, { type: 'tic', maintenant: T0 + 7_000 });
+    expect(s.restant).toBe(13);
+  });
+
+  it('ne brûle qu’une question par retour, même après une longue absence', () => {
+    let s = examen();
+    s = reduire(s, { type: 'tic', maintenant: T0 + 600_000 });
+    expect(s.index).toBe(1);
+    expect(s.restant).toBe(20);
   });
 
   it('finit sur l’écran de résultat après la dernière question', () => {
@@ -223,9 +240,10 @@ describe('écran de départ de l’examen', () => {
   });
 
   it('arme le chrono au démarrage, et pas avant', () => {
-    const s = reduire(creerSession('examen', trois), { type: 'commencer' });
+    const s = reduire(creerSession('examen', trois), { type: 'commencer', maintenant: T0 });
     expect(s.phase).toBe('en-cours');
     expect(s.restant).toBe(20);
+    expect(s.echeance).toBe(T0 + 20_000);
   });
 
   it('n’impose pas d’écran de départ à l’entraînement', () => {
@@ -234,8 +252,8 @@ describe('écran de départ de l’examen', () => {
 
   it('ne redémarre pas un examen déjà en cours', () => {
     let s = examen();
-    for (let i = 0; i < 5; i++) s = reduire(s, { type: 'tic' });
-    s = reduire(s, { type: 'commencer' });
+    s = reduire(s, { type: 'tic', maintenant: T0 + 5_000 });
+    s = reduire(s, { type: 'commencer', maintenant: T0 + 5_000 });
     expect(s.restant).toBe(15);
   });
 });
@@ -280,7 +298,7 @@ describe('reprise d’une session interrompue', () => {
   function enCours(): Session {
     let s = examen();
     s = reduire(s, { type: 'basculer', proposition: 'a' });
-    s = reduire(s, { type: 'valider' });
+    s = reduire(s, { type: 'valider', maintenant });
     s = reduire(s, { type: 'basculer', proposition: 'b' });
     return s;
   }
@@ -292,9 +310,21 @@ describe('reprise d’une session interrompue', () => {
     expect(apres).not.toBeNull();
     expect(apres!.index).toBe(1);
     expect(apres!.selections).toEqual(avant.selections);
-    expect(apres!.restant).toBe(avant.restant);
     expect(apres!.journal).toEqual(avant.journal);
     expect(apres!.phase).toBe('en-cours');
+  });
+
+  it('ne rend pas les secondes déjà passées à qui rafraîchit', () => {
+    const sauvegarde = extraireSauvegarde(enCours(), undefined, maintenant);
+    const apres = restaurerSession(sauvegarde, trois, 'examen', undefined, maintenant + 8_000);
+    expect(apres!.restant).toBe(12);
+  });
+
+  it('redonne la question entière quand son temps est passé pendant l’absence', () => {
+    const sauvegarde = extraireSauvegarde(enCours(), undefined, maintenant);
+    const apres = restaurerSession(sauvegarde, trois, 'examen', undefined, maintenant + 120_000);
+    expect(apres!.restant).toBe(20);
+    expect(apres!.index).toBe(1);
   });
 
   it('refuse une sauvegarde d’un autre mode', () => {
