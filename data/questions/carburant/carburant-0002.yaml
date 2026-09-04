@@ -1,0 +1,33 @@
+id: carburant-0002
+option: cotier
+theme: carburant
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu appliques la règle des tiers avec 90 litres utilisables, une consommation de 10 litres
+  par heure et une vitesse de 12 nœuds. Jusqu'à quelle distance peux-tu t'éloigner ?
+propositions:
+  - id: a
+    texte: 18 milles
+  - id: b
+    texte: 36 milles
+  - id: c
+    texte: 54 milles
+  - id: d
+    texte: 108 milles
+reponses:
+  - b
+explication: >-
+  La règle des tiers ne laisse qu'un tiers du carburant pour l'aller, soit 30 litres.
+  À 10 litres par heure, cela fait 3 heures de route. Le nœud valant un mille par heure,
+  3 heures à 12 nœuds portent à 36 milles. L'erreur classique consiste à calculer sur
+  la totalité du réservoir, ce qui donnerait 108 milles : de quoi arriver là-bas, et rien
+  pour revenir.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

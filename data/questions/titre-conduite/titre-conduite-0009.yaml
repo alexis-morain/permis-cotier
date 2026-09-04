@@ -1,0 +1,33 @@
+id: titre-conduite-0009
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton permis fait l'objet d'un retrait définitif. Au bout de combien de temps peux-tu
+  en solliciter un nouveau ?
+propositions:
+  - id: a
+    texte: Un an
+  - id: b
+    texte: Deux ans
+  - id: c
+    texte: Trois ans
+  - id: d
+    texte: Jamais, le retrait définitif est irrévocable
+reponses:
+  - c
+explication: >-
+  La personne qui a fait l'objet d'un retrait définitif n'est admise à solliciter un nouveau
+  permis qu'à l'expiration d'un délai de trois ans à compter de ce retrait. À distinguer
+  du retrait temporaire, dont la durée maximale est d'une année. En cas d'urgence motivée,
+  le retrait peut être prononcé avant que le titulaire ait été entendu, mais pour huit
+  jours seulement, pendant lesquels il doit l'être.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 6
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

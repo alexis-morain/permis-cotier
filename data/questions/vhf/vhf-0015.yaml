@@ -1,0 +1,35 @@
+id: vhf-0015
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 3
+enonce: >-
+  Ta VHF fixe est munie de l'ASN et programmée avec le MMSI du navire. Que doit-elle fournir
+  en permanence ?
+propositions:
+  - id: a
+    texte: La vitesse et le cap du navire
+  - id: b
+    texte: Des renseignements sur la position du navire, afin d'être inclus dans l'alerte
+      de détresse initiale
+  - id: c
+    texte: Le nombre de personnes à bord
+  - id: d
+    texte: Rien de plus, l'appareil ne transmet qu'à la demande
+reponses:
+  - b
+explication: >-
+  Lorsque la VHF fixe est munie de l'ASN et programmée avec le MMSI, des renseignements
+  sur la position du navire doivent être fournis automatiquement et en permanence, afin
+  d'être inclus dans l'alerte de détresse initiale. C'est tout l'intérêt du bouton rouge
+  : l'alerte part avec l'identité et la position du navire, sans que personne ait à les
+  dicter. Encore faut-il que le récepteur de positionnement soit effectivement raccordé
+  à la VHF.
+sources:
+  - texte: Division 240, article 240-2.20, IV
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

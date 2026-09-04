@@ -1,0 +1,32 @@
+id: carburant-0001
+option: cotier
+theme: carburant
+statut: publie
+difficulte: 1
+enonce: >-
+  Ton réservoir contient 120 litres réellement utilisables et ton moteur consomme 15 litres
+  par heure au régime de croisière. Quelle est ton autonomie ?
+propositions:
+  - id: a
+    texte: 4 heures
+  - id: b
+    texte: 6 heures
+  - id: c
+    texte: 8 heures
+  - id: d
+    texte: 12 heures
+reponses:
+  - c
+explication: >-
+  L'autonomie en durée est le carburant disponible divisé par la consommation horaire
+  : 120 divisé par 15 fait 8 heures. C'est une autonomie brute, celle du réservoir vidé
+  jusqu'à la dernière goutte. Elle ne dit pas jusqu'où tu peux aller : la règle des tiers
+  réserve un tiers de ce temps pour le retour et un tiers pour l'imprévu.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

@@ -1,0 +1,35 @@
+id: ecluses-0009
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu vois ce signal à l'entrée d'une écluse. Que signifie-t-il ?
+visuel:
+  fichier: ecluses/acces-deux-rouges-juxtaposes.svg
+  alt: Deux feux rouges allumés, côte à côte.
+  credit: code
+propositions:
+  - id: a
+    texte: L'accès est interdit et l'écluse est hors service
+  - id: b
+    texte: L'accès est interdit, l'écluse est fermée
+  - id: c
+    texte: L'accès est interdit, mais l'écluse se prépare à ouvrir
+  - id: d
+    texte: L'accès est autorisé
+reponses:
+  - b
+explication: >-
+  Deux feux rouges juxtaposés, côte à côte, annoncent une écluse fermée : l'accès est
+  interdit pour le moment, mais ton tour viendra. Un feu rouge isolé dit exactement la
+  même chose. Ne les confonds pas avec deux feux rouges superposés, l'un au-dessus de
+  l'autre, qui annoncent une écluse hors service : là, il n'y a rien à attendre.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

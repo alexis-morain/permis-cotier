@@ -19,6 +19,8 @@
     "credits": "python3 scripts/credits.py",
     "feux": "python3 scripts/feux.py",
     "balisage": "python3 scripts/balisage.py",
+    "ecluses": "python3 scripts/ecluses.py",
+    "carte": "python3 scripts/carte.py",
     "generer": "python3 scripts/generer.py",
     "build:pages": "astro build"
   },

@@ -1,0 +1,33 @@
+id: vhf-0012
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu pars pour une navigation à 80 milles d'un abri. Que t'impose l'armement hauturier
+  en plus de la VHF fixe déjà exigée en semi-hauturier ?
+propositions:
+  - id: a
+    texte: Une radiobalise de localisation des sinistres
+  - id: b
+    texte: Un émetteur-récepteur VHF portatif et étanche
+  - id: c
+    texte: Un second poste VHF fixe, sur une alimentation séparée
+  - id: d
+    texte: Un téléphone satellitaire
+reponses:
+  - a
+  - b
+explication: >-
+  L'armement hauturier, exigé à 60 milles et plus d'un abri, reprend l'armement semi-hauturier
+  et y ajoute notamment une radiobalise de localisation des sinistres et un émetteur-récepteur
+  VHF portatif et étanche, tous deux conformes à l'article 240-2.20. Le dispositif de
+  communication par satellite, lui, n'est que recommandé par le texte, pas imposé.
+sources:
+  - texte: Division 240, article 240-2.06, points 2 et 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

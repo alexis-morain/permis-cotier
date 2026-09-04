@@ -1,0 +1,34 @@
+id: meteo-0005
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu navigues à 10 milles d'un abri et tu veux entendre le bulletin météo en mer. Comment
+  procèdes-tu ?
+propositions:
+  - id: a
+    texte: Tu écoutes le bulletin sur le canal 16, qui le diffuse en continu
+  - id: b
+    texte: Tu écoutes le canal 16, où le CROSS annonce le bulletin, puis tu bascules sur
+      la voie de travail indiquée
+  - id: c
+    texte: Tu appelles le 196 pour te le faire lire
+  - id: d
+    texte: Tu attends le retour au port, le bulletin ne se diffuse pas en mer
+reponses:
+  - b
+explication: >-
+  Les CROSS diffusent les bulletins et les avis sur des canaux VHF de travail, annoncés
+  au préalable sur le canal 16, aux heures publiées dans les instructions nautiques et
+  les almanachs. Le canal 16 sert à l'annonce, pas à la diffusion : il se garde libre
+  pour l'appel et la détresse. Le 196 est le numéro d'urgence maritime, il n'est pas un
+  service de renseignement météo.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

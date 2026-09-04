@@ -107,7 +107,7 @@ export default function Quiz({ mode, questions, theme }: Props) {
       <div className="encadre">
         <p><strong>Aucune question publiée pour l’instant.</strong></p>
         <p className="discret">
-          La banque se remplit thème par thème, chaque question est relue avant d’être publiée.
+          La banque se remplit thème par thème, chaque question citant le texte dont elle est tirée.
           Reviens dans quelques jours.
         </p>
       </div>

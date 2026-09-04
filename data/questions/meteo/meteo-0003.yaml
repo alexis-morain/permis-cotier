@@ -1,0 +1,32 @@
+id: meteo-0003
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Le bulletin annonce une mer forte. Quelle hauteur de vagues cela recouvre-t-il ?
+propositions:
+  - id: a
+    texte: 0,5 à 1,25 mètre
+  - id: b
+    texte: 1,25 à 2,5 mètres
+  - id: c
+    texte: 2,5 à 4 mètres
+  - id: d
+    texte: 4 à 6 mètres
+reponses:
+  - c
+explication: >-
+  L'état de la mer se note de 0 à 9. La mer forte est le degré 5, de 2,5 à 4 mètres. Les
+  voisins : peu agitée au degré 3, de 0,5 à 1,25 mètre ; agitée au degré 4, de 1,25 à
+  2,5 mètres ; très forte au degré 6, de 4 à 6 mètres. Ces hauteurs sont des hauteurs
+  significatives, c'est-à-dire la moyenne du tiers des vagues les plus hautes : une vague
+  sur dix dépasse nettement le chiffre annoncé.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

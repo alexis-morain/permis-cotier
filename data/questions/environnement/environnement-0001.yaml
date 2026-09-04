@@ -1,0 +1,32 @@
+id: environnement-0001
+option: cotier
+theme: environnement
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu as fait une belle pêche en sortie de loisir. Qu'as-tu le droit d'en faire ?
+propositions:
+  - id: a
+    texte: La consommer avec ta famille, ou relâcher le poisson vivant
+  - id: b
+    texte: La vendre à un restaurateur qui te la commande
+  - id: c
+    texte: La proposer sur le marché, à condition de déclarer la recette
+  - id: d
+    texte: La céder à un poissonnier, la vente au particulier étant seule interdite
+reponses:
+  - a
+explication: >-
+  La pêche maritime de loisir est définie comme une pêcherie non commerciale dont le produit
+  est destiné à la consommation exclusive du pêcheur et de sa famille. Il ne peut être
+  colporté, exposé à la vente, vendu sous quelque forme que ce soit, ni acheté en connaissance
+  de cause : l'interdiction vise donc aussi l'acheteur. La pêche peut aussi consister
+  en la relâche du poisson vivant immédiatement après la capture.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-83, I, 3°
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

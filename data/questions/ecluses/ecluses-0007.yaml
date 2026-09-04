@@ -1,0 +1,33 @@
+id: ecluses-0007
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu approches du garage d'une écluse derrière un bateau plus lent. Que dit le règlement
+  ?
+propositions:
+  - id: a
+    texte: Tu peux le dépasser tant que tu es encore dans le garage
+  - id: b
+    texte: Tout dépassement est interdit à l'approche des écluses, notamment dans les
+      garages
+  - id: c
+    texte: Le dépassement est libre, seul le dépassement sous les ponts mobiles est interdit
+  - id: d
+    texte: Tu peux le dépasser après avoir émis deux sons brefs
+reponses:
+  - b
+explication: >-
+  À l'approche des écluses, et notamment dans les garages, tout dépassement est interdit.
+  Le garage est l'endroit où les bateaux se rangent en attendant leur tour, et le passage
+  se faisant dans l'ordre d'arrivée, un dépassement y détruirait cet ordre. La même interdiction
+  vaut à l'approche des ponts mobiles, sauf indication du personnel chargé de la manœuvre.
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

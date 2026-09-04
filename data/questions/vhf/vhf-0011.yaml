@@ -1,0 +1,32 @@
+id: vhf-0011
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu armes ton bateau pour une navigation de 6 à moins de 60 milles d'un abri. Quel équipement
+  radio te faut-il ?
+propositions:
+  - id: a
+    texte: Une VHF portative de six watts suffit
+  - id: b
+    texte: Une installation radioélectrique VHF fixe
+  - id: c
+    texte: Une radiobalise de localisation des sinistres
+  - id: d
+    texte: Aucun, la VHF n'est jamais obligatoire en plaisance
+reponses:
+  - b
+explication: >-
+  Le matériel d'armement et de sécurité semi-hauturier, exigé de 6 à moins de 60 milles
+  d'un abri, comprend une installation radioélectrique VHF fixe conforme aux exigences
+  de l'article 240-2.20. C'est le seuil où la VHF devient obligatoire : en deçà de 6 milles,
+  l'armement côtier ne l'impose pas, même si l'emporter reste évidemment recommandé.
+sources:
+  - texte: Division 240, article 240-2.05, point 2
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

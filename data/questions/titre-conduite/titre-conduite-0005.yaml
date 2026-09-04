@@ -1,0 +1,32 @@
+id: titre-conduite-0005
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 1
+enonce: >-
+  À partir de quelle puissance motrice la conduite d'un bateau de plaisance à moteur exige-t-elle
+  un permis ?
+propositions:
+  - id: a
+    texte: Au-delà de 4,5 kilowatts
+  - id: b
+    texte: Au-delà de 6 kilowatts
+  - id: c
+    texte: Au-delà de 20 kilowatts
+  - id: d
+    texte: Quelle que soit la puissance
+reponses:
+  - a
+explication: >-
+  Le décret subordonne au permis la conduite des bateaux de plaisance à moteur dont la
+  puissance motrice dépasse 4,5 kilowatts, soit environ 6 chevaux. En dessous de ce seuil,
+  aucun titre n'est exigé. Le seuil porte sur la puissance du moteur, pas sur la taille
+  du bateau ni sur la distance parcourue.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

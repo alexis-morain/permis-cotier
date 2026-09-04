@@ -1,0 +1,33 @@
+id: carburant-0005
+option: cotier
+theme: carburant
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu comptes ton autonomie avant de partir. Sur quoi ne faut-il pas se tromper ?
+propositions:
+  - id: a
+    texte: La consommation horaire est une constante du bateau, quelle que soit l'allure
+  - id: b
+    texte: La consommation horaire dépend du régime moteur et monte plus vite que la vitesse
+  - id: c
+    texte: La capacité annoncée du réservoir n'est pas entièrement utilisable
+  - id: d
+    texte: Une mer formée et un vent debout n'ont pas d'effet mesurable sur la consommation
+reponses:
+  - b
+  - c
+explication: >-
+  Deux pièges se cumulent. La consommation n'est pas une caractéristique du bateau mais
+  du régime : sur une coque planante, gagner deux nœuds au-dessus du régime économique
+  peut coûter la moitié de l'autonomie. Et la capacité annoncée n'est pas toute disponible
+  : le fond du réservoir, la gîte, l'assiette et l'imprécision de la jauge en retirent
+  une part. On calcule sur le carburant réellement disponible, à l'allure réellement tenue.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

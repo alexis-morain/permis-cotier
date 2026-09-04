@@ -1,0 +1,35 @@
+id: vhf-0008
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton moteur est en panne à quatre milles de la côte, la mer est belle, personne n'est
+  blessé et tu dérives lentement. Quel signal emploies-tu ?
+propositions:
+  - id: a
+    texte: MAYDAY
+  - id: b
+    texte: PAN PAN
+  - id: c
+    texte: SÉCURITÉ
+  - id: d
+    texte: Aucun, tu appelles directement une voie de travail
+reponses:
+  - b
+explication: >-
+  PAN PAN annonce une urgence sans danger grave et imminent : une avarie qui te prive
+  de propulsion sans mettre de vie en jeu dans l'immédiat en est le cas type. MAYDAY est
+  réservé au danger grave et imminent, celui qui appelle une assistance immédiate. Employer
+  MAYDAY ici mobiliserait des moyens hors de proportion, et le RIPAM interdit l'usage
+  d'un signal de détresse hors d'un cas de détresse ou d'un besoin d'assistance.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+  - texte: RIPAM, annexe IV, 2
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

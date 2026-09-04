@@ -1,0 +1,40 @@
+id: carte-marine-0004
+option: cotier
+theme: carte-marine
+statut: publie
+difficulte: 3
+enonce: >-
+  Sur cet extrait de carte, deux valeurs sont soulignées. Que signifie ce soulignement
+  ?
+visuel:
+  fichier: carte/estran-et-sondes.svg
+  alt: 'Extrait de carte marine : une bande jaune de terre, puis une bande verte entre
+    le trait de côte plein et la laisse de basse mer en tireté, puis des bleus qui s''éclaircissent
+    vers le large et enfin du blanc. Deux sondes soulignées sont portées dans la bande
+    verte, les autres dans le bleu.'
+  credit: code
+propositions:
+  - id: a
+    texte: Une profondeur douteuse, à vérifier
+  - id: b
+    texte: La hauteur d'un haut-fond qui découvre, comptée au-dessus du zéro des cartes
+  - id: c
+    texte: Une profondeur mesurée récemment
+  - id: d
+    texte: La hauteur d'un amer à terre
+reponses:
+  - b
+explication: >-
+  Le soulignement retourne le sens du chiffre : ce n'est plus une profondeur mais une
+  hauteur. La valeur soulignée donne de combien un haut-fond émerge au-dessus du zéro
+  des cartes lorsqu'il découvre. À pleine mer il sera recouvert, à basse mer il sortira
+  de l'eau. Les altitudes à terre et les hauteurs de feux, elles, ne se comptent pas depuis
+  le zéro des cartes mais depuis le niveau moyen des pleines mers de vive-eau.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

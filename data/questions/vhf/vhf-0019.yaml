@@ -1,0 +1,32 @@
+id: vhf-0019
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Dans quelle zone du SMDSM navigue la plaisance côtière française ?
+propositions:
+  - id: a
+    texte: A1
+  - id: b
+    texte: A2
+  - id: c
+    texte: A3
+  - id: d
+    texte: A4
+reponses:
+  - a
+explication: >-
+  La zone A1 est celle couverte par au moins une station côtière VHF équipée de l'ASN,
+  soit en pratique une vingtaine à une trentaine de milles de la côte : c'est là que se
+  tient toute la navigation en option côtière, limitée à 6 milles d'un abri. A2 est la
+  couverture des stations en ondes hectométriques, A3 celle des satellites géostationnaires
+  entre 70° nord et 70° sud, A4 le reste, c'est-à-dire les régions polaires.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

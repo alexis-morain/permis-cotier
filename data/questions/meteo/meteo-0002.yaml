@@ -1,0 +1,32 @@
+id: meteo-0002
+option: cotier
+theme: meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  À partir de quelle force de vent Météo-France émet-il un bulletin météorologique spécial
+  ?
+propositions:
+  - id: a
+    texte: Force 5
+  - id: b
+    texte: Force 6
+  - id: c
+    texte: Force 7
+  - id: d
+    texte: Force 8
+reponses:
+  - c
+explication: >-
+  Le BMS est émis dès qu'un vent de force 7 au moins est attendu ou observé : c'est l'avis
+  de grand frais. Le nom de l'avis suit ensuite la force annoncée : coup de vent à partir
+  de 8, fort coup de vent à 9, tempête à 10, violente tempête à 11, ouragan à 12. Le BMS
+  est diffusé dès sa parution, sans attendre l'heure du bulletin ordinaire.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

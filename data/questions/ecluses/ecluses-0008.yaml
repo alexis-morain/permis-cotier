@@ -1,0 +1,33 @@
+id: ecluses-0008
+option: cotier
+theme: ecluses
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau est équipé d'une installation de radiotéléphonie permettant les communications
+  sur le réseau des informations nautiques. Que dois-tu faire dans le garage et dans l'écluse
+  ?
+propositions:
+  - id: a
+    texte: Couper la radio, pour ne pas gêner les communications de l'éclusier
+  - id: b
+    texte: Être à l'écoute sur la voie allotie à l'écluse
+  - id: c
+    texte: Veiller le canal 16, comme en mer
+  - id: d
+    texte: Rien, cette obligation ne vise que les bateaux de commerce
+reponses:
+  - b
+explication: >-
+  Dans les garages des écluses et dans les écluses, les bateaux équipés d'une installation
+  de radiotéléphonie permettant les communications sur le réseau des informations nautiques
+  doivent être à l'écoute sur la voie allotie à l'écluse. C'est par là que passent les
+  instructions du personnel de manœuvre, auxquelles les bateaux doivent se conformer.
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'
