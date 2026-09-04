@@ -107,9 +107,19 @@ const orphelines = questions.filter((q) => !q.notion);
     counter-increment: notion;
   }
   .notion h3::before {
-    content: counter(notion) ". ";
-    color: var(--texte-doux);
+    content: counter(notion) " ";
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 0.5rem;
+    padding-inline: 0.3rem;
+    border-radius: 999px;
+    background: var(--jaune);
+    color: var(--marine);
+    font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
+    vertical-align: 0.1em;
   }
   .resume { margin: 0 0 0.6rem; }
   .aucune { margin: 0; font-style: italic; }
@@ -117,5 +127,5 @@ const orphelines = questions.filter((q) => !q.notion);
   .questions { padding-left: 1.2rem; margin: 0; }
   .questions li { margin-bottom: 0.45rem; }
   .questions a { text-decoration: none; }
-  .questions a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  .questions a:hover { text-decoration: underline; }
 </style>

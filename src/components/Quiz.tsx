@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import type React from 'react';
 import {
   creerSession,
   extraireSauvegarde,
@@ -301,7 +302,6 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
   if (session.phase === 'depart') {
     return (
       <div className="jeu depart">
-        <p className="chapitre">Examen blanc</p>
         <h1 className="depart__titre">Quarante questions, dans les conditions de l’épreuve.</h1>
 
         <ul className="depart__format">
@@ -379,7 +379,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       <div className="jeu">
         <h1 className="visuellement-cache">{titre}, résultat</h1>
         <div>
-          <p className="chapitre">
+          <p className="resultat__titre">
             {mode === 'examen'
               ? session.interrompu ? 'Examen blanc interrompu' : 'Examen blanc terminé'
               : titre}
@@ -418,7 +418,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
             {Object.entries(r.parTheme)
               .sort(([, a], [, b]) => a.bonnes / a.total - b.bonnes / b.total)
               .map(([code, note]) => (
-                <li key={code}>
+                <li key={code} style={{ '--part': note.bonnes / note.total } as React.CSSProperties}>
                   <b>{nomDuTheme(code)}</b>
                   <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
                     {note.bonnes} / {note.total}
@@ -606,7 +606,11 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
           </div>
         </div>
       ) : (
-        <div className="jeu__actions jeu__actions--collant">
+        <div
+          className={`jeu__actions jeu__actions--collant${
+            session.corrigee ? (session.juste ? ' jeu__actions--juste' : ' jeu__actions--fausse') : ''
+          }`}
+        >
           {session.corrigee ? (
             <button
               className="bouton bouton--principal"
