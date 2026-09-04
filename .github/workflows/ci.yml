@@ -35,6 +35,9 @@ jobs:
       - name: Vérifier les visuels de feux
         run: python scripts/feux.py --verifier
 
+      - name: Vérifier les marques de balisage
+        run: python scripts/balisage.py --verifier
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 
