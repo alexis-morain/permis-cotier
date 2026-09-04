@@ -60,6 +60,35 @@ describe('écran de départ de l’examen', () => {
     expect(screen.queryByText(/une bonne case seule ne suffit pas/)).toBeNull();
   });
 
+  it('ne recompte pas dans la progression les réponses déjà données', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: { 'ecluses-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' } },
+        examens: [],
+        dateExamen: null,
+        enCours: {
+          mode: 'examen',
+          theme: null,
+          ids: trois.map((q) => q.id),
+          index: 1,
+          selections: [['a'], [], []],
+          restant: 12,
+          journal: [{ id: 'ecluses-0001', juste: true }],
+          majLe: Date.now(),
+        },
+      }),
+    );
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+
+    const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
+    expect(etat.questions['ecluses-0001'].vues).toBe(1);
+    expect(etat.questions['ecluses-0002'].vues).toBe(1);
+  });
+
   it('propose de reprendre un examen laissé en plan', () => {
     localStorage.setItem(
       CLE_STOCKAGE,
