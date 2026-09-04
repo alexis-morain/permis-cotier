@@ -1,0 +1,34 @@
+id: barre-route-0026
+option: cotier
+theme: barre-route
+notion: barre-manoeuvre-evitement
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu as besoin de plus de temps pour apprécier une situation qui se rapproche. Que te
+  permet la règle 8 ?
+propositions:
+  - id: a
+    texte: Réduire ta vitesse, voire casser ton erre en stoppant ou en battant en arrière.
+  - id: b
+    texte: Maintenir ta vitesse, un navire qui ralentit devenant imprévisible.
+  - id: c
+    texte: Augmenter ta vitesse pour passer devant et sortir de la situation.
+  - id: d
+    texte: Rien de particulier, la règle 8 ne traite que des changements de cap.
+reponses:
+  - a
+explication: >-
+  La règle 8 e) le prévoit expressément : si c'est nécessaire pour éviter un abordage ou
+  pour se donner le temps d'apprécier la situation, on réduit sa vitesse ou on casse son
+  erre. Le piège est de croire que seul le cap se manœuvre. La règle 8 c) précise à
+  l'inverse que, si la place ne manque pas, le changement de cap seul peut être la
+  manœuvre la plus efficace : les deux moyens sont ouverts, c'est la situation qui choisit.
+sources:
+  - texte: RIPAM, règle 8 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

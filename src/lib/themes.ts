@@ -121,11 +121,12 @@ export const THEMES: readonly Theme[] = [
   },
   {
     code: 'carte-marine',
-    nom: 'Lecture de carte',
-    intitule: 'Initiation à la lecture d’une carte marine',
+    nom: 'Carte marine et marées',
+    intitule:
+      'Initiation à la lecture d’une carte marine : symboles élémentaires, notions élémentaires sur la marée et ses conséquences sur la navigation',
     description:
-      "Les sondes, les zéro des cartes, les principaux symboles, la rose des vents et la mesure d'une distance en milles. Le programme n'exige qu'une initiation : pas de calcul de marée ni de route au compas.",
-    cibleJ1: 4,
+      "Les sondes, le zéro des cartes, les principaux symboles et la mesure d'une distance en milles sur l'échelle des latitudes. L'arrêté y joint la marée : pleine et basse mer, marnage, coefficient, et ce que la hauteur d'eau change pour la navigation. Le programme n'exige qu'une initiation, pas de route au compas, mais la marée en fait bien partie.",
+    cibleJ1: 8,
   },
   {
     code: 'ecluses',

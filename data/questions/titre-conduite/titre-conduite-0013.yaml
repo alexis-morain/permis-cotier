@@ -1,0 +1,35 @@
+id: titre-conduite-0013
+option: cotier
+theme: titre-conduite
+notion: titre-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Quelle est la durée minimale de la formation pratique du permis plaisance, et comment
+  se répartit-elle ?
+propositions:
+  - id: a
+    texte: >-
+      Trois heures trente, dont deux heures de conduite effective par candidat.
+  - id: b
+    texte: Cinq heures, dont trois de conduite effective par candidat.
+  - id: c
+    texte: Deux heures, entièrement consacrées à la conduite.
+  - id: d
+    texte: Trois heures trente, dont une seule heure de conduite effective par candidat.
+reponses:
+  - a
+explication: >-
+  L'arrêté fixe trois heures trente au minimum : une heure trente qui peut être collective
+  pour la sécurité, la décision de sortie et la responsabilité, puis deux heures de conduite
+  effective par candidat, avec quatre élèves embarqués au plus. Ne confonds pas avec la
+  formation théorique en salle, qui est de cinq heures au minimum. L'attestation de réussite
+  à la formation ne peut être délivrée avant la réussite à l'épreuve théorique.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 3
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,34 @@
+id: barre-route-0021
+option: cotier
+theme: barre-route
+notion: barre-veille-vitesse
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu navigues par beau temps, en plein jour, sur une mer vide. Quelle veille la règle 5
+  t'impose-t-elle ?
+propositions:
+  - id: a
+    texte: Une veille visuelle et auditive permanente, par tous les moyens disponibles.
+  - id: b
+    texte: Une veille visuelle seulement, l'ouïe ne servant que par temps de brume.
+  - id: c
+    texte: Une veille au radar, dès lors que le navire en est équipé.
+  - id: d
+    texte: Aucune veille particulière tant qu'aucun navire n'est en vue.
+reponses:
+  - a
+explication: >-
+  La règle 5 ne connaît ni beau temps ni mer vide : la veille est permanente, visuelle
+  et auditive, et elle mobilise tous les moyens adaptés aux circonstances. Le piège est
+  de croire que la veille auditive est réservée à la brume, ou qu'une mer vide dispense
+  d'en assurer une. Le radar est l'un de ces moyens quand il existe, il ne remplace ni
+  l'œil ni l'oreille.
+sources:
+  - texte: RIPAM, règle 5
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

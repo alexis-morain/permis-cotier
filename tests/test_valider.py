@@ -237,3 +237,35 @@ def test_chaque_source_citee_par_la_banque_existe():
         if not (RACINE / "data" / "sources" / source["ref"]).is_dir()
     }
     assert manquantes == set()
+
+
+def test_notions_lues_depuis_le_typescript():
+    """Le référentiel vit dans src/lib/notions.ts, le validateur l'extrait.
+
+    Si le format du fichier change, ce test tombe : mieux vaut un échec bruyant
+    qu'une liste silencieusement vide, qui laisserait passer n'importe quelle
+    notion.
+    """
+    from valider import notions_declarees
+
+    notions = notions_declarees()
+    assert len(notions) > 90
+    assert notions["barre-voiliers"] == "barre-route"
+    assert notions["vhf-detresse"] == "vhf"
+
+
+def test_notion_inconnue_refusee():
+    assert "notion" in codes(avec(notion="notion-qui-nexiste-pas"))
+
+
+def test_notion_relevant_d_un_autre_theme_refusee():
+    # la question est en feux-marques, la notion appartient au thème vhf
+    assert "notion" in codes(avec(notion="vhf-detresse"))
+
+
+def test_notion_correcte_acceptee():
+    assert codes(avec(notion="feux-peche")) == set()
+
+
+def test_notion_facultative():
+    assert "notion" not in codes(VALIDE)
