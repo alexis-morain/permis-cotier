@@ -208,8 +208,11 @@ describe('arrêt d’un examen en cours', () => {
 
     const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
     expect(etat.examens).toEqual([]);
-    // La question jouée compte quand même dans la progression.
-    expect(etat.questions['ecluses-0001'].vues).toBe(1);
+    // La question jouée compte quand même dans la progression. Le tirage est
+    // aléatoire : on ne peut pas nommer laquelle, seulement qu'il y en a une.
+    const vues = Object.values(etat.questions) as { vues: number }[];
+    expect(vues).toHaveLength(1);
+    expect(vues[0]!.vues).toBe(1);
     expect(etat.enCours).toBeNull();
   });
 
