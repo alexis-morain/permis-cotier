@@ -127,8 +127,20 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
   // contrainte de l'épreuve, pas un instrument de mesure.
   useEffect(() => {
     if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const h = window.setInterval(() => envoyer({ type: 'tic' }), 1000);
+    const h = window.setInterval(() => envoyer({ type: 'tic', maintenant: Date.now() }), 1000);
     return () => window.clearInterval(h);
+  }, [session.mode, session.phase]);
+
+  // Un onglet caché voit son intervalle étranglé par le navigateur. Le chrono
+  // est une horloge murale, il ne se fige donc pas, mais l'affichage peut
+  // retarder : au retour, on recale sans attendre le prochain battement.
+  useEffect(() => {
+    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
+    const surRetour = () => {
+      if (!document.hidden) envoyer({ type: 'tic', maintenant: Date.now() });
+    };
+    document.addEventListener('visibilitychange', surRetour);
+    return () => document.removeEventListener('visibilitychange', surRetour);
   }, [session.mode, session.phase]);
 
   // Écriture de la progression locale, au fil des réponses.
@@ -215,7 +227,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       if (s.phase === 'depart') {
         if (evenementClavier.key === 'Enter' && !activable) {
           evenementClavier.preventDefault();
-          envoyer({ type: 'commencer' });
+          envoyer({ type: 'commencer', maintenant: Date.now() });
         }
         return;
       }
@@ -233,10 +245,10 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
         const choix = s.selections[s.index] ?? [];
         if (s.corrigee) {
           evenementClavier.preventDefault();
-          envoyer({ type: 'suivante' });
+          envoyer({ type: 'suivante', maintenant: Date.now() });
         } else if (!(m === 'entrainement' && choix.length === 0)) {
           evenementClavier.preventDefault();
-          envoyer({ type: 'valider' });
+          envoyer({ type: 'valider', maintenant: Date.now() });
         }
       }
     }
@@ -296,6 +308,11 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
         <p className="discret">
           Au clavier : <b>A</b>, <b>B</b>, <b>C</b>, <b>D</b> pour cocher, <b>Entrée</b> pour valider et passer.
         </p>
+        <p className="discret">
+          L’arrêté du 28 septembre 2007 fixe les quarante questions et les cinq erreurs admises.
+          Les vingt secondes et la règle des une ou deux bonnes réponses n’y sont pas : elles
+          viennent de la description de l’épreuve par les opérateurs agréés.
+        </p>
 
         {reprise && (
           <div className="encadre depart__reprise">
@@ -319,12 +336,20 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
               <button className="bouton bouton--principal" type="button" onClick={reprendre}>
                 Reprendre à la question {reprise.index + 1}
               </button>
-              <button className="bouton" type="button" onClick={() => envoyer({ type: 'commencer' })}>
+              <button
+                className="bouton"
+                type="button"
+                onClick={() => envoyer({ type: 'commencer', maintenant: Date.now() })}
+              >
                 Commencer un nouvel examen
               </button>
             </>
           ) : (
-            <button className="bouton bouton--principal" type="button" onClick={() => envoyer({ type: 'commencer' })}>
+            <button
+              className="bouton bouton--principal"
+              type="button"
+              onClick={() => envoyer({ type: 'commencer', maintenant: Date.now() })}
+            >
               Commencer l’examen
             </button>
           )}
@@ -570,7 +595,11 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       ) : (
         <div className="jeu__actions jeu__actions--collant">
           {session.corrigee ? (
-            <button className="bouton bouton--principal" type="button" onClick={() => envoyer({ type: 'suivante' })}>
+            <button
+              className="bouton bouton--principal"
+              type="button"
+              onClick={() => envoyer({ type: 'suivante', maintenant: Date.now() })}
+            >
               Question suivante
             </button>
           ) : (
@@ -578,7 +607,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
               className="bouton bouton--principal"
               type="button"
               disabled={mode === 'entrainement' && selection.length === 0}
-              onClick={() => envoyer({ type: 'valider' })}
+              onClick={() => envoyer({ type: 'valider', maintenant: Date.now() })}
             >
               {mode === 'examen' ? 'Valider et passer' : 'Valider'}
             </button>
