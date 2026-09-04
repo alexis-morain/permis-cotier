@@ -11,7 +11,7 @@ Deux origines, deux traitements :
   est le PDF du ministère chargé de la mer ; la référence juridique reste le
   décret n° 77-733 du 6 juillet 1977.
 
-    python3 scripts/sources.py legifrance --texte LEGITEXT000006057206 --ref arrete-2007-09-28
+    python3 scripts/sources.py legifrance --texte arrete-2007-09-28 --ref arrete-2007-09-28
     python3 scripts/sources.py ripam --pdf data/sources/_brut/texte-colreg.pdf --regles 20-31
 
 Sortie : `data/sources/<ref>/<article>.md`, un fichier par article ou par
@@ -33,8 +33,25 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[1]
 SOURCES = RACINE / "data" / "sources"
 
-OAUTH = "https://oauth.piste.gouv.fr/api/oauth/token"
-API = "https://api.piste.gouv.fr/dila/legifrance/lf-engine-app"
+# La sandbox PISTE sert les vraies données en lecture et s'active tout de suite
+# après l'inscription. La production peut demander une validation : on commence
+# donc en sandbox, on bascule avec --prod quand l'accès est ouvert.
+ENVIRONNEMENTS = {
+    "sandbox": (
+        "https://sandbox-oauth.piste.gouv.fr/api/oauth/token",
+        "https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app",
+    ),
+    "prod": (
+        "https://oauth.piste.gouv.fr/api/oauth/token",
+        "https://api.piste.gouv.fr/dila/legifrance/lf-engine-app",
+    ),
+}
+
+# Textes utiles, pour ne pas rechercher l'identifiant à chaque fois.
+TEXTES = {
+    # Programme, format de l'épreuve, titre de conduite.
+    "arrete-2007-09-28": "LEGITEXT000006112844",
+}
 
 
 def charger_env() -> dict[str, str]:
@@ -52,14 +69,17 @@ def charger_env() -> dict[str, str]:
     return valeurs
 
 
-def jeton(env: dict[str, str]) -> str:
+def jeton(env: dict[str, str], oauth: str) -> str:
     identifiant = env.get("LEGIFRANCE_CLIENT_ID")
     secret = env.get("LEGIFRANCE_CLIENT_SECRET")
     if not identifiant or not secret:
         raise SystemExit(
-            "Clés PISTE absentes. Inscris-toi sur https://piste.gouv.fr, abonne-toi à l'API\n"
-            "Légifrance, puis renseigne LEGIFRANCE_CLIENT_ID et LEGIFRANCE_CLIENT_SECRET\n"
-            "dans .env (référence : ~/Documents/08_IA/02_Outputs/permis-cotier/.env)."
+            "Clés PISTE absentes.\n"
+            "  1. Compte sur https://piste.gouv.fr/registration (gratuit)\n"
+            "  2. Créer une application, l'abonner à « API Légifrance »\n"
+            "  3. Copier le client_id et le client_secret de l'application\n"
+            "  4. Les poser dans .env : LEGIFRANCE_CLIENT_ID, LEGIFRANCE_CLIENT_SECRET\n"
+            "Référence : ~/Documents/08_IA/02_Outputs/permis-cotier/.env"
         )
     corps = urllib.parse.urlencode({
         "grant_type": "client_credentials",
@@ -67,14 +87,14 @@ def jeton(env: dict[str, str]) -> str:
         "client_secret": secret,
         "scope": "openid",
     }).encode()
-    requete = urllib.request.Request(OAUTH, data=corps, headers={"Content-Type": "application/x-www-form-urlencoded"})
+    requete = urllib.request.Request(oauth, data=corps, headers={"Content-Type": "application/x-www-form-urlencoded"})
     with urllib.request.urlopen(requete, timeout=30) as reponse:
         return json.load(reponse)["access_token"]
 
 
-def appeler(chemin: str, charge: dict, acces: str) -> dict:
+def appeler(chemin: str, charge: dict, acces: str, api: str) -> dict:
     requete = urllib.request.Request(
-        f"{API}{chemin}",
+        f"{api}{chemin}",
         data=json.dumps(charge).encode(),
         headers={"Authorization": f"Bearer {acces}", "Content-Type": "application/json", "Accept": "application/json"},
     )
@@ -120,9 +140,11 @@ def parcourir_articles(noeud: dict, recolte: list[dict]) -> None:
 
 
 def commande_legifrance(args) -> int:
-    acces = jeton(charger_env())
-    donnees = appeler("/consult/legiPart", {"textId": args.texte, "date": date.today().isoformat()}, acces)
-    titre = donnees.get("title") or args.texte
+    oauth, api = ENVIRONNEMENTS["prod" if args.prod else "sandbox"]
+    texte = TEXTES.get(args.texte, args.texte)
+    acces = jeton(charger_env(), oauth)
+    donnees = appeler("/consult/legiPart", {"textId": texte, "date": date.today().isoformat()}, acces, api)
+    titre = donnees.get("title") or texte
 
     articles: list[dict] = []
     parcourir_articles(donnees, articles)
@@ -257,8 +279,12 @@ def main(argv: list[str] | None = None) -> int:
     sous = parseur.add_subparsers(dest="commande", required=True)
 
     lf = sous.add_parser("legifrance", help="extrait un texte consolidé via l'API PISTE")
-    lf.add_argument("--texte", required=True, help="identifiant LEGITEXT du texte")
+    lf.add_argument(
+        "--texte", required=True,
+        help="identifiant LEGITEXT, ou une clé de TEXTES comme « arrete-2007-09-28 »",
+    )
     lf.add_argument("--ref", required=True, help="clé du dossier dans data/sources/")
+    lf.add_argument("--prod", action="store_true", help="tape la production plutôt que la sandbox")
     lf.set_defaults(fonction=commande_legifrance)
 
     ri = sous.add_parser("ripam", help="découpe le PDF du RIPAM en règles")
