@@ -10,12 +10,14 @@ const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), '
 // Domaine pas encore arrêté. Le site tourne sur son sous-domaine Pages en
 // attendant ; `src/pages/robots.txt.ts` bloque l'indexation tant qu'on y est.
 // Le jour du choix : SITE_URL dans les variables Cloudflare, rien d'autre.
-const site = process.env.SITE_URL ?? 'https://permis-cotier.pages.dev';
+const site = process.env.SITE_URL ?? 'https://permis-cotier-7nj.pages.dev';
 
 export default defineConfig({
   site,
   trailingSlash: 'never',
-  build: { format: 'directory' },
+  // `file` et non `directory` : avec `trailingSlash: 'never'`, un dossier
+  // ferait rediriger /examen vers /examen/ à chaque navigation.
+  build: { format: 'file' },
   integrations: [
     react(),
     sitemap({ filter: (page) => !page.includes('/examen') }),
