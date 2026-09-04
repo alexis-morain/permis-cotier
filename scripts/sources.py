@@ -434,6 +434,26 @@ MOBILIER = re.compile(
 )
 
 
+# Un début de paragraphe : la lettre, la parenthèse, puis une phrase. Le
+# renvoi « prescrits au paragraphe a) de la présente règle » retombe lui aussi
+# en début de ligne quand le PDF coupe, mais il enchaîne sur une minuscule.
+LETTRE_DE_PARAGRAPHE = re.compile(r"^([a-z])\)\s+[A-ZÀÂÉÈÊÎÔÙÛ]", flags=re.MULTILINE)
+
+
+def anomalies_de_lettrage(texte: str) -> list[tuple[str, str]]:
+    """Les endroits où le lettrage des paragraphes revient en arrière.
+
+    La banque cite l'alinéa, pas seulement la règle : une lettre fausse
+    envoie le candidat au mauvais endroit du texte. Le PDF du ministère en
+    porte une, règle 34, où l'alinéa e) est imprimé « c) »."""
+    lettres = LETTRE_DE_PARAGRAPHE.findall(texte)
+    return [
+        (lettres[i - 1], lettres[i])
+        for i in range(1, len(lettres))
+        if lettres[i] <= lettres[i - 1]
+    ]
+
+
 def nettoyer(texte: str) -> str:
     sans_saut_de_page = texte.replace("\f", "\n")
     sans_mobilier = MOBILIER.sub("", sans_saut_de_page)
@@ -492,6 +512,12 @@ def commande_ripam(args) -> int:
             "https://www.mer.gouv.fr/sites/default/files/2020-11/texte-colreg.pdf",
         )
         print(f"écrit {chemin.relative_to(RACINE)} ({len(corps)} caractères)")
+        for avant, apres in anomalies_de_lettrage(corps):
+            print(
+                f"  attention : le paragraphe {apres}) suit le {avant}), le PDF se trompe "
+                f"de lettre. Vérifie la référence avant d'écrire une question dessus.",
+                file=sys.stderr,
+            )
         ecrits += 1
 
     if not ecrits:

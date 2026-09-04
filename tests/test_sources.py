@@ -11,6 +11,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from sources import (  # noqa: E402
+    anomalies_de_lettrage,
     articles_utiles,
     invite_recherche,
     nom_article,
@@ -199,3 +200,25 @@ def test_une_cellule_tient_sur_une_ligne():
 
 def test_un_texte_sans_tableau_traverse_inchange():
     assert sans_balises("<p>Le chef de bord s'assure.</p>") == "Le chef de bord s'assure."
+
+
+# ── lettrage des paragraphes ─────────────────────────────────────────────────
+
+def test_un_lettrage_qui_se_suit_ne_signale_rien():
+    texte = "a) Le navire fait route.\n\nb) Tous les navires peuvent.\n\nc) Un navire s'approche."
+    assert anomalies_de_lettrage(texte) == []
+
+
+def test_un_retour_en_arriere_est_signale():
+    # Le PDF du ministère imprime « c) » là où le RIPAM porte « e) », entre
+    # d) et f). Une question qui citerait ce paragraphe renverrait le candidat
+    # au mauvais alinéa.
+    texte = "d) Lorsque deux navires.\n\nc) Un navire s'approchant d'un coude.\n\nf) Lorsque des sifflets."
+    assert anomalies_de_lettrage(texte) == [("d", "c")]
+
+
+def test_un_renvoi_en_milieu_de_phrase_n_est_pas_un_paragraphe():
+    # « prescrits au paragraphe a) de la présente règle » retombe en début de
+    # ligne quand le PDF coupe : ce n'est pas un début de paragraphe.
+    texte = "b) Tous les navires peuvent compléter les signaux\na) de la présente règle par des signaux."
+    assert anomalies_de_lettrage(texte) == []
