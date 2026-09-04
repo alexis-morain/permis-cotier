@@ -1,0 +1,32 @@
+id: titre-conduite-0001
+option: cotier
+theme: titre-conduite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu passes l'épreuve théorique de l'option « côtière », qui comporte quarante questions.
+  Combien d'erreurs sont admises ?
+propositions:
+  - id: a
+    texte: Trois erreurs.
+  - id: b
+    texte: Cinq erreurs.
+  - id: c
+    texte: Six erreurs.
+  - id: d
+    texte: Dix erreurs.
+reponses:
+  - b
+explication: >-
+  Le point 1.1 de l'article 1 fixe l'épreuve théorique de l'option « côtière » à quarante
+  questions, avec cinq erreurs admises. Au delà de cinq réponses fausses, l'épreuve est
+  manquée. Le piège tient aux valeurs voisines : trois ou six erreurs sonnent plausible,
+  mais le texte ne retient que cinq.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 1, point 1.1
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
