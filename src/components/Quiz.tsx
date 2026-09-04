@@ -207,6 +207,14 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
     if (arretDemande) continuer.current?.focus();
   }, [arretDemande]);
 
+  // Le chrono ne s'arrête pas pendant qu'on hésite, sinon la confirmation
+  // deviendrait un bouton pause. Mais si le temps fait passer la question
+  // derrière la boîte, celle-ci décrirait un état qui n'existe plus : elle se
+  // referme, et l'écran de jeu reprend la main sur la question suivante.
+  useEffect(() => {
+    setArretDemande(false);
+  }, [session.index]);
+
   // Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
   // le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
   const contexte = useRef({ session, affichee, mode, arretDemande });
@@ -219,8 +227,13 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       // arrive avec `document` pour cible.
       const cible = evenementClavier.target instanceof HTMLElement ? evenementClavier.target : null;
       if (cible?.closest('input, textarea, select, [contenteditable="true"]')) return;
-      // Un bouton ou un lien qui a le focus s'active tout seul : ne pas doubler.
-      const activable = cible?.tagName === 'BUTTON' || cible?.tagName === 'A';
+      // Un bouton d'action qui a le focus s'active tout seul : ne pas doubler.
+      // Une proposition est un bouton elle aussi, mais Chromium lui laisse le
+      // focus après un clic souris : sans cette exception, Entrée décochait la
+      // réponse au lieu de valider, alors que l'écran de départ le promet.
+      const activable =
+        (cible?.tagName === 'BUTTON' || cible?.tagName === 'A') &&
+        !cible.classList.contains('proposition');
 
       const { session: s, affichee: a, mode: m, arretDemande: arret } = contexte.current;
 
@@ -268,7 +281,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
   if (serie.length === 0) {
     return revoir ? (
       <div className="encadre">
-        <p><strong>Rien à revoir pour l’instant.</strong></p>
+        <h1 className="encadre__titre">Rien à revoir pour l’instant.</h1>
         <p className="discret">
           Les questions ratées atterrissent ici dès que tu en rates une, et en sortent quand tu
           les retrouves. <a href="/entrainement">S’entraîner par thème</a>.
@@ -276,7 +289,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       </div>
     ) : (
       <div className="encadre">
-        <p><strong>Aucune question publiée pour l’instant.</strong></p>
+        <h1 className="encadre__titre">Aucune question publiée pour l’instant.</h1>
         <p className="discret">
           La banque se remplit thème par thème, chaque question citant le texte dont elle est tirée.
           Reviens dans quelques jours.

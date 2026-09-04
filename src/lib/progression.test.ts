@@ -34,6 +34,27 @@ describe('état initial', () => {
   });
 });
 
+describe('statistiques bornées à la banque publiée', () => {
+  const etat = {
+    ...etatInitial(),
+    questions: {
+      'vhf-0001': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-01' },
+      'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02' },
+      'vhf-0009': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03' },
+    },
+  };
+
+  it('compte tout quand on ne lui donne pas la banque', () => {
+    expect(statistiques(etat).aRevoir).toBe(3);
+  });
+
+  it('ignore une question retirée de la banque, comme le fait la série', () => {
+    const s = statistiques(etat, ['vhf-0001', 'vhf-0002']);
+    expect(s.aRevoir).toBe(2);
+    expect(s.vues).toBe(2);
+  });
+});
+
 describe('session en cours', () => {
   const sauvegarde = {
     mode: 'examen' as const,

@@ -157,6 +157,19 @@ describe('clavier', () => {
     expect(screen.getByRole('button', { name: 'Valider' }).hasAttribute('disabled')).toBe(true);
   });
 
+  it('valide à l’entrée même quand une proposition garde le focus', () => {
+    // Chromium laisse le focus sur le bouton cliqué : sans exception, Entrée
+    // décochait la réponse au lieu de valider.
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    const proposition = screen.getByRole('button', { name: /Première proposition/ });
+    fireEvent.click(proposition);
+    proposition.focus();
+    fireEvent.keyDown(proposition, { key: 'Enter' });
+
+    expect(screen.getByRole('status')).toBeTruthy();
+    expect(proposition.getAttribute('aria-pressed')).toBe('true');
+  });
+
   it('laisse le bouton qui a le focus faire son travail, sans doubler', () => {
     render(<Quiz mode="examen" questions={trois} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));

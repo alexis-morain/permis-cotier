@@ -5,7 +5,8 @@ import Reprise from '../components/Reprise.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 
 const themes = await themesAvecComptes();
-const total = (await questionsPubliees()).length;
+const questions = await questionsPubliees();
+const total = questions.length;
 const couverts = themes.filter((t) => t.publiees > 0).length;
 ---
 
@@ -29,7 +30,7 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
         <a class="bouton bouton--discret" href="/entrainement">ou s’entraîner thème par thème</a>
       </div>
 
-      <Reprise client:only="react" />
+      <Reprise client:only="react" ids={questions.map((q) => q.id)} />
     </div>
 
     <aside class="ouverture__cote">

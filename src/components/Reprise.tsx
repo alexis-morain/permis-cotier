@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react';
 import { charger, statistiques } from '../lib/progression';
 import type { Statistiques } from '../lib/progression';
 
+interface Props {
+  /** Les identifiants publiés, pour ne pas compter ce que `/revoir` ne joue plus. */
+  ids?: string[];
+}
+
 /** Rappel de l'état local : questions vues, questions à revoir, dernier score. */
-export default function Reprise() {
+export default function Reprise({ ids }: Props) {
   const [stats, setStats] = useState<Statistiques | null>(null);
-  useEffect(() => setStats(statistiques(charger())), []);
+  useEffect(() => setStats(statistiques(charger(), ids)), [ids]);
 
   if (!stats || stats.vues === 0) return null;
 

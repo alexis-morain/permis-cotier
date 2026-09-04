@@ -206,6 +206,7 @@
   padding: 0.6rem 0;
 }
 .depart__format li:last-child { border-bottom: var(--filet-epaisseur) solid var(--filet-fin); }
+.encadre__titre { font: inherit; font-weight: 700; margin: 0 0 0.4rem; }
 .depart__retour { margin: 0; }
 .depart__reprise { margin-top: 0.25rem; }
 .depart__reprise p { margin: 0; }
@@ -267,6 +268,10 @@
     border-top: var(--filet-epaisseur) solid var(--filet);
     background: var(--fond);
   }
+
+  /* La barre monte à 141 px en entraînement, bouton plus lien de signalement :
+     un verdict court remonté par le bas passerait dessous. */
+  .verdict { scroll-margin-block: 1rem 10rem; }
 }
 
 @media (min-width: 46rem) {

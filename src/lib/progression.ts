@@ -81,8 +81,17 @@ export interface Statistiques {
   dernierScore: { bonnes: number; total: number; reussi: boolean } | null;
 }
 
-export function statistiques(etat: Etat): Statistiques {
-  const etats = Object.values(etat.questions);
+/**
+ * `connues` borne le calcul aux questions encore publiées. Sans elle, une
+ * question retirée après un signalement resterait comptée « à revoir » sur
+ * l'accueil alors que `/revoir` ne peut plus la jouer, et les deux chiffres
+ * divergeraient.
+ */
+export function statistiques(etat: Etat, connues?: readonly string[]): Statistiques {
+  const banque = connues ? new Set(connues) : null;
+  const etats = Object.entries(etat.questions)
+    .filter(([id]) => banque === null || banque.has(id))
+    .map(([, e]) => e);
   const dernier = etat.examens[0];
   return {
     vues: etats.length,
