@@ -1,0 +1,127 @@
+import type { EtatQuestion, Progression } from './quiz';
+
+/**
+ * Progression locale, dans le navigateur. Aucun compte, aucune donnée
+ * personnelle, rien qui parte sur un serveur. Le code de synchronisation
+ * anonyme arrive à J2 et réutilisera ce même objet.
+ *
+ * `VERSION_STOCKAGE` : à incrémenter quand la forme de l'état change. Un état
+ * d'une autre version est jeté plutôt que migré, la progression n'a pas assez
+ * de valeur pour justifier du code de migration.
+ */
+export const VERSION_STOCKAGE = 1;
+export const CLE_STOCKAGE = 'permis-cotier:progression';
+const MAX_EXAMENS = 50;
+
+export interface ExamenPasse {
+  date: string;
+  bonnes: number;
+  total: number;
+  reussi: boolean;
+}
+
+export interface Etat {
+  version: number;
+  questions: Progression;
+  examens: ExamenPasse[];
+  /** Réponse à « ton examen est quand ? », facultative. */
+  dateExamen: string | null;
+}
+
+/** Le sous-ensemble de localStorage qu'on utilise, pour pouvoir le remplacer en test. */
+export interface Stockage {
+  getItem(cle: string): string | null;
+  setItem(cle: string, valeur: string): void;
+  removeItem(cle: string): void;
+}
+
+export function etatInitial(): Etat {
+  return { version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null };
+}
+
+export function enregistrerReponse(etat: Etat, id: string, reussie: boolean, date: string): Etat {
+  const avant: EtatQuestion = etat.questions[id] ?? { vues: 0, ratees: 0, derniereReussie: false, vueLe: date };
+  return {
+    ...etat,
+    questions: {
+      ...etat.questions,
+      [id]: {
+        vues: avant.vues + 1,
+        ratees: avant.ratees + (reussie ? 0 : 1),
+        derniereReussie: reussie,
+        vueLe: date,
+      },
+    },
+  };
+}
+
+export function enregistrerExamen(etat: Etat, examen: ExamenPasse): Etat {
+  return { ...etat, examens: [examen, ...etat.examens].slice(0, MAX_EXAMENS) };
+}
+
+export interface Statistiques {
+  vues: number;
+  aRevoir: number;
+  examensTermines: number;
+  dernierScore: { bonnes: number; total: number; reussi: boolean } | null;
+}
+
+export function statistiques(etat: Etat): Statistiques {
+  const etats = Object.values(etat.questions);
+  const dernier = etat.examens[0];
+  return {
+    vues: etats.length,
+    aRevoir: etats.filter((e) => !e.derniereReussie).length,
+    examensTermines: etat.examens.length,
+    dernierScore: dernier ? { bonnes: dernier.bonnes, total: dernier.total, reussi: dernier.reussi } : null,
+  };
+}
+
+function stockageParDefaut(): Stockage | null {
+  try {
+    return typeof localStorage === 'undefined' ? null : localStorage;
+  } catch {
+    // Navigation privée ou cookies bloqués : on tourne sans mémoire.
+    return null;
+  }
+}
+
+export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
+  if (!stockage) return etatInitial();
+  try {
+    const brut = stockage.getItem(CLE_STOCKAGE);
+    if (!brut) return etatInitial();
+    const lu = JSON.parse(brut) as Partial<Etat>;
+    if (lu?.version !== VERSION_STOCKAGE) return etatInitial();
+    return {
+      version: VERSION_STOCKAGE,
+      questions: lu.questions ?? {},
+      examens: Array.isArray(lu.examens) ? lu.examens : [],
+      dateExamen: lu.dateExamen ?? null,
+    };
+  } catch {
+    return etatInitial();
+  }
+}
+
+export function sauvegarder(etat: Etat, stockage: Stockage | null = stockageParDefaut()): void {
+  if (!stockage) return;
+  try {
+    stockage.setItem(CLE_STOCKAGE, JSON.stringify(etat));
+  } catch {
+    // Quota plein ou écriture refusée : la session continue, sans mémoire.
+  }
+}
+
+export function effacer(stockage: Stockage | null = stockageParDefaut()): void {
+  if (!stockage) return;
+  try {
+    stockage.removeItem(CLE_STOCKAGE);
+  } catch {
+    /* rien à faire */
+  }
+}
+
+export function aujourdhui(): string {
+  return new Date().toISOString().slice(0, 10);
+}

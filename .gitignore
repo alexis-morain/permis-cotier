@@ -1,0 +1,32 @@
+# dépendances
+node_modules/
+.pnpm-store/
+
+# build
+dist/
+.astro/
+.output/
+.vercel/
+.wrangler/
+
+# secrets
+.env
+.env.*
+!.env.example
+*.bak
+*.bak.*
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# système
+.DS_Store
+*.log
+npm-debug.log*
+
+# caches de travail
+data/questions/_inbox/*.yaml

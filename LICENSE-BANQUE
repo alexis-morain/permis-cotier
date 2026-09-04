@@ -1,0 +1,26 @@
+# Licence de la banque de questions
+
+La banque de questions, c'est-à-dire tout le contenu de `data/` (questions,
+explications, sources citées, crédits) ainsi que les visuels produits pour ce
+projet, est publiée sous licence Creative Commons Attribution - Partage dans
+les Mêmes Conditions 4.0 International (CC BY-SA 4.0).
+
+Texte complet : https://creativecommons.org/licenses/by-sa/4.0/deed.fr
+Texte juridique : https://creativecommons.org/licenses/by-sa/4.0/legalcode.fr
+
+Attribution demandée : « Banque de questions permis côtier, Alexis Morain,
+CC BY-SA 4.0 », avec un lien vers le dépôt.
+
+## Ce que cette licence ne couvre pas
+
+- Le code source du site, sous licence MIT, voir `LICENSE`.
+- Les visuels repris de Wikimedia Commons, qui gardent leur licence d'origine.
+  Auteur, licence et URL de chacun sont dans `data/CREDITS.md`.
+- Les extraits de textes réglementaires dans `data/sources/`, publiés par
+  l'État sous Licence Ouverte 2.0 (Etalab) et cités comme tels.
+
+## Contributions
+
+Les contributions à la banque sont examinées au cas par cas. En proposant une
+question, vous acceptez qu'elle soit publiée sous CC BY-SA 4.0. Alexis Morain
+reste titulaire des droits sur la banque d'origine.
