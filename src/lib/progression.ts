@@ -1,4 +1,5 @@
 import type { EtatQuestion, Progression } from './quiz';
+import type { SessionSauvegardee } from './session';
 
 /**
  * Progression locale, dans le navigateur. Aucun compte, aucune donnée
@@ -26,6 +27,12 @@ export interface Etat {
   examens: ExamenPasse[];
   /** Réponse à « ton examen est quand ? », facultative. */
   dateExamen: string | null;
+  /**
+   * L'examen commencé et pas fini, pour le retrouver après un rafraîchissement
+   * ou un écran verrouillé. Champ ajouté sans changer `VERSION_STOCKAGE` :
+   * il est facultatif, un état écrit avant lui se relit sans rien perdre.
+   */
+  enCours: SessionSauvegardee | null;
 }
 
 /** Le sous-ensemble de localStorage qu'on utilise, pour pouvoir le remplacer en test. */
@@ -36,7 +43,15 @@ export interface Stockage {
 }
 
 export function etatInitial(): Etat {
-  return { version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null };
+  return { version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null };
+}
+
+export function enregistrerEnCours(etat: Etat, session: SessionSauvegardee): Etat {
+  return { ...etat, enCours: session };
+}
+
+export function effacerEnCours(etat: Etat): Etat {
+  return { ...etat, enCours: null };
 }
 
 export function enregistrerReponse(etat: Etat, id: string, reussie: boolean, date: string): Etat {
@@ -66,8 +81,17 @@ export interface Statistiques {
   dernierScore: { bonnes: number; total: number; reussi: boolean } | null;
 }
 
-export function statistiques(etat: Etat): Statistiques {
-  const etats = Object.values(etat.questions);
+/**
+ * `connues` borne le calcul aux questions encore publiées. Sans elle, une
+ * question retirée après un signalement resterait comptée « à revoir » sur
+ * l'accueil alors que `/revoir` ne peut plus la jouer, et les deux chiffres
+ * divergeraient.
+ */
+export function statistiques(etat: Etat, connues?: readonly string[]): Statistiques {
+  const banque = connues ? new Set(connues) : null;
+  const etats = Object.entries(etat.questions)
+    .filter(([id]) => banque === null || banque.has(id))
+    .map(([, e]) => e);
   const dernier = etat.examens[0];
   return {
     vues: etats.length,
@@ -98,6 +122,7 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
       questions: lu.questions ?? {},
       examens: Array.isArray(lu.examens) ? lu.examens : [],
       dateExamen: lu.dateExamen ?? null,
+      enCours: lu.enCours ?? null,
     };
   } catch {
     return etatInitial();

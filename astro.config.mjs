@@ -20,7 +20,7 @@ export default defineConfig({
   build: { format: 'file' },
   integrations: [
     react(),
-    sitemap({ filter: (page) => !page.includes('/examen') }),
+    sitemap({ filter: (page) => !page.includes('/examen') && !page.includes('/revoir') }),
     AstroPWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
