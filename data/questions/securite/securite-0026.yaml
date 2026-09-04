@@ -1,0 +1,38 @@
+id: securite-0026
+option: cotier
+theme: securite
+notion: securite-armement-cotier
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues à quatre milles d'un abri. Dans quel cas un équipier qui sait nager peut-il
+  se passer d'un équipement individuel de flottabilité de niveau 100 ?
+propositions:
+  - id: a
+    texte: S'il porte effectivement un équipement individuel de flottabilité de niveau
+      de performance d'au moins 50
+  - id: b
+    texte: S'il porte effectivement une combinaison humide ou sèche répondant aux caractéristiques
+      fixées par l'article
+  - id: c
+    texte: S'il sait nager, cela suffit à le dispenser
+  - id: d
+    texte: Si un équipement de niveau 100 reste rangé à bord, accessible rapidement
+reponses:
+  - a
+  - b
+explication: >-
+  Le point 3 de l'article 240-2.04 exige autant d'équipements individuels de flottabilité
+  de niveau 100 que de personnes embarquées, puis ouvre une porte étroite : la personne
+  doit savoir nager et porter effectivement, soit un équipement de niveau 50 au moins,
+  soit une combinaison néoprène ou sèche de flottabilité intrinsèque d'au moins 50 N,
+  protégeant le torse et l'abdomen et de couleur vive au cou ou aux épaules. Deux mots
+  font le piège : savoir nager ne suffit pas, et l'équipement doit être porté, pas rangé.
+sources:
+  - texte: Division 240, article 240-2.04, point 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

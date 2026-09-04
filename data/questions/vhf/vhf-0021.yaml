@@ -1,0 +1,33 @@
+id: vhf-0021
+option: cotier
+theme: vhf
+notion: vhf-alphabet
+statut: publie
+difficulte: 2
+enonce: >-
+  Lesquelles de ces épellations de l'alphabet phonétique international sont exactes ?
+propositions:
+  - id: a
+    texte: K se dit Kilo
+  - id: b
+    texte: N se dit Nectar
+  - id: c
+    texte: U se dit Uniform
+  - id: d
+    texte: S se dit Santiago
+reponses:
+  - a
+  - c
+explication: >-
+  L'alphabet phonétique est fixé mot par mot : Kilo pour le K, Uniform pour le U. November
+  et Sierra sont les mots du N et du S ; Nectar et Santiago n'appartiennent pas à la liste.
+  Le piège est là : un mot qui commence par la bonne lettre et qui sonne bien n'est pas
+  pour autant le bon. Sur une liaison brouillée, seul le mot exact est reconnu.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

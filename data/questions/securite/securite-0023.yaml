@@ -1,0 +1,36 @@
+id: securite-0023
+option: cotier
+theme: securite
+notion: securite-visibilite-restreinte
+statut: publie
+difficulte: 2
+enonce: >-
+  Le brouillard tombe et la visibilité chute autour de ton bateau à moteur. Que t'impose
+  la règle 19 b) ?
+propositions:
+  - id: a
+    texte: Naviguer à une vitesse de sécurité adaptée aux circonstances et à la visibilité
+      réduite
+  - id: b
+    texte: Tenir tes machines prêtes à manœuvrer immédiatement
+  - id: c
+    texte: Mouiller sans attendre et rester en place jusqu'au retour de la visibilité
+  - id: d
+    texte: Changer de cap sur bâbord pour t'écarter de la zone
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 19 b) tient en deux obligations. Tout navire adapte sa vitesse aux circonstances
+  existantes et aux conditions de visibilité réduite ; les navires à propulsion mécanique
+  tiennent en outre leurs machines prêtes à manœuvrer immédiatement. Rien dans cette règle
+  n'impose de mouiller, et le changement de cap sur bâbord est précisément la manœuvre
+  que la règle 19 d) demande d'éviter vers un navire situé sur l'avant du travers.
+sources:
+  - texte: RIPAM, règle 19 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

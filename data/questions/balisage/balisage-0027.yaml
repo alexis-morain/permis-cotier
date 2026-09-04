@@ -1,0 +1,38 @@
+id: balisage-0027
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, tu relèves ce feu qui alterne le bleu et le jaune. Que fait la marque qui le
+  porte ?
+visuel:
+  fichier: rythmes/danger-nouveau.svg
+  alt: "Feu alternant le bleu et le jaune, sans obscurité longue entre les deux couleurs."
+  credit: code
+propositions:
+  - id: a
+    texte: Elle double le balisage normal d'un danger récemment découvert
+  - id: b
+    texte: Elle délimite une zone de mouillage ou une installation de loisirs
+  - id: c
+    texte: Elle marque le milieu du chenal, eaux saines tout autour
+  - id: d
+    texte: Elle borde le chenal du côté bâbord en venant du large
+reponses:
+  - a
+explication: >-
+  Le feu bleu et jaune alternés n'appartient qu'à la marque de danger nouveau. Elle double
+  le balisage normal d'un danger tout juste découvert, une épave par exemple, tant qu'il
+  ne figure pas encore sur les documents nautiques : elle s'ajoute au balisage, elle ne
+  le remplace pas. Aucun autre feu du système ne mélange deux couleurs, c'est ce qui la
+  rend reconnaissable de nuit.
+sources:
+  - texte: Balisage AISM région A, marque de danger nouveau
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

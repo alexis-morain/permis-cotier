@@ -1,0 +1,39 @@
+id: barre-route-0036
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu relèves au compas, à trois reprises, un navire qui s'approche. Que dit la règle 7 d)
+  du lien entre le relèvement et le risque d'abordage ?
+visuel:
+  fichier: situations/relevement-constant.svg
+  alt: "Vue de dessus. Trois instants successifs d'une même rencontre, où les deux navires se rapprochent et où la ligne qui les joint garde exactement la même direction d'un instant à l'autre."
+  credit: code
+propositions:
+  - id: a
+    texte: Un relèvement qui ne change pas de manière appréciable signale un risque d'abordage.
+  - id: b
+    texte: Un relèvement qui varie de manière appréciable peut malgré tout cacher un risque.
+  - id: c
+    texte: Un relèvement constant ne dit rien tant que les vitesses sont différentes.
+  - id: d
+    texte: Un relèvement qui varie de manière appréciable écarte à coup sûr le risque.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 7 d) i) pose le principe : si le relèvement au compas ne change pas de manière
+  appréciable, il y a risque d'abordage, quelles que soient les vitesses. La règle 7 d) ii)
+  ferme aussitôt la porte à la conclusion inverse, car le risque peut subsister malgré une
+  variation nette du relèvement, notamment près d'un très grand navire, d'un train de
+  remorque ou à courte distance. Un relèvement qui bouge rassure, il ne suffit pas.
+sources:
+  - texte: RIPAM, règle 7 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

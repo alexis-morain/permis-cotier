@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Un navire en train de pêcher fait route. De la route de quels navires doit-il s'écarter,
-  dans la mesure du possible ? Deux réponses.
+  dans la mesure du possible ?
 propositions:
   - id: a
     texte: D'un navire qui n'est pas maître de sa manœuvre.

@@ -1,0 +1,35 @@
+id: meteo-0010
+option: cotier
+theme: meteo
+notion: meteo-facteurs
+statut: publie
+difficulte: 2
+enonce: >-
+  Le matin est calme au mouillage, et le vent monte nettement en début d'après-midi.
+  Comment s'appelle ce vent et d'où souffle-t-il ?
+propositions:
+  - id: a
+    texte: La brise de mer, qui souffle de la mer vers la terre
+  - id: b
+    texte: La brise de terre, qui souffle de la terre vers la mer
+  - id: c
+    texte: Un effet de site, qui souffle le long de la côte
+  - id: d
+    texte: Un grain, qui souffle en tournant
+reponses:
+  - a
+explication: >-
+  Le jour, la terre chauffe plus vite que la mer, l'air monte au-dessus du rivage et
+  l'air marin vient le remplacer : la brise de mer s'établit en début d'après-midi et
+  souffle de la mer vers la terre. La nuit, le mécanisme s'inverse et donne la brise
+  de terre, plus faible, en fin de nuit. Pour retenir le sens : la brise porte le nom
+  d'où elle vient, et l'après-midi elle vient de la mer.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « Ce qui
+      fait le vent local »'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

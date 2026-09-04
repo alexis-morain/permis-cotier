@@ -1,0 +1,34 @@
+id: securite-0028
+option: cotier
+theme: securite
+notion: securite-categories-conception
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu regardes la plaque d'une petite embarcation en catégorie de conception D. Quelle
+  hauteur de vagues est-elle réputée pouvoir affronter ?
+propositions:
+  - id: a
+    texte: Une hauteur significative jusqu'à 0,3 mètre, avec des vagues occasionnelles jusqu'à 0,5 mètre
+  - id: b
+    texte: Une hauteur significative jusqu'à 0,5 mètre, avec des vagues occasionnelles jusqu'à 1 mètre
+  - id: c
+    texte: Une hauteur significative jusqu'à 1 mètre, sans vague occasionnelle plus haute
+  - id: d
+    texte: Une hauteur significative jusqu'à 2 mètres, avec des vagues occasionnelles jusqu'à 3 mètres
+reponses:
+  - a
+explication: >-
+  L'article 245-1.02, II. 9 décrit la catégorie D comme conçue pour des vents jusqu'à
+  la force 4 comprise et des vagues d'une hauteur significative jusqu'à 0,3 mètre compris,
+  avec des vagues occasionnelles d'une hauteur maximale de 0,5 mètre. Le tableau du même
+  point n'affiche que le 0,5 mètre : c'est la valeur occasionnelle, pas la valeur
+  courante. Retenir les deux chiffres évite de surestimer ce que la coque encaisse.
+sources:
+  - texte: Division 245, article 245-1.02, II. 9
+    ref: division-245
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

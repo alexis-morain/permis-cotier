@@ -1,0 +1,35 @@
+id: ski-responsabilites-0004
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu ramènes ton skieur au rivage et tu empruntes un chenal traversier. En te dirigeant
+  vers la plage, quelle bouée laisses-tu sur bâbord ?
+propositions:
+  - id: a
+    texte: Une bouée cylindrique
+  - id: b
+    texte: Une bouée conique
+  - id: c
+    texte: Une bouée sphérique
+  - id: d
+    texte: Une bouée à voyant en croix
+reponses:
+  - a
+explication: >-
+  L'annexe I de l'arrêté du 27 mars 1991, paragraphe 2, décrit les limites latérales des
+  chenaux traversiers : les bouées sont cylindriques à bâbord et coniques à tribord en
+  accédant au rivage. Le sens de parcours est donc défini vers la terre, l'inverse du
+  réflexe pris en balisage latéral d'entrée de port. La bouée sphérique existe aussi dans
+  le chenal, mais elle marque la limite commune de deux chenaux contigus ; et l'article 2
+  du même arrêté précise que ces bouées sont dépourvues de voyant.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 2
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

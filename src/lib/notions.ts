@@ -889,7 +889,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'environnement',
     nom: 'Équipement sanitaire',
     resume:
-      "Un navire habitable doit pouvoir retenir ses eaux noires : cuve de stockage ou dispositif de traitement, avec possibilité de condamner le rejet direct.",
+      "Un navire équipé de toilettes retient ou traite ses eaux usées : capacités de rétention, avec raccord de vidange normalisé si les réservoirs sont fixes, ou installation de traitement. C'est la présence de toilettes qui déclenche l'obligation, pas l'habitabilité.",
     ordre: 2,
     cible: 1,
     ancrage: 'l’équipement sanitaire des navires habitables',
@@ -1091,13 +1091,23 @@ export const NOTIONS: readonly Notion[] = [
 
   // ----------------------------------------------------------------- ecluses
   {
+    code: 'ecluses-signaux-acces',
+    theme: 'ecluses',
+    nom: "Signaux d'accès à l'écluse",
+    resume:
+      "Deux rouges interdisent l'accès. Trois signaux annoncent seulement l'ouverture prochaine sans l'autoriser : un rouge éteint sur deux, un rouge et un vert juxtaposés, un rouge au-dessus d'un vert. Seuls un vert isolé ou deux verts juxtaposés ouvrent l'accès.",
+    ordre: 1,
+    cible: 3,
+    ancrage: 'règles d’utilisation des écluses gardées ou automatiques',
+  },
+  {
     code: 'ecluses-approche',
     theme: 'ecluses',
-    nom: "Approche et feux d'écluse",
+    nom: "Approche et attente",
     resume:
-      "Deux feux rouges interdisent l'entrée, un rouge et un vert annoncent la préparation, le vert autorise. On attend au poste d'attente sans gêner la sortie.",
-    ordre: 1,
-    cible: 1,
+      "On attend son tour au garage sans dépasser ni gêner la sortie, et une écluse sans feu ni panneau ne s'aborde pas comme une écluse qui autorise. L'ordre de passage se prend derrière celui qui est arrivé avant.",
+    ordre: 2,
+    cible: 2,
     ancrage: 'règles d’utilisation des écluses gardées ou automatiques',
   },
   {
@@ -1106,7 +1116,7 @@ export const NOTIONS: readonly Notion[] = [
     nom: 'Passage et amarrage',
     resume:
       "Les commerciaux passent avant la plaisance. On s'amarre avant et arrière sans raidir, on file ou on reprend au fur et à mesure, moteur prêt et pare-battages en place.",
-    ordre: 2,
+    ordre: 3,
     cible: 2,
     ancrage: 'règles d’utilisation des écluses gardées ou automatiques',
   },

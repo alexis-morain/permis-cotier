@@ -1,0 +1,37 @@
+id: meteo-0013
+option: cotier
+theme: meteo
+notion: meteo-decision
+statut: publie
+difficulte: 2
+enonce: >-
+  Le bulletin donne force 6 sur ta zone. Qu'est-ce qui, en plus du bulletin, entre dans
+  ta décision de sortir ?
+propositions:
+  - id: a
+    texte: La catégorie de conception du bateau, portée par la plaque du constructeur
+  - id: b
+    texte: L'expérience et le nombre de personnes capables de manœuvrer à bord
+  - id: c
+    texte: Le nombre de bateaux déjà sortis du port ce matin
+  - id: d
+    texte: La date de la dernière révision du moteur
+reponses:
+  - a
+  - b
+explication: >-
+  Le bulletin donne une prévision pour une zone, pas une autorisation de sortir. La décision
+  croise cette prévision avec le bateau, dont la catégorie de conception indique la force
+  de vent et la hauteur de vague pour lesquelles il est conçu, et avec l'équipage, dont
+  la fatigue et l'inexpérience ramènent la limite acceptable de plusieurs degrés Beaufort.
+  Se fier aux autres bateaux sortis n'est pas un critère : on ne connaît ni leur bateau
+  ni leur équipage.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « Décider
+      de sa sortie »'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

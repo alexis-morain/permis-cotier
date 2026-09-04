@@ -1,0 +1,39 @@
+id: carte-marine-0012
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 3
+enonce: >-
+  Une marque cardinale Nord porte un feu blanc qui scintille sans interruption, comme
+  celui-ci. Quelles descriptions la carte peut-elle en donner ?
+visuel:
+  fichier: rythmes/caractere-scintillant-rapide.svg
+  alt: "Feu scintillant rapide, fait d'éclats brefs qui se suivent deux fois plus vite que ceux d'un scintillant ordinaire."
+  credit: code
+propositions:
+  - id: a
+    texte: Q, scintillant continu
+  - id: b
+    texte: VQ, scintillant rapide continu
+  - id: c
+    texte: Fl (2), deux éclats groupés
+  - id: d
+    texte: Fl (3), trois éclats groupés
+reponses:
+  - a
+  - b
+explication: >-
+  Le feu de la cardinale Nord est un scintillant continu, Q, ou un scintillant rapide
+  continu, VQ : les deux existent, la carte dit lequel est en service à cet endroit. VQ
+  bat environ deux fois plus vite que Q, mais ni l'un ni l'autre ne s'interrompt. Les
+  deux autres descriptions sont des feux à éclats groupés, qui marquent une pause après
+  chaque groupe : la cardinale Nord est justement celle qui n'en fait aucune.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Nord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

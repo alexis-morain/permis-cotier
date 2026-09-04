@@ -21,6 +21,8 @@
     "balisage": "python3 scripts/balisage.py",
     "ecluses": "python3 scripts/ecluses.py",
     "carte": "python3 scripts/carte.py",
+    "rythmes": "python3 scripts/rythmes.py",
+    "situations": "python3 scripts/situations.py",
     "generer": "python3 scripts/generer.py",
     "build:pages": "astro build"
   },

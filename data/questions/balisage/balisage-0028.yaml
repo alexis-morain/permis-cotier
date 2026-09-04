@@ -1,0 +1,38 @@
+id: balisage-0028
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves ce feu jaune de nuit. Quelles sont les deux affirmations exactes ?
+visuel:
+  fichier: rythmes/speciale.svg
+  alt: "Feu jaune à éclats. Le rythme d'une marque spéciale est quelconque, mais sa couleur jaune ne se confond avec aucune marque blanche."
+  credit: code
+propositions:
+  - id: a
+    texte: C'est une marque spéciale, elle signale une zone ou une installation particulière
+  - id: b
+    texte: Son rythme est quelconque, c'est sa couleur qui l'identifie
+  - id: c
+    texte: Son rythme donne le côté par lequel il faut la contourner
+  - id: d
+    texte: Elle signale un danger de faible étendue entouré d'eaux saines
+reponses:
+  - a
+  - b
+explication: >-
+  La marque spéciale porte un feu jaune de rythme quelconque, choisi seulement pour ne
+  pas se confondre avec ceux des marques à feu blanc. Elle ne signale aucun danger de
+  navigation : zone de mouillage, câble, conduite, zone d'exercices, installation de loisirs.
+  De nuit, tu ne cherches donc pas à compter ses éclats, tu regardes sa couleur. Compter
+  le rythme n'a de sens que pour les cardinales et le danger isolé, dont le feu est blanc.
+sources:
+  - texte: Balisage AISM région A, marques spéciales
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

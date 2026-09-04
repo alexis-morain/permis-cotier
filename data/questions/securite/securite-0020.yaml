@@ -1,0 +1,37 @@
+id: securite-0020
+option: cotier
+theme: securite
+notion: securite-pieces-administratives
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu loues un bateau qui comporte un espace habitable. Où trouves-tu le rapport de sa
+  dernière vérification spéciale ?
+propositions:
+  - id: a
+    texte: Annexé à ton contrat de location, et embarqué à bord puisque le navire comporte
+      un espace habitable
+  - id: b
+    texte: Au seul registre des vérifications spéciales, consultable dans les locaux du
+      loueur
+  - id: c
+    texte: À bord seulement, le contrat de location n'ayant pas à le mentionner
+  - id: d
+    texte: Auprès des affaires maritimes, qui l'établissent chaque année
+reponses:
+  - a
+explication: >-
+  L'article 240-3.01 impose deux choses de la copie du dernier rapport : elle est annexée
+  au contrat de location et elle est embarquée à bord des navires comportant un espace
+  habitable. Le registre des vérifications spéciales existe bien, il archive tous les
+  rapports et il est mis à ta disposition avant l'embarquement, mais il vient en plus,
+  pas à la place. La vérification, elle, est effectuée sous la responsabilité du propriétaire
+  ou de l'exploitant, pas de l'administration.
+sources:
+  - texte: Division 240, article 240-3.01, II
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

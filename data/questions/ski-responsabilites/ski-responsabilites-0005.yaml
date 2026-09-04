@@ -1,0 +1,36 @@
+id: ski-responsabilites-0005
+option: cotier
+theme: ski-responsabilites
+notion: responsabilite-chef-de-bord
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es chef de bord d'un bateau de plaisance. De quoi la division 240 te rend-elle
+  garant avant d'appareiller ?
+propositions:
+  - id: a
+    texte: De l'adéquation de ta navigation avec les caractéristiques de ton navire
+  - id: b
+    texte: De la présence à bord, du bon état et de la validité du matériel de sécurité
+  - id: c
+    texte: De la validité du permis plaisance de chaque personne embarquée
+  - id: d
+    texte: De la déclaration de ta sortie auprès du CROSS de la zone
+reponses:
+  - a
+  - b
+explication: >-
+  L'article 240-1.03 énumère ce dont le chef de bord s'assure : l'adéquation de sa
+  navigation avec les caractéristiques de son navire, la présence à bord, le bon état et
+  la validité des équipements et matériels de sécurité ainsi que leur adaptation aux
+  personnes embarquées, et leur mise en oeuvre quand les circonstances l'exigent. Un seul
+  permis suffit à bord, celui de la personne qui conduit : rien n'oblige les passagers à
+  en détenir un. Et aucune déclaration de sortie n'est exigée du plaisancier.
+sources:
+  - texte: Division 240, article 240-1.03
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'

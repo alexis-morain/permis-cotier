@@ -1,0 +1,34 @@
+id: securite-0018
+option: cotier
+theme: securite
+notion: securite-pieces-administratives
+statut: publie
+difficulte: 3
+enonce: >-
+  En mer, un agent de l'autorité compétente te demande les pièces administratives exigées
+  pour conduire ton bateau à moteur. Que risques-tu si tu ne les présentes pas immédiatement ?
+propositions:
+  - id: a
+    texte: L'amende prévue pour les contraventions de la 2e classe
+  - id: b
+    texte: L'amende prévue pour les contraventions de la 4e classe
+  - id: c
+    texte: L'amende prévue pour les contraventions de la 5e classe
+  - id: d
+    texte: Rien, tant que tu les fais parvenir dans les cinq jours
+reponses:
+  - a
+explication: >-
+  L'article 18 du décret du 2 août 2007 punit de l'amende de la 2e classe le fait de ne
+  pas présenter immédiatement les autorisations, déclarations et pièces administratives
+  exigées. Le même article réserve la 4e classe à celui qui, invité à justifier dans un
+  délai de cinq jours, ne présente toujours rien au bout du délai. Ce délai n'efface donc
+  pas la première contravention, il en ouvre une seconde, plus lourde.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 18
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-04'
