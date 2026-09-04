@@ -156,9 +156,15 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
     if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
     const r = session.resultat;
     if (mode === 'examen') {
-      sauvegarder(
-        enregistrerExamen(charger(), { date: aujourdhui(), bonnes: r.bonnes, total: r.total, reussi: r.reussi }),
-      );
+      // Un examen arrêté en route n'entre pas dans l'historique : trois
+      // questions sur quarante s'afficheraient « reçu » sur l'accueil, ce qui
+      // serait faux. Il compte dans la progression par question, pas comme
+      // épreuve passée.
+      if (!session.interrompu) {
+        sauvegarder(
+          enregistrerExamen(charger(), { date: aujourdhui(), bonnes: r.bonnes, total: r.total, reussi: r.reussi }),
+        );
+      }
       evenement('examen-termine', { bonnes: r.bonnes, total: r.total, interrompu: session.interrompu });
     } else {
       evenement(revoir ? 'revoir-termine' : 'entrainement-termine', { theme, bonnes: r.bonnes, total: r.total });
@@ -274,7 +280,10 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
         <h1 className="depart__titre">Quarante questions, dans les conditions de l’épreuve.</h1>
 
         <ul className="depart__format">
-          <li><b>{serie.length} questions</b> tirées au sort dans les quatorze thèmes du programme.</li>
+          <li>
+            <b>{serie.length} question{serie.length > 1 ? 's' : ''}</b> tirées au sort dans les quatorze
+            thèmes du programme.
+          </li>
           <li><b>{SECONDES_PAR_QUESTION} secondes</b> par question. Passé ce délai, on passe à la suivante.</li>
           <li>
             <b>Une ou deux bonnes réponses.</b> La réponse doit être exacte : une bonne case seule
@@ -351,7 +360,7 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
                 session.interrompu ? (
                   <p className="resultat__verdict">
                     Examen interrompu, {r.total} question{r.total > 1 ? 's' : ''} jouée{r.total > 1 ? 's' : ''} sur{' '}
-                    {session.questions.length}. {r.erreurs} erreur{r.erreurs > 1 ? 's' : ''} sur ces {r.total}.
+                    {session.questions.length}, dont {r.erreurs} ratée{r.erreurs > 1 ? 's' : ''}.
                     Une note sur un examen entier demande d’aller au bout.
                   </p>
                 ) : (
@@ -538,7 +547,11 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
           <p className="discret">
             {session.index === 0
               ? 'Aucune question n’a encore été validée : tu n’auras pas de résultat.'
-              : `Il te reste ${restantes} question${restantes > 1 ? 's' : ''}. Ton résultat portera sur les ${session.index} déjà jouée${session.index > 1 ? 's' : ''}, pas sur ${session.questions.length}.`}
+              : `Il te reste ${restantes} question${restantes > 1 ? 's' : ''}. Ton résultat portera ${
+                  session.index === 1
+                    ? 'sur la seule que tu as jouée'
+                    : `sur les ${session.index} que tu as jouées`
+                }, pas sur ${session.questions.length}.`}
           </p>
           <div className="jeu__actions">
             <button
