@@ -1,0 +1,38 @@
+id: signaux-0016
+option: cotier
+theme: signaux
+notion: signaux-chenal
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu remontes un chenal étroit. Un navire qui te suit, en vue de toi, émet ce signal au
+  sifflet. Que t'annonce-t-il ?
+visuel:
+  fichier: sons/depassement-babord.svg
+  alt: "Deux sons prolongés au sifflet, suivis de deux sons brefs."
+  credit: code
+propositions:
+  - id: a
+    texte: Il compte te rattraper sur bâbord.
+  - id: b
+    texte: Il compte te rattraper sur tribord.
+  - id: c
+    texte: Il vient sur bâbord.
+  - id: d
+    texte: Il donne son accord à un dépassement.
+reponses:
+  - a
+explication: >-
+  Dans un chenal étroit ou une voie d'accès, la règle 34 c) i) fait annoncer son intention
+  au navire qui entend en rattraper un autre : deux sons prolongés puis un son bref pour
+  tribord, deux sons prolongés puis deux sons brefs pour bâbord. Les sons brefs de la
+  fin portent le côté, comme dans les signaux de manœuvre. L'accord de celui qui est rattrapé
+  est un autre signal, où prolongés et brefs alternent.
+sources:
+  - texte: RIPAM, règle 34 c) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

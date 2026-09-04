@@ -1,0 +1,40 @@
+id: signaux-0023
+option: cotier
+theme: signaux
+notion: signaux-avertissement
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu manœuvres à l'approche d'un navire que tu vois bien. Il t'adresse ce signal au sifflet.
+  Que t'annonce-t-il ?
+visuel:
+  fichier: sons/avertissement-doute.svg
+  alt: "Cinq sons brefs au sifflet, émis en série rapide, les silences plus courts que les sons."
+  credit: code
+propositions:
+  - id: a
+    texte: Il ne comprend pas tes intentions, ou doute que tu manœuvres assez pour éviter
+      l'abordage.
+  - id: b
+    texte: Il t'annonce qu'il vient sur bâbord.
+  - id: c
+    texte: Il est en détresse et demande assistance.
+  - id: d
+    texte: Il te demande de le rattraper par tribord.
+reponses:
+  - a
+explication: >-
+  Une série rapide d'au moins cinq sons brefs est le signal du doute de la règle 34 d) :
+  celui qui l'émet ne comprend pas les intentions de l'autre, ou se demande s'il prend
+  des mesures suffisantes pour éviter l'abordage. Il peut y ajouter au moins cinq éclats
+  brefs et rapides. Ce n'est pas un signal de détresse, qui relève de l'annexe IV, et
+  ce n'est pas non plus une manœuvre annoncée : au-delà de trois sons brefs, tu n'es plus
+  dans la règle 34 a).
+sources:
+  - texte: RIPAM, règle 34 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'
