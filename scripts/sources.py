@@ -11,8 +11,15 @@ Deux origines, deux traitements :
   est le PDF du ministère chargé de la mer ; la référence juridique reste le
   décret n° 77-733 du 6 juillet 1977.
 
+    python3 scripts/sources.py chercher "division 240"
     python3 scripts/sources.py legifrance --texte arrete-2007-09-28 --ref arrete-2007-09-28
+    python3 scripts/sources.py legifrance --texte JORFTEXT000000841523 --ref division-240 \\
+        --section "division 240"
     python3 scripts/sources.py ripam --pdf data/sources/_brut/texte-colreg.pdf --regles 20-31
+
+Un texte consolidé garde ses articles abrogés à côté de ceux qui les
+remplacent, parfois sous le même numéro : l'extraction ne prend que la
+vigueur, sauf `--tout`.
 
 Sortie : `data/sources/<ref>/<article>.md`, un fichier par article ou par
 règle, avec un en-tête qui porte la référence et la date de la version.
@@ -24,10 +31,12 @@ import json
 import os
 import re
 import sys
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import date
+from html.parser import HTMLParser
 from pathlib import Path
 
 RACINE = Path(__file__).resolve().parents[1]
@@ -53,6 +62,11 @@ ENVIRONNEMENTS = {
 TEXTES = {
     # Programme (art. 1er § 1.2), format de l'épreuve (§ 1.1), titre de conduite.
     "arrete-2007-09-28": "JORFTEXT000000428843",
+    # Arrêté du 23 novembre 1987 sur la sécurité des navires. Le texte porte
+    # toutes les divisions ; la 240 est celle de la plaisance, à extraire avec
+    # --section « division 240 ». Les arrêtés qui la modifient ne portent que
+    # la mention du changement : c'est bien le texte de 1987 qu'on consulte.
+    "arrete-1987-11-23": "JORFTEXT000000841523",
 }
 
 
@@ -108,13 +122,111 @@ def appeler(chemin: str, charge: dict, acces: str, api: str) -> dict:
         raise SystemExit(f"API Légifrance {erreur.code} sur {chemin} : {detail}")
 
 
+ENTITES = {"&nbsp;": " ", "&amp;": "&", "&lt;": "<", "&gt;": ">", "&#339;": "œ", "&quot;": '"'}
+
+
+def sans_entites(texte: str) -> str:
+    for avant, apres in ENTITES.items():
+        texte = texte.replace(avant, apres)
+    return texte
+
+
+class LecteurDeTableau(HTMLParser):
+    """Ramène un <table> à ses lignes de cellules.
+
+    Un `colspan` est reporté sur chaque colonne qu'il couvre : sans ça, la
+    ligne est plus courte que l'en-tête et tout ce qui suit glisse d'une
+    colonne. Dans la division 240, « Basique » couvre deux zones de
+    navigation, et le décalage mettrait « Côtier » en face de la mauvaise
+    distance d'un abri."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.lignes: list[list[str]] = []
+        self._ligne: list[str] | None = None
+        self._cellule: list[str] | None = None
+        self._portee = 1
+
+    def handle_starttag(self, balise, attributs):
+        if balise == "tr":
+            self._ligne = []
+        elif balise in ("td", "th"):
+            self._cellule = []
+            valeur = dict(attributs).get("colspan") or "1"
+            self._portee = int(valeur) if valeur.isdigit() and int(valeur) > 0 else 1
+        elif balise in ("br", "p") and self._cellule is not None:
+            # Une cellule tient sur une ligne : un saut devient une espace.
+            self._cellule.append(" ")
+
+    def handle_endtag(self, balise):
+        if balise in ("td", "th") and self._cellule is not None:
+            texte = " ".join("".join(self._cellule).split())
+            if self._ligne is None:
+                self._ligne = []
+            self._ligne.extend([texte] * self._portee)
+            self._cellule = None
+            self._portee = 1
+        elif balise == "tr" and self._ligne is not None:
+            self.lignes.append(self._ligne)
+            self._ligne = None
+
+    def handle_data(self, donnees):
+        if self._cellule is not None:
+            self._cellule.append(donnees)
+
+
+def rendre_tableau(html: str) -> str:
+    lecteur = LecteurDeTableau()
+    lecteur.feed(html)
+    lecteur.close()
+    lignes = [l for l in lecteur.lignes if l]
+    if not lignes:
+        return ""
+
+    largeur = max(len(l) for l in lignes)
+    rendues = ["| " + " | ".join(l + [""] * (largeur - len(l))) + " |" for l in lignes]
+    separateur = "| " + " | ".join(["---"] * largeur) + " |"
+    return "\n\n" + "\n".join([rendues[0], separateur, *rendues[1:]]) + "\n\n"
+
+
+def etendues_de_tableaux(html: str) -> list[tuple[int, int]]:
+    """Les bornes des <table> de premier niveau, imbrications comprises."""
+    etendues: list[tuple[int, int]] = []
+    profondeur = 0
+    debut = 0
+    for balise in re.finditer(r"</?table\b[^>]*>", html, flags=re.IGNORECASE):
+        if not balise.group(0).startswith("</"):
+            if profondeur == 0:
+                debut = balise.start()
+            profondeur += 1
+        elif profondeur:
+            profondeur -= 1
+            if profondeur == 0:
+                etendues.append((debut, balise.end()))
+    return etendues
+
+
+def tableaux_en_markdown(html: str) -> str:
+    """Remplace chaque tableau par un tableau markdown, lisible en ligne.
+
+    Sans ça, les balises sautent et les cellules se suivent en colonne :
+    on ne sait plus quelle valeur va avec quelle ligne."""
+    morceaux = []
+    curseur = 0
+    for debut, fin in etendues_de_tableaux(html):
+        morceaux.append(html[curseur:debut])
+        morceaux.append(rendre_tableau(html[debut:fin]))
+        curseur = fin
+    morceaux.append(html[curseur:])
+    return "".join(morceaux)
+
+
 def sans_balises(html: str) -> str:
-    texte = re.sub(r"<br\s*/?>", "\n", html or "")
+    texte = tableaux_en_markdown(html or "")
+    texte = re.sub(r"<br\s*/?>", "\n", texte)
     texte = re.sub(r"</p>", "\n\n", texte)
     texte = re.sub(r"<[^>]+>", "", texte)
-    remplacements = {"&nbsp;": " ", "&amp;": "&", "&lt;": "<", "&gt;": ">", "&#339;": "œ", "&quot;": '"'}
-    for avant, apres in remplacements.items():
-        texte = texte.replace(avant, apres)
+    texte = sans_entites(texte)
     return re.sub(r"\n{3,}", "\n\n", texte).strip()
 
 
@@ -141,6 +253,111 @@ def parcourir_articles(noeud: dict, recolte: list[dict]) -> None:
         parcourir_articles(section, recolte)
 
 
+# Un article sorti de vigueur reste dans le texte consolidé, à côté de celui
+# qui l'a remplacé, souvent sous le même numéro. Écrire une question sur du
+# droit abrogé serait la pire faute possible : on ne garde que la vigueur.
+ETATS_MORTS = {"ABROGE", "ABROGE_DIFF", "PERIME", "ANNULE", "MODIFIE_MORT_PERIME"}
+
+
+def sans_accents(texte: str) -> str:
+    decompose = unicodedata.normalize("NFD", texte)
+    return "".join(c for c in decompose if unicodedata.category(c) != "Mn").lower()
+
+
+def section_par_titre(noeud: dict, motif: str) -> dict | None:
+    """La première section dont le titre contient `motif`, à n'importe quelle
+    profondeur. Comparaison sans casse ni accents : les titres de Légifrance
+    mélangent « Quatrième section » et « Section 4 »."""
+    cherche = sans_accents(motif)
+    for section in noeud.get("sections", []) or []:
+        if cherche in sans_accents(section.get("title") or ""):
+            return section
+        trouve = section_par_titre(section, motif)
+        if trouve is not None:
+            return trouve
+    return None
+
+
+def articles_utiles(noeud: dict, en_vigueur_seulement: bool = True) -> list[dict]:
+    """Les articles du sous-arbre, en vigueur, sans doublon et non vides.
+
+    Légifrance garde les anciennes coquilles de section : le même article
+    reparaît sous deux titres différents, avec le même identifiant. On
+    dédoublonne dessus, et on garde l'ordre de l'arbre."""
+    bruts: list[dict] = []
+    parcourir_articles(noeud, bruts)
+
+    vus: set[str] = set()
+    gardes: list[dict] = []
+    for article in bruts:
+        if en_vigueur_seulement and (article.get("etat") or "").upper() in ETATS_MORTS:
+            continue
+        if not (article.get("content") or "").strip():
+            continue
+        identifiant = article.get("id") or ""
+        if identifiant and identifiant in vus:
+            continue
+        if identifiant:
+            vus.add(identifiant)
+        gardes.append(article)
+    return gardes
+
+
+def nom_article(numero: str, identifiant: str = "") -> str:
+    """Nom de fichier d'un article : « 240-1.01 » donne « article-240-1-01 »."""
+    propre = re.sub(r"[^a-z0-9]+", "-", (numero or "").lower()).strip("-")
+    return f"article-{propre}" if propre else (identifiant or "sans-numero")
+
+
+def invite_recherche(mots: str, fond: str = "LODA_DATE", nombre: int = 10) -> dict:
+    """Charge utile d'une recherche par titre. Sert à retrouver l'identifiant
+    d'un texte sans passer par le site, qui bloque les scripts."""
+    return {
+        "recherche": {
+            "champs": [
+                {
+                    "typeChamp": "TITLE",
+                    "criteres": [
+                        {
+                            "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
+                            "valeur": mots,
+                            "operateur": "ET",
+                        }
+                    ],
+                    "operateur": "ET",
+                }
+            ],
+            "filtres": [],
+            "pageNumber": 1,
+            "pageSize": nombre,
+            "sort": "PERTINENCE",
+            "typePagination": "DEFAUT",
+        },
+        "fond": fond,
+    }
+
+
+def commande_chercher(args) -> int:
+    """Retrouve l'identifiant d'un texte à partir de mots de son titre."""
+    oauth, api = ENVIRONNEMENTS["sandbox" if args.sandbox else "prod"]
+    acces = jeton(charger_env(), oauth)
+    reponse = appeler("/search", invite_recherche(args.mots, nombre=args.nombre), acces, api)
+
+    resultats = reponse.get("results") or []
+    if not resultats:
+        print("aucun texte pour ces mots", file=sys.stderr)
+        return 1
+
+    print(f"{reponse.get('totalResultNumber', len(resultats))} résultat(s), les {len(resultats)} premiers :\n")
+    for resultat in resultats:
+        for titre in (resultat.get("titles") or [])[:1]:
+            # L'API surligne les mots trouvés : illisible en console.
+            libelle = re.sub(r"</?mark>", "", titre.get("title") or "")
+            print(f"  {titre.get('cid')}  {libelle}")
+    print("\nPasse le CID à « sources.py legifrance --texte <CID> ».")
+    return 0
+
+
 def commande_legifrance(args) -> int:
     oauth, api = ENVIRONNEMENTS["sandbox" if args.sandbox else "prod"]
     texte = TEXTES.get(args.texte, args.texte)
@@ -150,10 +367,18 @@ def commande_legifrance(args) -> int:
     donnees = appeler("/consult/lawDecree", {"textId": texte, "date": date.today().isoformat()}, acces, api)
     titre = donnees.get("title") or texte
 
-    articles: list[dict] = []
-    parcourir_articles(donnees, articles)
+    racine_arbre: dict | None = donnees
+    if args.section:
+        racine_arbre = section_par_titre(donnees, args.section)
+        if racine_arbre is None:
+            print(f"aucune section dont le titre contient « {args.section} »", file=sys.stderr)
+            return 1
+        titre = (racine_arbre.get("title") or titre).strip()
+        print(f"section retenue : {titre}")
+
+    articles = articles_utiles(racine_arbre, en_vigueur_seulement=not args.tout)
     if not articles:
-        print("aucun article renvoyé ; vérifie l'identifiant du texte", file=sys.stderr)
+        print("aucun article en vigueur ; vérifie l'identifiant du texte", file=sys.stderr)
         return 1
 
     dossier = SOURCES / args.ref
@@ -161,11 +386,9 @@ def commande_legifrance(args) -> int:
     for article in articles:
         numero = (article.get("num") or "").strip()
         corps = sans_balises(article.get("content", ""))
-        if not corps:
-            continue
-        nom = "article-" + re.sub(r"[^a-z0-9]+", "-", numero.lower()).strip("-") if numero else article.get("id", "sans-numero")
         chemin = ecrire(
-            dossier, nom, f"{titre}, article {numero}".strip(", "), args.ref, corps,
+            dossier, nom_article(numero, article.get("id", "")),
+            f"{titre}, article {numero}".strip(", "), args.ref, corps,
             f"https://www.legifrance.gouv.fr/loda/article_lc/{article.get('id', '')}",
         )
         print(f"écrit {chemin.relative_to(RACINE)}")
@@ -288,8 +511,22 @@ def main(argv: list[str] | None = None) -> int:
         help="identifiant LEGITEXT, ou une clé de TEXTES comme « arrete-2007-09-28 »",
     )
     lf.add_argument("--ref", required=True, help="clé du dossier dans data/sources/")
+    lf.add_argument(
+        "--section", default=None,
+        help="ne garde que la section dont le titre contient ces mots, par exemple « division 240 »",
+    )
+    lf.add_argument(
+        "--tout", action="store_true",
+        help="garde aussi les articles abrogés (par défaut, la vigueur seule)",
+    )
     lf.add_argument("--sandbox", action="store_true", help="tape la sandbox plutôt que la production")
     lf.set_defaults(fonction=commande_legifrance)
+
+    ch = sous.add_parser("chercher", help="retrouve l'identifiant d'un texte par son titre")
+    ch.add_argument("mots", help="mots du titre, par exemple « division 240 »")
+    ch.add_argument("--nombre", type=int, default=10)
+    ch.add_argument("--sandbox", action="store_true")
+    ch.set_defaults(fonction=commande_chercher)
 
     ri = sous.add_parser("ripam", help="découpe le PDF du RIPAM en règles")
     ri.add_argument("--pdf", type=Path, default=SOURCES / "_brut" / "texte-colreg.pdf")
