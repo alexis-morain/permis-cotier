@@ -107,6 +107,58 @@ def extraire_documents(sortie: str) -> list[dict]:
     return documents
 
 
+class Bloc(str):
+    """Une chaîne à écrire en bloc plié, plus lisible en relecture."""
+
+
+def _bloc(vidangeur, valeur):
+    return vidangeur.represent_scalar("tag:yaml.org,2002:str", str(valeur), style=">")
+
+
+class Vidangeur(yaml.SafeDumper):
+    """Indente les listes, comme le gabarit les montre."""
+
+    def increase_indent(self, flow=False, indentless=False):
+        return super().increase_indent(flow, False)
+
+
+Vidangeur.add_representer(Bloc, _bloc)
+
+CHAMPS_LONGS = ("enonce", "explication")
+
+
+def rendre(doc: dict) -> str:
+    """Sérialise une question : champs dans l'ordre du gabarit, textes en bloc."""
+    propre: dict = {}
+    for cle in ("id", "option", "theme", "statut", "difficulte", "enonce", "visuel",
+                "propositions", "reponses", "explication", "sources", "meta"):
+        if cle not in doc:
+            continue
+        valeur = doc[cle]
+        if cle in CHAMPS_LONGS and isinstance(valeur, str):
+            valeur = Bloc(" ".join(valeur.split()))
+        propre[cle] = valeur
+    return yaml.dump(
+        propre, Dumper=Vidangeur, allow_unicode=True, sort_keys=False, width=84, default_flow_style=False,
+    )
+
+
+def nettoyer_textes(doc: dict) -> dict:
+    """Enlève les espaces de bord partout, la sortie du modèle en traîne."""
+    for cle in ("enonce", "explication"):
+        if isinstance(doc.get(cle), str):
+            doc[cle] = " ".join(doc[cle].split())
+    for prop in doc.get("propositions", []) or []:
+        if isinstance(prop, dict) and isinstance(prop.get("texte"), str):
+            prop["texte"] = " ".join(prop["texte"].split())
+    for source in doc.get("sources", []) or []:
+        if isinstance(source, dict):
+            for cle in ("texte", "ref"):
+                if isinstance(source.get(cle), str):
+                    source[cle] = source[cle].strip()
+    return doc
+
+
 def main(argv: list[str] | None = None) -> int:
     parseur = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parseur.add_argument("--source", type=Path, required=True, help="extrait dans data/sources/<ref>/")
@@ -157,6 +209,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"note du modèle : {str(doc['note']).strip()}")
             continue
 
+        doc = nettoyer_textes(doc)
         doc["id"] = prochain_identifiant(args.theme, pris)
         doc["theme"] = args.theme
         doc["option"] = "cotier"
@@ -183,9 +236,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         chemin = INBOX / f"{doc['id']}.yaml"
-        chemin.write_text(
-            yaml.safe_dump(doc, allow_unicode=True, sort_keys=False, width=88), encoding="utf-8",
-        )
+        chemin.write_text(rendre(doc), encoding="utf-8")
         deja.append(enonce)
         gardees += 1
         print(f"écrit {chemin.relative_to(RACINE)}")
