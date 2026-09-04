@@ -21,14 +21,11 @@ aucune banque de questions d'État, et personne ne peut prétendre reproduire
 celle de l'examen. Le site prépare **au format de l'épreuve** : 40 questions,
 1 ou 2 bonnes réponses, 5 erreurs admises, 20 secondes par question.
 
-**Les questions n'ont pas toutes le même niveau de relecture, et chacune le
-dit.** Le champ `meta.relu_par` de son fichier porte le nom du relecteur : 108
-questions sont relues par Alexis Morain, les 69 suivantes ne le sont pour
-l'instant que par le modèle qui les a écrites, à partir de l'article cité. Une
-relecture humaine de ces 69 est en cours, une deuxième relecture par un tiers
-est prévue avant décembre 2026. En attendant, une erreur est possible : le
-bouton de signalement est sur chaque question, et les signalements sont traités
-dans la semaine.
+**Toutes les questions publiées à ce jour sont relues par une seule personne,
+Alexis Morain.** Le champ `meta.relu_par` de chaque fichier porte le nom de son
+relecteur. Une deuxième relecture par un tiers est prévue avant décembre 2026.
+En attendant, une erreur est possible : le bouton de signalement est sur chaque
+question, et les signalements sont traités dans la semaine.
 
 Le site n'est pas entièrement statique. Deux fonctions serveur tournent sur
 Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de
