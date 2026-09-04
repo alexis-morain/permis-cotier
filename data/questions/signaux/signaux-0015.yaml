@@ -1,0 +1,35 @@
+id: signaux-0015
+option: cotier
+theme: signaux
+notion: signaux-manoeuvre
+statut: publie
+difficulte: 2
+enonce: >-
+  Le RIPAM définit lui-même les deux sons dont il se sert pour tous ses signaux. Quelles
+  durées leur donne-t-il ?
+propositions:
+  - id: a
+    texte: Le son bref dure environ une seconde.
+  - id: b
+    texte: Le son prolongé dure de quatre à six secondes.
+  - id: c
+    texte: Le son bref dure environ trois secondes.
+  - id: d
+    texte: Le son prolongé dure de dix à quinze secondes.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 32 pose les définitions avant tout le reste : le son bref dure environ une
+  seconde, le son prolongé de quatre à six secondes. Tout le système tient sur cet écart,
+  puisque c'est lui qui distingue un son prolongé isolé d'un son bref isolé, donc deux
+  messages qui n'ont rien à voir. Les valeurs proposées à côté sont trop longues pour
+  le bref et trop longues pour le prolongé.
+sources:
+  - texte: RIPAM, règle 32 b) et c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

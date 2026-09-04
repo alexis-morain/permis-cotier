@@ -1,0 +1,38 @@
+id: signaux-0019
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu navigues dans un banc de brume, au large, sans chenal ni obstacle autour de toi.
+  Ce signal au sifflet te parvient. Que t'apprend-il ?
+visuel:
+  fichier: sons/brume-avec-erre.svg
+  alt: "Un son prolongé au sifflet, isolé, tenu bien plus longtemps qu'un son bref."
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire à propulsion mécanique fait route et a de l'erre.
+  - id: b
+    texte: Un navire à propulsion mécanique fait route mais est stoppé, sans erre.
+  - id: c
+    texte: Un navire s'approche d'un coude de chenal.
+  - id: d
+    texte: Un navire à voile fait route.
+reponses:
+  - a
+explication: >-
+  La règle 35 a) prescrit un son prolongé au navire à propulsion mécanique qui a de l'erre,
+  autrement dit qui avance encore sur l'eau. Stoppé, il en émettrait deux. À la voile,
+  il émettrait un son prolongé suivi de deux sons brefs. Le même son prolongé isolé annonce
+  aussi un coude, mais seulement en vue d'un autre navire et dans un chenal, pas au large
+  dans la brume : c'est la situation qui donne le sens.
+sources:
+  - texte: RIPAM, règle 35 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

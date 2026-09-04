@@ -1,0 +1,38 @@
+id: signaux-0013
+option: cotier
+theme: signaux
+notion: signaux-manoeuvre
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu fais route au moteur, en vue d'un autre navire à moteur. Il manœuvre et t'adresse
+  ce signal au sifflet. Que t'annonce-t-il ?
+visuel:
+  fichier: sons/manoeuvre-tribord.svg
+  alt: "Un son bref au sifflet, une impulsion courte et isolée."
+  credit: code
+propositions:
+  - id: a
+    texte: Il vient sur tribord.
+  - id: b
+    texte: Il vient sur bâbord.
+  - id: c
+    texte: Il bat en arrière.
+  - id: d
+    texte: Il te demande de le dépasser.
+reponses:
+  - a
+explication: >-
+  La règle 34 a) donne trois signaux au sifflet pour un navire à propulsion mécanique
+  qui fait route et manœuvre en vue d'un autre : un son bref pour « Je viens sur tribord »,
+  deux sons brefs pour « Je viens sur bâbord », trois sons brefs pour « Je bats en arrière ».
+  Un seul son bref, donc tribord. Le moyen de retenir tient dans l'ordre du nombre de
+  sons : tribord, bâbord, arrière.
+sources:
+  - texte: RIPAM, règle 34 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

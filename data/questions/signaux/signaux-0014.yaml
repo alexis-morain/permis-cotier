@@ -1,0 +1,37 @@
+id: signaux-0014
+option: cotier
+theme: signaux
+notion: signaux-manoeuvre
+statut: publie
+difficulte: 2
+enonce: >-
+  Un navire à moteur qui fait route, en vue de toi, émet ce signal au sifflet. Que
+  t'annonce-t-il ?
+visuel:
+  fichier: sons/manoeuvre-arriere.svg
+  alt: "Trois sons brefs au sifflet, trois impulsions courtes de suite."
+  credit: code
+propositions:
+  - id: a
+    texte: Il bat en arrière.
+  - id: b
+    texte: Il vient sur bâbord.
+  - id: c
+    texte: Il ne comprend pas tes intentions.
+  - id: d
+    texte: Il est au mouillage dans la brume.
+reponses:
+  - a
+explication: >-
+  Trois sons brefs au sifflet disent « Je bats en arrière », d'après la règle 34 a). Deux
+  sons brefs diraient « Je viens sur bâbord » : ne compte pas de travers, l'écart entre
+  les deux signaux est d'un seul son. Le doute, lui, s'exprime par au moins cinq sons
+  brefs, ce qui s'entend tout de suite comme une série et non comme trois coups comptés.
+sources:
+  - texte: RIPAM, règle 34 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

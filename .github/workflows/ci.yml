@@ -52,6 +52,9 @@ jobs:
       - name: Vérifier les situations de rencontre
         run: python scripts/situations.py --verifier
 
+      - name: Vérifier les signaux sonores
+        run: python scripts/sons.py --verifier
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 
