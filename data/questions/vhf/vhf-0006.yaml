@@ -2,7 +2,7 @@ id: vhf-0006
 option: cotier
 theme: vhf
 notion: vhf-licence-mmsi
-statut: brouillon
+statut: publie
 difficulte: 2
 enonce: >-
   Ta VHF fixe est munie de l'appel sélectif numérique et programmée avec le MMSI du navire.
@@ -32,3 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

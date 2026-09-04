@@ -2,7 +2,7 @@ id: vhf-0005
 option: cotier
 theme: vhf
 notion: vhf-licence-mmsi
-statut: brouillon
+statut: publie
 difficulte: 1
 enonce: >-
   Tu installes une VHF fixe à bord. À quelle formalité administrative son utilisation
@@ -30,3 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
