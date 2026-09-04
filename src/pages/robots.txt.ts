@@ -1,14 +1,17 @@
 import type { APIRoute } from 'astro';
 
 /**
- * Tant que le site vit sur un sous-domaine pages.dev, il reste hors des
+ * Tant que le site vit sur un sous-domaine workers.dev ou pages.dev, il reste hors des
  * moteurs : l'acquisition passe par le vrai domaine, et deux adresses
  * indexées pour le même contenu se font du tort. Le jour où `SITE_URL`
  * pointe sur le domaine définitif, l'indexation s'ouvre toute seule.
  */
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL('https://exemple.invalid');
-  const provisoire = base.hostname.endsWith('.pages.dev') || base.hostname === 'exemple.invalid';
+  const provisoire =
+    base.hostname.endsWith('.workers.dev') ||
+    base.hostname.endsWith('.pages.dev') ||
+    base.hostname === 'exemple.invalid';
 
   const corps = provisoire
     ? [

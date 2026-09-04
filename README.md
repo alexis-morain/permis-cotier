@@ -7,7 +7,7 @@ la page visitée.
 Chaque question cite le texte réglementaire dont elle est tirée. La banque est
 écrite depuis les articles, jamais reprise chez un éditeur.
 
-**En ligne : https://permis-cotier-7nj.pages.dev**
+**En ligne : https://permis-cotier.alexis-c1f.workers.dev**
 
 Adresse provisoire. Le domaine définitif n'est pas choisi, et tant que le site
 vit sur ce sous-domaine il reste hors des moteurs de recherche : `robots.txt`

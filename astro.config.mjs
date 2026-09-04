@@ -7,10 +7,10 @@ import { readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
 
-// Domaine pas encore arrêté. Le site tourne sur son sous-domaine Pages en
+// Domaine pas encore arrêté. Le site tourne sur son sous-domaine Workers en
 // attendant ; `src/pages/robots.txt.ts` bloque l'indexation tant qu'on y est.
 // Le jour du choix : SITE_URL dans les variables Cloudflare, rien d'autre.
-const site = process.env.SITE_URL ?? 'https://permis-cotier-7nj.pages.dev';
+const site = process.env.SITE_URL ?? 'https://permis-cotier.alexis-c1f.workers.dev';
 
 export default defineConfig({
   site,
