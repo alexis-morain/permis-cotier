@@ -49,6 +49,27 @@ if (!existsSync(DIST)) {
   process.exit(1);
 }
 
+/** Les `url` et `item` du balisage, sur le domaine du site, `@id` exclus. */
+function adressesInternes(noeud, trouvees = new Set()) {
+  if (Array.isArray(noeud)) {
+    for (const n of noeud) adressesInternes(n, trouvees);
+  } else if (noeud && typeof noeud === 'object') {
+    for (const [cle, valeur] of Object.entries(noeud)) {
+      if ((cle === 'url' || cle === 'item') && typeof valeur === 'string' && valeur.startsWith('http')) {
+        trouvees.add(new URL(valeur).pathname);
+      } else {
+        adressesInternes(valeur, trouvees);
+      }
+    }
+  }
+  return trouvees;
+}
+
+const pageExiste = (chemin) => {
+  const nu = chemin.replace(/\/$/, '');
+  return nu === '' || existsSync(join(DIST, `${nu}.html`)) || existsSync(join(DIST, nu, 'index.html'));
+};
+
 const pages = pagesHtml(DIST).map(lire);
 const indexables = pages.filter((p) => !p.robots?.includes('noindex'));
 const durs = [];
@@ -73,10 +94,17 @@ for (const p of indexables) {
   if (p.h1.length !== 1) durs.push(`${p.fichier} : ${p.h1.length} <h1>`);
   if (!p.ogImage) doux.push(`${p.fichier} : pas d’image de partage`);
   for (const bloc of p.jsonLd) {
+    let graphe;
     try {
-      JSON.parse(bloc);
+      graphe = JSON.parse(bloc);
     } catch (e) {
       durs.push(`${p.fichier} : JSON-LD illisible (${e.message})`);
+      continue;
+    }
+    // Une adresse du balisage qui ne mène nulle part est une promesse fausse
+    // faite à un moteur. Les `@id` en sont exclus : ce sont des identifiants.
+    for (const lien of adressesInternes(graphe)) {
+      if (!pageExiste(lien)) durs.push(`${p.fichier} : le balisage renvoie vers ${lien}, page absente du build`);
     }
   }
 }
