@@ -62,7 +62,7 @@ describe('session en cours', () => {
     ids: ['vhf-0001', 'vhf-0002'],
     index: 1,
     selections: [['a'], []],
-    restant: 14,
+    echeance: 1_800_000_014_000,
     journal: [{ id: 'vhf-0001', juste: true }],
     majLe: 1_800_000_000_000,
   };
