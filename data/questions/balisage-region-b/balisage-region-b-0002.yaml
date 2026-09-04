@@ -1,0 +1,32 @@
+id: balisage-region-b-0002
+option: cotier
+theme: balisage-region-b
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en région de balisage B. Que deviennent les marques cardinales par rapport
+  à la région A ?
+propositions:
+  - id: a
+    texte: Elles sont identiques, rien ne change
+  - id: b
+    texte: Leurs couleurs sont inversées, comme celles des marques latérales
+  - id: c
+    texte: Leurs voyants sont inversés, pointes en bas au lieu de pointes en haut
+  - id: d
+    texte: Leur feu devient jaune au lieu de blanc
+reponses:
+  - a
+explication: >-
+  Les marques cardinales sont identiques en région A et en région B : mêmes couleurs noir
+  et jaune, mêmes voyants faits de deux cônes noirs, même feu blanc scintillant. Seules
+  les marques latérales changent d'une région à l'autre. Le piège consiste à étendre l'inversion
+  des latérales à tout le système, alors qu'elle ne touche que leurs couleurs.
+sources:
+  - texte: AISM, balisage région B, marques cardinales
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

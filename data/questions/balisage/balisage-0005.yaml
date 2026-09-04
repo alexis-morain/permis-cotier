@@ -1,0 +1,32 @@
+id: balisage-0005
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Quel est le corps d'une marque d'eaux saines ?
+propositions:
+  - id: a
+    texte: Des bandes verticales rouges et blanches
+  - id: b
+    texte: Des bandes verticales bleues et jaunes
+  - id: c
+    texte: Du noir avec une large bande horizontale rouge
+  - id: d
+    texte: Du jaune uni
+reponses:
+  - a
+explication: >-
+  La marque d'eaux saines porte des bandes verticales rouges et blanches, un voyant en
+  sphère rouge et un feu blanc. Elle signale que les eaux sont saines tout autour, en
+  milieu de chenal ou en atterrissage. Les autres corps proposés sont ceux de la marque
+  de danger nouveau, de la marque de danger isolé et de la marque spéciale : le rouge
+  apparaît dans deux d'entre eux, c'est le sens des bandes, verticales ici, qui tranche.
+sources:
+  - texte: Balisage AISM, marque d'eaux saines
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,33 @@
+id: balisage-0010
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu passes près d'une bouée à bandes verticales bleues et jaunes. Que signale-t-elle
+  ?
+propositions:
+  - id: a
+    texte: Un danger récemment découvert, pas encore porté sur les cartes
+  - id: b
+    texte: Une zone de mouillage réservée aux navires de commerce
+  - id: c
+    texte: Des eaux saines, tu peux passer de chaque côté
+  - id: d
+    texte: Un chenal traversier réservé aux engins de plage
+reponses:
+  - a
+explication: >-
+  Les bandes verticales bleues et jaunes désignent la marque de danger nouveau, qui double
+  le balisage normal d'un danger tout juste découvert, une épave par exemple, tant qu'il
+  ne figure pas sur les documents nautiques. Elle porte une croix jaune en X et un feu
+  bleu et jaune alternés. Le piège vient de cette croix jaune, qu'elle partage avec la
+  marque spéciale, laquelle a un corps entièrement jaune et ne signale aucun danger.
+sources:
+  - texte: Balisage AISM région A, marque de danger nouveau
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
