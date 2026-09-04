@@ -1,0 +1,21 @@
+# Arrêté du 18 mai 2005 relatif aux certificats restreints de radiotéléphoniste du service mobile maritime et du service mobile fluvial et aux droits d'examen concernant ces certificats, article 1
+
+- Référence : arrete-2005-05-18
+- Version consultée le : 2026-09-04
+- Source : https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000023649045
+- Licence : Licence Ouverte 2.0 (Etalab)
+
+---
+1. Toute personne manœuvrant, à partir d'un navire autre qu'un navire de plaisance ou qu'un navire pour lequel un certificat restreint d'opérateur est exigé, une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF) et naviguant dans les eaux territoriales françaises ou dans les eaux internationales doit être titulaire du certificat restreint de radiotéléphoniste du service mobile maritime. 
+
+2. Toute personne manœuvrant, à partir d'un navire de plaisance, une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF) et naviguant dans les eaux internationales doit être titulaire du certificat restreint de radiotéléphoniste du service mobile maritime. 
+
+3. Toute personne manœuvrant, à partir d'un navire de plaisance, une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF), autre qu'un équipement portatif d'une puissance maximale de six watts dépourvu de l'appel sélectif numérique, et naviguant uniquement dans les eaux territoriales françaises doit être titulaire du certificat restreint de radiotéléphoniste du service mobile maritime ou d'un permis de conduire en mer les bateaux de plaisance à moteur. 
+
+4. Toute personne manœuvrant, à partir d'un bateau autre qu'un bateau de plaisance ou qu'un bateau pour lequel un certificat restreint d'opérateur est exigé, une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF) et naviguant sur les voies de navigation intérieure françaises et étrangères doit être titulaire du certificat restreint de radiotéléphoniste du service mobile fluvial ou du certificat restreint de radiotéléphoniste du service mobile maritime. 
+
+5. Toute personne manœuvrant, à partir d'un bateau de plaisance, une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF) et naviguant dans les eaux intérieures étrangères doit être titulaire du certificat restreint de radiotéléphoniste du service mobile fluvial ou du certificat restreint de radiotéléphoniste du service mobile maritime. 
+
+6. Toute personne manœuvrant, à partir d'un bateau de plaisance, une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF), autre qu'un équipement portatif d'une puissance maximale de six watts dépourvu de l'appel sélectif numérique, et naviguant sur les voies de navigation intérieure françaises doit être titulaire du certificat restreint de radiotéléphoniste du service mobile fluvial ou du certificat restreint de radiotéléphoniste du service maritime ou d'un permis de conduire en eaux intérieures les bateaux de plaisance à moteur. 
+
+7. Les titulaires des brevets ou diplômes, en cours de validité, d'officier radioélectronicien de 1re ou 2e classe de la marine marchande, du certificat général d'opérateur, du certificat spécial d'opérateur ou du certificat restreint d'opérateur sont autorisés à manœuvrer en mer et dans les eaux intérieures une station radioélectrique fonctionnant dans la gamme des ondes métriques (VHF) sans avoir à être titulaire du certificat restreint de radiotéléphoniste du service mobile maritime ou du certificat restreint de radiotéléphoniste du service mobile fluvial.
