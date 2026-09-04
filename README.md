@@ -7,6 +7,13 @@ la page visitée.
 Chaque question cite le texte réglementaire dont elle est tirée. La banque est
 écrite depuis les articles, jamais reprise chez un éditeur.
 
+**En ligne : https://permis-cotier-7nj.pages.dev**
+
+Adresse provisoire. Le domaine définitif n'est pas choisi, et tant que le site
+vit sur ce sous-domaine il reste hors des moteurs de recherche : `robots.txt`
+interdit tout. Le basculement se fera en posant `SITE_URL` dans les variables
+Cloudflare, rien d'autre à changer.
+
 ## Ce que ce site n'est pas
 
 Il n'est ni officiel, ni agréé, ni « conforme ». L'administration ne publie
@@ -52,6 +59,7 @@ npm run dev
 | `npm run valider` | valide les fichiers YAML de la banque |
 | `npm run credits` | régénère `data/CREDITS.md` depuis les fiches de visuels |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
+| `npm run deploy` | construit et publie sur Cloudflare Pages |
 
 ## Ajouter une question
 
