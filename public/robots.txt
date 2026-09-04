@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /examen
+Disallow: /entrainement/
+Disallow: /signaler
+Disallow: /parametres
+
+# Le domaine définitif remplacera celui-ci à la mise en ligne.
+Sitemap: https://exemple.invalid/sitemap-index.xml

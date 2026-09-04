@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Parametres from '../components/Parametres.tsx';
+import { versionBanque, questionsPubliees } from '../lib/banque';
+
+const version = versionBanque();
+const total = (await questionsPubliees()).length;
+---
+
+<Base titre="Réglages" description="Ta progression, la version de la banque et les licences." indexable={false}>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <p class="chapitre">Réglages</p>
+    <h1>Réglages</h1>
+
+    <Parametres client:only="react" />
+
+    <h2>Cette version</h2>
+    <p>
+      Banque <b>{version}</b>, {total} question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}.
+      Le site fonctionne hors ligne une fois visité, et se met à jour tout seul à la publication suivante.
+    </p>
+
+    <h2>Ce que le site sait de toi</h2>
+    <p>
+      Aucun compte, aucun mot de passe, aucune adresse. La progression et la date d’examen restent
+      dans ce navigateur. La fréquentation est mesurée avec Umami, auto-hébergé et sans cookie :
+      pas d’identifiant, pas de suivi entre les sites.
+    </p>
+    <p class="discret">
+      Deux choses partent quand même vers un serveur, et seulement si tu les déclenches : un
+      signalement d’erreur, et plus tard le code de synchronisation. Le reste est statique.
+    </p>
+
+    <h2>Licences</h2>
+    <p>
+      Code sous <a href="https://opensource.org/licenses/MIT">MIT</a>. Banque de questions sous
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"> CC BY-SA 4.0</a> : tu peux la
+      reprendre, à condition de citer et de partager aux mêmes conditions.
+      <a href="/credits">Crédits des visuels</a>.
+    </p>
+  </div>
+</Base>

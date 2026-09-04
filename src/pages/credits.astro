@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { readFileSync } from 'node:fs';
+
+let corps = '';
+try {
+  corps = readFileSync(new URL('../../data/CREDITS.md', import.meta.url), 'utf-8');
+} catch {
+  corps = '';
+}
+const lignes = corps
+  .split('\n')
+  .filter((l) => l.startsWith('- '))
+  .map((l) => l.slice(2));
+---
+
+<Base
+  titre="Crédits des visuels"
+  description="Auteur, licence et source de chaque image reprise de l’extérieur."
+>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <p class="chapitre">Crédits</p>
+    <h1>D’où viennent les images</h1>
+    <p>
+      Aucun visuel dont dépend une réponse n’est produit par un générateur d’images. Les balises,
+      marques et pictogrammes viennent de Wikimedia Commons, avec leur licence d’origine. Les feux
+      de navires sont dessinés par un composant du site, à partir des règles du RIPAM.
+    </p>
+
+    {lignes.length > 0 ? (
+      <ul>{lignes.map((l) => <li set:html={l} />)}</ul>
+    ) : (
+      <p class="discret">Aucun visuel externe pour l’instant.</p>
+    )}
+
+    <h2>Textes réglementaires</h2>
+    <p>
+      Les extraits d’arrêtés et de décrets cités viennent de Légifrance, publiés sous
+      <a href="https://www.etalab.gouv.fr/licence-ouverte-open-licence/"> Licence Ouverte 2.0</a>.
+      Le texte du RIPAM utilisé comme document de travail est celui mis en ligne par le ministère
+      chargé de la mer ; la référence juridique reste le décret n° 77-733 du 6 juillet 1977.
+    </p>
+  </div>
+</Base>

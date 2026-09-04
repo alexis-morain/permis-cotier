@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import { questionsPubliees, nomDuTheme } from '../../lib/banque';
+
+export async function getStaticPaths() {
+  const questions = await questionsPubliees();
+  return questions.map((q) => ({ params: { id: q.id }, props: { q } }));
+}
+
+const { q } = Astro.props;
+const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
+const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
+---
+
+<Base titre={`${q.enonce.slice(0, 70)} — permis côtier`} description={q.explication.slice(0, 155)}>
+  <article class="page page--etroite" style="padding-block:3rem 0">
+    <p class="chapitre"><a href={`/theme/${q.theme}`}>{nomDuTheme(q.theme)}</a></p>
+    <h1 class="question">{q.enonce}</h1>
+
+    {q.visuel && (
+      <figure style="margin:1.5rem 0">
+        <img src={`/visuels/${q.visuel.fichier}`} alt={q.visuel.alt} style="max-width:100%;border:1px solid var(--filet)" />
+        <figcaption class="discret" style="margin-top:0.4rem">{q.visuel.alt}</figcaption>
+      </figure>
+    )}
+
+    <ol class="propositionsListe">
+      {q.propositions.map((p) => (
+        <li class={q.reponses.includes(p.id) ? 'bonne' : ''}>
+          <span class="lettre">{lettres[p.id] ?? p.id}</span>
+          <span>{p.texte}</span>
+        </li>
+      ))}
+    </ol>
+
+    <h2>Réponse</h2>
+    <p>
+      <strong>
+        {bonnes.map((p) => `${lettres[p.id] ?? p.id}, ${p.texte}`).join(' et ')}
+      </strong>
+    </p>
+    <p>{q.explication}</p>
+
+    <h2>Source</h2>
+    <ul class="sourcesListe">
+      {q.sources.map((s) => (
+        <li>{s.url ? <a href={s.url} rel="noreferrer noopener">{s.texte}</a> : s.texte}</li>
+      ))}
+    </ul>
+
+    <p style="margin-top:2.5rem">
+      <a class="bouton" href={`/entrainement/${q.theme}`}>S’entraîner sur {nomDuTheme(q.theme).toLowerCase()}</a>
+    </p>
+    <p><a class="signaler" href={`/signaler?question=${q.id}`}>Signaler une erreur sur cette question</a></p>
+  </article>
+</Base>
+
+<style>
+  .question { font-size: clamp(1.6rem, 5vw, 2.3rem); }
+  .propositionsListe { list-style: none; margin: 1.5rem 0 2.5rem; padding: 0; }
+  .propositionsListe li {
+    display: flex;
+    gap: 0.8rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--filet);
+    margin-bottom: 0.5rem;
+  }
+  .propositionsListe .bonne { border-color: var(--vert); border-width: 2px; }
+  .lettre {
+    flex: 0 0 1.6rem; height: 1.6rem;
+    display: grid; place-items: center;
+    border: 1px solid var(--texte-doux);
+    font-size: 0.8rem; font-weight: 700;
+  }
+  .bonne .lettre { background: var(--vert); border-color: var(--vert); color: var(--papier-vif); }
+  .sourcesListe { padding-left: 1.2rem; }
+  .signaler {
+    font-size: 0.85rem; color: var(--texte-doux);
+    text-decoration: underline; text-decoration-color: var(--filet);
+  }
+</style>

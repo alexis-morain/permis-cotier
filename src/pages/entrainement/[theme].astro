@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import Quiz from '../../components/Quiz.tsx';
+import { questionsDuTheme } from '../../lib/banque';
+import { THEMES } from '../../lib/themes';
+
+export async function getStaticPaths() {
+  return THEMES.map((theme) => ({ params: { theme: theme.code }, props: { theme } }));
+}
+
+const { theme } = Astro.props;
+const questions = await questionsDuTheme(theme.code);
+---
+
+<Base
+  titre={`Entraînement : ${theme.nom}`}
+  description={`Questions du thème ${theme.nom}, avec correction immédiate et source.`}
+  indexable={false}
+>
+  <div class="page page--etroite">
+    <p class="chapitre" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
+    <Quiz client:only="react" mode="entrainement" questions={questions} theme={theme.code} />
+  </div>
+</Base>

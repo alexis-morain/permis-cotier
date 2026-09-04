@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titre="Page introuvable" description="Cette page n’existe pas." indexable={false}>
+  <div class="page page--etroite" style="padding-block:4rem 2rem">
+    <p class="chapitre">Erreur 404</p>
+    <h1>Rien à cette adresse</h1>
+    <p>La page a peut-être été renommée, ou l’adresse est fautive.</p>
+    <p class="jeu__actions" style="margin-top:2rem">
+      <a class="bouton bouton--principal" href="/examen">Commencer un examen blanc</a>
+      <a class="bouton bouton--discret" href="/themes">Voir les thèmes</a>
+    </p>
+  </div>
+</Base>

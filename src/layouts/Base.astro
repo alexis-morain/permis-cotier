@@ -1,0 +1,125 @@
+---
+import '../styles/global.css';
+import { versionBanque } from '../lib/banque';
+
+interface Props {
+  titre: string;
+  description: string;
+  /** Laisser à false sur les écrans de jeu, qui n'ont rien à indexer. */
+  indexable?: boolean;
+  canonique?: string;
+}
+
+const { titre, description, indexable = true, canonique } = Astro.props;
+const url = canonique ?? new URL(Astro.url.pathname, Astro.site ?? 'https://exemple.invalid').href;
+const version = versionBanque();
+const annee = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    {!indexable && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="theme-color" content="#16231f" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+
+    <header class="entete">
+      <div class="page entete__interieur">
+        <a href="/" class="entete__marque">
+          <span class="entete__nom">Permis côtier</span>
+          <span class="entete__sous">révision</span>
+        </a>
+        <nav aria-label="Navigation principale">
+          <a href="/entrainement">Entraînement</a>
+          <a href="/themes">Thèmes</a>
+          <a href="/parametres">Réglages</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <slot />
+    </main>
+
+    <footer class="pied">
+      <div class="page pied__interieur">
+        <p>
+          Site de révision indépendant, sans lien avec l’administration. Il prépare
+          <strong>au format de l’épreuve</strong>, il ne délivre aucun titre.
+          Chaque question cite le texte dont elle est tirée.
+        </p>
+        <p class="discret">
+          Banque version {version}, relue par Alexis Morain seul à ce stade.
+          Une erreur ? Le bouton de signalement est sur chaque question.
+        </p>
+        <p class="discret">
+          Code sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>,
+          banque de questions sous <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>.
+          Visuels repris de Wikimedia Commons : <a href="/credits">crédits et licences</a>.
+          Textes réglementaires cités sous Licence Ouverte 2.0.
+        </p>
+        <p class="discret">
+          © {annee} Alexis Morain. <a href="https://github.com/alexismorain/permis-cotier">Code source</a>.
+        </p>
+      </div>
+    </footer>
+
+    <style>
+      .entete {
+        border-bottom: var(--filet-epaisseur) solid var(--filet);
+        background: var(--fond);
+      }
+      .entete__interieur {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem 1.5rem;
+        padding-block: 0.85rem;
+      }
+      .entete__marque {
+        display: flex;
+        align-items: baseline;
+        gap: 0.45rem;
+        text-decoration: none;
+      }
+      .entete__nom {
+        font-family: var(--serif);
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+      .entete__sous {
+        color: var(--texte-doux);
+        font-size: 0.8rem;
+      }
+      .entete nav {
+        display: flex;
+        gap: 1.25rem;
+        font-size: 0.95rem;
+      }
+      .entete nav a { text-decoration: none; }
+      .entete nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+
+      .pied {
+        margin-top: 5rem;
+        border-top: var(--filet-epaisseur) solid var(--filet);
+        background: color-mix(in srgb, var(--eau) 35%, var(--fond));
+      }
+      .pied__interieur { padding-block: 2.5rem 3.5rem; }
+      .pied p { max-width: 58ch; }
+      .pied p:first-child { font-size: 1rem; }
+    </style>
+  </body>
+</html>

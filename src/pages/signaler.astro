@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <p class="chapitre">Signalement</p>
+    <h1>Une question te paraît fausse ?</h1>
+    <p>
+      Dis-nous laquelle et pourquoi. Chaque signalement ouvre une fiche publique, la question est
+      relue, et corrigée ou retirée. Les erreurs signalées sont traitées dans la semaine.
+    </p>
+
+    <form class="signalement" method="post" action="/api/signaler">
+      <p>
+        <label for="question">Identifiant de la question</label>
+        <input id="question" name="question" required readonly />
+        <span class="discret">Rempli automatiquement depuis la question d’où tu viens.</span>
+      </p>
+      <p>
+        <label for="motif">Qu’est-ce qui ne va pas ?</label>
+        <select id="motif" name="motif" required>
+          <option value="reponse">La bonne réponse indiquée est fausse</option>
+          <option value="explication">L’explication est fausse ou incomplète</option>
+          <option value="source">La source ne dit pas ça</option>
+          <option value="visuel">Le visuel est faux ou illisible</option>
+          <option value="formulation">La question est mal formulée ou ambiguë</option>
+          <option value="autre">Autre</option>
+        </select>
+      </p>
+      <p>
+        <label for="details">Précise, si tu peux</label>
+        <textarea id="details" name="details" rows="5" maxlength="1200"
+          placeholder="La règle 26 parle du chalutier, pas du navire à la traîne."></textarea>
+      </p>
+      <p class="discret">
+        Rien d’autre n’est envoyé : pas de nom, pas d’adresse, pas d’adresse IP conservée.
+        Un signalement est public.
+      </p>
+      <p>
+        <button class="bouton bouton--principal" type="submit">Envoyer le signalement</button>
+      </p>
+      <noscript><p class="discret">Le formulaire a besoin de JavaScript pour l’anti-spam.</p></noscript>
+    </form>
+  </div>
+
+  <script is:inline>
+    const champ = document.getElementById('question');
+    const id = new URLSearchParams(location.search).get('question');
+    if (champ) {
+      if (id) champ.value = id;
+      else champ.removeAttribute('readonly');
+    }
+  </script>
+</Base>
+
+<style>
+  .signalement { margin-top: 2rem; max-width: 34rem; }
+  .signalement label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+  .signalement input,
+  .signalement select,
+  .signalement textarea {
+    font: inherit;
+    width: 100%;
+    min-height: 2.9rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--filet);
+    border-radius: 0;
+    background: var(--fond-carte);
+    color: inherit;
+  }
+  .signalement textarea { min-height: 7rem; resize: vertical; }
+  .signalement .discret { display: block; margin-top: 0.3rem; }
+</style>
