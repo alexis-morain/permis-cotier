@@ -57,13 +57,22 @@ describe('schéma de question', () => {
   });
 
   describe('propositions', () => {
-    it('refuse moins de trois propositions', () => {
-      expect(schemaQuestion.safeParse(avec({ propositions: valide.propositions.slice(0, 2), reponses: ['b'] })).success).toBe(false);
+    it('accepte deux propositions', () => {
+      expect(schemaQuestion.safeParse(avec({ propositions: valide.propositions.slice(0, 2), reponses: ['b'] })).success).toBe(true);
     });
 
-    it('refuse plus de cinq propositions', () => {
-      const six = ['a', 'b', 'c', 'd', 'e', 'f'].map((id) => ({ id, texte: 'x'.repeat(5) }));
-      expect(schemaQuestion.safeParse(avec({ propositions: six })).success).toBe(false);
+    it('refuse une proposition unique', () => {
+      expect(schemaQuestion.safeParse(avec({ propositions: valide.propositions.slice(0, 1), reponses: ['a'] })).success).toBe(false);
+    });
+
+    it('refuse cinq propositions', () => {
+      const cinq = ['a', 'b', 'c', 'd', 'e'].map((id) => ({ id, texte: 'x'.repeat(5) }));
+      expect(schemaQuestion.safeParse(avec({ propositions: cinq })).success).toBe(false);
+    });
+
+    it('refuse un identifiant de proposition au-delà de d', () => {
+      const avecE = [...valide.propositions.slice(0, 3), { id: 'e', texte: 'la cinquième lettre' }];
+      expect(schemaQuestion.safeParse(avec({ propositions: avecE })).success).toBe(false);
     });
 
     it('refuse des identifiants de proposition dupliqués', () => {
