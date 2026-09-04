@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run valider && astro build",
+    "build": "node scripts/valider-si-possible.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
@@ -39,7 +39,8 @@
     "jsdom": "^30.0.1",
     "typescript": "^5.9.3",
     "vitest": "^5.0.0",
-    "workbox-window": "^7.4.1"
+    "workbox-window": "^7.4.1",
+    "wrangler": "^4.129.0"
   },
   "overrides": {
     "@vitejs/plugin-react": "^4.7.0"

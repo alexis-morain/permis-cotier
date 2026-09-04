@@ -1,4 +1,11 @@
-# Cloudflare Pages. Le build sort dans dist/, les fonctions dans functions/.
+# Site entièrement statique servi par Workers Static Assets.
+# Pas de script Worker : aucun `main`, le trafic va directement aux fichiers.
 name = "permis-cotier"
 compatibility_date = "2026-09-04"
-pages_build_output_dir = "dist"
+
+[assets]
+directory = "./dist"
+# Le build Astro est en format fichier avec trailingSlash à never :
+# /examen doit servir examen.html, sans barre finale.
+html_handling = "drop-trailing-slash"
+not_found_handling = "404-page"
