@@ -203,3 +203,20 @@ export function ordonnerEntrainement<T extends { id: string }>(
     .sort((a, b) => a.rang - b.rang || a.vueLe.localeCompare(b.vueLe) || a.index - b.index)
     .map((x) => x.q);
 }
+
+/**
+ * Les seules questions ratées à la dernière rencontre, tous thèmes mêlés, la
+ * plus ancienne d'abord. C'est ce que compte la pastille « à revoir » de
+ * l'accueil : le même filtre des deux côtés, sinon le chiffre annoncé et la
+ * série jouée divergent.
+ */
+export function serieARevoir<T extends { id: string }>(
+  questions: readonly T[],
+  progression: Progression,
+): T[] {
+  const ratees = questions.filter((q) => {
+    const e = progression[q.id];
+    return e !== undefined && !e.derniereReussie;
+  });
+  return ordonnerEntrainement(ratees, progression);
+}

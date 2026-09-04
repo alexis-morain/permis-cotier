@@ -63,9 +63,17 @@ const relecture = await comptesDeRelecture();
         </p>
         <p class="discret">
           Banque version {version}. {
-            relecture.parUnePersonne === relecture.total
-              ? 'Toutes les questions sont relues par Alexis Morain, seul à ce stade.'
-              : `${relecture.parUnePersonne} des ${relecture.total} questions sont relues par Alexis Morain ; les autres ne le sont, pour l’instant, que par le modèle qui les a écrites à partir de l’article cité.`
+            relecture.parUnePersonne === relecture.total ? (
+              <Fragment>
+                Toutes les questions sont relues par <a href="/a-propos">Alexis Morain</a>, seul à ce stade.
+              </Fragment>
+            ) : (
+              <Fragment>
+                {relecture.parUnePersonne} des {relecture.total} questions sont relues par{' '}
+                <a href="/a-propos">Alexis Morain</a> ; les autres ne le sont, pour l’instant, que par le
+                modèle qui les a écrites à partir de l’article cité.
+              </Fragment>
+            )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
         <p class="discret">
@@ -98,6 +106,10 @@ const relecture = await comptesDeRelecture();
         align-items: baseline;
         gap: 0.45rem;
         text-decoration: none;
+        /* Cible tactile de 44 px sans casser l'alignement des deux mots :
+           le calage reste sur la ligne de base, la hauteur vient du padding. */
+        min-height: 2.75rem;
+        padding-block: 0.5rem;
       }
       .entete__nom {
         font-family: var(--serif);
@@ -113,7 +125,15 @@ const relecture = await comptesDeRelecture();
         gap: 1.25rem;
         font-size: 0.95rem;
       }
-      .entete nav a { text-decoration: none; }
+      .entete nav a {
+        /* 44 px de cible tactile, centrés dans le lien lui-même pour que
+           l'alignement sur la ligne de base du conteneur reste juste. */
+        display: flex;
+        align-items: center;
+        min-height: 2.75rem;
+        padding-block: 0.5rem;
+        text-decoration: none;
+      }
       .entete nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
 
       .pied {

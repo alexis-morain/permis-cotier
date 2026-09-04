@@ -29,6 +29,12 @@
 }
 .jeu__chrono--urgent { color: var(--rouge); }
 
+.jeu__jauges {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
 .jeu__barre {
   height: var(--hauteur-barre);
   background: var(--eau);
@@ -42,6 +48,21 @@
   transition: transform 1s linear;
 }
 .jeu__barre--urgent span { background: var(--rouge); }
+
+/* Avancement dans l'examen : plus fin et plus sourd que le chrono, pour qu'on
+   ne confonde pas les deux d'un coup d'œil. */
+.jeu__avancement {
+  height: 2px;
+  background: var(--filet-fin);
+  overflow: hidden;
+}
+.jeu__avancement span {
+  display: block;
+  height: 100%;
+  background: var(--texte-doux);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
 
 .jeu__consigne {
   font-size: 0.9rem;
@@ -136,6 +157,7 @@
 .jeu__actions .bouton--principal { flex: 1 1 12rem; }
 
 .verdict {
+  scroll-margin-block: 1rem 6rem;
   border: var(--filet-epaisseur) solid var(--filet);
   border-left-width: 3px;
   padding: 1rem 1.1rem;
@@ -151,9 +173,13 @@
 .sources li + li { margin-top: 0.2rem; }
 
 .signaler {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   background: none;
   border: 0;
-  padding: 0;
+  padding-block: 0.6rem;
+  padding-inline: 0;
   font: inherit;
   font-size: 0.85rem;
   color: var(--texte-doux);
@@ -162,6 +188,40 @@
   cursor: pointer;
 }
 .signaler:hover { color: var(--texte); text-decoration-color: var(--accent); }
+
+/* Écran de départ de l'examen. Le chrono ne tourne pas encore. */
+.depart { gap: 1.1rem; }
+.depart__titre {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.depart__format { list-style: none; margin: 0; padding: 0; max-width: 46ch; }
+.depart__format li {
+  border-top: var(--filet-epaisseur) solid var(--filet-fin);
+  padding: 0.6rem 0;
+}
+.depart__format li:last-child { border-bottom: var(--filet-epaisseur) solid var(--filet-fin); }
+.encadre__titre { font: inherit; font-weight: 700; margin: 0 0 0.4rem; }
+.depart__retour { margin: 0; }
+.depart__reprise { margin-top: 0.25rem; }
+.depart__reprise p { margin: 0; }
+.depart__reprise p + p { margin-top: 0.4rem; }
+
+/* Confirmation avant d'arrêter un examen en cours. */
+.arret {
+  border: var(--filet-epaisseur) solid var(--filet);
+  border-left-width: 3px;
+  border-left-color: var(--rouge);
+  padding: 1rem 1.1rem;
+  background: var(--fond-carte);
+}
+.arret__question { font-weight: 700; margin: 0 0 0.35rem; }
+.arret .jeu__actions { margin-top: 0.9rem; }
 
 /* Résultat */
 .resultat__score {
@@ -195,7 +255,28 @@
 .revue__rang { font-size: 0.85rem; color: var(--texte-doux); margin-bottom: 0.35rem; }
 .revue__enonce { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; margin: 0 0 0.75rem; max-width: 40ch; }
 
+/* Le bouton de validation tombait à 818 px sur un écran de 812 : il fallait
+   scroller à chaque question, et en examen ce scroll se paye en points. */
+@media (max-width: 45.999rem) {
+  .jeu__actions--collant {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin-inline: -1.25rem;
+    margin-block-start: 0;
+    padding: 0.75rem 1.25rem max(0.75rem, env(safe-area-inset-bottom));
+    border-top: var(--filet-epaisseur) solid var(--filet);
+    background: var(--fond);
+  }
+
+  /* La barre monte à 141 px en entraînement, bouton plus lien de signalement :
+     un verdict court remonté par le bas passerait dessous. */
+  .verdict { scroll-margin-block: 1rem 10rem; }
+}
+
 @media (min-width: 46rem) {
   .jeu { gap: 1.5rem; padding-block: 2rem 3rem; }
-  .jeu__enonce { max-width: 30ch; }
+  /* Plus large que sur mobile, pas plus étroit : l'énoncé est l'élément le
+     plus important de l'écran, il ne se lit pas en colonne de cinq lignes. */
+  .jeu__enonce { max-width: 48ch; }
 }
