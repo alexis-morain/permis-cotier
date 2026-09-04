@@ -1,0 +1,33 @@
+id: securite-0005
+option: cotier
+theme: securite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu armes ton bateau pour une navigation à moins de 2 milles d'un abri et tu choisis
+  un dispositif lumineux collectif. En quoi consiste-t-il ?
+propositions:
+  - id: a
+    texte: Une lampe torche étanche ayant une autonomie d'au moins 6 heures.
+  - id: b
+    texte: Une lampe torche étanche ayant une autonomie d'au moins 3 heures.
+  - id: c
+    texte: Une lampe flash fixée à chaque équipement individuel de flottabilité.
+  - id: d
+    texte: Un cyalume par personne embarquée.
+reponses:
+  - a
+explication: >-
+  Le point 2 de l'article 240-2.03 laisse le choix entre un dispositif lumineux collectif
+  et un dispositif individuel. Le collectif est une lampe torche étanche d'au moins 6
+  heures d'autonomie. Le piège est la confusion de catégorie : la lampe flash, le cyalume
+  et la fixation sur l'équipement individuel de flottabilité relèvent du dispositif individuel,
+  pas du collectif. L'autonomie de 6 heures, elle, vaut dans les deux cas.
+sources:
+  - texte: Division 240, article 240-2.03, point 2
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

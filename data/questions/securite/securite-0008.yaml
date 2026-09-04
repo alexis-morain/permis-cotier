@@ -1,0 +1,34 @@
+id: securite-0008
+option: cotier
+theme: securite
+statut: publie
+difficulte: 2
+enonce: >-
+  Où sont définis le type de ton extincteur portatif d'incendie, son emplacement et sa
+  signalisation ?
+propositions:
+  - id: a
+    texte: Dans le manuel du propriétaire ou, à défaut, dans l'annexe 240-A3.
+  - id: b
+    texte: Dans l'annexe 240-A3 uniquement, le manuel du propriétaire n'ayant pas valeur
+      réglementaire.
+  - id: c
+    texte: Sur la plaque constructeur apposée sur le navire.
+  - id: d
+    texte: Nulle part, le chef de bord décide librement.
+reponses:
+  - a
+explication: >-
+  Le point 3 de l'article 240-2.03 impose un ou plusieurs extincteurs portatifs et renvoie
+  au manuel du propriétaire pour le type, l'emplacement et la signalisation. L'annexe
+  240-A3 ne s'applique qu'à défaut de manuel, elle vient donc en second. Le piège est
+  d'inverser cet ordre ou de croire que le chef de bord choisit librement, alors que la
+  règle lui impose une référence.
+sources:
+  - texte: Division 240, article 240-2.03, point 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

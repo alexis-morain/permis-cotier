@@ -1,0 +1,36 @@
+id: balisage-region-b-0003
+option: cotier
+theme: balisage-region-b
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en région B et tu relèves cette marque en venant du large. De quel côté
+  la laisses-tu ?
+visuel:
+  fichier: balisage/laterale-tribord-region-b.svg
+  alt: Bouée conique rouge surmontée d'un voyant conique rouge, pointe en haut.
+  credit: code
+propositions:
+  - id: a
+    texte: Sur tribord
+  - id: b
+    texte: Sur bâbord
+  - id: c
+    texte: Elle se laisse indifféremment d'un côté ou de l'autre
+  - id: d
+    texte: Elle ne borde pas un chenal, elle signale une zone particulière
+reponses:
+  - a
+explication: >-
+  En région B, qui couvre les Amériques, le Japon, la Corée et les Philippines, les couleurs
+  latérales sont inversées : le rouge marque tribord. La forme, elle, ne change pas d'une
+  région à l'autre, et c'est elle qui tranche : le cône et le voyant conique sont toujours
+  à tribord, le cylindre toujours à bâbord. En région A, cette même marque serait verte.
+sources:
+  - texte: AISM, système de balisage maritime, région B, marque latérale tribord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

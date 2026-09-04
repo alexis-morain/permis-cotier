@@ -1,0 +1,34 @@
+id: signaux-0003
+option: cotier
+theme: signaux
+statut: publie
+difficulte: 3
+enonce: >-
+  Quel feu sert à émettre les signaux lumineux de manœuvre qui complètent les signaux
+  au sifflet ?
+propositions:
+  - id: a
+    texte: Un feu blanc visible sur tout l'horizon, d'une portée de cinq milles au moins
+  - id: b
+    texte: Un feu blanc visible sur tout l'horizon, d'une portée de trois milles au moins
+  - id: c
+    texte: Un feu jaune visible sur tout l'horizon, d'une portée de cinq milles au moins
+  - id: d
+    texte: Un feu blanc visible sur un secteur de 225°, d'une portée de cinq milles au
+      moins
+reponses:
+  - a
+explication: >-
+  La règle 34 b) iii) précise que le feu utilisé pour ces signaux, s'il existe, est un
+  feu blanc visible sur tout l'horizon à une distance de cinq milles au moins, conforme
+  à l'annexe I. Les distracteurs proposent la valeur voisine de trois milles, une autre
+  couleur, et le secteur de 225° qui est celui du feu de tête de mât, pas de ce feu de
+  manœuvre.
+sources:
+  - texte: RIPAM, règle 34 b) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

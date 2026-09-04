@@ -1,0 +1,37 @@
+id: balisage-0017
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves cette marque. De quel côté la contournes-tu pour trouver des eaux saines
+  ?
+visuel:
+  fichier: balisage/cardinale-nord.svg
+  alt: Bouée noire au-dessus, jaune en dessous, surmontée de deux cônes noirs pointes
+    en haut.
+  credit: code
+propositions:
+  - id: a
+    texte: Par le nord
+  - id: b
+    texte: Par l'est
+  - id: c
+    texte: Par le sud
+  - id: d
+    texte: Par l'ouest
+reponses:
+  - a
+explication: >-
+  Une marque cardinale Nord porte deux cônes noirs pointes en haut, et son corps est noir
+  au-dessus, jaune en dessous. Les cônes montrent où sont les eaux saines : pointes en
+  haut, on passe au nord. Le corps confirme, la bande noire est du côté vers lequel les
+  pointes se dirigent.
+sources:
+  - texte: AISM, système de balisage maritime, marque cardinale Nord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

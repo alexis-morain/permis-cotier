@@ -1,0 +1,32 @@
+id: balisage-0015
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Comment se présente un pictogramme d'interdiction sur la bande littorale des 300 mètres
+  ?
+propositions:
+  - id: a
+    texte: Une figure blanche sur fond bleu
+  - id: b
+    texte: Une figure noire sur fond blanc bordé et barré de rouge
+  - id: c
+    texte: Une figure rouge sur fond blanc bordé de noir
+  - id: d
+    texte: Une figure noire sur fond jaune barré de rouge
+reponses:
+  - b
+explication: >-
+  Le paragraphe 1 de l'annexe II décrit l'interdiction par une figure noire posée sur
+  un fond blanc, bordé et barré de rouge. L'autorisation, elle, se lit à la figure blanche
+  sur fond bleu. Les distracteurs jouent sur l'inversion des deux codes et sur des couleurs
+  voisines qui n'apparaissent pas dans le texte.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe II, paragraphe 1
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

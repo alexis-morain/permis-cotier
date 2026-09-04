@@ -1,0 +1,37 @@
+id: securite-0009
+option: cotier
+theme: securite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es chef de bord. De quoi t'assures-tu au sujet des équipements et matériels de sécurité
+  embarqués ?
+propositions:
+  - id: a
+    texte: De leur présence à bord seulement, leur bon état et leur validité relevant
+      du propriétaire du navire.
+  - id: b
+    texte: De leur présence à bord, de leur bon état, de leur validité et de leur adaptation
+      aux personnes embarquées.
+  - id: c
+    texte: De leur présence à bord et de leur validité, leur adaptation aux personnes
+      embarquées n'étant exigée que pour les enfants.
+  - id: d
+    texte: De leur présence à bord et de leur bon état, leur validité n'étant contrôlée
+      qu'à l'occasion d'un contrôle des affaires maritimes.
+reponses:
+  - b
+explication: >-
+  L'article 240-1.03 met quatre exigences sur la même ligne : le chef de bord s'assure
+  de la présence à bord, du bon état et de la validité de tous les équipements et matériels
+  de sécurité, ainsi que de leur adaptation aux personnes embarquées. Le piège consiste
+  à n'en retenir qu'une partie : aucune de ces vérifications n'est renvoyée au propriétaire,
+  à un contrôle administratif, ni réservée à une catégorie de passagers.
+sources:
+  - texte: Division 240, article 240-1.03
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

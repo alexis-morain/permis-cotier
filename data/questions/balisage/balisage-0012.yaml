@@ -1,0 +1,33 @@
+id: balisage-0012
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans un chenal traversier, à moins de 50 mètres du rivage, quel est l'intervalle de
+  mouillage entre deux bouées latérales ?
+propositions:
+  - id: a
+    texte: 5 mètres
+  - id: b
+    texte: 10 mètres
+  - id: c
+    texte: 25 mètres
+  - id: d
+    texte: 50 mètres
+reponses:
+  - b
+explication: >-
+  L'annexe I, paragraphe 2, échelonne les intervalles selon la distance au rivage : 50
+  mètres entre la ligne des 300 mètres et 150 mètres du rivage, 25 mètres entre 150 et
+  50 mètres, puis 10 mètres à moins de 50 mètres. Plus on approche de la plage, plus les
+  bouées se resserrent, et les trois valeurs de l'échelle servent de distracteurs les
+  unes aux autres.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 2
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

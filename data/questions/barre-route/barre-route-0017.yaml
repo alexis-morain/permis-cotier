@@ -1,0 +1,34 @@
+id: barre-route-0017
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu fais route dans un chenal étroit et la manœuvre peut se faire sans danger. Où navigues-tu
+  ?
+propositions:
+  - id: a
+    texte: Aussi près que possible de la limite extérieure gauche du chenal.
+  - id: b
+    texte: Aussi près que possible de la limite extérieure droite du chenal.
+  - id: c
+    texte: Au milieu du chenal, à égale distance des deux limites.
+  - id: d
+    texte: Du côté où la profondeur est la plus grande.
+reponses:
+  - b
+explication: >-
+  La règle 9 a) demande aux navires faisant route dans un chenal étroit ou une voie d'accès
+  de naviguer aussi près que possible de la limite extérieure droite, lorsque cela peut
+  se faire sans danger. C'est le bord droit, celui qui se trouve sur ta tribord dans le
+  sens où tu progresses, pas le milieu du chenal ni le côté le plus profond. Le piège
+  classique est l'inversion droite gauche, qui met deux navires se croisant bord à bord
+  du même côté.
+sources:
+  - texte: RIPAM, règle 9 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

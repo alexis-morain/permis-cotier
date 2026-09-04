@@ -1,0 +1,33 @@
+id: securite-0006
+option: cotier
+theme: securite
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau à moteur a un déplacement lège de 200 kg et une puissance propulsive de 6
+  kW. Es-tu dispensé de ligne de mouillage ?
+propositions:
+  - id: a
+    texte: Oui, son déplacement lège est inférieur à 250 kg.
+  - id: b
+    texte: Non, la dispense exige aussi une puissance d'au plus 4,5 kW.
+  - id: c
+    texte: Oui, tout navire à moteur en est dispensé à moins de 2 milles d'un abri.
+  - id: d
+    texte: Non, seuls les véhicules nautiques à moteur en sont dispensés.
+reponses:
+  - b
+explication: >-
+  Le point 6 de l'article 240-2.03 dispense de ligne de mouillage les navires motorisés
+  dont le déplacement lège est inférieur à 250 kg et dont la puissance propulsive est
+  inférieure ou égale à 4,5 kW, soit 6,1 ch. Les deux conditions se cumulent : avec 6
+  kW, la dispense tombe malgré les 200 kg. Le piège est de ne retenir que le critère de
+  poids, qui suffit pour un navire à voile mais pas pour un navire à moteur.
+sources:
+  - texte: Division 240, article 240-2.03, point 6
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

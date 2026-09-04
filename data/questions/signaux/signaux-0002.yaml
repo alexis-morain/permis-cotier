@@ -1,0 +1,33 @@
+id: signaux-0002
+option: cotier
+theme: signaux
+statut: publie
+difficulte: 2
+enonce: >-
+  Un navire s'approche de toi et tu ne comprends pas ses intentions. Quel signal sonore
+  émets-tu ?
+propositions:
+  - id: a
+    texte: Une série rapide d'au moins cinq sons brefs
+  - id: b
+    texte: Une série rapide d'au moins cinq sons prolongés
+  - id: c
+    texte: Une série rapide d'au moins trois sons brefs
+  - id: d
+    texte: Deux sons prolongés suivis de deux sons brefs
+reponses:
+  - a
+explication: >-
+  La règle 34 d) prévoit que le navire qui doute des intentions de l'autre, ou qui se
+  demande si l'autre en fait assez pour éviter l'abordage, exprime ce doute immédiatement
+  par une série rapide d'au moins cinq sons brefs. Ce signal peut être complété par au
+  moins cinq éclats brefs et rapides. Les distracteurs jouent sur la nature du son et
+  sur leur nombre.
+sources:
+  - texte: RIPAM, règle 34 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

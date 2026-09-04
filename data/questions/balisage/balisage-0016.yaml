@@ -1,0 +1,35 @@
+id: balisage-0016
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu navigues dans un chenal réglementé créé à l'intérieur de la bande littorale des 300
+  mètres. À quelle catégorie de marques appartiennent les bouées qui en balisent les limites
+  ?
+propositions:
+  - id: a
+    texte: Aux marques latérales.
+  - id: b
+    texte: Aux marques cardinales.
+  - id: c
+    texte: Aux marques spéciales.
+  - id: d
+    texte: Aux marques de danger isolé.
+reponses:
+  - c
+explication: >-
+  L'article 1 de l'arrêté du 27 mars 1991 prévoit que la limite des 300 mètres, ainsi
+  que les limites des zones et chenaux réglementés créés en deçà de cette limite, sont
+  matérialisées par des bouées présentant les caractères des marques spéciales définies
+  au chapitre 6 de l'annexe I au décret du 7 septembre 1983. Le piège tient au mot « chenal
+  » : on l'associe d'ordinaire au balisage latéral, bâbord et tribord, alors que le texte
+  range ces bouées dans la catégorie des marques spéciales.
+sources:
+  - texte: Arrêté du 27 mars 1991, article 1
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

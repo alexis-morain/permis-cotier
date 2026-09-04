@@ -1,0 +1,32 @@
+id: signaux-0010
+option: cotier
+theme: signaux
+statut: publie
+difficulte: 1
+enonce: >-
+  Ton navire est en détresse et tu demandes assistance. Où le RIPAM décrit-il les signaux
+  que tu dois utiliser ou montrer ?
+propositions:
+  - id: a
+    texte: à l'annexe I
+  - id: b
+    texte: à l'annexe II
+  - id: c
+    texte: à l'annexe III
+  - id: d
+    texte: à l'annexe IV
+reponses:
+  - d
+explication: >-
+  La règle 37 tient en une phrase : un navire en détresse qui demande assistance doit
+  utiliser ou montrer les signaux décrits à l'annexe IV du Règlement. C'est donc l'annexe
+  IV, et elle seule, qui fixe la liste de ces signaux. Le piège est de retenir qu'il existe
+  une annexe sans retenir laquelle, et de citer au jugé une des trois autres.
+sources:
+  - texte: RIPAM, règle 37
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

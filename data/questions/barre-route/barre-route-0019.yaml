@@ -1,0 +1,34 @@
+id: barre-route-0019
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Par visibilité réduite, tu détectes au radar seulement la présence d'un navire sur l'avant
+  de ton travers et tu manœuvres largement à temps pour éviter une situation très rapprochée.
+  Quel changement de cap la règle 19 te demande d'éviter ?
+propositions:
+  - id: a
+    texte: Un changement de cap sur bâbord, sauf si ce navire est en train d'être rattrapé.
+  - id: b
+    texte: Un changement de cap sur tribord, sauf si ce navire est en train d'être rattrapé.
+  - id: c
+    texte: Un changement de cap sur bâbord, sans aucune exception.
+  - id: d
+    texte: Tout changement de cap, la réduction de vitesse étant la seule manœuvre permise.
+reponses:
+  - a
+explication: >-
+  La règle 19 d) i) demande d'éviter, dans la mesure du possible, un changement de cap
+  sur bâbord pour un navire qui se trouve sur l'avant du travers, sauf si ce navire est
+  en train d'être rattrapé. Le piège tient à l'exception : elle existe bien, mais elle
+  ne vaut que pour le navire rattrapé, et l'interdiction ne porte pas sur tribord. La
+  règle n'interdit pas non plus de changer de cap, elle oriente le sens de la manœuvre.
+sources:
+  - texte: RIPAM, règle 19 d) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
