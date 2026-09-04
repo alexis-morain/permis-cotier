@@ -41,6 +41,29 @@ CODES_THEMES = [
     "ecluses",
 ]
 
+NOTIONS_TS = RACINE / "src" / "lib" / "notions.ts"
+_RE_NOTION = re.compile(
+    r"^\s+code: '([a-z0-9-]+)',\n\s+theme: '([a-z0-9-]+)',", re.M
+)
+
+
+def notions_declarees() -> dict[str, str]:
+    """Les notions du référentiel, lues dans `src/lib/notions.ts`.
+
+    Le TypeScript reste la source de vérité : c'est lui que le site consomme.
+    On l'extrait au lieu de le recopier, un référentiel de cent notions
+    recopié à la main finissant toujours par diverger. Un test vérifie que
+    l'extraction ramène bien le compte attendu, une reformulation du fichier
+    casse donc bruyamment au lieu de vider silencieusement la liste.
+    """
+    if not NOTIONS_TS.exists():
+        return {}
+    texte = NOTIONS_TS.read_text(encoding="utf-8")
+    return {code: theme for code, theme in _RE_NOTION.findall(texte)}
+
+
+NOTIONS = notions_declarees()
+
 STATUTS = ["brouillon", "relu", "publie", "retire"]
 STATUTS_RELUS = {"relu", "publie"}
 
@@ -52,7 +75,7 @@ RE_CREDIT = re.compile(r"^(genere|code|auteur|commons:.+)$")
 RE_FICHIER_VISUEL = re.compile(r"^[a-z0-9][a-z0-9/_-]*\.(svg|png|webp|jpg)$")
 
 CHAMPS = {
-    "id", "option", "theme", "statut", "difficulte", "enonce", "visuel",
+    "id", "option", "theme", "statut", "difficulte", "enonce", "visuel", "notion",
     "propositions", "reponses", "explication", "sources", "meta",
 }
 CHAMPS_META = {"cree_le", "genere_par", "relu_par", "relu_le", "relu_par_2"}
@@ -99,6 +122,16 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
         ko("id", f"identifiant attendu <theme>-<4 chiffres>, reçu {ident!r}")
     elif theme in CODES_THEMES and not ident.startswith(f"{theme}-"):
         ko("id", f"l'identifiant doit commencer par « {theme}- », reçu {ident!r}")
+
+    notion = q.get("notion")
+    if notion is not None:
+        if not isinstance(notion, str) or notion not in NOTIONS:
+            ko("notion", f"notion inconnue : {notion!r}")
+        elif NOTIONS[notion] != theme:
+            ko(
+                "notion",
+                f"la notion {notion!r} relève du thème {NOTIONS[notion]!r}, pas de {theme!r}",
+            )
 
     if q.get("option") != "cotier":
         ko("option", "seule l'option « cotier » existe en V1")

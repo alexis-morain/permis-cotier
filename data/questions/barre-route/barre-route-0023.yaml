@@ -1,0 +1,33 @@
+id: barre-route-0023
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: brouillon
+difficulte: 2
+enonce: >-
+  Tu relèves au compas un navire qui s'approche. Son relèvement ne change pas de manière
+  appréciable. Qu'en conclus-tu ?
+propositions:
+  - id: a
+    texte: Il y a risque d'abordage.
+  - id: b
+    texte: Il n'y a pas de risque, puisque vos routes sont parallèles.
+  - id: c
+    texte: Il y a risque seulement si le navire est plus rapide que toi.
+  - id: d
+    texte: Rien, le relèvement au compas ne renseigne pas sur le risque d'abordage.
+reponses:
+  - a
+explication: >-
+  C'est le critère de la règle 7 d) i) : un relèvement qui ne varie pas, alors que la
+  distance diminue, signe la route de collision. Un relèvement constant ne veut pas dire
+  route parallèle, au contraire : deux navires sur des routes parallèles se relèvent sous
+  un angle qui change. Attention aussi à la réciproque, que la règle écarte : un
+  relèvement qui varie n'exclut pas le risque, notamment avec un très grand navire, un
+  train de remorque ou un navire à courte distance.
+sources:
+  - texte: RIPAM, règle 7 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude

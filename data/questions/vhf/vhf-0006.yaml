@@ -1,0 +1,34 @@
+id: vhf-0006
+option: cotier
+theme: vhf
+notion: vhf-licence-mmsi
+statut: brouillon
+difficulte: 2
+enonce: >-
+  Ta VHF fixe est munie de l'appel sélectif numérique et programmée avec le MMSI du navire.
+  Qu'exige alors la division 240 ?
+propositions:
+  - id: a
+    texte: >-
+      Que des renseignements sur la position du navire soient fournis automatiquement en
+      permanence, pour être inclus dans l'alerte de détresse initiale.
+  - id: b
+    texte: Que la position soit saisie à la main avant chaque départ.
+  - id: c
+    texte: Que le MMSI soit reprogrammé à chaque changement de zone de navigation.
+  - id: d
+    texte: Que la VHF soit doublée d'une balise de localisation des sinistres.
+reponses:
+  - a
+explication: >-
+  L'alerte ASN ne vaut que si elle porte une position, et la division 240 impose que ce
+  renseignement soit fourni automatiquement et en permanence, ce qui suppose la VHF reliée
+  à un GPS. Une alerte sans position oblige le CROSS à chercher, et fait perdre le temps
+  qui compte. Le MMSI, lui, est attribué par l'autorité qui délivre les licences et ne se
+  reprogramme pas au gré des navigations.
+sources:
+  - texte: Division 240, article 240-2.20, III et IV
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
