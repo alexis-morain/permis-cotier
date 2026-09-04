@@ -175,7 +175,7 @@ describe('arrêt d’un examen en cours', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
 
     expect(screen.getByText(/Il te reste 2 questions/)).toBeTruthy();
-    expect(screen.getByText(/portera sur les 1 déjà jouée/)).toBeTruthy();
+    expect(screen.getByText(/portera sur la seule que tu as jouée, pas sur 3/)).toBeTruthy();
   });
 
   it('rend la main sans rien casser si on renonce', () => {
@@ -196,6 +196,32 @@ describe('arrêt d’un examen en cours', () => {
 
     expect(screen.getByText(/Examen interrompu, 1 question jouée sur 3/)).toBeTruthy();
     expect(screen.queryByText(/Recalé/)).toBeNull();
+  });
+
+  it('n’inscrit pas un examen interrompu dans les examens passés', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
+
+    const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
+    expect(etat.examens).toEqual([]);
+    // La question jouée compte quand même dans la progression.
+    expect(etat.questions['ecluses-0001'].vues).toBe(1);
+    expect(etat.enCours).toBeNull();
+  });
+
+  it('inscrit un examen mené au bout', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
+    expect(etat.examens).toHaveLength(1);
+    expect(etat.examens[0].total).toBe(3);
   });
 });
 
