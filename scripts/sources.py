@@ -445,7 +445,12 @@ def etendre_numeros(demande: str) -> list[str]:
 
     Les articles d'un code se suivent par leur dernier groupe de chiffres :
     on borne dessus, le reste du numéro est le préfixe commun. Un numéro seul
-    passe tel quel, et la virgule sépare plusieurs demandes."""
+    passe tel quel, et la virgule sépare plusieurs demandes.
+
+    Deux pièges, tous deux capables de faire manquer une source sans bruit :
+    le zéro de tête compte, « 240-2.04 » n'est pas « 240-2.4 » ; et une borne
+    haute écrite en entier doit porter le même préfixe que la borne basse,
+    sinon l'intervalle partirait du préfixe de gauche en ignorant l'autre."""
     numeros: list[str] = []
     for morceau in demande.split(","):
         morceau = morceau.strip()
@@ -454,19 +459,29 @@ def etendre_numeros(demande: str) -> list[str]:
         if ".." not in morceau:
             numeros.append(morceau)
             continue
-        gauche, _, droite = morceau.partition("..")
-        depart = re.search(r"(\d+)$", gauche.strip())
-        if not depart:
-            raise SystemExit(f"intervalle illisible : « {morceau} » ne finit pas par un nombre")
-        prefixe = gauche.strip()[: depart.start(1)]
+        gauche, _, droite = (part.strip() for part in morceau.partition(".."))
+        depart = re.search(r"(\d+)$", gauche)
         # La borne haute peut être écrite en entier ou réduite au dernier nombre.
-        arrivee = re.search(r"(\d+)$", droite.strip())
-        if not arrivee:
+        arrivee = re.search(r"(\d+)$", droite)
+        if not depart or not arrivee:
             raise SystemExit(f"intervalle illisible : « {morceau} » ne finit pas par un nombre")
+
+        prefixe = gauche[: depart.start(1)]
+        prefixe_haut = droite[: arrivee.start(1)]
+        if prefixe_haut and prefixe_haut != prefixe:
+            raise SystemExit(
+                f"intervalle entre deux textes : « {morceau} » borne « {prefixe} » "
+                f"par « {prefixe_haut} ». Écris la borne haute en entier ou réduis-la "
+                f"à son dernier nombre."
+            )
+
         premier, dernier = int(depart.group(1)), int(arrivee.group(1))
         if dernier < premier:
             raise SystemExit(f"intervalle à l'envers : « {morceau} »")
-        numeros.extend(f"{prefixe}{n}" for n in range(premier, dernier + 1))
+        # Le zéro de tête de la borne basse donne la largeur, il ne la plafonne
+        # pas : « A1-08..11 » va jusqu'à « A1-11 », pas « A1-011 ».
+        largeur = len(depart.group(1))
+        numeros.extend(f"{prefixe}{n:0{largeur}d}" for n in range(premier, dernier + 1))
     return numeros
 
 

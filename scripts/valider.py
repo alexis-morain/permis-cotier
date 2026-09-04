@@ -161,6 +161,10 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
             ref = s.get("ref")
             if not isinstance(ref, str) or not RE_REF.match(ref):
                 ko("sources", f"référence attendue en minuscules, chiffres et tirets, reçu {ref!r}")
+            # Une référence bien formée mais sans dossier renvoie le candidat
+            # vers un texte qui n'existe pas : la citation ne se vérifie plus.
+            elif not (racine / "data" / "sources" / ref).is_dir():
+                ko("sources", f"source absente du disque : data/sources/{ref}/")
             version = s.get("version")
             if version is not None and not (isinstance(version, str) and RE_DATE.match(version)):
                 ko("sources", f"version de source attendue au format AAAA-MM-JJ, reçu {version!r}")

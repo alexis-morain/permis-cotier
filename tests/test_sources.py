@@ -11,8 +11,11 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from sources import (  # noqa: E402
+    annexes_du_ripam,
     anomalies_de_lettrage,
     articles_utiles,
+    etendre_numeros,
+    invite_article,
     invite_recherche,
     nom_article,
     sans_balises,
@@ -222,3 +225,122 @@ def test_un_renvoi_en_milieu_de_phrase_n_est_pas_un_paragraphe():
     # ligne quand le PDF coupe : ce n'est pas un début de paragraphe.
     texte = "b) Tous les navires peuvent compléter les signaux\na) de la présente règle par des signaux."
     assert anomalies_de_lettrage(texte) == []
+
+
+# --- Extraction d'articles de code -----------------------------------------
+
+
+@pytest.mark.parametrize(
+    "demande, attendu",
+    [
+        ("A4241-53-26", ["A4241-53-26"]),
+        ("L218-10, L218-73", ["L218-10", "L218-73"]),
+        ("A4241-53-26..28", ["A4241-53-26", "A4241-53-27", "A4241-53-28"]),
+        ("A4241-53-26..A4241-53-28", ["A4241-53-26", "A4241-53-27", "A4241-53-28"]),
+        ("R921-88..88", ["R921-88"]),
+        ("L218-10..11, R921-90", ["L218-10", "L218-11", "R921-90"]),
+    ],
+)
+def test_etendre_numeros(demande, attendu):
+    assert etendre_numeros(demande) == attendu
+
+
+def test_etendre_numeros_garde_le_zero_de_tete():
+    # « 240-2.04 » et « 240-2.4 » ne désignent pas le même article : perdre le
+    # zéro fait chercher un numéro qui n'existe pas, et la source manque en
+    # silence dans le dossier.
+    assert etendre_numeros("240-2.04..06") == ["240-2.04", "240-2.05", "240-2.06"]
+    assert etendre_numeros("R921-08..10") == ["R921-08", "R921-09", "R921-10"]
+
+
+def test_etendre_numeros_passe_a_deux_chiffres_sans_tronquer():
+    # Le zéro de tête donne la largeur, il ne la plafonne pas.
+    assert etendre_numeros("A1-08..11") == ["A1-08", "A1-09", "A1-10", "A1-11"]
+
+
+def test_etendre_numeros_refuse_deux_bornes_de_prefixes_differents():
+    # Sans ce contrôle, la borne haute est ignorée et l'intervalle part du
+    # préfixe de gauche : on récupère sept articles d'un texte qu'on n'a pas
+    # demandé, sans le moindre avertissement.
+    with pytest.raises(SystemExit):
+        etendre_numeros("A4241-53-26..B1-32")
+
+
+def test_etendre_numeros_refuse_un_intervalle_a_l_envers():
+    with pytest.raises(SystemExit):
+        etendre_numeros("L218-20..10")
+
+
+def test_etendre_numeros_refuse_une_borne_sans_nombre():
+    with pytest.raises(SystemExit):
+        etendre_numeros("L218-10..annexe")
+
+
+def test_etendre_numeros_ignore_les_morceaux_vides():
+    assert etendre_numeros("L218-10, ,L218-11") == ["L218-10", "L218-11"]
+
+
+def test_invite_article_filtre_sur_le_nom_du_code():
+    # Le fond CODE_DATE cherche dans tous les codes : sans la facette, un
+    # numéro d'article ramènerait ses homonymes des autres codes.
+    charge = invite_article("A4241-53-26", "Code des transports")
+    assert charge["fond"] == "CODE_DATE"
+    champ = charge["recherche"]["champs"][0]
+    assert champ["typeChamp"] == "NUM_ARTICLE"
+    assert champ["criteres"][0]["valeur"] == "A4241-53-26"
+    assert charge["recherche"]["filtres"] == [
+        {"facette": "NOM_CODE", "valeurs": ["Code des transports"]}
+    ]
+
+
+# --- Découpe des annexes du RIPAM ------------------------------------------
+
+
+PDF_FACTICE = """
+Sommaire
+  Règle 38 - Exemptions ...................................... 36
+  ANNEXE I ................................................... 37
+  ANNEXE IV .................................................. 40
+
+Règle 37 - Signaux de détresse
+Un navire en détresse utilise les signaux de l'annexe IV.
+
+Règle 38 - Exemptions
+Corps de la règle 38.
+
+ANNEXE I - EMPLACEMENT DES FEUX
+Corps de l'annexe I.
+
+ANNEXE I - EMPLACEMENT DES FEUX
+Suite de l'annexe I, l'onglet latéral se répète à chaque page.
+
+  Annexe IV
+
+Signaux de détresse
+Corps de l'annexe IV.
+"""
+
+
+def test_les_annexes_se_decoupent_par_numero():
+    assert set(annexes_du_ripam(PDF_FACTICE)) == {"I", "IV"}
+
+
+def test_le_sommaire_n_est_pas_pris_pour_le_corps():
+    # Le sommaire cite les mêmes numéros en tête de document : découper dessus
+    # ferait passer la table des matières pour le texte de l'annexe.
+    assert "37" not in annexes_du_ripam(PDF_FACTICE)["I"]
+    assert "Corps de l'annexe I." in annexes_du_ripam(PDF_FACTICE)["I"]
+
+
+def test_une_annexe_en_bas_de_casse_est_reconnue():
+    # Le PDF du ministère écrit « Annexe IV » quand les trois autres onglets
+    # sont en capitales.
+    assert "Corps de l'annexe IV." in annexes_du_ripam(PDF_FACTICE)["IV"]
+
+
+def test_une_annexe_s_arrete_a_la_suivante():
+    assert "annexe IV" not in annexes_du_ripam(PDF_FACTICE)["I"]
+
+
+def test_un_texte_sans_annexe_ne_rend_rien():
+    assert annexes_du_ripam("Règle 38 - Exemptions\nCorps.") == {}

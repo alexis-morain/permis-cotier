@@ -93,8 +93,9 @@ parce qu'elle bouge lentement et qu'une rose ancienne demande une correction.
 - Un phare ou un feu : une étoile ou un point avec un éclat magenta, suivi de la
   description du feu, par exemple « Fl(2) R 10s 12m 9M » : deux éclats rouges
   toutes les dix secondes, feu à douze mètres, portée neuf milles.
-- Une bouée : un petit losange incliné à la base du symbole, colorié selon la
-  marque, avec son nom en italique.
+- Une bouée : sa silhouette coloriée selon la marque, avec un petit cercle à sa
+  base qui marque la position exacte, et son nom en italique. C'est le cercle
+  qui porte le point, pas le milieu du dessin.
 - Une roche qui découvre : une croix ou un astérisque, souvent avec sa hauteur
   soulignée.
 - Une roche à fleur d'eau ou dangereuse : entourée d'un pointillé de danger.
