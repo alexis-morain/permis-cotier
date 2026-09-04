@@ -1,0 +1,33 @@
+id: feux-marques-0003
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu chalutes de nuit à bord d'un navire de 12 mètres : que fais-tu du feu de tête de
+  mât placé plus haut que le feu vert et à l'arrière de celui-ci ?
+propositions:
+  - id: a
+    texte: Tu peux le montrer, sans y être tenu
+  - id: b
+    texte: Tu dois le montrer, comme tout navire en train de chaluter
+  - id: c
+    texte: Tu dois le montrer seulement si tu as de l'erre
+  - id: d
+    texte: Tu ne dois pas le montrer
+reponses:
+  - a
+explication: >-
+  La règle 26 b) ii) prescrit ce feu de tête de mât au chalutier, puis dispense les navires
+  de moins de 50 mètres de le montrer tout en les autorisant à le faire. Un navire de
+  12 mètres est donc libre : ni obligation, ni interdiction. Le piège est de confondre
+  une faculté avec une obligation, ou de rattacher ce feu à l'erre, qui commande seulement
+  les feux de côté et le feu de poupe.
+sources:
+  - texte: RIPAM, règle 26 b) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

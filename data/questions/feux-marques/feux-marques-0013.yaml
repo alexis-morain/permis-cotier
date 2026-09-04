@@ -1,0 +1,33 @@
+id: feux-marques-0013
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Un navire à propulsion mécanique peut se contenter d'un feu blanc visible sur tout l'horizon,
+  les feux de côté n'étant montrés que si possible : à quelles conditions ?
+propositions:
+  - id: a
+    texte: Longueur inférieure à 7 mètres et vitesse maximale ne dépassant pas 7 nœuds.
+  - id: b
+    texte: Longueur inférieure à 12 mètres et vitesse maximale ne dépassant pas 7 nœuds.
+  - id: c
+    texte: Longueur inférieure à 7 mètres et vitesse maximale ne dépassant pas 12 nœuds.
+  - id: d
+    texte: Longueur inférieure à 20 mètres, quelle que soit la vitesse.
+reponses:
+  - a
+explication: >-
+  La règle 23 d) ii) réunit deux conditions cumulatives : une longueur inférieure à 7
+  mètres et une vitesse maximale qui ne dépasse pas 7 nœuds. Le navire montre alors un
+  feu blanc visible sur tout l'horizon et, si possible seulement, des feux de côté. Le
+  piège est de mélanger ce cas avec celui des navires de moins de 12 mètres, où les feux
+  de côté sont exigés et où aucune limite de vitesse n'intervient.
+sources:
+  - texte: RIPAM, règle 23 d) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,32 @@
+id: feux-marques-0025
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton bateau mesure moins de 12 mètres : es-tu tenu de montrer les feux et marques de
+  la règle 27 ?
+propositions:
+  - id: a
+    texte: Non, sauf si tu participes à des opérations de plongée
+  - id: b
+    texte: Non, sans aucune exception
+  - id: c
+    texte: Oui, dans tous les cas
+  - id: d
+    texte: Non, mais seulement de jour pour les marques
+reponses:
+  - a
+explication: >-
+  La règle 27 g) dispense les navires de longueur inférieure à 12 mètres des feux et marques
+  prescrits par cette règle, à la seule exception des navires participant à des opérations
+  de plongée. Cette exception est le piège : la plongée met des hommes à l'eau, la signalisation
+  reste donc obligatoire quelle que soit la taille du bateau.
+sources:
+  - texte: RIPAM, règle 27 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

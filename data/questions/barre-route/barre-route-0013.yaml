@@ -1,0 +1,32 @@
+id: barre-route-0013
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu fais route au moteur et tu t'approches d'un navire à voile qui fait route à la voile,
+  de manière à faire craindre un abordage. Que dit la règle 18 ?
+propositions:
+  - id: a
+    texte: Tu dois t'écarter de la route du navire à voile.
+  - id: b
+    texte: Le navire à voile doit s'écarter de ta route, ton navire manœuvre moins bien.
+  - id: c
+    texte: Vous venez tous les deux sur tribord.
+  - id: d
+    texte: Celui qui voit l'autre sur sa tribord s'écarte, quel que soit son mode de propulsion.
+reponses:
+  - a
+explication: >-
+  La règle 18 a) iv) impose au navire à propulsion mécanique faisant route de s'écarter
+  de la route d'un navire à voile. La proposition d) applique la règle du croisement entre
+  deux navires à propulsion mécanique, qui ne joue pas ici. Le partage des manœuvres à
+  tribord appartient à la situation de face à face, pas aux responsabilités réciproques.
+sources:
+  - texte: RIPAM, règle 18 a) iv)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

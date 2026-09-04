@@ -7,9 +7,10 @@ import { readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
 
-// Domaine pas encore arrêté, cinq candidats à choisir avant la mise en ligne.
-// À remplacer ici et dans `public/robots.txt` le jour du choix.
-const site = process.env.SITE_URL ?? 'https://exemple.invalid';
+// Domaine pas encore arrêté. Le site tourne sur son sous-domaine Pages en
+// attendant ; `src/pages/robots.txt.ts` bloque l'indexation tant qu'on y est.
+// Le jour du choix : SITE_URL dans les variables Cloudflare, rien d'autre.
+const site = process.env.SITE_URL ?? 'https://permis-cotier.pages.dev';
 
 export default defineConfig({
   site,

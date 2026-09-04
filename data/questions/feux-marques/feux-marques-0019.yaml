@@ -1,0 +1,35 @@
+id: feux-marques-0019
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton voilier mesure 16 mètres et fait route à la voile : que te permet la règle pour
+  les feux de côté et le feu de poupe ?
+propositions:
+  - id: a
+    texte: Les réunir en un seul fanal placé au sommet ou à la partie supérieure du mât,
+      à l'endroit le plus visible.
+  - id: b
+    texte: Réunir les seuls feux de côté en un fanal unique placé à l'avant, le feu de
+      poupe restant séparé.
+  - id: c
+    texte: Les remplacer par un feu blanc visible sur tout l'horizon.
+  - id: d
+    texte: Rien de particulier, ce fanal unique n'est permis qu'au-dessous de 12 mètres.
+reponses:
+  - a
+explication: >-
+  La règle 25 b) autorise le navire à voile de longueur inférieure à 20 mètres à réunir
+  les feux du paragraphe a), donc les feux de côté et le feu de poupe, en un seul fanal
+  au sommet ou à la partie supérieure du mât. Ton bateau de 16 mètres entre dans cette
+  limite. Attention à la valeur : la règle dit 20 mètres, pas 12, et le fanal réunit bien
+  les trois feux, pas seulement les deux feux de côté.
+sources:
+  - texte: RIPAM, règle 25 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

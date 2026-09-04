@@ -1,0 +1,32 @@
+id: barre-route-0011
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Tes routes se croisent avec un autre navire à propulsion mécanique que tu vois sur tribord.
+  Outre le fait de t'écarter, que t'impose la règle 15 ?
+propositions:
+  - id: a
+    texte: Éviter, si les circonstances le permettent, de croiser sa route sur l'avant.
+  - id: b
+    texte: Croiser sa route sur l'avant pour rendre ta manœuvre visible.
+  - id: c
+    texte: Venir sur bâbord dans tous les cas.
+  - id: d
+    texte: Réduire ta vitesse jusqu'à l'arrêt complet.
+reponses:
+  - a
+explication: >-
+  La règle 15 ajoute une seconde prescription à l'obligation de s'écarter : éviter de
+  croiser la route de l'autre navire sur son avant, si les circonstances le permettent.
+  Passer sur l'avant est justement la manœuvre que le texte écarte, et rien n'impose ni
+  de venir sur bâbord ni de stopper.
+sources:
+  - texte: RIPAM, règle 15
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

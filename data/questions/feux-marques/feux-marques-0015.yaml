@@ -1,0 +1,33 @@
+id: feux-marques-0015
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu remorques de nuit à bord d'un navire à propulsion mécanique : où le feu de remorquage
+  doit-il être placé ?
+propositions:
+  - id: a
+    texte: À la verticale au-dessus du feu de poupe
+  - id: b
+    texte: À la verticale au-dessous du feu de poupe
+  - id: c
+    texte: Au-dessus des feux de tête de mât superposés
+  - id: d
+    texte: À l'endroit le plus visible du navire, sans position imposée
+reponses:
+  - a
+explication: >-
+  La règle 24 a) iv) impose un feu de remorquage placé à la verticale au-dessus du feu
+  de poupe, en plus des deux feux de tête de mât superposés, des feux de côté et du feu
+  de poupe. Vue de l'arrière, la signature du remorqueur est donc ce couple de feux superposés
+  dans l'axe. La position « à l'endroit le plus visible » concerne la marque biconique
+  du paragraphe a) v), pas le feu.
+sources:
+  - texte: RIPAM, règle 24 a) iv)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

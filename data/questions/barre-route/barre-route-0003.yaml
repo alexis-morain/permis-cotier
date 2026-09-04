@@ -1,0 +1,33 @@
+id: barre-route-0003
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu reçois le vent de bâbord et tu vois un voilier au vent, sans pouvoir déterminer de
+  quel bord il reçoit le vent. Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu t'écartes de sa route.
+  - id: b
+    texte: Tu maintiens ta route, car c'est au voilier au vent de s'écarter.
+  - id: c
+    texte: Tu maintiens ta route tant que tu n'as pas identifié son bord de vent.
+  - id: d
+    texte: Tu t'écartes seulement si tu constates qu'il reçoit le vent de tribord.
+reponses:
+  - a
+explication: >-
+  La règle 12 a) iii) règle le doute : quand un voilier bâbord amures voit un autre voilier
+  au vent et ne peut pas déterminer avec certitude de quel bord celui-ci reçoit le vent,
+  c'est lui qui s'écarte. Le doute ne suspend pas l'obligation, il la déclenche. Le piège
+  est d'appliquer la règle du voilier au vent, qui ne vaut que si l'on est sûr que les
+  deux reçoivent le vent du même bord.
+sources:
+  - texte: RIPAM, règle 12 a) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

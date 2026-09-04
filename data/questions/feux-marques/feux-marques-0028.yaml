@@ -1,0 +1,34 @@
+id: feux-marques-0028
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau mesure 6 mètres et tu mouilles pour la nuit dans un chenal étroit : dois-tu
+  montrer un feu de mouillage ?
+propositions:
+  - id: a
+    texte: Oui, l'exemption ne joue pas dans un chenal étroit
+  - id: b
+    texte: Non, l'exemption vaut partout en dessous de 7 mètres
+  - id: c
+    texte: Non, l'exemption vaut jusqu'à 12 mètres
+  - id: d
+    texte: Oui, et tu montres en plus deux feux rouges superposés
+reponses:
+  - a
+explication: >-
+  La règle 30 e) dispense de feu de mouillage les navires de moins de 7 mètres, mais elle
+  réserve expressément le cas du mouillage dans un chenal étroit, une voie d'accès, un
+  ancrage, à proximité de ces lieux ou sur les routes fréquentées par d'autres navires.
+  Là où tu gênes, tu te signales. Les deux feux rouges appartiennent au navire échoué,
+  règle 30 d), et le seuil de 12 mètres ne concerne que la dispense des marques d'échouement,
+  règle 30 f).
+sources:
+  - texte: RIPAM, règle 30 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

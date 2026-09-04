@@ -1,0 +1,32 @@
+id: barre-route-0002
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 2
+enonce: >-
+  Deux voiliers reçoivent le vent du même bord et s'approchent de manière à faire craindre
+  un abordage. Lequel doit s'écarter ?
+propositions:
+  - id: a
+    texte: Celui qui est au vent.
+  - id: b
+    texte: Celui qui est sous le vent.
+  - id: c
+    texte: Celui qui reçoit le vent de bâbord.
+  - id: d
+    texte: Celui qui rattrape l'autre, quel que soit son bord de vent.
+reponses:
+  - a
+explication: >-
+  La règle 12 a) ii) tranche le cas des deux voiliers qui reçoivent le vent du même bord
+  : celui qui est au vent s'écarte de la route de celui qui est sous le vent. Le voilier
+  sous le vent, gêné dans ses manœuvres, garde sa route. Le critère bâbord ou tribord
+  ne sert plus à rien ici, puisque les deux reçoivent le vent du même bord.
+sources:
+  - texte: RIPAM, règle 12 a) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

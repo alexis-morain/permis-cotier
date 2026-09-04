@@ -1,0 +1,32 @@
+id: feux-marques-0005
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu chalutes de nuit et tu as de l'erre : que montres-tu en plus des feux de pêche ?
+propositions:
+  - id: a
+    texte: Les feux de côté et le feu de poupe
+  - id: b
+    texte: Le feu de poupe seulement
+  - id: c
+    texte: Les feux de côté seulement
+  - id: d
+    texte: Rien de plus, les feux de pêche suffisent
+reponses:
+  - a
+explication: >-
+  La règle 26 b) iii) ajoute aux feux du chalutier les feux de côté et le feu de poupe
+  dès qu'il a de l'erre, c'est-à-dire dès qu'il se déplace sur l'eau. La même exigence
+  vaut pour les autres navires en train de pêcher, règle 26 c) iii). Sans erre, ces feux
+  disparaissent et il ne reste que les deux feux superposés, ce qui explique la dernière
+  proposition.
+sources:
+  - texte: RIPAM, règle 26 b) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

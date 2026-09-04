@@ -1,0 +1,33 @@
+id: barre-route-0001
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu barres un voilier et tu reçois le vent de bâbord. Un autre voilier s'approche, il
+  reçoit le vent de tribord, l'abordage est à craindre. Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu t'écartes de sa route.
+  - id: b
+    texte: Tu maintiens ta route, c'est à lui de s'écarter de la tienne.
+  - id: c
+    texte: Tu t'écartes seulement si tu es au vent de lui.
+  - id: d
+    texte: Tu maintiens ta route et tu le laisses choisir sa manœuvre.
+reponses:
+  - a
+explication: >-
+  La règle 12 a) i) vise le cas de deux voiliers qui reçoivent le vent d'un bord différent
+  : celui qui reçoit le vent de bâbord s'écarte de la route de l'autre. Ici tu es tribord
+  amures pour personne, tu es bâbord amures, donc la manœuvre est pour toi. Le piège est
+  de croire que la position au vent ou sous le vent entre en jeu : ce critère n'intervient
+  que si les deux voiliers reçoivent le vent du même bord.
+sources:
+  - texte: RIPAM, règle 12 a) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

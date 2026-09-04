@@ -1,0 +1,35 @@
+id: barre-route-0008
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu fais route de nuit au moteur et tu vois devant toi un navire dont les deux feux de
+  mât sont l'un par l'autre et dont les deux feux de côté sont visibles. Quelle situation
+  as-tu sous les yeux ?
+propositions:
+  - id: a
+    texte: Une situation de navires qui se rattrapent.
+  - id: b
+    texte: Une situation de routes directement opposées.
+  - id: c
+    texte: Une situation de routes qui se croisent.
+  - id: d
+    texte: Aucune situation particulière tant que le relèvement ne change pas.
+reponses:
+  - b
+explication: >-
+  La règle 14 b) décrit exactement cette observation : de nuit, voir les feux de mât de
+  l'autre navire l'un par l'autre ou presque et ses deux feux de côté signifie qu'il est
+  devant toi ou pratiquement devant toi, donc en routes directement opposées. Voir les
+  deux feux de côté à la fois est la signature de la situation. Si tu ne voyais qu'un
+  seul feu de côté, vert ou rouge, tu serais dans une situation de routes qui se croisent,
+  régie par une autre règle.
+sources:
+  - texte: RIPAM, règle 14 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,33 @@
+id: feux-marques-0020
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu fais route à la voile et tu montres, en plus de tes feux, deux feux superposés visibles
+  sur tout l'horizon au sommet du mât : quelles sont leurs couleurs ?
+propositions:
+  - id: a
+    texte: Rouge au-dessus, vert au-dessous.
+  - id: b
+    texte: Vert au-dessus, rouge au-dessous.
+  - id: c
+    texte: Rouge au-dessus, blanc au-dessous.
+  - id: d
+    texte: Vert au-dessus, blanc au-dessous.
+reponses:
+  - a
+explication: >-
+  La règle 25 c) permet au navire à voile faisant route de montrer, au sommet ou à la
+  partie supérieure du mât, deux feux superposés visibles sur tout l'horizon : le supérieur
+  rouge, l'inférieur vert. L'ordre est le piège, on inverse facilement les deux couleurs.
+  Ces feux restent facultatifs et la même règle interdit de les montrer en même temps
+  que le fanal unique autorisé au paragraphe b).
+sources:
+  - texte: RIPAM, règle 25 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

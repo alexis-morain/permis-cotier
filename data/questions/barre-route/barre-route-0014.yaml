@@ -1,0 +1,32 @@
+id: barre-route-0014
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu barres un voilier qui fait route à la voile et tu rencontres un navire en train de
+  pêcher. Qui doit s'écarter ?
+propositions:
+  - id: a
+    texte: Le navire en train de pêcher, parce qu'il avance au moteur.
+  - id: b
+    texte: Toi, le voilier doit s'écarter de la route du navire en train de pêcher.
+  - id: c
+    texte: Personne, chacun garde sa route et sa vitesse.
+  - id: d
+    texte: Toi, mais seulement si le navire en train de pêcher est plus grand que le tien.
+reponses:
+  - b
+explication: >-
+  La règle 18 b) iii) impose au navire à voile faisant route de s'écarter de la route
+  d'un navire en train de pêcher. La voile ne donne aucun privilège face à un navire qui
+  pêche : elle n'en donne que face au navire à propulsion mécanique, au titre de la règle
+  18 a) iv). La taille des navires n'entre jamais en compte dans la règle 18.
+sources:
+  - texte: RIPAM, règle 18 b) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,33 @@
+id: feux-marques-0024
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton navire participe à des opérations de plongée et ses dimensions ne lui permettent
+  pas de montrer toutes les marques prescrites : que montres-tu à la place ?
+propositions:
+  - id: a
+    texte: Une reproduction rigide du pavillon « A » d'au moins un mètre de hauteur
+  - id: b
+    texte: Un pavillon « A » en tissu hissé dans la mâture
+  - id: c
+    texte: Une reproduction rigide du pavillon « A » d'au moins cinquante centimètres
+  - id: d
+    texte: Un bicône noir visible sur tout l'horizon
+reponses:
+  - a
+explication: >-
+  La règle 27 e) ii) demande une reproduction rigide du pavillon « A » du Code international
+  de signaux, d'au moins un mètre de hauteur, et impose de prendre les mesures pour qu'elle
+  soit visible sur tout l'horizon. Deux détails font le piège : la marque doit être rigide,
+  donc un pavillon en tissu qui retombe le long du mât ne suffit pas, et la hauteur minimale
+  est d'un mètre, pas de cinquante centimètres.
+sources:
+  - texte: RIPAM, règle 27 e) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

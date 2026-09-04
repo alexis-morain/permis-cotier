@@ -1,0 +1,32 @@
+id: feux-marques-0006
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  Sur quel arc d'horizon le feu de tête de mât projette-t-il sa lumière ?
+propositions:
+  - id: a
+    texte: 112,5 degrés
+  - id: b
+    texte: 135 degrés
+  - id: c
+    texte: 225 degrés
+  - id: d
+    texte: 360 degrés
+reponses:
+  - c
+explication: >-
+  La règle 21 a) définit le feu de tête de mât comme un feu blanc placé au-dessus de l'axe
+  longitudinal, projetant une lumière ininterrompue sur un arc de 225 degrés, depuis l'avant
+  jusqu'à 22,5 degrés sur l'arrière du travers de chaque bord. Le piège vient des autres
+  secteurs de la même règle : 112,5 degrés est celui d'un feu de côté, 135 degrés celui
+  du feu de poupe, et 360 degrés désigne un feu visible sur tout l'horizon.
+sources:
+  - texte: RIPAM, règle 21 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
