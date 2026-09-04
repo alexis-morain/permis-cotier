@@ -1,0 +1,34 @@
+id: securite-0003
+option: cotier
+theme: securite
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu embarques un enfant de 25 kg pour une sortie à un mille d'un abri. Quel équipement
+  individuel de flottabilité doit-il porter ?
+propositions:
+  - id: a
+    texte: Un EIF de niveau de performance 50
+  - id: b
+    texte: Un EIF de niveau de performance 100
+  - id: c
+    texte: Un EIF de niveau de performance 150
+  - id: d
+    texte: Un EIF de son choix, le niveau n'étant imposé qu'au-delà de deux milles d'un
+      abri
+reponses:
+  - b
+explication: >-
+  L'article 240-2.01, alinéa 6, impose aux enfants de 30 kg au maximum un EIF de niveau
+  de performance 100, dès lors que le bateau est soumis à l'emport d'un équipement individuel
+  de flottabilité. Le texte ajoute « quelle que soit la distance d'éloignement d'un abri
+  » : le niveau 50, suffisant pour un adulte près de la côte, ne convient donc jamais
+  pour cet enfant, et la distance ne change rien à l'exigence.
+sources:
+  - texte: Division 240, article 240-2.01, alinéa 6
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

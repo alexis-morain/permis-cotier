@@ -1,0 +1,37 @@
+id: feux-marques-0030
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, un navire te montre ces trois feux à l'endroit le plus visible. Que t'indique-t-il
+  ?
+visuel:
+  fichier: feux/capacite-de-manoeuvre-restreinte.svg
+  alt: Trois feux superposés visibles sur tout l'horizon, rouge, blanc puis rouge.
+  credit: code
+propositions:
+  - id: a
+    texte: Sa capacité de manœuvre est restreinte
+  - id: b
+    texte: Il n'est pas maître de sa manœuvre
+  - id: c
+    texte: Il est handicapé par son tirant d'eau
+  - id: d
+    texte: Il est échoué
+reponses:
+  - a
+explication: >-
+  La règle 27 b) i) prescrit au navire à capacité de manœuvre restreinte trois feux superposés
+  visibles sur tout l'horizon, les deux extrêmes rouges et celui du milieu blanc. Le blanc
+  au milieu est tout ce qui le distingue : trois rouges désignent le navire handicapé
+  par son tirant d'eau, règle 28, et deux rouges seuls le navire qui n'est pas maître
+  de sa manœuvre, règle 27 a) i).
+sources:
+  - texte: RIPAM, règle 27 b) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

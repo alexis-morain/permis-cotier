@@ -1,0 +1,33 @@
+id: signaux-0004
+option: cotier
+theme: signaux
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans un chenal étroit, tu comptes rattraper un navire par son tribord. Quel signal annonces-tu
+  au sifflet ?
+propositions:
+  - id: a
+    texte: Deux sons prolongés suivis d'un son bref
+  - id: b
+    texte: Deux sons prolongés suivis de deux sons brefs
+  - id: c
+    texte: Un son prolongé suivi d'un son bref
+  - id: d
+    texte: Un son bref
+reponses:
+  - a
+explication: >-
+  La règle 34 c) i) donne les deux signaux du navire qui entend en rattraper un autre
+  dans un chenal étroit ou une voie d'accès : deux sons prolongés suivis d'un son bref
+  pour « Je compte vous rattraper sur tribord », deux sons prolongés suivis de deux sons
+  brefs pour bâbord. Le piège est de confondre ces signaux avec le simple son bref de
+  la règle 34 a), qui dit seulement « Je viens sur tribord ».
+sources:
+  - texte: RIPAM, règle 34 c) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

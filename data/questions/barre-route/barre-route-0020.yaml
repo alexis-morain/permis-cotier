@@ -1,0 +1,35 @@
+id: barre-route-0020
+option: cotier
+theme: barre-route
+statut: publie
+difficulte: 2
+enonce: >-
+  Par visibilité réduite, tu entends le signal de brume d'un autre navire dans une direction
+  qui te paraît être sur l'avant du travers, et il n'est pas établi qu'il n'existe pas
+  de risque d'abordage. Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu réduis ta vitesse au minimum nécessaire pour maintenir ton cap.
+  - id: b
+    texte: Tu casses ton erre sans attendre et tu restes stoppé jusqu'au retour de la
+      visibilité.
+  - id: c
+    texte: Tu réponds par ton propre signal de brume et tu gardes ta vitesse de sécurité.
+  - id: d
+    texte: Tu changes de cap sur tribord en gardant ta vitesse.
+reponses:
+  - a
+explication: >-
+  La règle 19 e) impose de réduire la vitesse au minimum nécessaire pour maintenir le
+  cap dès qu'un signal de brume est entendu sur l'avant du travers, tant qu'il n'est pas
+  établi qu'aucun risque d'abordage n'existe. Casser son erre n'est demandé que « si nécessaire
+  », c'est une étape de plus, pas la première. Émettre son propre signal ne dispense de
+  rien, et la règle ne prescrit ici aucun changement de cap.
+sources:
+  - texte: RIPAM, règle 19 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

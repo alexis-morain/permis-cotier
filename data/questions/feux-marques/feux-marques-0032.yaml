@@ -1,0 +1,36 @@
+id: feux-marques-0032
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, un navire te montre ces deux feux à la tête de son mât. Que fait-il ?
+visuel:
+  fichier: feux/bateau-pilote.svg
+  alt: Deux feux superposés visibles sur tout l'horizon, le supérieur blanc, l'inférieur
+    rouge.
+  credit: code
+propositions:
+  - id: a
+    texte: Il est en service de pilotage
+  - id: b
+    texte: Il pêche autrement qu'au chalut
+  - id: c
+    texte: Il tire un chalut
+  - id: d
+    texte: Il n'est pas maître de sa manœuvre
+reponses:
+  - a
+explication: >-
+  La règle 29 a) i) donne au bateau-pilote en service deux feux superposés à la tête du
+  mât, le supérieur blanc et l'inférieur rouge. Le piège est l'ordre : rouge au-dessus
+  de blanc désigne le navire qui pêche autrement qu'au chalut, règle 26 c) i). Retiens
+  que le pilote porte son blanc en haut.
+sources:
+  - texte: RIPAM, règle 29 a) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

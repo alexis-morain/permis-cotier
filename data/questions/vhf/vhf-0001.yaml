@@ -1,0 +1,34 @@
+id: vhf-0001
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu quittes les eaux territoriales françaises pour les eaux internationales avec la VHF
+  fixe de ton bateau de plaisance. Quel titre te faut-il ?
+propositions:
+  - id: a
+    texte: Le certificat restreint de radiotéléphoniste du service mobile maritime.
+  - id: b
+    texte: Le permis de conduire en mer les bateaux de plaisance à moteur, qui suffit
+      partout.
+  - id: c
+    texte: Le certificat restreint de radiotéléphoniste du service mobile fluvial.
+  - id: d
+    texte: Aucun titre, la VHF est libre d'usage hors des eaux territoriales.
+reponses:
+  - a
+explication: >-
+  Le 2) de l'article 1 exige, pour manœuvrer une VHF depuis un navire de plaisance naviguant
+  dans les eaux internationales, le certificat restreint de radiotéléphoniste du service
+  mobile maritime. Le piège vient du 3) : le permis plaisance ne vaut titre radio que
+  pour une navigation limitée aux eaux territoriales françaises. Dès que tu sors de ces
+  eaux, il ne suffit plus.
+sources:
+  - texte: Arrêté du 18 mai 2005, article 1, 2)
+    ref: arrete-2005-05-18
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

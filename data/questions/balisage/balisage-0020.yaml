@@ -1,0 +1,36 @@
+id: balisage-0020
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu relèves cette marque. De quel côté la contournes-tu pour trouver des eaux saines
+  ?
+visuel:
+  fichier: balisage/cardinale-ouest.svg
+  alt: Bouée jaune à bande noire, surmontée de deux cônes noirs pointes l'une contre l'autre.
+  credit: code
+propositions:
+  - id: a
+    texte: Par l'ouest
+  - id: b
+    texte: Par l'est
+  - id: c
+    texte: Par le sud
+  - id: d
+    texte: Par le nord
+reponses:
+  - a
+explication: >-
+  Les deux cônes se touchent par la pointe, le voyant se resserre à la taille, et le corps
+  est jaune avec une bande noire : c'est une cardinale Ouest, on passe à l'ouest. Retiens
+  la silhouette en verre à pied pour l'Ouest et le losange pour l'Est, les deux corps
+  se lisent ensuite tout seuls.
+sources:
+  - texte: AISM, système de balisage maritime, marque cardinale Ouest
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,31 @@
+id: securite-0010
+option: cotier
+theme: securite
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu armes ton bateau pour une navigation de 2 à moins de 6 milles d'un abri. Quels moyens
+  de signalisation de détresse dois-tu embarquer ?
+propositions:
+  - id: a
+    texte: Deux feux rouges à main
+  - id: b
+    texte: Trois feux rouges à main
+  - id: c
+    texte: Six feux rouges à main
+  - id: d
+    texte: Trois fumigènes flottants
+reponses:
+  - b
+explication: >-
+  L'article 240-2.04, point 4, fixe le nombre à trois feux rouges à main, conformes à
+  la division 311 du règlement. Le piège tient au nombre, que l'on retient volontiers
+  de travers, et au type d'artifice : le texte nomme le feu rouge à main, pas le fumigène.
+sources:
+  - texte: Division 240, article 240-2.04, point 4
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

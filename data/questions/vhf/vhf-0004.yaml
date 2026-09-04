@@ -1,0 +1,37 @@
+id: vhf-0004
+option: cotier
+theme: vhf
+statut: publie
+difficulte: 3
+enonce: >-
+  Un équipier titulaire du certificat général d'opérateur en cours de validité veut manœuvrer
+  la VHF du bord. Que lui faut il de plus ?
+propositions:
+  - id: a
+    texte: Rien, son certificat l'autorise à manœuvrer la VHF en mer et dans les eaux
+      intérieures.
+  - id: b
+    texte: Le certificat restreint de radiotéléphoniste du service mobile maritime en
+      plus.
+  - id: c
+    texte: Le certificat restreint de radiotéléphoniste du service mobile fluvial dès
+      qu'on quitte la mer.
+  - id: d
+    texte: Le permis de conduire en mer les bateaux de plaisance à moteur.
+reponses:
+  - a
+explication: >-
+  Le 7) de l'article 1 dispense les titulaires de plusieurs brevets et certificats en
+  cours de validité, dont le certificat général d'opérateur, le certificat spécial d'opérateur
+  et le certificat restreint d'opérateur : ils manœuvrent une VHF en mer comme dans les
+  eaux intérieures sans avoir à détenir le certificat restreint de radiotéléphoniste,
+  maritime ou fluvial. Le piège est de croire que ces titres se cumulent, alors que le
+  plus élevé couvre le plus restreint.
+sources:
+  - texte: Arrêté du 18 mai 2005, article 1, 7)
+    ref: arrete-2005-05-18
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

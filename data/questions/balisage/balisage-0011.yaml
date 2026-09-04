@@ -1,0 +1,32 @@
+id: balisage-0011
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu remontes un chenal traversier en te dirigeant vers le rivage. Quelle est la forme
+  des bouées qui marquent la limite bâbord ?
+propositions:
+  - id: a
+    texte: Conique
+  - id: b
+    texte: Cylindrique
+  - id: c
+    texte: Sphérique
+  - id: d
+    texte: La même des deux bords, seule la couleur les distingue
+reponses:
+  - b
+explication: >-
+  L'annexe I, paragraphe 2, précise que les bouées des limites latérales d'un chenal traversier
+  sont de forme cylindrique à bâbord et conique à tribord, en accédant au rivage. Le sens
+  de parcours compte : c'est en allant vers la plage que bâbord est bâbord, et l'inversion
+  est le piège classique de cette règle.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 2
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

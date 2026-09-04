@@ -1,0 +1,33 @@
+id: ski-responsabilites-0001
+option: cotier
+theme: ski-responsabilites
+statut: publie
+difficulte: 2
+enonce: >-
+  Le soleil se couche alors que tu es à un mille de la plage en scooter des mers. Que
+  t'impose la division 240 ?
+propositions:
+  - id: a
+    texte: Tu rentres, la navigation des véhicules nautiques à moteur est exclusivement
+      diurne.
+  - id: b
+    texte: Tu peux continuer à condition d'allumer un feu blanc visible sur tout l'horizon.
+  - id: c
+    texte: Tu peux continuer tant que tu restes à moins de 2 milles d'un abri.
+  - id: d
+    texte: Tu peux continuer tant que tu restes dans la bande des 300 mètres.
+reponses:
+  - a
+explication: >-
+  L'article 240-2.12 pose que les véhicules nautiques à moteur effectuent une navigation
+  exclusivement diurne. Aucun feu et aucune distance d'abri ne lèvent cette limite : la
+  nuit venue, le scooter des mers doit être rentré. Le piège consiste à raisonner comme
+  pour un bateau de plaisance, qui lui peut faire route de nuit s'il porte ses feux réglementaires.
+sources:
+  - texte: Division 240, article 240-2.12
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

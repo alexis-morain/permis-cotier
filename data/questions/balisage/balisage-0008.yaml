@@ -1,0 +1,33 @@
+id: balisage-0008
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu longes la limite extérieure de la bande des 300 mètres. Quelle est la forme des bouées
+  qui la matérialisent ?
+propositions:
+  - id: a
+    texte: Cylindriques
+  - id: b
+    texte: Coniques
+  - id: c
+    texte: Sphériques
+  - id: d
+    texte: Cylindriques à bâbord et coniques à tribord
+reponses:
+  - c
+explication: >-
+  L'annexe I, paragraphe 1, prévoit que les bouées de la limite extérieure de la bande
+  des 300 mètres sont de forme sphérique, toutes de mêmes dimensions, avec un diamètre
+  d'au moins 0,80 mètre. Le piège vient du paragraphe suivant : c'est dans les chenaux
+  traversiers, et là seulement, que la forme change selon le bord, cylindrique à bâbord
+  et conique à tribord.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 1
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

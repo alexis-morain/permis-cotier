@@ -1,0 +1,37 @@
+id: feux-marques-0031
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, un navire montre ces feux en plus de ceux d'un navire à propulsion mécanique.
+  Que t'indique-t-il ?
+visuel:
+  fichier: feux/handicape-par-son-tirant-d-eau.svg
+  alt: Trois feux rouges superposés visibles sur tout l'horizon.
+  credit: code
+propositions:
+  - id: a
+    texte: Il est handicapé par son tirant d'eau
+  - id: b
+    texte: Sa capacité de manœuvre est restreinte
+  - id: c
+    texte: Il n'est pas maître de sa manœuvre
+  - id: d
+    texte: Il tire un chalut
+reponses:
+  - a
+explication: >-
+  La règle 28 permet au navire handicapé par son tirant d'eau de montrer trois feux rouges
+  superposés visibles sur tout l'horizon, ou une marque cylindrique de jour. Compte les
+  feux avant de répondre : deux rouges désignent le navire qui n'est pas maître de sa
+  manœuvre, et trois feux dont celui du milieu est blanc désignent la capacité de manœuvre
+  restreinte.
+sources:
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

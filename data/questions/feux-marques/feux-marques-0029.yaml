@@ -1,0 +1,36 @@
+id: feux-marques-0029
+option: cotier
+theme: feux-marques
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, un navire te montre ces feux sur tout l'horizon. Que fait-il ?
+visuel:
+  fichier: feux/chalut.svg
+  alt: Deux feux superposés visibles sur tout l'horizon, le supérieur vert, l'inférieur
+    blanc.
+  credit: code
+propositions:
+  - id: a
+    texte: Il tire un chalut
+  - id: b
+    texte: Il pêche autrement qu'au chalut
+  - id: c
+    texte: Il est en service de pilotage
+  - id: d
+    texte: Il n'est pas maître de sa manœuvre
+reponses:
+  - a
+explication: >-
+  La règle 26 b) i) donne au navire qui tire un chalut deux feux superposés visibles sur
+  tout l'horizon, le supérieur vert et l'inférieur blanc. Le vert est la marque du chalut,
+  et il est toujours en haut. Le rouge sur blanc appartient au navire qui pêche autrement
+  qu'au chalut, règle 26 c) i), et le blanc sur rouge au bateau-pilote, règle 29 a) i).
+sources:
+  - texte: RIPAM, règle 26 b) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

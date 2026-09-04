@@ -1,0 +1,32 @@
+id: securite-0011
+option: cotier
+theme: securite
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu installes le compas magnétique de route exigé pour naviguer à plus de 2 milles d'un
+  abri. Quelle exigence doit-il respecter ?
+propositions:
+  - id: a
+    texte: Être indépendant de toute source d'énergie, sauf pour son éclairage
+  - id: b
+    texte: Être alimenté par le circuit électrique du bord pour afficher le cap
+  - id: c
+    texte: Être fixé à demeure, une fixation temporaire étant interdite
+  - id: d
+    texte: Être de classe C ou D
+reponses:
+  - a
+explication: >-
+  L'article 240-2.04, point 5, demande un compas de classe A ou B, éclairé ou éclairable,
+  affichant le cap au poste de barre principal, et indépendant de toute source d'énergie
+  à l'exception de l'éclairage : une panne électrique ne doit pas te priver de cap. Le
+  même point admet une fixation temporaire ou permanente, ce qui écarte la réponse c.
+sources:
+  - texte: Division 240, article 240-2.04, point 5
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

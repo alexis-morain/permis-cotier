@@ -1,0 +1,35 @@
+id: signaux-0005
+option: cotier
+theme: signaux
+statut: publie
+difficulte: 1
+enonce: >-
+  Un navire à propulsion mécanique de 25 mètres fait route avec de l'erre dans une zone
+  de visibilité réduite. Quel signal sonore doit-il émettre ?
+propositions:
+  - id: a
+    texte: Deux sons prolongés séparés par deux secondes environ, à des intervalles ne
+      dépassant pas deux minutes.
+  - id: b
+    texte: Un son prolongé, à des intervalles ne dépassant pas deux minutes.
+  - id: c
+    texte: Un son prolongé suivi de deux sons brefs, à des intervalles ne dépassant pas
+      deux minutes.
+  - id: d
+    texte: Un son prolongé, à des intervalles ne dépassant pas une minute.
+reponses:
+  - b
+explication: >-
+  La règle 35 a) prescrit un son prolongé à des intervalles ne dépassant pas deux minutes
+  pour le navire à propulsion mécanique qui a de l'erre, autrement dit qui avance sur
+  l'eau. Deux sons prolongés désigneraient au contraire un navire stoppé, et le son prolongé
+  suivi de deux sons brefs appartient aux navires du paragraphe c). Le second piège porte
+  sur la cadence : deux minutes au maximum, pas une.
+sources:
+  - texte: RIPAM, règle 35 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
