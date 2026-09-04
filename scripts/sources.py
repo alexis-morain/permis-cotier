@@ -33,9 +33,9 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[1]
 SOURCES = RACINE / "data" / "sources"
 
-# La sandbox PISTE sert les vraies données en lecture et s'active tout de suite
-# après l'inscription. La production peut demander une validation : on commence
-# donc en sandbox, on bascule avec --prod quand l'accès est ouvert.
+# Une application PISTE vit dans un seul environnement. La nôtre est en
+# production, ses clés ne passent pas en sandbox : on tape la production par
+# défaut, --sandbox reste là pour une application de test.
 ENVIRONNEMENTS = {
     "sandbox": (
         "https://sandbox-oauth.piste.gouv.fr/api/oauth/token",
@@ -48,9 +48,11 @@ ENVIRONNEMENTS = {
 }
 
 # Textes utiles, pour ne pas rechercher l'identifiant à chaque fois.
+# L'API veut l'identifiant JORFTEXT du texte d'origine, pas le LEGITEXT :
+# /consult/legiPart refuse ce dernier avec « L'expression à valider est fausse ».
 TEXTES = {
-    # Programme, format de l'épreuve, titre de conduite.
-    "arrete-2007-09-28": "LEGITEXT000006112844",
+    # Programme (art. 1er § 1.2), format de l'épreuve (§ 1.1), titre de conduite.
+    "arrete-2007-09-28": "JORFTEXT000000428843",
 }
 
 
@@ -140,10 +142,12 @@ def parcourir_articles(noeud: dict, recolte: list[dict]) -> None:
 
 
 def commande_legifrance(args) -> int:
-    oauth, api = ENVIRONNEMENTS["prod" if args.prod else "sandbox"]
+    oauth, api = ENVIRONNEMENTS["sandbox" if args.sandbox else "prod"]
     texte = TEXTES.get(args.texte, args.texte)
     acces = jeton(charger_env(), oauth)
-    donnees = appeler("/consult/legiPart", {"textId": texte, "date": date.today().isoformat()}, acces, api)
+    # lawDecree rend la version consolidée à la date demandée, articles et
+    # sections compris. legiPart ne prend pas les identifiants JORFTEXT.
+    donnees = appeler("/consult/lawDecree", {"textId": texte, "date": date.today().isoformat()}, acces, api)
     titre = donnees.get("title") or texte
 
     articles: list[dict] = []
@@ -284,7 +288,7 @@ def main(argv: list[str] | None = None) -> int:
         help="identifiant LEGITEXT, ou une clé de TEXTES comme « arrete-2007-09-28 »",
     )
     lf.add_argument("--ref", required=True, help="clé du dossier dans data/sources/")
-    lf.add_argument("--prod", action="store_true", help="tape la production plutôt que la sandbox")
+    lf.add_argument("--sandbox", action="store_true", help="tape la sandbox plutôt que la production")
     lf.set_defaults(fonction=commande_legifrance)
 
     ri = sous.add_parser("ripam", help="découpe le PDF du RIPAM en règles")

@@ -24,7 +24,7 @@ export const THEMES: readonly Theme[] = [
     nom: 'Balisage',
     intitule: 'Balisage des côtes, des plages et pictogrammes',
     description:
-      "Le système de balisage maritime de la région A : marques latérales, cardinales, de danger isolé, d'eaux saines et marques spéciales. On y ajoute le balisage des plages et des zones réservées aux baigneurs, ainsi que les pictogrammes affichés à terre. C'est le thème le plus visuel de l'épreuve : la forme, la couleur et le voyant suffisent presque toujours à répondre.",
+      "Le système de balisage maritime de la région A : marques latérales, cardinales, de danger isolé, d'eaux saines et marques spéciales. On y ajoute le balisage des plages et des zones réservées aux baigneurs, ainsi que les pictogrammes affichés à terre. L'arrêté écarte explicitement les marques de musoir. C'est le thème le plus visuel de l'épreuve : la forme, la couleur et le voyant suffisent presque toujours à répondre.",
     cibleJ1: 16,
   },
   {
