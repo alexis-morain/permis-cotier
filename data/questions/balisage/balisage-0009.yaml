@@ -1,0 +1,33 @@
+id: balisage-0009
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, tu relèves un feu blanc à deux éclats groupés. Quelle marque te signale-t-il
+  ?
+propositions:
+  - id: a
+    texte: Une marque de danger isolé
+  - id: b
+    texte: Une marque d'eaux saines
+  - id: c
+    texte: Une marque cardinale Est
+  - id: d
+    texte: Une marque spéciale
+reponses:
+  - a
+explication: >-
+  La marque de danger isolé porte un feu blanc à deux éclats groupés, Fl (2), et elle
+  est mouillée sur un danger de faible étendue entouré d'eaux saines. Les deux éclats
+  rappellent les deux sphères noires de son voyant. Attention à ne pas la confondre avec
+  la marque d'eaux saines, dont le feu blanc est isophase, à occultations, à un éclat
+  long ou à la lettre A du Morse, ni avec une cardinale, dont le feu blanc scintille.
+sources:
+  - texte: Balisage AISM région A, marque de danger isolé
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

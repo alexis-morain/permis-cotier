@@ -1,0 +1,32 @@
+id: balisage-0007
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves une bouée dont le corps est noir dans sa partie haute et jaune dans sa partie
+  basse. Quelle marque cardinale as-tu devant toi ?
+propositions:
+  - id: a
+    texte: Une cardinale Nord
+  - id: b
+    texte: Une cardinale Sud
+  - id: c
+    texte: Une cardinale Est
+  - id: d
+    texte: Une cardinale Ouest
+reponses:
+  - a
+explication: >-
+  La cardinale Nord porte un corps noir au-dessus et jaune en dessous. Le noir est du
+  côté vers lequel pointent les cônes du voyant, ici vers le haut, donc vers le nord.
+  Le piège est la cardinale Sud, qui porte exactement les mêmes couleurs mais dans l'ordre
+  inverse, jaune au-dessus et noir en dessous.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Nord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

@@ -1,0 +1,32 @@
+id: balisage-region-b-0001
+option: cotier
+theme: balisage-region-b
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu entres dans un port des États-Unis, en région de balisage B. De quelle couleur est
+  la marque latérale que tu laisses sur bâbord ?
+propositions:
+  - id: a
+    texte: Verte
+  - id: b
+    texte: Rouge
+  - id: c
+    texte: Jaune
+  - id: d
+    texte: Noire à bande rouge
+reponses:
+  - a
+explication: >-
+  En région B, les couleurs des marques latérales sont inversées par rapport à la région
+  A : bâbord est vert et tribord rouge. La réponse « rouge » est le réflexe de la région
+  A, celle que l'on pratique en France, et c'est exactement le piège. Les Amériques, le
+  Japon, la Corée du Sud et les Philippines sont en région B.
+sources:
+  - texte: AISM, balisage région B, marques latérales
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

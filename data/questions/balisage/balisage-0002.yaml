@@ -1,0 +1,32 @@
+id: balisage-0002
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 2
+enonce: >-
+  Quel voyant porte une marque cardinale Est ?
+propositions:
+  - id: a
+    texte: Deux cônes noirs, pointes en haut
+  - id: b
+    texte: Deux cônes noirs, base contre base
+  - id: c
+    texte: Deux cônes noirs, pointes en bas
+  - id: d
+    texte: Deux cônes noirs, pointes l'une contre l'autre
+reponses:
+  - b
+explication: >-
+  Le voyant d'une marque cardinale est toujours fait de deux cônes noirs superposés, et
+  c'est leur position qui donne le point cardinal. Pour l'Est, les deux cônes sont base
+  contre base. Les trois autres propositions sont les voyants des cardinales Nord, Sud
+  et Ouest, dans cet ordre, et se ressemblent assez pour se confondre si tu ne regardes
+  pas où pointent les cônes.
+sources:
+  - texte: Balisage AISM, marques cardinales, voyants
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

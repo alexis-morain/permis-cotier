@@ -1,0 +1,33 @@
+id: balisage-0001
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu rentres au port en venant du large. Quelles sont la couleur et la forme de la marque
+  latérale que tu laisses sur bâbord ?
+propositions:
+  - id: a
+    texte: Rouge, de forme cylindrique
+  - id: b
+    texte: Verte, de forme conique
+  - id: c
+    texte: Rouge, de forme conique
+  - id: d
+    texte: Verte, de forme cylindrique
+reponses:
+  - a
+explication: >-
+  En région A, dont la France fait partie, la marque latérale bâbord est rouge et cylindrique,
+  dite « en boîte de conserve », avec un voyant cylindrique rouge. Le sens conventionnel
+  de balisage est celui du large vers le port, donc en rentrant tu la laisses bien à bâbord.
+  Le piège est la région B (Amériques, Japon, Corée du Sud, Philippines) où les couleurs
+  latérales sont inversées, et l'échange des formes avec la marque tribord, qui est conique.
+sources:
+  - texte: Balisage AISM, région A, marques latérales
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'

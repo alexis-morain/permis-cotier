@@ -1,0 +1,33 @@
+id: balisage-0003
+option: cotier
+theme: balisage
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, tu relèves un feu blanc à six scintillements suivis d'un éclat long, répété
+  toutes les quinze secondes. Quelle marque as-tu devant toi ?
+propositions:
+  - id: a
+    texte: Une cardinale Est
+  - id: b
+    texte: Une cardinale Sud
+  - id: c
+    texte: Une cardinale Ouest
+  - id: d
+    texte: Une marque de danger isolé
+reponses:
+  - b
+explication: >-
+  La cardinale Sud montre un feu blanc Q (6) suivi d'un éclat long toutes les 15 secondes,
+  ou VQ (6) suivi d'un éclat long toutes les 10 secondes. L'éclat long est la signature
+  du Sud, il confirme que tu as bien compté six scintillements et pas neuf. Le moyen mnémotechnique
+  aide : 3 pour l'Est, 6 pour le Sud, 9 pour l'Ouest, comme sur un cadran d'horloge. La
+  marque de danger isolé, elle, montre deux éclats groupés seulement.
+sources:
+  - texte: Balisage AISM, marques cardinales, feux
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-04'
