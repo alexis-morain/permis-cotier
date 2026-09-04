@@ -169,6 +169,28 @@ def texte_du_pdf(pdf: Path) -> str:
     return "\n".join(page.extract_text() or "" for page in PdfReader(str(pdf)).pages)
 
 
+# Le PDF répète le nom de la partie et de l'annexe sur chaque page, en onglet
+# latéral. pdftotext les rend au milieu du texte : on les enlève, ils polluent
+# l'extrait sans rien apporter.
+# `[^\S\n]` plutôt que `[ \t]` : pdftotext préfixe les débuts de page d'un saut
+# de page (\f), et l'onglet latéral se retrouve juste derrière.
+MOBILIER = re.compile(
+    r"^[^\S\n]*("
+    r"PARTIE[^\S\n]+[A-F].*"          # onglet latéral de partie
+    r"|ANNEXE[^\S\n]+[IVX]+.*"        # onglet latéral d'annexe
+    r"|.*CORLEG 72.*"                  # pied de page « n° Règle N - Titre | CORLEG 72 »
+    r"|\d{1,3}"                        # numéro de page seul
+    r")[^\S\n]*$",
+    flags=re.MULTILINE,
+)
+
+
+def nettoyer(texte: str) -> str:
+    sans_saut_de_page = texte.replace("\f", "\n")
+    sans_mobilier = MOBILIER.sub("", sans_saut_de_page)
+    return re.sub(r"\n{3,}", "\n\n", sans_mobilier).strip()
+
+
 def commande_ripam(args) -> int:
     if not args.pdf.is_file():
         raise SystemExit(
@@ -180,19 +202,42 @@ def commande_ripam(args) -> int:
     texte = texte_du_pdf(args.pdf)
     debut, fin = (int(x) for x in args.regles.split("-"))
 
-    # Les règles s'ouvrent par « Règle N » en tête de ligne. On découpe là-dessus.
-    coupes = list(re.finditer(r"^\s*R[èe]gle\s+(\d+)\b", texte, flags=re.MULTILINE | re.IGNORECASE))
+    # Un en-tête de règle a toujours la forme « Règle N - Titre ». Exiger le
+    # tiret et le titre écarte les renvois du type « règle 30, les feux… » que
+    # le retour à la ligne du PDF met en début de ligne. Le PDF du ministère
+    # écrit une fois « Régle28 », sans espace ni accent grave : le motif tolère
+    # les deux accents et l'absence d'espace. Le sommaire du PDF
+    # a la même forme, en finissant par des points de conduite et un numéro de
+    # page : on l'écarte, sinon on prend la table des matières pour le texte.
+    def dans_le_sommaire(depart: int) -> bool:
+        # Une entrée de sommaire porte des points de conduite vers son numéro de
+        # page. Quand le titre est long il passe à la ligne, et la ligne d'en-tête
+        # n'a plus de points : on regarde donc la fenêtre qui suit, pas la ligne.
+        return bool(re.search(r"\.{5,}", texte[depart : depart + 300]))
+
+    coupes = [
+        c
+        for c in re.finditer(r"^[ \t]*R[èéÈÉ]gle\s*(\d+)\s*[-–—]\s*\S.*$", texte, flags=re.MULTILINE)
+        if not dans_le_sommaire(c.start())
+    ]
     if not coupes:
         raise SystemExit("aucune règle repérée dans le PDF ; vérifie l'extraction du texte")
 
-    dossier = SOURCES / args.ref
-    ecrits = 0
+    # Une règle peut apparaître plusieurs fois (rappel en annexe). On garde
+    # l'extrait le plus long, qui est le corps de la règle.
+    meilleurs: dict[int, str] = {}
     for i, coupe in enumerate(coupes):
         numero = int(coupe.group(1))
         if not debut <= numero <= fin:
             continue
         borne = coupes[i + 1].start() if i + 1 < len(coupes) else len(texte)
-        corps = re.sub(r"\n{3,}", "\n\n", texte[coupe.start():borne]).strip()
+        corps = nettoyer(texte[coupe.start():borne])
+        if len(corps) > len(meilleurs.get(numero, "")):
+            meilleurs[numero] = corps
+
+    dossier = SOURCES / args.ref
+    ecrits = 0
+    for numero, corps in sorted(meilleurs.items()):
         chemin = ecrire(
             dossier, f"regle-{numero:02d}", f"RIPAM, règle {numero}", args.ref, corps,
             "https://www.mer.gouv.fr/sites/default/files/2020-11/texte-colreg.pdf",

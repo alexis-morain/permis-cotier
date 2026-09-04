@@ -1,4 +1,7 @@
-import { z } from 'zod';
+// On prend le zod qu'Astro embarque, pas un second installé à côté : c'est la
+// même instance que celle des collections de contenu, donc les types collent
+// et le schéma reste l'unique source de vérité, partagée avec les tests.
+import { z } from 'astro/zod';
 import { CODES_THEMES } from './themes';
 
 /**
@@ -34,7 +37,7 @@ export const schemaSource = z.object({
   texte: texteNonVide(3),
   /** Clé du texte dans `data/sources/<ref>/`. */
   ref: z.string().regex(/^[a-z0-9-]+$/, 'référence en minuscules, chiffres et tirets'),
-  url: z.url().optional(),
+  url: z.string().url().optional(),
   /** Date de la version consultée, pour retrouver les questions touchées par une modification. */
   version: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 });
@@ -64,7 +67,7 @@ export const schemaQuestion = z
   .object({
     id: z.string().regex(ID_QUESTION, 'identifiant attendu : <theme>-<4 chiffres>'),
     option: z.literal('cotier'),
-    theme: z.enum(CODES_THEMES as [string, ...string[]]),
+    theme: z.enum(CODES_THEMES as unknown as [string, ...string[]]),
     statut: z.enum(STATUTS),
     difficulte: z.number().int().min(1).max(3),
     enonce: texteNonVide(10),
@@ -78,7 +81,7 @@ export const schemaQuestion = z
   .superRefine((q, ctx) => {
     if (!q.id.startsWith(`${q.theme}-`)) {
       ctx.addIssue({
-        code: 'custom',
+        code: z.ZodIssueCode.custom,
         path: ['id'],
         message: `l'identifiant doit commencer par « ${q.theme}- »`,
       });
@@ -86,21 +89,21 @@ export const schemaQuestion = z
 
     const ids = q.propositions.map((p) => p.id);
     if (new Set(ids).size !== ids.length) {
-      ctx.addIssue({ code: 'custom', path: ['propositions'], message: 'identifiants de proposition dupliqués' });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['propositions'], message: 'identifiants de proposition dupliqués' });
     }
 
     if (new Set(q.reponses).size !== q.reponses.length) {
-      ctx.addIssue({ code: 'custom', path: ['reponses'], message: 'réponse dupliquée' });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['reponses'], message: 'réponse dupliquée' });
     }
 
     for (const r of q.reponses) {
       if (!ids.includes(r)) {
-        ctx.addIssue({ code: 'custom', path: ['reponses'], message: `la réponse « ${r} » n'est pas dans les propositions` });
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['reponses'], message: `la réponse « ${r} » n'est pas dans les propositions` });
       }
     }
 
     if ((q.statut === 'relu' || q.statut === 'publie') && !q.meta.relu_par) {
-      ctx.addIssue({ code: 'custom', path: ['meta', 'relu_par'], message: `le statut « ${q.statut} » exige meta.relu_par` });
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['meta', 'relu_par'], message: `le statut « ${q.statut} » exige meta.relu_par` });
     }
   });
 
