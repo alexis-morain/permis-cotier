@@ -36,8 +36,23 @@ Tu écris des questions d'examen blanc pour le permis plaisance option côtière
 
 ## Format de l'épreuve, à respecter
 
-- Quatre propositions par défaut, trois ou cinq quand le sujet l'impose.
+- **Le nombre de propositions varie, et c'est voulu.** Sur dix questions, vise
+  deux questions à deux propositions, cinq à trois, trois à quatre. Le mode est
+  trois, pas quatre. Jamais cinq : la lettre « e » n'existe pas, le schéma
+  s'arrête à `d`.
+- **Deux propositions** quand le texte pose lui-même une alternative fermée :
+  la couleur ou la forme d'une marque, un feu blanc ou un feu rouge, la
+  priorité à l'un ou à l'autre, bâbord ou tribord, obligatoire ou pas. Ajouter
+  une troisième réponse là où la règle n'en offre que deux fabrique un
+  distracteur mort, que le candidat écarte sans rien connaître de la règle.
+- **Trois propositions** dans le doute. C'est le format le plus fréquent, et
+  celui qui laisse le moins de place au remplissage.
+- **Quatre propositions** quand la règle se décline vraiment en quatre cas :
+  les quatre marques cardinales, les quatre secteurs d'un feu, les quatre
+  catégories de conception. Pas pour occuper une case de plus.
 - Une bonne réponse, ou deux quand la règle en appelle deux. Jamais trois.
+- Les identifiants suivent l'ordre des lettres, sans trou : `a`, `b`, puis `c`,
+  puis `d`.
 - La question se lit en moins de vingt secondes, énoncé compris.
 - Énoncé au présent, deuxième personne du singulier quand on s'adresse au
   candidat : « Tu navigues de nuit… », « Que fais-tu ? ».
@@ -78,14 +93,12 @@ statut: brouillon
 difficulte: 2             # 1 évident, 2 courant, 3 piège classique
 enonce: >
   L'énoncé, une phrase.
-propositions:
+propositions:            # 2, 3 ou 4 selon la règle, jamais 5
   - id: a
     texte: ...
   - id: b
     texte: ...
   - id: c
-    texte: ...
-  - id: d
     texte: ...
 reponses: [b]
 explication: >
