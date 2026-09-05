@@ -9,6 +9,7 @@ import {
   corriger,
   calculerResultat,
   ordonnerEntrainement,
+  serieARevoir,
 } from './quiz';
 import { THEMES, cibleTotaleJ1 } from './themes';
 import type { QuestionJouable, Progression } from './quiz';
@@ -251,5 +252,42 @@ describe('ordonnancement de l’entraînement', () => {
   it('ne perd ni ne duplique aucune question', () => {
     const ordre = ordonnerEntrainement(questions, progression);
     expect(new Set(ordre.map((x) => x.id)).size).toBe(questions.length);
+  });
+});
+
+describe('série « à revoir »', () => {
+  const questions = [
+    q('vhf-0001', 'vhf'),
+    q('vhf-0002', 'vhf'),
+    q('vhf-0003', 'vhf'),
+    q('vhf-0004', 'vhf'),
+  ];
+  const progression: Progression = {
+    'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
+    'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03' },
+    'vhf-0004': { vues: 2, ratees: 2, derniereReussie: false, vueLe: '2026-09-02' },
+  };
+
+  it('ne garde que les questions ratées à la dernière rencontre', () => {
+    expect(serieARevoir(questions, progression).map((x) => x.id).sort()).toEqual([
+      'vhf-0002', 'vhf-0004',
+    ]);
+  });
+
+  it('laisse dehors ce qui n’a jamais été vu', () => {
+    expect(serieARevoir(questions, progression).map((x) => x.id)).not.toContain('vhf-0003');
+  });
+
+  it('sort la plus ancienne ratée en premier', () => {
+    expect(serieARevoir(questions, progression)[0]?.id).toBe('vhf-0004');
+  });
+
+  it('rend une série vide quand rien n’a été raté', () => {
+    expect(serieARevoir(questions, {})).toEqual([]);
+  });
+
+  it('compte comme la pastille de l’accueil', () => {
+    const aRevoir = Object.values(progression).filter((e) => !e.derniereReussie).length;
+    expect(serieARevoir(questions, progression)).toHaveLength(aRevoir);
   });
 });

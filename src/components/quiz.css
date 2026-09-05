@@ -1,60 +1,102 @@
 /* Écran de jeu. Tout doit tenir dans 375 px de large sans défilement latéral,
-   et la question plus son visuel dans une hauteur d'écran de téléphone. */
+   et la question plus son visuel dans une hauteur d'écran de téléphone.
+   Le vocabulaire est celui de DESIGN.md : bord plein, rayon unique, jaune
+   pour l'action, vert et rouge pour le seul verdict. */
 
 .jeu {
-  --hauteur-barre: 4px;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   padding-block: 1.25rem 2rem;
 }
 
+/* Compteur et chrono, en display : ce sont les deux nombres qu'on lit de
+   loin, entre deux propositions. */
 .jeu__entete {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--texte-doux);
 }
 
-.jeu__compteur { font-weight: 600; color: var(--texte); }
+.jeu__compteur {
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--texte);
+}
+.jeu__compteur .discret { font-stretch: 100%; font-weight: 600; font-size: 0.9rem; }
 
 .jeu__chrono {
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: 0.25rem;
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--texte);
   font-variant-numeric: tabular-nums;
-  font-weight: 600;
 }
-.jeu__chrono--urgent { color: var(--rouge); }
+.jeu__chrono .discret { font-stretch: 100%; font-weight: 600; font-size: 0.9rem; }
+.jeu__chrono--urgent { color: var(--rouge-texte); }
 
+.jeu__jauges {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Le chrono, jauge pleine et jaune ; rouge sur les cinq dernières secondes. */
 .jeu__barre {
-  height: var(--hauteur-barre);
-  background: var(--eau);
+  height: 10px;
+  border-radius: 999px;
+  background: var(--fond-2);
   overflow: hidden;
 }
 .jeu__barre span {
   display: block;
   height: 100%;
-  background: var(--accent);
+  border-radius: inherit;
+  background: var(--jaune);
   transform-origin: left;
-  transition: transform 1s linear;
+  transition: transform 1s linear, background var(--transition);
 }
 .jeu__barre--urgent span { background: var(--rouge); }
 
+/* Avancement dans l'examen : plus fin et marine, pour ne pas le confondre
+   avec le chrono d'un coup d'œil. */
+.jeu__avancement {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--fond-2);
+  overflow: hidden;
+}
+.jeu__avancement span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--texte);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
 .jeu__consigne {
   font-size: 0.9rem;
-  color: var(--texte-doux);
-  border-left: 2px solid var(--accent);
-  padding-left: 0.7rem;
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--rayon-petit);
+  background: var(--jaune-pale);
+  color: var(--texte);
 }
 
 .jeu__enonce {
-  font-family: var(--serif);
-  font-size: clamp(1.3rem, 5vw, 1.75rem);
-  font-weight: 600;
-  line-height: 1.25;
+  font-stretch: 100%;
+  font-size: clamp(1.25rem, 4.6vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
   margin: 0;
   max-width: 34ch;
   text-wrap: pretty;
@@ -66,7 +108,8 @@
   max-width: 100%;
   width: auto;
   margin: 0;
-  border: var(--filet-epaisseur) solid var(--filet);
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon);
   background: var(--fond-carte);
 }
 
@@ -76,55 +119,89 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.7rem;
 }
+.propositions li { max-width: none; }
 
+/* La proposition : une carte à bord plein, comme un bouton. La lettre dans un
+   cercle, qui se remplit quand on coche. */
 .proposition {
   display: flex;
   align-items: flex-start;
-  gap: 0.8rem;
+  gap: 0.85rem;
   width: 100%;
-  min-height: 3.25rem;
+  min-height: 3.5rem;
   padding: 0.85rem 1rem;
-  border: var(--filet-epaisseur) solid var(--filet);
+  border: 2px solid var(--filet);
   border-radius: var(--rayon);
   background: var(--fond-carte);
   color: inherit;
   font: inherit;
+  line-height: 1.4;
   text-align: left;
   cursor: pointer;
-  transition: border-color var(--transition), background var(--transition);
+  box-shadow: 0 var(--bord) 0 var(--filet);
+  transition: border-color var(--transition), background var(--transition),
+    box-shadow var(--transition), transform var(--transition), opacity var(--transition);
 }
-.proposition:hover:not(:disabled) { border-color: var(--texte-doux); }
+.proposition:hover:not(:disabled) { border-color: var(--filet-fort); box-shadow: 0 var(--bord) 0 var(--filet-fort); }
+.proposition:active:not(:disabled) { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet); }
 .proposition:disabled { cursor: default; }
 
 .proposition__lettre {
-  flex: 0 0 1.75rem;
-  height: 1.75rem;
+  flex: 0 0 1.85rem;
+  height: 1.85rem;
+  margin-top: 0.05rem;
   display: grid;
   place-items: center;
-  border: var(--filet-epaisseur) solid var(--texte-doux);
+  border: 2px solid var(--filet-fort);
+  border-radius: 999px;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
 }
 
 .proposition--cochee {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, var(--fond-carte));
+  border-color: var(--texte);
+  background: var(--jaune-pale);
+  box-shadow: 0 var(--bord) 0 var(--texte);
 }
 .proposition--cochee .proposition__lettre {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-contraste);
+  background: var(--texte);
+  border-color: var(--texte);
+  color: var(--fond-carte);
 }
 
-.proposition--juste { border-color: var(--vert); border-width: 2px; }
-.proposition--juste .proposition__lettre { background: var(--vert); border-color: var(--vert); color: var(--papier-vif); }
-.proposition--fausse { border-color: var(--rouge); border-width: 2px; }
-.proposition--fausse .proposition__lettre { background: var(--rouge); border-color: var(--rouge); color: var(--papier-vif); }
+.proposition--juste {
+  border-color: var(--vert);
+  background: var(--vert-pale);
+  box-shadow: 0 var(--bord) 0 var(--vert);
+}
+.proposition--juste .proposition__lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
+.proposition--fausse {
+  border-color: var(--rouge);
+  background: var(--rouge-pale);
+  box-shadow: 0 var(--bord) 0 var(--rouge);
+}
+.proposition--fausse .proposition__lettre { background: var(--rouge); border-color: var(--rouge); color: #fff; }
 
-.proposition__marque { margin-left: auto; font-size: 0.8rem; font-weight: 600; }
+/* Une fois corrigé, ou quand deux cases sont déjà cochées, les autres
+   propositions s'effacent un peu. */
+.proposition:disabled:not(.proposition--juste):not(.proposition--fausse):not(.proposition--cochee) {
+  opacity: 0.55;
+}
+
+.proposition__marque {
+  margin-left: auto;
+  align-self: center;
+  padding: 0.1em 0.55em;
+  border-radius: 999px;
+  background: var(--fond-carte);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
 
 .jeu__actions {
   display: flex;
@@ -135,15 +212,25 @@
 }
 .jeu__actions .bouton--principal { flex: 1 1 12rem; }
 
+/* Le verdict : une carte pleine, verte ou rouge, sans filet de côté. Le titre
+   en display coloré est ce qu'on lit en premier. */
 .verdict {
-  border: var(--filet-epaisseur) solid var(--filet);
-  border-left-width: 3px;
-  padding: 1rem 1.1rem;
+  scroll-margin-block: 1rem 6rem;
+  border-radius: var(--rayon);
+  padding: 1.1rem 1.2rem;
   background: var(--fond-carte);
+  border: 2px solid var(--filet);
 }
-.verdict--juste { border-left-color: var(--vert); }
-.verdict--fausse { border-left-color: var(--rouge); }
-.verdict__titre { font-weight: 700; margin: 0 0 0.4rem; }
+.verdict--juste { background: var(--vert-pale); border-color: var(--vert-pale); }
+.verdict--fausse { background: var(--rouge-pale); border-color: var(--rouge-pale); }
+.verdict__titre {
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin: 0 0 0.45rem;
+}
+.verdict--juste .verdict__titre { color: var(--vert-texte); }
+.verdict--fausse .verdict__titre { color: var(--rouge-texte); }
 .verdict p:last-child { margin-bottom: 0; }
 
 .sources { font-size: 0.9rem; color: var(--texte-doux); margin: 0.75rem 0 0; }
@@ -151,51 +238,215 @@
 .sources li + li { margin-top: 0.2rem; }
 
 .signaler {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   background: none;
   border: 0;
-  padding: 0;
+  padding-block: 0.6rem;
+  padding-inline: 0;
   font: inherit;
   font-size: 0.85rem;
+  font-weight: 600;
   color: var(--texte-doux);
   text-decoration: underline;
-  text-decoration-color: var(--filet);
+  text-decoration-color: var(--filet-fort);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
   cursor: pointer;
 }
-.signaler:hover { color: var(--texte); text-decoration-color: var(--accent); }
+.signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+
+/* Écran de départ de l'examen. Le chrono ne tourne pas encore. */
+.depart { gap: 1.1rem; }
+.depart__titre {
+  font-size: clamp(1.7rem, 6vw, 2.5rem);
+  margin: 0;
+  max-width: 18ch;
+}
+.depart__format {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  max-width: 46ch;
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon);
+  background: var(--fond-carte);
+}
+.depart__format li {
+  padding: 0.75rem 1rem;
+  max-width: none;
+}
+.depart__format li + li { border-top: 2px solid var(--filet); }
+/* Les touches du clavier, dessinées comme des touches. */
+.depart .discret b {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 0.35em;
+  border: 2px solid var(--filet-fort);
+  border-bottom-width: 3px;
+  border-radius: 0.4rem;
+  text-align: center;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+.encadre__titre { font: inherit; font-weight: 700; margin: 0 0 0.4rem; }
+.depart__retour { margin: 0; }
+.depart__reprise { margin-top: 0.25rem; background: var(--jaune-pale); border-color: var(--jaune-pale); }
+.depart__reprise p { margin: 0; }
+.depart__reprise p + p { margin-top: 0.4rem; }
+
+/* Confirmation avant d'arrêter un examen en cours. */
+.arret {
+  border-radius: var(--rayon);
+  padding: 1.1rem 1.2rem;
+  background: var(--rouge-pale);
+}
+.arret__question { font-weight: 800; font-stretch: var(--large); margin: 0 0 0.35rem; color: var(--rouge-texte); }
+.arret .jeu__actions { margin-top: 0.9rem; }
 
 /* Résultat */
+.resultat__titre {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+  margin: 0 0 0.25rem;
+}
 .resultat__score {
-  font-family: var(--serif);
-  font-size: clamp(3rem, 16vw, 5.5rem);
+  font-stretch: var(--large);
+  font-size: clamp(3.5rem, 18vw, 6rem);
   line-height: 0.95;
-  font-weight: 600;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   margin: 0;
 }
-.resultat__score small { font-size: 0.35em; color: var(--texte-doux); font-weight: 400; }
-.resultat__verdict { font-size: 1.15rem; font-weight: 600; margin: 0.35rem 0 1.25rem; }
-.resultat__verdict--reussi { color: var(--vert); }
-.resultat__verdict--echoue { color: var(--rouge); }
+.resultat__score small {
+  font-size: 0.3em;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  color: var(--texte-doux);
+  font-weight: 600;
+}
+.resultat__verdict { font-size: 1.15rem; font-weight: 700; margin: 0.5rem 0 1.25rem; }
+.resultat__verdict--reussi { color: var(--vert-texte); }
+.resultat__verdict--echoue { color: var(--rouge-texte); }
 
+/* Le détail par thème, avec une jauge sous chaque ligne : `--part` est la
+   part de bonnes réponses, posée par l'écran. */
 .parTheme { list-style: none; margin: 1.5rem 0; padding: 0; max-width: 34rem; }
 .parTheme li {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.5rem 1rem;
+  gap: 0.35rem 1rem;
   align-items: baseline;
-  padding: 0.5rem 0;
-  border-bottom: var(--filet-epaisseur) solid var(--filet-fin);
+  padding: 0.7rem 0;
+  max-width: none;
 }
-.parTheme b { font-weight: 600; }
-.parTheme__note { font-variant-numeric: tabular-nums; }
-.parTheme__note--faible { color: var(--rouge); font-weight: 700; }
+.parTheme li + li { border-top: 2px solid var(--filet); }
+.parTheme li::after {
+  content: '';
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--vert) calc(var(--part, 0) * 100%), var(--fond-2) 0);
+}
+.parTheme b { font-weight: 700; }
+.parTheme__note { font-variant-numeric: tabular-nums; font-weight: 700; }
+.parTheme__note--faible { color: var(--rouge-texte); }
 
 /* Revue */
 .revue { display: flex; flex-direction: column; gap: 2.5rem; margin-top: 2rem; }
-.revue__item { border-top: var(--filet-epaisseur) solid var(--filet); padding-top: 1.25rem; }
-.revue__rang { font-size: 0.85rem; color: var(--texte-doux); margin-bottom: 0.35rem; }
-.revue__enonce { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; margin: 0 0 0.75rem; max-width: 40ch; }
+.revue__item { border-top: 2px solid var(--filet); padding-top: 1.25rem; }
+.revue__rang { font-size: 0.85rem; font-weight: 600; color: var(--texte-doux); margin-bottom: 0.35rem; }
+.revue__enonce { font-stretch: 100%; letter-spacing: 0; font-size: 1.2rem; font-weight: 700; line-height: 1.3; margin: 0 0 0.75rem; max-width: 40ch; }
+
+/* Le bouton de validation tombait à 818 px sur un écran de 812 : il fallait
+   scroller à chaque question, et en examen ce scroll se paye en points. Sous
+   46 rem la barre est collée en bas, et elle prend la couleur du verdict. */
+@media (max-width: 45.999rem) {
+  .jeu__actions--collant {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin-inline: -1.25rem;
+    margin-block-start: 0;
+    padding: 0.75rem 1.25rem max(0.75rem, env(safe-area-inset-bottom));
+    border-top: 2px solid var(--filet);
+    background: var(--fond);
+    transition: background 200ms cubic-bezier(0.2, 0, 0, 1), border-color 200ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .jeu__actions--juste { background: var(--vert-pale); border-top-color: var(--vert-pale); }
+  .jeu__actions--fausse { background: var(--rouge-pale); border-top-color: var(--rouge-pale); }
+
+  /* La barre monte à 141 px en entraînement, bouton plus lien de signalement :
+     un verdict court remonté par le bas passerait dessous. */
+  .verdict { scroll-margin-block: 1rem 10rem; }
+}
 
 @media (min-width: 46rem) {
   .jeu { gap: 1.5rem; padding-block: 2rem 3rem; }
-  .jeu__enonce { max-width: 30ch; }
+  /* Plus large que sur mobile, pas plus étroit : l'énoncé est l'élément le
+     plus important de l'écran, il ne se lit pas en colonne de cinq lignes. */
+  .jeu__enonce { max-width: 48ch; }
+  /* Sur un grand écran, le bouton principal garde une taille de bouton. */
+  .jeu__actions .bouton--principal { flex: 0 1 auto; min-width: 16rem; }
+}
+
+/* Mouvement.
+
+   On n'anime que `transform` et `opacity`, jamais une propriété qui met en
+   page. Le mouvement marque un changement d'état réel : rien ne bouge tant que
+   le candidat n'a pas agi. Tout se coupe sous `prefers-reduced-motion`.
+
+   Le sélecteur `.jeu > …` sépare le jeu de la revue : dans la revue, verdicts
+   et réponses justes sont là dès l'affichage, les animer ferait clignoter
+   toute la page. */
+
+@keyframes jeu-entree {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.jeu > .jeu__enonce { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) both; }
+.jeu > .jeu__visuel { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) 40ms both; }
+.jeu > .propositions { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) 70ms both; }
+
+/* Le moment écrit du site : le verdict monte sous les propositions, pendant
+   que la barre d'action prend sa couleur. */
+@keyframes verdict-entree {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.jeu > .verdict { animation: verdict-entree 220ms cubic-bezier(0.2, 0, 0, 1) both; }
+
+@keyframes pastille-marquee {
+  from { transform: scale(0.7); }
+  to { transform: none; }
+}
+.jeu > .propositions .proposition--juste .proposition__lettre,
+.jeu > .propositions .proposition--fausse .proposition__lettre {
+  animation: pastille-marquee 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes chrono-battement {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.jeu__chrono--urgent { animation: chrono-battement 1s ease-in-out infinite; }
+
+.resultat__score { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) both; }
+.resultat__verdict { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) 90ms both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jeu > .jeu__enonce,
+  .jeu > .jeu__visuel,
+  .jeu > .propositions,
+  .jeu > .verdict,
+  .jeu > .propositions .proposition--juste .proposition__lettre,
+  .jeu > .propositions .proposition--fausse .proposition__lettre,
+  .jeu__chrono--urgent,
+  .resultat__score,
+  .resultat__verdict {
+    animation: none;
+  }
+  .jeu__barre span { transition: none; }
 }

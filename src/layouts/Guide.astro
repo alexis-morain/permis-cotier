@@ -94,10 +94,13 @@ const fiches = notionsDuGuide(page.slug)
 
 <style>
   .reponseCourte {
-    font-family: var(--serif);
+    /* Archivo étendue, comme les titres : c'est la phrase que le lecteur
+       pressé vient chercher, et celle qu'un moteur cite. */
+    font-stretch: var(--large);
+    font-weight: 600;
     font-size: 1.25rem;
-    line-height: 1.45;
-    border-left: 3px solid var(--accent);
+    line-height: 1.35;
+    border-left: var(--bord) solid var(--accent);
     padding-left: 1.1rem;
     margin: 1.5rem 0 2.5rem;
     max-width: 52ch;
