@@ -1,0 +1,28 @@
+id: vhf-0034
+option: cotier
+theme: vhf
+notion: vhf-canaux
+statut: publie
+difficulte: 2
+enonce: >-
+  Quelle est la puissance d'émission maximale d'une VHF marine fixe ?
+propositions:
+  - id: a
+    texte: 6 watts
+  - id: b
+    texte: 25 watts
+  - id: c
+    texte: 100 watts
+reponses:
+  - b
+explication: >-
+  Une VHF fixe émet au plus 25 watts, une portative 6 watts. La puissance ne fait pas
+  la portée : la VHF porte à vue, et c'est la hauteur des antennes qui compte.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,29 @@
+id: ecluses-0018
+option: cotier
+theme: ecluses
+notion: ecluses-approche
+statut: publie
+difficulte: 3
+enonce: >-
+  Un bateau portant une flamme rouge arrive au garage de l'écluse où tu attends depuis
+  une heure. Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu lui facilites le passage, il bénéficie d'un droit de priorité
+  - id: b
+    texte: Tu gardes ton tour, le passage se fait dans l'ordre d'arrivée
+reponses:
+  - a
+explication: >-
+  Par dérogation à l'ordre d'arrivée, bénéficient d'un droit de priorité de passage aux
+  écluses les bateaux en déplacement urgent de service et ceux auxquels l'autorité de
+  police de la navigation a accordé ce droit, qui portent la flamme rouge. Les autres
+  bateaux leur facilitent au maximum le passage.
+sources:
+  - texte: Code des transports, article A. 4241-53-32
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

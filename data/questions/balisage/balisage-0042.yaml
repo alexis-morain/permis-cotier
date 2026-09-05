@@ -1,0 +1,32 @@
+id: balisage-0042
+option: cotier
+theme: balisage
+notion: balisage-lateral
+statut: publie
+difficulte: 2
+enonce: >-
+  Les marques latérales se lisent selon le sens conventionnel de balisage. Quel est-il
+  ?
+propositions:
+  - id: a
+    texte: Le sens général que suit un navire venant de la haute mer vers un port, une
+      rivière ou un estuaire
+  - id: b
+    texte: Le sens du courant de marée dominant
+  - id: c
+    texte: Le sens qui va du nord vers le sud le long de la côte
+reponses:
+  - a
+explication: >-
+  Le sens conventionnel de balisage est le sens général que suit le navire venant de la
+  haute mer lorsqu'il s'approche d'un port, d'une rivière, d'un estuaire ou d'une autre
+  voie d'eau. Le long des côtes, quand rien ne l'impose, il suit les contours des continents
+  dans le sens des aiguilles d'une montre.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

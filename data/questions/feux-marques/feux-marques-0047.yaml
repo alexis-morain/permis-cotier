@@ -1,0 +1,32 @@
+id: feux-marques-0047
+option: cotier
+theme: feux-marques
+notion: feux-moteur-route
+statut: publie
+difficulte: 3
+enonce: >-
+  Sur ton bateau à moteur de 6 mètres, il est impossible d'installer le feu blanc dans
+  l'axe longitudinal. Que permet la règle 23 ?
+propositions:
+  - id: a
+    texte: Le placer hors de l'axe, à condition que les feux de côté soient combinés en
+      un seul fanal dans l'axe
+  - id: b
+    texte: Le placer n'importe où, sans condition
+  - id: c
+    texte: Rien, le feu blanc doit toujours être dans l'axe
+reponses:
+  - a
+explication: >-
+  À bord d'un navire à propulsion mécanique de moins de 12 mètres, le feu de tête de mât
+  ou le feu blanc visible sur tout l'horizon peut ne pas se trouver dans l'axe s'il est
+  impossible de l'y installer, à condition que les feux de côté soient combinés en un
+  seul fanal disposé dans l'axe ou aussi près que possible de celui du feu blanc.
+sources:
+  - texte: RIPAM, règle 23 d) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

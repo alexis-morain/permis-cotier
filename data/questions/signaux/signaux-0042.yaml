@@ -1,0 +1,32 @@
+id: signaux-0042
+option: cotier
+theme: signaux
+notion: signaux-detresse
+statut: publie
+difficulte: 2
+enonce: >-
+  Lesquels de ces signaux indiquent la détresse et le besoin d'assistance ?
+propositions:
+  - id: a
+    texte: Un signal fumigène produisant une fumée orange
+  - id: b
+    texte: Des battements lents et répétés des bras étendus de chaque côté
+  - id: c
+    texte: Une fusée projetant des étoiles vertes
+  - id: d
+    texte: Un pavillon jaune hissé en tête de mât
+reponses:
+  - a
+  - b
+explication: >-
+  L'annexe IV retient la fumée orange et les battements lents et répétés des bras étendus
+  parmi les signaux de détresse. Les fusées de détresse projettent des étoiles rouges,
+  pas vertes, et le pavillon de détresse est un pavillon carré accompagné d'une boule.
+sources:
+  - texte: RIPAM, annexe IV, 1
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

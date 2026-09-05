@@ -1,0 +1,30 @@
+id: balisage-0044
+option: cotier
+theme: balisage
+notion: balisage-cardinal
+statut: publie
+difficulte: 2
+enonce: >-
+  Deux cônes noirs opposés par la pointe coiffent une bouée. De quelle marque cardinale
+  s'agit-il ?
+propositions:
+  - id: a
+    texte: Une cardinale Ouest
+  - id: b
+    texte: Une cardinale Est
+  - id: c
+    texte: Une cardinale Sud
+reponses:
+  - a
+explication: >-
+  Le voyant de la cardinale Ouest est fait de deux cônes noirs superposés, opposés par
+  la pointe. Les cônes opposés par la base sont ceux de la cardinale Est, et les deux
+  pointes en bas ceux de la cardinale Sud.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.4
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

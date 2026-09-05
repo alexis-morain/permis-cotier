@@ -1,0 +1,30 @@
+id: titre-conduite-0015
+option: cotier
+theme: titre-conduite
+notion: titre-conditions
+statut: publie
+difficulte: 3
+enonce: >-
+  Un jeune de quinze ans, membre d'un club affilié à une fédération agréée, peut-il conduire
+  un bateau à moteur ?
+propositions:
+  - id: a
+    texte: Oui, de jour, un bateau de moins de 20 mètres, dans le cadre des activités
+      du club et sous encadrement
+  - id: b
+    texte: Non, rien n'est possible avant seize ans
+reponses:
+  - a
+explication: >-
+  L'âge minimum du permis est seize ans, mais dès quatorze ans et jusqu'à seize, les membres
+  d'un organisme affilié à une fédération sportive agréée peuvent conduire de jour un
+  bateau de plaisance de moins de 20 mètres dans le cadre des activités de cet organisme,
+  sous les conditions d'encadrement fixées par arrêté.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 3
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

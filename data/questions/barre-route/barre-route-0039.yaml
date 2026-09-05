@@ -1,0 +1,34 @@
+id: barre-route-0039
+option: cotier
+theme: barre-route
+notion: barre-veille-vitesse
+statut: publie
+difficulte: 2
+enonce: >-
+  Quels facteurs la règle 6 te demande-t-elle de prendre en compte pour fixer ta vitesse
+  de sécurité ?
+propositions:
+  - id: a
+    texte: La visibilité
+  - id: b
+    texte: La densité du trafic, notamment les concentrations de navires de pêche
+  - id: c
+    texte: La puissance maximale de ton moteur
+  - id: d
+    texte: L'heure d'arrivée prévue au port
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 6 liste, pour tous les navires, la visibilité, la densité du trafic, la capacité
+  de manœuvre et la distance d'arrêt, l'arrière-plan lumineux de nuit, l'état du vent,
+  de la mer et des courants, et le tirant d'eau. Ce que peut faire ton moteur et l'heure
+  à laquelle tu veux arriver n'y figurent pas.
+sources:
+  - texte: RIPAM, règle 6 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

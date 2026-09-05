@@ -1,0 +1,29 @@
+id: signaux-0041
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans la brume, un navire en train de pêcher est au mouillage. Quel signal émet-il ?
+propositions:
+  - id: a
+    texte: Un son prolongé suivi de deux sons brefs, comme s'il faisait route
+  - id: b
+    texte: La cloche sonnée rapidement pendant cinq secondes, comme tout navire au mouillage
+  - id: c
+    texte: Aucun, un navire au mouillage se tait
+reponses:
+  - a
+explication: >-
+  Un navire en train de pêcher au mouillage, et un navire à capacité de manœuvre restreinte
+  qui travaille au mouillage, émettent le signal de la règle 35 c), un son prolongé suivi
+  de deux sons brefs, au lieu de la cloche des navires au mouillage.
+sources:
+  - texte: RIPAM, règle 35 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

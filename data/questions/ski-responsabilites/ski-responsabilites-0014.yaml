@@ -1,0 +1,31 @@
+id: ski-responsabilites-0014
+option: cotier
+theme: ski-responsabilites
+notion: responsabilite-chef-de-bord
+statut: publie
+difficulte: 1
+enonce: >-
+  Comment la division 240 définit-elle le chef de bord ?
+propositions:
+  - id: a
+    texte: Le membre d'équipage responsable de la conduite du navire, du respect des règlements
+      et de la sécurité des personnes embarquées
+  - id: b
+    texte: Le propriétaire du navire, qu'il soit à bord ou non
+  - id: c
+    texte: La personne la plus âgée à bord
+reponses:
+  - a
+explication: >-
+  Le chef de bord est le membre d'équipage responsable de la conduite du navire, de la
+  tenue du journal de bord lorsqu'il est exigé, du respect des règlements et de la sécurité
+  des personnes embarquées. Ce n'est pas une question de propriété ni d'âge, mais de responsabilité
+  assumée à bord.
+sources:
+  - texte: Division 240, article 240-1.02, IV. 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,29 @@
+id: vhf-0045
+option: cotier
+theme: vhf
+notion: vhf-licence-mmsi
+statut: publie
+difficulte: 2
+enonce: >-
+  Qui délivre en France la licence de station de navire ?
+propositions:
+  - id: a
+    texte: L'Agence nationale des fréquences
+  - id: b
+    texte: Le CROSS
+  - id: c
+    texte: La capitainerie du port d'attache
+reponses:
+  - a
+explication: >-
+  La licence de station de navire, autorisation administrative d'utiliser une installation
+  radioélectrique à bord, est délivrée par l'Agence nationale des fréquences. Le CROSS
+  coordonne les secours, il n'attribue rien.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

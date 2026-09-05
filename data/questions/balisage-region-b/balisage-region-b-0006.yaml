@@ -1,0 +1,30 @@
+id: balisage-region-b-0006
+option: cotier
+theme: balisage-region-b
+notion: region-b-invariants
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu es en région B. Quelle forme a la marque latérale que tu laisses sur tribord en entrant
+  au port ?
+propositions:
+  - id: a
+    texte: Conique, comme en région A
+  - id: b
+    texte: Cylindrique, tout est inversé
+  - id: c
+    texte: Sphérique
+reponses:
+  - a
+explication: >-
+  D'une région à l'autre, seules les couleurs des marques latérales s'inversent. La forme
+  ne change pas : la marque de tribord reste conique, celle de bâbord cylindrique. En
+  région B, la marque de tribord est donc un cône rouge, pointe en haut.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

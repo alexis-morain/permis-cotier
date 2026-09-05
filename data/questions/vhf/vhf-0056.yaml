@@ -1,0 +1,32 @@
+id: vhf-0056
+option: cotier
+theme: vhf
+notion: vhf-canaux
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton bateau est équipé d'une VHF. Que t'impose la division 240 pendant que tu es en mer
+  ?
+propositions:
+  - id: a
+    texte: Rester à l'écoute du canal 16 en permanence, quand c'est possible, au poste
+      de navigation
+  - id: b
+    texte: Éteindre la VHF pour économiser la batterie, sauf en cas d'urgence
+  - id: c
+    texte: Veiller le canal 70 en phonie
+reponses:
+  - a
+explication: >-
+  En complément de la veille visuelle et auditive de la règle 5, tout navire équipé d'une
+  VHF fixe ou portative doit, lorsqu'il est à la mer et lorsque c'est possible, rester
+  en permanence à l'écoute de la voie 16, depuis le poste de navigation habituel. C'est
+  ainsi qu'on entend un MAYDAY voisin ou un avis du CROSS.
+sources:
+  - texte: Division 240, article 240-2.07, point 2
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

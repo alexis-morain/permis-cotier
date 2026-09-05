@@ -1,0 +1,31 @@
+id: barre-route-0042
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 3
+enonce: >-
+  Le relèvement d'un grand cargo qui s'approche varie nettement. Es-tu certain qu'il n'y
+  a pas de risque d'abordage ?
+propositions:
+  - id: a
+    texte: Non, un risque peut exister malgré une variation appréciable du relèvement,
+      surtout avec un très grand navire ou à courte distance
+  - id: b
+    texte: Oui, un relèvement qui varie écarte tout risque
+reponses:
+  - a
+explication: >-
+  La règle 7 d) ii) prévient qu'un risque d'abordage peut parfois exister même si l'on
+  observe une variation appréciable du relèvement, particulièrement lorsque l'on s'approche
+  d'un très grand navire, d'un train de remorque ou d'un navire qui est à courte distance.
+  Sa longueur fait varier le relèvement de sa passerelle sans que sa proue s'écarte de
+  toi.
+sources:
+  - texte: RIPAM, règle 7 d) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: vhf-0033
+option: cotier
+theme: vhf
+notion: vhf-canaux
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu veux appeler la capitainerie pour demander une place au port. Sur quel type de voie
+  la joins-tu ?
+propositions:
+  - id: a
+    texte: Une voie portuaire, comme le canal 9, 12 ou 14
+  - id: b
+    texte: Le canal 16, réservé à l'appel
+  - id: c
+    texte: Le canal 70
+reponses:
+  - a
+explication: >-
+  Les capitaineries veillent une voie portuaire, le plus souvent le canal 9, 12 ou 14
+  selon le port. Le canal 16 est réservé à la détresse, à l'urgence et à l'appel, et l'on
+  ne s'y attarde pas. Le canal 70 ne porte aucune phonie.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

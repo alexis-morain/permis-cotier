@@ -1,0 +1,30 @@
+id: carte-marine-0023
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 1
+enonce: >-
+  La carte porte l'abréviation R sur le fond où tu comptes mouiller. Que vas-tu trouver
+  sous l'ancre ?
+propositions:
+  - id: a
+    texte: De la roche
+  - id: b
+    texte: Du sable
+  - id: c
+    texte: De la vase
+reponses:
+  - a
+explication: >-
+  R désigne la roche, dans la convention française comme dans la convention internationale.
+  S est le sable et G le gravier. La vase s'abrège V sur les cartes françaises anciennes
+  mais M sur les cartes conformes à la norme internationale.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,32 @@
+id: securite-0047
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu veux emmener ton kayak de mer à quatre milles d'un abri. Que demande la division
+  240 ?
+propositions:
+  - id: a
+    texte: Naviguer à deux embarcations de conserve au moins, avec une VHF étanche par
+      groupe de deux
+  - id: b
+    texte: Rien de plus qu'à deux milles, le kayak est un engin de plage
+  - id: c
+    texte: C'est interdit, comme pour la planche à pagaie
+reponses:
+  - a
+explication: >-
+  Hors planche à pagaie, une embarcation à propulsion humaine peut naviguer jusqu'à six
+  milles d'un abri à deux embarcations de conserve au minimum, chaque groupe de deux disposant
+  d'une VHF étanche qui ne coule pas. Un pratiquant seul le peut s'il adhère à une association
+  déclarée et emporte cette VHF. L'armement côtier s'y ajoute.
+sources:
+  - texte: Division 240, article 240-2.10, point 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

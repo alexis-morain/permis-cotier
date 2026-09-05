@@ -1,0 +1,30 @@
+id: carte-marine-0021
+option: cotier
+theme: carte-marine
+notion: carte-distances
+statut: publie
+difficulte: 3
+enonce: >-
+  Pourquoi ne mesure-t-on jamais une distance sur l'échelle des longitudes, en haut et
+  en bas de la carte ?
+propositions:
+  - id: a
+    texte: Parce que la minute de longitude rétrécit quand on s'éloigne de l'équateur
+  - id: b
+    texte: Parce qu'elle est graduée en kilomètres
+  - id: c
+    texte: Parce qu'elle n'est pas imprimée sur les cartes françaises
+reponses:
+  - a
+explication: >-
+  Les méridiens se rejoignent aux pôles : la minute de longitude rétrécit à mesure qu'on
+  s'éloigne de l'équateur, et ne vaut plus un mille sous nos latitudes. Seule la minute
+  de latitude, sur les bords verticaux, garde sa valeur d'un mille.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

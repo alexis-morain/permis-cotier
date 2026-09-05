@@ -1,0 +1,29 @@
+id: securite-0039
+option: cotier
+theme: securite
+notion: securite-armement-cotier
+statut: publie
+difficulte: 2
+enonce: >-
+  À partir de quelle distance d'un abri un radeau de survie devient-il obligatoire ?
+propositions:
+  - id: a
+    texte: 6 milles
+  - id: b
+    texte: 2 milles
+  - id: c
+    texte: 60 milles
+reponses:
+  - a
+explication: >-
+  Le radeau de survie gonflable, capable d'embarquer tout le monde, entre dans l'armement
+  semi-hauturier de l'article 240-2.05, pour une navigation de 6 à moins de 60 milles
+  d'un abri. L'armement côtier n'en demande pas.
+sources:
+  - texte: Division 240, article 240-2.05, point 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: titre-conduite-0019
+option: cotier
+theme: titre-conduite
+notion: titre-sanctions
+statut: publie
+difficulte: 3
+enonce: >-
+  Quelle est la durée maximale d'un retrait temporaire du permis de conduire les bateaux
+  de plaisance ?
+propositions:
+  - id: a
+    texte: Une année
+  - id: b
+    texte: Trois ans
+  - id: c
+    texte: Six mois
+reponses:
+  - a
+explication: >-
+  Le retrait temporaire est prononcé pour une durée maximum d'une année, après que le
+  titulaire a pu présenter ses observations. Les trois ans sont le délai avant de pouvoir
+  solliciter un nouveau permis après un retrait définitif.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 6
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

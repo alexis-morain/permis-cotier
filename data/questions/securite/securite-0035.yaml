@@ -1,0 +1,32 @@
+id: securite-0035
+option: cotier
+theme: securite
+notion: securite-armement-basique
+statut: publie
+difficulte: 2
+enonce: >-
+  Le cordon de ton coupe-circuit te gêne pour te déplacer à bord, moteur en marche. Que
+  permet la division 240 ?
+propositions:
+  - id: a
+    texte: Rien, le cordon ne doit en aucun cas être rallongé ni déplacé, on se déplace
+      moteur éteint ou au point mort
+  - id: b
+    texte: Le rallonger d'un mètre au plus
+  - id: c
+    texte: Le détacher le temps du déplacement
+reponses:
+  - a
+explication: >-
+  Pour prévenir l'engagement intempestif de l'hélice, le coupe-circuit filaire ne doit
+  en aucun cas être modifié, rallongé ou déplacé pour faciliter les mouvements du conducteur.
+  Tout déplacement à bord s'effectue après avoir éteint le moteur ou s'être assuré qu'il
+  est au point mort et que l'hélice ne peut pas tourner.
+sources:
+  - texte: Division 240, article 240-2.01, point 7
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

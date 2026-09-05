@@ -1,0 +1,30 @@
+id: balisage-0051
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Quel rythme bat le feu d'une marque cardinale Ouest ?
+propositions:
+  - id: a
+    texte: Neuf scintillements groupés
+  - id: b
+    texte: Six scintillements groupés suivis d'un éclat long
+  - id: c
+    texte: Trois scintillements groupés
+reponses:
+  - a
+explication: >-
+  La cardinale Ouest bat neuf scintillements groupés, rapides toutes les dix secondes
+  ou ordinaires toutes les quinze. Les trois scintillements sont la cardinale Est, et
+  les six suivis d'un éclat long la cardinale Sud, comme les heures d'une montre : trois,
+  six, neuf.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.4
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

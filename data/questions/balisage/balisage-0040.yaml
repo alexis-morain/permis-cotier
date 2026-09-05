@@ -1,0 +1,28 @@
+id: balisage-0040
+option: cotier
+theme: balisage
+notion: balisage-lateral
+statut: publie
+difficulte: 1
+enonce: >-
+  Quel voyant porte une marque latérale tribord en région A ?
+propositions:
+  - id: a
+    texte: Un cône vert, pointe en haut
+  - id: b
+    texte: Un cylindre rouge
+  - id: c
+    texte: Un cône vert, pointe en bas
+reponses:
+  - a
+explication: >-
+  La marque de tribord de la région A est verte, conique, et son voyant est un seul cône
+  vert pointe en haut. Le cylindre rouge est le voyant de la marque de bâbord.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

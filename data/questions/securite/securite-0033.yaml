@@ -1,0 +1,31 @@
+id: securite-0033
+option: cotier
+theme: securite
+notion: securite-armement-basique
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu ranges tes brassières et tes feux à main. Où la division 240 t'interdit-elle de les
+  conserver ?
+propositions:
+  - id: a
+    texte: Dans les locaux de machines
+  - id: b
+    texte: Dans un coffre de cockpit
+  - id: c
+    texte: Dans un sac étanche sous un plancher amovible
+reponses:
+  - a
+explication: >-
+  Aucun matériel d'armement et de sécurité n'est conservé dans les locaux de machines.
+  Faute d'autre rangement, il peut être stocké à l'extérieur, éventuellement sous un plancher
+  amovible, en sacs ou boîtes étanches fermés et assujettis à la structure, dans un lieu
+  propre et sans coulures d'hydrocarbures.
+sources:
+  - texte: Division 240, article 240-2.01, point 4
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: barre-route-0047
+option: cotier
+theme: barre-route
+notion: barre-chenal-etroit
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu veux traverser un chenal étroit alors qu'un navire qui ne peut naviguer qu'à l'intérieur
+  de ce chenal arrive. Que t'impose la règle 9 ?
+propositions:
+  - id: a
+    texte: Ne pas traverser si tu gênes son passage
+  - id: b
+    texte: Traverser vite, perpendiculairement au chenal
+  - id: c
+    texte: Traverser en émettant deux sons prolongés
+reponses:
+  - a
+explication: >-
+  Un navire ne doit pas traverser un chenal étroit ou une voie d'accès si, ce faisant,
+  il gêne le passage des navires qui ne peuvent naviguer en toute sécurité qu'à l'intérieur
+  de ce chenal. Ces derniers peuvent exprimer leur doute par au moins cinq sons brefs.
+sources:
+  - texte: RIPAM, règle 9 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

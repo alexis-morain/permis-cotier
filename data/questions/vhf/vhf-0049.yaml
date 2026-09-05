@@ -1,0 +1,32 @@
+id: vhf-0049
+option: cotier
+theme: vhf
+notion: vhf-smdsm-zones
+statut: publie
+difficulte: 3
+enonce: >-
+  Quelles zones du SMDSM sont définies par autre chose qu'une station côtière ?
+propositions:
+  - id: a
+    texte: La zone A3, couverte par les satellites géostationnaires
+  - id: b
+    texte: La zone A4, les régions polaires où seules les ondes décamétriques passent
+  - id: c
+    texte: La zone A1, couverte par les stations VHF
+  - id: d
+    texte: La zone A2, couverte par les stations en ondes hectométriques
+reponses:
+  - a
+  - b
+explication: >-
+  Les zones A1 et A2 se définissent par la portée d'une station côtière, VHF pour A1,
+  ondes hectométriques pour A2. La zone A3 est celle des satellites géostationnaires,
+  entre 70° nord et 70° sud environ, et la zone A4 couvre le reste, les régions polaires.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,32 @@
+id: titre-conduite-0014
+option: cotier
+theme: titre-conduite
+notion: titre-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Ta fille a seize ans et pas encore le permis. Peut-elle conduire ton bateau à moteur
+  avec toi à bord ?
+propositions:
+  - id: a
+    texte: Oui, pendant un an, si tu détiens ton permis depuis au moins trois ans et as
+      fait la déclaration de conduite accompagnée
+  - id: b
+    texte: Non, la conduite sans permis est interdite quel que soit l'accompagnateur
+  - id: c
+    texte: Oui, sans condition, tant que tu es à bord
+reponses:
+  - a
+explication: >-
+  Dès seize ans, on peut conduire durant une année un bateau de plaisance à moteur sans
+  permis, à condition d'être accompagné d'une personne titulaire depuis au moins trois
+  ans d'un permis ou titre de conduite. Cette conduite accompagnée est précédée d'une
+  déclaration de l'accompagnateur, valable un an, et reste dans les limites de son titre.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 9
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

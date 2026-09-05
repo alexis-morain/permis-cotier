@@ -1,0 +1,31 @@
+id: environnement-0017
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 2
+enonce: >-
+  Combien de casiers peux-tu détenir à bord de ton bateau de plaisance pour la pêche de
+  loisir ?
+propositions:
+  - id: a
+    texte: Deux
+  - id: b
+    texte: Cinq
+  - id: c
+    texte: Autant que tu veux, seuls les filets sont limités
+reponses:
+  - a
+explication: >-
+  À bord d'un navire de pêche de loisir, sont seuls autorisés deux palangres de trente
+  hameçons chacune, deux casiers, une foëne, une épuisette, des lignes gréées de douze
+  hameçons au plus en tout, et selon la façade une grappette à dents ou un filet de 50
+  mètres.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-88
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,31 @@
+id: barre-route-0041
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton radar ne montre qu'un écho faible et intermittent sur l'avant. Que te dit la règle
+  7 sur la conclusion à en tirer ?
+propositions:
+  - id: a
+    texte: On doit éviter de tirer des conclusions de renseignements insuffisants, notamment
+      de renseignements radar insuffisants
+  - id: b
+    texte: Un écho faible signifie qu'il n'y a pas de risque d'abordage
+  - id: c
+    texte: Le radar fait foi et dispense de la veille visuelle
+reponses:
+  - a
+explication: >-
+  La règle 7 c) interdit de tirer des conclusions de renseignements insuffisants, en particulier
+  radar. Le radar s'utilise de façon appropriée, avec balayage à longue portée et observation
+  systématique, mais il complète la veille visuelle et auditive, il ne la remplace pas.
+sources:
+  - texte: RIPAM, règle 7 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

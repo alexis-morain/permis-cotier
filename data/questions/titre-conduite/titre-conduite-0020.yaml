@@ -1,0 +1,28 @@
+id: titre-conduite-0020
+option: cotier
+theme: titre-conduite
+notion: titre-sanctions
+statut: publie
+difficulte: 3
+enonce: >-
+  En cas d'urgence motivée, un permis peut-il être retiré avant que son titulaire ait
+  été entendu ?
+propositions:
+  - id: a
+    texte: Oui, pour huit jours au plus, pendant lesquels l'intéressé doit être entendu
+  - id: b
+    texte: Non, jamais sans audition préalable
+reponses:
+  - a
+explication: >-
+  Le retrait est en principe prononcé après que le titulaire a été mis à même de présenter
+  ses observations. En cas d'urgence motivée, il peut intervenir avant, pour une période
+  de huit jours durant laquelle l'intéressé doit être entendu.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 6
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

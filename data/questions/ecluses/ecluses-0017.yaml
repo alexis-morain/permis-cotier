@@ -1,0 +1,32 @@
+id: ecluses-0017
+option: cotier
+theme: ecluses
+notion: ecluses-passage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu prépares tes défenses avant d'entrer dans le sas. Que dit le règlement à leur sujet
+  ?
+propositions:
+  - id: a
+    texte: Leur emploi est obligatoire, et elles doivent être flottantes lorsqu'elles
+      sont amovibles
+  - id: b
+    texte: Elles sont recommandées, sans obligation
+  - id: c
+    texte: Elles sont interdites, elles abîment les bajoyers
+reponses:
+  - a
+explication: >-
+  Dans les écluses, l'emploi de défenses est obligatoire, et elles doivent être flottantes
+  lorsqu'elles sont amovibles : une défense qui tombe à l'eau et coule bloque les portes
+  ou les vannes. Le règlement interdit aussi de rejeter de l'eau sur les terre-pleins
+  ou les autres bateaux.
+sources:
+  - texte: Code des transports, article A. 4241-53-30, 7 c)
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

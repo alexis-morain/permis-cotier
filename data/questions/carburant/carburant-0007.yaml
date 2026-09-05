@@ -1,0 +1,31 @@
+id: carburant-0007
+option: cotier
+theme: carburant
+notion: carburant-regle-tiers
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu disposes de 150 litres réellement utilisables, ton moteur consomme 25 litres par
+  heure et tu files 20 nœuds. En appliquant la règle des tiers, jusqu'à quelle distance
+  vas-tu à l'aller ?
+propositions:
+  - id: a
+    texte: 40 milles
+  - id: b
+    texte: 120 milles
+  - id: c
+    texte: 60 milles
+reponses:
+  - a
+explication: >-
+  Un tiers de 150 litres fait 50 litres, soit deux heures à 25 litres par heure, et deux
+  heures à 20 nœuds font 40 milles. Les 120 milles sont l'autonomie totale, qu'il faut
+  partager entre l'aller, le retour et la réserve.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'
