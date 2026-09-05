@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Mesure from '../components/Mesure.astro';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
 import {
   SITE,
@@ -98,6 +99,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
+
+    <Mesure />
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>

@@ -19,7 +19,7 @@ export default function Reprise({ ids }: Props) {
       Tu as déjà vu <b>{stats.vues}</b> question{stats.vues > 1 ? 's' : ''}
       {stats.aRevoir > 0 && (
         <>
-          , dont <a href="/revoir" data-umami-event="accueil-revoir"><b>{stats.aRevoir}</b> à revoir</a>
+          , dont <a href="/revoir" data-mesure="accueil-revoir"><b>{stats.aRevoir}</b> à revoir</a>
         </>
       )}.
       {stats.dernierScore && (

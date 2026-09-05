@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { charger, sauvegarder } from '../lib/progression';
+import { evenement } from '../lib/mesure';
 
 /**
  * « Ton examen est quand ? » Facultative, gardée dans le navigateur, jamais
@@ -26,9 +27,9 @@ export default function DateExamen() {
   function enregistrer(valeur: string) {
     setDate(valeur);
     sauvegarder({ ...charger(), dateExamen: valeur || null });
-    if (valeur) {
-      (window as { umami?: { track: (n: string) => void } }).umami?.track('date-examen-renseignee');
-    }
+    // Une date posée est la meilleure intention que le site puisse lire :
+    // elle dit qu'il reste des jours à réviser, pas qu'on passe en visiteur.
+    if (valeur) evenement('date-examen-renseignee');
   }
 
   if (!pret) return null;

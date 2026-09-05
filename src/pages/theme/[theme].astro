@@ -41,7 +41,12 @@ const orphelines = questions.filter((q) => !q.notion);
 
     {questions.length > 0 ? (
       <p style="margin-top:2rem">
-        <a class="bouton bouton--principal" href={`/entrainement/${theme.code}`}>
+        <a
+          class="bouton bouton--principal"
+          href={`/entrainement/${theme.code}`}
+          data-mesure="theme-entrainement"
+          data-mesure-theme={theme.code}
+        >
           S’entraîner sur ce thème
         </a>
       </p>

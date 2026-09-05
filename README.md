@@ -32,6 +32,12 @@ Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de
 synchronisation de progression. Tout le reste est du HTML généré au build.
 Aucun compte, aucune donnée personnelle, aucun cookie.
 
+La fréquentation est comptée par une instance Umami auto-hébergée : pas de
+cookie, pas d'identifiant de visiteur, rien qui suive quelqu'un d'un site à
+l'autre, et le compte ne se remplit que depuis `lepermiscotier.fr` — ni une
+préversion, ni un poste de développement n'y entrent. Chacun peut s'en retirer
+depuis les réglages. Les noms d'événements sont dans `src/lib/mesure.ts`.
+
 ## Le format de l'épreuve
 
 QCM de 40 questions, 5 erreurs admises, bénéfice de 18 mois. Arrêté du
@@ -96,7 +102,7 @@ data/VERSION                       version de la banque, dans le cache hors lign
 data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
-src/lib/                           moteur : thèmes, schéma, tirage, session, progression
+src/lib/                           moteur : thèmes, schéma, tirage, session, progression, mesure
 src/pages/                         Astro : accueil, thèmes, questions, examen, entraînement
 src/components/                    îlot React du quiz
 functions/api/                     signalement, puis synchronisation

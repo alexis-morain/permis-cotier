@@ -21,7 +21,7 @@ const { sources, verifieLe } = Astro.props;
   <ul>
     {sources.map((s) => (
       <li>
-        <a href={s.url} rel="noreferrer noopener">{s.texte}</a>
+        <a href={s.url} rel="noreferrer noopener" data-mesure="source-ouverte">{s.texte}</a>
       </li>
     ))}
   </ul>

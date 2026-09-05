@@ -11,6 +11,8 @@
  *
  *   node scripts/verifier-prod.mjs [https://autre-domaine.fr]
  */
+import { readFile } from 'node:fs/promises';
+
 const SITE = process.argv[2] ?? 'https://lepermiscotier.fr';
 const hote = new URL(SITE).hostname;
 const PREVERSION = 'https://permis-cotier.alexis-c1f.workers.dev';
@@ -116,6 +118,45 @@ for (const [chemin, nom] of [['/llms.txt', 'llms.txt'], ['/partage/le-permis-cot
   const r = await recuperer(`${SITE}${chemin}`, { method: 'HEAD' });
   if (r.erreur || !r.reponse.ok) ko(nom, r.erreur ?? `HTTP ${r.reponse.status}`, 'présent dans le build ? redéployer');
   else ok(nom, `HTTP ${r.reponse.status}`);
+}
+
+
+// 8. La mesure d'audience est branchée sur le site en ligne. Le traceur est
+//    posé par un script de la page : c'est l'identifiant du site, l'adresse du
+//    traceur et l'hôte autorisé qu'on retrouve dans le HTML, pas un attribut.
+//    Les trois valeurs sont lues dans le code, pour que ce contrôle suive une
+//    modification au lieu de recopier des constantes qui divergeront.
+const mesure = await readFile(new URL('../src/lib/mesure.ts', import.meta.url), 'utf-8');
+const valeur = (cle) => new RegExp(`${cle}:\\s*'([^']+)'`).exec(mesure)?.[1];
+const [siteUmami, scriptUmami, domainesUmami] = ['site', 'script', 'domaines'].map(valeur);
+
+if (!siteUmami || !scriptUmami || !domainesUmami) {
+  ko('mesure d’audience', 'valeurs illisibles dans `src/lib/mesure.ts`', 'vérifier la constante MESURE');
+} else if (!(accueil.corps ?? '').includes(siteUmami)) {
+  ko(
+    'mesure d’audience',
+    'l’identifiant du site est absent de l’accueil',
+    'le traceur n’est pas servi : vérifier `Mesure.astro` dans `Base.astro`, et que le build en ligne est bien celui de la branche',
+  );
+} else if (!(accueil.corps ?? '').includes(scriptUmami)) {
+  ko('mesure d’audience', `l’adresse ${scriptUmami} est absente de l’accueil`, 'vérifier `Mesure.astro`');
+} else if (domainesUmami !== hote) {
+  ko(
+    'mesure d’audience',
+    `le compte n’accepte que ${domainesUmami}, le site répond sur ${hote}`,
+    'aligner `MESURE.domaines` sur le domaine servi, sinon aucune visite ne sera comptée',
+  );
+} else {
+  const traceur = await recuperer(scriptUmami, { method: 'HEAD' });
+  if (traceur.erreur || !traceur.reponse.ok) {
+    ko(
+      'mesure d’audience',
+      `le traceur ne répond pas (${traceur.erreur ?? `HTTP ${traceur.reponse.status}`})`,
+      'l’instance Umami est-elle debout ? le tunnel Cloudflare est-il ouvert ?',
+    );
+  } else {
+    ok('mesure d’audience', `traceur servi, compte fermé hors ${domainesUmami}`);
+  }
 }
 
 console.log(`\n${SITE}\n`);
