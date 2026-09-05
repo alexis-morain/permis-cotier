@@ -10,8 +10,10 @@ import { couperMesure, mesureCoupee } from '../lib/mesure';
  * visite dix fois par jour, et ses allers-retours fausseraient ses propres
  * chiffres s'il ne pouvait pas se retirer du compte.
  *
- * Le réglage vaut pour ce navigateur seulement, et le traceur le relit avant
- * chaque envoi : décocher agit tout de suite, sans recharger la page.
+ * Le réglage vaut pour ce navigateur seulement. Le traceur relit la clé avant
+ * chaque envoi, donc cocher agit tout de suite ; décocher rend les clics au
+ * compte sur-le-champ, et la page vue au prochain chargement — le traceur
+ * n'installe son écoute qu'une fois, au démarrage, et ne la rattrape pas.
  */
 export default function MesureReglage() {
   const [coupee, setCoupee] = useState(false);
@@ -43,8 +45,8 @@ export default function MesureReglage() {
       </label>
       <span className="discret">
         {coupee
-          ? 'Ce navigateur est hors du compte. Vider son stockage remet la mesure.'
-          : 'Vaut pour ce navigateur, et prend effet tout de suite.'}
+          ? 'Ce navigateur est hors du compte, dès maintenant.'
+          : 'Vaut pour ce navigateur. Couper agit tout de suite, remettre au prochain chargement de page.'}
       </span>
       <style>{`
         .mesureReglage { display: flex; flex-direction: column; gap: 0.25rem; }

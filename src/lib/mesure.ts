@@ -59,8 +59,12 @@ export function mesureCoupee(): boolean {
 }
 
 /**
- * Exclure ce navigateur du compte, ou l'y remettre. Le traceur relit la clé à
- * chaque envoi : l'effet est immédiat, sans rechargement.
+ * Exclure ce navigateur du compte, ou l'y remettre.
+ *
+ * Le traceur relit la clé avant chaque envoi : couper prend effet tout de
+ * suite. Remettre, presque — le traceur n'installe son écoute de la page vue
+ * qu'une fois, au démarrage, et ne la rattrape pas. Les clics repartent, la
+ * page vue attend le prochain chargement.
  */
 export function couperMesure(coupee: boolean): void {
   try {
@@ -69,4 +73,52 @@ export function couperMesure(coupee: boolean): void {
   } catch {
     /* Pas de stockage, pas d'interrupteur : l'appelant n'a rien à en faire. */
   }
+}
+
+/**
+ * L'attribut qui nomme un clic à compter, et le préfixe de ses données :
+ * `data-mesure="guide-examen" data-mesure-theme="meteo"`.
+ *
+ * Ce n'est pas `data-umami-event`, et c'est voulu. Le traceur intercepte cet
+ * attribut-là lui-même, mais il annule la navigation, attend la réponse du
+ * serveur, puis rend la main au lien. Un bouton « Passer un examen blanc » se
+ * met alors à dépendre du temps de réponse d'un serveur de statistiques, ce qui
+ * est exactement à l'envers. Ici le clic part sans rien retenir : l'envoi est en
+ * `keepalive`, il survit au changement de page.
+ */
+const ATTRIBUT = 'data-mesure';
+
+/** Le nom et les données d'un clic, lus sur l'élément qui les porte. */
+export function evenementDeLElement(element: Element): { nom: string; donnees?: Record<string, string> } | null {
+  const nom = element.getAttribute(ATTRIBUT);
+  if (!nom) return null;
+
+  const donnees: Record<string, string> = {};
+  for (const attribut of element.getAttributeNames()) {
+    const cle = attribut.startsWith(`${ATTRIBUT}-`) ? attribut.slice(ATTRIBUT.length + 1) : null;
+    const valeur = cle ? element.getAttribute(attribut) : null;
+    if (cle && valeur) donnees[cle] = valeur;
+  }
+
+  return { nom, donnees: Object.keys(donnees).length > 0 ? donnees : undefined };
+}
+
+/**
+ * Compte les clics sur les éléments qui se nomment, où qu'ils soient dans la
+ * page. Une seule écoute, en capture, posée une fois pour toutes : les îlots
+ * React remplacent leurs boutons sans que personne ait à se réabonner.
+ */
+export function brancherClics(racine: Document | HTMLElement = document): void {
+  racine.addEventListener(
+    'click',
+    (clic) => {
+      const cible = clic.target;
+      if (!(cible instanceof Element)) return;
+      const porteur = cible.closest(`[${ATTRIBUT}]`);
+      if (!porteur) return;
+      const trouve = evenementDeLElement(porteur);
+      if (trouve) evenement(trouve.nom, trouve.donnees);
+    },
+    true,
+  );
 }

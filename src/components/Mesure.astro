@@ -47,3 +47,12 @@ const domaines = MESURE.domaines;
     </script>
   )
 }
+
+<script>
+  // Les clics qui se nomment eux-mêmes, comptés sans retenir la navigation.
+  // Astro empaquette ce script une fois pour tout le site, et le hors-ligne le
+  // garde avec le reste.
+  import { brancherClics } from '../lib/mesure';
+
+  brancherClics();
+</script>
