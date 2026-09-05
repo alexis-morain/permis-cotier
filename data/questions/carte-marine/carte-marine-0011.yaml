@@ -1,0 +1,38 @@
+id: carte-marine-0011
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce feu blanc lance des éclats brefs à cadence régulière, sans jamais s'arrêter. Quelle
+  abréviation la carte porte-t-elle pour lui ?
+visuel:
+  fichier: rythmes/caractere-scintillant.svg
+  alt: "Feu scintillant, fait d'éclats brefs qui se suivent à cadence régulière, sans interruption."
+  credit: code
+propositions:
+  - id: a
+    texte: Q
+  - id: b
+    texte: Fl
+  - id: c
+    texte: Fl (3)
+  - id: d
+    texte: F
+reponses:
+  - a
+explication: >-
+  Un feu scintillant s'abrège Q, et c'est le feu des marques cardinales : la cardinale
+  Nord montre un scintillant continu, Q, ou un scintillant rapide continu, VQ. Ne confonds
+  pas Q avec Fl : le feu à éclats laisse entre ses éclats une obscurité bien plus longue
+  que le scintillant, qui enchaîne. Le chiffre entre parenthèses ne s'ajoute que si les
+  éclats sont groupés, ce qui n'est pas le cas ici.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Nord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

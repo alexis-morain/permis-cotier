@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 120" width="256" height="120" role="img">
+<style>.son{opacity:1;animation:avertissementdoute-son 8.2s step-end infinite}@keyframes avertissementdoute-son{0%{opacity:1}12.2%{opacity:0}18.29%{opacity:1}30.49%{opacity:0}36.59%{opacity:1}48.78%{opacity:0}54.88%{opacity:1}67.07%{opacity:0}73.17%{opacity:1}85.37%{opacity:0}100%{opacity:0}}@keyframes propagation{from{transform:scale(0.62);opacity:0.95}to{transform:scale(1.12);opacity:0.1}}.onde{transform-box:view-box;transform-origin:60px 50px;animation:propagation 1.05s linear infinite}.curseur{transform-box:view-box;animation:avertissementdoute-balayage 8.2s linear infinite}@keyframes avertissementdoute-balayage{from{transform:translateX(0)}to{transform:translateX(101.50px)}}@media (prefers-reduced-motion:reduce){.son,.onde{animation:none}.son{opacity:1}.curseur{display:none}}</style>
+<rect width="256" height="120" fill="#dbe4e8" />
+<rect x="0" y="14" width="256" height="7" fill="#c9d6dc" fill-opacity="0.55" />
+<rect x="0" y="34" width="256" height="11" fill="#c9d6dc" fill-opacity="0.55" />
+<rect x="0" y="58" width="256" height="7" fill="#c9d6dc" fill-opacity="0.55" />
+<rect x="0" y="78" width="256" height="11" fill="#c9d6dc" fill-opacity="0.55" />
+<g class="son"><g class="onde"><path d="M69.23,38.18 A15,15 0 0 1 69.23,61.82" fill="none" stroke="#16231f" stroke-width="2.6" stroke-linecap="round" stroke-opacity="0.75" /><path d="M76.01,29.51 A26,26 0 0 1 76.01,70.49" fill="none" stroke="#16231f" stroke-width="2.1" stroke-linecap="round" stroke-opacity="0.57" /><path d="M82.78,20.84 A37,37 0 0 1 82.78,79.16" fill="none" stroke="#16231f" stroke-width="1.6" stroke-linecap="round" stroke-opacity="0.39" /></g></g>
+<path d="M24,42 L44,42 L60,28 L60,72 L44,58 L24,58 Z" fill="#a8823c" stroke="#16231f" stroke-width="1.2" stroke-linejoin="round" />
+<rect x="18" y="44" width="8" height="12" rx="1.5" fill="#4a5a54" />
+<line x1="20" y1="100" x2="121.50" y2="100" stroke="#8fa3ac" stroke-width="1.5" />
+<rect x="20.00" y="87" width="14.50" height="13" fill="#16231f" />
+<rect x="41.75" y="87" width="14.50" height="13" fill="#16231f" />
+<rect x="63.50" y="87" width="14.50" height="13" fill="#16231f" />
+<rect x="85.25" y="87" width="14.50" height="13" fill="#16231f" />
+<rect x="107.00" y="87" width="14.50" height="13" fill="#16231f" />
+<g class="curseur"><line x1="20" y1="80" x2="20" y2="105" stroke="#16231f" stroke-width="1.4" stroke-opacity="0.5" /></g>
+</svg>

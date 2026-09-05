@@ -1,0 +1,38 @@
+id: securite-0024
+option: cotier
+theme: securite
+notion: securite-incendie-mouillage
+statut: publie
+difficulte: 3
+enonce: >-
+  Au titre de l'armement basique, quels navires la division 240 dispense-t-elle de ligne
+  de mouillage ?
+propositions:
+  - id: a
+    texte: Les navires à voile dont le déplacement lège est inférieur à 250 kg
+  - id: b
+    texte: Les véhicules nautiques à moteur
+  - id: c
+    texte: Les navires motorisés dont le déplacement lège est inférieur à 250 kg, quelle
+      que soit leur puissance
+  - id: d
+    texte: Tous les navires non habitables tant qu'ils restent à moins de 2 milles d'un
+      abri
+reponses:
+  - a
+  - b
+explication: >-
+  Le point 6 de l'article 240-2.03 dresse une liste de trois dispensés, sous la responsabilité
+  du chef de bord : le navire à voile de moins de 250 kg de déplacement lège, le navire
+  motorisé de moins de 250 kg dont la puissance propulsive ne dépasse pas 4,5 kW, et le
+  véhicule nautique à moteur. Pour un navire à moteur, le poids seul ne suffit donc pas,
+  c'est ce que la proposition c laisse tomber. Et la dispense ne tient jamais à la zone
+  de navigation.
+sources:
+  - texte: Division 240, article 240-2.03, point 6
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

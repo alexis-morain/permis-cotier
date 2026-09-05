@@ -1,0 +1,38 @@
+id: balisage-0030
+option: cotier
+theme: balisage
+notion: balisage-lateral
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu quittes le port et tu fais route vers le large. De quel côté laisses-tu cette
+  marque ?
+visuel:
+  fichier: balisage/laterale-tribord.svg
+  alt: "Bouée conique verte surmontée d'un voyant conique vert, pointe en haut."
+  credit: code
+propositions:
+  - id: a
+    texte: Sur bâbord
+  - id: b
+    texte: Sur tribord, une marque verte se laisse toujours sur tribord
+  - id: c
+    texte: Sur tribord, le sens conventionnel s'entendant du port vers le large
+  - id: d
+    texte: D'un côté ou de l'autre, sa forme conique n'engage à rien
+reponses:
+  - a
+explication: >-
+  Le cône vert et son voyant conique désignent la marque latérale tribord de la région A.
+  Mais « tribord » se dit dans le sens conventionnel de balisage, qui va du large vers le
+  port : en sortant, tu remontes ce sens à contresens, et la marque passe donc sur ton
+  bâbord. Le piège est de lire le côté sur sa propre étrave plutôt que sur le sens
+  conventionnel, ou de retourner ce sens en croyant qu'il suit la route du bateau.
+sources:
+  - texte: AISM, système de balisage maritime, région A, marque latérale tribord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

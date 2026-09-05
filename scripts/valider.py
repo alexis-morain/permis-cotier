@@ -71,6 +71,13 @@ RE_ID = re.compile(r"^[a-z][a-z0-9-]*-\d{4}$")
 RE_PROPOSITION = re.compile(r"^[a-d]$")
 RE_REF = re.compile(r"^[a-z0-9-]+$")
 RE_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# L'arrêté ne dit pas combien de cases une question comporte, et l'épreuve
+# ne l'annonce pas non plus. Un énoncé qui le dit supprime le seul jugement
+# que les questions à deux réponses servent à entraîner.
+RE_COMPTE_REPONSES = re.compile(
+    r"\b(deux|trois)\s+(?:\w+\s+)?(r[ée]ponses?|affirmations?|propositions?|cases?)\b",
+    re.I,
+)
 RE_CREDIT = re.compile(r"^(genere|code|auteur|commons:.+)$")
 RE_FICHIER_VISUEL = re.compile(r"^[a-z0-9][a-z0-9/_-]*\.(svg|png|webp|jpg)$")
 
@@ -178,6 +185,12 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
         for r in reponses:
             if r not in ids_propositions:
                 ko("reponses", f"la réponse {r!r} n'est pas dans les propositions")
+
+    # Huit énoncés l'ont annoncé avant qu'on l'interdise, dont un relu par une
+    # personne : la règle ne tient que si elle est mécanique.
+    if RE_COMPTE_REPONSES.search(_texte(q.get("enonce"))):
+        ko("enonce", "l'énoncé annonce le nombre de bonnes réponses, "
+                     "ce que l'épreuve ne fait jamais")
 
     sources = q.get("sources")
     if not isinstance(sources, list) or not sources:

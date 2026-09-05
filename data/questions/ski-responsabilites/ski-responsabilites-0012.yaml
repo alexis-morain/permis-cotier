@@ -1,0 +1,35 @@
+id: ski-responsabilites-0012
+option: cotier
+theme: ski-responsabilites
+notion: conduite-homme-a-la-mer
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es revenu sur la personne tombée à l'eau et tu arrives à quelques mètres d'elle. Que
+  fais-tu au moment du contact ?
+propositions:
+  - id: a
+    texte: Tu débrayes l'hélice et tu la récupères par le côté sous le vent
+  - id: b
+    texte: Tu la récupères par l'arrière, moteur au ralenti
+  - id: c
+    texte: Tu gardes de la vitesse pour ne pas dériver loin d'elle
+  - id: d
+    texte: Tu approches vent arrière, plus maniable à petite vitesse
+reponses:
+  - a
+explication: >-
+  L'hélice qui tourne est le danger principal de la récupération : on débraye avant le
+  contact, et on ne présente jamais l'arrière du bateau à la personne. L'approche se fait
+  face au vent, doucement, parce que le bateau ralentit alors tout seul et reste
+  manoeuvrant ; vent arrière il se jette sur la personne. La récupération se fait sous le
+  vent, à l'aide d'un bout, d'une échelle ou d'un palan, autant que possible à
+  l'horizontale : une personne épuisée ou en hypothermie ne se hisse pas seule.
+sources:
+  - texte: Fiche conduite à tenir, section Homme à la mer
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

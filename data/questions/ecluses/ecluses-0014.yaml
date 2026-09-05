@@ -1,0 +1,43 @@
+id: ecluses-0014
+option: cotier
+theme: ecluses
+notion: ecluses-signaux-acces
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce signal vient de s'allumer alors que tu patientes dans le garage de l'écluse. Que
+  fais-tu ?
+visuel:
+  fichier: ecluses/acces-rouge-vert-juxtaposes.svg
+  alt: "Deux feux allumés côte à côte, un rouge et un vert."
+  credit: code
+propositions:
+  - id: a
+    texte: Tu restes en attente, ce signal n'autorise pas encore l'accès
+  - id: b
+    texte: Tu relèves tes ancres et tu prépares les défenses flottantes qu'il te faudra
+      dans le sas
+  - id: c
+    texte: Tu entres sans attendre, le vert autorise le passage
+  - id: d
+    texte: Tu fais demi-tour, l'écluse est hors service
+reponses:
+  - a
+  - b
+explication: >-
+  Un feu rouge et un feu vert juxtaposés annoncent une écluse en préparation pour l'ouverture,
+  et l'accès reste interdit tant que le rouge est là. C'est donc le moment d'être prêt,
+  pas d'avancer. Dans les garages, les ancres doivent être en position complètement relevée
+  dès lors qu'elles ne sont pas utilisées, et l'emploi de défenses, flottantes lorsqu'elles
+  sont amovibles, est obligatoire dans le sas. Le signal ne dit pas que l'attente est
+  finie, il dit qu'elle finira bientôt.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1 c)
+    ref: rgpni-ecluses
+  - texte: Code des transports, article A. 4241-53-30, 5 et 7 c)
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

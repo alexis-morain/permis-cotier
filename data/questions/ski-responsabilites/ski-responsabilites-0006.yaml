@@ -1,0 +1,36 @@
+id: ski-responsabilites-0006
+option: cotier
+theme: ski-responsabilites
+notion: responsabilite-chef-de-bord
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu as respecté à la lettre chaque règle de barre, et l'abordage a quand même eu lieu.
+  Que dit la règle 2 du RIPAM ?
+propositions:
+  - id: a
+    texte: Appliquer les règles ne t'exonère pas d'une négligence sur les précautions que
+      commande l'expérience ordinaire du marin
+  - id: b
+    texte: Le respect des règles de barre te met à l'abri de toute responsabilité
+  - id: c
+    texte: La responsabilité pèse sur le propriétaire du navire, jamais sur le chef de bord
+  - id: d
+    texte: La responsabilité est partagée par moitié entre les deux navires
+reponses:
+  - a
+explication: >-
+  La règle 2 a) du RIPAM pose qu'aucune disposition des Règles ne saurait exonérer le
+  navire, son propriétaire, son capitaine ou son équipage des conséquences d'une
+  négligence, qu'elle porte sur l'application des Règles ou sur toute précaution que
+  commandent l'expérience ordinaire du marin ou les circonstances. Le RIPAM est un
+  minimum, pas un abri. La règle 2 b) va dans le même sens : les circonstances
+  particulières peuvent obliger à s'écarter des Règles pour éviter un danger immédiat.
+sources:
+  - texte: RIPAM, règle 2, alinéa a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

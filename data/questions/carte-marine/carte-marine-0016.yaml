@@ -1,0 +1,36 @@
+id: carte-marine-0016
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu relèves sur la carte un feu décrit par « Fl(2) R 10s 12m 9M ». Quelles lectures
+  sont exactes ?
+propositions:
+  - id: a
+    texte: Le (2) annonce deux éclats dans le groupe
+  - id: b
+    texte: Le 10s donne la période, dix secondes
+  - id: c
+    texte: Le (2) annonce un éclat de deux secondes
+  - id: d
+    texte: Le 10s annonce dix éclats par période
+reponses:
+  - a
+  - b
+explication: >-
+  La description se lit dans l'ordre : le caractère, la couleur, la période, la hauteur,
+  la portée. Le chiffre entre parenthèses compte les éclats du groupe, jamais des secondes,
+  et la période est le nombre suivi de s. Ce feu montre donc deux éclats rouges groupés,
+  et le motif entier se répète toutes les dix secondes. Les deux propositions fausses
+  échangent exactement ces deux rôles : des secondes dans les parenthèses, des éclats
+  derrière le s.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

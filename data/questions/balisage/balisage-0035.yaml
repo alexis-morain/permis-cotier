@@ -1,0 +1,38 @@
+id: balisage-0035
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves ce feu blanc de nuit. Quelle marque as-tu devant toi ?
+visuel:
+  fichier: rythmes/eaux-saines-morse-a.svg
+  alt: "Feu blanc battant la lettre A du code Morse, un éclat bref suivi d'un éclat long."
+  credit: code
+propositions:
+  - id: a
+    texte: Une marque d'eaux saines
+  - id: b
+    texte: Une marque de danger isolé
+  - id: c
+    texte: Une cardinale Est
+  - id: d
+    texte: Une marque spéciale
+reponses:
+  - a
+explication: >-
+  Le feu blanc de la marque d'eaux saines a quatre rythmes possibles : isophase, à
+  occultations, un éclat long toutes les 10 s, ou la lettre A du code Morse. C'est donc
+  bien une marque d'eaux saines, eau saine tout autour, en milieu de chenal ou en
+  atterrissage. Le piège est de compter deux éclats et de conclure au danger isolé : son
+  feu est bien à deux éclats groupés, mais de même durée, alors que le Morse A oppose un
+  bref et un long. Une marque spéciale, elle, aurait un feu jaune.
+sources:
+  - texte: Balisage AISM région A, marque d'eaux saines
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

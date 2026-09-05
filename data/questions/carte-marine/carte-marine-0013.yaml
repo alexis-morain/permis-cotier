@@ -1,0 +1,38 @@
+id: carte-marine-0013
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 3
+enonce: >-
+  Ce feu reste allumé plus longtemps qu'il n'est éteint. Quelle abréviation la carte
+  porte-t-elle pour lui ?
+visuel:
+  fichier: rythmes/caractere-a-occultations.svg
+  alt: "Feu à occultations, dont la lumière dure nettement plus que l'obscurité qui la coupe."
+  credit: code
+propositions:
+  - id: a
+    texte: Oc
+  - id: b
+    texte: Fl
+  - id: c
+    texte: Iso
+  - id: d
+    texte: F
+reponses:
+  - a
+explication: >-
+  Ce qui sépare ces deux caractères est une comparaison de durées. Le feu à occultations,
+  Oc, garde une lumière plus longue que l'obscurité qui la coupe : la nuit est brièvement
+  masquée. Le feu à éclats, Fl, fait l'inverse, sa lumière dure moins que l'obscurité.
+  C'est la confusion la plus fréquente : retiens qu'une occultation est un trou noir
+  dans une lumière, un éclat une lumière dans le noir.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

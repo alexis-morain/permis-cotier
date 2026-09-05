@@ -1,0 +1,34 @@
+id: vhf-0026
+option: cotier
+theme: vhf
+notion: vhf-detresse
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans ton MAYDAY, tu as donné ton identité, ta position et la nature de la détresse.
+  Que dois-tu encore annoncer ?
+propositions:
+  - id: a
+    texte: L'assistance que tu demandes
+  - id: b
+    texte: Ton cap et ta vitesse
+  - id: c
+    texte: Le nombre de personnes à bord
+  - id: d
+    texte: Le numéro de ta licence de station
+reponses:
+  - a
+  - c
+explication: >-
+  Après la nature de la détresse viennent l'assistance demandée et le nombre de personnes
+  à bord, puis tout renseignement utile et À VOUS. Ces deux éléments commandent les moyens
+  que le CROSS engage : ce qu'il faut faire, et pour combien de gens. Le cap, la vitesse
+  et le numéro de licence ne font pas partie du message et se demandent ensuite, si besoin.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

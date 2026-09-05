@@ -1,0 +1,36 @@
+id: ski-responsabilites-0009
+option: cotier
+theme: ski-responsabilites
+notion: conduite-incendie-voie-eau
+statut: publie
+difficulte: 2
+enonce: >-
+  Un début d'incendie se déclare dans ton compartiment moteur. Quels sont les deux gestes
+  justes ?
+propositions:
+  - id: a
+    texte: Couper l'alimentation du feu, vanne de carburant, coupe-batterie et robinet de gaz
+  - id: b
+    texte: Attaquer à la base des flammes avec l'extincteur
+  - id: c
+    texte: Ouvrir grand le capot moteur pour viser le foyer
+  - id: d
+    texte: Accélérer pour que le vent apparent chasse les flammes vers l'arrière
+reponses:
+  - a
+  - b
+explication: >-
+  Un feu privé de son alimentation s'éteint souvent seul : on ferme la vanne de carburant,
+  le gaz, et on coupe les batteries. L'extincteur se dirige à la base des flammes, jamais
+  au sommet, sinon le produit passe au-dessus du foyer. Ouvrir grand le capot fait un
+  appel d'air qui relance le feu, on utilise l'orifice prévu quand il existe. Et un bateau
+  qui court devant son propre incendie l'attise sur lui-même : on manoeuvre au contraire
+  pour mettre le feu sous le vent, flammes et fumée poussées loin de l'équipage.
+sources:
+  - texte: Fiche conduite à tenir, section Incendie
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

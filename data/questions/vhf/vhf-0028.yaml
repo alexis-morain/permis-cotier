@@ -1,0 +1,33 @@
+id: vhf-0028
+option: cotier
+theme: vhf
+notion: vhf-smdsm-zones
+statut: publie
+difficulte: 3
+enonce: >-
+  Qu'est-ce qui définit la zone A2 du SMDSM ?
+propositions:
+  - id: a
+    texte: La portée d'une station côtière VHF équipée de l'ASN
+  - id: b
+    texte: La portée d'une station côtière en ondes hectométriques, hors zone A1
+  - id: c
+    texte: La couverture des satellites géostationnaires
+  - id: d
+    texte: Les régions polaires, où seules les ondes décamétriques passent
+reponses:
+  - b
+explication: >-
+  Les quatre zones se lisent par le moyen radio qui y porte l'alerte. A1 est la portée
+  d'une station côtière VHF munie de l'ASN, une vingtaine à une trentaine de milles. A2
+  est la portée d'une station en ondes hectométriques hors A1, de l'ordre de cent à cent
+  cinquante milles. A3 est la couverture des satellites géostationnaires, A4 le reste,
+  c'est-à-dire les pôles.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

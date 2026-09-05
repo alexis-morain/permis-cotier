@@ -1,0 +1,40 @@
+id: signaux-0025
+option: cotier
+theme: signaux
+notion: signaux-chenal
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans un chenal étroit, deux navires sont en vue l'un de l'autre et tu entends ce signal
+  au sifflet. Qui l'émet, et que veut-il ?
+visuel:
+  fichier: sons/depassement-tribord.svg
+  alt: "Deux sons prolongés au sifflet, suivis d'un son bref."
+  credit: code
+propositions:
+  - id: a
+    texte: Le navire qui rattrape, qui compte passer sur tribord.
+  - id: b
+    texte: Le navire qui rattrape, qui compte passer sur bâbord.
+  - id: c
+    texte: Le navire sur le point d'être rattrapé, qui donne son accord.
+  - id: d
+    texte: Le navire sur le point d'être rattrapé, qui refuse le dépassement.
+reponses:
+  - a
+explication: >-
+  La règle 34 c) i) donne ce signal au navire qui entend en rattraper un autre, et à lui
+  seul : deux sons prolongés suivis d'un son bref pour « Je compte vous rattraper sur
+  tribord », deux sons prolongés suivis de deux sons brefs pour bâbord. Les deux sons
+  prolongés groupés en tête sont la marque de l'intention de dépasser ; le côté se lit
+  ensuite au nombre de sons brefs. Celui qui est rattrapé n'a qu'un seul signal, un
+  prolongé et un bref qui alternent, et c'est toujours un accord, jamais un refus : c'est
+  l'objet de la question sur ce signal-là.
+sources:
+  - texte: RIPAM, règle 34 c) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

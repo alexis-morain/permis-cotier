@@ -1,0 +1,37 @@
+id: securite-0019
+option: cotier
+theme: securite
+notion: securite-pieces-administratives
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu loues un bateau pour la journée et tu signes la déclaration prévue par la division
+  240. Que devient ce document ?
+propositions:
+  - id: a
+    texte: Un exemplaire t'est remis, et tu dois pouvoir le présenter à tout instant aux
+      autorités de contrôle
+  - id: b
+    texte: Le loueur en conserve un second, tenu à la disposition de ces mêmes autorités
+  - id: c
+    texte: Il reste à l'agence, où les autorités peuvent venir le consulter
+  - id: d
+    texte: Il est transmis par le loueur aux affaires maritimes avant l'appareillage
+reponses:
+  - a
+  - b
+explication: >-
+  L'article 240-3.02 fait renseigner et signer au locataire une déclaration établie sur
+  le modèle de l'annexe 240-A.6, que le loueur contresigne après avoir vérifié les indications
+  portées. Le texte en prévoit ensuite deux exemplaires : l'un remis à l'utilisateur du
+  navire et présentable à tout instant aux autorités de contrôle, l'autre conservé par
+  le loueur et tenu à la disposition des mêmes autorités. Le document t'accompagne donc
+  à bord, il ne dort ni à l'agence ni dans un bureau de l'administration.
+sources:
+  - texte: Division 240, article 240-3.02, I
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

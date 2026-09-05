@@ -103,3 +103,61 @@ attendre l'heure du bulletin.
 À partir de 6 milles d'un abri, un dispositif permettant de recevoir les
 prévisions météorologiques marines à bord fait partie du matériel d'armement
 et de sécurité semi-hauturier, article 240-2.05 de la division 240.
+
+## Ce qui fait le vent local
+
+Le vent général vient de la répartition des pressions. Il souffle des hautes
+pressions vers les basses, d'autant plus fort que les isobares sont resserrés sur
+la carte. Dans l'hémisphère nord, il tourne dans le sens inverse des aiguilles
+d'une montre autour d'une dépression, et dans le sens des aiguilles autour d'un
+anticyclone. Une pression qui baisse vite annonce un renforcement.
+
+Trois effets locaux se superposent à ce vent général et ne figurent pas toujours
+dans le bulletin de côte, qui décrit une zone entière :
+
+- **La brise thermique.** Le jour, la terre chauffe plus vite que la mer : l'air
+  monte au-dessus du rivage et la brise de mer s'établit en début d'après-midi,
+  soufflant de la mer vers la terre. La nuit, le mécanisme s'inverse et la brise
+  de terre, plus faible, souffle de la terre vers la mer en fin de nuit. Une
+  brise de mer peut ajouter deux à trois degrés Beaufort à un vent général
+  faible, et fait des après-midi ventés là où le matin était calme.
+- **L'effet de site.** Le relief accélère le vent : au débouché d'une vallée, à
+  la pointe d'un cap, au pied d'une falaise, le vent se renforce et change de
+  direction sur quelques centaines de mètres. À l'inverse, sous une côte au vent
+  de terre, on trouve une zone abritée où la mer reste plate et le vent tombe :
+  cette accalmie ne dit rien de ce qui attend au large.
+- **Les rafales.** Le degré Beaufort décrit le vent moyen. Les rafales dépassent
+  couramment ce vent moyen d'un tiers, davantage sous un grain. Un force 5
+  annoncé, c'est un force 5 à tenir avec des pointes de l'ordre du force 6.
+
+La brume et le brouillard de mer se forment quand de l'air doux et humide passe
+au-dessus d'une mer plus froide. Ils s'installent par vent faible, souvent au
+petit matin ou au retour d'une brise de mer, et se lèvent aussi vite qu'ils sont
+venus. La visibilité est l'une des quatre rubriques du bulletin de côte, avec le
+vent, la mer et le temps.
+
+## Décider de sa sortie
+
+Le bulletin ne dit pas si l'on peut sortir : il donne une prévision pour une
+zone et pour une durée de validité. La décision se prend en croisant cette
+prévision avec quatre choses.
+
+- **Le bateau.** Sa catégorie de conception, portée par la plaque du
+  constructeur, indique la force de vent et la hauteur de vague pour lesquelles
+  il a été conçu. Sa capacité à remonter au vent et à faire route au moteur dans
+  le clapot compte autant que sa taille.
+- **L'équipage.** Le nombre de personnes capables de manœuvrer, leur fatigue et
+  leur mal de mer. Un équipage inexpérimenté ramène la limite acceptable de
+  plusieurs degrés Beaufort.
+- **La zone.** Un vent de terre laisse une mer plate au départ et une mer formée
+  au large. Un vent contre le courant, dans un raz ou une passe, lève une mer
+  courte et creuse hors de proportion avec la force annoncée. La distance à
+  l'abri le plus proche fixe le temps dont on dispose si la situation tourne.
+- **Le retour.** La sortie se juge sur le trajet complet. Une brise de mer qui
+  monte l'après-midi transforme un aller au portant en un retour au près dans un
+  vent doublé.
+
+Renoncer ou reporter fait partie de la décision, et se décide à terre, avant
+d'appareiller, quand elle ne coûte rien. Une fois dehors, les options se
+réduisent. En cas de doute sur un bulletin, la vacation VHF du CROSS et
+l'affichage de la capitainerie donnent la mise à jour la plus récente.

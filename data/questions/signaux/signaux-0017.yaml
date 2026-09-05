@@ -1,0 +1,38 @@
+id: signaux-0017
+option: cotier
+theme: signaux
+notion: signaux-chenal
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans un chenal étroit, deux navires en vue l'un de l'autre échangent des signaux. Tu
+  entends celui-ci au sifflet. Qui l'émet, et que dit-il ?
+visuel:
+  fichier: sons/accord-depassement.svg
+  alt: "Au sifflet, un son prolongé, un son bref, un son prolongé et un son bref, dans cet ordre."
+  credit: code
+propositions:
+  - id: a
+    texte: Le navire sur le point d'être rattrapé, qui donne son accord.
+  - id: b
+    texte: Le navire qui rattrape, qui annonce son intention de passer sur tribord.
+  - id: c
+    texte: Le navire sur le point d'être rattrapé, qui refuse le dépassement.
+  - id: d
+    texte: Le navire qui rattrape, qui prévient d'un coude masqué.
+reponses:
+  - a
+explication: >-
+  La règle 34 c) ii) donne un seul signal au navire sur le point d'être rattrapé : un
+  son prolongé, un son bref, un son prolongé et un son bref, dans cet ordre. C'est un
+  accord, jamais un refus, et il accompagne la manœuvre prévue par la règle 9 e) i). Retiens
+  l'alternance : deux prolongés groupés en tête annoncent une intention de dépasser, des
+  prolongés et des brefs qui alternent répondent oui.
+sources:
+  - texte: RIPAM, règle 34 c) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

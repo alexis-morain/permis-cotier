@@ -1,0 +1,34 @@
+id: meteo-0015
+option: cotier
+theme: meteo
+notion: meteo-etat-mer
+statut: publie
+difficulte: 2
+enonce: >-
+  Le bulletin annonce une mer peu agitée. Quelle hauteur de vagues cela recouvre-t-il ?
+propositions:
+  - id: a
+    texte: 0,1 à 0,5 mètre
+  - id: b
+    texte: 0,5 à 1,25 mètre
+  - id: c
+    texte: 1,25 à 2,5 mètres
+  - id: d
+    texte: 2,5 à 4 mètres
+reponses:
+  - b
+explication: >-
+  L'état de la mer se note de 0 à 9. Le degré 3, mer peu agitée, correspond à une hauteur
+  significative de 0,5 à 1,25 mètre. Les distracteurs sont les degrés voisins : 0,1 à
+  0,5 mètre est une mer belle, 1,25 à 2,5 mètres une mer agitée, 2,5 à 4 mètres une mer
+  forte. Retiens que la hauteur significative est la moyenne du tiers des vagues les
+  plus hautes : une vague sur trois dépasse le chiffre annoncé.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « État
+      de la mer »'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

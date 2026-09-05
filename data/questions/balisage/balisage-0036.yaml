@@ -1,0 +1,38 @@
+id: balisage-0036
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, tu remontes un chenal depuis le large et tu relèves ce feu. Qu'en conclus-tu ?
+visuel:
+  fichier: rythmes/laterale-babord.svg
+  alt: "Feu rouge à éclats, la lumière durant nettement moins que l'obscurité qui la sépare de l'éclat suivant."
+  credit: code
+propositions:
+  - id: a
+    texte: Sa couleur marque la limite bâbord du chenal, tu le laisses sur bâbord
+  - id: b
+    texte: Il faut compter ses éclats pour savoir de quel côté le laisser
+  - id: c
+    texte: Son rythme à éclats groupés en fait une marque de danger isolé
+  - id: d
+    texte: La couleur ne dit rien du côté, seul le voyant vu de jour le donne
+reponses:
+  - a
+explication: >-
+  En région A, le feu d'une marque latérale bâbord est rouge, celui d'une latérale tribord
+  est vert, et dans les deux cas le rythme est quelconque : il ne se compte pas et ne se
+  lit pas. C'est la couleur, et elle seule, qui identifie une latérale de nuit. Comme tu
+  remontes le chenal dans le sens conventionnel, du large vers le port, le feu rouge reste
+  sur ton bâbord. Le danger isolé, lui, a un feu blanc : compter des éclats n'a de sens
+  que pour les marques à feu blanc, cardinales et danger isolé.
+sources:
+  - texte: Balisage AISM région A, marque latérale bâbord, feu
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

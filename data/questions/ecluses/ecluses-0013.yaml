@@ -1,0 +1,40 @@
+id: ecluses-0013
+option: cotier
+theme: ecluses
+notion: ecluses-signaux-acces
+statut: publie
+difficulte: 3
+enonce: >-
+  Ce signal est allumé à l'entrée d'une écluse. Quel autre signal d'accès a exactement
+  la même signification ?
+visuel:
+  fichier: ecluses/acces-rouge-isole.svg
+  alt: "Un feu rouge isolé allumé."
+  credit: code
+propositions:
+  - id: a
+    texte: Deux feux rouges juxtaposés
+  - id: b
+    texte: Deux feux rouges superposés
+  - id: c
+    texte: Un feu rouge au-dessus d'un feu vert
+  - id: d
+    texte: L'extinction de l'un des deux feux rouges juxtaposés
+reponses:
+  - a
+explication: >-
+  Le règlement met un feu rouge isolé et deux feux rouges juxtaposés dans la même phrase
+  : accès interdit, écluse fermée. Ils disent la même chose, et tous deux annoncent une
+  attente qui prendra fin. Les trois autres signaux disent autre chose. Deux feux rouges
+  superposés, l'un au-dessus de l'autre, annoncent une écluse hors service, donc une attente
+  sans terme. Le feu rouge au-dessus du feu vert et l'extinction de l'un des deux feux
+  rouges juxtaposés annoncent au contraire une écluse en préparation pour l'ouverture.
+  Ce qui compte est donc moins le nombre de feux que leur disposition.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1 b)
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

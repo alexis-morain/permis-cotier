@@ -1,0 +1,37 @@
+id: carte-marine-0015
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 2
+enonce: >-
+  La carte abrège ce feu F. Un peu plus loin, un autre feu est décrit Fl, sans chiffre
+  entre parenthèses. Qu'est-ce qui sépare les deux ?
+visuel:
+  fichier: rythmes/caractere-fixe.svg
+  alt: "Feu fixe, dont la lumière reste allumée sans interruption."
+  credit: code
+propositions:
+  - id: a
+    texte: Fl s'éteint entre ses éclats, F ne s'éteint jamais
+  - id: b
+    texte: F lance un seul éclat isolé, Fl en lance plusieurs à la suite
+  - id: c
+    texte: Fl est un feu fixe dont on n'a pas noté le nombre d'éclats
+  - id: d
+    texte: F est un feu fixe blanc, Fl un feu fixe d'une autre couleur
+reponses:
+  - a
+explication: >-
+  F est le feu fixe : sa lumière ne s'interrompt pas. Fl est un feu à éclats, et l'absence
+  de chiffre entre parenthèses veut seulement dire que ses éclats sont isolés, un par
+  un, au lieu d'être groupés. Un feu sans chiffre entre parenthèses n'est donc pas un
+  feu fixe, c'est le piège classique : seul F reste allumé.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'
