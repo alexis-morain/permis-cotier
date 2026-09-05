@@ -1,0 +1,32 @@
+id: barre-route-0045
+option: cotier
+theme: barre-route
+notion: barre-manoeuvre-evitement
+statut: publie
+difficulte: 3
+enonce: >-
+  Appliquer une règle à la lettre te mènerait droit sur un danger immédiat. Que permet
+  la règle 2 ?
+propositions:
+  - id: a
+    texte: S'écarter des règles quand les circonstances l'obligent pour éviter un danger
+      immédiat
+  - id: b
+    texte: Rien, les règles s'appliquent en toutes circonstances
+  - id: c
+    texte: Demander l'autorisation du CROSS avant de s'écarter des règles
+reponses:
+  - a
+explication: >-
+  La règle 2 b) demande de tenir dûment compte de tous les dangers de la navigation, des
+  risques d'abordage et des circonstances particulières, notamment les limites d'utilisation
+  des navires, qui peuvent obliger à s'écarter des règles pour éviter un danger immédiat.
+  C'est une exception de dernier recours, pas une liberté.
+sources:
+  - texte: RIPAM, règle 2 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

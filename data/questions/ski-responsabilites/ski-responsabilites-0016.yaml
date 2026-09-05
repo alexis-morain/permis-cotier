@@ -1,0 +1,31 @@
+id: ski-responsabilites-0016
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Un ami sans permis veut essayer un engin à sustentation hydropropulsé. Que dit la division
+  240 ?
+propositions:
+  - id: a
+    texte: L'utilisateur doit être titulaire du permis côtier ou être accompagné par un
+      titulaire de ce permis
+  - id: b
+    texte: Aucun titre n'est exigé, l'engin n'est pas un bateau
+  - id: c
+    texte: Il lui faut le certificat restreint de radiotéléphoniste
+reponses:
+  - a
+explication: >-
+  L'utilisateur d'un engin à sustentation hydropropulsé est titulaire du permis plaisance
+  option côtière ou est accompagné par un titulaire de ce permis. L'engin navigue de jour,
+  à moins de deux milles d'un abri, dans des zones dégagées de tout obstacle.
+sources:
+  - texte: Division 240, article 240-2.13, point 2
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

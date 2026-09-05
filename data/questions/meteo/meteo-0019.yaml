@@ -1,0 +1,29 @@
+id: meteo-0019
+option: cotier
+theme: meteo
+notion: meteo-etat-mer
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu approches d'une passe où le courant sort face au vent. À quoi t'attends-tu ?
+propositions:
+  - id: a
+    texte: À une mer courte et creuse, hors de proportion avec la force du vent annoncée
+  - id: b
+    texte: À une mer plus plate, le courant couchant les vagues
+  - id: c
+    texte: À rien de particulier, le courant ne change pas l'état de la mer
+reponses:
+  - a
+explication: >-
+  Un vent contre le courant, dans un raz ou une passe, lève une mer courte et creuse hors
+  de proportion avec la force annoncée. C'est l'un des effets locaux que le bulletin de
+  côte, qui décrit une zone entière, ne peut pas détailler.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

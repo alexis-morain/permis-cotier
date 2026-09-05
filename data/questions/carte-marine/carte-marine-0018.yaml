@@ -1,0 +1,30 @@
+id: carte-marine-0018
+option: cotier
+theme: carte-marine
+notion: carte-generalites
+statut: publie
+difficulte: 2
+enonce: >-
+  Depuis quel niveau les sondes d'une carte marine sont-elles comptées ?
+propositions:
+  - id: a
+    texte: Le zéro des cartes, niveau des plus basses mers astronomiques
+  - id: b
+    texte: Le niveau moyen de la mer
+  - id: c
+    texte: Le niveau des pleines mers de vive-eau
+reponses:
+  - a
+explication: >-
+  Le zéro des cartes est le niveau des plus basses mers astronomiques, le plus bas que
+  la marée puisse atteindre. Une sonde est donc la profondeur minimale à cet endroit,
+  et la hauteur de marée du moment s'y ajoute. Les hauteurs de feux se comptent, elles,
+  depuis le niveau moyen des pleines mers de vive-eau.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

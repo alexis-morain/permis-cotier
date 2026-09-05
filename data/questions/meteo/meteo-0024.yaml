@@ -1,0 +1,30 @@
+id: meteo-0024
+option: cotier
+theme: meteo
+notion: meteo-facteurs
+statut: publie
+difficulte: 2
+enonce: >-
+  Sur la carte, les isobares sont très resserrées au-dessus de ta zone. Qu'en déduis-tu
+  ?
+propositions:
+  - id: a
+    texte: Le vent y est fort
+  - id: b
+    texte: Le vent y est faible
+  - id: c
+    texte: La visibilité y est réduite
+reponses:
+  - a
+explication: >-
+  Le vent souffle des hautes pressions vers les basses, d'autant plus fort que les isobares
+  sont resserrées sur la carte. Des isobares espacées annoncent au contraire un vent faible.
+  Une pression qui baisse vite annonce un renforcement.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

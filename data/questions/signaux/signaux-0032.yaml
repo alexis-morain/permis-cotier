@@ -1,0 +1,30 @@
+id: signaux-0032
+option: cotier
+theme: signaux
+notion: signaux-portuaires
+statut: publie
+difficulte: 2
+enonce: >-
+  À l'entrée d'un port, trois feux verts sont allumés verticalement. Que signifient-ils
+  ?
+propositions:
+  - id: a
+    texte: Le passage est autorisé, sous certaines conditions
+  - id: b
+    texte: Le passage est libre pour tous, sans aucune restriction
+  - id: c
+    texte: Le passage est interdit
+reponses:
+  - a
+explication: >-
+  Trois feux verticaux verts signifient passage autorisé sous certaines conditions. Le
+  message principal peut être complété par des signaux auxiliaires, dont la lecture demande
+  les publications nautiques, et des règlements locaux de police s'appliquent toujours.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe V, 6.15
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

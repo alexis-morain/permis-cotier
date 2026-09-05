@@ -1,0 +1,30 @@
+id: titre-conduite-0017
+option: cotier
+theme: titre-conduite
+notion: titre-options
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu veux conduire sur un canal un bateau à moteur de 12 mètres. Quel titre te faut-il
+  ?
+propositions:
+  - id: a
+    texte: L'option eaux intérieures
+  - id: b
+    texte: L'option côtière
+  - id: c
+    texte: L'extension grande plaisance eaux intérieures
+reponses:
+  - a
+explication: >-
+  En eaux intérieures, l'option eaux intérieures couvre les bateaux de moins de 20 mètres,
+  et l'extension grande plaisance eaux intérieures ceux de 20 mètres et plus. L'option
+  côtière ne vaut sur les eaux intérieures que pour les lacs et plans d'eau fermés.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2 b)
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

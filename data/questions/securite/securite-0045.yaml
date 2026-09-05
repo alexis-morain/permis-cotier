@@ -1,0 +1,30 @@
+id: securite-0045
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu gonfles un petit canot à rames de 2,20 mètres, un engin de plage. Jusqu'où peux-tu
+  t'éloigner d'un abri ?
+propositions:
+  - id: a
+    texte: 300 mètres, de jour seulement
+  - id: b
+    texte: 2 milles, de jour seulement
+  - id: c
+    texte: 6 milles, avec l'armement côtier
+reponses:
+  - a
+explication: >-
+  Les engins de plage effectuent une navigation exclusivement diurne, limitée à 300 mètres
+  d'un abri, sans matériel d'armement obligatoire. Ils ne vont jusqu'à deux milles que
+  dans le cadre d'une activité encadrée par une structure agréée.
+sources:
+  - texte: Division 240, article 240-2.08
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

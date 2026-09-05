@@ -1,0 +1,31 @@
+id: ski-responsabilites-0017
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 3
+enonce: >-
+  Quel pavillon doit être arboré sur le flotteur qui alimente un engin à sustentation
+  hydropropulsé en cours d'utilisation ?
+propositions:
+  - id: a
+    texte: Le pavillon « Alpha », d'au moins 0,50 mètre de guindant
+  - id: b
+    texte: Le pavillon national
+  - id: c
+    texte: Un pavillon jaune
+reponses:
+  - a
+explication: >-
+  Le pavillon « Alpha », d'au moins 0,50 mètre de guindant, visible sur tout l'horizon
+  et conforme au code international des signaux, est arboré sur l'élément support pendant
+  l'utilisation de l'engin. C'est le même pavillon que celui des plongeurs : quelqu'un
+  est dans l'eau, on passe au large et lentement.
+sources:
+  - texte: Division 240, article 240-2.13, point 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

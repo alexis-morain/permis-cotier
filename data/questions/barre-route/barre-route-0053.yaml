@@ -1,0 +1,29 @@
+id: barre-route-0053
+option: cotier
+theme: barre-route
+notion: barre-privilegie-non-privilegie
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu es privilégié, mais l'autre navire est maintenant si près que sa seule manœuvre ne
+  peut plus éviter l'abordage. Que t'impose la règle 17 ?
+propositions:
+  - id: a
+    texte: Faire de ton côté la manœuvre la meilleure pour aider à éviter l'abordage
+  - id: b
+    texte: Maintenir ton cap et ta vitesse jusqu'au bout, la faute est à l'autre
+reponses:
+  - a
+explication: >-
+  Quand le navire tenu de maintenir son cap et sa vitesse se trouve tellement près de
+  l'autre que l'abordage ne peut plus être évité par la seule manœuvre du navire qui doit
+  laisser la route libre, il doit de son côté faire la manœuvre qui est la meilleure pour
+  aider à l'éviter. Le privilège n'est pas un droit d'aborder.
+sources:
+  - texte: RIPAM, règle 17 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

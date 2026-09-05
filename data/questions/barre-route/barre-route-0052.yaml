@@ -1,0 +1,29 @@
+id: barre-route-0052
+option: cotier
+theme: barre-route
+notion: barre-voiliers
+statut: publie
+difficulte: 3
+enonce: >-
+  Comment la règle 12 détermine-t-elle le bord d'où un voilier reçoit le vent ?
+propositions:
+  - id: a
+    texte: C'est le bord opposé à celui où la grand-voile est bordée
+  - id: b
+    texte: C'est le bord où la grand-voile est bordée
+  - id: c
+    texte: C'est le bord indiqué par la girouette du bateau voisin
+reponses:
+  - a
+explication: >-
+  Le côté d'où vient le vent est celui du bord opposé au bord de brassage de la grand-voile.
+  Grand-voile bordée à tribord, tu es bâbord amures : tu reçois le vent de bâbord, et
+  c'est toi qui t'écartes d'un voilier tribord amures.
+sources:
+  - texte: RIPAM, règle 12 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

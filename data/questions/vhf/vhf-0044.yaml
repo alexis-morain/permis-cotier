@@ -1,0 +1,30 @@
+id: vhf-0044
+option: cotier
+theme: vhf
+notion: vhf-licence-mmsi
+statut: publie
+difficulte: 2
+enonce: >-
+  Que sais-tu du MMSI attribué à ton bateau ?
+propositions:
+  - id: a
+    texte: Il compte neuf chiffres
+  - id: b
+    texte: Ses trois premiers chiffres désignent le pays
+  - id: c
+    texte: Il change à chaque sortie en mer
+reponses:
+  - a
+  - b
+explication: >-
+  Le MMSI identifie la station en neuf chiffres. Les trois premiers forment l'indicatif
+  du pays, 226, 227 ou 228 pour la France métropolitaine. Il est attribué avec la licence
+  de station et programmé une fois pour toutes dans l'appareil.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

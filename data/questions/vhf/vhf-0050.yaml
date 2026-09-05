@@ -1,0 +1,32 @@
+id: vhf-0050
+option: cotier
+theme: vhf
+notion: vhf-sauvetage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu as un téléphone qui capte et une VHF. Pourquoi lancer l'alerte à la VHF plutôt qu'au
+  téléphone ?
+propositions:
+  - id: a
+    texte: Les navires alentour entendent l'appel et sont les premiers secours possibles
+  - id: b
+    texte: Le téléphone ne permet pas de joindre le CROSS
+  - id: c
+    texte: La VHF est obligatoire pour toute alerte, le téléphone est interdit
+reponses:
+  - a
+explication: >-
+  La VHF est entendue à la fois par le CROSS et par tous les navires à portée, qui sont
+  souvent les plus proches et les plus rapides à intervenir. Le téléphone joint bien le
+  CROSS par le 196, mais lui seul, et il dépend de la couverture du réseau.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+  - texte: Arrêté du 28 septembre 2007, annexe I, objectif n° 3
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

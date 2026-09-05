@@ -1,0 +1,30 @@
+id: carburant-0008
+option: cotier
+theme: carburant
+notion: carburant-autonomie
+statut: publie
+difficulte: 1
+enonce: >-
+  Au retour, le vent est debout et la mer s'est formée. Qu'arrive-t-il à ta consommation
+  de carburant ?
+propositions:
+  - id: a
+    texte: Elle monte, la mer formée et le vent debout font grimper la consommation
+  - id: b
+    texte: Elle ne change pas, elle ne dépend que du régime moteur
+  - id: c
+    texte: Elle baisse, le bateau va moins vite
+reponses:
+  - a
+explication: >-
+  La consommation dépend du régime moteur, mais aussi de ce que le bateau affronte : la
+  mer formée, le vent debout, une carène sale et une surcharge la font monter. C'est exactement
+  l'imprévu que couvre le tiers de réserve.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

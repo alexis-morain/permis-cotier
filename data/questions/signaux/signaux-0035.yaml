@@ -1,0 +1,30 @@
+id: signaux-0035
+option: cotier
+theme: signaux
+notion: signaux-lumineux
+statut: publie
+difficulte: 1
+enonce: >-
+  De nuit, un navire complète son signal au sifflet par trois éclats de son feu blanc.
+  Que t'annonce-t-il ?
+propositions:
+  - id: a
+    texte: Il bat en arrière
+  - id: b
+    texte: Il vient sur tribord
+  - id: c
+    texte: Il ne comprend pas tes intentions
+reponses:
+  - a
+explication: >-
+  Les signaux lumineux doublent les signaux au sifflet : un éclat pour « je viens sur
+  tribord », deux pour « je viens sur bâbord », trois pour « je bats en arrière ». Le
+  doute s'exprime par au moins cinq éclats brefs et rapides.
+sources:
+  - texte: RIPAM, règle 34 b) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

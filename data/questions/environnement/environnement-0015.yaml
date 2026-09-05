@@ -1,0 +1,32 @@
+id: environnement-0015
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 1
+enonce: >-
+  Un restaurateur te propose d'acheter les bars que tu as pêchés ce matin en sortie de
+  loisir. Que dit le code rural et de la pêche maritime ?
+propositions:
+  - id: a
+    texte: Le produit de la pêche de loisir ne peut être ni vendu, ni colporté, ni acheté
+      en connaissance de cause
+  - id: b
+    texte: La vente est possible si elle reste occasionnelle
+  - id: c
+    texte: La vente est possible aux seuls restaurateurs
+reponses:
+  - a
+explication: >-
+  La pêche maritime de loisir est une pêcherie non commerciale, dont le produit est destiné
+  à la consommation exclusive du pêcheur et de sa famille. Il ne peut être colporté, exposé
+  à la vente, vendu sous quelque forme que ce soit, ni acheté en connaissance de cause.
+  L'acheteur est aussi en faute que le vendeur.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-83
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

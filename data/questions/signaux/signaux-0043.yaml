@@ -1,0 +1,31 @@
+id: signaux-0043
+option: cotier
+theme: signaux
+notion: signaux-detresse
+statut: publie
+difficulte: 1
+enonce: >-
+  De quelle couleur est la lumière d'une fusée à parachute ou d'un feu à main de détresse
+  ?
+propositions:
+  - id: a
+    texte: Rouge
+  - id: b
+    texte: Blanche
+  - id: c
+    texte: Verte
+reponses:
+  - a
+explication: >-
+  L'annexe IV range parmi les signaux de détresse la fusée à parachute ou le feu à main
+  produisant une lumière rouge, ainsi que les fusées ou bombes projetant des étoiles rouges.
+  Le rouge est la couleur de la détresse, comme les trois feux rouges à main de l'armement
+  côtier.
+sources:
+  - texte: RIPAM, annexe IV, 1 i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

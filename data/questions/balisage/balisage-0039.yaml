@@ -1,0 +1,31 @@
+id: balisage-0039
+option: cotier
+theme: balisage
+notion: balisage-chenal-prefere
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, en remontant un chenal, tu relèves un feu vert à éclats groupés deux plus un.
+  Quelle marque le porte ?
+propositions:
+  - id: a
+    texte: Une marque de chenal préféré à bâbord, verte à bande rouge
+  - id: b
+    texte: Une marque latérale tribord ordinaire
+  - id: c
+    texte: Une marque de danger isolé
+reponses:
+  - a
+explication: >-
+  Le rythme à éclats diversement groupés deux plus un est réservé aux marques latérales
+  modifiées de chenal préféré. En vert, c'est la marque verte à bande rouge du chenal
+  préféré à bâbord. Une latérale tribord ordinaire montre un feu vert de rythme quelconque,
+  mais jamais celui-là.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

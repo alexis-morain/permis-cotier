@@ -1,0 +1,30 @@
+id: signaux-0039
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 3
+enonce: >-
+  À partir de quelle longueur un navire doit-il être pourvu d'une cloche en plus du sifflet
+  ?
+propositions:
+  - id: a
+    texte: 20 mètres
+  - id: b
+    texte: 12 mètres
+  - id: c
+    texte: 100 mètres
+reponses:
+  - a
+explication: >-
+  Le sifflet est obligatoire à partir de 12 mètres, la cloche s'y ajoute à partir de 20
+  mètres, et le gong à partir de 100 mètres, avec un son qui ne se confond pas avec celui
+  de la cloche.
+sources:
+  - texte: RIPAM, règle 33 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

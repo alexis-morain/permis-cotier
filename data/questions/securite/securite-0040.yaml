@@ -1,0 +1,30 @@
+id: securite-0040
+option: cotier
+theme: securite
+notion: securite-equipement-individuel
+statut: publie
+difficulte: 1
+enonce: >-
+  Les brassières ne sont pas portées. Comment doivent-elles être rangées ?
+propositions:
+  - id: a
+    texte: De manière à être accessibles rapidement et aisément
+  - id: b
+    texte: Dans leur emballage d'origine, à l'abri de l'humidité
+  - id: c
+    texte: Dans le compartiment moteur, au sec
+reponses:
+  - a
+explication: >-
+  Lorsqu'ils ne sont pas portés, les équipements individuels de flottabilité sont rangés
+  de manière à pouvoir être accessibles rapidement et aisément. Ils doivent aussi être
+  adaptés à la morphologie de chaque personne embarquée. Le compartiment moteur est interdit
+  à tout matériel de sécurité.
+sources:
+  - texte: Division 240, article 240-2.16, I
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

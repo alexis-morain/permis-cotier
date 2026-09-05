@@ -1,0 +1,30 @@
+id: securite-0038
+option: cotier
+theme: securite
+notion: securite-armement-cotier
+statut: publie
+difficulte: 1
+enonce: >-
+  À quatre milles d'un abri, quel niveau de performance doit présenter l'équipement individuel
+  de flottabilité de chaque personne embarquée ?
+propositions:
+  - id: a
+    texte: Au moins 100
+  - id: b
+    texte: Au moins 50
+  - id: c
+    texte: Au moins 150
+reponses:
+  - a
+explication: >-
+  L'armement côtier exige autant d'EIF de niveau de performance d'au moins 100 que de
+  personnes embarquées. Le niveau 50 suffit à moins de deux milles, et le niveau 150 s'impose
+  à partir de six milles, avec l'armement semi-hauturier.
+sources:
+  - texte: Division 240, article 240-2.04, point 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

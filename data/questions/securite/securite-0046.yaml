@@ -1,0 +1,30 @@
+id: securite-0046
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Jusqu'à quelle distance d'un abri une planche à voile ou une planche aérotractée peut-elle
+  naviguer ?
+propositions:
+  - id: a
+    texte: 2 milles
+  - id: b
+    texte: 300 mètres
+  - id: c
+    texte: 6 milles
+reponses:
+  - a
+explication: >-
+  Les planches à voile, les planches aérotractées et les planches nautiques à moteur naviguent
+  de jour, jusqu'à deux milles d'un abri. Dès 300 mètres, le pratiquant porte une aide
+  à la flottabilité de 50 N ou une combinaison, et un moyen de repérage lumineux.
+sources:
+  - texte: Division 240, article 240-2.11
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

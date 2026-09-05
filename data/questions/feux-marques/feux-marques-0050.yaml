@@ -1,0 +1,31 @@
+id: feux-marques-0050
+option: cotier
+theme: feux-marques
+notion: feux-remorquage
+statut: publie
+difficulte: 3
+enonce: >-
+  Un pousseur et sa barge sont reliés par un raccordement rigide et forment une unité
+  composite. Quels feux montrent-ils ?
+propositions:
+  - id: a
+    texte: Ceux d'un seul navire à propulsion mécanique, prévus par la règle 23
+  - id: b
+    texte: Deux feux de tête de mât superposés et un feu de remorquage
+  - id: c
+    texte: Les feux d'un navire à capacité de manœuvre restreinte
+reponses:
+  - a
+explication: >-
+  Un navire en train de pousser et un navire poussé reliés par un raccordement rigide,
+  de manière à former une unité composite, sont considérés comme un seul navire à propulsion
+  mécanique et montrent les feux de la règle 23. Les deux feux de tête de mât superposés
+  sont réservés au remorquage et au poussage sans unité composite.
+sources:
+  - texte: RIPAM, règle 24 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

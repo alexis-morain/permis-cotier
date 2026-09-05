@@ -1,0 +1,32 @@
+id: securite-0034
+option: cotier
+theme: securite
+notion: securite-armement-basique
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton hors-bord à barre franche est équipé d'un coupe-circuit filaire. Pourquoi la division
+  240 demande-t-elle un second coupe-circuit accessible à bord ?
+propositions:
+  - id: a
+    texte: Pour que ceux restés à bord puissent redémarrer et aller chercher la personne
+      tombée à l'eau
+  - id: b
+    texte: Pour remplacer le premier quand il s'use
+  - id: c
+    texte: Pour pouvoir rallonger le cordon si le pilote se déplace
+reponses:
+  - a
+explication: >-
+  Si le pilote est éjecté, le coupe-circuit part avec lui et le moteur s'arrête. Un second
+  coupe-circuit, rapidement et facilement accessible et dont l'emplacement est connu de
+  tous, permet aux personnes restées à bord de redémarrer et d'aller chercher la personne
+  tombée à l'eau. Le cordon, lui, ne doit jamais être modifié, ni rallongé ni déplacé.
+sources:
+  - texte: Division 240, article 240-2.01, point 7
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

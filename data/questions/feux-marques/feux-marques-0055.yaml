@@ -1,0 +1,30 @@
+id: feux-marques-0055
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+statut: publie
+difficulte: 3
+enonce: >-
+  Une drague au travail te montre de nuit, en plus de ses trois feux rouge, blanc, rouge,
+  deux feux verts d'un côté et deux feux rouges de l'autre. De quel côté passes-tu ?
+propositions:
+  - id: a
+    texte: Du côté des deux feux verts
+  - id: b
+    texte: Du côté des deux feux rouges
+  - id: c
+    texte: Par l'arrière, au plus près
+reponses:
+  - a
+explication: >-
+  Un navire à capacité de manœuvre restreinte qui drague ou effectue des travaux sous-marins
+  montre deux feux rouges, ou deux boules, du côté où se trouve l'obstruction, et deux
+  feux verts, ou deux bicônes, du côté où un autre navire peut passer.
+sources:
+  - texte: RIPAM, règle 27 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

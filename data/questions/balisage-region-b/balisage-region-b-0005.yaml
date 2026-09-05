@@ -1,0 +1,29 @@
+id: balisage-region-b-0005
+option: cotier
+theme: balisage-region-b
+notion: region-b-lateral
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu navigues aux Antilles françaises, en Guadeloupe ou en Martinique. Dans quelle région
+  de balisage es-tu ?
+propositions:
+  - id: a
+    texte: En région B, les marques latérales y sont inversées
+  - id: b
+    texte: En région A, comme partout sur le littoral français
+reponses:
+  - a
+explication: >-
+  L'arrêté place la Guadeloupe, la Martinique, la Guyane et Saint-Pierre-et-Miquelon en
+  région B. La métropole, Mayotte, La Réunion, la Polynésie et la Nouvelle-Calédonie sont
+  en région A. Le piège consiste à croire que tout le littoral français est en région
+  A.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

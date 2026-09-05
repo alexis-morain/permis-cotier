@@ -1,0 +1,27 @@
+id: barre-route-0058
+option: cotier
+theme: barre-route
+notion: barre-hierarchie-privileges
+statut: publie
+difficulte: 3
+enonce: >-
+  Un hydravion amerri manœuvre près de ton bateau. Que lui impose la règle 18 ?
+propositions:
+  - id: a
+    texte: Se tenir largement à l'écart de tous les navires et éviter de gêner leur navigation
+  - id: b
+    texte: Rien, tous les navires doivent s'écarter de sa route
+reponses:
+  - a
+explication: >-
+  Un hydravion amerri doit, en règle générale, se tenir largement à l'écart de tous les
+  navires et éviter de gêner leur navigation. S'il y a malgré tout risque d'abordage,
+  il applique les règles de barre comme un navire.
+sources:
+  - texte: RIPAM, règle 18 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

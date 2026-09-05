@@ -1,0 +1,33 @@
+id: vhf-0052
+option: cotier
+theme: vhf
+notion: vhf-fausses-alertes
+statut: publie
+difficulte: 1
+enonce: >-
+  Quelle est la conséquence d'une fausse alerte de détresse ?
+propositions:
+  - id: a
+    texte: Elle mobilise des moyens de secours pour rien et met en danger ceux qui en
+      ont besoin ailleurs
+  - id: b
+    texte: Aucune, les secours vérifient toujours avant de partir
+  - id: c
+    texte: Elle bloque ta VHF pendant vingt-quatre heures
+reponses:
+  - a
+explication: >-
+  Une fausse alerte engage des moyens humains et matériels qui manquent alors ailleurs,
+  là où quelqu'un est vraiment en danger. C'est pourquoi l'annexe IV du RIPAM interdit
+  tout signal de détresse hors d'un cas de détresse, et pourquoi une alerte partie par
+  erreur s'annule aussitôt sur le canal 16.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+  - texte: Arrêté du 28 septembre 2007, annexe I, objectif n° 7
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: meteo-0026
+option: cotier
+theme: meteo
+notion: meteo-facteurs
+statut: publie
+difficulte: 2
+enonce: >-
+  Dans quelles conditions se forme le brouillard de mer ?
+propositions:
+  - id: a
+    texte: Quand de l'air doux et humide passe au-dessus d'une mer plus froide, par vent
+      faible
+  - id: b
+    texte: Quand un vent fort soulève les embruns
+  - id: c
+    texte: Quand la mer est plus chaude que l'air, par grand froid
+reponses:
+  - a
+explication: >-
+  La brume et le brouillard de mer se forment quand de l'air doux et humide passe au-dessus
+  d'une mer plus froide. Ils s'installent par vent faible, souvent au petit matin ou au
+  retour d'une brise de mer, et se lèvent aussi vite qu'ils sont venus.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -1,0 +1,31 @@
+id: barre-route-0049
+option: cotier
+theme: barre-route
+notion: barre-chenal-etroit
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu dois couper les voies d'un dispositif de séparation du trafic. Sous quel cap le fais-tu
+  ?
+propositions:
+  - id: a
+    texte: Un cap autant que possible perpendiculaire à la direction générale du trafic
+  - id: b
+    texte: Un cap parallèle au trafic, pour le suivre le plus longtemps possible
+  - id: c
+    texte: Un cap à 45 degrés du trafic
+reponses:
+  - a
+explication: >-
+  Les navires doivent éviter autant que possible de couper les voies de circulation d'un
+  dispositif de séparation du trafic, mais s'ils y sont obligés, ils le font en suivant
+  un cap autant que possible perpendiculaire à la direction générale du trafic, pour y
+  rester le moins longtemps possible.
+sources:
+  - texte: RIPAM, règle 10 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

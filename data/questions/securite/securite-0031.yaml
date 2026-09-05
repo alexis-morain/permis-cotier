@@ -1,0 +1,30 @@
+id: securite-0031
+option: cotier
+theme: securite
+notion: securite-armement-basique
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau ouvert est auto-videur et ne comporte aucun espace habitable. L'armement
+  basique t'impose-t-il un dispositif d'assèchement manuel ?
+propositions:
+  - id: a
+    texte: Non, il n'est exigé que des navires non auto-videurs ou de ceux qui ont un
+      espace habitable
+  - id: b
+    texte: Oui, une écope ou une pompe à main est obligatoire sur tout navire
+reponses:
+  - a
+explication: >-
+  Le dispositif d'assèchement manuel, écope, seau ou pompe à main, est exigé pour les
+  navires non auto-videurs ou ceux qui comportent au moins un espace habitable. Un cockpit
+  qui évacue l'eau par gravité en permanence en est dispensé, mais rien n'interdit d'embarquer
+  une écope.
+sources:
+  - texte: Division 240, article 240-2.03, point 4
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

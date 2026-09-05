@@ -1,0 +1,32 @@
+id: signaux-0040
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 2
+enonce: >-
+  Dans la brume, ton bateau de 8 mètres n'émet pas les signaux prescrits aux grands navires.
+  Que dois-tu faire à la place ?
+propositions:
+  - id: a
+    texte: Émettre un autre signal sonore efficace, à des intervalles ne dépassant pas
+      deux minutes
+  - id: b
+    texte: Rien, tu n'es tenu à aucun signal
+  - id: c
+    texte: Émettre un MAYDAY sur le canal 16
+reponses:
+  - a
+explication: >-
+  Un navire de moins de 12 mètres n'est pas tenu de faire entendre les signaux de la règle
+  35, mais lorsqu'il ne le fait pas, il doit faire entendre un autre signal sonore efficace
+  à des intervalles ne dépassant pas deux minutes. Le silence n'est pas une option dans
+  la brume.
+sources:
+  - texte: RIPAM, règle 35 j)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

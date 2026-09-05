@@ -1,0 +1,30 @@
+id: balisage-0056
+option: cotier
+theme: balisage
+notion: balisage-plages
+statut: publie
+difficulte: 3
+enonce: >-
+  Deux chenaux traversiers sont contigus. Quelle forme ont les bouées qui matérialisent
+  leur limite commune ?
+propositions:
+  - id: a
+    texte: Sphérique
+  - id: b
+    texte: Cylindrique
+  - id: c
+    texte: Conique
+reponses:
+  - a
+explication: >-
+  Une limite commune ne peut pas être à la fois bâbord d'un chenal et tribord de l'autre
+  : l'arrêté la fait matérialiser par des bouées sphériques. Cylindrique et conique restent
+  les formes des limites bâbord et tribord, en accédant au rivage.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 2
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'
