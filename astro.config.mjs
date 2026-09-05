@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
 
@@ -12,6 +12,14 @@ const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), '
 // l'indexation tout seul, pour qu'une préversion ne fasse pas concurrence au
 // domaine dans les résultats.
 const site = process.env.SITE_URL ?? 'https://lepermiscotier.fr';
+
+// Une leçon du cours n'entre au sitemap que si elle est écrite : une leçon
+// courte n'est que le résumé de sa fiche de notion, la page la déclare en
+// `noindex`, et un sitemap qui l'annoncerait dirait le contraire.
+const leconIndexable = (page) => {
+  const code = /\/cours\/([a-z0-9-]+)(?:\.html)?$/.exec(new URL(page).pathname)?.[1];
+  return !code || existsSync(new URL(`./data/cours/${code}.yaml`, import.meta.url));
+};
 
 export default defineConfig({
   site,
@@ -26,7 +34,8 @@ export default defineConfig({
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
       filter: (page) =>
         !/\/(examen|revoir|parametres|signaler)(\.html)?$/.test(page) &&
-        !page.includes('/entrainement/'),
+        !page.includes('/entrainement/') &&
+        leconIndexable(page),
       changefreq: 'weekly',
       lastmod: new Date(),
       serialize(item) {
@@ -34,7 +43,8 @@ export default defineConfig({
         // Ce que Google doit explorer en premier : l'accueil, puis les pages
         // qui répondent à une question, puis le programme, puis la banque.
         if (chemin === '/' || chemin === '') item.priority = 1.0;
-        else if (chemin.startsWith('/guide')) item.priority = 0.9;
+        else if (chemin === '/cours' || chemin.startsWith('/guide')) item.priority = 0.9;
+        else if (chemin.startsWith('/cours/')) item.priority = 0.7;
         else if (chemin === '/themes' || chemin.startsWith('/theme/')) item.priority = 0.8;
         else if (chemin.startsWith('/notion/')) item.priority = 0.7;
         else if (chemin.startsWith('/question/')) item.priority = 0.4;

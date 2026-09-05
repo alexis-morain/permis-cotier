@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import Parcours from '../../components/Parcours.tsx';
+import { CHAPITRES, leconsDuChapitre } from '../../lib/parcours';
+import { leconsEcrites, compteLeconsEcrites } from '../../lib/lecons';
+
+const ecrites = await leconsEcrites();
+const compte = await compteLeconsEcrites();
+
+const chapitres = CHAPITRES.map((c) => ({
+  code: c.code,
+  titre: c.titre,
+  promesse: c.promesse,
+  lecons: leconsDuChapitre(c.code).map((l) => ({
+    code: l.notion.code,
+    nom: l.notion.nom,
+    ecrite: ecrites.has(l.notion.code),
+    duree: ecrites.get(l.notion.code)?.duree ?? 1,
+  })),
+}));
+---
+
+<Base
+  titre="Le cours du permis côtier, leçon par leçon"
+  description="Le programme dans l’ordre où on l’apprend : le balisage, les règles de rencontre, les feux, puis le reste. Des leçons de trois minutes, chacune vérifiée sur les questions de la banque."
+  miettes={[{ nom: 'Cours', chemin: '/cours' }]}
+>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <h1>Le cours, leçon par leçon</h1>
+    <p class="chapo">
+      Tu pars de zéro ? Ce cours prend le programme dans l’ordre où on l’apprend, pas dans
+      celui de l’arrêté : d’abord ce qu’on voit sur l’eau, puis les règles de rencontre,
+      puis ce qui se prépare à terre.
+    </p>
+    <p>
+      {compte.total} leçons de deux à cinq minutes, une par notion du programme. Chacune
+      se termine par des questions de la banque, corrigées une par une avec le texte dont
+      la réponse est tirée. Ta progression reste dans ton navigateur, sans compte.
+    </p>
+    <p class="discret">
+      {compte.ecrites} leçons sont rédigées à ce jour. Les autres tiennent en un résumé, le
+      temps de les écrire depuis les textes : elles sont marquées « résumé seulement ».
+    </p>
+
+    <Parcours client:load chapitres={chapitres} />
+  </div>
+</Base>
+
+<style>
+  .chapo { font-size: 1.15rem; }
+</style>

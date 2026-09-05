@@ -1,0 +1,52 @@
+notion: barre-veille-vitesse
+duree: 3
+accroche: >-
+  Beau temps, mer plate, tu discutes avec tes passagers. Personne ne regarde devant. Le
+  RIPAM a une règle pour ça, et c’est la première de toutes celles qui gouvernent la route.
+etapes:
+  - titre: La veille, en permanence
+    texte: >-
+      Tout navire doit assurer en permanence une veille visuelle et auditive, en
+      utilisant tous les moyens disponibles adaptés aux circonstances. C’est la règle 5.
+      Elle vaut pour un pétrolier comme pour un semi-rigide, de jour comme de nuit.
+
+      Veiller, c’est regarder tout autour, écouter, et se servir de ce qu’on a à bord pour
+      apprécier la situation et le risque d’abordage.
+  - titre: La vitesse de sécurité
+    texte: >-
+      Tout navire doit maintenir en permanence une vitesse de sécurité : celle qui lui
+      permet d’éviter un abordage et de s’arrêter sur une distance adaptée aux
+      circonstances. C’est la règle 6.
+
+      Il n’y a pas de chiffre. La bonne vitesse dépend de ce que tu vois et de ce que ton
+      bateau sait faire.
+  - titre: Ce qui fait baisser la vitesse
+    texte: >-
+      La règle 6 liste les facteurs à prendre en compte. Chacun peut tomber à l’épreuve.
+    liste:
+      - La visibilité
+      - La densité du trafic, et les concentrations de navires de pêche
+      - La capacité de manœuvre du bateau, sa distance d’arrêt, sa giration
+      - De nuit, un arrière-plan lumineux qui gêne, feux côtiers ou tes propres feux
+      - L’état du vent, de la mer et des courants, la proximité de dangers
+      - Le tirant d’eau par rapport à la profondeur disponible
+piege: >-
+  « Vitesse de sécurité » ne veut pas dire « vitesse lente ». C’est la vitesse à laquelle
+  tu peux encore t’arrêter sur la distance que tu vois. Par brume épaisse, elle peut être
+  très faible ; par temps clair et mer libre, elle peut être élevée.
+retenir:
+  - "Règle 5 : veille visuelle et auditive permanente, par tous les moyens disponibles."
+  - "Règle 6 : une vitesse qui permet d’éviter l’abordage et de s’arrêter à temps."
+  - "Aucun chiffre : visibilité, trafic, manœuvrabilité, mer et tirant d’eau décident."
+sources:
+  - texte: RIPAM, règle 5
+    ref: decret-77-733
+    fichier: regle-05
+  - texte: RIPAM, règle 6
+    ref: decret-77-733
+    fichier: regle-06
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

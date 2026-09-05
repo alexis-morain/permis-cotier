@@ -1,0 +1,58 @@
+notion: balisage-lateral
+duree: 3
+accroche: >-
+  Tu rentres au port en venant du large. Devant toi, deux files de bouées, des rouges
+  d’un côté, des vertes de l’autre. Elles te disent où est le chenal, et de quel côté
+  les laisser.
+etapes:
+  - titre: Le sens conventionnel
+    texte: >-
+      Le balisage latéral se lit dans un seul sens, celui qu’on appelle conventionnel :
+      du large vers le port. Toute la logique des couleurs suppose que tu rentres.
+
+      Quand tu sors, tu lis la même chose à l’envers : ce qui était à ta gauche passe à
+      ta droite. La bouée n’a pas bougé, c’est toi qui as changé de sens.
+  - titre: "Bâbord : rouge, cylindrique"
+    texte: >-
+      En région A, dont la France fait partie, la marque bâbord est rouge. Son corps est
+      cylindrique, on dit « en boîte de conserve », et son voyant est un cylindre rouge.
+
+      En rentrant, tu la laisses sur ta gauche, à bâbord.
+    visuel: balisage/laterale-babord.svg
+    alt: "Une bouée à corps rouge, de forme cylindrique, surmontée d’un voyant en cylindre rouge."
+  - titre: "Tribord : vert, conique"
+    texte: >-
+      La marque tribord est verte. Son corps est conique et son voyant est un cône vert,
+      pointe en haut.
+
+      En rentrant, tu la laisses sur ta droite, à tribord.
+    visuel: balisage/laterale-tribord.svg
+    alt: "Une bouée à corps vert, de forme conique, surmontée d’un voyant en cône vert pointe en haut."
+  - titre: La forme dit la même chose que la couleur
+    texte: >-
+      Chaque marque le dit deux fois, par la couleur et par la forme. Un cylindre est
+      toujours bâbord, un cône toujours tribord. De loin, à contre-jour ou quand la
+      peinture est passée, la silhouette suffit.
+
+      De nuit, la couleur passe dans le feu : rouge sur la marque bâbord, vert sur la
+      marque tribord, à un rythme quelconque.
+    liste:
+      - "Bâbord : rouge, cylindre, voyant cylindrique, feu rouge"
+      - "Tribord : vert, cône, voyant conique, feu vert"
+piege: >-
+  L’épreuve te fait souvent sortir du port. Là, tu vas contre le sens conventionnel : la
+  marque rouge est à ta droite et la verte à ta gauche. Lis l’énoncé pour savoir dans quel
+  sens tu vas, avant de regarder la couleur.
+retenir:
+  - Le balisage latéral se lit du large vers le port.
+  - "Bâbord : rouge, cylindre, voyant cylindrique. Tribord : vert, cône, voyant conique."
+  - En sortant, tout s’inverse pour toi, pas pour la bouée.
+sources:
+  - texte: Balisage AISM, région A, marques latérales
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

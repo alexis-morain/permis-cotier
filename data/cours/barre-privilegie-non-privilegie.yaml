@@ -1,0 +1,48 @@
+notion: barre-privilegie-non-privilegie
+duree: 3
+accroche: >-
+  Tu es privilégié. L’autre devait s’écarter et ne fait rien. Tu attends encore ?
+etapes:
+  - titre: "Le non privilégié : tôt et franchement"
+    texte: >-
+      Le navire tenu de s’écarter manœuvre de bonne heure et franchement, de manière à
+      s’écarter largement. C’est la règle 16. Une manœuvre tardive laisse l’autre dans le
+      doute.
+  - titre: "Le privilégié : cap et vitesse"
+    texte: >-
+      Le navire privilégié maintient son cap et sa vitesse. C’est la règle 17. Ce n’est
+      pas un droit mais une obligation : si tu bouges, l’autre ne peut plus prévoir où tu
+      seras, et sa manœuvre devient dangereuse.
+  - titre: Quand l’autre ne fait rien
+    texte: >-
+      Dès qu’il te paraît évident que le non privilégié ne manœuvre pas comme il le
+      devrait, tu peux manœuvrer seul pour éviter l’abordage. Et quand tu es si près que
+      sa seule manœuvre ne suffirait plus, tu dois faire la manœuvre qui aide le mieux à
+      l’éviter.
+
+      Un navire à moteur qui manœuvre ainsi face à un autre navire à moteur venant sur
+      son bâbord évite, si possible, d’abattre sur bâbord.
+  - titre: Le non privilégié reste tenu
+    texte: >-
+      Rien de tout cela ne dispense le navire qui doit laisser la route libre de
+      s’écarter. Que le privilégié ait manœuvré n’efface pas sa faute.
+piege: >-
+  « Maintenir cap et vitesse » ne veut pas dire « foncer jusqu’au choc ». Le privilégié
+  peut agir dès que l’autre n’agit pas, et doit agir quand il est trop tard pour que
+  l’autre s’en sorte seul.
+retenir:
+  - "Règle 16 : le non privilégié s’écarte tôt, franchement, largement."
+  - "Règle 17 : le privilégié maintient cap et vitesse."
+  - Il peut manœuvrer dès que l’autre ne fait rien, il doit manœuvrer quand l’autre seul ne suffit plus, sans abattre sur bâbord vers un navire qui vient de bâbord.
+sources:
+  - texte: RIPAM, règle 16
+    ref: decret-77-733
+    fichier: regle-16
+  - texte: RIPAM, règle 17
+    ref: decret-77-733
+    fichier: regle-17
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

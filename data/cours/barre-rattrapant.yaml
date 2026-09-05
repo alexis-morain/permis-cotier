@@ -1,0 +1,49 @@
+notion: barre-rattrapant
+duree: 4
+accroche: >-
+  Tu remontes lentement sur un voilier qui te précède. Tu es à moteur, lui à voile.
+  Est-ce lui qui doit s’écarter ? Non.
+etapes:
+  - titre: Celui qui rattrape s’écarte, toujours
+    texte: >-
+      Tout navire qui en rattrape un autre doit s’écarter de sa route. La règle 13
+      s’applique « nonobstant toute disposition » des autres règles de rencontre : elle
+      passe avant la hiérarchie entre voiliers et navires à moteur.
+
+      Un navire à moteur rattrapé par un voilier est privilégié. Un voilier rattrapé par
+      un navire à moteur l’est aussi.
+  - titre: Qu’est-ce que rattraper
+    texte: >-
+      Rattrape celui qui s’approche d’un autre navire en venant de plus de 22,5 degrés sur
+      l’arrière de son travers. De nuit, c’est le secteur d’où l’on ne voit que le feu de
+      poupe de l’autre, sans aucun de ses feux de côté.
+    visuel: situations/secteur-rattrapant.svg
+    alt: "Vue de dessus d’un navire et du secteur qui s’ouvre derrière lui, de part et d’autre, au-delà de 22,5 degrés sur l’arrière de son travers."
+  - titre: Tu rattrapes, tu es rattrapé
+    texte: >-
+      Si tu gagnes sur un navire qui te précède, tu t’écartes, en passant à bonne distance
+      et sans le serrer. Si c’est toi qu’on rattrape, tu maintiens ton cap et ta vitesse.
+    visuel: situations/tu-rattrapes.svg
+    alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l’image et gagne sur un navire à moteur plus lent qui le précède, légèrement sur sa droite."
+  - titre: Jusqu’au bout
+    texte: >-
+      Un navire qui ne peut pas déterminer avec certitude s’il rattrape doit se
+      considérer comme rattrapant. Et aucun changement de relèvement ultérieur ne le
+      transforme en navire qui croise : il reste tenu de s’écarter jusqu’à ce qu’il soit
+      tout à fait paré et clair.
+piege: >-
+  L’épreuve adore le voilier qui rattrape un bateau à moteur. Le réflexe « la voile est
+  prioritaire » est faux ici : le voilier rattrape, donc le voilier s’écarte.
+retenir:
+  - Celui qui rattrape s’écarte, quel que soit son type.
+  - "Rattraper : arriver de plus de 22,5 degrés sur l’arrière du travers, là où on ne verrait que le feu de poupe."
+  - Dans le doute, on se considère comme rattrapant, et on le reste jusqu’à être paré et clair.
+sources:
+  - texte: RIPAM, règle 13
+    ref: decret-77-733
+    fichier: regle-13
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,42 @@
+notion: balisage-eaux-saines
+duree: 2
+accroche: >-
+  Tu arrives de la haute mer et tu cherches l’entrée du chenal. Une bouée à rayures
+  verticales rouges et blanches t’attend au large : c’est ton point d’atterrissage.
+etapes:
+  - titre: "Elle dit : rien à craindre ici"
+    texte: >-
+      La marque d’eaux saines signale que l’eau est saine tout autour d’elle. On la
+      trouve à l’atterrissage, là où on quitte la haute mer pour prendre un chenal, ou au
+      milieu d’un chenal pour en marquer l’axe.
+    visuel: balisage/eaux-saines.svg
+    alt: "Une bouée à bandes verticales rouges et blanches, surmontée d’une sphère rouge."
+  - titre: La reconnaître
+    texte: >-
+      Les bandes sont verticales. C’est ce qui la distingue du danger isolé, dont la
+      bande rouge est horizontale, sur du noir.
+    liste:
+      - "Corps : bandes verticales rouges et blanches"
+      - "Voyant : une sphère rouge"
+      - "Feu : blanc, isophase, à occultations, un éclat long toutes les 10 secondes, ou la lettre A du morse"
+  - titre: Un point de passage, pas un côté
+    texte: >-
+      Elle marque un axe ou un point de passage, pas un côté à respecter. Tu peux la
+      laisser à bâbord ou à tribord.
+piege: >-
+  Rouge et blanc, rouge et noir : deux marques, deux sens opposés. Les bandes verticales
+  rouges et blanches disent « tout va bien », la bande rouge horizontale sur noir dit
+  « danger dessous ».
+retenir:
+  - "Bandes verticales rouges et blanches, sphère rouge : eaux saines tout autour."
+  - Elle sert d’atterrissage ou de milieu de chenal, et se laisse d’un côté ou de l’autre.
+  - "Feu blanc lent : isophase, occultations, éclat long, ou morse A."
+sources:
+  - texte: Balisage AISM, région A, marque d’eaux saines
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

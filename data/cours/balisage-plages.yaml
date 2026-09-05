@@ -1,0 +1,42 @@
+notion: balisage-plages
+duree: 3
+accroche: >-
+  Août, une plage pleine. Entre les baigneurs et toi, une ligne de bouées jaunes. Tu veux
+  ramener ton bateau à la plage : par où, et à quelle vitesse ?
+etapes:
+  - titre: La bande des 300 mètres
+    texte: >-
+      Le long des côtes, une bande littorale de 300 mètres est réservée aux baigneurs et
+      aux engins de plage. Sa limite au large est marquée par des bouées jaunes
+      sphériques. À l’intérieur, la vitesse est limitée à 5 nœuds pour tout le monde.
+  - titre: Le chenal traversier
+    texte: >-
+      Pour rejoindre la plage sans traverser la zone de baignade, on emprunte un chenal
+      traversier, balisé de jaune lui aussi : bouées cylindriques d’un côté, coniques de
+      l’autre.
+
+      Le sens de lecture est celui de la sortie. En sortant vers le large, les cylindres
+      sont à bâbord et les cônes à tribord.
+  - titre: Dans le chenal, on reste lent
+    texte: >-
+      Le chenal traversier est dans la bande des 300 mètres : la limite de 5 nœuds s’y
+      applique aussi. Il est réservé aux engins de plage et aux véhicules nautiques à
+      moteur qui rejoignent le large. Les baigneurs n’y ont pas leur place, et toi tu
+      n’as pas la tienne dans la zone de baignade.
+piege: >-
+  Le chenal traversier se lit dans le sens de la sortie, à l’inverse du chenal de port
+  qui se lit en entrant. Cylindre à bâbord en sortant, donc à tribord quand tu rentres à
+  la plage.
+retenir:
+  - "Bande des 300 mètres : bouées jaunes sphériques, vitesse 5 nœuds."
+  - "Chenal traversier : bouées jaunes, cylindres à bâbord et cônes à tribord dans le sens de la sortie."
+  - On n’entre jamais dans une zone de baignade, on passe par le chenal.
+sources:
+  - texte: Balisage AISM, région A, balisage des plages
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

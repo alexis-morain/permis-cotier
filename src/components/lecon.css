@@ -1,0 +1,152 @@
+/*
+ * L'écran de leçon. Même grammaire que l'écran de jeu : la barre en jaune,
+ * les cartes à bord plein, le mémo dans la bande marine. Une idée par écran
+ * quand le script est là ; tout à la suite quand il n'y est pas.
+ */
+
+.lecon { scroll-margin-top: 1rem; }
+
+.lecon__entete { margin-bottom: 1.5rem; }
+.lecon__chapitre { margin: 0 0 0.6rem; font-size: 0.9rem; font-weight: 600; }
+.lecon__chapitre a { text-decoration: none; }
+.lecon__chapitre a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+
+.lecon__barre {
+  height: 0.6rem;
+  border-radius: 999px;
+  background: var(--fond-2);
+  overflow: hidden;
+}
+.lecon__barre span {
+  display: block;
+  height: 100%;
+  background: var(--jaune);
+  transform-origin: left;
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Le pas à pas : seul l'écran courant est visible, et seulement quand la page
+   a un script pour avancer. Sans lui, tout se lit à la suite. */
+html.js .lecon--pas-a-pas .ecran:not(.ecran--courant) { display: none; }
+html:not(.js) .lecon__suite,
+html:not(.js) .lecon__mode { display: none; }
+
+.ecran { outline: none; margin-bottom: 2.5rem; }
+.lecon--pas-a-pas .ecran { margin-bottom: 0; }
+.ecran--courant { animation: ecran-entree 200ms cubic-bezier(0.2, 0, 0, 1); }
+@keyframes ecran-entree {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to { opacity: 1; transform: none; }
+}
+
+.ecran__accroche {
+  font-stretch: var(--large);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.4;
+  max-width: 30ch;
+  margin: 0.5rem 0 0;
+}
+
+.ecran__titre {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  margin: 0 0 0.9rem;
+}
+.ecran__numero {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  background: var(--jaune);
+  color: var(--marine);
+  font-size: 0.9rem;
+  font-weight: 800;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  align-self: center;
+}
+
+.ecran__visuel {
+  margin: 0 0 1.1rem;
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon);
+  background: var(--fond-carte);
+  padding: 0.75rem;
+  display: grid;
+  place-items: center;
+}
+.ecran__visuel img { max-height: 16rem; width: auto; max-width: 100%; }
+
+.ecran__liste { padding-left: 1.2rem; margin: 0.6rem 0 0; }
+.ecran__liste li { margin-bottom: 0.35rem; }
+
+/* Le piège : un encadré jaune pâle, cerné de marine. Pas de rouge, il est
+   réservé au verdict. */
+.piege {
+  background: var(--jaune-pale);
+  border: 2px solid var(--texte);
+  border-radius: var(--rayon);
+  padding: 1.1rem 1.25rem;
+}
+.piege__titre {
+  font-stretch: var(--large);
+  font-weight: 800;
+  margin: 0 0 0.4rem;
+}
+.piege p:last-child { margin: 0; }
+
+/* Le mémo : la bande marine, comme l'accueil. C'est ce qu'on relit la veille. */
+.retenir {
+  background: var(--bande);
+  color: var(--bande-texte);
+  border-radius: var(--rayon);
+  padding: 1.25rem 1.4rem;
+  border-bottom: 6px solid var(--jaune);
+}
+.retenir__titre {
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin: 0 0 0.6rem;
+}
+.retenir ul { margin: 0; padding-left: 1.2rem; }
+.retenir li { margin-bottom: 0.45rem; max-width: 60ch; }
+.retenir li:last-child { margin-bottom: 0; }
+
+.verification__compteur {
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+}
+.verification__enonce { font-size: 1.15rem; margin: 0.5rem 0 1rem; }
+.verification .verdict { margin: 1rem 0; }
+.verification .jeu__actions { margin-top: 1rem; }
+
+.fin__titre { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0 0 0.5rem; }
+.fin__score { font-size: 1.1rem; }
+.fin__actions { display: flex; flex-direction: column; align-items: stretch; gap: 0.75rem; margin-top: 1.5rem; }
+@media (min-width: 40rem) {
+  .fin__actions { flex-direction: row; flex-wrap: wrap; align-items: center; }
+}
+
+.lecon__suite {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.lecon__suite .bouton--principal { flex: 1 1 12rem; }
+
+.lecon__mode { margin: 2.5rem 0 0; text-align: right; }
+.lecon__mode .bouton { font-size: 0.9rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ecran--courant { animation: none; }
+}

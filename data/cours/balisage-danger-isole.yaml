@@ -1,0 +1,41 @@
+notion: balisage-danger-isole
+duree: 2
+accroche: >-
+  Un rocher isolé, entouré d’eau profonde. Une seule bouée est posée dessus, noire à
+  bande rouge, avec deux boules sur la tête.
+etapes:
+  - titre: Posée sur le danger lui-même
+    texte: >-
+      La marque de danger isolé est mouillée sur le danger, ou tout contre. Le danger est
+      de faible étendue et les eaux sont saines tout autour : tu peux passer de n’importe
+      quel côté, en gardant tes distances.
+    visuel: balisage/danger-isole.svg
+    alt: "Une bouée à corps noir traversé d’une large bande rouge, surmontée de deux sphères noires superposées."
+  - titre: La reconnaître
+    texte: >-
+      Deux sphères, deux éclats : le voyant et le feu disent le même nombre.
+    liste:
+      - "Corps : noir, avec une ou plusieurs larges bandes rouges horizontales"
+      - "Voyant : deux sphères noires superposées"
+      - "Feu : blanc, à deux éclats groupés"
+  - titre: Ne pas la confondre
+    texte: >-
+      Une cardinale porte des cônes, jamais des sphères. Une marque d’eaux saines porte
+      une sphère rouge, et une seule. Deux sphères noires, c’est un danger isolé, et
+      c’est le seul cas.
+piege: >-
+  « Eaux saines tout autour » ne veut pas dire « passe dessus ». La marque est sur le
+  danger : tu la contournes, du côté que tu veux, mais à bonne distance.
+retenir:
+  - "Noir à bande rouge, deux sphères noires : la marque est sur le danger."
+  - Eaux saines tout autour, passe du côté que tu veux, à distance.
+  - "De nuit : feu blanc à deux éclats, comme les deux sphères."
+sources:
+  - texte: Balisage AISM, région A, marque de danger isolé
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -2,13 +2,18 @@
 import Base from '../layouts/Base.astro';
 import DateExamen from '../components/DateExamen.tsx';
 import Reprise from '../components/Reprise.tsx';
+import ReprendreCours from '../components/ReprendreCours.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
+import { leconsDuParcours, CHAPITRES } from '../lib/parcours';
+import { compteLeconsEcrites } from '../lib/lecons';
 
 const themes = await themesAvecComptes();
 const questions = await questionsPubliees();
 const total = questions.length;
 const couverts = themes.filter((t) => t.publiees > 0).length;
+const lecons = leconsDuParcours().map((l) => ({ code: l.notion.code, nom: l.notion.nom }));
+const cours = await compteLeconsEcrites();
 ---
 
 <Base
@@ -34,6 +39,11 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
           </a>
         </div>
 
+        <p class="ouverture__debut">
+          Tu pars de zéro ? <a href="/cours" data-mesure="accueil-cours-lien">Commence par le cours</a>,
+          leçon par leçon.
+        </p>
+
         <Reprise client:only="react" ids={questions.map((q) => q.id)} />
       </div>
 
@@ -49,6 +59,21 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
         <DateExamen client:only="react" />
       </aside>
     </div>
+  </section>
+
+  <section class="page page--etroite cours">
+    <h2>Apprendre avant de répondre</h2>
+    <p>
+      Les examens blancs disent où tu en es. Le cours dit ce qu’il faut savoir, dans l’ordre
+      où on l’apprend : {CHAPITRES[0]?.titre.toLowerCase()}, puis se croiser sans se toucher,
+      puis les feux, les signaux, le bateau, la VHF. {cours.total} leçons de trois minutes,
+      chacune fermée par des questions de la banque, avec la source sous chaque réponse.
+    </p>
+    <p class="discret">
+      {cours.ecrites} leçons rédigées à ce jour, les autres tiennent en un résumé. La
+      progression reste dans ton navigateur.
+    </p>
+    <ReprendreCours client:load lecons={lecons} />
   </section>
 
   <section class="page page--etroite methode">
@@ -128,6 +153,8 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
     margin-top: 2rem;
   }
   .ouverture .bouton--discret { color: var(--bande-texte); }
+  .ouverture__debut { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; }
+  .ouverture__debut a { color: var(--bande-texte); }
   .ouverture :global(.reprise) {
     border-top-color: color-mix(in srgb, var(--bande-texte) 25%, transparent);
     color: var(--bande-doux);
@@ -152,6 +179,9 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
   .compteur .display { font-size: 3.4rem; line-height: 1; }
   .compteur span { font-weight: 600; }
   .ouverture__cote hr { margin: 1.25rem 0; }
+
+  .cours { padding-block: 3.5rem 0; }
+  .cours h2 { margin-bottom: 1rem; }
 
   .methode { padding-block: 3.5rem 2rem; }
   .methode h2 { margin-bottom: 1rem; }

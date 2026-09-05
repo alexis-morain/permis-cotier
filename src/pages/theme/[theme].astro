@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { questionsDuTheme } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
 import { notionsDuTheme } from '../../lib/notions';
+import { CHAPITRES } from '../../lib/parcours';
 
 export async function getStaticPaths() {
   return THEMES.map((theme) => ({ params: { theme: theme.code }, props: { theme } }));
@@ -23,6 +24,7 @@ const etapes = notions.map((notion) => ({
 // Une question sans notion n'est pas perdue de vue : elle est ramassée en fin
 // de page tant que la banque n'est pas entièrement reclassée.
 const orphelines = questions.filter((q) => !q.notion);
+const chapitre = CHAPITRES.find((c) => c.themes.includes(theme.code));
 ---
 
 <Base
@@ -67,6 +69,14 @@ const orphelines = questions.filter((q) => !q.notion);
       {notions.length} notion{notions.length > 1 ? 's' : ''} à réviser, dans l’ordre.
       {questions.length > 0 && ' Les questions de la banque sont rangées dessous.'}
     </p>
+
+    {chapitre && (
+      <p class="discret">
+        Pour apprendre plutôt que réviser, ce thème est le chapitre
+        « <a href={`/cours#${chapitre.code}`} data-mesure="theme-cours" data-mesure-theme={theme.code}>{chapitre.titre}</a> » du cours,
+        une leçon par notion.
+      </p>
+    )}
 
     <ol class="notions">
       {etapes.map(({ notion, questions: qs }) => (

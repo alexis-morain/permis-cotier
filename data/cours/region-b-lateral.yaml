@@ -1,0 +1,41 @@
+notion: region-b-lateral
+duree: 2
+accroche: >-
+  Tu loues un bateau aux Antilles. À l’entrée du port, la bouée verte est à ta gauche.
+  Erreur de balisage ? Non : tu as changé de région.
+etapes:
+  - titre: Deux régions dans le monde
+    texte: >-
+      Le système de balisage AISM partage le monde en deux régions. La France, comme le
+      reste de l’Europe, est en région A. La région B couvre les Amériques, le Japon, la
+      Corée du Sud et les Philippines.
+  - titre: Les couleurs latérales s’inversent
+    texte: >-
+      En région B, la marque bâbord est verte et la marque tribord est rouge. Le sens
+      conventionnel reste le même, du large vers le port : en rentrant, tu laisses le
+      vert à gauche et le rouge à droite.
+    visuel: balisage/laterale-babord-region-b.svg
+    alt: "Une bouée à corps vert, de forme cylindrique, surmontée d’un voyant en cylindre vert."
+  - titre: Les formes ne bougent pas
+    texte: >-
+      Seule la couleur change. La marque bâbord reste cylindrique avec un voyant
+      cylindrique, la marque tribord reste conique avec un voyant conique. Si tu doutes
+      de la couleur, la forme te remet dans le bon sens.
+    visuel: balisage/laterale-tribord-region-b.svg
+    alt: "Une bouée à corps rouge, de forme conique, surmontée d’un voyant en cône rouge pointe en haut."
+piege: >-
+  L’épreuve n’en demande qu’une initiation, mais la question tombe. Elle se joue sur un
+  seul mot, la couleur. Tout le reste, formes, voyants, sens conventionnel, est identique.
+retenir:
+  - "Région B : Amériques, Japon, Corée du Sud, Philippines."
+  - "Bâbord vert, tribord rouge : les couleurs latérales sont inversées."
+  - Les formes et le sens conventionnel ne changent pas.
+sources:
+  - texte: Balisage AISM, région B, marques latérales
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

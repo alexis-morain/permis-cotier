@@ -114,9 +114,17 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
       </section>
     )}
 
-    <p class="bloc">
+    <p class="bloc actions">
       <a
         class="bouton bouton--principal"
+        href={`/cours/${notion.code}`}
+        data-mesure="notion-lecon"
+        data-mesure-notion={notion.code}
+      >
+        Suivre la leçon
+      </a>
+      <a
+        class="bouton"
         href={`/entrainement/${notion.theme}`}
         data-mesure="notion-entrainement"
         data-mesure-theme={notion.theme}
@@ -183,6 +191,7 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
   .ancrage { margin: 0; }
 
   .bloc { margin-top: 2.5rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; max-width: none; }
 
   .illustration { margin: 2rem 0 0; }
   .illustration img {

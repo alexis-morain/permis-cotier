@@ -1,0 +1,126 @@
+---
+import Base from '../../layouts/Base.astro';
+import Lecon from '../../components/Lecon.tsx';
+import { leconsDuParcours, leconsDuChapitre, type Lecon as LeconDuParcours } from '../../lib/parcours';
+import { leconDeLaNotion } from '../../lib/lecons';
+import { themeParCode } from '../../lib/themes';
+import { SITE, ressource } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  return leconsDuParcours().map((lecon) => ({ params: { code: lecon.notion.code }, props: { lecon } }));
+}
+
+const { lecon } = Astro.props as { lecon: LeconDuParcours };
+const { notion, chapitre } = lecon;
+const affichable = await leconDeLaNotion(notion);
+const theme = themeParCode(notion.theme);
+const nomTheme = theme?.nom ?? notion.theme;
+const chemin = `/cours/${notion.code}`;
+const base = Astro.site ?? SITE.domaine;
+
+const duChapitre = leconsDuChapitre(chapitre.code);
+const suivante = leconsDuParcours()[lecon.rang];
+
+// Une leçon courte n'est que le résumé de sa fiche : elle se joue, elle ne
+// s'indexe pas, la fiche de notion est déjà là pour ça.
+const indexable = !affichable.courte;
+const description = affichable.accroche ?? notion.resume;
+---
+
+<Base
+  titre={`${notion.nom} : la leçon`}
+  description={description}
+  indexable={indexable}
+  miettes={[
+    { nom: 'Cours', chemin: '/cours' },
+    { nom: chapitre.titre, chemin: `/cours#${chapitre.code}` },
+    { nom: notion.nom, chemin },
+  ]}
+  jsonLd={
+    indexable
+      ? [
+          ressource(
+            {
+              nom: `${notion.nom} : la leçon`,
+              resume: description,
+              chemin,
+              theme: nomTheme,
+              nombreQuestions: affichable.questions.length,
+              type: affichable.questions.length > 0 ? ['Leçon', 'Questions d’entraînement'] : 'Leçon',
+            },
+            base,
+          ),
+        ]
+      : []
+  }
+>
+  {/* Avant l'îlot : la classe qui autorise le pas à pas. Posée ici et non
+      dans le layout, elle ne dit rien aux autres pages. */}
+  <script is:inline>document.documentElement.classList.add('js');</script>
+
+  <article class="page page--etroite" style="padding-block:2.5rem 0">
+    <p class="chapitre"><a href="/cours">Cours</a></p>
+    <h1>{notion.nom}</h1>
+
+    <Lecon
+      client:load
+      lecon={affichable}
+      chapitre={{ code: chapitre.code, titre: chapitre.titre }}
+      rang={lecon.rangDansChapitre}
+      total={duChapitre.length}
+      suivante={suivante ? { code: suivante.notion.code, nom: suivante.notion.nom } : undefined}
+      theme={{ code: notion.theme, nom: nomTheme }}
+    />
+  </article>
+
+  <aside class="page page--etroite origine">
+    {affichable.courte ? (
+      <Fragment>
+        <h2>Cette leçon n’est pas encore rédigée</h2>
+        <p>
+          Elle reprend le résumé de la notion, celui de sa <a href={`/notion/${notion.code}`}>fiche</a>,
+          et ses questions. La leçon détaillée viendra quand le texte qui la fonde aura été
+          dépouillé.
+        </p>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <h2>D’où vient cette leçon</h2>
+        <ul>
+          {affichable.sources.map((s) => (
+            <li>{s.url ? <a href={s.url} rel="noreferrer noopener" data-mesure="source-ouverte">{s.texte}</a> : s.texte}</li>
+          ))}
+        </ul>
+        <p class="discret">
+          {affichable.reluPar ? (
+            <Fragment>Leçon écrite depuis les textes cités et relue par {affichable.reluPar}.</Fragment>
+          ) : (
+            <Fragment>
+              Leçon écrite depuis les textes cités, pas encore relue par une personne : une erreur
+              est possible. <a href="/signaler">Signale-la</a>, la correction arrive dans la semaine.
+            </Fragment>
+          )}
+        </p>
+      </Fragment>
+    )}
+    <p class="discret origine__liens">
+      Programme de l’épreuve, arrêté du 28 septembre 2007, art. 1er § 1.2 : « {notion.ancrage} ».
+      Thème <a href={`/theme/${notion.theme}`}>{nomTheme.toLowerCase()}</a>,
+      fiche <a href={`/notion/${notion.code}`}>{notion.nom.toLowerCase()}</a>.
+    </p>
+  </aside>
+</Base>
+
+<style>
+  h1 { margin-bottom: 1.25rem; }
+
+  .origine {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--filet);
+  }
+  .origine h2 { font-size: 1.05rem; }
+  .origine ul { padding-left: 1.1rem; margin: 0 0 0.8rem; }
+  .origine li { margin-bottom: 0.3rem; }
+  .origine__liens { margin-top: 1rem; }
+</style>

@@ -1,0 +1,50 @@
+notion: barre-routes-croisees
+duree: 4
+accroche: >-
+  Un bateau à moteur arrive par ta droite, cap sur ta route. Vous allez vous croiser.
+  L’un de vous deux doit s’écarter, et c’est écrit.
+etapes:
+  - titre: Celui qui voit l’autre sur tribord s’écarte
+    texte: >-
+      Entre deux navires à propulsion mécanique dont les routes se croisent, celui qui
+      voit l’autre sur tribord s’écarte de sa route. L’autre, qui te voit sur son bâbord,
+      est privilégié et maintient.
+
+      Ici, il arrive par ta droite : tu t’écartes.
+    visuel: situations/routes-croisees-tribord.svg
+    alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l’image. Un navire à moteur vient de la droite, cap vers la gauche, et coupera ta route devant toi."
+  - titre: Pas par l’avant
+    texte: >-
+      Celui qui s’écarte évite, si les circonstances le permettent, de croiser la route de
+      l’autre sur l’avant. Il passe derrière : il vient sur tribord, ou ralentit.
+
+      Sur cette image, l’autre arrive par ta gauche. C’est lui qui doit s’écarter, tu
+      maintiens ton cap et ta vitesse.
+    visuel: situations/routes-croisees-babord.svg
+    alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l’image. Un navire à moteur vient de la gauche, cap vers la droite, et coupera ta route devant toi."
+  - titre: Le feu qui le dit
+    texte: >-
+      De nuit, la couleur du feu de côté que tu vois te donne la réponse. Tu vois son feu
+      rouge, celui de bâbord : il est sur ta droite et te voit sur sa gauche, tu
+      t’écartes. Tu vois son feu vert : tu es privilégié. Le rouge arrête, le vert laisse
+      passer, comme un feu de circulation.
+piege: >-
+  La règle vaut entre deux navires à moteur. Un voilier qui arrive par ta gauche n’est pas
+  non privilégié pour autant : à moteur, tu t’écartes du voilier, quelle que soit sa
+  position.
+retenir:
+  - "Routes qui se croisent, deux navires à moteur : celui qui voit l’autre sur tribord s’écarte."
+  - On évite de croiser sur l’avant, on passe derrière.
+  - "De nuit : je vois son rouge, je m’écarte. Je vois son vert, je maintiens."
+sources:
+  - texte: RIPAM, règle 15
+    ref: decret-77-733
+    fichier: regle-15
+  - texte: RIPAM, règle 21
+    ref: decret-77-733
+    fichier: regle-21
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

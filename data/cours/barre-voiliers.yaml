@@ -1,0 +1,51 @@
+notion: barre-voiliers
+duree: 4
+accroche: >-
+  Deux voiliers convergent, sans moteur, sans corne. Le vent décide qui s’écarte.
+etapes:
+  - titre: D’où vient le vent
+    texte: >-
+      Un voilier reçoit le vent d’un bord. On dit qu’il est tribord amures quand le vent
+      vient de tribord, bâbord amures quand il vient de bâbord. Le RIPAM le dit
+      autrement : le côté d’où vient le vent est l’opposé du bord où est bordée la
+      grand-voile.
+
+      Regarde donc la grand-voile. Bôme à bâbord, le vent vient de tribord, le voilier est
+      tribord amures.
+  - titre: "Bords différents : bâbord amures s’écarte"
+    texte: >-
+      Quand les deux voiliers reçoivent le vent d’un bord différent, celui qui reçoit le
+      vent de bâbord s’écarte de la route de l’autre. Le voilier tribord amures est
+      privilégié.
+    visuel: situations/voiliers-amures-contraires.svg
+    alt: "Vue de dessus. Deux voiliers convergent, vent venant de la droite de l’image. Le voilier du bas porte sa voile à bâbord, celui qui vient de la droite la porte à tribord."
+  - titre: "Même bord : celui au vent s’écarte"
+    texte: >-
+      Quand les deux reçoivent le vent du même bord, celui qui est au vent s’écarte de la
+      route de celui qui est sous le vent. Le voilier sous le vent est privilégié : il a
+      moins de marge pour manœuvrer.
+    visuel: situations/voiliers-memes-amures.svg
+    alt: "Vue de dessus. Deux voiliers font route au même cap, vent venant de la droite de l’image, voiles portées du même côté. L’un est plus proche du vent, l’autre plus loin sous le vent."
+  - titre: Dans le doute, on s’écarte
+    texte: >-
+      Un voilier bâbord amures qui voit un autre voilier au vent sans pouvoir dire de quel
+      bord il reçoit le vent doit s’écarter. C’est la même logique qu’ailleurs dans le
+      RIPAM : le doute ne donne jamais la priorité.
+piege: >-
+  Ne raisonne pas avec « il est à ma droite ». Entre voiliers, ce n’est pas la règle des
+  routes qui se croisent qui joue, c’est le vent : d’abord les amures, puis la position au
+  vent.
+retenir:
+  - Le vent vient du côté opposé à la grand-voile.
+  - "Amures différentes : bâbord amures s’écarte."
+  - "Mêmes amures : celui qui est au vent s’écarte."
+  - "Dans le doute, bâbord amures s’écarte."
+sources:
+  - texte: RIPAM, règle 12
+    ref: decret-77-733
+    fichier: regle-12
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

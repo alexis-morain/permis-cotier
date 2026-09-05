@@ -33,6 +33,20 @@ export interface Etat {
    * il est facultatif, un état écrit avant lui se relit sans rien perdre.
    */
   enCours: SessionSauvegardee | null;
+  /**
+   * Les leçons du cours qu'on a suivies jusqu'au bout, avec le score de leur
+   * vérification. Même statut que `enCours` : champ facultatif, ajouté sans
+   * changer la version, un état écrit avant lui se relit sans rien perdre.
+   */
+  lecons: Record<string, LeconSuivie>;
+}
+
+export interface LeconSuivie {
+  faiteLe: string;
+  /** Questions justes à la vérification de fin de leçon. */
+  bonnes: number;
+  /** Questions posées ; zéro quand la notion n'a pas encore de question. */
+  total: number;
 }
 
 /** Le sous-ensemble de localStorage qu'on utilise, pour pouvoir le remplacer en test. */
@@ -43,7 +57,25 @@ export interface Stockage {
 }
 
 export function etatInitial(): Etat {
-  return { version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null };
+  return { version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null, lecons: {} };
+}
+
+/** Une leçon suivie jusqu'au bout. La refaire remplace la fois d'avant. */
+export function terminerLecon(
+  etat: Etat,
+  code: string,
+  score: { bonnes: number; total: number },
+  date: string,
+): Etat {
+  return {
+    ...etat,
+    lecons: { ...etat.lecons, [code]: { faiteLe: date, bonnes: score.bonnes, total: score.total } },
+  };
+}
+
+/** Les codes des leçons faites, sous la forme que le parcours attend. */
+export function leconsFaites(etat: Etat): Record<string, boolean> {
+  return Object.fromEntries(Object.keys(etat.lecons).map((code) => [code, true]));
 }
 
 export function enregistrerEnCours(etat: Etat, session: SessionSauvegardee): Etat {
@@ -123,6 +155,7 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
       examens: Array.isArray(lu.examens) ? lu.examens : [],
       dateExamen: lu.dateExamen ?? null,
       enCours: lu.enCours ?? null,
+      lecons: lu.lecons && typeof lu.lecons === 'object' ? lu.lecons : {},
     };
   } catch {
     return etatInitial();

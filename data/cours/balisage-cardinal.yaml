@@ -1,0 +1,66 @@
+notion: balisage-cardinal
+duree: 5
+accroche: >-
+  Une bouée noire et jaune, seule au milieu de l’eau, avec deux cônes sur la tête. Elle
+  ne borde pas un chenal : elle te dit de quel côté d’un danger passer.
+etapes:
+  - titre: De quel côté passer
+    texte: >-
+      Une marque cardinale est posée près d’un danger et prend le nom du côté où l’eau est
+      saine. Une marque Nord se contourne par le nord, une marque Est par l’est, et ainsi
+      de suite. Tu passes du côté qu’elle annonce, jamais entre elle et le danger.
+
+      Elle est identique en région A et en région B.
+  - titre: Nord
+    texte: >-
+      Corps noir dessus, jaune dessous. Voyant : deux cônes noirs pointes en haut.
+
+      Les cônes pointent vers le noir, et les deux pointent vers le haut, comme le nord
+      sur une carte.
+    visuel: balisage/cardinale-nord.svg
+    alt: "Une bouée dont le corps est noir en haut et jaune en bas, surmontée de deux cônes noirs pointes en haut."
+  - titre: Sud
+    texte: >-
+      Corps jaune dessus, noir dessous. Voyant : deux cônes noirs pointes en bas.
+
+      Là encore, les pointes visent le noir.
+    visuel: balisage/cardinale-sud.svg
+    alt: "Une bouée dont le corps est jaune en haut et noir en bas, surmontée de deux cônes noirs pointes en bas."
+  - titre: Est
+    texte: >-
+      Corps noir, bande jaune, noir. Voyant : deux cônes noirs base contre base, comme un
+      losange.
+
+      Le noir est là où les pointes visent, en haut et en bas.
+    visuel: balisage/cardinale-est.svg
+    alt: "Une bouée à corps noir, bande jaune, noir, surmontée de deux cônes noirs base contre base."
+  - titre: Ouest
+    texte: >-
+      Corps jaune, bande noire, jaune. Voyant : deux cônes noirs pointe contre pointe,
+      comme un sablier.
+
+      Le noir est au milieu, là où les pointes se rejoignent.
+    visuel: balisage/cardinale-ouest.svg
+    alt: "Une bouée à corps jaune, bande noire, jaune, surmontée de deux cônes noirs pointe contre pointe."
+  - titre: Un seul truc pour tout lire
+    texte: >-
+      Les pointes des cônes montrent où est le noir sur le corps : en haut au Nord, en bas
+      au Sud, aux deux bouts à l’Est, au milieu à l’Ouest. Retiens le voyant, il te donne
+      le corps, et le corps te donne le nom.
+piege: >-
+  Le piège classique : passer entre la marque et la côte parce qu’elle a l’air proche du
+  bord. La marque dit où est l’eau saine, pas où est la terre. Une cardinale Sud près
+  d’une pointe se contourne par le sud, même si ça fait un détour.
+retenir:
+  - "Une cardinale se contourne du côté qu’elle nomme : Nord par le nord, Sud par le sud."
+  - "Voyant : deux cônes noirs. Pointes en haut au Nord, en bas au Sud, base contre base à l’Est, pointe contre pointe à l’Ouest."
+  - Les pointes montrent où est le noir sur le corps.
+sources:
+  - texte: Balisage AISM, région A, marques cardinales
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

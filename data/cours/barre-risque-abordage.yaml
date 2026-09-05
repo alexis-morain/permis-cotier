@@ -1,0 +1,44 @@
+notion: barre-risque-abordage
+duree: 3
+accroche: >-
+  Un chalutier se rapproche sur ton avant droit. Tu le vois depuis dix minutes, toujours
+  au même endroit dans ton champ de vision. C’est exactement le signe qu’il ne faut pas
+  ignorer.
+etapes:
+  - titre: Le relèvement qui ne change pas
+    texte: >-
+      Le relèvement, c’est la direction dans laquelle tu vois l’autre navire, lue au
+      compas. S’il ne change pas de manière appréciable pendant que la distance diminue,
+      il y a risque d’abordage : vous allez au même point au même moment. C’est le critère
+      de la règle 7.
+    visuel: situations/relevement-constant.svg
+    alt: "Vue de dessus. Trois instants successifs d’une même rencontre : deux navires se rapprochent et la ligne qui les joint garde exactement la même direction d’un instant à l’autre."
+  - titre: Dans le doute, le risque existe
+    texte: >-
+      La règle est nette : s’il y a doute quant au risque d’abordage, on doit considérer
+      que ce risque existe. Tu n’attends pas d’être sûr pour agir.
+
+      Tous les moyens disponibles servent à l’apprécier : l’œil, le compas, et le radar
+      s’il y en a un, sans tirer de conclusions de renseignements insuffisants.
+  - titre: Le relèvement change, et pourtant
+    texte: >-
+      Un relèvement qui varie n’est pas une garantie. Le risque peut exister quand même
+      face à un très grand navire, à un train de remorque, ou à un navire déjà tout
+      près : leur longueur fait bouger le relèvement sans écarter le danger.
+piege: >-
+  Un repère pris sur ton bateau, un chandelier, un hauban, fait le même travail que le
+  compas : si l’autre reste derrière le même repère et grossit, il y a risque. Ce qu’il
+  faut lire, c’est la direction, pas la distance.
+retenir:
+  - "Relèvement constant et distance qui diminue : risque d’abordage."
+  - Dans le doute, le risque existe.
+  - "Très grand navire, remorque ou navire très proche : le risque peut exister même si le relèvement bouge."
+sources:
+  - texte: RIPAM, règle 7
+    ref: decret-77-733
+    fichier: regle-07
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

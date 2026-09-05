@@ -1,0 +1,69 @@
+notion: balisage-feux
+duree: 5
+accroche: >-
+  La nuit tombe. Les bouées ne sont plus que des points de lumière. Leur couleur et leur
+  rythme te disent tout ce que la forme te disait le jour.
+etapes:
+  - titre: La couleur suit la marque
+    texte: >-
+      Une marque latérale bâbord porte un feu rouge, une marque tribord un feu vert, une
+      marque spéciale un feu jaune. Le rythme de ces trois-là est quelconque : c’est la
+      couleur qui les identifie.
+
+      Les cardinales, le danger isolé et les eaux saines portent un feu blanc. Pour
+      elles, c’est le rythme qui parle.
+    visuel: rythmes/laterale-babord.svg
+    alt: "Un feu rouge sur fond de nuit, qui s’allume et s’éteint, avec sous lui le tracé de son rythme dans le temps."
+  - titre: "Les cardinales : compter les scintillements"
+    texte: >-
+      Le feu d’une cardinale est blanc, scintillant ou scintillant rapide. Le nombre de
+      scintillements dit le nom. Est : 3. Sud : 6, suivis d’un éclat long. Ouest : 9.
+      Nord : scintillement continu, sans pause.
+
+      Pense à un cadran : 3 h à l’est, 6 h au sud, 9 h à l’ouest, et le nord en haut,
+      qui ne s’arrête jamais.
+    visuel: rythmes/cardinale-est.svg
+    alt: "Un feu blanc sur fond de nuit, qui lance trois scintillements rapprochés puis s’éteint, avec le tracé de ce rythme."
+  - titre: Le Sud et son éclat long
+    texte: >-
+      Six et neuf se comptent mal dans la houle. L’éclat long qui suit les six
+      scintillements du Sud lève le doute : un éclat long après la série, c’est le Sud.
+    visuel: rythmes/cardinale-sud.svg
+    alt: "Un feu blanc qui lance six scintillements puis un éclat plus long, avec le tracé de ce rythme."
+  - titre: Danger isolé et eaux saines
+    texte: >-
+      Le danger isolé a un feu blanc à deux éclats groupés, comme ses deux sphères.
+
+      Les eaux saines ont un feu blanc lent : isophase, à occultations, un éclat long
+      toutes les dix secondes, ou la lettre A du morse, un court puis un long.
+    visuel: rythmes/danger-isole.svg
+    alt: "Un feu blanc qui lance deux éclats groupés puis marque une pause, avec le tracé de ce rythme."
+  - titre: Les mots des rythmes
+    texte: >-
+      Un feu se décrit par son caractère, c’est-à-dire la façon dont la lumière et
+      l’obscurité se partagent le temps.
+    visuel: rythmes/caractere-isophase.svg
+    alt: "Un feu blanc allumé et éteint pendant des durées égales, avec le tracé de ce rythme."
+    liste:
+      - "Fixe : allumé en permanence"
+      - "À occultations : la lumière domine, coupée par de courtes extinctions"
+      - "Isophase : autant de lumière que d’obscurité"
+      - "À éclats : l’obscurité domine, coupée par de courts éclats"
+      - "Scintillant, scintillant rapide : des éclats très rapprochés"
+piege: >-
+  De nuit, la couleur du feu ne dit pas tout. Un feu blanc peut être une cardinale, un
+  danger isolé ou des eaux saines : il faut compter. Et un feu rouge n’est pas toujours
+  une bouée : le feu rouge d’un navire est son feu de côté bâbord.
+retenir:
+  - "Rouge, vert, jaune : la couleur de la marque, rythme quelconque."
+  - "Blanc : compter. 3 Est, 6 plus un éclat long Sud, 9 Ouest, continu Nord."
+  - "Deux éclats groupés : danger isolé. Feu lent, isophase, occultations, éclat long ou morse A : eaux saines."
+sources:
+  - texte: Balisage AISM, région A, balisage de nuit
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'
