@@ -1,0 +1,240 @@
+<title>Planche feux, rencontres et sons</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root {
+    --nuit: #0b1620;
+    --pont: #142330;
+    --craie: #e7edf0;
+    --craie-douce: #90a5b2;
+    --filet: #24394b;
+    --feu: #f2c631;
+    --mer: #7fc3d8;
+    --corne: #d8a44e;
+    --serif: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+    --sans: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color-scheme: dark;
+  }
+  /* Clair : une carte marine sur le papier, pas une crème. */
+  :root[data-theme="light"] {
+    --nuit: #eaf0f3; --pont: #ffffff; --craie: #10202b; --craie-douce: #566c7b;
+    --filet: #c6d6de; --feu: #7d5600; --mer: #1e6c86; --corne: #8a5a12;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --nuit: #eaf0f3; --pont: #ffffff; --craie: #10202b; --craie-douce: #566c7b;
+      --filet: #c6d6de; --feu: #7d5600; --mer: #1e6c86; --corne: #8a5a12;
+      color-scheme: light;
+    }
+  }
+
+  body {
+    background: var(--nuit);
+    color: var(--craie);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+  .tete { border-bottom: 1px solid var(--filet); padding-bottom: 1.75rem; }
+  .tete h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5.5vw, 3.1rem);
+    font-weight: 600; line-height: 1.05; margin: 0 0 0.5rem;
+    text-wrap: balance;
+  }
+  .tete > p { margin: 0; max-width: 62ch; color: var(--craie-douce); }
+  .tete strong { color: var(--craie); font-weight: 500; }
+
+  .barre {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 1rem 2rem; margin-top: 1.75rem;
+  }
+  .comptes { display: flex; flex-wrap: wrap; gap: 1.75rem; font-variant-numeric: tabular-nums; }
+  .comptes div { line-height: 1.2; }
+  .comptes b { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; display: block; }
+  .comptes span { font-size: 0.78rem; color: var(--craie-douce); }
+
+  .bascule {
+    font: inherit; font-weight: 500; color: var(--craie);
+    background: transparent; border: 1px solid var(--filet); border-radius: 999px;
+    padding: 0.55rem 1.1rem 0.55rem 0.75rem; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    transition: border-color 140ms ease;
+  }
+  .bascule:hover { border-color: var(--craie-douce); }
+  .bascule:focus-visible { outline: 2px solid var(--feu); outline-offset: 2px; }
+  .temoin {
+    width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--feu);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--feu) 22%, transparent);
+    animation: pouls 1.4s ease-in-out infinite;
+  }
+  @keyframes pouls { 0%, 100% { opacity: 1 } 50% { opacity: 0.28 } }
+  .bascule[aria-pressed="true"] .temoin { animation: none; opacity: 0.35; box-shadow: none; }
+  @media (prefers-reduced-motion: reduce) { .temoin { animation: none } }
+
+  .repere {
+    margin-top: 1.5rem; padding: 1rem 1.1rem;
+    background: var(--pont); border-left: 2px solid var(--feu);
+  }
+  .repere p { margin: 0 0 0.5rem; font-weight: 500; }
+  .repere ol { margin: 0; padding-left: 1.15rem; color: var(--craie-douce); }
+  .repere li + li { margin-top: 0.25rem; }
+
+  .section { margin-top: 3.5rem; }
+  .section__tete {
+    display: flex; align-items: baseline; gap: 1rem;
+    border-bottom: 1px solid var(--filet); padding-bottom: 0.6rem; margin-bottom: 1.5rem;
+  }
+  .section__tete h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; margin: 0; }
+  .section__tete span {
+    margin-left: auto; color: var(--craie-douce); font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .section > p { margin: 0 0 1.75rem; max-width: 68ch; color: var(--craie-douce); }
+
+  .grille { display: grid; gap: 2.25rem 1.5rem; }
+  .grille--feux { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+  .grille--rencontres { grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); }
+  .grille--sons { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+
+  .plaque { margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+  .plaque__vue {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--filet); background: var(--pont);
+  }
+  .plaque figcaption { display: flex; flex-direction: column; gap: 0.35rem; }
+  .plaque p { margin: 0; }
+  .plaque__cle { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .abrev {
+    font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .abrev--feux { color: var(--feu); }
+  .abrev--rencontres { color: var(--mer); }
+  /* Le motif sonore est repris en barres, à la même échelle relative que la
+     frise du dessin : un prolongé fait cinq fois un bref. */
+  .abrev--sons { display: inline-flex; align-items: center; gap: 3px; }
+  .t { display: inline-block; height: 11px; background: var(--corne); }
+  .t--b { width: 5px; }
+  .t--p { width: 25px; }
+  .t--c { width: 2px; height: 14px; }
+  .t--v {
+    width: 25px;
+    background: repeating-linear-gradient(90deg,
+      var(--corne) 0 2px, transparent 2px 4px);
+  }
+  .plaque__cle code { font-family: var(--sans); font-size: 0.78rem; color: var(--craie-douce); }
+  .plaque__regle { font-size: 0.86rem; line-height: 1.45; }
+  .plaque__alt { font-size: 0.8rem; line-height: 1.5; color: var(--craie-douce); }
+  .etiq {
+    display: block; font-size: 0.65rem; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--craie-douce); margin-bottom: 0.15rem;
+  }
+  .plaque__q { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.15rem; }
+  .q {
+    font-size: 0.72rem; padding: 0.12rem 0.45rem;
+    border: 1px solid var(--filet); color: var(--craie-douce);
+    text-decoration: none; font-variant-numeric: tabular-nums;
+  }
+  .q:hover, .q:focus-visible { border-color: var(--feu); color: var(--craie); }
+  .q--vide { border-style: dashed; }
+
+  .pied {
+    margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--filet);
+    color: var(--craie-douce); font-size: 0.85rem;
+  }
+  .pied p { margin: 0 0 0.4rem; max-width: 70ch; }
+</style>
+
+<div class="page">
+  <header class="tete">
+    <h1>Planche feux, rencontres et sons</h1>
+    <p>Les <strong>@TOTAL@ visuels animés</strong> de la banque, dessinés par du code depuis
+    la fiche AISM et le RIPAM. Ils sont ici à relire côte à côte, dans leur état animé
+    et dans l'état figé que voit un lecteur qui a demandé moins de mouvement.</p>
+
+    <div class="barre">
+      <div class="comptes">
+        <div><b>@N_FEUX@</b><span>rythmes de feux</span></div>
+        <div><b>@N_RENCONTRES@</b><span>rencontres</span></div>
+        <div><b>@N_SONS@</b><span>signaux sonores</span></div>
+        <div><b>@N_QUESTIONS@</b><span>questions les portent</span></div>
+      </div>
+      <button class="bascule" type="button" id="figer" aria-pressed="false">
+        <span class="temoin" aria-hidden="true"></span>
+        <span id="figer-texte">Figer les animations</span>
+      </button>
+    </div>
+
+    <div class="repere">
+      <p>Ce qu'il faut vérifier sur chaque plaque</p>
+      <ol>
+        <li>Le motif est-il celui de la règle citée, éclat par éclat, son par son, coque par coque.</li>
+        <li>Le dessin figé dit-il encore la même chose, une fois le mouvement coupé.</li>
+        <li>Le texte alternatif décrit-il ce qu'on voit sans jamais énoncer la règle.</li>
+      </ol>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section__tete"><h2>Rythmes de feux</h2><span>@N_FEUX@ plaques</span></div>
+    <p>La lampe bat, la frise sous elle trace le motif en entier. Le nombre d'éclats du groupe
+    est exact ; la pause entre deux groupes est abrégée, et c'est pourquoi aucune frise ne porte
+    de graduation en secondes. Une question sur la période se pose depuis la fiche, jamais depuis
+    ces images.</p>
+    <div class="grille grille--feux">
+@FEUX@
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__tete"><h2>Situations de rencontre</h2><span>@N_RENCONTRES@ plaques</span></div>
+    <p>Vue de dessus, convention tenue partout : ton bateau est en bas, il fait route vers le haut,
+    sa coque porte la couleur d'accent du site. Les sept premières montrent l'approche et
+    s'arrêtent avant la manœuvre, sinon elles donneraient la réponse. Les deux dernières sont des
+    schémas d'explication, pas des énoncés.</p>
+    <div class="grille grille--rencontres">
+@RENCONTRES@
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__tete"><h2>Signaux sonores</h2><span>@N_SONS@ plaques</span></div>
+    <p>L'instrument sonne pendant chaque son. Ici les durées sont sourcées et dessinées à
+    l'échelle : la règle 32 donne le son bref à environ une seconde et le son prolongé à quatre
+    ou six, et <strong>la même échelle sert aux seize dessins</strong>, si bien qu'une barre de
+    même largeur dit la même durée d'une planche à l'autre. L'étiquette reprend le motif en
+    gros grain, une barre longue pour un prolongé, courte pour un bref, hachurée pour une volée
+    de cloche, fine pour un coup isolé. Ce que les dessins ne disent pas, c'est l'intervalle de
+    répétition.</p>
+    <div class="grille grille--sons">
+@SONS@
+    </div>
+  </section>
+
+  <footer class="pied">
+    <p>Page produite par <code>scripts/planche.py</code>, à partir de
+    <code>scripts/rythmes.py</code>, <code>scripts/situations.py</code> et
+    <code>scripts/sons.py</code>. La CI refait les visuels et échoue si un fichier livré a
+    dérivé de sa description : un SVG retouché à la main ne passe pas.</p>
+    <p>Si ton système demande déjà moins de mouvement, les plaques arrivent figées et le
+    bouton ne change rien : c'est le comportement voulu.</p>
+  </footer>
+</div>
+
+<script>
+  const bouton = document.getElementById('figer');
+  const texte = document.getElementById('figer-texte');
+  const vues = document.querySelectorAll('.plaque__vue');
+  let fige = false;
+  bouton.addEventListener('click', () => {
+    fige = !fige;
+    bouton.setAttribute('aria-pressed', String(fige));
+    texte.textContent = fige ? 'Relancer les animations' : 'Figer les animations';
+    for (const vue of vues) vue.src = vue.dataset[fige ? 'fige' : 'anime'];
+  });
+</script>
