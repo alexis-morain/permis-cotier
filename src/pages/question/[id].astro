@@ -75,7 +75,14 @@ const miettes = [
     )}
 
     <p style="margin-top:2.5rem">
-      <a class="bouton" href={`/entrainement/${q.theme}`}>S’entraîner sur {theme.toLowerCase()}</a>
+      <a
+        class="bouton"
+        href={`/entrainement/${q.theme}`}
+        data-umami-event="question-entrainement"
+        data-umami-event-theme={q.theme}
+      >
+        S’entraîner sur {theme.toLowerCase()}
+      </a>
     </p>
     <p><a class="signaler" href={`/signaler?question=${q.id}`}>Signaler une erreur sur cette question</a></p>
   </article>

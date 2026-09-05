@@ -266,3 +266,59 @@ describe('révision des erreurs', () => {
     expect(screen.getByText(/Rien à revoir pour l’instant/)).toBeTruthy();
   });
 });
+
+describe('ce que la série raconte à la mesure', () => {
+  function traceur() {
+    const track = vi.fn();
+    (window as unknown as { umami: { track: typeof track } }).umami = { track };
+    return track;
+  }
+
+  afterEach(() => {
+    delete (window as unknown as { umami?: unknown }).umami;
+  });
+
+  it('annonce le départ de l’examen, pas son affichage', () => {
+    const track = traceur();
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(track).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    expect(track).toHaveBeenCalledWith('examen-commence', { theme: undefined });
+  });
+
+  it('dit à quelle question l’examen a été quitté', () => {
+    const track = traceur();
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+
+    window.dispatchEvent(new Event('pagehide'));
+    expect(track).toHaveBeenCalledWith('examen-abandonne', { rang: 2, total: 3, theme: undefined });
+
+    // Un seul abandon par série, même si la page s’en va deux fois.
+    window.dispatchEvent(new Event('pagehide'));
+    expect(track.mock.calls.filter((c) => c[0] === 'examen-abandonne')).toHaveLength(1);
+  });
+
+  it('ne compte pas comme abandon une série allée au bout', () => {
+    const track = traceur();
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    for (let i = 0; i < trois.length; i += 1) {
+      fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+      fireEvent.click(screen.getByRole('button', { name: /Valider/ }));
+    }
+
+    window.dispatchEvent(new Event('pagehide'));
+    expect(track.mock.calls.map((c) => c[0])).not.toContain('examen-abandonne');
+    expect(track).toHaveBeenCalledWith('examen-termine', {
+      bonnes: 3,
+      erreurs: 0,
+      total: 3,
+      reussi: true,
+      interrompu: false,
+    });
+  });
+});

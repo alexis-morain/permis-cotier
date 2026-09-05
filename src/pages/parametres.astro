@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Parametres from '../components/Parametres.tsx';
+import MesureReglage from '../components/MesureReglage.tsx';
 import { versionBanque, questionsPubliees } from '../lib/banque';
 
 const version = versionBanque();
@@ -23,10 +24,14 @@ const total = (await questionsPubliees()).length;
     <p>
       Aucun compte, aucun mot de passe, aucune adresse. La progression et la date d’examen restent
       dans ce navigateur. La fréquentation est mesurée avec Umami, auto-hébergé et sans cookie :
-      pas d’identifiant, pas de suivi entre les sites.
+      pas d’identifiant, pas de suivi entre les sites. Ce qu’il enregistre tient en trois choses —
+      la page vue, d’où tu viens, et si tu lances puis termines une série de questions.
     </p>
+
+    <MesureReglage client:only="react" />
+
     <p class="discret">
-      Deux choses partent quand même vers un serveur, et seulement si tu les déclenches : un
+      Deux autres choses partent vers un serveur, et seulement si tu les déclenches : un
       signalement d’erreur, et plus tard le code de synchronisation. Le reste est statique.
     </p>
 

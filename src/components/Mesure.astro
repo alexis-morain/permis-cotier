@@ -1,0 +1,49 @@
+---
+/**
+ * Le traceur d'audience, posé sur toutes les pages.
+ *
+ * Umami auto-hébergé : pas de cookie, pas d'identifiant de visiteur, pas de
+ * profil, rien qui suive quelqu'un d'un site à l'autre. Ce qu'on cherche à
+ * savoir tient en trois questions : par où les gens arrivent, s'ils lancent
+ * une série de questions, et jusqu'où ils vont dedans.
+ *
+ * La balise est écrite par la page plutôt que posée en dur : c'est ce qui
+ * permet de lui donner son étiquette, « app » ou « web », avant le premier
+ * envoi. Le reste — l'hôte autorisé, l'interrupteur des réglages — est réglé
+ * par le traceur lui-même.
+ */
+import { MESURE } from '../lib/mesure';
+
+const site = import.meta.env.UMAMI_WEBSITE_ID || MESURE.site;
+const script = import.meta.env.UMAMI_SCRIPT_URL || MESURE.script;
+const domaines = MESURE.domaines;
+---
+
+{
+  site && script && (
+    <script is:inline define:vars={{ site, script, domaines }}>
+      // Une visite depuis l'application installée n'est pas une visite depuis
+      // le navigateur : l'étiquette suit les pages vues comme les événements,
+      // et les deux publics se lisent séparément, sans doubler les compteurs.
+      const app =
+        window.matchMedia && window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+
+      const balise = document.createElement('script');
+      balise.async = true;
+      balise.src = script;
+      balise.setAttribute('data-website-id', site);
+      // Le compte ne se remplit que depuis le vrai domaine : ni localhost, ni
+      // une préversion en .workers.dev, ni un miroir du site.
+      balise.setAttribute('data-domains', domaines);
+      balise.setAttribute('data-tag', app ? 'app' : 'web');
+      document.head.appendChild(balise);
+
+      // Installer le site en application est le geste de retour le plus net
+      // qu'un visiteur sans compte puisse faire. Il vaut son propre événement.
+      window.addEventListener('appinstalled', function () {
+        if (window.umami) window.umami.track('app-installee');
+      });
+    </script>
+  )
+}
