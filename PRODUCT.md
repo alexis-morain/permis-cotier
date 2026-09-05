@@ -45,7 +45,8 @@ une fois visité (PWA).
 - Le format de l'épreuve n'est pas entièrement dans l'arrêté du 28 septembre
   2007 : les vingt secondes et la règle des deux réponses viennent des opérateurs
   agréés, et se citent comme tel.
-- Domaine non choisi, indexation fermée tant que l'hôte finit par `.workers.dev`.
+- Domaine `lepermiscotier.fr`, indexation ouverte. Une préversion referme la
+  sienne toute seule : son hôte finit par `.workers.dev` ou `.pages.dev`.
 
 ## Brand Commitments
 
