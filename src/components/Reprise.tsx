@@ -28,7 +28,7 @@ export default function Reprise({ ids }: Props) {
           {stats.dernierScore.reussi ? 'reçu' : 'recalé'}.
         </>
       )}
-      <style>{`.reprise { border-top: 1px solid var(--filet); padding-top: 0.9rem; margin-top: 1.25rem; font-size: 0.95rem; }`}</style>
+      <style>{`.reprise { border-top: 2px solid var(--filet); padding-top: 0.9rem; margin-top: 1.25rem; font-size: 0.95rem; }`}</style>
     </p>
   );
 }

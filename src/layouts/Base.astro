@@ -15,6 +15,10 @@ const url = canonique ?? new URL(Astro.url.pathname, Astro.site ?? 'https://exem
 const version = versionBanque();
 const annee = new Date().getFullYear();
 const relecture = await comptesDeRelecture();
+
+// La section courante, soulignée dans la navigation.
+const chemin = Astro.url.pathname;
+const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`${prefixe}/`) ? 'page' : undefined);
 ---
 
 <!doctype html>
@@ -30,22 +34,29 @@ const relecture = await comptesDeRelecture();
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
-    <meta name="theme-color" content="#16231f" />
+    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
 
     <header class="entete">
       <div class="page entete__interieur">
-        <a href="/" class="entete__marque">
-          <span class="entete__nom">Permis côtier</span>
-          <span class="entete__sous">révision</span>
+        <a href="/" class="marque" aria-label="Permis côtier, accueil">
+          <svg class="marque__glyphe" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+            <rect width="32" height="32" rx="8" class="marque__fond" />
+            <path d="M16 6.5 L25.5 21.5 H6.5 Z" class="marque__cone" />
+            <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" class="marque__cone" />
+          </svg>
+          <span class="marque__nom">Permis côtier</span>
         </a>
         <nav aria-label="Navigation principale">
-          <a href="/entrainement">Entraînement</a>
-          <a href="/themes">Thèmes</a>
-          <a href="/parametres">Réglages</a>
+          <a href="/examen" aria-current={courant('/examen')}>Examen</a>
+          <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
+          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme')}>Thèmes</a>
+          <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
         </nav>
       </div>
     </header>
@@ -90,60 +101,73 @@ const relecture = await comptesDeRelecture();
 
     <style>
       .entete {
-        border-bottom: var(--filet-epaisseur) solid var(--filet);
-        background: var(--fond);
+        background: var(--fond-carte);
+        border-bottom: 2px solid var(--filet);
       }
       .entete__interieur {
         display: flex;
         flex-wrap: wrap;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        gap: 0.75rem 1.5rem;
-        padding-block: 0.85rem;
-      }
-      .entete__marque {
-        display: flex;
-        align-items: baseline;
-        gap: 0.45rem;
-        text-decoration: none;
-        /* Cible tactile de 44 px sans casser l'alignement des deux mots :
-           le calage reste sur la ligne de base, la hauteur vient du padding. */
-        min-height: 2.75rem;
+        gap: 0.5rem 1.5rem;
+        min-height: 3.75rem;
         padding-block: 0.5rem;
       }
-      .entete__nom {
-        font-family: var(--serif);
-        font-size: 1.15rem;
-        font-weight: 600;
+      .marque {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 2.75rem;
+        text-decoration: none;
       }
-      .entete__sous {
-        color: var(--texte-doux);
-        font-size: 0.8rem;
+      .marque__fond { fill: var(--marine); }
+      .marque__cone { fill: var(--jaune); }
+      @media (prefers-color-scheme: dark) {
+        .marque__fond { fill: var(--jaune); }
+        .marque__cone { fill: var(--marine); }
+      }
+      .marque__nom {
+        font-stretch: var(--large);
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
       }
       .entete nav {
         display: flex;
-        gap: 1.25rem;
-        font-size: 0.95rem;
+        gap: 0 0.25rem;
+        margin-inline: -0.6rem;
+      }
+      /* Sous 40 rem, la navigation prend sa propre ligne et se répartit :
+         quatre entrées ne tiennent pas à côté de la marque sur 375 px. */
+      @media (max-width: 39.999rem) {
+        .entete__interieur { flex-direction: column; align-items: stretch; gap: 0; padding-block: 0.5rem 0.25rem; }
+        .entete nav { justify-content: space-between; margin-inline: -0.4rem; }
+        .entete nav a { padding-inline: 0.4rem; }
       }
       .entete nav a {
-        /* 44 px de cible tactile, centrés dans le lien lui-même pour que
-           l'alignement sur la ligne de base du conteneur reste juste. */
-        display: flex;
+        display: inline-flex;
         align-items: center;
         min-height: 2.75rem;
-        padding-block: 0.5rem;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.875rem;
+        font-weight: 700;
         text-decoration: none;
+        border-radius: var(--rayon-petit);
+        /* Le trait jaune est réservé à la page où on est. */
+        box-shadow: inset 0 -3px 0 transparent;
+        transition: box-shadow var(--transition), background var(--transition);
       }
-      .entete nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      .entete nav a:hover { background: var(--fond-2); }
+      .entete nav a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--jaune); }
 
       .pied {
         margin-top: 5rem;
-        border-top: var(--filet-epaisseur) solid var(--filet);
-        background: color-mix(in srgb, var(--eau) 35%, var(--fond));
+        border-top: 2px solid var(--filet);
+        background: var(--fond-2);
       }
       .pied__interieur { padding-block: 2.5rem 3.5rem; }
-      .pied p { max-width: 58ch; }
-      .pied p:first-child { font-size: 1rem; }
+      .pied p { max-width: 60ch; }
     </style>
   </body>
 </html>
