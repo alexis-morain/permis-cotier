@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import DateExamen from '../components/DateExamen.tsx';
 import Reprise from '../components/Reprise.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
+import { GUIDE } from '../lib/guide';
 
 const themes = await themesAvecComptes();
 const questions = await questionsPubliees();
@@ -11,13 +12,13 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
 ---
 
 <Base
-  titre="Réviser le permis côtier : examens blancs au format de l’épreuve"
-  description="Examens blancs de 40 questions, chronométrés comme à l’épreuve, et entraînement par thème. Gratuit, sans inscription, chaque question cite le texte dont elle est tirée."
+  titre="Permis côtier : tests et examens blancs gratuits"
+  description="Examens blancs de 40 questions chronométrés comme à l’épreuve, et entraînement par thème. Gratuit, sans inscription, chaque question cite le texte réglementaire dont elle est tirée."
 >
   <section class="ouverture">
     <div class="page ouverture__grille">
       <div class="ouverture__texte">
-        <h1>Passe des examens blancs, au format de l’épreuve.</h1>
+        <h1>Révise le permis côtier au format de l’épreuve.</h1>
         <p class="ouverture__promesse">
           Quarante questions, vingt secondes chacune, cinq erreurs admises. Comme le jour J,
           sauf que tu peux recommencer autant que tu veux. Gratuit, sans compte, et chaque
@@ -66,6 +67,20 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
       Ce site prépare au format de l’épreuve. Il n’est ni officiel, ni agréé, et l’administration
       ne publie aucune banque de questions.
     </p>
+  </section>
+
+  <section class="page page--etroite guide">
+    <h2>Avant de réviser</h2>
+    <p>
+      Jusqu’où le permis côtier autorise à aller, ce que l’épreuve demande, ce que le
+      titre coûte : les réponses sont dans le décret du 2 août 2007 et dans l’arrêté du
+      28 septembre 2007, et le guide cite l’article à chaque fois.
+    </p>
+    <ul class="guide__liens">
+      {GUIDE.map((p) => (
+        <li><a href={`/guide/${p.slug}`}>{p.question}</a></li>
+      ))}
+    </ul>
   </section>
 
   <section class="page themes">
@@ -138,6 +153,14 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
 
   .methode { padding-block: 3.5rem 2rem; }
   .methode h2 { margin-bottom: 1rem; }
+
+  .guide { padding-top: 3rem; }
+  .guide h2 { margin-bottom: 1rem; }
+  .guide__liens { list-style: none; margin: 1.2rem 0 0; padding: 0; }
+  .guide__liens li { border-top: 1px solid var(--filet); padding: 0.7rem 0; }
+  .guide__liens li:last-child { border-bottom: 1px solid var(--filet); }
+  .guide__liens a { text-decoration: none; }
+  .guide__liens a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
 
   .themes { padding-top: 2.5rem; }
   .themes__note { margin-bottom: 1.5rem; }

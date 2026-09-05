@@ -1,0 +1,114 @@
+---
+import Guide from '../../layouts/Guide.astro';
+import { themesAvecComptes, questionsPubliees } from '../../lib/banque';
+
+const themes = await themesAvecComptes();
+const total = (await questionsPubliees()).length;
+---
+
+<Guide
+  slug="examen-du-permis-cotier"
+  verifieLe="2026-09-05"
+  questions={[
+    {
+      question: 'Combien de questions à l’examen du permis côtier ?',
+      reponse:
+        'Quarante questions à choix multiple, et cinq erreurs sont admises. C’est l’article 1er de l’arrêté du 28 septembre 2007 qui le fixe.',
+    },
+    {
+      question: 'Combien de temps garde-t-on le bénéfice de l’épreuve théorique ?',
+      reponse:
+        'Dix-huit mois. Passé ce délai sans que la formation pratique ait été validée, il faut repasser l’épreuve.',
+    },
+    {
+      question: 'Faut-il une formation obligatoire avant l’examen ?',
+      reponse:
+        'Oui, deux. Cinq heures au moins de formation théorique en salle avec un formateur, et une formation pratique validée par un établissement agréé. Les titulaires de l’option eaux intérieures sont dispensés de la partie théorique.',
+    },
+    {
+      question: 'Quel est le taux de réussite au permis côtier ?',
+      reponse:
+        'Aucun chiffre officiel n’est publié. Les taux cités en ligne ne s’appuient sur aucune statistique publique.',
+    },
+  ]}
+>
+  <h2>Quarante questions, cinq erreurs</h2>
+  <p>
+    L’article 1er de l’arrêté du 28 septembre 2007 tient en une phrase pour le format :
+    « L’épreuve théorique comporte quarante questions ; cinq erreurs sont admises. »
+    Trente-cinq bonnes réponses suffisent donc, et la trente-sixième erreur n’existe
+    pas. L’épreuve se passe sur tablette, dans un centre, et dure une trentaine de
+    minutes.
+  </p>
+  <p>
+    Une question peut appeler une ou deux bonnes réponses, et l’écran ne dit pas
+    lesquelles. Savoir s’arrêter fait partie de l’exercice : c’est pour cela que les
+    examens blancs de ce site n’annoncent jamais le nombre de cases à cocher.
+  </p>
+
+  <h2>Dix-huit mois pour valider la pratique</h2>
+  <p>
+    Le même article ajoute une phrase que peu de sites reprennent : « Le candidat
+    conserve le bénéfice de la réussite à l’épreuve théorique pendant dix-huit mois. »
+    Réussir le code ne suffit pas à obtenir le titre. Il faut encore qu’un
+    établissement de formation agréé valide la formation pratique, et cette validation
+    doit intervenir dans les dix-huit mois. Au-delà, le code est perdu.
+  </p>
+
+  <h2>Deux formations, dont une en salle</h2>
+  <p>
+    L’obtention de l’option côtière suppose l’épreuve théorique et la validation de la
+    formation pratique. À cela s’ajoute une durée plancher : la formation théorique en
+    salle, en présence du formateur, ne peut être inférieure à cinq heures. Les
+    candidats déjà titulaires de l’option « eaux intérieures » en sont dispensés.
+  </p>
+
+  <h2>Ce que contient le dossier</h2>
+  <p>
+    L’article 6 de l’arrêté liste les pièces : une demande d’inscription selon un
+    modèle défini, une photographie d’identité en couleurs, l’identifiant du timbre
+    dématérialisé, un certificat médical de moins de six mois sauf pour les titulaires
+    de la carte mer, et une photocopie de pièce d’identité. L’identité du candidat est
+    vérifiée avant le début de l’épreuve.
+  </p>
+
+  <h2>Le programme, thème par thème</h2>
+  <p>
+    L’article 1er, paragraphe 1.2, énumère ce qui est interrogeable. Ce sont les
+    {themes.length} thèmes ci-dessous, dans l’ordre du texte. Aucune pondération
+    officielle n’est publiée : le nombre de questions par thème n’est pas fixé par
+    l’arrêté, et quiconque en annonce une le devine.
+  </p>
+  <ul class="programme">
+    {themes.map((t) => (
+      <li>
+        <a href={`/theme/${t.code}`}>{t.nom}</a>
+        <span class="discret"> — {t.intitule}</span>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Le taux de réussite n’est pas publié</h2>
+  <p>
+    C’est une des questions les plus posées, et elle n’a pas de réponse sourcée.
+    L’administration ne publie pas de statistique de réussite à l’épreuve théorique du
+    permis plaisance. Les pourcentages qui circulent viennent des écoles, chacune
+    comptant ses propres candidats. Ce site n’en avancera pas.
+  </p>
+
+  <div class="encadre" style="margin-top:2.5rem">
+    <p style="margin:0"><strong>Le format se travaille en le passant.</strong></p>
+    <p class="discret" style="margin:0.4rem 0 0.8rem">
+      {total} questions publiées, tirées comme le jour J : quarante questions,
+      cinq erreurs admises, chronomètre.
+    </p>
+    <p style="margin:0">
+      <a class="bouton bouton--principal" href="/examen">Passer un examen blanc</a>
+    </p>
+  </div>
+</Guide>
+
+<style>
+  .programme { padding-left: 1.1rem; }
+  .programme li { margin-bottom: 0.35rem; }
+</style>

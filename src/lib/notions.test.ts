@@ -7,6 +7,7 @@ import {
   notionsDuTheme,
   cibleNotionsDuTheme,
   notionsOrphelines,
+  notionsVoisines,
 } from './notions';
 import { THEMES } from './themes';
 
@@ -54,5 +55,18 @@ describe('référentiel des notions', () => {
   it('somme les cibles des notions d’un thème', () => {
     expect(cibleNotionsDuTheme('carburant')).toBe(4);
     expect(cibleNotionsDuTheme('inexistant')).toBe(0);
+  });
+
+  it('donne les voisines d’une notion dans l’ordre de son thème', () => {
+    const { precedente, suivante } = notionsVoisines('balisage-cardinal');
+    expect(precedente?.code).toBe('balisage-chenal-prefere');
+    expect(suivante?.ordre).toBe(4);
+  });
+
+  it('n’invente pas de voisine aux extrémités d’un thème', () => {
+    const premiere = notionsDuTheme('balisage')[0];
+    expect(premiere).toBeDefined();
+    expect(notionsVoisines(premiere!.code).precedente).toBeUndefined();
+    expect(notionsVoisines('inexistante')).toEqual({});
   });
 });

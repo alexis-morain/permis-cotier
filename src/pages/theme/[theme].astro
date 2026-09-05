@@ -26,8 +26,12 @@ const orphelines = questions.filter((q) => !q.notion);
 ---
 
 <Base
-  titre={`${theme.nom} : réviser ce thème du permis côtier`}
+  titre={theme.nom}
   description={`${theme.description.slice(0, 150)}`}
+  miettes={[
+    { nom: 'Programme', chemin: '/themes' },
+    { nom: theme.nom, chemin: `/theme/${theme.code}` },
+  ]}
 >
   <div class="page page--etroite" style="padding-block:3rem 0">
     <p class="chapitre"><a href="/themes">Programme</a></p>
@@ -62,7 +66,7 @@ const orphelines = questions.filter((q) => !q.notion);
     <ol class="notions">
       {etapes.map(({ notion, questions: qs }) => (
         <li class="notion" id={notion.code}>
-          <h3>{notion.nom}</h3>
+          <h3><a href={`/notion/${notion.code}`}>{notion.nom}</a></h3>
           <p class="resume">{notion.resume}</p>
           {qs.length > 0 ? (
             <ul class="questions">
@@ -121,6 +125,8 @@ const orphelines = questions.filter((q) => !q.notion);
     font-variant-numeric: tabular-nums;
     vertical-align: 0.1em;
   }
+  .notion h3 a { text-decoration: none; }
+  .notion h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
   .resume { margin: 0 0 0.6rem; }
   .aucune { margin: 0; font-style: italic; }
 
