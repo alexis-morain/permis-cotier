@@ -24,6 +24,7 @@
     "rythmes": "python3 scripts/rythmes.py",
     "situations": "python3 scripts/situations.py",
     "sons": "python3 scripts/sons.py",
+    "planche": "python3 scripts/planche.py",
     "generer": "python3 scripts/generer.py",
     "build:pages": "astro build"
   },
