@@ -7,12 +7,12 @@ la page visitée.
 Chaque question cite le texte réglementaire dont elle est tirée. La banque est
 écrite depuis les articles, jamais reprise chez un éditeur.
 
-**En ligne : https://permis-cotier.alexis-c1f.workers.dev**
+**En ligne : https://lepermiscotier.fr**
 
-Adresse provisoire. Le domaine définitif n'est pas choisi, et tant que le site
-vit sur ce sous-domaine il reste hors des moteurs de recherche : `robots.txt`
-interdit tout. Le basculement se fera en posant `SITE_URL` dans les variables
-Cloudflare, rien d'autre à changer.
+Un Worker Cloudflare relié à ce dépôt sert le site : un push sur `main`
+construit et déploie. `www` redirige vers l'apex en 301, et le sous-domaine de
+préversion reste fermé. Une préversion, elle, referme son `robots.txt` toute
+seule tant que son hôte finit par `.workers.dev` ou `.pages.dev`.
 
 ## Ce que ce site n'est pas
 

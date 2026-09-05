@@ -2,6 +2,11 @@
 # Pas de script Worker : aucun `main`, le trafic va directement aux fichiers.
 name = "permis-cotier"
 compatibility_date = "2026-09-04"
+# Le site répond sur lepermiscotier.fr. Sans cette ligne, chaque
+# `wrangler deploy` rouvre permis-cotier.alexis-c1f.workers.dev : un second
+# hôte sert alors les mêmes pages, et le fermer dans le tableau de bord ne
+# tient que jusqu’au déploiement suivant.
+workers_dev = false
 
 [assets]
 directory = "./dist"
