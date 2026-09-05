@@ -27,6 +27,7 @@ import {
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
 import { nomDuTheme } from '../lib/themes-client';
+import { evenement } from '../lib/mesure';
 import './quiz.css';
 
 interface Props {
@@ -47,11 +48,6 @@ function reduireEcran(s: Session, action: ActionEcran): Session {
   return action.type === 'restaurer' ? action.session : reduire(s, action);
 }
 
-function evenement(nom: string, donnees?: Record<string, unknown>) {
-  // Umami, sans cookie. Absent en local, on ne casse rien.
-  (window as { umami?: { track: (n: string, d?: unknown) => void } }).umami?.track(nom, donnees);
-}
-
 /** Le défilement doux, sauf pour qui a demandé qu'on arrête de bouger. */
 function douceur(): ScrollBehavior {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
@@ -65,7 +61,15 @@ function Sources({ sources }: { sources: QuestionAffichable['sources'] }) {
         {sources.map((s) => (
           <li key={`${s.ref}-${s.texte}`}>
             {s.url ? (
-              <a href={s.url} target="_blank" rel="noreferrer noopener">{s.texte}</a>
+              <a
+                href={s.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-mesure="source-ouverte"
+                data-mesure-ref={s.ref}
+              >
+                {s.texte}
+              </a>
             ) : (
               s.texte
             )}
@@ -124,6 +128,11 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
 
   const retour = mode === 'examen' ? '/examen' : revoir ? '/revoir' : `/entrainement/${theme}`;
 
+  // Le nom que cette série porte dans la mesure. Les trois écrans du composant
+  // sont trois parcours différents : les mêler dans un seul compteur rendrait
+  // chaque chiffre illisible.
+  const nomSerie = mode === 'examen' ? 'examen' : revoir ? 'revoir' : 'entrainement';
+
   // Horloge de l'examen. Une seconde, pas plus précis : le chrono est une
   // contrainte de l'épreuve, pas un instrument de mesure.
   useEffect(() => {
@@ -178,18 +187,46 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
           enregistrerExamen(charger(), { date: aujourdhui(), bonnes: r.bonnes, total: r.total, reussi: r.reussi }),
         );
       }
-      evenement('examen-termine', { bonnes: r.bonnes, total: r.total, interrompu: session.interrompu });
+      evenement('examen-termine', {
+        bonnes: r.bonnes,
+        erreurs: r.erreurs,
+        total: r.total,
+        reussi: r.reussi,
+        interrompu: session.interrompu,
+      });
     } else {
-      evenement(revoir ? 'revoir-termine' : 'entrainement-termine', { theme, bonnes: r.bonnes, total: r.total });
+      evenement(`${nomSerie}-termine`, { theme, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
     }
   }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
 
   useEffect(() => {
     if (session.phase !== 'en-cours') return;
-    evenement(mode === 'examen' ? 'examen-commence' : revoir ? 'revoir-commence' : 'entrainement-commence', { theme });
+    evenement(`${nomSerie}-commence`, { theme });
     // Une seule fois, au vrai départ de la série.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.phase === 'en-cours']);
+
+  // Une série quittée en route ne dit rien d'elle-même. Sans ce signal, les
+  // départs et les arrivées ne se recoupent pas : on saurait que la moitié des
+  // examens ne finit pas, jamais à quelle question ils s'arrêtent.
+  const enCours = useRef({ index: 0, total: 0, phase: session.phase });
+  enCours.current = { index: session.index, total: session.questions.length, phase: session.phase };
+
+  useEffect(() => {
+    if (session.phase !== 'en-cours') return;
+    let envoye = false;
+    const partir = () => {
+      const s = enCours.current;
+      if (envoye || s.phase !== 'en-cours') return;
+      envoye = true;
+      evenement(`${nomSerie}-abandonne`, { rang: s.index + 1, total: s.total, theme });
+    };
+    // `pagehide` couvre la fermeture, la navigation et le passage en arrière-plan
+    // sur mobile, là où `unload` ne part plus. L'envoi survit à la page.
+    window.addEventListener('pagehide', partir);
+    return () => window.removeEventListener('pagehide', partir);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session.phase === 'en-cours', nomSerie, theme]);
 
   // La correction tombait sous la ligne de flottaison sur mobile : valider
   // n'avait l'air de rien faire. On la remonte dans le champ de vision.
