@@ -16,6 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "valider": "python3 scripts/valider.py",
+    "audit:seo": "node scripts/audit-seo.mjs",
+    "verifier:prod": "node scripts/verifier-prod.mjs",
     "credits": "python3 scripts/credits.py",
     "feux": "python3 scripts/feux.py",
     "balisage": "python3 scripts/balisage.py",
@@ -26,13 +28,13 @@
     "sons": "python3 scripts/sons.py",
     "planche": "python3 scripts/planche.py",
     "generer": "python3 scripts/generer.py",
+    "partage": "node scripts/partage.mjs",
     "build:pages": "astro build"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/archivo": "^5.3.0",
-    "@fontsource-variable/source-serif-4": "^5.3.0",
     "astro": "^5.18.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { questionsPubliees, nomDuTheme } from '../../lib/banque';
+import { SITE, quiz, titreQuestion, descriptionPage } from '../../lib/seo';
+import { notionParCode } from '../../lib/notions';
 
 export async function getStaticPaths() {
   const questions = await questionsPubliees();
@@ -10,16 +12,33 @@ export async function getStaticPaths() {
 const { q } = Astro.props;
 const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
+const theme = nomDuTheme(q.theme);
+const notion = q.notion ? notionParCode(q.notion) : undefined;
+const base = Astro.site ?? new URL(SITE.domaine);
+
+// Une question de la banque est un exercice, et Google sait l'afficher comme
+// tel. Le balisage `Quiz` donne l'énoncé, toutes les propositions et celles qui
+// sont justes : c'est exactement ce que la page montre déjà.
+const miettes = [
+  { nom: 'Programme', chemin: '/themes' },
+  { nom: theme, chemin: `/theme/${q.theme}` },
+  ...(notion ? [{ nom: notion.nom, chemin: `/notion/${notion.code}` }] : []),
+];
 ---
 
-<Base titre={`${q.enonce.slice(0, 70)} — permis côtier`} description={q.explication.slice(0, 155)}>
+<Base
+  titre={titreQuestion(q.enonce, q.visuel?.alt ?? notion?.nom)}
+  description={descriptionPage(q.explication)}
+  miettes={miettes}
+  jsonLd={[quiz(q, theme, base)]}
+>
   <article class="page page--etroite" style="padding-block:3rem 0">
     <p class="chapitre"><a href={`/theme/${q.theme}`}>{nomDuTheme(q.theme)}</a></p>
     <h1 class="question">{q.enonce}</h1>
 
     {q.visuel && (
       <figure style="margin:1.5rem 0">
-        <img src={`/visuels/${q.visuel.fichier}`} alt={q.visuel.alt} style="width:min(100%,30rem);height:auto;border:1px solid var(--filet)" />
+        <img src={`/visuels/${q.visuel.fichier}`} alt={q.visuel.alt} style="width:min(100%,30rem);height:auto;border:2px solid var(--filet);border-radius:var(--rayon);background:var(--fond-carte)" />
         <figcaption class="discret" style="margin-top:0.4rem">{q.visuel.alt}</figcaption>
       </figure>
     )}
@@ -48,34 +67,47 @@ const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
       ))}
     </ul>
 
+    {notion && (
+      <p class="versNotion">
+        Cette question porte sur <a href={`/notion/${notion.code}`}>{notion.nom.toLowerCase()}</a>.
+        La fiche donne la règle, et les autres questions qui la vérifient.
+      </p>
+    )}
+
     <p style="margin-top:2.5rem">
-      <a class="bouton" href={`/entrainement/${q.theme}`}>S’entraîner sur {nomDuTheme(q.theme).toLowerCase()}</a>
+      <a class="bouton" href={`/entrainement/${q.theme}`}>S’entraîner sur {theme.toLowerCase()}</a>
     </p>
     <p><a class="signaler" href={`/signaler?question=${q.id}`}>Signaler une erreur sur cette question</a></p>
   </article>
 </Base>
 
 <style>
-  .question { font-size: clamp(1.6rem, 5vw, 2.3rem); }
+  .question { font-stretch: 100%; letter-spacing: 0; font-size: clamp(1.4rem, 4.6vw, 2rem); font-weight: 700; line-height: 1.25; }
   .propositionsListe { list-style: none; margin: 1.5rem 0 2.5rem; padding: 0; }
   .propositionsListe li {
     display: flex;
-    gap: 0.8rem;
-    padding: 0.7rem 0.9rem;
-    border: 1px solid var(--filet);
-    margin-bottom: 0.5rem;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    background: var(--fond-carte);
+    margin-bottom: 0.6rem;
+    max-width: none;
   }
-  .propositionsListe .bonne { border-color: var(--vert); border-width: 2px; }
+  .propositionsListe .bonne { border-color: var(--vert); background: var(--vert-pale); }
   .lettre {
-    flex: 0 0 1.6rem; height: 1.6rem;
+    flex: 0 0 1.85rem; height: 1.85rem;
     display: grid; place-items: center;
-    border: 1px solid var(--texte-doux);
-    font-size: 0.8rem; font-weight: 700;
+    border: 2px solid var(--filet-fort);
+    border-radius: 999px;
+    font-size: 0.85rem; font-weight: 800;
   }
-  .bonne .lettre { background: var(--vert); border-color: var(--vert); color: var(--papier-vif); }
+  .bonne .lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
   .sourcesListe { padding-left: 1.2rem; }
+  .versNotion { margin-top: 2rem; max-width: 58ch; }
   .signaler {
-    font-size: 0.85rem; color: var(--texte-doux);
-    text-decoration: underline; text-decoration-color: var(--filet);
+    font-size: 0.85rem; font-weight: 600; color: var(--texte-doux);
+    text-decoration: underline; text-decoration-color: var(--filet-fort);
   }
 </style>

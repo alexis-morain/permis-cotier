@@ -68,7 +68,7 @@ STATUTS = ["brouillon", "relu", "publie", "retire"]
 STATUTS_RELUS = {"relu", "publie"}
 
 RE_ID = re.compile(r"^[a-z][a-z0-9-]*-\d{4}$")
-RE_PROPOSITION = re.compile(r"^[a-e]$")
+RE_PROPOSITION = re.compile(r"^[a-d]$")
 RE_REF = re.compile(r"^[a-z0-9-]+$")
 RE_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # L'arrêté ne dit pas combien de cases une question comporte, et l'épreuve
@@ -159,8 +159,8 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
 
     propositions = q.get("propositions")
     ids_propositions: list[str] = []
-    if not isinstance(propositions, list) or not 3 <= len(propositions) <= 5:
-        ko("propositions", "il faut de 3 à 5 propositions")
+    if not isinstance(propositions, list) or not 2 <= len(propositions) <= 4:
+        ko("propositions", "il faut de 2 à 4 propositions")
     else:
         for prop in propositions:
             if not isinstance(prop, dict) or set(prop) - {"id", "texte"}:
@@ -168,7 +168,7 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
                 continue
             pid = prop.get("id")
             if not isinstance(pid, str) or not RE_PROPOSITION.match(pid):
-                ko("propositions", f"identifiant de proposition attendu entre a et e, reçu {pid!r}")
+                ko("propositions", f"identifiant de proposition attendu entre a et d, reçu {pid!r}")
             else:
                 ids_propositions.append(pid)
             if not _texte(prop.get("texte")):

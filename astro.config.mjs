@@ -7,10 +7,11 @@ import { readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
 
-// Domaine pas encore arrêté. Le site tourne sur son sous-domaine Workers en
-// attendant ; `src/pages/robots.txt.ts` bloque l'indexation tant qu'on y est.
-// Le jour du choix : SITE_URL dans les variables Cloudflare, rien d'autre.
-const site = process.env.SITE_URL ?? 'https://permis-cotier.alexis-c1f.workers.dev';
+// Le domaine du site. `SITE_URL` le remplace pour une prévisualisation : sur
+// une adresse en .workers.dev ou .pages.dev, `src/pages/robots.txt.ts` referme
+// l'indexation tout seul, pour qu'une préversion ne fasse pas concurrence au
+// domaine dans les résultats.
+const site = process.env.SITE_URL ?? 'https://lepermiscotier.fr';
 
 export default defineConfig({
   site,
@@ -20,12 +21,32 @@ export default defineConfig({
   build: { format: 'file' },
   integrations: [
     react(),
-    sitemap({ filter: (page) => !page.includes('/examen') }),
+    sitemap({
+      // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
+      // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
+      filter: (page) =>
+        !/\/(examen|revoir|parametres|signaler)(\.html)?$/.test(page) &&
+        !page.includes('/entrainement/'),
+      changefreq: 'weekly',
+      lastmod: new Date(),
+      serialize(item) {
+        const chemin = new URL(item.url).pathname.replace(/\.html$/, '');
+        // Ce que Google doit explorer en premier : l'accueil, puis les pages
+        // qui répondent à une question, puis le programme, puis la banque.
+        if (chemin === '/' || chemin === '') item.priority = 1.0;
+        else if (chemin.startsWith('/guide')) item.priority = 0.9;
+        else if (chemin === '/themes' || chemin.startsWith('/theme/')) item.priority = 0.8;
+        else if (chemin.startsWith('/notion/')) item.priority = 0.7;
+        else if (chemin.startsWith('/question/')) item.priority = 0.4;
+        else item.priority = 0.3;
+        return item;
+      },
+    }),
     AstroPWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Révision permis côtier',
+        name: 'Le Permis Côtier — révision',
         short_name: 'Permis côtier',
         description:
           'Examens blancs au format de l’épreuve et entraînement par thème pour le permis plaisance option côtière.',

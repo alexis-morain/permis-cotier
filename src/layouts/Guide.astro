@@ -1,0 +1,117 @@
+---
+import Base from './Base.astro';
+import Sources from '../components/Sources.astro';
+import { pageGuide, autresPages, sourcesResolues, notionsDuGuide } from '../lib/guide';
+import { notionParCode } from '../lib/notions';
+import { SITE, articlePage, faq, type QuestionFaq } from '../lib/seo';
+
+interface Props {
+  slug: string;
+  /** Questions traitées par la page, telles qu'on les pose. Elles alimentent
+   *  le balisage FAQ ; chacune doit avoir sa réponse visible dans la page. */
+  questions?: readonly QuestionFaq[];
+  /** Date de dernière vérification des textes cités. */
+  verifieLe: string;
+}
+
+const { slug, questions = [], verifieLe } = Astro.props;
+const page = pageGuide(slug);
+if (!page) throw new Error(`page de guide inconnue : ${slug}`);
+
+const base = Astro.site ?? new URL(SITE.domaine);
+const chemin = `/guide/${page.slug}`;
+const sources = sourcesResolues(page);
+const autres = autresPages(page.slug);
+// Les fiches du programme que cette page détaille. Le guide dit le cadre, la
+// fiche dit ce qu'il faut avoir retenu pour l'épreuve.
+const fiches = notionsDuGuide(page.slug)
+  .map((code) => notionParCode(code))
+  .filter((n): n is NonNullable<typeof n> => n !== undefined);
+---
+
+<Base
+  titre={page.titre}
+  description={page.reponse}
+  miettes={[
+    { nom: 'Guide', chemin: '/guide' },
+    { nom: page.court, chemin },
+  ]}
+  jsonLd={[
+    articlePage(
+      {
+        titre: page.titre,
+        description: page.reponse,
+        chemin,
+        modifieLe: verifieLe,
+        citations: sources.map((s) => s.texte),
+      },
+      base,
+    ),
+    ...(questions.length > 0 ? [faq(questions)] : []),
+  ]}
+>
+  <article class="page page--etroite" style="padding-block:2.5rem 0">
+    <p class="chapitre"><a href="/guide">Guide</a></p>
+    <h1>{page.titre}</h1>
+
+    {/* La réponse d'abord, en une phrase, avant tout développement. C'est ce
+        qu'un lecteur pressé vient chercher, et ce qu'un moteur cite. */}
+    <p class="reponseCourte">{page.reponse}</p>
+
+    <slot />
+
+    <Sources sources={sources} verifieLe={verifieLe} />
+
+    {fiches.length > 0 && (
+      <section class="fiches">
+        <h2>Les fiches du programme correspondantes</h2>
+        <ul>
+          {fiches.map((n) => (
+            <li>
+              <a href={`/notion/${n.code}`}>{n.nom}</a>
+              <span class="discret"> — {n.resume}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <nav class="suite" aria-label="Autres pages du guide">
+      <h2>Le reste du guide</h2>
+      <ul>
+        {autres.map((p) => (
+          <li>
+            <a href={`/guide/${p.slug}`}>{p.question}</a>
+          </li>
+        ))}
+      </ul>
+      <p style="margin-top:1.5rem">
+        <a class="bouton bouton--principal" href="/examen">Passer un examen blanc</a>
+      </p>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .reponseCourte {
+    /* Archivo étendue, comme les titres : c'est la phrase que le lecteur
+       pressé vient chercher, et celle qu'un moteur cite. */
+    font-stretch: var(--large);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.35;
+    border-left: var(--bord) solid var(--accent);
+    padding-left: 1.1rem;
+    margin: 1.5rem 0 2.5rem;
+    max-width: 52ch;
+  }
+  .fiches { margin-top: 3rem; }
+  .fiches h2 { font-size: 1.05rem; }
+  .fiches ul { padding-left: 1.1rem; }
+  .fiches li { margin-bottom: 0.6rem; max-width: 62ch; }
+
+  .suite { margin-top: 3rem; }
+  .suite h2 { font-size: 1.05rem; }
+  .suite ul { padding-left: 1.1rem; }
+  .suite li { margin-bottom: 0.4rem; }
+</style>
