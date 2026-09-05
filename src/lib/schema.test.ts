@@ -148,4 +148,26 @@ describe('schéma de question', () => {
     expect(schemaQuestion.safeParse(avec({ enonce: '  ' })).success).toBe(false);
     expect(schemaQuestion.safeParse(avec({ explication: '' })).success).toBe(false);
   });
+
+  it("refuse un énoncé qui annonce le nombre de bonnes réponses", () => {
+    for (const enonce of [
+      "Que t’impose la règle 15 ? Deux réponses.",
+      "Lesquelles de ces marques sont jaunes ? deux bonnes reponses",
+      "Que fais-tu ? Trois reponses possibles.",
+      "Quelles sont les deux affirmations exactes ?",
+      "Coche les deux propositions justes.",
+    ]) {
+      const r = schemaQuestion.safeParse({ ...valide, enonce });
+      expect(r.success, enonce).toBe(false);
+    }
+  });
+
+  it("laisse passer une tournure au singulier", () => {
+    const r = schemaQuestion.safeParse({
+      ...valide,
+      enonce: "Le navire rattrapé répond à ce signal. Que fait-il ?",
+    });
+    expect(r.success).toBe(true);
+  });
+
 });

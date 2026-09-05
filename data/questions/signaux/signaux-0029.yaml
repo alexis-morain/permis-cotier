@@ -1,0 +1,41 @@
+id: signaux-0029
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 2
+enonce: >-
+  Dans la brume, tu t'approches d'un navire que tu n'as pas encore vu et tu entends ce
+  signal au sifflet. Que t'annonce-t-il ?
+visuel:
+  fichier: sons/mouillage-abordage.svg
+  alt: "Au sifflet, un son bref, un son prolongé et un son bref, dans cet ordre."
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire au mouillage te signale sa position et la possibilité d'un abordage.
+  - id: b
+    texte: Un navire à propulsion mécanique fait route et a de l'erre.
+  - id: c
+    texte: Un navire sur le point d'être rattrapé donne son accord au dépassement.
+  - id: d
+    texte: Un navire échoué demande assistance.
+reponses:
+  - a
+explication: >-
+  La règle 35 g) se termine par un signal facultatif : le navire au mouillage peut faire
+  entendre trois sons consécutifs, un son bref suivi d'un son prolongé et d'un son bref,
+  pour signaler sa position et la possibilité d'un abordage à un navire qui s'approche.
+  Il s'ajoute à la cloche, il ne la remplace pas. Le motif ressemble à celui de l'accord
+  au dépassement, qui alterne aussi prolongés et brefs, mais celui-ci commence par un
+  prolongé, en compte quatre sons, et ne vaut qu'entre navires en vue dans un chenal
+  étroit. La détresse, elle, ne se demande pas au sifflet mais par les signaux de
+  l'annexe IV.
+sources:
+  - texte: RIPAM, règle 35 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -5,10 +5,10 @@ notion: balisage-feux
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu relèves ce feu jaune de nuit. Quelles sont les deux affirmations exactes ?
+  Tu relèves ce feu jaune de nuit. Que peux-tu en dire ?
 visuel:
   fichier: rythmes/speciale.svg
-  alt: "Feu jaune à éclats. Le rythme d'une marque spéciale est quelconque, mais sa couleur jaune ne se confond avec aucune marque blanche."
+  alt: "Feu jaune à éclats, la lumière durant nettement moins que l'obscurité qui la sépare de l'éclat suivant."
   credit: code
 propositions:
   - id: a

@@ -1,0 +1,39 @@
+id: signaux-0024
+option: cotier
+theme: signaux
+notion: signaux-manoeuvre
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu fais route au moteur, en vue d'un autre navire à moteur qui fait route lui aussi.
+  Il t'adresse ce signal au sifflet. Que fait-il ?
+visuel:
+  fichier: sons/manoeuvre-babord.svg
+  alt: "Deux sons brefs au sifflet, deux impulsions courtes séparées par un silence de même ordre."
+  credit: code
+propositions:
+  - id: a
+    texte: Il vient sur bâbord.
+  - id: b
+    texte: Il vient sur tribord.
+  - id: c
+    texte: Il bat en arrière.
+  - id: d
+    texte: Il compte te rattraper sur bâbord.
+reponses:
+  - a
+explication: >-
+  Deux sons brefs au sifflet disent « Je viens sur bâbord », d'après la règle 34 a), qui
+  ordonne les trois signaux de manœuvre par le nombre de sons : un pour tribord, deux
+  pour bâbord, trois pour battre en arrière. Le côté annoncé se lit donc au comptage,
+  et l'inversion tribord bâbord est le piège habituel. Le dépassement par bâbord se dit
+  autrement, avec deux sons prolongés en tête, comme le montre la question sur ce signal :
+  ici il n'y a aucun son prolongé.
+sources:
+  - texte: RIPAM, règle 34 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

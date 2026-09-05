@@ -1,0 +1,37 @@
+id: balisage-0032
+option: cotier
+theme: balisage
+notion: balisage-eaux-saines
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu relèves cette marque en approchant de la côte. Que te signale-t-elle ?
+visuel:
+  fichier: balisage/eaux-saines.svg
+  alt: "Bouée à bandes verticales rouges et blanches, surmontée d'une sphère rouge."
+  credit: code
+propositions:
+  - id: a
+    texte: Des eaux saines tout autour, souvent un atterrissage ou un milieu de chenal
+  - id: b
+    texte: La limite bâbord du chenal, en venant du large
+  - id: c
+    texte: Un danger de faible étendue entouré d'eaux saines
+  - id: d
+    texte: Une zone réservée aux baigneurs
+reponses:
+  - a
+explication: >-
+  Bandes verticales rouges et blanches et voyant en sphère rouge : c'est la marque d'eaux
+  saines, qui annonce que l'eau est saine tout autour, en milieu de chenal ou en
+  atterrissage. Le piège est son rouge, qui fait penser à une latérale bâbord : mais la
+  latérale bâbord est rouge unie, cylindrique, et son voyant est un cylindre, pas une
+  sphère. Les bandes verticales et la sphère sont les deux signes qui tranchent.
+sources:
+  - texte: Balisage AISM, marque d'eaux saines
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

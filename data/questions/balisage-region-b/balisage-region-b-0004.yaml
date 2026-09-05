@@ -1,0 +1,38 @@
+id: balisage-region-b-0004
+option: cotier
+theme: balisage-region-b
+notion: region-b-lateral
+statut: publie
+difficulte: 2
+enonce: >-
+  En route vers un port japonais, en région de balisage B, tu remontes le chenal depuis
+  le large et cette marque se présente. De quel côté la laisses-tu ?
+visuel:
+  fichier: balisage/laterale-babord-region-b.svg
+  alt: "Bouée cylindrique verte surmontée d'un voyant cylindrique vert."
+  credit: code
+propositions:
+  - id: a
+    texte: Sur bâbord
+  - id: b
+    texte: Sur tribord, le vert marque tribord dans toutes les régions
+  - id: c
+    texte: Sur tribord, la forme cylindrique désignant le côté tribord
+  - id: d
+    texte: D'un côté ou de l'autre, en région B le vert ne borde pas un chenal
+reponses:
+  - a
+explication: >-
+  En région B, qui couvre les Amériques, le Japon, la Corée du Sud et les Philippines, les
+  couleurs latérales sont inversées : le vert marque bâbord. La forme, elle, ne change pas
+  d'une région à l'autre, et elle confirme : le cylindre et le voyant cylindrique sont
+  toujours à bâbord, le cône toujours à tribord. Croire le vert toujours à tribord est le
+  réflexe de la région A, et attribuer le cylindre à tribord ajoute une erreur à l'autre.
+sources:
+  - texte: AISM, système de balisage maritime, région B, marque latérale bâbord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'
