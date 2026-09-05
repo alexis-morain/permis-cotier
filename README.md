@@ -70,6 +70,16 @@ npm run dev
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
 
+## Le cours
+
+`/cours` prend les 105 notions du programme dans un ordre d'apprentissage, dix
+chapitres, une leçon par notion. Une leçon écrite est un fichier
+`data/cours/<notion>.yaml` : accroche, étapes, piège, mémo, sources, comme une
+question elle cite ses textes. Une notion sans fichier a une leçon courte, le
+résumé de sa fiche, jouable mais en `noindex`. Chaque leçon se termine par
+jusqu'à trois questions de la banque sur la notion ; la progression reste dans
+le navigateur.
+
 ## Ajouter une question
 
 L'ordre ne change jamais : lire l'article, écrire la question, relire. Les
@@ -97,13 +107,15 @@ Une question sans source n'entre pas. Le statut `publie` exige `meta.relu_par`.
 ```
 data/questions/<theme>/<id>.yaml   une question par fichier, statut dans le fichier
 data/questions/_inbox/             brouillons générés, en attente de relecture
+data/cours/<notion>.yaml           une leçon par notion, écrite depuis ses sources
 data/sources/<ref>/                extraits d'articles cités (Licence Ouverte 2.0)
 data/VERSION                       version de la banque, dans le cache hors ligne
 data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
-src/lib/                           moteur : thèmes, schéma, tirage, session, progression, mesure
-src/pages/                         Astro : accueil, thèmes, questions, examen, entraînement
+src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
+                                   session, progression, mesure
+src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement
 src/components/                    îlot React du quiz
 functions/api/                     signalement, puis synchronisation
 ```

@@ -1,0 +1,46 @@
+notion: barre-manoeuvre-evitement
+duree: 3
+accroche: >-
+  Tu as compris qu’il y a risque. Reste à manœuvrer, et là encore le RIPAM dit comment :
+  tôt, franchement, et en vérifiant.
+etapes:
+  - titre: Franche, et largement à temps
+    texte: >-
+      Toute manœuvre pour éviter un abordage doit être exécutée franchement, largement à
+      temps, et conformément aux bons usages maritimes. C’est la règle 8. Une manœuvre
+      tardive ou timide n’est pas une manœuvre.
+  - titre: Assez grande pour être vue
+    texte: >-
+      Un changement de cap ou de vitesse doit être assez important pour être
+      immédiatement perçu par l’autre, à l’œil ou au radar. Une succession de petits
+      changements est à éviter : l’autre ne les voit pas, et ne sait pas ce que tu fais.
+  - titre: Le cap plutôt que la vitesse
+    texte: >-
+      Si tu as la place, changer de cap seul est souvent la manœuvre la plus efficace, à
+      condition qu’elle soit faite tôt, franchement, et qu’elle ne crée pas une autre
+      situation rapprochée.
+
+      Si besoin, réduis ta vitesse, casse ton erre ou bats en arrière : ça laisse du temps
+      pour apprécier la situation.
+  - titre: Jusqu’à ce que l’autre soit paré
+    texte: >-
+      On passe à distance suffisante, et on contrôle l’efficacité de la manœuvre jusqu’à
+      ce que l’autre navire soit définitivement paré et clair. Tourner puis oublier n’est
+      pas prévu par la règle.
+piege: >-
+  L’épreuve oppose souvent « un changement de cap franc » à « plusieurs petites
+  corrections successives ». La bonne réponse est toujours la manœuvre nette, visible,
+  faite tôt.
+retenir:
+  - Manœuvre franche, largement à temps, selon les bons usages maritimes.
+  - Un changement assez grand pour être vu, pas une suite de petites corrections.
+  - On contrôle jusqu’à ce que l’autre soit paré et clair.
+sources:
+  - texte: RIPAM, règle 8
+    ref: decret-77-733
+    fichier: regle-08
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

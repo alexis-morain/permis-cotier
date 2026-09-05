@@ -7,7 +7,7 @@
 - Planche officielle : « La signalisation maritime », secrétariat d'État chargé
   de la Mer, novembre 2022, planches « Balisage de jour » et « Balisage de nuit »,
   région de balisage A.
-  https://www.mer.gouv.fr/sites/default/files/2020-11/la_signalisation_maritime_4p_DEF_Web.pdf
+- Source : https://www.mer.gouv.fr/sites/default/files/2020-11/la_signalisation_maritime_4p_DEF_Web.pdf
 
 ## Nature de cette fiche
 
@@ -39,6 +39,27 @@ Tribord :
 En région B (Amériques, Japon, Corée du Sud, Philippines), les couleurs des
 marques latérales sont inversées : bâbord vert, tribord rouge. Les formes, les
 voyants et tout le reste du système ne changent pas.
+
+## Marques latérales de chenal préféré, région A
+
+À la séparation de deux chenaux, la marque posée à la fourche dit lequel est le
+chenal principal, dit préféré. Elle se lit dans le sens conventionnel et se
+traite comme la marque latérale dont elle a la couleur dominante et la forme.
+
+Chenal préféré à tribord (la marque se laisse à bâbord) :
+- couleur du corps : rouge, avec une large bande horizontale verte
+- forme : cylindrique
+- voyant : un cylindre rouge
+- feu : rouge, à éclats groupés (2 + 1), Fl (2+1) R
+
+Chenal préféré à bâbord (la marque se laisse à tribord) :
+- couleur du corps : vert, avec une large bande horizontale rouge
+- forme : conique
+- voyant : un cône vert, pointe en haut
+- feu : vert, à éclats groupés (2 + 1), Fl (2+1) G
+
+Section ajoutée le 2026-09-05 pour la leçon `balisage-chenal-prefere`, à
+vérifier contre la planche officielle comme le reste de cette fiche.
 
 ## Marques cardinales
 

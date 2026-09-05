@@ -10,6 +10,9 @@ import {
   charger,
   sauvegarder,
   effacer,
+  terminerLecon,
+  leconsFaites,
+  CLE_STOCKAGE,
 } from './progression';
 import type { Stockage } from './progression';
 
@@ -190,5 +193,42 @@ describe('date d’examen', () => {
     const e = { ...etatInitial(), dateExamen: '2026-10-15' };
     sauvegarder(e, memoire);
     expect(charger(memoire).dateExamen).toBe('2026-10-15');
+  });
+});
+
+describe('leçons suivies', () => {
+  it('n’en a aucune au départ', () => {
+    expect(leconsFaites(etatInitial())).toEqual({});
+  });
+
+  it('marque une leçon faite avec son score et sa date', () => {
+    const e = terminerLecon(etatInitial(), 'balisage-lateral', { bonnes: 2, total: 3 }, '2026-09-05');
+    expect(e.lecons['balisage-lateral']).toEqual({ faiteLe: '2026-09-05', bonnes: 2, total: 3 });
+    expect(leconsFaites(e)).toEqual({ 'balisage-lateral': true });
+  });
+
+  it('garde la dernière fois qu’on la refait', () => {
+    const une = terminerLecon(etatInitial(), 'balisage-lateral', { bonnes: 1, total: 3 }, '2026-09-05');
+    const deux = terminerLecon(une, 'balisage-lateral', { bonnes: 3, total: 3 }, '2026-09-06');
+    expect(deux.lecons['balisage-lateral']).toEqual({ faiteLe: '2026-09-06', bonnes: 3, total: 3 });
+  });
+
+  it('accepte une leçon sans question, faite à zéro sur zéro', () => {
+    const e = terminerLecon(etatInitial(), 'signaux-portuaires', { bonnes: 0, total: 0 }, '2026-09-05');
+    expect(e.lecons['signaux-portuaires']!.total).toBe(0);
+  });
+
+  it('survit à l’aller-retour par le stockage', () => {
+    const e = terminerLecon(etatInitial(), 'balisage-lateral', { bonnes: 2, total: 3 }, '2026-09-05');
+    sauvegarder(e, memoire);
+    expect(charger(memoire).lecons).toEqual(e.lecons);
+  });
+
+  it('relit un état écrit avant que les leçons existent', () => {
+    memoire.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({ version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null }),
+    );
+    expect(charger(memoire).lecons).toEqual({});
   });
 });

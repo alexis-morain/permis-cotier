@@ -1,0 +1,44 @@
+notion: barre-chenal-etroit
+duree: 3
+accroche: >-
+  Un chenal étroit entre deux digues, un cargo qui sort, ton voilier qui entre. Qui gêne
+  qui ?
+etapes:
+  - titre: À droite, comme sur la route
+    texte: >-
+      Dans un chenal étroit ou une voie d’accès, on navigue aussi près que possible de la
+      limite extérieure droite, quand cela peut se faire sans danger. Chacun tient sa
+      droite, et les navires se croisent bâbord contre bâbord.
+  - titre: Les petits ne gênent pas les gros
+    texte: >-
+      Un navire de moins de 20 mètres et un navire à voile ne doivent pas gêner le
+      passage d’un navire qui ne peut naviguer en sécurité qu’à l’intérieur du chenal.
+      Même chose pour un navire en train de pêcher.
+
+      Ton voilier de 10 mètres a la place de s’écarter, le cargo non. C’est lui qu’on
+      laisse passer.
+  - titre: Traverser, dépasser, mouiller
+    texte: >-
+      La règle 9 couvre tout ce qui se passe dans le chenal.
+    liste:
+      - Ne pas traverser le chenal si cela gêne un navire qui doit y rester
+      - Pour dépasser quand l’autre doit manœuvrer, annoncer son intention au signal sonore et attendre son accord
+      - À l’approche d’un coude, redoubler de prudence et faire entendre le signal du coude
+      - Éviter de mouiller dans un chenal étroit
+piege: >-
+  Un voilier est privilégié face à un navire à moteur en mer libre, pas dans un chenal
+  étroit face à un navire qui ne peut pas en sortir. Le chenal renverse la hiérarchie
+  habituelle.
+retenir:
+  - Dans un chenal étroit, on tient sa droite.
+  - "Moins de 20 mètres, à voile ou en pêche : on ne gêne pas ceux qui ne peuvent naviguer que dans le chenal."
+  - On ne traverse pas si on gêne, on annonce un dépassement, on évite d’y mouiller.
+sources:
+  - texte: RIPAM, règle 9
+    ref: decret-77-733
+    fichier: regle-09
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

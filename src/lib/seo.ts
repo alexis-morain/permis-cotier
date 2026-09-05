@@ -229,6 +229,8 @@ export function ressource(
     chemin: string;
     theme: string;
     nombreQuestions: number;
+    /** Ce qu'est la page : une fiche par défaut, une leçon pour le cours. */
+    type?: string | readonly string[];
   },
   base: URL | string,
 ): JsonLd {
@@ -241,7 +243,8 @@ export function ressource(
     teaches: params.nom,
     about: { '@type': 'Thing', name: params.theme },
     educationalLevel: 'beginner',
-    learningResourceType: params.nombreQuestions > 0 ? ['Fiche de révision', 'Questions d’entraînement'] : 'Fiche de révision',
+    learningResourceType:
+      params.type ?? (params.nombreQuestions > 0 ? ['Fiche de révision', 'Questions d’entraînement'] : 'Fiche de révision'),
     inLanguage: SITE.langue,
     isAccessibleForFree: true,
     isPartOf: { '@id': absolue('/#site', base) },

@@ -33,6 +33,12 @@ const ESSENTIEL: readonly Lien[] = [
       'Ce qu’est l’épreuve, ce que le site propose, et par où commencer selon le temps dont on dispose',
   },
   {
+    titre: 'Le cours, leçon par leçon',
+    chemin: '/cours',
+    description:
+      'Le programme dans l’ordre où on l’apprend, une leçon par notion, chacune citant ses sources et vérifiée sur les questions de la banque',
+  },
+  {
     titre: 'Guide du permis côtier',
     chemin: '/guide',
     description:

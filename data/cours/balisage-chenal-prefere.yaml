@@ -1,0 +1,47 @@
+notion: balisage-chenal-prefere
+duree: 3
+accroche: >-
+  Le chenal se sépare en deux devant toi. Une bouée rouge avec une bande verte marque la
+  fourche. De quel côté est le chenal principal ?
+etapes:
+  - titre: Une marque à la fourche
+    texte: >-
+      Quand un chenal se divise, la marque posée à la séparation dit quel bras est le
+      chenal principal, qu’on appelle chenal préféré. Elle garde la logique du balisage
+      latéral et se lit dans le sens conventionnel, du large vers le port.
+  - titre: Chenal préféré à tribord
+    texte: >-
+      La marque est rouge, avec une large bande verte au milieu. Corps cylindrique,
+      voyant cylindrique rouge, feu rouge à éclats groupés deux plus un.
+
+      Tu la traites comme une marque bâbord : tu la laisses à gauche pour prendre le
+      chenal principal, qui part à tribord.
+  - titre: Chenal préféré à bâbord
+    texte: >-
+      La marque est verte, avec une large bande rouge. Corps conique, voyant conique
+      vert, feu vert à éclats groupés deux plus un.
+
+      Tu la traites comme une marque tribord : tu la laisses à droite pour prendre le
+      chenal principal, qui part à bâbord.
+  - titre: La forme tranche
+    texte: >-
+      La bande de l’autre couleur peut faire hésiter. La forme, elle, ne ment pas : un
+      cylindre se laisse à bâbord, un cône à tribord, comme toujours en rentrant. Regarde
+      le corps et le voyant avant la bande.
+piege: >-
+  La couleur dominante dit de quel côté tu laisses la marque, et la bande dit de quel
+  côté part le chenal secondaire. Rouge à bande verte : tu la laisses à bâbord, et le
+  chenal principal est à tribord.
+retenir:
+  - "Rouge à bande verte : cylindre, se laisse à bâbord, le chenal principal part à tribord."
+  - "Vert à bande rouge : cône, se laisse à tribord, le chenal principal part à bâbord."
+  - "Dans le doute, la forme : cylindre bâbord, cône tribord."
+sources:
+  - texte: Balisage AISM, région A, marques latérales de chenal préféré
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,61 @@
+notion: barre-hierarchie-privileges
+duree: 4
+accroche: >-
+  Un voilier, un chalutier en pêche, un navire à moteur et un dragueur au travail se
+  retrouvent dans la même baie. Qui s’écarte de qui ?
+etapes:
+  - titre: Une échelle
+    texte: >-
+      Sauf dispositions contraires des règles 9, 10 et 13, la règle 18 range les navires.
+      Chacun s’écarte de ceux qui le précèdent dans la liste : plus un navire est gêné
+      dans sa manœuvre, plus il est privilégié.
+    liste:
+      - Navire qui n’est pas maître de sa manœuvre
+      - Navire à capacité de manœuvre restreinte
+      - Navire handicapé par son tirant d’eau
+      - Navire en train de pêcher
+      - Navire à voile
+      - Navire à propulsion mécanique
+  - titre: Le navire à moteur s’écarte de presque tout
+    texte: >-
+      Un navire à propulsion mécanique faisant route s’écarte d’un navire non maître de sa
+      manœuvre, d’un navire à capacité de manœuvre restreinte, d’un navire en train de
+      pêcher et d’un navire à voile.
+
+      Un navire à voile s’écarte des trois premiers, mais pas d’un navire à moteur. Un
+      navire en train de pêcher s’écarte des deux premiers, dans la mesure du possible.
+  - titre: Le tirant d’eau, un cas à part
+    texte: >-
+      Tout navire, sauf ceux qui ne sont pas maîtres de leur manœuvre ou à capacité
+      restreinte, évite de gêner le libre passage d’un navire handicapé par son tirant
+      d’eau qui montre les signaux prévus. Lui, de son côté, navigue avec une prudence
+      particulière.
+  - titre: Ce que veulent dire ces mots
+    texte: >-
+      Les définitions sont à la règle 3, et l’épreuve les demande.
+    liste:
+      - "Non maître de sa manœuvre : une avarie l’empêche de manœuvrer, il ne peut pas s’écarter"
+      - "Capacité de manœuvre restreinte : la nature de son travail l’en empêche, dragage, pose de câble, plongée"
+      - "En train de pêcher : il traîne des engins qui restreignent sa manœuvre ; une ligne à la traîne ne compte pas"
+      - "Handicapé par son tirant d’eau : la profondeur et la largeur disponibles limitent ses possibilités"
+piege: >-
+  La hiérarchie ne joue qu’en mer libre, entre navires en vue. Dans un chenal étroit, dans
+  un dispositif de séparation du trafic et quand un navire en rattrape un autre, les
+  règles 9, 10 et 13 passent devant : le voilier qui rattrape s’écarte, le voilier ne gêne
+  pas le cargo dans le chenal.
+retenir:
+  - "Ordre : non maître de sa manœuvre, manœuvre restreinte, tirant d’eau, pêche, voile, moteur."
+  - Chacun s’écarte de ceux qui le précèdent.
+  - Les règles 9, 10 et 13 passent avant cette hiérarchie.
+sources:
+  - texte: RIPAM, règle 18
+    ref: decret-77-733
+    fichier: regle-18
+  - texte: RIPAM, règle 3
+    ref: decret-77-733
+    fichier: regle-03
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

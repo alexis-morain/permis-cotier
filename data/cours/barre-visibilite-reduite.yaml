@@ -1,0 +1,50 @@
+notion: barre-visibilite-reduite
+duree: 4
+accroche: >-
+  La brume tombe d’un coup. Tu ne vois plus rien à cent mètres. Les règles de rencontre
+  supposaient que vous vous voyiez : elles changent.
+etapes:
+  - titre: Vitesse de sécurité, machine prête
+    texte: >-
+      Par visibilité réduite, tout navire navigue à une vitesse de sécurité adaptée aux
+      circonstances et aux conditions de visibilité. Un navire à propulsion mécanique
+      tient sa machine prête à manœuvrer immédiatement. C’est la règle 19, qui s’applique
+      aux navires qui ne sont pas en vue les uns des autres.
+  - titre: Un écho au radar
+    texte: >-
+      Un navire qui détecte un autre navire au radar seulement doit déterminer s’il y a
+      risque d’abordage, et manœuvrer largement à temps. S’il change de cap, il évite
+      autant que possible deux manœuvres.
+    liste:
+      - Venir sur bâbord pour un navire situé sur l’avant du travers, sauf s’il est en train de le rattraper
+      - Venir vers un navire qui est par le travers ou sur l’arrière du travers
+  - titre: Un signal de brume devant
+    texte: >-
+      Sauf s’il est établi qu’il n’y a pas de risque d’abordage, un navire qui entend le
+      signal de brume d’un autre navire sur l’avant du travers réduit sa vitesse au
+      minimum nécessaire pour garder son cap. Si nécessaire, il casse son erre, et dans
+      tous les cas il navigue avec une extrême précaution jusqu’à ce que le risque soit
+      passé.
+  - titre: Plus de privilégié
+    texte: >-
+      Dans la brume, personne n’est privilégié : la règle 19 ne dit pas qui maintient,
+      elle dit que chacun manœuvre pour éviter. Les règles entre voiliers, sur les routes
+      croisées ou sur la hiérarchie supposent des navires en vue les uns des autres.
+piege: >-
+  « Je le vois au radar » n’est pas « en vue ». Tant que tu ne vois pas l’autre à l’œil,
+  tu es en visibilité réduite, sous la règle 19, et tu ne peux pas compter sur une
+  priorité.
+retenir:
+  - "Visibilité réduite : vitesse de sécurité, machine prête à manœuvrer."
+  - "Écho radar sur l’avant du travers : on ne vient pas sur bâbord. Par le travers ou sur l’arrière : on ne vient pas vers lui."
+  - "Signal de brume devant : vitesse au minimum, extrême précaution."
+  - Personne n’est privilégié dans la brume.
+sources:
+  - texte: RIPAM, règle 19
+    ref: decret-77-733
+    fichier: regle-19
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

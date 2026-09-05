@@ -1,0 +1,38 @@
+notion: region-b-invariants
+duree: 2
+accroche: >-
+  Même bateau, même mer des Caraïbes. Une cardinale Nord passe devant toi. Faut-il
+  l’inverser aussi ?
+etapes:
+  - titre: "Non : les cardinales sont les mêmes partout"
+    texte: >-
+      Les marques cardinales sont identiques dans les deux régions : mêmes couleurs
+      noires et jaunes, mêmes voyants à deux cônes, mêmes feux blancs. Une cardinale
+      Nord se contourne par le nord à Fort-de-France comme à Brest.
+  - titre: "Danger isolé, eaux saines, spéciales : pareil"
+    texte: >-
+      Aucune de ces marques ne change d’une région à l’autre.
+    liste:
+      - "Danger isolé : noir à bandes rouges, deux sphères noires"
+      - "Eaux saines : bandes verticales rouges et blanches, sphère rouge"
+      - "Spéciale : jaune, croix jaune"
+      - "Danger nouveau : bleu et jaune"
+  - titre: Ce qui change tient en une ligne
+    texte: >-
+      L’inversion ne porte que sur le balisage latéral, et seulement sur la couleur. Tout
+      le reste du système est le même dans le monde entier.
+piege: >-
+  Une question de région B qui montre une cardinale ou un danger isolé cherche à te faire
+  inverser quelque chose. Il n’y a rien à inverser : seules les latérales changent.
+retenir:
+  - "Cardinales, danger isolé, eaux saines, spéciales : identiques en A et en B."
+  - Seule la couleur des marques latérales s’inverse.
+sources:
+  - texte: Balisage AISM, ce qui ne change pas entre les régions A et B
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

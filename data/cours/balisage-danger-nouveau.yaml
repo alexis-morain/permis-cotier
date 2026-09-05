@@ -1,0 +1,39 @@
+notion: balisage-danger-nouveau
+duree: 2
+accroche: >-
+  Une épave a coulé la semaine dernière. Elle n’est sur aucune carte. Comment la mer te
+  prévient-elle ?
+etapes:
+  - titre: Un danger que les cartes ne connaissent pas encore
+    texte: >-
+      Un danger récemment découvert, une épave par exemple, n’est pas encore porté sur
+      les documents nautiques. On le balise en doublant le balisage normal : deux marques
+      au lieu d’une, ce qui attire l’œil.
+  - titre: La marque de danger nouveau
+    texte: >-
+      Si le danger est grave, on ajoute une marque de danger nouveau : corps à bandes
+      verticales bleues et jaunes, voyant en croix jaune, feu bleu et jaune alternés.
+      Elle reste en place jusqu’à ce que le danger soit connu et balisé normalement.
+    visuel: balisage/danger-nouveau.svg
+    alt: "Une bouée à bandes verticales bleues et jaunes, surmontée d’un voyant en croix jaune en forme de X."
+  - titre: Ce qu’elle te demande
+    texte: >-
+      Tu passes largement à l’écart. Comme le danger n’est pas cartographié, tu ne sais
+      ni sa taille ni sa forme : la seule bonne réponse est la distance.
+piege: >-
+  Bleu et jaune, ce n’est pas une marque spéciale délavée. La marque spéciale est toute
+  jaune. Dès que tu vois du bleu, c’est un danger, et un danger que personne ne connaît
+  bien.
+retenir:
+  - Un danger nouveau se balise par une marque normale doublée, ou par une marque bleue et jaune.
+  - Bandes verticales bleues et jaunes, croix jaune, feu bleu et jaune alternés.
+  - "On passe loin : le danger n’est pas sur la carte."
+sources:
+  - texte: Balisage AISM, région A, marque de danger nouveau
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,41 @@
+notion: barre-routes-opposees
+duree: 3
+accroche: >-
+  Un bateau à moteur vient droit sur toi, étrave contre étrave. Vous devez chacun choisir
+  un côté, et le RIPAM ne vous laisse pas le choix.
+etapes:
+  - titre: Chacun vient sur tribord
+    texte: >-
+      Quand deux navires à propulsion mécanique font des routes directement opposées, ou
+      à peu près, avec risque d’abordage, chacun vient sur tribord pour passer par bâbord
+      l’un de l’autre. Tu tournes à droite, lui aussi, et vous vous croisez rouge contre
+      rouge.
+    visuel: situations/routes-opposees.svg
+    alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l’image. Un navire à moteur vient droit sur lui, étrave contre étrave."
+  - titre: Reconnaître la situation
+    texte: >-
+      Tu es dans ce cas quand tu vois l’autre devant toi ou pratiquement devant. De nuit,
+      tu verrais ses deux feux de côté, le rouge et le vert, et ses feux de mât l’un par
+      l’autre ou presque. De jour, tu le vois sous un angle correspondant, c’est-à-dire de
+      face.
+  - titre: Dans le doute, c’est le cas
+    texte: >-
+      Si tu ne peux pas déterminer avec certitude si les routes sont opposées, tu dois
+      considérer qu’elles le sont, et manœuvrer : venir sur tribord.
+piege: >-
+  La règle 14 ne concerne que deux navires à propulsion mécanique. Face à un voilier, ce
+  n’est pas elle qui joue, c’est la hiérarchie de la règle 18 : le navire à moteur
+  s’écarte.
+retenir:
+  - "Routes opposées entre deux navires à moteur : chacun vient sur tribord."
+  - On se croise bâbord contre bâbord.
+  - Dans le doute, on considère que les routes sont opposées.
+sources:
+  - texte: RIPAM, règle 14
+    ref: decret-77-733
+    fichier: regle-14
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

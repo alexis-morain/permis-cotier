@@ -1,0 +1,43 @@
+notion: balisage-speciale
+duree: 2
+accroche: >-
+  Une bouée toute jaune, avec une croix sur la tête. Elle ne te protège d’aucun rocher,
+  mais elle te dit qu’ici, quelque chose se passe.
+etapes:
+  - titre: Pas un danger, une zone
+    texte: >-
+      La marque spéciale ne signale pas un danger pour la navigation. Elle délimite une
+      zone ou une installation : zone de mouillage, câble ou conduite sous-marine, zone
+      d’exercices, zone de dépôt, installation de loisirs.
+    visuel: balisage/speciale.svg
+    alt: "Une bouée à corps jaune, surmontée d’un voyant en croix jaune en forme de X."
+  - titre: La reconnaître
+    texte: >-
+      Le jaune est sa seule couleur. Une marque jaune et noire est une cardinale, une
+      marque jaune et bleue est un danger nouveau.
+    liste:
+      - "Corps : jaune"
+      - "Voyant : une croix jaune en forme de X"
+      - "Feu : jaune, à un rythme différent de ceux des feux blancs"
+  - titre: Ce qu’elle demande
+    texte: >-
+      Elle ne dit pas de quel côté passer. Pour savoir quoi faire, il faut savoir ce
+      qu’elle délimite : on ne mouille pas sur un câble, on ne traverse pas une zone de
+      baignade. C’est la carte ou le document nautique qui le dit.
+piege: >-
+  La croix est aussi le voyant de la marque de danger nouveau. La différence est sur le
+  corps : tout jaune pour la marque spéciale, bandes bleues et jaunes pour le danger
+  nouveau.
+retenir:
+  - "Jaune, croix jaune, feu jaune : marque spéciale."
+  - Elle délimite une zone ou une installation, pas un danger.
+  - "Elle n’indique pas de côté : la carte dit quoi faire."
+sources:
+  - texte: Balisage AISM, région A, marques spéciales
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'
