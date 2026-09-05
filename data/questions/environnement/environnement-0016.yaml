@@ -1,0 +1,30 @@
+id: environnement-0016
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu veux remonter tes lignes plus facilement. Quels engins électriques la pêche de loisir
+  t'autorise-t-elle ?
+propositions:
+  - id: a
+    texte: Jusqu'à trois vire-lignes ou moulinets électriques de 800 watts au plus chacun
+  - id: b
+    texte: Un vire-casier électrique
+  - id: c
+    texte: Aucun engin électrique
+reponses:
+  - a
+explication: >-
+  Vire-casiers, vire-filets, treuils et potences mécanisées sont interdits à bord d'un
+  bateau de pêche de loisir. Seuls sont admis les vire-lignes ou moulinets électriques,
+  dans la limite de trois engins par navire d'une puissance maximale de 800 watts chacun.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-89
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -1,0 +1,31 @@
+id: vhf-0036
+option: cotier
+theme: vhf
+notion: vhf-canaux
+statut: publie
+difficulte: 2
+enonce: >-
+  Avec ta VHF portative, tu tentes d'appeler un bateau ami que tu sais à quarante milles
+  de toi. Peux-tu espérer le joindre ?
+propositions:
+  - id: a
+    texte: Non, d'un bateau à l'autre la VHF porte quelques milles seulement
+  - id: b
+    texte: Oui, si tu passes en pleine puissance
+  - id: c
+    texte: Oui, la VHF porte une centaine de milles par beau temps
+reponses:
+  - a
+explication: >-
+  La VHF porte à vue, un peu au-delà de l'horizon optique. D'un bateau à l'autre, avec
+  des antennes basses, la portée est de quelques milles. Elle atteint plusieurs dizaines
+  de milles vers une station côtière haut perchée, et la puissance n'y change presque
+  rien.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

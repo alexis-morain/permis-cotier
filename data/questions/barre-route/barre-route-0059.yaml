@@ -1,0 +1,31 @@
+id: barre-route-0059
+option: cotier
+theme: barre-route
+notion: barre-visibilite-reduite
+statut: publie
+difficulte: 1
+enonce: >-
+  Qu'appelle-t-on « visibilité réduite » au sens du RIPAM ?
+propositions:
+  - id: a
+    texte: Toute situation où la visibilité est diminuée par la brume, la bruine, la neige,
+      de forts grains de pluie ou une cause analogue
+  - id: b
+    texte: La nuit, entre le coucher et le lever du soleil
+  - id: c
+    texte: Une visibilité inférieure à un mille, mesurée au radar
+reponses:
+  - a
+explication: >-
+  La règle 3 l) définit la visibilité réduite comme toute situation où la visibilité est
+  diminuée par suite de brume, bruine, neige, forts grains de pluie ou tempêtes de sable,
+  ou pour toute autre cause analogue. La nuit claire n'en est pas une, et aucun seuil
+  chiffré n'est fixé.
+sources:
+  - texte: RIPAM, règle 3 l)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

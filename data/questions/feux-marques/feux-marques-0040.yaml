@@ -1,0 +1,27 @@
+id: feux-marques-0040
+option: cotier
+theme: feux-marques
+notion: feux-definitions
+statut: publie
+difficulte: 1
+enonce: >-
+  De nuit, tu aperçois le feu rouge d'un navire qui fait route. Quel bord te présente-t-il
+  ?
+propositions:
+  - id: a
+    texte: Son bâbord
+  - id: b
+    texte: Son tribord
+reponses:
+  - a
+explication: >-
+  Le feu de côté rouge est placé à bâbord, le vert à tribord. Voir du rouge, c'est voir
+  le côté gauche du navire, et donc savoir vers où il se dirige.
+sources:
+  - texte: RIPAM, règle 21 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

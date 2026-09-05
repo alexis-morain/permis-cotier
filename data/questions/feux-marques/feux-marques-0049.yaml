@@ -1,0 +1,31 @@
+id: feux-marques-0049
+option: cotier
+theme: feux-marques
+notion: feux-remorquage
+statut: publie
+difficulte: 2
+enonce: >-
+  De jour, un remorqueur montre une marque biconique à l'endroit le plus visible. Que
+  t'indique-t-elle ?
+propositions:
+  - id: a
+    texte: La longueur du train de remorque dépasse 200 mètres
+  - id: b
+    texte: Le remorqueur n'est pas maître de sa manœuvre
+  - id: c
+    texte: Le remorqueur pêche au chalut
+reponses:
+  - a
+explication: >-
+  Le navire remorquant montre une marque biconique à l'endroit le plus visible lorsque
+  la longueur du train de remorque, mesurée de son arrière à l'extrémité du train, dépasse
+  200 mètres. Le navire remorqué en montre une aussi. Passe large derrière lui : le câble
+  est long.
+sources:
+  - texte: RIPAM, règle 24 a) v)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

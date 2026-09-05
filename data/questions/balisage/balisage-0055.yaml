@@ -1,0 +1,28 @@
+id: balisage-0055
+option: cotier
+theme: balisage
+notion: balisage-plages
+statut: publie
+difficulte: 2
+enonce: >-
+  Les bouées qui balisent la bande des 300 mètres et ses chenaux portent-elles un voyant
+  ?
+propositions:
+  - id: a
+    texte: Non, elles en sont dépourvues
+  - id: b
+    texte: Oui, une croix jaune en X comme toute marque spéciale
+reponses:
+  - a
+explication: >-
+  L'article 2 de l'arrêté du 27 mars 1991 est net : les bouées sont dépourvues de voyant.
+  Elles ont pourtant les caractères des marques spéciales, jaunes, mais c'est leur forme,
+  sphérique, cylindrique ou conique, qui dit leur rôle.
+sources:
+  - texte: Arrêté du 27 mars 1991, article 2
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

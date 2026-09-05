@@ -1,0 +1,31 @@
+id: environnement-0022
+option: cotier
+theme: environnement
+notion: env-faune-flore
+statut: publie
+difficulte: 2
+enonce: >-
+  Que risque celui qui pêche dans une zone ou à une période où la pêche d'une espèce est
+  interdite ?
+propositions:
+  - id: a
+    texte: 22 500 euros d'amende
+  - id: b
+    texte: Un simple avertissement
+  - id: c
+    texte: 100 000 euros d'amende
+reponses:
+  - a
+explication: >-
+  L'article L. 945-4 du code rural et de la pêche maritime punit de 22 500 euros d'amende
+  le fait de pratiquer la pêche dans une zone ou à une profondeur interdite, ou de pêcher
+  certaines espèces dans une zone, à une profondeur ou à une période où leur pêche est
+  interdite. Les 100 000 euros sanctionnent les rejets nuisibles.
+sources:
+  - texte: Code rural et de la pêche maritime, article L. 945-4, I. 3°
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

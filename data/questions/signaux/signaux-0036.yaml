@@ -1,0 +1,30 @@
+id: signaux-0036
+option: cotier
+theme: signaux
+notion: signaux-lumineux
+statut: publie
+difficulte: 3
+enonce: >-
+  Quelles durées la règle 34 fixe-t-elle aux signaux lumineux de manœuvre ?
+propositions:
+  - id: a
+    texte: Chaque éclat dure une seconde environ, séparé du suivant par une seconde environ
+  - id: b
+    texte: Deux signaux successifs sont séparés de dix secondes au moins
+  - id: c
+    texte: Chaque éclat dure de quatre à six secondes
+reponses:
+  - a
+  - b
+explication: >-
+  Chaque éclat dure une seconde environ, l'intervalle entre les éclats est d'une seconde
+  environ, et l'intervalle entre deux signaux successifs est de dix secondes au moins.
+  Les quatre à six secondes sont la durée du son prolongé au sifflet, pas celle d'un éclat.
+sources:
+  - texte: RIPAM, règle 34 b) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

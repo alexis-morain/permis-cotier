@@ -1,0 +1,31 @@
+id: ecluses-0016
+option: cotier
+theme: ecluses
+notion: ecluses-passage
+statut: publie
+difficulte: 2
+enonce: >-
+  Le feu vert d'accès s'allume et tu es seul dans le garage à bord de ton bateau de plaisance,
+  une menue embarcation. Entres-tu dans le sas ?
+propositions:
+  - id: a
+    texte: Seulement après y avoir été invité par le personnel chargé de la manœuvre de
+      l'écluse
+  - id: b
+    texte: Oui, sans attendre, le feu vert suffit
+  - id: c
+    texte: Non, une menue embarcation seule n'est jamais éclusée
+reponses:
+  - a
+explication: >-
+  Les menues embarcations ne peuvent exiger un éclusage spécial et ne doivent pénétrer
+  dans le sas qu'après y avoir été invitées par le personnel chargé de la manœuvre. Éclusées
+  avec d'autres bateaux, elles entrent après eux et se tiennent à distance.
+sources:
+  - texte: Code des transports, article A. 4241-53-30, 3
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

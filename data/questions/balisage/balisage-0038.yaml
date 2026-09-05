@@ -1,0 +1,34 @@
+id: balisage-0038
+option: cotier
+theme: balisage
+notion: balisage-chenal-prefere
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu remontes un chenal depuis le large. À l'endroit où il se divise en deux, tu relèves
+  une bouée cylindrique rouge portant une large bande horizontale verte. Que t'indique-t-elle
+  ?
+propositions:
+  - id: a
+    texte: Le chenal à emprunter de préférence est à tribord, tu la laisses sur bâbord
+      pour le suivre
+  - id: b
+    texte: Le chenal à emprunter de préférence est à bâbord, tu la laisses sur tribord
+      pour le suivre
+  - id: c
+    texte: Un danger isolé au milieu de la bifurcation
+reponses:
+  - a
+explication: >-
+  C'est une marque latérale modifiée : rouge à large bande verte, cylindrique, elle signale
+  un chenal préféré à tribord. Elle se traite comme une marque de bâbord, et le chenal
+  principal passe à sa droite. La marque inverse, verte à bande rouge et conique, signale
+  un chenal préféré à bâbord.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

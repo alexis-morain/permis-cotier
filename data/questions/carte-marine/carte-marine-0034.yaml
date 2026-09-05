@@ -1,0 +1,31 @@
+id: carte-marine-0034
+option: cotier
+theme: carte-marine
+notion: maree-consequences
+statut: publie
+difficulte: 3
+enonce: >-
+  Le calcul de la hauteur d'eau par la règle des douzièmes est-il au programme de l'option
+  côtière ?
+propositions:
+  - id: a
+    texte: Non, il relève de l'extension hauturière
+  - id: b
+    texte: Oui, c'est une question classique de l'épreuve
+reponses:
+  - a
+explication: >-
+  L'option côtière demande des notions élémentaires sur la marée et ses conséquences.
+  Le calcul par la règle des douzièmes relève de l'extension hauturière, article 4.2 de
+  l'arrêté du 28 septembre 2007. Savoir qu'une sonde est un minimum et lire un coefficient
+  suffit.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+  - texte: Arrêté du 28 septembre 2007, article 1er, 1.2
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

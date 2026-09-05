@@ -1,0 +1,30 @@
+id: carte-marine-0024
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 2
+enonce: >-
+  Sur la carte, une bouée est dessinée avec un petit cercle à sa base. Où est sa position
+  exacte ?
+propositions:
+  - id: a
+    texte: Au petit cercle, à la base du dessin
+  - id: b
+    texte: Au milieu du dessin de la bouée
+  - id: c
+    texte: Au sommet du dessin
+reponses:
+  - a
+explication: >-
+  Une bouée est représentée par sa silhouette coloriée selon la marque, avec un petit
+  cercle à sa base qui marque la position exacte, et son nom en italique. C'est le cercle
+  qui porte le point, pas le milieu du dessin.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

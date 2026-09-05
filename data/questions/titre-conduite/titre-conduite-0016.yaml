@@ -1,0 +1,28 @@
+id: titre-conduite-0016
+option: cotier
+theme: titre-conduite
+notion: titre-options
+statut: publie
+difficulte: 2
+enonce: >-
+  Avec ton option côtière, peux-tu conduire un bateau à moteur sur un lac ?
+propositions:
+  - id: a
+    texte: Oui, l'option côtière vaut l'option eaux intérieures sur les lacs et plans
+      d'eau fermés
+  - id: b
+    texte: Non, il faut l'option eaux intérieures partout hors de la mer
+reponses:
+  - a
+explication: >-
+  L'option côtière et l'extension hauturière valent l'option eaux intérieures pour la
+  conduite des bateaux de plaisance sur les lacs et plans d'eau fermés. Sur les rivières
+  et canaux, en revanche, il faut l'option eaux intérieures.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 12
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

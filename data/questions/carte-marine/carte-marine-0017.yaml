@@ -1,0 +1,30 @@
+id: carte-marine-0017
+option: cotier
+theme: carte-marine
+notion: carte-dangers-amers
+statut: publie
+difficulte: 1
+enonce: >-
+  Deux amers sont placés l'un derrière l'autre dans le même plan vertical, et tu les gardes
+  superposés pour entrer au port. Comment s'appelle ce dispositif ?
+propositions:
+  - id: a
+    texte: Un alignement
+  - id: b
+    texte: Un feu à secteurs
+  - id: c
+    texte: Une marque d'eaux saines
+reponses:
+  - a
+explication: >-
+  Un alignement est un groupe de deux marques ou feux placés dans le même plan vertical,
+  de telle manière que le navigateur puisse suivre le même relèvement en les gardant superposés.
+  Il matérialise l'axe d'un chenal ou une route sûre, de jour comme de nuit.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 8.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

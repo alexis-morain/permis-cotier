@@ -1,0 +1,29 @@
+id: meteo-0018
+option: cotier
+theme: meteo
+notion: meteo-etat-mer
+statut: publie
+difficulte: 3
+enonce: >-
+  Le bulletin donne la hauteur significative des vagues. Que mesure-t-elle ?
+propositions:
+  - id: a
+    texte: La moyenne du tiers des vagues les plus hautes
+  - id: b
+    texte: La hauteur de la plus haute vague observée
+  - id: c
+    texte: La moyenne de toutes les vagues
+reponses:
+  - a
+explication: >-
+  L'état de la mer décrit la hauteur significative des vagues, c'est-à-dire la moyenne
+  du tiers des vagues les plus hautes. Certaines vagues dépassent donc nettement la valeur
+  annoncée : une mer forte à 3 mètres significatifs en cache de plus grosses.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

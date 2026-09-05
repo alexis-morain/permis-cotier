@@ -1,0 +1,28 @@
+id: feux-marques-0063
+option: cotier
+theme: feux-marques
+notion: feux-mouillage-echoue
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau de 9 mètres s'est échoué de nuit. Es-tu tenu de montrer les deux feux rouges
+  superposés du navire échoué ?
+propositions:
+  - id: a
+    texte: Non, les navires de moins de 12 mètres échoués en sont dispensés
+  - id: b
+    texte: Oui, tout navire échoué doit les montrer
+reponses:
+  - a
+explication: >-
+  Les navires de longueur inférieure à 12 mètres, lorsqu'ils sont échoués, ne sont pas
+  tenus de montrer les deux feux rouges ni les trois boules de la règle 30 d). La dispense
+  ne vaut que pour ces signaux d'échouement, pas pour le feu de mouillage si le lieu l'exige.
+sources:
+  - texte: RIPAM, règle 30 f)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

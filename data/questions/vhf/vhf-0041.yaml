@@ -1,0 +1,30 @@
+id: vhf-0041
+option: cotier
+theme: vhf
+notion: vhf-detresse
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu donnes ta position dans un message de détresse. Quelles formes sont admises ?
+propositions:
+  - id: a
+    texte: La latitude et la longitude
+  - id: b
+    texte: Un relèvement et une distance depuis un point connu
+  - id: c
+    texte: Le nom du port d'où tu es parti ce matin
+reponses:
+  - a
+  - b
+explication: >-
+  La position s'annonce en latitude et longitude, ou par un relèvement et une distance
+  depuis un point connu, un phare ou un cap par exemple. Le port de départ ne dit rien
+  de l'endroit où tu te trouves maintenant.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

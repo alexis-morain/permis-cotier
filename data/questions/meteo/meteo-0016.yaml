@@ -1,0 +1,30 @@
+id: meteo-0016
+option: cotier
+theme: meteo
+notion: meteo-beaufort
+statut: publie
+difficulte: 2
+enonce: >-
+  Le CROSS annonce un vent frais sur ta zone. Quelle force Beaufort et quels nœuds cela
+  recouvre-t-il ?
+propositions:
+  - id: a
+    texte: Force 6, 22 à 27 nœuds
+  - id: b
+    texte: Force 5, 17 à 21 nœuds
+  - id: c
+    texte: Force 7, 28 à 33 nœuds
+reponses:
+  - a
+explication: >-
+  Le vent frais est la force 6, 22 à 27 nœuds de vent moyen. La bonne brise est la force
+  5 et le grand frais la force 7, premier degré qui déclenche un avis. La force 6 est
+  déjà la limite de conception des bateaux de catégorie C.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

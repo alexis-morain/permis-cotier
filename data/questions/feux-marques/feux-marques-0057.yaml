@@ -1,0 +1,30 @@
+id: feux-marques-0057
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+statut: publie
+difficulte: 2
+enonce: >-
+  De jour, un navire montre à l'endroit le plus visible deux boules noires superposées.
+  Que t'indique-t-il ?
+propositions:
+  - id: a
+    texte: Il n'est pas maître de sa manœuvre
+  - id: b
+    texte: Il est au mouillage
+  - id: c
+    texte: Il est en détresse
+reponses:
+  - a
+explication: >-
+  Deux boules superposées sont la marque de jour du navire qui n'est pas maître de sa
+  manœuvre, l'équivalent des deux feux rouges de nuit. Le navire au mouillage n'en montre
+  qu'une, et la règle 27 h) précise que ces signaux ne sont pas des signaux de détresse.
+sources:
+  - texte: RIPAM, règle 27 a) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

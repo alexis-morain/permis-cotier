@@ -1,0 +1,27 @@
+id: meteo-0023
+option: cotier
+theme: meteo
+notion: meteo-facteurs
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans l'hémisphère nord, dans quel sens le vent tourne-t-il autour d'une dépression ?
+propositions:
+  - id: a
+    texte: Dans le sens inverse des aiguilles d'une montre
+  - id: b
+    texte: Dans le sens des aiguilles d'une montre
+reponses:
+  - a
+explication: >-
+  Dans l'hémisphère nord, le vent tourne dans le sens inverse des aiguilles d'une montre
+  autour d'une dépression, et dans le sens des aiguilles autour d'un anticyclone. Il souffle
+  des hautes pressions vers les basses, d'autant plus fort que les isobares sont resserrées.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

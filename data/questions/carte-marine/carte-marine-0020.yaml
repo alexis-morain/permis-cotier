@@ -1,0 +1,29 @@
+id: carte-marine-0020
+option: cotier
+theme: carte-marine
+notion: carte-distances
+statut: publie
+difficulte: 2
+enonce: >-
+  Que vaut une minute de latitude ?
+propositions:
+  - id: a
+    texte: Un mille marin, soit 1 852 mètres
+  - id: b
+    texte: Un kilomètre
+  - id: c
+    texte: Une encablure, soit 185 mètres
+reponses:
+  - a
+explication: >-
+  Une minute de latitude vaut un mille marin, 1 852 mètres. C'est pourquoi les distances
+  se mesurent sur l'échelle des latitudes, aux bords verticaux de la carte. L'encablure
+  est le dixième du mille, environ 185 mètres.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

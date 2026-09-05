@@ -1,0 +1,30 @@
+id: barre-route-0044
+option: cotier
+theme: barre-route
+notion: barre-manoeuvre-evitement
+statut: publie
+difficulte: 3
+enonce: >-
+  Une règle te tient de ne pas gêner le passage d'un autre navire. Un risque d'abordage
+  se crée malgré tout. Es-tu libéré de l'obligation de ne pas le gêner ?
+propositions:
+  - id: a
+    texte: Non, tu restes tenu de ne pas gêner son passage, et tu manœuvres en tenant
+      compte des autres règles
+  - id: b
+    texte: Oui, dès qu'il y a risque d'abordage seules les règles de croisement s'appliquent
+reponses:
+  - a
+explication: >-
+  La règle 8 f) ii) précise qu'un navire tenu de ne pas gêner le passage d'un autre n'est
+  pas dispensé de cette obligation s'il s'approche de l'autre de telle sorte qu'il existe
+  un risque d'abordage. Il manœuvre sans tarder, en tenant compte des manœuvres que les
+  autres règles peuvent exiger.
+sources:
+  - texte: RIPAM, règle 8 f)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

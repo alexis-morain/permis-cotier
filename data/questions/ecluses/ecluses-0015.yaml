@@ -1,0 +1,29 @@
+id: ecluses-0015
+option: cotier
+theme: ecluses
+notion: ecluses-signaux-acces
+statut: publie
+difficulte: 1
+enonce: >-
+  Le sas est vidé et deux feux verts s'allument côté aval. Que t'indiquent-ils ?
+propositions:
+  - id: a
+    texte: La sortie de l'écluse est autorisée
+  - id: b
+    texte: La sortie est encore interdite, le personnel prépare l'ouverture
+  - id: c
+    texte: L'écluse est hors service
+reponses:
+  - a
+explication: >-
+  La sortie d'une écluse est réglée, de jour comme de nuit, par un ou deux feux rouges
+  pour la sortie interdite, et un ou deux feux verts pour la sortie autorisée. Les signaux
+  d'entrée, plus nuancés, distinguent l'écluse fermée, hors service ou en préparation.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 2
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

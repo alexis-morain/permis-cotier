@@ -1,0 +1,30 @@
+id: carte-marine-0026
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 3
+enonce: >-
+  Un feu est décrit « LFl 10s ». Que signifie LFl ?
+propositions:
+  - id: a
+    texte: Un éclat long, d'au moins deux secondes
+  - id: b
+    texte: Un feu fixe
+  - id: c
+    texte: Un feu à occultations
+reponses:
+  - a
+explication: >-
+  LFl désigne un feu à éclat long, un éclat qui dure au moins deux secondes, ici toutes
+  les dix secondes. C'est l'un des rythmes possibles d'une marque d'eaux saines. F est
+  le feu fixe et Oc le feu à occultations.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de
+      feu »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

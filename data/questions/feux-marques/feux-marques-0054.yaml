@@ -1,0 +1,28 @@
+id: feux-marques-0054
+option: cotier
+theme: feux-marques
+notion: feux-peche
+statut: publie
+difficulte: 3
+enonce: >-
+  Un navire pêche au mouillage, de nuit. Montre-t-il le feu blanc de mouillage en plus
+  de ses feux de pêche ?
+propositions:
+  - id: a
+    texte: Non, en pêche il ne montre que les feux et marques de la règle 26
+  - id: b
+    texte: Oui, tout navire au mouillage montre le feu de la règle 30
+reponses:
+  - a
+explication: >-
+  Un navire en train de pêcher ne doit, lorsqu'il fait route ou lorsqu'il est au mouillage,
+  montrer que les feux et marques prescrits par la règle 26. Le feu de mouillage de la
+  règle 30 ne s'y ajoute pas.
+sources:
+  - texte: RIPAM, règle 26 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

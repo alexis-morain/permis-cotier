@@ -1,0 +1,31 @@
+id: carte-marine-0022
+option: cotier
+theme: carte-marine
+notion: carte-generalites
+statut: publie
+difficulte: 3
+enonce: >-
+  Au centre de la rose des vents, la carte indique la déclinaison magnétique avec une
+  année et une variation annuelle. Pourquoi ?
+propositions:
+  - id: a
+    texte: Parce que la déclinaison bouge lentement et qu'une rose ancienne demande une
+      correction
+  - id: b
+    texte: Parce que la déclinaison change avec la saison
+  - id: c
+    texte: Parce que la carte a été dessinée cette année-là
+reponses:
+  - a
+explication: >-
+  L'écart entre le nord vrai et le nord magnétique, la déclinaison, bouge lentement d'année
+  en année. La rose porte donc sa valeur, son sens, son année de mesure et sa variation
+  annuelle, pour qu'on la corrige à la date où l'on navigue.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -1,0 +1,33 @@
+id: vhf-0054
+option: cotier
+theme: vhf
+notion: vhf-alphabet
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu épelles ton indicatif à la radio. Quels mots de l'alphabet phonétique international
+  sont les bons pour les lettres J, W, X et Z ?
+propositions:
+  - id: a
+    texte: J se dit Juliett
+  - id: b
+    texte: W se dit Whiskey
+  - id: c
+    texte: X se dit Xénon
+  - id: d
+    texte: Z se dit Zèbre
+reponses:
+  - a
+  - b
+explication: >-
+  L'alphabet phonétique international épelle J Juliett et W Whiskey. X se dit X-ray et
+  Z se dit Zulu. Ces mots sont les mêmes dans toutes les langues, c'est ce qui les rend
+  compréhensibles à la radio.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

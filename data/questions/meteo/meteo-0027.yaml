@@ -1,0 +1,31 @@
+id: meteo-0027
+option: cotier
+theme: meteo
+notion: meteo-decision
+statut: publie
+difficulte: 2
+enonce: >-
+  Le bulletin te laisse un doute sur la sortie de demain. À quel moment la décision de
+  renoncer coûte-t-elle le moins ?
+propositions:
+  - id: a
+    texte: À terre, avant d'appareiller
+  - id: b
+    texte: Une fois dehors, quand on voit vraiment le temps qu'il fait
+  - id: c
+    texte: Au moment de faire demi-tour, à mi-parcours
+reponses:
+  - a
+explication: >-
+  Renoncer ou reporter fait partie de la décision, et se décide à terre, avant d'appareiller,
+  quand cela ne coûte rien. Une fois dehors, les options se réduisent. En cas de doute,
+  la vacation VHF du CROSS et l'affichage de la capitainerie donnent la mise à jour la
+  plus récente.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

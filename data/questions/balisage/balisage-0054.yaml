@@ -1,0 +1,31 @@
+id: balisage-0054
+option: cotier
+theme: balisage
+notion: balisage-plages
+statut: publie
+difficulte: 3
+enonce: >-
+  À quel intervalle sont mouillées les bouées qui matérialisent la limite extérieure de
+  la bande des 300 mètres ?
+propositions:
+  - id: a
+    texte: 200 mètres environ
+  - id: b
+    texte: 50 mètres environ
+  - id: c
+    texte: 500 mètres environ
+reponses:
+  - a
+explication: >-
+  Les bouées sphériques de la limite des 300 mètres, d'au moins 0,80 mètre de diamètre,
+  sont mouillées à intervalles réguliers de 200 mètres environ. Les intervalles de 50
+  mètres et moins sont ceux des chenaux traversiers, qui se resserrent en approchant du
+  rivage.
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 1
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

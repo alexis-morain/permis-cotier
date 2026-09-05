@@ -1,0 +1,28 @@
+id: vhf-0042
+option: cotier
+theme: vhf
+notion: vhf-detresse
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu termines ton message de détresse. Par quel mot rends-tu l'antenne ?
+propositions:
+  - id: a
+    texte: À VOUS
+  - id: b
+    texte: TERMINÉ
+  - id: c
+    texte: MAYDAY
+reponses:
+  - a
+explication: >-
+  Le message de détresse se termine par « À VOUS », qui rend l'antenne et invite les stations
+  à répondre. MAYDAY ouvre le message, il ne le ferme pas.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

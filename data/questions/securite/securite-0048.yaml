@@ -1,0 +1,30 @@
+id: securite-0048
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton voilier est au mouillage à un mille de la côte. Jusqu'où peux-tu t'en éloigner avec
+  l'annexe ?
+propositions:
+  - id: a
+    texte: 300 mètres du voilier, qui est considéré comme un abri
+  - id: b
+    texte: Jusqu'à la côte, sans limite, puisque le voilier est en vue
+  - id: c
+    texte: 2 milles du voilier
+reponses:
+  - a
+explication: >-
+  La navigation des annexes est limitée à 300 mètres d'un abri, et le navire porteur est
+  considéré comme un abri. Au-delà de 300 mètres d'un abri côtier, l'annexe embarque un
+  moyen de repérage lumineux et autant d'EIF de niveau 50 que de personnes.
+sources:
+  - texte: Division 240, article 240-2.09
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

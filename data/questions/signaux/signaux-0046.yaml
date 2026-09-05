@@ -1,0 +1,29 @@
+id: signaux-0046
+option: cotier
+theme: signaux
+notion: signaux-detresse
+statut: publie
+difficulte: 3
+enonce: >-
+  Un navire hisse un pavillon carré avec une boule au-dessous. Que t'indique-t-il ?
+propositions:
+  - id: a
+    texte: Il est en détresse et demande assistance
+  - id: b
+    texte: Il participe à des opérations de plongée
+  - id: c
+    texte: Il est au mouillage
+reponses:
+  - a
+explication: >-
+  Le signal constitué par un pavillon carré avec une boule ou un objet analogue au-dessus
+  ou en dessous est un signal de détresse de l'annexe IV. La plongée se signale par le
+  pavillon « A », et le mouillage par une boule seule.
+sources:
+  - texte: RIPAM, annexe IV, 1 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: balisage-0043
+option: cotier
+theme: balisage
+notion: balisage-cardinal
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu relèves une bouée dont le corps est jaune avec une seule large bande horizontale
+  noire. Quelle marque cardinale as-tu devant toi ?
+propositions:
+  - id: a
+    texte: Une cardinale Ouest
+  - id: b
+    texte: Une cardinale Est
+  - id: c
+    texte: Une cardinale Sud
+reponses:
+  - a
+explication: >-
+  La cardinale Ouest est jaune avec une seule bande horizontale noire, et son voyant est
+  fait de deux cônes opposés par la pointe. La cardinale Est est l'inverse, noire avec
+  une seule bande jaune. La Sud est jaune au-dessus de noir, sans bande.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.4
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

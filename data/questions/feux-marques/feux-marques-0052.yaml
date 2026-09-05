@@ -1,0 +1,30 @@
+id: feux-marques-0052
+option: cotier
+theme: feux-marques
+notion: feux-voile-aviron
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton voilier de 10 mètres porte en tête de mât un fanal unique réunissant feux de côté
+  et feu de poupe. Peux-tu allumer en même temps les deux feux rouge et vert superposés
+  du voilier ?
+propositions:
+  - id: a
+    texte: Non, ces feux ne doivent pas être montrés en même temps que le fanal unique
+  - id: b
+    texte: Oui, plus tu montres de feux, mieux tu es vu
+reponses:
+  - a
+explication: >-
+  La règle 25 c) autorise un voilier à ajouter en tête de mât un feu rouge au-dessus d'un
+  feu vert, visibles sur tout l'horizon, mais précise que ces feux ne doivent pas être
+  montrés en même temps que le fanal unique du paragraphe b). Ensemble, ils rendraient
+  le voilier illisible.
+sources:
+  - texte: RIPAM, règle 25 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

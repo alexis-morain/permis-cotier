@@ -1,0 +1,31 @@
+id: barre-route-0050
+option: cotier
+theme: barre-route
+notion: barre-chenal-etroit
+statut: publie
+difficulte: 3
+enonce: >-
+  Un dispositif de séparation du trafic longe la côte que tu suis, avec une zone de navigation
+  côtière entre lui et le rivage. Ton bateau à moteur de 9 mètres peut-il utiliser cette
+  zone ?
+propositions:
+  - id: a
+    texte: Oui, les navires de moins de 20 mètres, les voiliers et les navires en pêche
+      peuvent l'utiliser
+  - id: b
+    texte: Non, tout navire doit suivre la voie de circulation du dispositif
+reponses:
+  - a
+explication: >-
+  En principe, un navire n'utilise pas la zone de navigation côtière quand il peut suivre
+  en sécurité la voie de circulation du dispositif. Mais la règle 10 d) i) en excepte
+  les navires de longueur inférieure à 20 mètres, les navires à voile et les navires en
+  train de pêcher.
+sources:
+  - texte: RIPAM, règle 10 d) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

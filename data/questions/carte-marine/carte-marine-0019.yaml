@@ -1,0 +1,29 @@
+id: carte-marine-0019
+option: cotier
+theme: carte-marine
+notion: carte-generalites
+statut: publie
+difficulte: 2
+enonce: >-
+  Sur la carte, une zone est teintée en bleu. Que t'indique cette couleur ?
+propositions:
+  - id: a
+    texte: Des petits fonds, d'autant plus faibles que la teinte est sombre
+  - id: b
+    texte: L'estran, qui découvre à basse mer
+  - id: c
+    texte: Des eaux profondes
+reponses:
+  - a
+explication: >-
+  La carte se lit d'abord à la couleur : blanc pour les eaux profondes, bleu pour les
+  petits fonds, la teinte s'assombrissant vers la côte, vert pour l'estran qui découvre,
+  et jaune ou beige pour la terre.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

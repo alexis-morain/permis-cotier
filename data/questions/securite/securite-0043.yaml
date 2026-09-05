@@ -1,0 +1,27 @@
+id: securite-0043
+option: cotier
+theme: securite
+notion: securite-incendie-mouillage
+statut: publie
+difficulte: 3
+enonce: >-
+  Un vieil extincteur au Halon traîne dans le garage. Peux-tu l'embarquer ?
+propositions:
+  - id: a
+    texte: Non, les agents extincteurs au Halon et au perfluorocarbone sont interdits
+  - id: b
+    texte: Oui, s'il est encore sous pression
+reponses:
+  - a
+explication: >-
+  L'annexe 240-A3 interdit d'utiliser un agent extincteur contenant du Halon 1211, 1301,
+  2402 ou du perfluorocarbone. Les extincteurs admis sont marqués barre à roue, MMF ou
+  NF EN 3, et leur durée de vie est fixée par le fabricant.
+sources:
+  - texte: Division 240, annexe 240-A3, II. 1
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

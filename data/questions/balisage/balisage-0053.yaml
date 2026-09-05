@@ -1,0 +1,30 @@
+id: balisage-0053
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Un feu de la côte te montre du rouge quand tu es d'un côté et du blanc quand tu te déplaces
+  de l'autre. De quel type de feu s'agit-il ?
+propositions:
+  - id: a
+    texte: Un feu à secteurs, dont la couleur change selon l'arc d'où on le voit
+  - id: b
+    texte: Un feu à éclats alternatifs
+  - id: c
+    texte: Une marque latérale flottante
+reponses:
+  - a
+explication: >-
+  Un feu à secteurs est une aide fixe qui montre une couleur ou un rythme différent selon
+  l'arc d'où on le regarde. La couleur apporte une information directionnelle : elle signale
+  un chenal, un point tournant ou une zone dangereuse à éviter.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 8.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

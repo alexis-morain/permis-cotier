@@ -1,0 +1,31 @@
+id: environnement-0019
+option: cotier
+theme: environnement
+notion: env-rejets
+statut: publie
+difficulte: 2
+enonce: >-
+  Que punit l'article L. 218-73 du code de l'environnement ?
+propositions:
+  - id: a
+    texte: Le rejet en mer de substances nuisibles à la conservation ou à la reproduction
+      des animaux et végétaux marins
+  - id: b
+    texte: La pêche sans licence
+  - id: c
+    texte: Le dépassement du nombre de personnes à bord
+reponses:
+  - a
+explication: >-
+  Jeter, déverser ou laisser écouler en mer des substances ou organismes nuisibles pour
+  la conservation ou la reproduction des mammifères marins, poissons, crustacés, coquillages,
+  mollusques ou végétaux, ou de nature à les rendre impropres à la consommation, est puni
+  de 100 000 euros d'amende.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

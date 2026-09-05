@@ -1,0 +1,29 @@
+id: balisage-0046
+option: cotier
+theme: balisage
+notion: balisage-eaux-saines
+statut: publie
+difficulte: 2
+enonce: >-
+  Quel voyant porte une marque d'eaux saines ?
+propositions:
+  - id: a
+    texte: Une seule sphère rouge
+  - id: b
+    texte: Deux sphères noires superposées
+  - id: c
+    texte: Une croix jaune en X
+reponses:
+  - a
+explication: >-
+  La marque d'eaux saines, à bandes verticales rouges et blanches, porte le cas échéant
+  une seule sphère rouge. Deux sphères noires superposées désignent un danger isolé, et
+  la croix jaune une marque spéciale.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

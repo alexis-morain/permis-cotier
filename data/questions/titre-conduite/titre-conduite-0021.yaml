@@ -1,0 +1,30 @@
+id: titre-conduite-0021
+option: cotier
+theme: titre-conduite
+notion: titre-examen
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu t'inscris à une session d'examen théorique de l'option côtière organisée par l'administration.
+  Que dois-tu acquitter ?
+propositions:
+  - id: a
+    texte: Une redevance, payée par un timbre dématérialisé
+  - id: b
+    texte: Rien, l'examen est gratuit
+  - id: c
+    texte: Une caution restituée en cas de réussite
+reponses:
+  - a
+explication: >-
+  L'inscription aux épreuves théoriques de l'option côtière ou de l'option eaux intérieures
+  organisées par l'administration donne lieu au paiement d'une redevance, dont le tarif
+  est fixé par arrêté et qui s'acquitte au moyen d'un timbre dématérialisé.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 8-1
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'
