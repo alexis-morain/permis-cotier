@@ -65,8 +65,8 @@ function Sources({ sources }: { sources: QuestionAffichable['sources'] }) {
                 href={s.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                data-umami-event="source-ouverte"
-                data-umami-event-ref={s.ref}
+                data-mesure="source-ouverte"
+                data-mesure-ref={s.ref}
               >
                 {s.texte}
               </a>
