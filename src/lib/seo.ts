@@ -93,13 +93,13 @@ export type JsonLd = Record<string, unknown>;
 /**
  * L'auteur, cité par les pages qui portent une affirmation réglementaire.
  *
- * `@id` est un identifiant, pas une adresse à visiter : il peut désigner une
- * ancre de page qui n'existe pas encore. `url`, lui, doit mener quelque part,
- * et n'est donc posé que si la page auteur est du voyage — elle arrive avec la
- * branche `audit-ux`. `scripts/audit-seo.mjs` vérifie que toute adresse interne
- * du balisage correspond à une page construite.
+ * `@id` est un identifiant, pas une adresse à visiter ; `url`, lui, doit mener
+ * quelque part. D'où cette constante : la page auteur n'a pas toujours existé,
+ * et pointer vers elle avant son arrivée aurait posé le même renvoi mort sur
+ * les 319 pages indexables. `scripts/audit-seo.mjs` vérifie que toute adresse
+ * interne du balisage correspond à une page construite.
  */
-export const PAGE_AUTEUR: string | undefined = undefined;
+export const PAGE_AUTEUR: string | undefined = '/a-propos';
 
 export function personneAuteur(base: URL | string): JsonLd {
   return {

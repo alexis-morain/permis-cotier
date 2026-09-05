@@ -2,6 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   VERSION_STOCKAGE,
   etatInitial,
+  enregistrerEnCours,
+  effacerEnCours,
   enregistrerReponse,
   enregistrerExamen,
   statistiques,
@@ -28,6 +30,62 @@ describe('état initial', () => {
     expect(e.questions).toEqual({});
     expect(e.examens).toEqual([]);
     expect(e.dateExamen).toBeNull();
+    expect(e.enCours).toBeNull();
+  });
+});
+
+describe('statistiques bornées à la banque publiée', () => {
+  const etat = {
+    ...etatInitial(),
+    questions: {
+      'vhf-0001': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-01' },
+      'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02' },
+      'vhf-0009': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03' },
+    },
+  };
+
+  it('compte tout quand on ne lui donne pas la banque', () => {
+    expect(statistiques(etat).aRevoir).toBe(3);
+  });
+
+  it('ignore une question retirée de la banque, comme le fait la série', () => {
+    const s = statistiques(etat, ['vhf-0001', 'vhf-0002']);
+    expect(s.aRevoir).toBe(2);
+    expect(s.vues).toBe(2);
+  });
+});
+
+describe('session en cours', () => {
+  const sauvegarde = {
+    mode: 'examen' as const,
+    theme: null,
+    ids: ['vhf-0001', 'vhf-0002'],
+    index: 1,
+    selections: [['a'], []],
+    echeance: 1_800_000_014_000,
+    journal: [{ id: 'vhf-0001', juste: true }],
+    majLe: 1_800_000_000_000,
+  };
+
+  it('garde la série interrompue, et la relit telle quelle', () => {
+    const e = enregistrerEnCours(etatInitial(), sauvegarde);
+    sauvegarder(e, memoire);
+    expect(charger(memoire).enCours).toEqual(sauvegarde);
+  });
+
+  it('l’oublie une fois la série finie', () => {
+    const e = effacerEnCours(enregistrerEnCours(etatInitial(), sauvegarde));
+    expect(e.enCours).toBeNull();
+  });
+
+  it('ne perd pas la progression d’un état écrit avant ce champ', () => {
+    memoire.setItem(
+      'permis-cotier:progression',
+      JSON.stringify({ version: VERSION_STOCKAGE, questions: { 'vhf-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' } }, examens: [] }),
+    );
+    const lu = charger(memoire);
+    expect(lu.questions['vhf-0001']?.vues).toBe(1);
+    expect(lu.enCours).toBeNull();
   });
 });
 

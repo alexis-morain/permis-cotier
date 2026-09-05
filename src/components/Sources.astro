@@ -33,11 +33,12 @@ const { sources, verifieLe } = Astro.props;
 
 <style>
   .sources {
-    border: var(--filet-epaisseur) solid var(--filet);
-    border-left: 3px solid var(--accent);
+    border: 2px solid var(--filet);
+    border-left: var(--bord) solid var(--accent);
+    border-radius: var(--rayon);
     padding: 1.25rem 1.4rem;
     margin: 3rem 0 0;
-    background: color-mix(in srgb, var(--eau) 25%, var(--fond));
+    background: var(--fond-2);
   }
   .sources__titre { font-size: 1rem; margin: 0 0 0.6rem; }
   .sources ul { margin: 0 0 0.8rem; padding-left: 1.1rem; }

@@ -29,7 +29,7 @@ export const STATUTS = ['brouillon', 'relu', 'publie', 'retire'] as const;
 export type Statut = (typeof STATUTS)[number];
 
 export const schemaProposition = z.object({
-  id: z.string().regex(/^[a-e]$/, 'identifiant de proposition attendu entre a et e'),
+  id: z.string().regex(/^[a-d]$/, 'identifiant de proposition attendu entre a et d'),
   texte: texteNonVide(1),
 });
 
@@ -76,7 +76,13 @@ export const schemaQuestion = z
     difficulte: z.number().int().min(1).max(3),
     enonce: texteNonVide(10),
     visuel: schemaVisuel.optional(),
-    propositions: z.array(schemaProposition).min(3).max(5),
+    /** De 2 à 4 propositions. L'arrêté du 28 septembre 2007 ne dit rien du
+     *  nombre : il ne parle que de « questionnaire à choix multiple ». Le
+     *  cadrage tenait 3 à 5 ; 268 questions relevées chez deux éditeurs qui se
+     *  réclament du format donnent trois pour mode, 21 % de questions à deux
+     *  propositions, et jamais cinq. D'où 2 à 4, et un plafond qui rend la
+     *  lettre « e » inatteignable : `schemaProposition` s'arrête à `d`. */
+    propositions: z.array(schemaProposition).min(2).max(4),
     reponses: z.array(z.string()).min(1).max(2),
     explication: texteNonVide(20),
     sources: z.array(schemaSource).min(1),

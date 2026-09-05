@@ -5,11 +5,11 @@ import {
   SITE,
   titrePage,
   descriptionPage,
+  cheminServi,
   filAriane,
   siteWeb,
   graphe,
   type JsonLd,
-  cheminServi,
   type Miette,
 } from '../lib/seo';
 
@@ -61,6 +61,10 @@ const noeuds: JsonLd[] = indexable
 const version = versionBanque();
 const annee = new Date().getFullYear();
 const relecture = await comptesDeRelecture();
+
+// La section courante, soulignée dans la navigation.
+const chemin = Astro.url.pathname;
+const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`${prefixe}/`) ? 'page' : undefined);
 ---
 
 <!doctype html>
@@ -73,7 +77,6 @@ const relecture = await comptesDeRelecture();
     <link rel="canonical" href={url} />
     {!indexable && <meta name="robots" content="noindex, follow" />}
     {indexable && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
-
     <meta property="og:title" content={titreComplet} />
     <meta property="og:description" content={descriptionCourte} />
     <meta property="og:type" content="website" />
@@ -88,10 +91,11 @@ const relecture = await comptesDeRelecture();
     <meta name="twitter:title" content={titreComplet} />
     <meta name="twitter:description" content={descriptionCourte} />
     <meta name="twitter:image" content={imageAbsolue} />
-
     <meta name="author" content={SITE.auteur} />
-    <meta name="theme-color" content="#16231f" />
+    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
   </head>
@@ -100,15 +104,20 @@ const relecture = await comptesDeRelecture();
 
     <header class="entete">
       <div class="page entete__interieur">
-        <a href="/" class="entete__marque">
-          <span class="entete__nom">Le Permis Côtier</span>
-          <span class="entete__sous">révision</span>
+        <a href="/" class="marque" aria-label="Permis côtier, accueil">
+          <svg class="marque__glyphe" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+            <rect width="32" height="32" rx="8" class="marque__fond" />
+            <path d="M16 6.5 L25.5 21.5 H6.5 Z" class="marque__cone" />
+            <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" class="marque__cone" />
+          </svg>
+          <span class="marque__nom">Permis côtier</span>
         </a>
         <nav aria-label="Navigation principale">
-          <a href="/entrainement">Entraînement</a>
-          <a href="/themes">Thèmes</a>
-          <a href="/guide">Guide</a>
-          <a href="/parametres">Réglages</a>
+          <a href="/examen" aria-current={courant('/examen')}>Examen</a>
+          <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
+          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Thèmes</a>
+          <a href="/guide" aria-current={courant('/guide')}>Guide</a>
+          <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
         </nav>
       </div>
     </header>
@@ -143,9 +152,17 @@ const relecture = await comptesDeRelecture();
         </p>
         <p class="discret">
           Banque version {version}. {
-            relecture.parUnePersonne === relecture.total
-              ? 'Toutes les questions sont relues par Alexis Morain, seul à ce stade.'
-              : `${relecture.parUnePersonne} des ${relecture.total} questions sont relues par Alexis Morain ; les autres ne le sont, pour l’instant, que par le modèle qui les a écrites à partir de l’article cité.`
+            relecture.parUnePersonne === relecture.total ? (
+              <Fragment>
+                Toutes les questions sont relues par <a href="/a-propos">Alexis Morain</a>, seul à ce stade.
+              </Fragment>
+            ) : (
+              <Fragment>
+                {relecture.parUnePersonne} des {relecture.total} questions sont relues par{' '}
+                <a href="/a-propos">Alexis Morain</a> ; les autres ne le sont, pour l’instant, que par le
+                modèle qui les a écrites à partir de l’article cité.
+              </Fragment>
+            )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
         <nav class="pied__plan" aria-label="Plan du site">
@@ -153,6 +170,7 @@ const relecture = await comptesDeRelecture();
           <a href="/entrainement">Entraînement par thème</a>
           <a href="/themes">Les quatorze thèmes</a>
           <a href="/guide">Guide du permis côtier</a>
+          <a href="/a-propos">Qui écrit ces questions</a>
           <a href="/credits">Crédits</a>
         </nav>
         <p class="discret">
@@ -162,62 +180,19 @@ const relecture = await comptesDeRelecture();
           Textes réglementaires cités sous Licence Ouverte 2.0.
         </p>
         <p class="discret">
-          © {annee} {SITE.auteur}. <a href="https://github.com/alexis-morain/permis-cotier">Code source</a>.
+          © {annee} Alexis Morain. <a href="https://github.com/alexis-morain/permis-cotier">Code source</a>.
         </p>
       </div>
     </footer>
 
     <style>
-      .entete {
-        border-bottom: var(--filet-epaisseur) solid var(--filet);
-        background: var(--fond);
-      }
-      .entete__interieur {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 0.75rem 1.5rem;
-        padding-block: 0.85rem;
-      }
-      .entete__marque {
-        display: flex;
-        align-items: baseline;
-        gap: 0.45rem;
-        text-decoration: none;
-      }
-      .entete__nom {
-        font-family: var(--serif);
-        font-size: 1.15rem;
-        font-weight: 600;
-      }
-      .entete__sous {
-        color: var(--texte-doux);
-        font-size: 0.8rem;
-      }
-      .entete nav {
-        display: flex;
-        gap: 1.25rem;
-        font-size: 0.95rem;
-      }
-      .entete nav a { text-decoration: none; }
-      .entete nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
-
       .ariane { padding-block: 0.9rem 0; font-size: 0.85rem; color: var(--texte-doux); }
       .ariane ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
-      .ariane li + li::before { content: "›"; margin-right: 0.4rem; color: var(--filet); }
+      .ariane li + li::before { content: "›"; margin-right: 0.4rem; color: var(--filet-fort); }
       .ariane a { color: inherit; text-decoration: none; }
       .ariane a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
-      .ariane [aria-current="page"] { color: var(--encre); }
+      .ariane [aria-current="page"] { color: var(--texte); }
 
-      .pied {
-        margin-top: 5rem;
-        border-top: var(--filet-epaisseur) solid var(--filet);
-        background: color-mix(in srgb, var(--eau) 35%, var(--fond));
-      }
-      .pied__interieur { padding-block: 2.5rem 3.5rem; }
-      .pied p { max-width: 58ch; }
-      .pied p:first-child { font-size: 1rem; }
       .pied__plan {
         display: flex;
         flex-wrap: wrap;
@@ -225,6 +200,75 @@ const relecture = await comptesDeRelecture();
         margin: 1.5rem 0;
         font-size: 0.9rem;
       }
+
+      .entete {
+        background: var(--fond-carte);
+        border-bottom: 2px solid var(--filet);
+      }
+      .entete__interieur {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem 1.5rem;
+        min-height: 3.75rem;
+        padding-block: 0.5rem;
+      }
+      .marque {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 2.75rem;
+        text-decoration: none;
+      }
+      .marque__fond { fill: var(--marine); }
+      .marque__cone { fill: var(--jaune); }
+      @media (prefers-color-scheme: dark) {
+        .marque__fond { fill: var(--jaune); }
+        .marque__cone { fill: var(--marine); }
+      }
+      .marque__nom {
+        font-stretch: var(--large);
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+      .entete nav {
+        display: flex;
+        gap: 0 0.25rem;
+        margin-inline: -0.6rem;
+      }
+      /* Sous 40 rem, la navigation prend sa propre ligne et se répartit :
+         quatre entrées ne tiennent pas à côté de la marque sur 375 px. */
+      @media (max-width: 39.999rem) {
+        .entete__interieur { flex-direction: column; align-items: stretch; gap: 0; padding-block: 0.5rem 0.25rem; }
+        .entete nav { justify-content: space-between; margin-inline: -0.4rem; }
+        .entete nav a { padding-inline: 0.4rem; }
+      }
+      .entete nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: var(--rayon-petit);
+        /* Le trait jaune est réservé à la page où on est. */
+        box-shadow: inset 0 -3px 0 transparent;
+        transition: box-shadow var(--transition), background var(--transition);
+      }
+      .entete nav a:hover { background: var(--fond-2); }
+      .entete nav a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--jaune); }
+
+      .pied {
+        margin-top: 5rem;
+        border-top: 2px solid var(--filet);
+        background: var(--fond-2);
+      }
+      .pied__interieur { padding-block: 2.5rem 3.5rem; }
+      .pied p { max-width: 60ch; }
     </style>
   </body>
 </html>

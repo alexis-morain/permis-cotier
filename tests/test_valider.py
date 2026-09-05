@@ -71,10 +71,20 @@ def test_option_fluviale_refusee_en_v1():
     assert "option" in codes(avec(option="fluvial"))
 
 
-@pytest.mark.parametrize("n", [2, 6])
+@pytest.mark.parametrize("n", [1, 5])
 def test_nombre_de_propositions(n):
-    props = [{"id": c, "texte": "texte"} for c in "abcdef"[:n]]
+    props = [{"id": c, "texte": "texte"} for c in "abcde"[:n]]
     assert "propositions" in codes(avec(propositions=props, reponses=["a"]))
+
+
+def test_deux_propositions_acceptees():
+    props = [{"id": "a", "texte": "Bâbord"}, {"id": "b", "texte": "Tribord"}]
+    assert codes(avec(propositions=props, reponses=["b"])) == set()
+
+
+def test_identifiant_de_proposition_au_dela_de_d():
+    props = VALIDE["propositions"][:3] + [{"id": "e", "texte": "la cinquième lettre"}]
+    assert "propositions" in codes(avec(propositions=props))
 
 
 def test_identifiants_de_propositions_dupliques():
