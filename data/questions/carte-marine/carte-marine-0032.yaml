@@ -1,0 +1,29 @@
+id: carte-marine-0032
+option: cotier
+theme: carte-marine
+notion: maree-coefficient
+statut: publie
+difficulte: 3
+enonce: >-
+  L'annuaire annonce un coefficient de 95 pour demain. Que t'apprend-il ?
+propositions:
+  - id: a
+    texte: C'est une vive-eau moyenne, avec un marnage important
+  - id: b
+    texte: C'est une morte-eau moyenne, avec un marnage faible
+  - id: c
+    texte: C'est la plus forte marée possible
+reponses:
+  - a
+explication: >-
+  Un coefficient de 95 correspond à une vive-eau moyenne : le marnage est important, les
+  courants sont forts et les hauts-fonds découvrent largement à basse mer. La morte-eau
+  moyenne est à 45, et 120 est la plus forte marée astronomique.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

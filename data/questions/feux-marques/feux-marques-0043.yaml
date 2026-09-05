@@ -1,0 +1,32 @@
+id: feux-marques-0043
+option: cotier
+theme: feux-marques
+notion: feux-definitions
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, tu voudrais allumer une guirlande de lampes colorées sur le pont pour la fête.
+  Que dit la règle 20 ?
+propositions:
+  - id: a
+    texte: Aucun autre feu pouvant être confondu avec les feux réglementaires ou gêner
+      la veille ne doit être montré
+  - id: b
+    texte: Tout est permis tant que les feux réglementaires sont allumés
+  - id: c
+    texte: Seules les lampes rouges sont interdites
+reponses:
+  - a
+explication: >-
+  Entre le coucher et le lever du soleil, on ne doit montrer aucun autre feu pouvant être
+  confondu avec les feux prescrits, gêner leur visibilité ou leur caractère distinctif,
+  ou empêcher d'exercer une veille satisfaisante. Une guirlande verte et rouge trompe
+  les navires autour de toi.
+sources:
+  - texte: RIPAM, règle 20 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

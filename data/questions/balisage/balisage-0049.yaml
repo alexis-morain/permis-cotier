@@ -1,0 +1,29 @@
+id: balisage-0049
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 3
+enonce: >-
+  Quand la signalisation d'un danger nouveau peut-elle être retirée ?
+propositions:
+  - id: a
+    texte: Quand l'information a été suffisamment diffusée ou que le danger a été résolu
+  - id: b
+    texte: Au bout de trente jours, dans tous les cas
+  - id: c
+    texte: Dès que le danger figure sur une carte électronique
+reponses:
+  - a
+explication: >-
+  Le service responsable retire la signalisation du danger nouveau lorsqu'il estime que
+  l'information a été suffisamment diffusée aux navigateurs, ou que le problème posé par
+  ce danger a été résolu. Aucun délai fixe n'est prévu.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.7
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

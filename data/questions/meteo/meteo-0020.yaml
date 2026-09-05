@@ -1,0 +1,29 @@
+id: meteo-0020
+option: cotier
+theme: meteo
+notion: meteo-sources
+statut: publie
+difficulte: 2
+enonce: >-
+  Jusqu'à quelle distance des côtes porte le bulletin dit « large » ?
+propositions:
+  - id: a
+    texte: 200 milles
+  - id: b
+    texte: 20 milles
+  - id: c
+    texte: 6 milles
+reponses:
+  - a
+explication: >-
+  Météo-France publie trois portées de bulletin marine : côte jusqu'à 20 milles, large
+  jusqu'à 200 milles, grand large au-delà. Pour l'option côtière, limitée à six milles
+  d'un abri, le bulletin de côte est celui qu'on lit.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

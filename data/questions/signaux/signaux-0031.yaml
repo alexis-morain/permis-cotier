@@ -1,0 +1,31 @@
+id: signaux-0031
+option: cotier
+theme: signaux
+notion: signaux-portuaires
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu approches de l'entrée d'un port et tu vois trois feux rouges disposés verticalement.
+  Que t'indiquent-ils ?
+propositions:
+  - id: a
+    texte: Le passage est interdit
+  - id: b
+    texte: Le passage est autorisé sous certaines conditions
+  - id: c
+    texte: L'écluse est hors service
+reponses:
+  - a
+explication: >-
+  Les signaux de trafic portuaire reposent sur un message principal, simple à mémoriser
+  : trois feux verticaux rouges, passage interdit ; trois feux verticaux verts, passage
+  autorisé sous certaines conditions. Ce système régit les mouvements dans les ports et
+  à leur approche.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe V, 6.15
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

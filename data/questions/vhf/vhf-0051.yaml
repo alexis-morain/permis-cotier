@@ -1,0 +1,28 @@
+id: vhf-0051
+option: cotier
+theme: vhf
+notion: vhf-sauvetage
+statut: publie
+difficulte: 1
+enonce: >-
+  Que désigne le sigle CROSS ?
+propositions:
+  - id: a
+    texte: Le centre régional opérationnel de surveillance et de sauvetage
+  - id: b
+    texte: Le centre de radiocommunication des opérations de secours en mer
+  - id: c
+    texte: La compagnie régionale des opérations de sauvetage et de secours
+reponses:
+  - a
+explication: >-
+  Les CROSS, centres régionaux opérationnels de surveillance et de sauvetage, reçoivent
+  l'alerte et coordonnent les moyens de secours en mer. Ils veillent le canal 16 en permanence.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

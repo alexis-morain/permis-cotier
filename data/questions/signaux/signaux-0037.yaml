@@ -1,0 +1,30 @@
+id: signaux-0037
+option: cotier
+theme: signaux
+notion: signaux-manoeuvre
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu vires de bord à la voile, moteur arrêté, en vue d'un autre navire. Dois-tu annoncer
+  ta manœuvre par un ou deux sons brefs ?
+propositions:
+  - id: a
+    texte: Non, les signaux de manœuvre de la règle 34 a) sont ceux du navire à propulsion
+      mécanique
+  - id: b
+    texte: Oui, tout navire qui change de cap en vue d'un autre doit le signaler
+reponses:
+  - a
+explication: >-
+  La règle 34 a) impose les signaux de manœuvre au navire à propulsion mécanique faisant
+  route, en vue d'un autre navire. Un voilier qui marche à la voile seule n'y est pas
+  tenu. Il reste libre d'attirer l'attention par tout signal qui ne prête pas à confusion,
+  règle 36.
+sources:
+  - texte: RIPAM, règle 34 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

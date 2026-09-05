@@ -1,0 +1,33 @@
+id: signaux-0033
+option: cotier
+theme: signaux
+notion: signaux-portuaires
+statut: publie
+difficulte: 3
+enonce: >-
+  Le signal principal d'un port est complété par des feux auxiliaires que tu ne sais pas
+  lire. Où trouves-tu leur signification ?
+propositions:
+  - id: a
+    texte: Dans les publications nautiques et le règlement local du port
+  - id: b
+    texte: Dans le RIPAM, règle 34
+  - id: c
+    texte: Nulle part, ils ne concernent que les navires de commerce
+reponses:
+  - a
+explication: >-
+  Le message principal se lit seul, mais les signaux auxiliaires donnent des informations
+  supplémentaires dont la compréhension nécessite l'utilisation des publications nautiques.
+  L'arrêté rappelle que les mesures locales des ports sont souvent couvertes par des règlements
+  particuliers de police, à consulter avant une première entrée.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe V, 6.15
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 8.7
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

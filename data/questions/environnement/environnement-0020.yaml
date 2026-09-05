@@ -1,0 +1,31 @@
+id: environnement-0020
+option: cotier
+theme: environnement
+notion: env-equipement-sanitaire
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau habitable a un réservoir fixe pour les eaux des toilettes. Quelle capacité
+  minimale la division 245 lui impose-t-elle ?
+propositions:
+  - id: a
+    texte: 1,5 litre par personne pouvant être embarquée
+  - id: b
+    texte: 10 litres par personne pouvant être embarquée
+  - id: c
+    texte: Aucun minimum, seule la présence du réservoir compte
+reponses:
+  - a
+explication: >-
+  Lorsqu'un navire est équipé de réservoirs fixes de rétention des eaux usées des toilettes,
+  leur capacité atteint au minimum 1,5 litre par personne pouvant être embarquée, et ils
+  disposent d'un raccord de vidange normalisé pour les installations de réception des
+  ports.
+sources:
+  - texte: Division 245, article 245-5.37, II
+    ref: division-245
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

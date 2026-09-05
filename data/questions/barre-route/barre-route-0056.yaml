@@ -1,0 +1,30 @@
+id: barre-route-0056
+option: cotier
+theme: barre-route
+notion: barre-hierarchie-privileges
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu traînes deux lignes derrière ton bateau à moteur, sans que cela gêne ta manœuvre.
+  Es-tu un « navire en train de pêcher » au sens du RIPAM ?
+propositions:
+  - id: a
+    texte: Non, la définition exclut les lignes traînantes qui ne réduisent pas la capacité
+      de manœuvre
+  - id: b
+    texte: Oui, dès qu'une ligne est à l'eau
+reponses:
+  - a
+explication: >-
+  Le navire en train de pêcher est celui qui pêche avec des filets, lignes, chaluts ou
+  autres engins réduisant sa capacité de manœuvre. La règle 3 d) exclut expressément les
+  navires qui pêchent avec des lignes traînantes ou d'autres engins ne réduisant pas leur
+  capacité de manœuvre. Tu restes un navire à propulsion mécanique ordinaire, sans privilège.
+sources:
+  - texte: RIPAM, règle 3 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

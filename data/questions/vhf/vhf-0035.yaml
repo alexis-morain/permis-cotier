@@ -1,0 +1,29 @@
+id: vhf-0035
+option: cotier
+theme: vhf
+notion: vhf-canaux
+statut: publie
+difficulte: 3
+enonce: >-
+  Sur quelle fréquence émet le canal 16 ?
+propositions:
+  - id: a
+    texte: 156,800 MHz
+  - id: b
+    texte: 156,525 MHz
+  - id: c
+    texte: 121,5 MHz
+reponses:
+  - a
+explication: >-
+  Le canal 16 correspond à la fréquence 156,800 MHz. La fréquence 156,525 MHz est celle
+  du canal 70, réservé à l'appel sélectif numérique, et 121,5 MHz est une fréquence de
+  détresse aéronautique.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

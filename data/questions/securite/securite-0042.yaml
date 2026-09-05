@@ -1,0 +1,31 @@
+id: securite-0042
+option: cotier
+theme: securite
+notion: securite-incendie-mouillage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu ranges ton extincteur dans un placard fermé. Que demande l'annexe 240-A3 ?
+propositions:
+  - id: a
+    texte: Que la porte du placard porte le pictogramme approprié, l'extincteur restant
+      immédiatement accessible
+  - id: b
+    texte: Rien, un extincteur se range où l'on veut
+  - id: c
+    texte: Que le placard soit dans le compartiment moteur
+reponses:
+  - a
+explication: >-
+  Chaque extincteur portatif doit être immédiatement et facilement accessible. Il peut
+  être entreposé dans un placard ou un espace clos, mais la porte porte alors le symbole
+  approprié. Les emplacements du matériel de lutte contre l'incendie sont signalés par
+  des pictogrammes.
+sources:
+  - texte: Division 240, annexe 240-A3, II. 2 et 3
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

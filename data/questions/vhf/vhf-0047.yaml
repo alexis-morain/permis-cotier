@@ -1,0 +1,29 @@
+id: vhf-0047
+option: cotier
+theme: vhf
+notion: vhf-crr
+statut: publie
+difficulte: 2
+enonce: >-
+  À partir de quel âge peut-on se présenter à l'examen du certificat restreint de radiotéléphoniste
+  ?
+propositions:
+  - id: a
+    texte: Seize ans
+  - id: b
+    texte: Dix-huit ans
+  - id: c
+    texte: Quatorze ans
+reponses:
+  - a
+explication: >-
+  L'article 4 de l'arrêté du 18 mai 2005 exige que le candidat ait seize ans au moins
+  à la date de l'examen. C'est le même âge que celui de l'option côtière du permis plaisance.
+sources:
+  - texte: Arrêté du 18 mai 2005, article 4
+    ref: arrete-2005-05-18
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,29 @@
+id: meteo-0022
+option: cotier
+theme: meteo
+notion: meteo-sources
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau est équipé d'un récepteur Navtex. Que reçoit-il ?
+propositions:
+  - id: a
+    texte: Les bulletins et avis météo en texte, dans les zones couvertes
+  - id: b
+    texte: Les appels de détresse des navires voisins
+  - id: c
+    texte: La position des autres navires
+reponses:
+  - a
+explication: >-
+  Le Navtex reçoit en texte, dans les zones couvertes, les bulletins et les avis météorologiques,
+  dont les BMS. C'est l'un des moyens de se procurer les prévisions en mer, avec la diffusion
+  VHF des CROSS annoncée sur le canal 16.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

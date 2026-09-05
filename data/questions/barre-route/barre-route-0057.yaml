@@ -1,0 +1,29 @@
+id: barre-route-0057
+option: cotier
+theme: barre-route
+notion: barre-hierarchie-privileges
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton voilier fait route à la voile, le moteur tourne au point mort sans être embrayé.
+  Au sens du RIPAM, es-tu un navire à voile ?
+propositions:
+  - id: a
+    texte: Oui, tant que la machine propulsive n'est pas utilisée pour faire route
+  - id: b
+    texte: Non, dès que le moteur tourne tu es un navire à propulsion mécanique
+reponses:
+  - a
+explication: >-
+  Le navire à voile est tout navire marchant à la voile, même s'il possède une machine
+  propulsive, à condition que celle-ci ne soit pas utilisée. Dès que l'hélice te propulse,
+  tu deviens un navire à propulsion mécanique, et tu montres de jour le cône pointe en
+  bas.
+sources:
+  - texte: RIPAM, règle 3 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

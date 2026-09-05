@@ -1,0 +1,29 @@
+id: balisage-0050
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 1
+enonce: >-
+  De quelle couleur sont les feux des marques cardinales ?
+propositions:
+  - id: a
+    texte: Blanche
+  - id: b
+    texte: Jaune
+  - id: c
+    texte: Rouge
+reponses:
+  - a
+explication: >-
+  Les quatre marques cardinales portent un feu blanc. C'est leur rythme, scintillant continu
+  ou par groupes de trois, six ou neuf, qui les distingue la nuit. Le feu jaune est celui
+  des marques spéciales, le rouge celui des latérales de bâbord.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

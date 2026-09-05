@@ -1,0 +1,30 @@
+id: barre-route-0040
+option: cotier
+theme: barre-route
+notion: barre-veille-vitesse
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, tu approches d'un port dont les lumières éclairent tout l'horizon. Pourquoi
+  la règle 6 te demande-t-elle de ralentir ?
+propositions:
+  - id: a
+    texte: Un arrière-plan lumineux gêne la détection des feux des autres navires
+  - id: b
+    texte: La vitesse est limitée à cinq nœuds la nuit
+  - id: c
+    texte: Les feux côtiers éblouissent le radar
+reponses:
+  - a
+explication: >-
+  Parmi les facteurs de la vitesse de sécurité, la règle 6 cite, de nuit, la présence
+  d'un arrière-plan lumineux tel que celui créé par des feux côtiers. Les feux d'un navire
+  se perdent dans les lumières de la ville, et il faut plus de temps pour les repérer.
+sources:
+  - texte: RIPAM, règle 6 a) iv)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: environnement-0018
+option: cotier
+theme: environnement
+notion: env-rejets
+statut: publie
+difficulte: 2
+enonce: >-
+  Au large, une avarie de ton réservoir laisse échapper du carburant à la mer. Que dit
+  le code de l'environnement ?
+propositions:
+  - id: a
+    texte: Un rejet provenant d'une avarie, au-delà des eaux territoriales, n'est pas
+      une infraction sous les conditions de la convention MARPOL
+  - id: b
+    texte: Tout rejet est puni, quelle qu'en soit la cause
+reponses:
+  - a
+explication: >-
+  L'article L. 218-20 précise qu'un rejet se produisant au-delà des eaux territoriales
+  et provenant d'une avarie survenue au navire ou à son équipement n'est pas considéré
+  comme une infraction, sous les conditions posées par la convention MARPOL. Le rejet
+  volontaire, lui, reste puni.
+sources:
+  - texte: Code de l'environnement, article L. 218-20
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

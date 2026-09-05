@@ -1,0 +1,32 @@
+id: feux-marques-0051
+option: cotier
+theme: feux-marques
+notion: feux-voile-aviron
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu rentres de nuit sur un dériveur de 4,50 mètres qui n'a aucun feu installé. Que t'impose
+  la règle 25 ?
+propositions:
+  - id: a
+    texte: Tenir prête une lampe électrique ou un fanal à feu blanc, à montrer immédiatement
+      pour prévenir un abordage
+  - id: b
+    texte: Rien, les voiliers de moins de 7 mètres sont dispensés de tout
+  - id: c
+    texte: Montrer un feu rouge au-dessus d'un feu vert
+reponses:
+  - a
+explication: >-
+  Un navire à voile de moins de 7 mètres doit si possible montrer les feux des voiliers,
+  mais s'il ne le fait pas, il doit être prêt à montrer immédiatement une lampe électrique
+  ou un fanal allumé à feu blanc pour prévenir un abordage. La même règle vaut pour un
+  navire à l'aviron.
+sources:
+  - texte: RIPAM, règle 25 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

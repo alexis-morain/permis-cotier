@@ -1,0 +1,32 @@
+id: feux-marques-0056
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+statut: publie
+difficulte: 3
+enonce: >-
+  Un navire montre trois boules, une près de la tête du mât de misaine et une à chaque
+  extrémité de la vergue. Que fait-il, et à quelle distance restes-tu ?
+propositions:
+  - id: a
+    texte: Il effectue des opérations de déminage, ne pas s'approcher à moins de 1 000
+      mètres
+  - id: b
+    texte: Il est échoué, passer au large de sa poupe
+  - id: c
+    texte: Il remorque, passer à plus de 200 mètres
+reponses:
+  - a
+explication: >-
+  Trois feux verts ou trois boules, l'un près de la tête du mât de misaine et un à chaque
+  extrémité de la vergue, signalent un navire en opération de déminage. Il est dangereux
+  de s'en approcher à moins de 1 000 mètres. Les trois boules superposées de l'échoué
+  sont sur une même verticale.
+sources:
+  - texte: RIPAM, règle 27 f)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

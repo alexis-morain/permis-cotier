@@ -1,0 +1,30 @@
+id: balisage-0048
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 3
+enonce: >-
+  Quel voyant porte la bouée d'épave mise en place en urgence sur un danger nouveau ?
+propositions:
+  - id: a
+    texte: Une croix jaune à branches verticale et horizontale
+  - id: b
+    texte: Une croix jaune en X
+  - id: c
+    texte: Deux sphères noires superposées
+reponses:
+  - a
+explication: >-
+  La bouée d'épave d'urgence, à bandes verticales bleues et jaunes, porte le cas échéant
+  une croix jaune dont les branches sont disposées verticalement et horizontalement, une
+  croix droite. La croix en X est le voyant de la marque spéciale, et les deux sphères
+  celui du danger isolé.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

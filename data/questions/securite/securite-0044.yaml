@@ -1,0 +1,31 @@
+id: securite-0044
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Qu'appelle-t-on un « abri » au sens de la division 240 ?
+propositions:
+  - id: a
+    texte: Un endroit de la côte où le navire et son équipage peuvent se mettre en sécurité
+      et repartir sans assistance
+  - id: b
+    texte: Un port de plaisance disposant d'une capitainerie
+  - id: c
+    texte: Tout point de la côte visible depuis le bateau
+reponses:
+  - a
+explication: >-
+  L'abri est un endroit de la côte où tout engin, embarcation ou navire et son équipage
+  peuvent se mettre en sécurité en mouillant, atterrissant ou accostant, et en repartir
+  sans assistance. La notion dépend de la météo et de la mer du moment, et du bateau :
+  une plage abritée par beau temps peut cesser d'être un abri quand le vent tourne.
+sources:
+  - texte: Division 240, article 240-1.02, IV. 2
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

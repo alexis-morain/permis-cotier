@@ -1,0 +1,30 @@
+id: titre-conduite-0018
+option: cotier
+theme: titre-conduite
+notion: titre-options
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu prévois une navigation à dix milles d'un abri. Quel titre de conduite te faut-il
+  ?
+propositions:
+  - id: a
+    texte: L'extension hauturière
+  - id: b
+    texte: L'option côtière suffit
+  - id: c
+    texte: Aucun, au-delà de six milles le permis n'est plus exigé
+reponses:
+  - a
+explication: >-
+  L'option côtière permet une navigation jusqu'à six milles d'un abri. Au-delà, il faut
+  l'extension hauturière, qui s'obtient après l'option côtière par une épreuve théorique
+  de navigation.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2 a)
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

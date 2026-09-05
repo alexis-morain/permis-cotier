@@ -1,0 +1,28 @@
+id: titre-conduite-0022
+option: cotier
+theme: titre-conduite
+notion: titre-examen
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu détiens déjà l'option eaux intérieures et tu prépares l'option côtière. Es-tu tenu
+  aux cinq heures de formation théorique en salle ?
+propositions:
+  - id: a
+    texte: Non, les titulaires de l'option eaux intérieures en sont dispensés
+  - id: b
+    texte: Oui, chaque option a sa formation théorique obligatoire
+reponses:
+  - a
+explication: >-
+  La formation théorique en salle, en présence du formateur, ne peut être inférieure à
+  cinq heures. Les candidats titulaires de l'option eaux intérieures ou d'un titre équivalent
+  ne sont pas soumis à cette obligation. L'épreuve théorique reste à passer.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 1er, 1.3
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,31 @@
+id: meteo-0021
+option: cotier
+theme: meteo
+notion: meteo-sources
+statut: publie
+difficulte: 2
+enonce: >-
+  Quand un bulletin météorologique spécial est-il diffusé ?
+propositions:
+  - id: a
+    texte: Hors des heures normales, dès qu'un vent de force 7 au moins est attendu ou
+      observé
+  - id: b
+    texte: Chaque matin à six heures, sur le canal 16
+  - id: c
+    texte: Seulement en cas de tempête, à partir de la force 10
+reponses:
+  - a
+explication: >-
+  Le bulletin météorologique spécial, ou BMS, est un avis diffusé hors des heures normales
+  dès qu'un vent de force 7 au moins est attendu ou observé. Il porte le nom de l'avis,
+  grand frais, coup de vent, tempête, et les CROSS le diffusent dès sa parution sans attendre
+  l'heure du bulletin.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,30 @@
+id: vhf-0040
+option: cotier
+theme: vhf
+notion: vhf-detresse
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu allais appeler un ami sur le canal 16 quand un MAYDAY y est lancé par un autre navire.
+  Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu gardes le silence et tu écoutes, la détresse prime sur tout autre trafic
+  - id: b
+    texte: Tu passes ton appel rapidement, puis tu libères le canal
+  - id: c
+    texte: Tu réponds au navire en détresse pour lui demander de changer de canal
+reponses:
+  - a
+explication: >-
+  Le MAYDAY prime sur tout autre trafic et impose le silence radio à tous. Tu écoutes,
+  prêt à relayer si aucune station ne répond, et tu ne reprends ton propre trafic qu'une
+  fois le trafic de détresse terminé.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

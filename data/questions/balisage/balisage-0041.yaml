@@ -1,0 +1,28 @@
+id: balisage-0041
+option: cotier
+theme: balisage
+notion: balisage-lateral
+statut: publie
+difficulte: 3
+enonce: >-
+  Les marques latérales d'une voie navigable étroite sont numérotées. Quelles marques
+  portent les numéros pairs ?
+propositions:
+  - id: a
+    texte: Les marques de bâbord
+  - id: b
+    texte: Les marques de tribord
+reponses:
+  - a
+explication: >-
+  La numérotation suit le sens conventionnel de balisage, avec des numéros pairs à bâbord
+  et des numéros impairs à tribord. Un moyen de retrouver son côté quand la forme ou la
+  couleur se distinguent mal.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.5.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

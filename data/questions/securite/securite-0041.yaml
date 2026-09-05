@@ -1,0 +1,30 @@
+id: securite-0041
+option: cotier
+theme: securite
+notion: securite-equipement-individuel
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu pars naviguer seul. Que recommande la division 240 ?
+propositions:
+  - id: a
+    texte: Porter en permanence un EIF d'au moins 50 auquel est assujettie une VHF portable
+  - id: b
+    texte: Rester à moins de 300 mètres d'un abri
+  - id: c
+    texte: Prévenir la capitainerie de ton heure de retour
+reponses:
+  - a
+explication: >-
+  L'article 240-2.03 recommande que toute personne qui navigue en solitaire porte en permanence
+  un équipement individuel de flottabilité d'un niveau de performance d'au moins 50, auquel
+  est assujettie une VHF portable. Tombé à l'eau, le solitaire n'a que ce qu'il porte
+  sur lui.
+sources:
+  - texte: Division 240, article 240-2.03, point 1
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

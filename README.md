@@ -23,9 +23,12 @@ celle de l'examen. Le site prépare **au format de l'épreuve** : 40 questions,
 
 **Toutes les questions publiées à ce jour sont relues par une seule personne,
 Alexis Morain.** Le champ `meta.relu_par` de chaque fichier porte le nom de son
-relecteur. Une deuxième relecture par un tiers est prévue avant décembre 2026.
-En attendant, une erreur est possible : le bouton de signalement est sur chaque
-question, et les signalements sont traités dans la semaine.
+relecteur : `alexis` une fois relue, `claude` tant qu'un lot écrit par le modèle
+depuis l'article cité attend sa relecture, et le pied de page du site compte
+les deux au moment du build. Une deuxième relecture par un tiers est prévue
+avant décembre 2026. En attendant, une erreur est possible : le bouton de
+signalement est sur chaque question, et les signalements sont traités dans la
+semaine.
 
 Le site n'est pas entièrement statique. Deux fonctions serveur tournent sur
 Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de

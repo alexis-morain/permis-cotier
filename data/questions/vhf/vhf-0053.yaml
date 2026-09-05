@@ -1,0 +1,33 @@
+id: vhf-0053
+option: cotier
+theme: vhf
+notion: vhf-emport
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues à quatre milles d'un abri sur ton propre bateau à moteur. La division 240
+  t'impose-t-elle d'embarquer une VHF ?
+propositions:
+  - id: a
+    texte: Non, l'armement côtier n'en exige pas
+  - id: b
+    texte: Oui, dès deux milles d'un abri
+  - id: c
+    texte: Oui, dès que le bateau est à moteur
+reponses:
+  - a
+explication: >-
+  La liste du matériel d'armement côtier de l'article 240-2.04, pour une navigation de
+  2 à moins de 6 milles d'un abri, ne comporte pas de VHF. Elle devient obligatoire avec
+  l'armement semi-hauturier, à partir de 6 milles. Seul un bateau proposé à la location
+  doit en avoir une dès 2 milles, article 240-3.03.
+sources:
+  - texte: Division 240, article 240-2.04
+    ref: division-240
+  - texte: Division 240, article 240-3.03
+    ref: division-240
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

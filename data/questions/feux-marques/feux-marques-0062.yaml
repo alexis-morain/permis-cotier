@@ -1,0 +1,29 @@
+id: feux-marques-0062
+option: cotier
+theme: feux-marques
+notion: feux-mouillage-echoue
+statut: publie
+difficulte: 1
+enonce: >-
+  De jour, quelle marque montre un navire au mouillage ?
+propositions:
+  - id: a
+    texte: Une boule, à l'avant
+  - id: b
+    texte: Un cône pointe en bas
+  - id: c
+    texte: Deux boules superposées
+reponses:
+  - a
+explication: >-
+  Un navire au mouillage montre à l'avant, à l'endroit le plus visible, une boule. Le
+  cône pointe en bas est la marque du voilier qui marche aussi au moteur, et les deux
+  boules celle du navire qui n'est pas maître de sa manœuvre.
+sources:
+  - texte: RIPAM, règle 30 a) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

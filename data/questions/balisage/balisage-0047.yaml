@@ -1,0 +1,33 @@
+id: balisage-0047
+option: cotier
+theme: balisage
+notion: balisage-speciale
+statut: publie
+difficulte: 2
+enonce: >-
+  Lesquelles de ces zones sont signalées par des marques spéciales ?
+propositions:
+  - id: a
+    texte: La présence de câbles ou d'oléoducs sous-marins
+  - id: b
+    texte: Une zone d'exercices militaires
+  - id: c
+    texte: Un danger isolé entouré d'eaux saines
+  - id: d
+    texte: Le milieu d'un chenal
+reponses:
+  - a
+  - b
+explication: >-
+  Les marques spéciales n'ont pas pour but principal d'aider la navigation : elles indiquent
+  une zone ou une configuration décrite dans les documents nautiques, câbles et oléoducs,
+  zones militaires, dépôts, zones de mouillage ou de plaisance, cultures marines. Un danger
+  isolé et le milieu d'un chenal ont leurs propres marques.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

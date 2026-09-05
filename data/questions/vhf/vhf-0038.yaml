@@ -1,0 +1,31 @@
+id: vhf-0038
+option: cotier
+theme: vhf
+notion: vhf-urgence-securite
+statut: publie
+difficulte: 2
+enonce: >-
+  Un équipier s'est profondément entaillé la main. Il saigne, mais il est conscient et
+  son état n'est pas critique. Quel signal emploies-tu pour demander un avis ou une évacuation
+  ?
+propositions:
+  - id: a
+    texte: MAYDAY
+  - id: b
+    texte: PAN PAN
+  - id: c
+    texte: SÉCURITÉ
+reponses:
+  - b
+explication: >-
+  Un blessé dont l'état n'est pas critique relève de l'urgence : le message concerne la
+  sécurité d'une personne, sans danger imminent. C'est PAN PAN. MAYDAY est réservé au
+  danger grave et imminent qui demande une assistance immédiate.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'
