@@ -29,7 +29,9 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
           <a class="bouton bouton--principal" href="/examen" data-umami-event="accueil-examen">
             Commencer un examen blanc
           </a>
-          <a class="bouton bouton--discret" href="/entrainement">ou s’entraîner thème par thème</a>
+          <a class="bouton bouton--discret" href="/entrainement" data-umami-event="accueil-entrainement">
+            ou s’entraîner thème par thème
+          </a>
         </div>
 
         <Reprise client:only="react" ids={questions.map((q) => q.id)} />
