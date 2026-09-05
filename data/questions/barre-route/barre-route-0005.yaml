@@ -14,8 +14,6 @@ propositions:
     texte: Chacun vient sur tribord, comme pour une route directement opposée.
   - id: c
     texte: Toi, le voilier, parce que tu rattrapes ce navire.
-  - id: d
-    texte: Personne, tant que le relèvement entre vous ne change pas.
 reponses:
   - c
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

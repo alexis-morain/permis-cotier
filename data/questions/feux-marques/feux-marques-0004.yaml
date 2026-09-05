@@ -15,9 +15,6 @@ propositions:
     texte: Un feu blanc visible sur tout l'horizon, ou un cône la pointe en bas, dans
       l'alignement de l'engin
   - id: c
-    texte: Un feu vert visible sur tout l'horizon, ou un cône la pointe en haut, dans
-      l'alignement de l'engin
-  - id: d
     texte: Deux cônes superposés réunis par la pointe, dans l'alignement de l'engin
 reponses:
   - a
@@ -33,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -14,8 +14,6 @@ propositions:
     texte: Longueur inférieure à 12 mètres et vitesse maximale ne dépassant pas 7 nœuds.
   - id: c
     texte: Longueur inférieure à 7 mètres et vitesse maximale ne dépassant pas 12 nœuds.
-  - id: d
-    texte: Longueur inférieure à 20 mètres, quelle que soit la vitesse.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

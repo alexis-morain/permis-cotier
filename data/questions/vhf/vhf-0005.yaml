@@ -12,8 +12,6 @@ propositions:
   - id: b
     texte: À la détresse, à l'urgence et à l'appel
   - id: c
-    texte: À l'appel sélectif numérique
-  - id: d
     texte: Aux communications avec les capitaineries
 reponses:
   - b
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

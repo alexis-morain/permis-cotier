@@ -15,8 +15,6 @@ propositions:
       la voie de travail indiquée
   - id: c
     texte: Tu appelles le 196 pour te le faire lire
-  - id: d
-    texte: Tu attends le retour au port, le bulletin ne se diffuse pas en mer
 reponses:
   - b
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

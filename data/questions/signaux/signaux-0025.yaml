@@ -18,8 +18,6 @@ propositions:
     texte: Le navire qui rattrape, qui compte passer sur bâbord.
   - id: c
     texte: Le navire sur le point d'être rattrapé, qui donne son accord.
-  - id: d
-    texte: Le navire sur le point d'être rattrapé, qui refuse le dépassement.
 reponses:
   - a
 explication: >-
@@ -36,5 +34,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -17,8 +17,6 @@ propositions:
       Par une succession de petites corrections de cap, plus douces pour l'équipage.
   - id: c
     texte: Par un changement de vitesse seul, le cap ne devant jamais être modifié.
-  - id: d
-    texte: Par la manœuvre de ton choix, dès lors que l'abordage est évité.
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -15,11 +15,7 @@ propositions:
   - id: a
     texte: Sur bâbord
   - id: b
-    texte: Sur tribord, une marque verte se laisse toujours sur tribord
-  - id: c
     texte: Sur tribord, le sens conventionnel s'entendant du port vers le large
-  - id: d
-    texte: D'un côté ou de l'autre, sa forme conique n'engage à rien
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

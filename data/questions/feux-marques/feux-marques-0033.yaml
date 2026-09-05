@@ -14,8 +14,6 @@ propositions:
     texte: 2 milles.
   - id: c
     texte: 3 milles.
-  - id: d
-    texte: 5 milles.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

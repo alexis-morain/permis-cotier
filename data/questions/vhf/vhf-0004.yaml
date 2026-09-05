@@ -17,8 +17,6 @@ propositions:
   - id: c
     texte: Le certificat restreint de radiotéléphoniste du service mobile fluvial dès
       qu'on quitte la mer.
-  - id: d
-    texte: Le permis de conduire en mer les bateaux de plaisance à moteur.
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

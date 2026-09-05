@@ -11,10 +11,6 @@ propositions:
     texte: De la phonie, en cas de détresse seulement
   - id: b
     texte: Uniquement l'appel sélectif numérique
-  - id: c
-    texte: La conversation avec les capitaineries
-  - id: d
-    texte: Les bulletins météorologiques des CROSS
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

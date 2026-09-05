@@ -9,15 +9,13 @@ enonce: >-
   toutes les quinze secondes. Quelle marque as-tu devant toi ?
 propositions:
   - id: a
-    texte: Une cardinale Est
-  - id: b
     texte: Une cardinale Sud
-  - id: c
+  - id: b
     texte: Une cardinale Ouest
-  - id: d
+  - id: c
     texte: Une marque de danger isolé
 reponses:
-  - b
+  - a
 explication: >-
   La cardinale Sud montre un feu blanc Q (6) suivi d'un éclat long toutes les 15 secondes,
   ou VQ (6) suivi d'un éclat long toutes les 10 secondes. L'éclat long est la signature
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

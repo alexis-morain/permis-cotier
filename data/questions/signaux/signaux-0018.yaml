@@ -16,10 +16,6 @@ propositions:
     texte: Un navire arrive en sens inverse, de l'autre côté du coude.
   - id: b
     texte: Un navire à moteur a de l'erre dans une zone de visibilité réduite.
-  - id: c
-    texte: Un navire exprime un doute sur tes intentions.
-  - id: d
-    texte: Un navire te demande de ralentir avant le coude.
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

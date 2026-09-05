@@ -14,8 +14,6 @@ propositions:
     texte: La catégorie D
   - id: c
     texte: La catégorie B
-  - id: d
-    texte: La catégorie A
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

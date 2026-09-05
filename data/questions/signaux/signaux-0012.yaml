@@ -14,8 +14,6 @@ propositions:
     texte: Un son bref, auquel il répond par deux sons brefs.
   - id: c
     texte: Cinq sons brefs et rapprochés, auxquels il répond de la même façon.
-  - id: d
-    texte: Deux sons prolongés, auxquels il n'est pas tenu de répondre.
 reponses:
   - a
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

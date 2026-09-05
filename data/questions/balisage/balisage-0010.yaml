@@ -14,8 +14,6 @@ propositions:
     texte: Une zone de mouillage réservée aux navires de commerce
   - id: c
     texte: Des eaux saines, tu peux passer de chaque côté
-  - id: d
-    texte: Un chenal traversier réservé aux engins de plage
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

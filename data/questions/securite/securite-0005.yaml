@@ -11,10 +11,8 @@ propositions:
   - id: a
     texte: Une lampe torche étanche ayant une autonomie d'au moins 6 heures.
   - id: b
-    texte: Une lampe torche étanche ayant une autonomie d'au moins 3 heures.
-  - id: c
     texte: Une lampe flash fixée à chaque équipement individuel de flottabilité.
-  - id: d
+  - id: c
     texte: Un cyalume par personne embarquée.
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -14,8 +14,6 @@ propositions:
     texte: Dans l'annexe 240-A3 uniquement, le manuel du propriétaire n'ayant pas valeur
       réglementaire.
   - id: c
-    texte: Sur la plaque constructeur apposée sur le navire.
-  - id: d
     texte: Nulle part, le chef de bord décide librement.
 reponses:
   - a
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

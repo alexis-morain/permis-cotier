@@ -14,8 +14,6 @@ propositions:
       la pollution ne l''est pas'
   - id: c
     texte: Non, à condition d'être effectué au-delà des eaux territoriales
-  - id: d
-    texte: Non, à condition d'avoir prévenu le CROSS
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -12,10 +12,6 @@ propositions:
     texte: Que le véhicule compte au moins deux places
   - id: b
     texte: Que le véhicule compte au moins trois places
-  - id: c
-    texte: Que tu navigues de jour uniquement
-  - id: d
-    texte: Rien de plus, l'armement côtier spécifique suffit
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

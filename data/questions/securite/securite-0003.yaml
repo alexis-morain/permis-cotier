@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Un EIF de niveau de performance 100
   - id: c
-    texte: Un EIF de niveau de performance 150
-  - id: d
     texte: Un EIF de son choix, le niveau n'étant imposé qu'au-delà de deux milles d'un
       abri
 reponses:
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

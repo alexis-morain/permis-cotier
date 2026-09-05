@@ -9,15 +9,13 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: Force 5
-  - id: b
     texte: Force 6
-  - id: c
+  - id: b
     texte: Force 7
-  - id: d
+  - id: c
     texte: Force 8
 reponses:
-  - c
+  - b
 explication: >-
   Le BMS est émis dès qu'un vent de force 7 au moins est attendu ou observé : c'est l'avis
   de grand frais. Le nom de l'avis suit ensuite la force annoncée : coup de vent à partir
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

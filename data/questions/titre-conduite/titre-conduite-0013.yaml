@@ -14,8 +14,6 @@ propositions:
   - id: b
     texte: Cinq heures, dont trois de conduite effective par candidat.
   - id: c
-    texte: Deux heures, entièrement consacrées à la conduite.
-  - id: d
     texte: Trois heures trente, dont une seule heure de conduite effective par candidat.
 reponses:
   - a
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

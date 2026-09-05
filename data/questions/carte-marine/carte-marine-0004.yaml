@@ -20,8 +20,6 @@ propositions:
   - id: b
     texte: La hauteur d'un haut-fond qui découvre, comptée au-dessus du zéro des cartes
   - id: c
-    texte: Une profondeur mesurée récemment
-  - id: d
     texte: La hauteur d'un amer à terre
 reponses:
   - b
@@ -37,5 +35,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

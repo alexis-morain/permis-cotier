@@ -11,16 +11,13 @@ propositions:
   - id: a
     texte: Un son prolongé, à des intervalles ne dépassant pas deux minutes.
   - id: b
-    texte: Un son prolongé suivi de deux sons brefs, à des intervalles ne dépassant pas
-      deux minutes.
-  - id: c
     texte: Deux sons prolongés séparés par deux secondes environ, à des intervalles ne
       dépassant pas deux minutes.
-  - id: d
+  - id: c
     texte: Deux sons brefs séparés par deux secondes environ, à des intervalles ne dépassant
       pas deux minutes.
 reponses:
-  - c
+  - b
 explication: >-
   La règle 35 b) vise le navire à propulsion mécanique qui fait route mais qui est stoppé
   et n'a plus d'erre : deux sons prolongés séparés par un intervalle de deux secondes
@@ -34,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

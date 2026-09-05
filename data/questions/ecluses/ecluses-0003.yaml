@@ -11,14 +11,10 @@ propositions:
   - id: a
     texte: Tu entres, l'absence de signal vaut autorisation
   - id: b
-    texte: Tu entres si aucun autre bateau ne se présente
-  - id: c
     texte: 'Tu n''entres pas : sans feu ni panneau, l''accès est interdit, sauf ordre
       du personnel de l''écluse'
-  - id: d
-    texte: Tu entres après avoir émis un son prolongé au sifflet
 reponses:
-  - c
+  - b
 explication: >-
   Le règlement retourne l'intuition : l'absence de signal n'est pas une permission, c'est
   une interdiction. Sans feux et sans panneaux, l'accès comme la sortie des écluses sont
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

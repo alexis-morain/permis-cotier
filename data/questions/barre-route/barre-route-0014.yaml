@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Toi, le voilier doit s'écarter de la route du navire en train de pêcher.
   - id: c
-    texte: Personne, chacun garde sa route et sa vitesse.
-  - id: d
     texte: Toi, mais seulement si le navire en train de pêcher est plus grand que le tien.
 reponses:
   - b
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

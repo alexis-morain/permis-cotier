@@ -12,10 +12,6 @@ propositions:
     texte: Il est obligatoire dès que le navire dépasse 12 mètres.
   - id: b
     texte: Il n'est pas obligatoire, mais le navire peut le montrer.
-  - id: c
-    texte: Il est interdit en dessous de 50 mètres de longueur.
-  - id: d
-    texte: Il remplace le feu de poupe quand le navire fait route.
 reponses:
   - b
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
