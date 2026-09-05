@@ -1,9 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Feu à secteurs">
-  <rect width="64" height="64" fill="#16231f"/>
-  <!-- Secteur du feu, magenta de surimpression des cartes marines. -->
-  <path d="M32 32 L32 6 A26 26 0 0 1 54.5 19 Z" fill="#d6006e"/>
-  <path d="M32 32 L54.5 19 A26 26 0 0 1 54.5 45 Z" fill="#f2ecdd" opacity="0.9"/>
-  <path d="M32 32 L54.5 45 A26 26 0 0 1 32 58 Z" fill="#0c6b45"/>
-  <circle cx="32" cy="32" r="6" fill="#f2ecdd"/>
-  <circle cx="32" cy="32" r="26" fill="none" stroke="#f2ecdd" stroke-width="1.5" opacity="0.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Permis côtier">
+  <!-- Une bouée conique, jaune cardinal sur marine. Même dessin que le wordmark. -->
+  <rect width="32" height="32" rx="8" fill="#0b1d3a"/>
+  <path d="M16 6.5 L25.5 21.5 H6.5 Z" fill="#ffc72c"/>
+  <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" fill="#ffc72c"/>
 </svg>

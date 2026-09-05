@@ -3,47 +3,50 @@ import Base from '../layouts/Base.astro';
 import DateExamen from '../components/DateExamen.tsx';
 import Reprise from '../components/Reprise.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
+import { GUIDE } from '../lib/guide';
 
 const themes = await themesAvecComptes();
-const total = (await questionsPubliees()).length;
+const questions = await questionsPubliees();
+const total = questions.length;
 const couverts = themes.filter((t) => t.publiees > 0).length;
 ---
 
 <Base
-  titre="Réviser le permis côtier : examens blancs au format de l’épreuve"
-  description="Examens blancs de 40 questions, chronométrés comme à l’épreuve, et entraînement par thème. Gratuit, sans inscription, chaque question cite le texte dont elle est tirée."
+  titre="Permis côtier : tests et examens blancs gratuits"
+  description="Examens blancs de 40 questions chronométrés comme à l’épreuve, et entraînement par thème. Gratuit, sans inscription, chaque question cite le texte réglementaire dont elle est tirée."
 >
-  <section class="page ouverture">
-    <div class="ouverture__texte">
-      <h1>Passe des examens blancs, au format de l’épreuve.</h1>
-      <p class="ouverture__promesse">
-        Quarante questions, vingt secondes chacune, cinq erreurs admises. Comme le jour J,
-        sauf que tu peux recommencer autant que tu veux. Gratuit, sans compte, et chaque
-        réponse renvoie au texte dont elle est tirée.
-      </p>
+  <section class="ouverture">
+    <div class="page ouverture__grille">
+      <div class="ouverture__texte">
+        <h1>Révise le permis côtier au format de l’épreuve.</h1>
+        <p class="ouverture__promesse">
+          Quarante questions, vingt secondes chacune, cinq erreurs admises. Comme le jour J,
+          sauf que tu peux recommencer autant que tu veux. Gratuit, sans compte, et chaque
+          réponse renvoie au texte dont elle est tirée.
+        </p>
 
-      <div class="ouverture__actions">
-        <a class="bouton bouton--principal" href="/examen" data-umami-event="accueil-examen">
-          Commencer un examen blanc
-        </a>
-        <a class="bouton bouton--discret" href="/entrainement">ou s’entraîner thème par thème</a>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--principal" href="/examen" data-umami-event="accueil-examen">
+            Commencer un examen blanc
+          </a>
+          <a class="bouton bouton--discret" href="/entrainement">ou s’entraîner thème par thème</a>
+        </div>
+
+        <Reprise client:only="react" ids={questions.map((q) => q.id)} />
       </div>
 
-      <Reprise client:only="react" />
+      <aside class="ouverture__cote">
+        <p class="compteur">
+          <b class="display">{total}</b>
+          <span>question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}, {couverts} thème{couverts > 1 ? 's' : ''} sur 14</span>
+        </p>
+        <p class="discret">
+          Objectif 400 d’ici décembre. Rien n’est publié avant relecture.
+        </p>
+        <hr />
+        <DateExamen client:only="react" />
+      </aside>
     </div>
-
-    <aside class="ouverture__cote">
-      <p class="chapitre">Où en est la banque</p>
-      <p class="compteur">
-        <b>{total}</b> question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}
-      </p>
-      <p class="discret">
-        {couverts} thème{couverts > 1 ? 's' : ''} sur 14 couvert{couverts > 1 ? 's' : ''}.
-        Objectif 400 d’ici décembre. Rien n’est publié avant relecture.
-      </p>
-      <hr />
-      <DateExamen client:only="react" />
-    </aside>
   </section>
 
   <section class="page page--etroite methode">
@@ -57,7 +60,8 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
     <p>
       Résultat : sous chaque explication, tu as la règle exacte et son numéro. Si une question
       te paraît fausse, le bouton de signalement est juste dessous, et la correction arrive dans
-      la semaine. Le site est ouvert, le code et la banque sont sur GitHub.
+      la semaine. Le site est ouvert, le code et la banque sont sur GitHub, et le détail de la
+      fabrication est sur la page <a href="/a-propos">qui écrit ces questions</a>.
     </p>
     <p class="discret">
       Ce site prépare au format de l’épreuve. Il n’est ni officiel, ni agréé, et l’administration
@@ -65,18 +69,31 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
     </p>
   </section>
 
+  <section class="page page--etroite guide">
+    <h2>Avant de réviser</h2>
+    <p>
+      Jusqu’où le permis côtier autorise à aller, ce que l’épreuve demande, ce que le
+      titre coûte : les réponses sont dans le décret du 2 août 2007 et dans l’arrêté du
+      28 septembre 2007, et le guide cite l’article à chaque fois.
+    </p>
+    <ul class="guide__liens">
+      {GUIDE.map((p) => (
+        <li><a href={`/guide/${p.slug}`}>{p.question}</a></li>
+      ))}
+    </ul>
+  </section>
+
   <section class="page themes">
     <h2>Les quatorze thèmes du programme</h2>
-    <p class="discret" style="margin-bottom:2rem">
-      Dans l’ordre de l’arrêté. Le nombre entre parenthèses est ce qui est publié aujourd’hui,
-      pas ce qui est promis.
+    <p class="discret themes__note">
+      Dans l’ordre de l’arrêté. Le compte est ce qui est publié aujourd’hui, pas ce qui est promis.
     </p>
     <ul class="listeThemes">
       {themes.map((t) => (
         <li>
           <a href={`/theme/${t.code}`}>
             <span class="listeThemes__nom">{t.nom}</span>
-            <span class="listeThemes__compte">
+            <span class="pastille">
               {t.publiees > 0 ? `${t.publiees} question${t.publiees > 1 ? 's' : ''}` : 'à venir'}
             </span>
           </a>
@@ -88,12 +105,19 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
 </Base>
 
 <style>
+  /* La bande marine, soulignée de la ligne de flottaison jaune. */
   .ouverture {
+    background: var(--bande);
+    color: var(--bande-texte);
+    border-bottom: 6px solid var(--jaune);
+  }
+  .ouverture__grille {
     display: grid;
     gap: 2.5rem;
-    padding-block: 3rem 4rem;
+    padding-block: 3rem 3.5rem;
   }
-  .ouverture__promesse { font-size: 1.15rem; max-width: 42ch; }
+  .ouverture h1 { max-width: 16ch; }
+  .ouverture__promesse { font-size: 1.15rem; max-width: 42ch; color: var(--bande-doux); }
   .ouverture__actions {
     display: flex;
     flex-wrap: wrap;
@@ -101,44 +125,72 @@ const couverts = themes.filter((t) => t.publiees > 0).length;
     gap: 1rem 1.5rem;
     margin-top: 2rem;
   }
-  .ouverture__cote {
-    border-top: 2px solid var(--encre);
-    padding-top: 1.25rem;
-    align-self: start;
+  .ouverture .bouton--discret { color: var(--bande-texte); }
+  .ouverture :global(.reprise) {
+    border-top-color: color-mix(in srgb, var(--bande-texte) 25%, transparent);
+    color: var(--bande-doux);
   }
-  .compteur { font-family: var(--serif); font-size: 1.35rem; margin: 0 0 0.35rem; }
-  .compteur b { font-size: 2.4rem; font-weight: 600; line-height: 1; }
+  .ouverture :global(.reprise b) { color: var(--bande-texte); }
 
-  .methode { padding-block: 1rem 2rem; }
+  /* Le panneau blanc posé sur la bande. */
+  .ouverture__cote {
+    align-self: start;
+    background: var(--fond-carte);
+    color: var(--texte);
+    border: 2px solid var(--fond-carte);
+    border-radius: var(--rayon);
+    padding: 1.5rem;
+  }
+  /* En sombre, la surface a la couleur de la bande : le panneau se détache
+     par le fond de page et un filet. */
+  @media (prefers-color-scheme: dark) {
+    .ouverture__cote { background: var(--fond); border-color: var(--filet); }
+  }
+  .compteur { display: flex; flex-direction: column; gap: 0.15rem; margin: 0 0 0.5rem; }
+  .compteur .display { font-size: 3.4rem; line-height: 1; }
+  .compteur span { font-weight: 600; }
+  .ouverture__cote hr { margin: 1.25rem 0; }
+
+  .methode { padding-block: 3.5rem 2rem; }
   .methode h2 { margin-bottom: 1rem; }
 
-  .themes { padding-top: 3rem; }
+  .guide { padding-top: 3rem; }
+  .guide h2 { margin-bottom: 1rem; }
+  .guide__liens { list-style: none; margin: 1.2rem 0 0; padding: 0; }
+  .guide__liens li { border-top: 1px solid var(--filet); padding: 0.7rem 0; }
+  .guide__liens li:last-child { border-bottom: 1px solid var(--filet); }
+  .guide__liens a { text-decoration: none; }
+  .guide__liens a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+
+  .themes { padding-top: 2.5rem; }
+  .themes__note { margin-bottom: 1.5rem; }
   .listeThemes { list-style: none; margin: 0; padding: 0; }
   .listeThemes li {
-    border-top: 1px solid var(--filet);
+    border-top: 2px solid var(--filet);
     padding: 1rem 0 1.1rem;
+    max-width: none;
   }
-  .listeThemes li:last-child { border-bottom: 1px solid var(--filet); }
+  .listeThemes li:last-child { border-bottom: 2px solid var(--filet); }
   .listeThemes a {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 0.5rem 1.5rem;
+    min-height: 2.75rem;
     text-decoration: none;
   }
-  .listeThemes a:hover .listeThemes__nom { text-decoration: underline; text-decoration-color: var(--accent); }
-  .listeThemes__nom { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; }
-  .listeThemes__compte { color: var(--texte-doux); font-size: 0.9rem; white-space: nowrap; }
-  .listeThemes p { margin: 0.2rem 0 0; max-width: 60ch; }
+  .listeThemes a:hover .listeThemes__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+  .listeThemes__nom { font-size: 1.2rem; font-weight: 700; }
+  .listeThemes p { margin: 0.1rem 0 0; max-width: 60ch; }
 
   @media (min-width: 52rem) {
-    .ouverture {
-      grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.85fr);
+    .ouverture__grille {
+      grid-template-columns: minmax(0, 1.6fr) minmax(17rem, 0.85fr);
       gap: 4rem;
-      padding-block: 5rem 5rem;
+      padding-block: 5rem 5.5rem;
     }
-    .themes { padding-top: 4rem; }
+    .themes { padding-top: 3.5rem; }
     .listeThemes { column-count: 2; column-gap: 3rem; }
     .listeThemes li { break-inside: avoid; }
   }

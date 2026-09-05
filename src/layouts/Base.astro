@@ -1,6 +1,17 @@
 ---
 import '../styles/global.css';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
+import {
+  SITE,
+  titrePage,
+  descriptionPage,
+  cheminServi,
+  filAriane,
+  siteWeb,
+  graphe,
+  type JsonLd,
+  type Miette,
+} from '../lib/seo';
 
 interface Props {
   titre: string;
@@ -8,13 +19,52 @@ interface Props {
   /** Laisser à false sur les écrans de jeu, qui n'ont rien à indexer. */
   indexable?: boolean;
   canonique?: string;
+  /** Fil d'Ariane, sans l'accueil : il est ajouté en tête. */
+  miettes?: readonly Miette[];
+  /** Nœuds JSON-LD propres à la page, ajoutés au graphe du site. */
+  jsonLd?: readonly JsonLd[];
+  /** Image de partage, relative à la racine. */
+  image?: string;
+  imageAlt?: string;
 }
 
-const { titre, description, indexable = true, canonique } = Astro.props;
-const url = canonique ?? new URL(Astro.url.pathname, Astro.site ?? 'https://exemple.invalid').href;
+const {
+  titre,
+  description,
+  indexable = true,
+  canonique,
+  miettes = [],
+  jsonLd = [],
+  image = '/partage/le-permis-cotier.png',
+  imageAlt = 'Le Permis Côtier — examens blancs au format de l’épreuve',
+} = Astro.props;
+
+const base = Astro.site ?? new URL(SITE.domaine);
+const url = canonique ?? new URL(cheminServi(Astro.url.pathname), base).href;
+const titreComplet = titrePage(titre);
+const descriptionCourte = descriptionPage(description);
+const imageAbsolue = new URL(image, base).href;
+
+// Le graphe rassemble ce qui vaut pour tout le site et ce qui vaut pour la
+// page. Les écrans non indexables n'en portent pas : baliser ce qu'on demande
+// aux moteurs d'ignorer ne sert personne.
+const noeuds: JsonLd[] = indexable
+  ? [
+      siteWeb(base),
+      ...(miettes.length > 0
+        ? [filAriane([{ nom: 'Accueil', chemin: '/' }, ...miettes], base)]
+        : []),
+      ...jsonLd,
+    ]
+  : [];
+
 const version = versionBanque();
 const annee = new Date().getFullYear();
 const relecture = await comptesDeRelecture();
+
+// La section courante, soulignée dans la navigation.
+const chemin = Astro.url.pathname;
+const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`${prefixe}/`) ? 'page' : undefined);
 ---
 
 <!doctype html>
@@ -22,33 +72,72 @@ const relecture = await comptesDeRelecture();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titre}</title>
-    <meta name="description" content={description} />
+    <title>{titreComplet}</title>
+    <meta name="description" content={descriptionCourte} />
     <link rel="canonical" href={url} />
     {!indexable && <meta name="robots" content="noindex, follow" />}
-    <meta property="og:title" content={titre} />
-    <meta property="og:description" content={description} />
+    {indexable && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
+    <meta property="og:title" content={titreComplet} />
+    <meta property="og:description" content={descriptionCourte} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
-    <meta name="theme-color" content="#16231f" />
+    <meta property="og:site_name" content={SITE.nom} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={imageAbsolue} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titreComplet} />
+    <meta name="twitter:description" content={descriptionCourte} />
+    <meta name="twitter:image" content={imageAbsolue} />
+    <meta name="author" content={SITE.auteur} />
+    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
 
     <header class="entete">
       <div class="page entete__interieur">
-        <a href="/" class="entete__marque">
-          <span class="entete__nom">Permis côtier</span>
-          <span class="entete__sous">révision</span>
+        <a href="/" class="marque" aria-label="Permis côtier, accueil">
+          <svg class="marque__glyphe" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+            <rect width="32" height="32" rx="8" class="marque__fond" />
+            <path d="M16 6.5 L25.5 21.5 H6.5 Z" class="marque__cone" />
+            <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" class="marque__cone" />
+          </svg>
+          <span class="marque__nom">Permis côtier</span>
         </a>
         <nav aria-label="Navigation principale">
-          <a href="/entrainement">Entraînement</a>
-          <a href="/themes">Thèmes</a>
-          <a href="/parametres">Réglages</a>
+          <a href="/examen" aria-current={courant('/examen')}>Examen</a>
+          <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
+          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Thèmes</a>
+          <a href="/guide" aria-current={courant('/guide')}>Guide</a>
+          <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
         </nav>
       </div>
     </header>
+
+    {miettes.length > 0 && (
+      <nav class="page ariane" aria-label="Fil d’Ariane">
+        <ol>
+          <li><a href="/">Accueil</a></li>
+          {miettes.map((m, i) => (
+            <li>
+              {i === miettes.length - 1 ? (
+                <span aria-current="page">{m.nom}</span>
+              ) : (
+                <a href={m.chemin}>{m.nom}</a>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
 
     <main id="contenu">
       <slot />
@@ -63,11 +152,27 @@ const relecture = await comptesDeRelecture();
         </p>
         <p class="discret">
           Banque version {version}. {
-            relecture.parUnePersonne === relecture.total
-              ? 'Toutes les questions sont relues par Alexis Morain, seul à ce stade.'
-              : `${relecture.parUnePersonne} des ${relecture.total} questions sont relues par Alexis Morain ; les autres ne le sont, pour l’instant, que par le modèle qui les a écrites à partir de l’article cité.`
+            relecture.parUnePersonne === relecture.total ? (
+              <Fragment>
+                Toutes les questions sont relues par <a href="/a-propos">Alexis Morain</a>, seul à ce stade.
+              </Fragment>
+            ) : (
+              <Fragment>
+                {relecture.parUnePersonne} des {relecture.total} questions sont relues par{' '}
+                <a href="/a-propos">Alexis Morain</a> ; les autres ne le sont, pour l’instant, que par le
+                modèle qui les a écrites à partir de l’article cité.
+              </Fragment>
+            )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
+        <nav class="pied__plan" aria-label="Plan du site">
+          <a href="/examen">Examen blanc</a>
+          <a href="/entrainement">Entraînement par thème</a>
+          <a href="/themes">Les quatorze thèmes</a>
+          <a href="/guide">Guide du permis côtier</a>
+          <a href="/a-propos">Qui écrit ces questions</a>
+          <a href="/credits">Crédits</a>
+        </nav>
         <p class="discret">
           Code sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>,
           banque de questions sous <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>.
@@ -81,49 +186,89 @@ const relecture = await comptesDeRelecture();
     </footer>
 
     <style>
+      .ariane { padding-block: 0.9rem 0; font-size: 0.85rem; color: var(--texte-doux); }
+      .ariane ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
+      .ariane li + li::before { content: "›"; margin-right: 0.4rem; color: var(--filet-fort); }
+      .ariane a { color: inherit; text-decoration: none; }
+      .ariane a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      .ariane [aria-current="page"] { color: var(--texte); }
+
+      .pied__plan {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin: 1.5rem 0;
+        font-size: 0.9rem;
+      }
+
       .entete {
-        border-bottom: var(--filet-epaisseur) solid var(--filet);
-        background: var(--fond);
+        background: var(--fond-carte);
+        border-bottom: 2px solid var(--filet);
       }
       .entete__interieur {
         display: flex;
         flex-wrap: wrap;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        gap: 0.75rem 1.5rem;
-        padding-block: 0.85rem;
+        gap: 0.5rem 1.5rem;
+        min-height: 3.75rem;
+        padding-block: 0.5rem;
       }
-      .entete__marque {
-        display: flex;
-        align-items: baseline;
-        gap: 0.45rem;
+      .marque {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 2.75rem;
         text-decoration: none;
       }
-      .entete__nom {
-        font-family: var(--serif);
-        font-size: 1.15rem;
-        font-weight: 600;
+      .marque__fond { fill: var(--marine); }
+      .marque__cone { fill: var(--jaune); }
+      @media (prefers-color-scheme: dark) {
+        .marque__fond { fill: var(--jaune); }
+        .marque__cone { fill: var(--marine); }
       }
-      .entete__sous {
-        color: var(--texte-doux);
-        font-size: 0.8rem;
+      .marque__nom {
+        font-stretch: var(--large);
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
       }
       .entete nav {
         display: flex;
-        gap: 1.25rem;
-        font-size: 0.95rem;
+        gap: 0 0.25rem;
+        margin-inline: -0.6rem;
       }
-      .entete nav a { text-decoration: none; }
-      .entete nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      /* Sous 40 rem, la navigation prend sa propre ligne et se répartit :
+         quatre entrées ne tiennent pas à côté de la marque sur 375 px. */
+      @media (max-width: 39.999rem) {
+        .entete__interieur { flex-direction: column; align-items: stretch; gap: 0; padding-block: 0.5rem 0.25rem; }
+        .entete nav { justify-content: space-between; margin-inline: -0.4rem; }
+        .entete nav a { padding-inline: 0.4rem; }
+      }
+      .entete nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: var(--rayon-petit);
+        /* Le trait jaune est réservé à la page où on est. */
+        box-shadow: inset 0 -3px 0 transparent;
+        transition: box-shadow var(--transition), background var(--transition);
+      }
+      .entete nav a:hover { background: var(--fond-2); }
+      .entete nav a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--jaune); }
 
       .pied {
         margin-top: 5rem;
-        border-top: var(--filet-epaisseur) solid var(--filet);
-        background: color-mix(in srgb, var(--eau) 35%, var(--fond));
+        border-top: 2px solid var(--filet);
+        background: var(--fond-2);
       }
       .pied__interieur { padding-block: 2.5rem 3.5rem; }
-      .pied p { max-width: 58ch; }
-      .pied p:first-child { font-size: 1rem; }
+      .pied p { max-width: 60ch; }
     </style>
   </body>
 </html>

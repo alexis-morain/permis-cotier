@@ -40,6 +40,7 @@ export default function DateExamen() {
       <label htmlFor="date-examen">Ton examen est quand&nbsp;?</label>
       <input
         id="date-examen"
+        className="champ"
         type="date"
         value={date}
         onChange={(e) => enregistrer(e.target.value)}
@@ -56,18 +57,7 @@ export default function DateExamen() {
         Gardée dans ce navigateur, rien n’est envoyé.
       </p>
       <style>{`
-        .dateExamen label { display: block; font-weight: 600; margin-bottom: 0.4rem; }
-        .dateExamen input {
-          font: inherit;
-          padding: 0.6rem 0.7rem;
-          min-height: 2.75rem;
-          width: 100%;
-          border: 1px solid var(--filet);
-          border-radius: 0;
-          background: var(--fond);
-          color: inherit;
-        }
-        .dateExamen input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .dateExamen label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
       `}</style>
     </div>
   );

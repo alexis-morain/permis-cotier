@@ -8,9 +8,9 @@ const themes = await themesAvecComptes();
 <Base
   titre="Le programme du permis côtier, thème par thème"
   description="Les quatorze thèmes de l’épreuve théorique du permis plaisance option côtière, dans l’ordre de l’arrêté du 28 septembre 2007."
+  miettes={[{ nom: 'Programme', chemin: '/themes' }]}
 >
   <div class="page page--etroite" style="padding-block:3rem 1rem">
-    <p class="chapitre">Programme</p>
     <h1>Les quatorze thèmes de l’épreuve</h1>
     <p>
       L’arrêté du 28 septembre 2007 fixe le programme à son article 1er, paragraphe 1.2.
@@ -26,10 +26,11 @@ const themes = await themesAvecComptes();
           <h2><a href={`/theme/${t.code}`}>{t.nom}</a></h2>
           <p class="discret grilleThemes__intitule">{t.intitule}</p>
           <p>{t.description}</p>
-          <p class="discret">
-            {t.publiees > 0
-              ? `${t.publiees} question${t.publiees > 1 ? 's' : ''} publiée${t.publiees > 1 ? 's' : ''}, cible ${t.cibleJ1}.`
-              : `Aucune question publiée pour l’instant, cible ${t.cibleJ1}.`}
+          <p class="grilleThemes__compte">
+            <span class="pastille">
+              {t.publiees > 0 ? `${t.publiees} question${t.publiees > 1 ? 's' : ''}` : 'à venir'}
+            </span>
+            <span class="discret">cible {t.cibleJ1}</span>
           </p>
         </li>
       ))}
@@ -39,11 +40,12 @@ const themes = await themesAvecComptes();
 
 <style>
   .grilleThemes { list-style: none; margin: 0 0 3rem; padding: 0; }
-  .grilleThemes li { border-top: 1px solid var(--filet); padding: 1.75rem 0; }
-  .grilleThemes h2 { font-size: 1.5rem; margin-bottom: 0.15rem; }
+  .grilleThemes li { border-top: 2px solid var(--filet); padding: 1.75rem 0; max-width: none; }
+  .grilleThemes h2 { font-size: 1.4rem; margin-bottom: 0.15rem; }
   .grilleThemes h2 a { text-decoration: none; }
-  .grilleThemes h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  .grilleThemes h2 a:hover { text-decoration: underline; }
   .grilleThemes__intitule { margin-bottom: 0.75rem; }
+  .grilleThemes__compte { display: flex; align-items: center; gap: 0.6rem; margin: 0; }
   @media (min-width: 60rem) {
     .grilleThemes li {
       display: grid;

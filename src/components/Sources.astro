@@ -1,0 +1,47 @@
+---
+/**
+ * D'où la page tient ce qu'elle affirme.
+ *
+ * Ce bloc n'est pas une politesse. Une page qui répond à une question de droit
+ * sans dire d'où elle sort sa réponse vaut ce que vaut son auteur ; celle qui
+ * cite l'article se vérifie en un clic. C'est la seule chose que ce site fait
+ * mieux que les autres, elle doit se voir.
+ */
+interface Props {
+  sources: readonly { texte: string; url: string }[];
+  /** Date de la dernière vérification des textes cités. */
+  verifieLe?: string;
+}
+
+const { sources, verifieLe } = Astro.props;
+---
+
+<aside class="sources">
+  <h2 class="sources__titre">D’où vient cette réponse</h2>
+  <ul>
+    {sources.map((s) => (
+      <li>
+        <a href={s.url} rel="noreferrer noopener">{s.texte}</a>
+      </li>
+    ))}
+  </ul>
+  <p class="discret">
+    Textes publiés sur Légifrance sous Licence Ouverte 2.0{verifieLe ? `, version consultée le ${verifieLe}` : ''}.
+    Une erreur, un texte modifié ? <a href="/signaler">Signale-le</a>, la correction arrive dans la semaine.
+  </p>
+</aside>
+
+<style>
+  .sources {
+    border: 2px solid var(--filet);
+    border-left: var(--bord) solid var(--accent);
+    border-radius: var(--rayon);
+    padding: 1.25rem 1.4rem;
+    margin: 3rem 0 0;
+    background: var(--fond-2);
+  }
+  .sources__titre { font-size: 1rem; margin: 0 0 0.6rem; }
+  .sources ul { margin: 0 0 0.8rem; padding-left: 1.1rem; }
+  .sources li { margin-bottom: 0.3rem; }
+  .sources p { margin: 0; max-width: 60ch; }
+</style>

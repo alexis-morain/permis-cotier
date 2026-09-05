@@ -1,25 +1,33 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// Repli du chantier 1 de l'audit UX : tant que le Worker de signalement n'est
+// pas posé (jetons GitHub, Resend et Turnstile encore vides), le formulaire
+// ouvre un courrier pré-rempli au lieu de poster sur un `/api/signaler` qui
+// n'existe pas et rendait 405. Une adresse en clair vaut mieux qu'une page
+// blanche : la promesse faite en pied de page redevient vraie.
+const ADRESSE = 'alexis@morain.fr';
 ---
 
 <Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
   <div class="page page--etroite" style="padding-block:3rem 0">
-    <p class="chapitre">Signalement</p>
     <h1>Une question te paraît fausse ?</h1>
     <p>
-      Dis-nous laquelle et pourquoi. Chaque signalement ouvre une fiche publique, la question est
-      relue, et corrigée ou retirée. Les erreurs signalées sont traitées dans la semaine.
+      Dis-moi laquelle et pourquoi. Chaque signalement est relu contre le texte cité, et la
+      question est corrigée ou retirée. La correction est publique, elle passe par le dépôt.
+      Les erreurs signalées sont traitées dans la semaine.
     </p>
 
-    <form class="signalement" method="post" action="/api/signaler">
+    <form class="signalement" id="signalement" method="post" enctype="text/plain"
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE}>
       <p>
         <label for="question">Identifiant de la question</label>
-        <input id="question" name="question" required readonly />
+        <input id="question" name="question" class="champ" required readonly />
         <span class="discret">Rempli automatiquement depuis la question d’où tu viens.</span>
       </p>
       <p>
         <label for="motif">Qu’est-ce qui ne va pas ?</label>
-        <select id="motif" name="motif" required>
+        <select id="motif" name="motif" class="champ" required>
           <option value="reponse">La bonne réponse indiquée est fausse</option>
           <option value="explication">L’explication est fausse ou incomplète</option>
           <option value="source">La source ne dit pas ça</option>
@@ -30,18 +38,37 @@ import Base from '../layouts/Base.astro';
       </p>
       <p>
         <label for="details">Précise, si tu peux</label>
-        <textarea id="details" name="details" rows="5" maxlength="1200"
+        <textarea id="details" name="details" class="champ" rows="5" maxlength="1200"
           placeholder="La règle 26 parle du chalutier, pas du navire à la traîne."></textarea>
       </p>
       <p class="discret">
-        Rien d’autre n’est envoyé : pas de nom, pas d’adresse, pas d’adresse IP conservée.
-        Un signalement est public.
+        Le message part de ta boîte, ton adresse m’est donc visible et ne sert qu’à te répondre.
+        Rien n’est enregistré ailleurs, aucun compte, aucune adresse IP conservée.
       </p>
       <p>
-        <button class="bouton bouton--principal" type="submit">Envoyer le signalement</button>
+        <button class="bouton bouton--principal" type="submit">Préparer le signalement</button>
       </p>
-      <noscript><p class="discret">Le formulaire a besoin de JavaScript pour l’anti-spam.</p></noscript>
+      <noscript>
+        <p class="discret">
+          Sans JavaScript, écris directement à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> en
+          citant l’identifiant de la question.
+        </p>
+      </noscript>
     </form>
+
+    <div class="confirmation" id="confirmation" role="status" tabindex="-1" hidden>
+      <p class="confirmation__titre">Ton logiciel de courrier s’ouvre avec le message pré-rempli.</p>
+      <p>
+        Il ne part pas tout seul : relis-le, puis envoie-le. Rien n’est enregistré ici.
+      </p>
+      <p class="discret">
+        Rien ne s’est ouvert ? Écris à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> en citant
+        l’identifiant <b id="confirmation-id">de la question</b>. C’est la même chose, à la main.
+      </p>
+      <p>
+        <a class="bouton bouton--discret" href="/entrainement">Revenir à l’entraînement</a>
+      </p>
+    </div>
   </div>
 
   <script is:inline>
@@ -51,24 +78,66 @@ import Base from '../layouts/Base.astro';
       if (id) champ.value = id;
       else champ.removeAttribute('readonly');
     }
+
+    const formulaire = document.getElementById('signalement');
+    const adresse = formulaire?.dataset.adresse ?? '';
+    const confirmation = document.getElementById('confirmation');
+
+    const MOTIFS = {
+      reponse: 'la bonne réponse indiquée est fausse',
+      explication: 'l’explication est fausse ou incomplète',
+      source: 'la source ne dit pas ça',
+      visuel: 'le visuel est faux ou illisible',
+      formulation: 'la question est mal formulée ou ambiguë',
+      autre: 'autre',
+    };
+
+    formulaire?.addEventListener('submit', (evenement) => {
+      evenement.preventDefault();
+      const question = (document.getElementById('question')?.value ?? '').trim();
+      const motif = document.getElementById('motif')?.value ?? 'autre';
+      const details = (document.getElementById('details')?.value ?? '').trim();
+
+      const corps = [
+        `Question : ${question}`,
+        `Motif : ${MOTIFS[motif] ?? motif}`,
+        '',
+        details || '(rien de plus)',
+        '',
+        `Page : ${location.origin}/question/${question}`,
+      ].join('\n');
+
+      const lien =
+        `mailto:${adresse}` +
+        `?subject=${encodeURIComponent(`Signalement ${question}`)}` +
+        `&body=${encodeURIComponent(corps)}`;
+
+      const marque = document.getElementById('confirmation-id');
+      if (marque && question) marque.textContent = question;
+      formulaire.hidden = true;
+      if (confirmation) {
+        confirmation.hidden = false;
+        confirmation.focus();
+      }
+      window.umami?.track('signalement-prepare', { motif });
+      location.href = lien;
+    });
   </script>
 </Base>
 
 <style>
   .signalement { margin-top: 2rem; max-width: 34rem; }
-  .signalement label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
-  .signalement input,
-  .signalement select,
-  .signalement textarea {
-    font: inherit;
-    width: 100%;
-    min-height: 2.9rem;
-    padding: 0.6rem 0.7rem;
-    border: 1px solid var(--filet);
-    border-radius: 0;
-    background: var(--fond-carte);
-    color: inherit;
-  }
+  .signalement label { display: block; font-weight: 700; margin-bottom: 0.35rem; }
   .signalement textarea { min-height: 7rem; resize: vertical; }
   .signalement .discret { display: block; margin-top: 0.3rem; }
+
+  .confirmation {
+    margin-top: 2rem;
+    max-width: 34rem;
+    border-radius: var(--rayon);
+    padding: 1.25rem;
+    background: var(--vert-pale);
+  }
+  .confirmation__titre { font-weight: 800; font-stretch: var(--large); color: var(--vert-texte); margin-top: 0; }
+  .confirmation p:last-child { margin-bottom: 0; }
 </style>
