@@ -1,4 +1,5 @@
 ---
+import { guidesDeLaNotion } from '../../lib/guide';
 import Base from '../../layouts/Base.astro';
 import { questionsDuTheme } from '../../lib/banque';
 import { themeParCode } from '../../lib/themes';
@@ -10,6 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { notion } = Astro.props;
+const guides = guidesDeLaNotion(notion.code);
 const theme = themeParCode(notion.theme);
 const nomTheme = theme?.nom ?? notion.theme;
 const chemin = `/notion/${notion.code}`;
@@ -94,6 +96,22 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
           quand le texte réglementaire qui les fonde aura été dépouillé.
         </p>
       </div>
+    )}
+
+    {guides.length > 0 && (
+      <section class="bloc">
+        <h2>Le cadre, en entier</h2>
+        <p class="discret">
+          Cette notion se comprend mieux avec le texte qui la porte.
+        </p>
+        <ul class="questions">
+          {guides.map((g) => (
+            <li>
+              <a href={`/guide/${g.slug}`}>{g.question}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
     )}
 
     <p class="bloc">
