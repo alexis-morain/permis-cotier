@@ -206,22 +206,22 @@ RYTHMES: dict[str, dict] = {
     "laterale-babord": {
         "motif": [(0.6, "rouge"), (1.4, None)],
         "fenetre": 3,
-        "alt": "Feu rouge à éclats. Le rythme d'une marque latérale est quelconque, "
-               "c'est la couleur qui l'identifie.",
+        "alt": "Feu rouge à éclats, la lumière durant nettement moins que "
+               "l'obscurité qui la sépare de l'éclat suivant.",
         "regle": "AISM, région A, marque latérale bâbord, feu rouge, rythme quelconque",
     },
     "laterale-tribord": {
         "motif": [(0.6, "vert"), (1.4, None)],
         "fenetre": 3,
-        "alt": "Feu vert à éclats. Le rythme d'une marque latérale est quelconque, "
-               "c'est la couleur qui l'identifie.",
+        "alt": "Feu vert à éclats, la lumière durant nettement moins que "
+               "l'obscurité qui la sépare de l'éclat suivant.",
         "regle": "AISM, région A, marque latérale tribord, feu vert, rythme quelconque",
     },
     "speciale": {
         "motif": [(0.6, "jaune"), (1.4, None)],
         "fenetre": 3,
-        "alt": "Feu jaune à éclats. Le rythme d'une marque spéciale est quelconque, mais "
-               "sa couleur jaune ne se confond avec aucune marque blanche.",
+        "alt": "Feu jaune à éclats, la lumière durant nettement moins que "
+               "l'obscurité qui la sépare de l'éclat suivant.",
         "regle": "AISM, région A, marque spéciale, feu jaune, rythme quelconque",
     },
 }

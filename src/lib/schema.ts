@@ -17,6 +17,16 @@ import { NOTIONS } from './notions';
  */
 export const ID_QUESTION = /^[a-z][a-z0-9-]*-\d{4}$/;
 
+/**
+ * L'arrêté ne dit pas combien de cases une question comporte, et l'épreuve ne
+ * l'annonce pas non plus. Un énoncé qui le dit supprime le seul jugement que
+ * les questions à deux bonnes réponses servent à entraîner : « ai-je fini ? ».
+ * Huit énoncés l'avaient annoncé avant que la règle soit posée, dont un relu
+ * par une personne, d'où le contrôle mécanique des deux côtés.
+ */
+export const ANNONCE_COMPTE_REPONSES =
+  /\b(deux|trois)\s+(?:\w+\s+)?(r[ée]ponses?|affirmations?|propositions?|cases?)\b/i;
+
 const texteNonVide = (min = 1) =>
   z
     .string()
@@ -104,6 +114,14 @@ export const schemaQuestion = z
       if (!ids.includes(r)) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['reponses'], message: `la réponse « ${r} » n'est pas dans les propositions` });
       }
+    }
+
+    if (ANNONCE_COMPTE_REPONSES.test(q.enonce)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['enonce'],
+        message: "l'énoncé annonce le nombre de bonnes réponses, ce que l'épreuve ne fait jamais",
+      });
     }
 
     if (q.notion !== undefined) {

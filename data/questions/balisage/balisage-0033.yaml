@@ -1,0 +1,38 @@
+id: balisage-0033
+option: cotier
+theme: balisage
+notion: balisage-speciale
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves cette marque sur ta route. Que peux-tu en conclure ?
+visuel:
+  fichier: balisage/speciale.svg
+  alt: "Bouée jaune surmontée d'une croix jaune en forme de X."
+  credit: code
+propositions:
+  - id: a
+    texte: Elle délimite une zone ou une installation particulière
+  - id: b
+    texte: Elle ne signale par elle-même aucun danger pour la navigation
+  - id: c
+    texte: Elle borde un chenal et se laisse sur bâbord en venant du large
+  - id: d
+    texte: Elle signale un danger tout juste découvert, absent de tes documents nautiques
+reponses:
+  - a
+  - b
+explication: >-
+  Corps jaune et voyant en croix jaune : c'est une marque spéciale. Elle délimite une zone
+  de mouillage, un câble, une conduite, une zone d'exercices, une zone de dépôt ou une
+  installation de loisirs, et elle ne dit rien d'un danger de navigation. Le piège est la
+  marque de danger nouveau, qui porte la même croix jaune mais un corps à bandes verticales
+  bleues et jaunes : la croix ne suffit pas, c'est la couleur du corps qui les sépare.
+sources:
+  - texte: Balisage AISM, marques spéciales
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'

@@ -1,0 +1,38 @@
+id: balisage-0029
+option: cotier
+theme: balisage
+notion: balisage-lateral
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu rentres au port en venant du large et cette marque se présente devant toi. De quel
+  côté la laisses-tu ?
+visuel:
+  fichier: balisage/laterale-babord.svg
+  alt: "Bouée cylindrique rouge surmontée d'un voyant cylindrique rouge."
+  credit: code
+propositions:
+  - id: a
+    texte: Sur bâbord
+  - id: b
+    texte: Sur tribord
+  - id: c
+    texte: Sur bâbord en sortant du port, sur tribord en y rentrant
+  - id: d
+    texte: D'un côté ou de l'autre, elle ne borde pas un chenal
+reponses:
+  - a
+explication: >-
+  Corps cylindrique rouge et voyant cylindrique rouge : c'est la marque latérale bâbord
+  de la région A, celle qui s'applique en France. Le sens conventionnel de balisage se
+  lit du large vers le port, et tu le remontes justement dans ce sens : la marque reste
+  donc sur ton bâbord. La proposition qui fait dépendre le côté du sens de ta route
+  confond ta route et le sens conventionnel, qui lui ne bouge pas.
+sources:
+  - texte: AISM, système de balisage maritime, région A, marque latérale bâbord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-05'
