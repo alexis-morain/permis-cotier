@@ -1,3 +1,0 @@
-# Une seule adresse par page. Le www renvoie vers le domaine nu, en 301, pour
-# que les deux ne se partagent pas les signaux de classement.
-https://www.lepermiscotier.fr/* https://lepermiscotier.fr/:splat 301

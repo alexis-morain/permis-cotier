@@ -138,3 +138,34 @@ export function sourcesResolues(
     .map((s) => ({ texte: s.texte, url: urlSource(s) }))
     .filter((s): s is { texte: string; url: string } => s.url !== undefined);
 }
+
+/**
+ * Ce qu'une page du guide éclaire dans le programme.
+ *
+ * Le lien ne va que dans un sens dans le texte, mais il se lit dans les deux :
+ * la fiche d'une notion renvoie vers la page qui la met en contexte, et la page
+ * du guide renvoie vers les fiches qui la détaillent. Rien n'est lié par
+ * politesse — une notion absente de cette table n'affiche pas de bloc.
+ */
+const NOTIONS_ECLAIREES: Readonly<Record<string, readonly string[]>> = {
+  'limites-du-permis-cotier': ['titre-obligation', 'titre-options', 'securite-limitations'],
+  'cotier-ou-fluvial': ['titre-options'],
+  'examen-du-permis-cotier': ['titre-conditions'],
+  'prix-du-permis-cotier': ['titre-conditions'],
+  'ou-passer-le-permis-cotier': ['titre-conditions'],
+};
+
+/** Les codes de notion que telle page du guide détaille. */
+export function notionsDuGuide(slug: string): readonly string[] {
+  return NOTIONS_ECLAIREES[slug] ?? [];
+}
+
+/** Les pages du guide qui mettent telle notion en contexte. */
+export function guidesDeLaNotion(code: string): readonly PageGuide[] {
+  return GUIDE.filter((p) => notionsDuGuide(p.slug).includes(code));
+}
+
+/** Tous les codes cités par la table, pour que les tests vérifient qu'ils existent. */
+export function notionsCitees(): readonly string[] {
+  return [...new Set(Object.values(NOTIONS_ECLAIREES).flat())];
+}

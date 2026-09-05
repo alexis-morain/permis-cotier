@@ -1,7 +1,8 @@
 ---
 import Base from './Base.astro';
 import Sources from '../components/Sources.astro';
-import { pageGuide, autresPages, sourcesResolues } from '../lib/guide';
+import { pageGuide, autresPages, sourcesResolues, notionsDuGuide } from '../lib/guide';
+import { notionParCode } from '../lib/notions';
 import { SITE, articlePage, faq, type QuestionFaq } from '../lib/seo';
 
 interface Props {
@@ -21,6 +22,11 @@ const base = Astro.site ?? new URL(SITE.domaine);
 const chemin = `/guide/${page.slug}`;
 const sources = sourcesResolues(page);
 const autres = autresPages(page.slug);
+// Les fiches du programme que cette page détaille. Le guide dit le cadre, la
+// fiche dit ce qu'il faut avoir retenu pour l'épreuve.
+const fiches = notionsDuGuide(page.slug)
+  .map((code) => notionParCode(code))
+  .filter((n): n is NonNullable<typeof n> => n !== undefined);
 ---
 
 <Base
@@ -56,6 +62,20 @@ const autres = autresPages(page.slug);
 
     <Sources sources={sources} verifieLe={verifieLe} />
 
+    {fiches.length > 0 && (
+      <section class="fiches">
+        <h2>Les fiches du programme correspondantes</h2>
+        <ul>
+          {fiches.map((n) => (
+            <li>
+              <a href={`/notion/${n.code}`}>{n.nom}</a>
+              <span class="discret"> — {n.resume}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     <nav class="suite" aria-label="Autres pages du guide">
       <h2>Le reste du guide</h2>
       <ul>
@@ -82,6 +102,11 @@ const autres = autresPages(page.slug);
     margin: 1.5rem 0 2.5rem;
     max-width: 52ch;
   }
+  .fiches { margin-top: 3rem; }
+  .fiches h2 { font-size: 1.05rem; }
+  .fiches ul { padding-left: 1.1rem; }
+  .fiches li { margin-bottom: 0.6rem; max-width: 62ch; }
+
   .suite { margin-top: 3rem; }
   .suite h2 { font-size: 1.05rem; }
   .suite ul { padding-left: 1.1rem; }
