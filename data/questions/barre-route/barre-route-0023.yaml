@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Il n'y a pas de risque, puisque vos routes sont parallèles.
   - id: c
-    texte: Il y a risque seulement si le navire est plus rapide que toi.
-  - id: d
     texte: Rien, le relèvement au compas ne renseigne pas sur le risque d'abordage.
 reponses:
   - a
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

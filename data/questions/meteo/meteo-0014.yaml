@@ -13,8 +13,6 @@ propositions:
     texte: Le vent, la marée, la température et la pression
   - id: c
     texte: La mer, la visibilité et les heures de vacation VHF
-  - id: d
-    texte: Le vent et la mer, sans autre rubrique
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

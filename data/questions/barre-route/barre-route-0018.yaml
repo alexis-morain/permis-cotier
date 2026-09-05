@@ -14,8 +14,6 @@ propositions:
     texte: Tu es à la voile, il doit s'écarter de ta route.
   - id: c
     texte: Tu dois sortir du chenal et mouiller à l'extérieur.
-  - id: d
-    texte: Tu dois faire entendre un signal sonore pour signaler ta présence.
 reponses:
   - a
 explication: >-
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

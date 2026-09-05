@@ -14,8 +14,6 @@ propositions:
     texte: Celui qui est sous le vent.
   - id: c
     texte: Celui qui reçoit le vent de bâbord.
-  - id: d
-    texte: Celui qui rattrape l'autre, quel que soit son bord de vent.
 reponses:
   - a
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

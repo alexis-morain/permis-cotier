@@ -12,10 +12,6 @@ propositions:
     texte: Non, elle relève de l'extension hauturière
   - id: b
     texte: Oui, le programme demande des notions d'autonomie en matière de carburant
-  - id: c
-    texte: Non, aucun texte ne s'en occupe
-  - id: d
-    texte: Oui, mais seulement pour les navires de plus de 6 mètres
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

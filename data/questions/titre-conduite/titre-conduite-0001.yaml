@@ -14,8 +14,6 @@ propositions:
     texte: Cinq erreurs.
   - id: c
     texte: Six erreurs.
-  - id: d
-    texte: Dix erreurs.
 reponses:
   - b
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

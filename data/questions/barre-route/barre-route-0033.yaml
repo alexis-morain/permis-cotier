@@ -18,8 +18,6 @@ propositions:
     texte: Tu appliques la règle des routes qui se croisent, le doute lui étant favorable.
   - id: c
     texte: Tu maintiens ton cap et ta vitesse jusqu'à ce que le doute se lève.
-  - id: d
-    texte: Tu lui demandes ses intentions au signal sonore avant de manœuvrer.
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

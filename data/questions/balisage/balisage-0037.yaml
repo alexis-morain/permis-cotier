@@ -16,10 +16,6 @@ propositions:
     texte: Rien de particulier, les deux marquent le côté tribord du chenal
   - id: b
     texte: Les deux marques bordent des côtés opposés du chenal
-  - id: c
-    texte: La différence de rythme annonce la séparation de deux chenaux
-  - id: d
-    texte: Le rythme le plus rapide désigne celle des deux qui est la plus proche du danger
 reponses:
   - a
 explication: >-
@@ -35,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

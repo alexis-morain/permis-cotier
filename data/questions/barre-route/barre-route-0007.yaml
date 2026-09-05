@@ -13,10 +13,6 @@ propositions:
     texte: Tu viens sur bâbord pour passer tribord à tribord.
   - id: b
     texte: Tu viens sur tribord pour passer bâbord à bâbord.
-  - id: c
-    texte: Tu maintiens ta route, c'est à l'autre navire de s'écarter.
-  - id: d
-    texte: Tu viens sur tribord si l'autre navire est plus grand que le tien.
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

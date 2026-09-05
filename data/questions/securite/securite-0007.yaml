@@ -11,10 +11,8 @@ propositions:
   - id: a
     texte: Le moyen de connaître les heures et coefficients de marée du jour.
   - id: b
-    texte: Le dispositif lumineux.
-  - id: c
     texte: L'extincteur portatif d'incendie.
-  - id: d
+  - id: c
     texte: La ligne de mouillage.
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

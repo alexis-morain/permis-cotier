@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: 0,40 mètre
   - id: c
-    texte: 0,60 mètre
-  - id: d
     texte: 0,80 mètre
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -9,15 +9,13 @@ enonce: >-
   de signalisation de détresse dois-tu embarquer ?
 propositions:
   - id: a
-    texte: Deux feux rouges à main
-  - id: b
     texte: Trois feux rouges à main
-  - id: c
+  - id: b
     texte: Six feux rouges à main
-  - id: d
+  - id: c
     texte: Trois fumigènes flottants
 reponses:
-  - b
+  - a
 explication: >-
   L'article 240-2.04, point 4, fixe le nombre à trois feux rouges à main, conformes à
   la division 311 du règlement. Le piège tient au nombre, que l'on retient volontiers
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

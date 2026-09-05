@@ -14,8 +14,6 @@ propositions:
     texte: Au moins deux heures d'autonomie, visible jusqu'à deux milles.
   - id: c
     texte: Au moins douze heures d'autonomie, visible jusqu'à un mille.
-  - id: d
-    texte: Aucune exigence chiffrée, le dispositif devant seulement être lumineux.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

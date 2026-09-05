@@ -14,8 +14,6 @@ propositions:
     texte: Des feux de côté, un feu de poupe et un feu de remorquage
   - id: c
     texte: Un feu blanc visible sur tout l'horizon à l'avant et un autre à l'arrière
-  - id: d
-    texte: Deux feux de tête de mât superposés et des feux de côté
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

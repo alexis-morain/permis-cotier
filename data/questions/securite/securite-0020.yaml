@@ -16,8 +16,6 @@ propositions:
       loueur
   - id: c
     texte: À bord seulement, le contrat de location n'ayant pas à le mentionner
-  - id: d
-    texte: Auprès des affaires maritimes, qui l'établissent chaque année
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

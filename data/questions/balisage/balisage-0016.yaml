@@ -15,8 +15,6 @@ propositions:
     texte: Aux marques cardinales.
   - id: c
     texte: Aux marques spéciales.
-  - id: d
-    texte: Aux marques de danger isolé.
 reponses:
   - c
 explication: >-
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -13,8 +13,6 @@ propositions:
     texte: En position complètement relevée
   - id: c
     texte: Prêtes à mouiller, pendues au davier
-  - id: d
-    texte: Peu importe, l'article ne vise que les bateaux de commerce
 reponses:
   - b
 explication: >-
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

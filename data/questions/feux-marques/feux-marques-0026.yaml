@@ -9,15 +9,13 @@ enonce: >-
   seul feu blanc visible sur tout l'horizon ?
 propositions:
   - id: a
-    texte: 20 mètres
-  - id: b
     texte: 50 mètres
-  - id: c
+  - id: b
     texte: 100 mètres
-  - id: d
+  - id: c
     texte: 12 mètres
 reponses:
-  - b
+  - a
 explication: >-
   La règle 30 b) autorise un navire au mouillage de longueur inférieure à 50 mètres à
   montrer un seul feu blanc visible sur tout l'horizon, à l'endroit le plus visible, au
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

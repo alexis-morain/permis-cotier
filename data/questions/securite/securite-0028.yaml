@@ -14,8 +14,6 @@ propositions:
     texte: Une hauteur significative jusqu'à 0,5 mètre, avec des vagues occasionnelles jusqu'à 1 mètre
   - id: c
     texte: Une hauteur significative jusqu'à 1 mètre, sans vague occasionnelle plus haute
-  - id: d
-    texte: Une hauteur significative jusqu'à 2 mètres, avec des vagues occasionnelles jusqu'à 3 mètres
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

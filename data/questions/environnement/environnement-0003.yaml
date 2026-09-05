@@ -13,10 +13,6 @@ propositions:
   - id: b
     texte: Oui, et les règles propres à la pêche de loisir ne peuvent jamais être plus
       favorables
-  - id: c
-    texte: Non, aucune taille minimale ne s'impose au pêcheur de loisir
-  - id: d
-    texte: Oui, mais seulement en Méditerranée
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -14,8 +14,6 @@ propositions:
     texte: Non, tu dois t'écarter jusqu'à être tout à fait paré et clair.
   - id: c
     texte: Oui, dès que tu arrives par le travers du navire rattrapé.
-  - id: d
-    texte: Non, mais le navire rattrapé doit alors manœuvrer pour t'aider.
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

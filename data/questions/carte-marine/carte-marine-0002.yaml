@@ -11,10 +11,6 @@ propositions:
     texte: L'échelle des longitudes, sur les bords horizontaux
   - id: b
     texte: L'échelle des latitudes, sur les bords verticaux
-  - id: c
-    texte: Indifféremment l'une ou l'autre, elles portent la même graduation
-  - id: d
-    texte: L'échelle graphique en kilomètres portée dans le cartouche
 reponses:
   - b
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

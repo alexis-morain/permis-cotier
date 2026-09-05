@@ -18,9 +18,6 @@ propositions:
       superposés réunis par la pointe
   - id: c
     texte: Ce navire tire un chalut
-  - id: d
-    texte: De jour, à la place de ces feux, il montrerait un cône unique la pointe en
-      haut
 reponses:
   - a
   - b
@@ -41,5 +38,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

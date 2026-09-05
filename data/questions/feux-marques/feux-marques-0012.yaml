@@ -14,8 +14,6 @@ propositions:
     texte: Un feu blanc visible sur tout l'horizon, seul.
   - id: c
     texte: Des feux de côté et un feu de poupe, sans feu blanc.
-  - id: d
-    texte: Un feu de tête de mât et un feu de poupe, sans feux de côté.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

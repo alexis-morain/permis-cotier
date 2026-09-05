@@ -16,10 +16,6 @@ propositions:
     texte: Sur bâbord
   - id: b
     texte: Sur tribord, le vert marque tribord dans toutes les régions
-  - id: c
-    texte: Sur tribord, la forme cylindrique désignant le côté tribord
-  - id: d
-    texte: D'un côté ou de l'autre, en région B le vert ne borde pas un chenal
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

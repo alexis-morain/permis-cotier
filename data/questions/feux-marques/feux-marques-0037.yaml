@@ -17,8 +17,6 @@ propositions:
   - id: b
     texte: Tu dois t'écarter de sa route, que tu sois au moteur ou à la voile
   - id: c
-    texte: Il est échoué
-  - id: d
     texte: Sa capacité de manœuvre est restreinte
 reponses:
   - a
@@ -41,5 +39,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: À la verticale au-dessous du feu de poupe
   - id: c
-    texte: Au-dessus des feux de tête de mât superposés
-  - id: d
     texte: À l'endroit le plus visible du navire, sans position imposée
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

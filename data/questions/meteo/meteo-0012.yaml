@@ -14,8 +14,6 @@ propositions:
     texte: Sur l'état de la mer que tu vois depuis le port
   - id: c
     texte: Sur la seule force du vent annoncée
-  - id: d
-    texte: Sur l'heure du coucher du soleil
 reponses:
   - a
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

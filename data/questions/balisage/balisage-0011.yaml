@@ -12,10 +12,6 @@ propositions:
     texte: Conique
   - id: b
     texte: Cylindrique
-  - id: c
-    texte: Sphérique
-  - id: d
-    texte: La même des deux bords, seule la couleur les distingue
 reponses:
   - b
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
