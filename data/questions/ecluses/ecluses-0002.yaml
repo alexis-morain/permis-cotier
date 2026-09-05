@@ -17,8 +17,6 @@ propositions:
     texte: 'Tu attends : l''accès est encore interdit, mais l''écluse se prépare à ouvrir'
   - id: c
     texte: Tu fais demi-tour, l'écluse est hors service
-  - id: d
-    texte: Tu appelles l'éclusier, cette combinaison n'a pas de signification définie
 reponses:
   - b
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

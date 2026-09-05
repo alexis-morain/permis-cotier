@@ -17,13 +17,11 @@ propositions:
   - id: a
     texte: Les eaux profondes
   - id: b
-    texte: Un herbier de posidonie
-  - id: c
     texte: L'estran, la zone qui découvre entre haute et basse mer
-  - id: d
+  - id: c
     texte: Une zone de mouillage autorisé
 reponses:
-  - c
+  - b
 explication: >-
   La carte se lit d'abord à la couleur. Le blanc porte les eaux profondes, le bleu les
   petits fonds avec une teinte qui s'assombrit vers la côte, le vert l'estran, cette bande
@@ -36,5 +34,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

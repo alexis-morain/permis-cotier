@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Tu peux les remplacer par un feu blanc visible sur tout l'horizon.
   - id: c
-    texte: Tu peux les combiner avec le feu de poupe dans un seul fanal.
-  - id: d
     texte: Tu dois garder deux fanaux séparés, la combinaison n'est permise qu'en dessous
       de 12 mètres.
 reponses:
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

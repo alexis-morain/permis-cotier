@@ -12,8 +12,6 @@ propositions:
   - id: b
     texte: Un feu rouge au-dessus d'un feu blanc, visibles sur tout l'horizon
   - id: c
-    texte: Trois feux rouges superposés visibles sur tout l'horizon
-  - id: d
     texte: Deux feux rouges superposés visibles sur 225 degrés vers l'avant
 reponses:
   - a
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

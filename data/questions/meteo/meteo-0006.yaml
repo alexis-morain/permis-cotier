@@ -13,8 +13,6 @@ propositions:
     texte: Jusqu'à 20 milles des côtes
   - id: c
     texte: Jusqu'à 200 milles des côtes
-  - id: d
-    texte: Toute la zone de navigation de l'option côtière, sans limite de distance
 reponses:
   - b
 explication: >-
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

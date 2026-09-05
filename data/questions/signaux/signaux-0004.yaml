@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Deux sons prolongés suivis de deux sons brefs
   - id: c
-    texte: Un son prolongé suivi d'un son bref
-  - id: d
     texte: Un son bref
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

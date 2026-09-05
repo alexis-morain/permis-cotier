@@ -10,10 +10,8 @@ propositions:
   - id: a
     texte: Les feux de côté et le feu de poupe
   - id: b
-    texte: Le feu de poupe seulement
-  - id: c
     texte: Les feux de côté seulement
-  - id: d
+  - id: c
     texte: Rien de plus, les feux de pêche suffisent
 reponses:
   - a
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -11,10 +11,6 @@ propositions:
     texte: Les feux de côté et un feu de poupe.
   - id: b
     texte: Les feux de côté et un feu de tête de mât.
-  - id: c
-    texte: Les feux de côté, un feu de poupe et un feu de tête de mât.
-  - id: d
-    texte: Un seul feu blanc visible sur tout l'horizon.
 reponses:
   - a
 explication: >-
@@ -28,5 +24,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

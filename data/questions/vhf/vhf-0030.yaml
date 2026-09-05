@@ -11,10 +11,6 @@ propositions:
     texte: Tu poursuis la conversation sur le canal 16
   - id: b
     texte: Tu bascules sur une voie de travail, 72 ou 77
-  - id: c
-    texte: Tu bascules sur le canal 70
-  - id: d
-    texte: Tu bascules sur le canal 6
 reponses:
   - b
 explication: >-
@@ -28,5 +24,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -16,10 +16,6 @@ propositions:
     texte: Un navire à propulsion mécanique fait route et a de l'erre.
   - id: b
     texte: Un navire à propulsion mécanique fait route mais est stoppé, sans erre.
-  - id: c
-    texte: Un navire s'approche d'un coude de chenal.
-  - id: d
-    texte: Un navire à voile fait route.
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -9,15 +9,13 @@ enonce: >-
   que tu dois utiliser ou montrer ?
 propositions:
   - id: a
-    texte: à l'annexe I
-  - id: b
     texte: à l'annexe II
-  - id: c
+  - id: b
     texte: à l'annexe III
-  - id: d
+  - id: c
     texte: à l'annexe IV
 reponses:
-  - d
+  - c
 explication: >-
   La règle 37 tient en une phrase : un navire en détresse qui demande assistance doit
   utiliser ou montrer les signaux décrits à l'annexe IV du Règlement. C'est donc l'annexe
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

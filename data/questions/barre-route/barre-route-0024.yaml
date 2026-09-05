@@ -12,10 +12,6 @@ propositions:
     texte: Tu dois considérer que ce risque existe.
   - id: b
     texte: Tu maintiens ta route jusqu'à pouvoir en juger.
-  - id: c
-    texte: Tu considères qu'il n'existe pas tant que le relèvement varie.
-  - id: d
-    texte: Tu demandes à l'autre navire ses intentions avant de conclure.
 reponses:
   - a
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

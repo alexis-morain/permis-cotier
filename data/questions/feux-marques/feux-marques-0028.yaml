@@ -14,8 +14,6 @@ propositions:
     texte: Non, l'exemption vaut partout en dessous de 7 mètres
   - id: c
     texte: Non, l'exemption vaut jusqu'à 12 mètres
-  - id: d
-    texte: Oui, et tu montres en plus deux feux rouges superposés
 reponses:
   - a
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

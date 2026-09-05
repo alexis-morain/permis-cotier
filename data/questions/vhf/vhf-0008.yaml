@@ -14,8 +14,6 @@ propositions:
     texte: PAN PAN
   - id: c
     texte: SÉCURITÉ
-  - id: d
-    texte: Aucun, tu appelles directement une voie de travail
 reponses:
   - b
 explication: >-
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

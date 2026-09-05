@@ -18,8 +18,6 @@ propositions:
     texte: Tu maintiens ta route, c'est au voilier sous le vent de s'écarter.
   - id: c
     texte: Tu maintiens ta route tant qu'aucun de vous ne change d'amures.
-  - id: d
-    texte: Vous venez tous les deux sur tribord.
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

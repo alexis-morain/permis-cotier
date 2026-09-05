@@ -16,10 +16,6 @@ propositions:
     texte: Il vient sur tribord.
   - id: b
     texte: Il vient sur bâbord.
-  - id: c
-    texte: Il bat en arrière.
-  - id: d
-    texte: Il te demande de le dépasser.
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

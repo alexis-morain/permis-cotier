@@ -11,16 +11,13 @@ propositions:
   - id: a
     texte: Un son prolongé, à des intervalles ne dépassant pas deux minutes.
   - id: b
-    texte: Deux sons prolongés séparés par deux secondes environ, à des intervalles ne
-      dépassant pas deux minutes.
-  - id: c
     texte: Un son prolongé suivi de trois sons brefs, à des intervalles ne dépassant pas
       deux minutes.
-  - id: d
+  - id: c
     texte: Un son prolongé suivi de deux sons brefs, à des intervalles ne dépassant pas
       deux minutes.
 reponses:
-  - d
+  - c
 explication: >-
   La règle 35 c) range le navire à voile avec le navire qui n'est pas maître de sa manœuvre,
   celui à capacité de manœuvre restreinte, celui handicapé par son tirant d'eau, celui
@@ -35,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

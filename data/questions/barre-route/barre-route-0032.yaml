@@ -16,10 +16,6 @@ propositions:
     texte: Lui, il te rattrape.
   - id: b
     texte: Toi, il te déborde et tu dois lui ouvrir le passage.
-  - id: c
-    texte: Chacun de vous, en venant sur tribord.
-  - id: d
-    texte: Personne, il lui suffit de passer à distance suffisante.
 reponses:
   - a
 explication: >-
@@ -33,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

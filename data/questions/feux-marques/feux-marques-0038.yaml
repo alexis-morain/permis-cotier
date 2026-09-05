@@ -16,11 +16,6 @@ propositions:
     texte: Il est au mouillage et sa longueur est inférieure à 50 mètres
   - id: b
     texte: Il est au mouillage et sa longueur atteint ou dépasse 50 mètres
-  - id: c
-    texte: Il est au mouillage et sa longueur est inférieure à 7 mètres
-  - id: d
-    texte: Il fait route au moteur, sa longueur étant inférieure à 7 mètres et sa vitesse
-      maximale ne dépassant pas 7 nœuds
 reponses:
   - a
 explication: >-
@@ -43,5 +38,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

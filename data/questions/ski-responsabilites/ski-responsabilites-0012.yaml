@@ -14,8 +14,6 @@ propositions:
     texte: Tu la récupères par l'arrière, moteur au ralenti
   - id: c
     texte: Tu gardes de la vitesse pour ne pas dériver loin d'elle
-  - id: d
-    texte: Tu approches vent arrière, plus maniable à petite vitesse
 reponses:
   - a
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

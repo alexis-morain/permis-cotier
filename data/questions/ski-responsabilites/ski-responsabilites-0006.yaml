@@ -15,8 +15,6 @@ propositions:
     texte: Le respect des règles de barre te met à l'abri de toute responsabilité
   - id: c
     texte: La responsabilité pèse sur le propriétaire du navire, jamais sur le chef de bord
-  - id: d
-    texte: La responsabilité est partagée par moitié entre les deux navires
 reponses:
   - a
 explication: >-
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -15,8 +15,6 @@ propositions:
       à bord
   - id: c
     texte: Un baromètre enregistreur
-  - id: d
-    texte: Un abonnement à un service de routage météorologique
 reponses:
   - b
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

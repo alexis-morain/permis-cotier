@@ -11,10 +11,6 @@ propositions:
     texte: Vérifier l'état de la coque et l'absence de voie d'eau
   - id: b
     texte: Mettre en marche arrière à pleine puissance pour te dégager tout de suite
-  - id: c
-    texte: Envoyer un équipier à l'eau pour pousser l'étrave
-  - id: d
-    texte: Attendre la renverse de marée sans rien examiner
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

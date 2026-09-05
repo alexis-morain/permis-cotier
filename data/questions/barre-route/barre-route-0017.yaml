@@ -12,10 +12,6 @@ propositions:
     texte: Aussi près que possible de la limite extérieure gauche du chenal.
   - id: b
     texte: Aussi près que possible de la limite extérieure droite du chenal.
-  - id: c
-    texte: Au milieu du chenal, à égale distance des deux limites.
-  - id: d
-    texte: Du côté où la profondeur est la plus grande.
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

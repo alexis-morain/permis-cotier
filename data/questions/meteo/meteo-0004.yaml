@@ -11,10 +11,6 @@ propositions:
     texte: La vitesse des rafales
   - id: b
     texte: Le vent moyen sur dix minutes, mesuré à dix mètres au-dessus de la surface
-  - id: c
-    texte: La hauteur des vagues
-  - id: d
-    texte: La vitesse du vent au moment précis de l'émission du bulletin
 reponses:
   - b
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
