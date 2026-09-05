@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "valider": "python3 scripts/valider.py",
     "audit:seo": "node scripts/audit-seo.mjs",
+    "verifier:prod": "node scripts/verifier-prod.mjs",
     "credits": "python3 scripts/credits.py",
     "feux": "python3 scripts/feux.py",
     "balisage": "python3 scripts/balisage.py",
