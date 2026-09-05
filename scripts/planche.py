@@ -106,7 +106,7 @@ def _echappe(t: str) -> str:
 
 def plaque(v: dict, famille: str) -> str:
     liens = "".join(
-        f'<a class="q" href="https://permis-cotier.alexis-c1f.workers.dev/question/'
+        f'<a class="q" href="https://lepermiscotier.fr/question/'
         f'{_echappe(i)}">{_echappe(i)}</a>'
         for i in v["questions"]
     ) or '<span class="q q--vide">aucune question</span>'
