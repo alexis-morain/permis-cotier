@@ -1,0 +1,83 @@
+---
+import Guide from '../../layouts/Guide.astro';
+---
+
+<Guide
+  slug="prix-du-permis-cotier"
+  verifieLe="2026-09-05"
+  questions={[
+    {
+      question: 'Combien coûte le permis côtier ?',
+      reponse:
+        'Le coût se partage en deux : une redevance versée à l’État, payée par timbre dématérialisé et dont le tarif est fixé par arrêté du ministre chargé de la mer, et le prix du bateau-école, qui est libre.',
+    },
+    {
+      question: 'Le prix du permis côtier est-il réglementé ?',
+      reponse:
+        'En partie seulement. La redevance d’inscription à l’examen est fixée par arrêté. La formation, elle, relève du prix libre : deux écoles voisines peuvent afficher des montants très différents.',
+    },
+    {
+      question: 'Que paie-t-on au bateau-école ?',
+      reponse:
+        'La formation théorique en salle, cinq heures au minimum, la formation pratique à bord et sa validation, et le montage du dossier d’inscription.',
+    },
+  ]}
+>
+  <h2>Deux postes, un seul est réglementé</h2>
+  <p>
+    L’article 8-1 du décret du 2 août 2007 pose le principe : l’inscription à l’épreuve
+    théorique « donne lieu au paiement d’une redevance », dont « le tarif est déterminé
+    par arrêté du ministre chargé de la mer », acquittée « au moyen d’un timbre
+    dématérialisé ». C’est le poste public, identique partout en France.
+  </p>
+  <p>
+    Le reste va au bateau-école : les cinq heures de formation théorique en salle
+    exigées par l’arrêté, la formation pratique à bord et sa validation, le montage du
+    dossier. Ce prix-là est libre, et c’est lui qui fait tout l’écart entre deux devis.
+  </p>
+
+  <h2>Pourquoi ce site ne vous donne pas de montant</h2>
+  <p>
+    Parce qu’il ne l’a pas vérifié à la source. Le montant du timbre ne figure ni dans
+    le décret ni dans l’arrêté : ceux-ci renvoient au code des impositions sur les biens
+    et services, dont l’article n’a pas pu être extrait au moment de la rédaction de
+    cette page. Recopier un chiffre trouvé sur un autre site reviendrait à faire ce que
+    ce site reproche aux autres.
+  </p>
+  <p>
+    Un seul montant est écrit noir sur blanc dans les textes cités, et il ne concerne
+    pas le cas courant : l’article 18.3 de l’arrêté fixe à 30 € la redevance des
+    sessions d’examen organisées à titre exceptionnel par le service instructeur, pour
+    les candidats en langue étrangère ou en situation de handicap.
+  </p>
+
+  <h2>Ce qui fait varier le devis d’une école</h2>
+  <p>
+    Trois choses, principalement. La durée réelle de la formation pratique, qui n’a pas
+    de plancher réglementaire contrairement aux cinq heures de théorie. La taille du
+    groupe, une sortie à deux candidats ne coûtant pas ce que coûte une sortie
+    individuelle. Et ce que le forfait inclut : timbre, certificat médical, photos et
+    frais de dossier sont tantôt compris, tantôt facturés à part.
+  </p>
+  <p>
+    Demandez le détail poste par poste plutôt qu’un prix global, et vérifiez ce qui se
+    passe en cas d’échec à la théorie. Le bénéfice de l’épreuve réussie court dix-huit
+    mois, mais un échec se repasse, et le repassage se paie.
+  </p>
+
+  <h2>Réviser ne coûte rien</h2>
+  <p>
+    La formation est payante, la révision n’a pas à l’être. Ce site est gratuit, sans
+    compte et sans publicité, et sa banque de questions est sous licence libre. Il ne
+    remplace ni les cinq heures en salle ni la sortie en mer, qui sont obligatoires :
+    il remplace le fascicule d’entraînement.
+  </p>
+
+  <div class="encadre" style="margin-top:2.5rem">
+    <p style="margin:0"><strong>Un devis se compare mieux quand on connaît le programme.</strong></p>
+    <p class="discret" style="margin:0.4rem 0 0.8rem">
+      Les quatorze thèmes de l’épreuve, dans l’ordre de l’arrêté.
+    </p>
+    <p style="margin:0"><a class="bouton" href="/themes">Voir le programme</a></p>
+  </div>
+</Guide>

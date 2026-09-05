@@ -1,6 +1,17 @@
 ---
 import '../styles/global.css';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
+import {
+  SITE,
+  titrePage,
+  descriptionPage,
+  cheminServi,
+  filAriane,
+  siteWeb,
+  graphe,
+  type JsonLd,
+  type Miette,
+} from '../lib/seo';
 
 interface Props {
   titre: string;
@@ -8,10 +19,45 @@ interface Props {
   /** Laisser à false sur les écrans de jeu, qui n'ont rien à indexer. */
   indexable?: boolean;
   canonique?: string;
+  /** Fil d'Ariane, sans l'accueil : il est ajouté en tête. */
+  miettes?: readonly Miette[];
+  /** Nœuds JSON-LD propres à la page, ajoutés au graphe du site. */
+  jsonLd?: readonly JsonLd[];
+  /** Image de partage, relative à la racine. */
+  image?: string;
+  imageAlt?: string;
 }
 
-const { titre, description, indexable = true, canonique } = Astro.props;
-const url = canonique ?? new URL(Astro.url.pathname, Astro.site ?? 'https://exemple.invalid').href;
+const {
+  titre,
+  description,
+  indexable = true,
+  canonique,
+  miettes = [],
+  jsonLd = [],
+  image = '/partage/le-permis-cotier.png',
+  imageAlt = 'Le Permis Côtier — examens blancs au format de l’épreuve',
+} = Astro.props;
+
+const base = Astro.site ?? new URL(SITE.domaine);
+const url = canonique ?? new URL(cheminServi(Astro.url.pathname), base).href;
+const titreComplet = titrePage(titre);
+const descriptionCourte = descriptionPage(description);
+const imageAbsolue = new URL(image, base).href;
+
+// Le graphe rassemble ce qui vaut pour tout le site et ce qui vaut pour la
+// page. Les écrans non indexables n'en portent pas : baliser ce qu'on demande
+// aux moteurs d'ignorer ne sert personne.
+const noeuds: JsonLd[] = indexable
+  ? [
+      siteWeb(base),
+      ...(miettes.length > 0
+        ? [filAriane([{ nom: 'Accueil', chemin: '/' }, ...miettes], base)]
+        : []),
+      ...jsonLd,
+    ]
+  : [];
+
 const version = versionBanque();
 const annee = new Date().getFullYear();
 const relecture = await comptesDeRelecture();
@@ -26,18 +72,32 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titre}</title>
-    <meta name="description" content={description} />
+    <title>{titreComplet}</title>
+    <meta name="description" content={descriptionCourte} />
     <link rel="canonical" href={url} />
     {!indexable && <meta name="robots" content="noindex, follow" />}
-    <meta property="og:title" content={titre} />
-    <meta property="og:description" content={description} />
+    {indexable && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
+    <meta property="og:title" content={titreComplet} />
+    <meta property="og:description" content={descriptionCourte} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={SITE.nom} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={imageAbsolue} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titreComplet} />
+    <meta name="twitter:description" content={descriptionCourte} />
+    <meta name="twitter:image" content={imageAbsolue} />
+    <meta name="author" content={SITE.auteur} />
     <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
@@ -55,11 +115,29 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         <nav aria-label="Navigation principale">
           <a href="/examen" aria-current={courant('/examen')}>Examen</a>
           <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
-          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme')}>Thèmes</a>
+          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Thèmes</a>
+          <a href="/guide" aria-current={courant('/guide')}>Guide</a>
           <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
         </nav>
       </div>
     </header>
+
+    {miettes.length > 0 && (
+      <nav class="page ariane" aria-label="Fil d’Ariane">
+        <ol>
+          <li><a href="/">Accueil</a></li>
+          {miettes.map((m, i) => (
+            <li>
+              {i === miettes.length - 1 ? (
+                <span aria-current="page">{m.nom}</span>
+              ) : (
+                <a href={m.chemin}>{m.nom}</a>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
 
     <main id="contenu">
       <slot />
@@ -87,6 +165,14 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
             )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
+        <nav class="pied__plan" aria-label="Plan du site">
+          <a href="/examen">Examen blanc</a>
+          <a href="/entrainement">Entraînement par thème</a>
+          <a href="/themes">Les quatorze thèmes</a>
+          <a href="/guide">Guide du permis côtier</a>
+          <a href="/a-propos">Qui écrit ces questions</a>
+          <a href="/credits">Crédits</a>
+        </nav>
         <p class="discret">
           Code sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>,
           banque de questions sous <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>.
@@ -100,6 +186,21 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     </footer>
 
     <style>
+      .ariane { padding-block: 0.9rem 0; font-size: 0.85rem; color: var(--texte-doux); }
+      .ariane ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
+      .ariane li + li::before { content: "›"; margin-right: 0.4rem; color: var(--filet-fort); }
+      .ariane a { color: inherit; text-decoration: none; }
+      .ariane a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      .ariane [aria-current="page"] { color: var(--texte); }
+
+      .pied__plan {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin: 1.5rem 0;
+        font-size: 0.9rem;
+      }
+
       .entete {
         background: var(--fond-carte);
         border-bottom: 2px solid var(--filet);

@@ -1,0 +1,214 @@
+---
+import { guidesDeLaNotion } from '../../lib/guide';
+import Base from '../../layouts/Base.astro';
+import { questionsDuTheme } from '../../lib/banque';
+import { themeParCode } from '../../lib/themes';
+import { NOTIONS, notionsDuTheme, notionsVoisines } from '../../lib/notions';
+import { SITE, ressource } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  return NOTIONS.map((notion) => ({ params: { code: notion.code }, props: { notion } }));
+}
+
+const { notion } = Astro.props;
+const guides = guidesDeLaNotion(notion.code);
+const theme = themeParCode(notion.theme);
+const nomTheme = theme?.nom ?? notion.theme;
+const chemin = `/notion/${notion.code}`;
+const base = Astro.site ?? SITE.domaine;
+
+// Les questions de la notion se prennent dans son thème : une question rangée
+// ailleurs ne porterait pas cette notion.
+const questions = (await questionsDuTheme(notion.theme)).filter(
+  (q) => q.notion === notion.code,
+);
+
+// Un seul visuel, le premier rencontré : la page illustre la notion, elle ne
+// recopie pas la banque.
+const illustration = questions.find((q) => q.visuel);
+
+const { precedente, suivante } = notionsVoisines(notion.code);
+const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code);
+---
+
+<Base
+  titre={notion.nom}
+  description={notion.resume}
+  miettes={[
+    { nom: 'Programme', chemin: '/themes' },
+    { nom: nomTheme, chemin: `/theme/${notion.theme}` },
+    { nom: notion.nom, chemin },
+  ]}
+  jsonLd={[
+    ressource(
+      {
+        nom: notion.nom,
+        resume: notion.resume,
+        chemin,
+        theme: nomTheme,
+        nombreQuestions: questions.length,
+      },
+      base,
+    ),
+  ]}
+>
+  <article class="page page--etroite" style="padding-block:2.5rem 0">
+    <p class="chapitre"><a href={`/theme/${notion.theme}`}>{nomTheme}</a></p>
+    <h1>{notion.nom}</h1>
+
+    <p class="chapo">{notion.resume}</p>
+
+    <p class="discret ancrage">
+      Programme de l’épreuve, arrêté du 28 septembre 2007, art. 1er § 1.2 :
+      « {notion.ancrage} ». Thème <a href={`/theme/${notion.theme}`}>{nomTheme.toLowerCase()}</a>.
+    </p>
+
+    {illustration?.visuel && (
+      <figure class="illustration">
+        <img
+          src={`/visuels/${illustration.visuel.fichier}`}
+          alt={illustration.visuel.alt}
+          loading="lazy"
+        />
+        <figcaption class="discret">{illustration.visuel.alt}</figcaption>
+      </figure>
+    )}
+
+    {questions.length > 0 ? (
+      <section class="bloc">
+        <h2>
+          {questions.length} question{questions.length > 1 ? 's' : ''} sur cette notion
+        </h2>
+        <ul class="questions">
+          {questions.map((q) => (
+            <li>
+              <a href={`/question/${q.id}`}>{q.enonce}</a>
+              <span class="discret"> — {q.sources.map((s) => s.texte).join(', ')}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : (
+      <div class="encadre bloc">
+        <p style="margin:0"><strong>Aucune question sur cette notion pour l’instant.</strong></p>
+        <p class="discret" style="margin:0.4rem 0 0">
+          Le résumé ci-dessus dit ce qu’il faut avoir retenu. Les questions viendront
+          quand le texte réglementaire qui les fonde aura été dépouillé.
+        </p>
+      </div>
+    )}
+
+    {guides.length > 0 && (
+      <section class="bloc">
+        <h2>Le cadre, en entier</h2>
+        <p class="discret">
+          Cette notion se comprend mieux avec le texte qui la porte.
+        </p>
+        <ul class="questions">
+          {guides.map((g) => (
+            <li>
+              <a href={`/guide/${g.slug}`}>{g.question}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <p class="bloc">
+      <a class="bouton bouton--principal" href={`/entrainement/${notion.theme}`}>
+        S’entraîner sur {nomTheme.toLowerCase()}
+      </a>
+    </p>
+  </article>
+
+  <nav class="page page--etroite bloc" aria-label="Progression dans le thème">
+    <ul class="voisines">
+      <li>
+        {precedente ? (
+          <a href={`/notion/${precedente.code}`}>
+            <span class="discret">Notion précédente</span>
+            <span>{precedente.nom}</span>
+          </a>
+        ) : (
+          <span class="discret">Première notion du thème.</span>
+        )}
+      </li>
+      <li class="voisines__suivante">
+        {suivante ? (
+          <a href={`/notion/${suivante.code}`}>
+            <span class="discret">Notion suivante</span>
+            <span>{suivante.nom}</span>
+          </a>
+        ) : (
+          <span class="discret">Dernière notion du thème.</span>
+        )}
+      </li>
+    </ul>
+  </nav>
+
+  {autres.length > 0 && (
+    <section class="page page--etroite bloc">
+      <h2>Les autres notions de {nomTheme.toLowerCase()}</h2>
+      <ol class="autres">
+        {autres.map((n) => (
+          <li value={n.ordre}>
+            <a href={`/notion/${n.code}`}>{n.nom}</a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+</Base>
+
+<style>
+  h1 { margin-bottom: 0.75rem; }
+
+  /* Le résumé est la phrase que la page existe pour porter : elle se lit avant
+     tout le reste, et elle se cite telle quelle. */
+  .chapo {
+    font-stretch: var(--large);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .ancrage { margin: 0; }
+
+  .bloc { margin-top: 2.5rem; }
+
+  .illustration { margin: 2rem 0 0; }
+  .illustration img {
+    max-width: 100%;
+    border: 1px solid var(--filet);
+  }
+  .illustration figcaption { margin-top: 0.4rem; }
+
+  .questions { padding-left: 1.2rem; margin: 0; }
+  .questions li { margin-bottom: 0.6rem; }
+  .questions a { text-decoration: none; }
+  .questions a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+
+  .voisines {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--filet);
+  }
+  .voisines a { display: block; text-decoration: none; }
+  .voisines a:hover span:last-child {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+  .voisines span { display: block; }
+  .voisines__suivante { text-align: right; margin-left: auto; }
+
+  .autres { margin: 1rem 0 0; padding-left: 1.4rem; }
+  .autres li { margin-bottom: 0.4rem; }
+</style>

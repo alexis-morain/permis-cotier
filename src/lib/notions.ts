@@ -1141,3 +1141,19 @@ export function cibleNotionsDuTheme(codeTheme: string): number {
 export function notionsOrphelines(): readonly Notion[] {
   return NOTIONS.filter((n) => !CODES_THEMES.includes(n.theme));
 }
+
+/**
+ * La notion qui précède et celle qui suit, dans le même thème. C'est la
+ * progression du thème qui fait l'ordre, pas l'ordre alphabétique : passer
+ * d'une notion à la suivante doit revenir à avancer dans la révision.
+ */
+export function notionsVoisines(code: string): {
+  precedente?: Notion;
+  suivante?: Notion;
+} {
+  const notion = notionParCode(code);
+  if (!notion) return {};
+  const fratrie = notionsDuTheme(notion.theme);
+  const rang = fratrie.findIndex((n) => n.code === code);
+  return { precedente: fratrie[rang - 1], suivante: fratrie[rang + 1] };
+}
