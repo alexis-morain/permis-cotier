@@ -15,8 +15,6 @@ propositions:
     texte: Être à l'écoute sur la voie allotie à l'écluse
   - id: c
     texte: Veiller le canal 16, comme en mer
-  - id: d
-    texte: Rien, cette obligation ne vise que les bateaux de commerce
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

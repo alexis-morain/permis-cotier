@@ -12,10 +12,6 @@ propositions:
     texte: De bonne heure et franchement, de manière à t'écarter largement.
   - id: b
     texte: Au dernier moment, pour ne pas gêner inutilement les autres navires.
-  - id: c
-    texte: Seulement après avoir signalé ton intention au sifflet.
-  - id: d
-    texte: En attendant de voir si l'autre navire manœuvre de son côté.
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

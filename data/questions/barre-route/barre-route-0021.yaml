@@ -14,8 +14,6 @@ propositions:
     texte: Une veille visuelle seulement, l'ouïe ne servant que par temps de brume.
   - id: c
     texte: Une veille au radar, dès lors que le navire en est équipé.
-  - id: d
-    texte: Aucune veille particulière tant qu'aucun navire n'est en vue.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

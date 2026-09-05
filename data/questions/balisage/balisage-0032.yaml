@@ -17,8 +17,6 @@ propositions:
     texte: La limite bâbord du chenal, en venant du large
   - id: c
     texte: Un danger de faible étendue entouré d'eaux saines
-  - id: d
-    texte: Une zone réservée aux baigneurs
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

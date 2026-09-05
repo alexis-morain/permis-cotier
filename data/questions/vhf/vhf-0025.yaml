@@ -14,8 +14,6 @@ propositions:
     texte: ICI, puis le nom de ton navire répété trois fois
   - id: c
     texte: La nature de la détresse
-  - id: d
-    texte: Le nombre de personnes à bord
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

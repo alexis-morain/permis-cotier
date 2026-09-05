@@ -12,10 +12,6 @@ propositions:
     texte: Tu peux le montrer, sans y être tenu
   - id: b
     texte: Tu dois le montrer, comme tout navire en train de chaluter
-  - id: c
-    texte: Tu dois le montrer seulement si tu as de l'erre
-  - id: d
-    texte: Tu ne dois pas le montrer
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

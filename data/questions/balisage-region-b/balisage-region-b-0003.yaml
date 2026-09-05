@@ -17,8 +17,6 @@ propositions:
   - id: b
     texte: Sur bâbord
   - id: c
-    texte: Elle se laisse indifféremment d'un côté ou de l'autre
-  - id: d
     texte: Elle ne borde pas un chenal, elle signale une zone particulière
 reponses:
   - a
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

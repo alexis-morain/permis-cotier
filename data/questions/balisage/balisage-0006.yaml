@@ -12,10 +12,6 @@ propositions:
     texte: Une zone ou une installation particulière, pas un danger de navigation
   - id: b
     texte: Un danger récemment découvert, absent des documents nautiques
-  - id: c
-    texte: Le côté tribord du chenal, en venant du large
-  - id: d
-    texte: Un haut-fond à contourner par le côté indiqué
 reponses:
   - a
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

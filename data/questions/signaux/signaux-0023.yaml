@@ -19,8 +19,6 @@ propositions:
     texte: Il t'annonce qu'il vient sur bâbord.
   - id: c
     texte: Il est en détresse et demande assistance.
-  - id: d
-    texte: Il te demande de le rattraper par tribord.
 reponses:
   - a
 explication: >-
@@ -36,5 +34,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

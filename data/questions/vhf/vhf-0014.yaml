@@ -14,8 +14,6 @@ propositions:
     texte: Le MMSI attribué par l'autorité compétente pour les licences de stations
   - id: c
     texte: Le numéro de la licence de station
-  - id: d
-    texte: L'indicatif d'appel du chef de bord
 reponses:
   - b
 explication: >-
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

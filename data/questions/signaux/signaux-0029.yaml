@@ -17,8 +17,6 @@ propositions:
   - id: b
     texte: Un navire à propulsion mécanique fait route et a de l'erre.
   - id: c
-    texte: Un navire sur le point d'être rattrapé donne son accord au dépassement.
-  - id: d
     texte: Un navire échoué demande assistance.
 reponses:
   - a
@@ -37,5 +35,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

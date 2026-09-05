@@ -12,10 +12,6 @@ propositions:
     texte: Au-delà de 4,5 kilowatts
   - id: b
     texte: Au-delà de 6 kilowatts
-  - id: c
-    texte: Au-delà de 20 kilowatts
-  - id: d
-    texte: Quelle que soit la puissance
 reponses:
   - a
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

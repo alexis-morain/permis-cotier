@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Tu maintiens ta route et ta vitesse le temps de lever le doute.
   - id: c
-    texte: Tu considères qu'il n'y a pas de routes opposées tant que tu n'en es pas sûr.
-  - id: d
     texte: Tu viens sur bâbord, la manœuvre la plus sûre quand le doute subsiste.
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

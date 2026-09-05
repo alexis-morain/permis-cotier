@@ -16,10 +16,6 @@ propositions:
     texte: Fl s'éteint entre ses éclats, F ne s'éteint jamais
   - id: b
     texte: F lance un seul éclat isolé, Fl en lance plusieurs à la suite
-  - id: c
-    texte: Fl est un feu fixe dont on n'a pas noté le nombre d'éclats
-  - id: d
-    texte: F est un feu fixe blanc, Fl un feu fixe d'une autre couleur
 reponses:
   - a
 explication: >-
@@ -33,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

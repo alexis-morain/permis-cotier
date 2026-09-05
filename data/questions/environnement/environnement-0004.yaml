@@ -14,8 +14,6 @@ propositions:
     texte: Douze par ligne, sans limite du nombre de lignes
   - id: c
     texte: Trente, comme sur une palangre
-  - id: d
-    texte: Aucune limite, la restriction ne vise que les filets
 reponses:
   - a
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

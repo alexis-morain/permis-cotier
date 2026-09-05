@@ -14,8 +14,6 @@ propositions:
     texte: Les signaux sonores qui ne peuvent être confondus avec un autre signal autorisé.
   - id: c
     texte: Le faisceau d'un projecteur orienté vers le danger qui menace un navire.
-  - id: d
-    texte: Les feux à éclats de faible intensité.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

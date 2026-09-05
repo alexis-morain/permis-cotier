@@ -16,10 +16,6 @@ propositions:
     texte: Il compte te rattraper sur bâbord.
   - id: b
     texte: Il compte te rattraper sur tribord.
-  - id: c
-    texte: Il vient sur bâbord.
-  - id: d
-    texte: Il donne son accord à un dépassement.
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

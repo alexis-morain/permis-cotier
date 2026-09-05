@@ -14,8 +14,6 @@ propositions:
     texte: Verte, de forme conique
   - id: c
     texte: Rouge, de forme conique
-  - id: d
-    texte: Verte, de forme cylindrique
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

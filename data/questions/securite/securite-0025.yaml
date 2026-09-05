@@ -14,8 +14,6 @@ propositions:
     texte: 1 kg
   - id: c
     texte: 5 kg
-  - id: d
-    texte: 6 kg
 reponses:
   - a
 explication: >-
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

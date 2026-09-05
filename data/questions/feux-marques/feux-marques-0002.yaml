@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Il chalute
   - id: c
-    texte: Il chalute et son chalut est déployé sur plus de 150 mètres
-  - id: d
     texte: Il n'est pas en train de pêcher
 reponses:
   - a
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

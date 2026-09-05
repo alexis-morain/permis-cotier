@@ -15,8 +15,6 @@ propositions:
     texte: Tu peux continuer à condition d'allumer un feu blanc visible sur tout l'horizon.
   - id: c
     texte: Tu peux continuer tant que tu restes à moins de 2 milles d'un abri.
-  - id: d
-    texte: Tu peux continuer tant que tu restes dans la bande des 300 mètres.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

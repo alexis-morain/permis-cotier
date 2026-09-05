@@ -14,8 +14,6 @@ propositions:
     texte: Un émetteur-récepteur VHF
   - id: c
     texte: Une radiobalise de localisation des sinistres
-  - id: d
-    texte: Un téléphone étanche
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

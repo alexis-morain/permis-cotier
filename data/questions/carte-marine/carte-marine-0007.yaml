@@ -12,8 +12,6 @@ propositions:
   - id: b
     texte: En vive-eau, autour de la pleine et de la nouvelle lune
   - id: c
-    texte: Toujours au solstice d'été
-  - id: d
     texte: Le marnage ne varie pas d'un jour à l'autre
 reponses:
   - b
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

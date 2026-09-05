@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Au moins 10 sur l'ensemble et au moins 7 à l'épreuve sur carte.
   - id: c
-    texte: Au moins 12 sur l'ensemble et au moins 7 à l'épreuve sur carte.
-  - id: d
     texte: Au moins 10 sur l'ensemble et au moins 10 à l'épreuve sur carte.
 reponses:
   - b
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

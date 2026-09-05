@@ -9,15 +9,11 @@ enonce: >-
   qui la matérialisent ?
 propositions:
   - id: a
-    texte: Cylindriques
-  - id: b
-    texte: Coniques
-  - id: c
     texte: Sphériques
-  - id: d
+  - id: b
     texte: Cylindriques à bâbord et coniques à tribord
 reponses:
-  - c
+  - a
 explication: >-
   L'annexe I, paragraphe 1, prévoit que les bouées de la limite extérieure de la bande
   des 300 mètres sont de forme sphérique, toutes de mêmes dimensions, avec un diamètre
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

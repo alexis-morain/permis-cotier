@@ -14,8 +14,6 @@ propositions:
     texte: Des renseignements sur la position du navire, afin d'être inclus dans l'alerte
       de détresse initiale
   - id: c
-    texte: Le nombre de personnes à bord
-  - id: d
     texte: Rien de plus, l'appareil ne transmet qu'à la demande
 reponses:
   - b
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

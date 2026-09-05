@@ -12,10 +12,6 @@ propositions:
     texte: Tu attends la réponse sans rien émettre d'autre
   - id: b
     texte: Tu passes sur le canal 16 et tu émets le message de détresse parlé
-  - id: c
-    texte: Tu restes sur le canal 70 et tu parles pour préciser ta situation
-  - id: d
-    texte: Tu renvoies l'alerte numérique toutes les minutes
 reponses:
   - b
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

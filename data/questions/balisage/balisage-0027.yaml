@@ -18,8 +18,6 @@ propositions:
     texte: Elle délimite une zone de mouillage ou une installation de loisirs
   - id: c
     texte: Elle marque le milieu du chenal, eaux saines tout autour
-  - id: d
-    texte: Elle borde le chenal du côté bâbord en venant du large
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
