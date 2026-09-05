@@ -1,0 +1,36 @@
+id: balisage-0021
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, tu relèves ce feu blanc. Quelle marque cardinale as-tu devant toi ?
+visuel:
+  fichier: rythmes/cardinale-est.svg
+  alt: "Feu blanc à trois scintillements groupés, séparés du groupe suivant par une pause."
+  credit: code
+propositions:
+  - id: a
+    texte: Une cardinale Est
+  - id: b
+    texte: Une cardinale Sud
+  - id: c
+    texte: Une cardinale Ouest
+  - id: d
+    texte: Une cardinale Nord
+reponses:
+  - a
+explication: >-
+  Compte les scintillements du groupe : trois, donc une cardinale Est, Q (3) toutes les
+  10 s ou VQ (3) toutes les 5 s. Le nombre se retient comme les heures du cadran, 3 pour
+  l'Est, 6 pour le Sud, 9 pour l'Ouest. Le Nord, lui, scintille sans interruption, sans
+  groupe ni pause : c'est le seul qui ne se compte pas.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Est
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

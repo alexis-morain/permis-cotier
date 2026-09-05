@@ -1,0 +1,38 @@
+id: signaux-0018
+option: cotier
+theme: signaux
+notion: signaux-coude
+statut: publie
+difficulte: 3
+enonce: >-
+  Par bonne visibilité, tu remontes un chenal et tu approches d'un coude qu'un obstacle
+  te masque. Tu entends ce signal au sifflet. Que t'apprend-il ?
+visuel:
+  fichier: sons/coude.svg
+  alt: "Un son prolongé au sifflet, tenu bien plus longtemps qu'un son bref."
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire arrive en sens inverse, de l'autre côté du coude.
+  - id: b
+    texte: Un navire à moteur a de l'erre dans une zone de visibilité réduite.
+  - id: c
+    texte: Un navire exprime un doute sur tes intentions.
+  - id: d
+    texte: Un navire te demande de ralentir avant le coude.
+reponses:
+  - a
+explication: >-
+  La règle 34 e) fait émettre un son prolongé au navire qui approche d'un coude ou d'une
+  partie de chenal où des navires peuvent être cachés par un obstacle, et tout navire
+  venant dans sa direction répond par un son prolongé. C'est le contexte qui tranche :
+  le même son prolongé isolé, dans la brume, serait le signal du navire à moteur ayant
+  de l'erre de la règle 35 a). En vue et dans un chenal, il annonce un coude.
+sources:
+  - texte: RIPAM, règle 34 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

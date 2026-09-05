@@ -1,0 +1,37 @@
+id: signaux-0022
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 2
+enonce: >-
+  Un navire de 25 mètres est au mouillage dans une zone de visibilité réduite. À quelle
+  cadence doit-il sonner la cloche ?
+propositions:
+  - id: a
+    texte: Rapidement pendant cinq secondes environ, à des intervalles ne dépassant pas
+      une minute.
+  - id: b
+    texte: Rapidement pendant cinq secondes environ, à des intervalles ne dépassant pas
+      deux minutes.
+  - id: c
+    texte: Rapidement pendant une minute environ, à des intervalles ne dépassant pas cinq
+      minutes.
+  - id: d
+    texte: Trois coups espacés, à des intervalles ne dépassant pas une minute.
+reponses:
+  - a
+explication: >-
+  La règle 35 g) demande au navire au mouillage de sonner la cloche rapidement pendant
+  cinq secondes environ, à des intervalles ne dépassant pas une minute. Cette minute est
+  la seule du chapitre : tous les signaux de route de la règle 35 se répètent au plus
+  toutes les deux minutes, le mouillage se signale deux fois plus souvent. Les trois coups
+  séparés, eux, appartiennent au navire échoué.
+sources:
+  - texte: RIPAM, règle 35 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

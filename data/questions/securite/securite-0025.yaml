@@ -1,0 +1,35 @@
+id: securite-0025
+option: cotier
+theme: securite
+notion: securite-incendie-mouillage
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton bateau est exclu du marquage CE et tu veux y embarquer un extincteur portatif au
+  dioxyde de carbone. Quelle capacité maximale l'annexe 240-A3 lui laisse-t-elle ?
+propositions:
+  - id: a
+    texte: 2 kg
+  - id: b
+    texte: 1 kg
+  - id: c
+    texte: 5 kg
+  - id: d
+    texte: 6 kg
+reponses:
+  - a
+explication: >-
+  Pour les navires exclus du marquage CE, l'annexe 240-A3 plafonne à 2 kg la capacité
+  d'un extincteur portatif au CO2. La même annexe encadre son emplacement : il ne se place
+  que dans un local d'habitation contenant des équipements électriques sous tension ou
+  des liquides inflammables, et il ne peut y en avoir plus d'un par espace habitable.
+  Le CO2 est donc l'agent le plus tenu en bride du texte, qui interdit par ailleurs tout
+  agent au halon.
+sources:
+  - texte: Division 240, annexe 240-A3, II
+    ref: division-240
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

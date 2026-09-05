@@ -1,0 +1,41 @@
+id: signaux-0027
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans une zone de visibilité réduite, tu entends ce signal au sifflet. Qui la règle
+  autorise-t-elle à l'émettre ?
+visuel:
+  fichier: sons/brume-remorque.svg
+  alt: "Un son prolongé au sifflet, suivi de trois sons brefs."
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire remorqué, s'il a un équipage à bord.
+  - id: b
+    texte: Le dernier navire du convoi, quand plusieurs navires sont remorqués.
+  - id: c
+    texte: Le navire qui en remorque un autre.
+  - id: d
+    texte: Un navire à voile faisant route.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 35 e) donne quatre sons consécutifs, un son prolongé suivi de trois sons brefs,
+  au navire remorqué qui a un équipage à bord, et, lorsque plusieurs navires sont remorqués,
+  au dernier du convoi. Le signal est émis si possible juste après celui du remorqueur.
+  Le piège est le signal voisin de la règle 35 c), un son prolongé suivi de deux sons
+  brefs seulement : c'est celui du remorqueur lui-même et du voilier, avec quatre autres
+  catégories, comme le détaille la question sur ce signal. Un seul son bref sépare les
+  deux motifs, à l'avant du convoi ou à l'arrière.
+sources:
+  - texte: RIPAM, règle 35 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

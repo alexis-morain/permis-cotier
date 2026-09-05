@@ -1,0 +1,39 @@
+id: balisage-0037
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 3
+enonce: >-
+  Ce feu et celui de la bouée suivante, plus haut dans le chenal, sont de la même couleur
+  mais ne battent pas le même rythme. Qu'en conclus-tu ?
+visuel:
+  fichier: rythmes/laterale-tribord.svg
+  alt: "Feu vert à éclats, la lumière durant nettement moins que l'obscurité qui la sépare de l'éclat suivant."
+  credit: code
+propositions:
+  - id: a
+    texte: Rien de particulier, les deux marquent le côté tribord du chenal
+  - id: b
+    texte: Les deux marques bordent des côtés opposés du chenal
+  - id: c
+    texte: La différence de rythme annonce la séparation de deux chenaux
+  - id: d
+    texte: Le rythme le plus rapide désigne celle des deux qui est la plus proche du danger
+reponses:
+  - a
+explication: >-
+  Le rythme d'une marque latérale est quelconque : deux bouées voisines du même côté du
+  chenal peuvent parfaitement battre des rythmes différents sans que cela signifie quoi
+  que ce soit. Ce qui les identifie est leur couleur, ici le vert, c'est-à-dire le côté
+  tribord du chenal en région A, dans le sens conventionnel du large vers le port. Chercher
+  un sens au rythme est le réflexe des cardinales et du danger isolé, dont le feu est blanc
+  et se compte : il n'a pas cours sur les latérales.
+sources:
+  - texte: Balisage AISM région A, marque latérale tribord, feu
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

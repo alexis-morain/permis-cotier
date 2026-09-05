@@ -279,3 +279,34 @@ def test_notion_correcte_acceptee():
 
 def test_notion_facultative():
     assert "notion" not in codes(VALIDE)
+
+
+def test_un_enonce_qui_annonce_le_compte_est_refuse(tmp_path):
+    # L'épreuve ne dit jamais combien de cases cocher. L'annoncer supprime le
+    # seul jugement que les questions à deux réponses servent à entraîner.
+    (tmp_path / "data" / "sources" / "decret-77-733").mkdir(parents=True)
+    for annonce in (
+        "Que t'impose la regle 15 ? Deux réponses.",
+        "Lesquelles de ces marques sont jaunes ? deux bonnes reponses",
+        "Que fais-tu ? Trois reponses possibles.",
+        "Quelles sont les deux affirmations exactes ?",
+        "Coche les deux propositions justes.",
+    ):
+        q = avec(enonce=annonce)
+        codes = {pb.code for pb in valider_question(q, Path("q.yaml"), tmp_path)}
+        assert "enonce" in codes, annonce
+
+
+def test_un_enonce_qui_parle_de_reponse_au_singulier_passe(tmp_path):
+    # Le contrôle ne doit pas mordre sur une tournure légitime.
+    (tmp_path / "data" / "sources" / "decret-77-733").mkdir(parents=True)
+    q = avec(enonce="Le navire rattrape repond a ce signal. Que fait-il ?")
+    assert valider_question(q, Path("q.yaml"), tmp_path) == []
+
+
+def test_aucun_enonce_de_la_banque_n_annonce_le_compte():
+    # Huit énoncés l'ont fait avant que la règle soit posée, dont un relu par
+    # une personne : ce test empêche la dérive de revenir.
+    racine = Path(__file__).resolve().parents[1]
+    fautifs = [p.fichier for p in valider_banque(racine) if p.code == "enonce"]
+    assert fautifs == []

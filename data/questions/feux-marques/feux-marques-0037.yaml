@@ -1,0 +1,45 @@
+id: feux-marques-0037
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, un navire ne montre que ces feux, à l'endroit le plus visible, et rien d'autre.
+  Que peux-tu en dire ?
+visuel:
+  fichier: feux/non-maitre-de-sa-manoeuvre.svg
+  alt: "Deux feux rouges superposés visibles sur tout l'horizon."
+  credit: code
+propositions:
+  - id: a
+    texte: Il n'est pas maître de sa manœuvre
+  - id: b
+    texte: Tu dois t'écarter de sa route, que tu sois au moteur ou à la voile
+  - id: c
+    texte: Il est échoué
+  - id: d
+    texte: Sa capacité de manœuvre est restreinte
+reponses:
+  - a
+  - b
+explication: >-
+  Deux feux rouges superposés à l'endroit le plus visible désignent un navire qui n'est
+  pas maître de sa manœuvre, et le règlement en tire aussitôt la conséquence : un navire
+  à propulsion mécanique comme un navire à voile faisant route doit s'écarter de sa route.
+  C'est un navire qui ne peut pas manœuvrer pour t'éviter, donc c'est à toi de le faire.
+  Un navire échoué montre lui aussi ces deux feux rouges, mais jamais seuls : ils s'ajoutent
+  au feu blanc de mouillage, et c'est l'absence de ce feu blanc qui tranche ici. Un navire
+  à capacité de manœuvre restreinte, lui, en montre trois, rouge, blanc, rouge.
+sources:
+  - texte: RIPAM, règle 27 a) i)
+    ref: decret-77-733
+  - texte: RIPAM, règle 18 a) i) et b) i)
+    ref: decret-77-733
+  - texte: RIPAM, règle 30 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

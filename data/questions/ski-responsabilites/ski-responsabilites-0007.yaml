@@ -1,0 +1,34 @@
+id: ski-responsabilites-0007
+option: cotier
+theme: ski-responsabilites
+notion: conduite-detresse
+statut: publie
+difficulte: 1
+enonce: >-
+  La situation se dégrade à bord et tu hésites encore à appeler les secours. À quel
+  moment lances-tu l'alerte ?
+propositions:
+  - id: a
+    texte: Dès que tu doutes de pouvoir t'en sortir avec les moyens du bord
+  - id: b
+    texte: Quand tu es certain de ne plus pouvoir t'en sortir seul
+  - id: c
+    texte: Quand la batterie faiblit et que la VHF risque de lâcher
+  - id: d
+    texte: Après avoir prévenu un proche à terre, qui relaiera
+reponses:
+  - a
+explication: >-
+  On alerte sur le doute, pas sur la certitude. Une alerte lancée trop tôt s'annule en une
+  phrase sur le canal 16 et ne coûte rien ; une alerte lancée trop tard arrive après la
+  panne d'électricité, quand la VHF ne porte plus. Passer par un proche à terre ajoute un
+  intermédiaire, du délai et des erreurs de position : le CROSS s'appelle directement, par
+  VHF en mer ou par le 196 depuis un téléphone.
+sources:
+  - texte: Fiche conduite à tenir, section Décider d'alerter
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

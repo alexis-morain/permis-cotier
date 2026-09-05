@@ -1,0 +1,38 @@
+id: balisage-0022
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu comptes les scintillements de ce feu blanc. Quelle marque cardinale te signale-t-il
+  ?
+visuel:
+  fichier: rythmes/cardinale-ouest.svg
+  alt: "Feu blanc à neuf scintillements groupés, séparés du groupe suivant par une pause."
+  credit: code
+propositions:
+  - id: a
+    texte: Une cardinale Ouest
+  - id: b
+    texte: Une cardinale Est
+  - id: c
+    texte: Une cardinale Sud
+  - id: d
+    texte: Une cardinale Nord
+reponses:
+  - a
+explication: >-
+  Neuf scintillements groupés, c'est la cardinale Ouest, Q (9) toutes les 15 s ou VQ (9)
+  toutes les 10 s. La confusion se fait avec l'Est, qui n'en montre que trois : de nuit
+  on ne voit ni le corps ni le voyant, il faut compter. Retiens 3 pour l'Est, 6 pour le
+  Sud, 9 pour l'Ouest, comme les heures 3, 6 et 9 sur un cadran, en tournant dans le sens
+  des aiguilles depuis le haut.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Ouest
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

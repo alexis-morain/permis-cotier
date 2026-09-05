@@ -1,0 +1,39 @@
+id: balisage-0024
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 3
+enonce: >-
+  Ce feu blanc est celui d'une marque cardinale Sud. Quelles sont les deux caractéristiques
+  de son rythme ?
+visuel:
+  fichier: rythmes/cardinale-sud.svg
+  alt: "Feu blanc à six scintillements groupés, suivis d'un éclat long nettement plus soutenu que les six premiers."
+  credit: code
+propositions:
+  - id: a
+    texte: Le groupe compte six scintillements
+  - id: b
+    texte: Un éclat long termine le groupe
+  - id: c
+    texte: Le groupe compte neuf scintillements
+  - id: d
+    texte: Le feu change de couleur à chaque groupe
+reponses:
+  - a
+  - b
+explication: >-
+  Le feu de la cardinale Sud est Q (6) suivi d'un éclat long toutes les 15 s, ou VQ (6)
+  suivi d'un éclat long toutes les 10 s. Les deux marques du rythme comptent : six scintillements,
+  puis un éclat long. L'éclat long est la signature du Sud, et il sert à vérifier ton
+  compte : si tu as vu un éclat long, tu as compté six, pas neuf. Neuf sans éclat long,
+  c'est l'Ouest.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Sud
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

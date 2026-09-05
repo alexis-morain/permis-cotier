@@ -1,0 +1,37 @@
+id: balisage-0023
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce feu blanc bat sans jamais s'interrompre : aucun groupe, aucune pause. Quelle marque
+  cardinale porte ce rythme ?
+visuel:
+  fichier: rythmes/cardinale-nord.svg
+  alt: "Feu blanc scintillant sans interruption, un éclat régulier après l'autre, sans groupe ni pause."
+  credit: code
+propositions:
+  - id: a
+    texte: Une cardinale Nord
+  - id: b
+    texte: Une cardinale Est
+  - id: c
+    texte: Une cardinale Sud
+  - id: d
+    texte: Une cardinale Ouest
+reponses:
+  - a
+explication: >-
+  La cardinale Nord montre un feu blanc scintillant continu, Q, ou scintillant rapide
+  continu, VQ. C'est la seule des quatre dont le feu ne se compte pas : les trois autres
+  scintillent par groupes, trois à l'Est, six plus un éclat long au Sud, neuf à l'Ouest.
+  Si tu n'arrives pas à compter parce que rien ne s'arrête, tu as ta réponse.
+sources:
+  - texte: Balisage AISM région A, marques cardinales, Nord
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

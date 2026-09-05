@@ -1,0 +1,35 @@
+id: securite-0022
+option: cotier
+theme: securite
+notion: securite-plongeurs
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves sur un petit bateau une reproduction rigide du pavillon « A » du Code international
+  de signaux. Que t'indique-t-elle ?
+propositions:
+  - id: a
+    texte: Il participe à des opérations de plongée
+  - id: b
+    texte: Il est en détresse et demande assistance
+  - id: c
+    texte: Il n'est pas maître de sa manœuvre
+  - id: d
+    texte: Il effectue une opération de déminage
+reponses:
+  - a
+explication: >-
+  La règle 27 e) ii) réserve cette reproduction rigide du pavillon « A », d'au moins un
+  mètre de hauteur et visible sur tout l'horizon, au navire participant à des opérations
+  de plongée que ses dimensions empêchent de montrer tous les feux et marques prescrits.
+  Le paragraphe h) de la même règle écarte le contresens le plus grave : les signaux de
+  la règle 27 ne sont pas des signaux de détresse. Le déminage, lui, se signale par trois
+  feux verts ou trois boules.
+sources:
+  - texte: RIPAM, règle 27 e) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

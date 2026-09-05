@@ -1,0 +1,38 @@
+id: carte-marine-0010
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 2
+enonce: >-
+  Ce feu lance des éclats brefs, isolés, séparés par une obscurité bien plus longue. Comment
+  la carte l'abrège-t-elle ?
+visuel:
+  fichier: rythmes/caractere-a-eclats.svg
+  alt: "Feu à éclats, dont la lumière dure nettement moins que l'obscurité qui la sépare de l'éclat suivant."
+  credit: code
+propositions:
+  - id: a
+    texte: Fl
+  - id: b
+    texte: Fl (2)
+  - id: c
+    texte: Q
+  - id: d
+    texte: F
+reponses:
+  - a
+explication: >-
+  Sur une carte, un feu à éclats s'abrège Fl, et le chiffre entre parenthèses donne le
+  nombre d'éclats du groupe quand ils sont groupés : Fl (2) R 10s se lit deux éclats rouges
+  toutes les dix secondes. Ici les éclats sont isolés, un par un, donc pas de chiffre
+  : Fl tout court. Le piège est justement d'ajouter un chiffre à un feu qui ne groupe
+  rien.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, symboles élémentaires
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

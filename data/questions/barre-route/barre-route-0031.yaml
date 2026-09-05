@@ -1,0 +1,39 @@
+id: barre-route-0031
+option: cotier
+theme: barre-route
+notion: barre-privilegie-non-privilegie
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu es le bateau du bas, au moteur. Le navire à moteur que tu vois doit s'écarter de ta
+  route, mais il n'en prend visiblement pas le chemin et tu décides de manœuvrer seul.
+  Que t'interdit la règle 17 c) ?
+visuel:
+  fichier: situations/routes-croisees-babord.svg
+  alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image. Un navire à moteur vient de la gauche, cap vers la droite, et coupera ta route devant toi."
+  credit: code
+propositions:
+  - id: a
+    texte: Abattre sur bâbord, si les circonstances le permettent.
+  - id: b
+    texte: Abattre sur tribord, si les circonstances le permettent.
+  - id: c
+    texte: Réduire ta vitesse tant qu'il n'a pas manœuvré.
+  - id: d
+    texte: Manœuvrer avant qu'il ne soit tout à fait paré et clair.
+reponses:
+  - a
+explication: >-
+  La règle 17 c) vise le cas précis où deux navires à propulsion mécanique ont des routes
+  qui se croisent et où le privilégié manœuvre seul faute de voir l'autre s'écarter. Quand
+  l'autre navire est bâbord à toi, tu ne dois pas abattre sur bâbord si les circonstances
+  le permettent : tu irais à sa rencontre au lieu de t'en éloigner. Moyen de retenir, on
+  ne va jamais chercher celui qui arrive de la gauche.
+sources:
+  - texte: RIPAM, règle 17 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

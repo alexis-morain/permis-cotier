@@ -1,0 +1,43 @@
+id: ecluses-0012
+option: cotier
+theme: ecluses
+notion: ecluses-signaux-acces
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu te présentes à l'entrée d'une écluse et ce signal est allumé. Que fais-tu ?
+visuel:
+  fichier: ecluses/acces-vert-isole.svg
+  alt: "Un feu vert isolé allumé."
+  credit: code
+propositions:
+  - id: a
+    texte: Tu peux entrer, l'accès est autorisé
+  - id: b
+    texte: Tu réduis ta vitesse à l'entrée, de façon à éviter tout choc contre les portes,
+      les dispositifs de protection ou les autres bateaux
+  - id: c
+    texte: Tu attends, ce feu annonce seulement que l'écluse se prépare à ouvrir
+  - id: d
+    texte: Tu entres à bonne allure, pour dégager le sas au plus vite et ne pas retarder
+      les bateaux suivants
+reponses:
+  - a
+  - b
+explication: >-
+  Un feu vert isolé autorise l'accès. Avec deux feux verts juxtaposés, c'est le seul
+  autre signal qui l'ouvre : partout ailleurs un rouge est présent, et sa présence suffit
+  à interdire l'entrée, quelle que soit la disposition des feux. L'autorisation ne dispense
+  de rien pour autant. Lors de l'entrée dans les écluses, les bateaux doivent réduire
+  leur vitesse de façon à éviter tout choc contre les portes, les dispositifs de protection
+  ou d'autres bateaux. Le vert dit que la voie est libre, pas qu'on peut y aller vite.
+sources:
+  - texte: Code des transports, article A. 4241-53-31, 1 d)
+    ref: rgpni-ecluses
+  - texte: Code des transports, article A. 4241-53-30, 6
+    ref: rgpni-ecluses
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

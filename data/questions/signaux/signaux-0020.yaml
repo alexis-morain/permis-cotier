@@ -1,0 +1,41 @@
+id: signaux-0020
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans une zone de visibilité réduite, tu entends ce signal au sifflet. Quels navires
+  la règle 35 c) autorise-t-elle à l'émettre ?
+visuel:
+  fichier: sons/brume-manoeuvre-restreinte.svg
+  alt: "Un son prolongé au sifflet, suivi de deux sons brefs."
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire en train de pêcher
+  - id: b
+    texte: Un navire qui en remorque un autre
+  - id: c
+    texte: Un navire à propulsion mécanique stoppé, sans erre
+  - id: d
+    texte: Un navire remorqué, dernier du convoi
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 35 c) réunit sous un seul signal, un son prolongé suivi de deux sons brefs,
+  six catégories : le navire qui n'est pas maître de sa manœuvre, celui à capacité de
+  manœuvre restreinte, celui handicapé par son tirant d'eau, le voilier, le navire en
+  train de pêcher et celui qui en remorque ou en pousse un autre. Ce signal remplace ceux
+  des paragraphes a) et b), réservés à la propulsion mécanique libre de ses mouvements.
+  Le navire remorqué, lui, a son propre signal au paragraphe e), avec trois sons brefs
+  et non deux.
+sources:
+  - texte: RIPAM, règle 35 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

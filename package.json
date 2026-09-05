@@ -23,6 +23,10 @@
     "balisage": "python3 scripts/balisage.py",
     "ecluses": "python3 scripts/ecluses.py",
     "carte": "python3 scripts/carte.py",
+    "rythmes": "python3 scripts/rythmes.py",
+    "situations": "python3 scripts/situations.py",
+    "sons": "python3 scripts/sons.py",
+    "planche": "python3 scripts/planche.py",
     "generer": "python3 scripts/generer.py",
     "partage": "node scripts/partage.mjs",
     "build:pages": "astro build"

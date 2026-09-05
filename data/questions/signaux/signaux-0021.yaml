@@ -1,0 +1,38 @@
+id: signaux-0021
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans la brume, tu entends ce signal à la cloche. Que peux-tu en dire ?
+visuel:
+  fichier: sons/brume-echouement.svg
+  alt: "Trois coups de cloche séparés et distincts, puis la cloche sonnée rapidement pendant cinq secondes environ, puis de nouveau trois coups séparés et distincts."
+  credit: code
+propositions:
+  - id: a
+    texte: Le navire est échoué.
+  - id: b
+    texte: Le navire peut compléter ce signal par un signal approprié au sifflet.
+  - id: c
+    texte: Le navire est au mouillage.
+  - id: d
+    texte: Le navire n'est pas maître de sa manœuvre.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 35 h) ajoute à la sonnerie rapide de la cloche trois coups séparés et distincts
+  juste avant et juste après : c'est la signature du navire échoué, et elle encadre la
+  sonnerie du mouillage sans la remplacer. Le même alinéa autorise en plus un signal approprié
+  au sifflet. Le piège est d'entendre la sonnerie rapide au milieu et de conclure au mouillage :
+  ce sont les trois coups de part et d'autre qui disent l'échouement.
+sources:
+  - texte: RIPAM, règle 35 h)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

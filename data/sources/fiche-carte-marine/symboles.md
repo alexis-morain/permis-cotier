@@ -104,6 +104,37 @@ parce qu'elle bouge lentement et qu'une rose ancienne demande une correction.
 - Une zone interdite ou réglementée : une limite en tireté magenta, avec sa
   mention.
 
+## Les caractères de feu
+
+Un feu porté sur la carte est décrit par son caractère, c'est-à-dire la façon
+dont il alterne lumière et obscurité, abrégé par une ou deux lettres. Ce qui
+sépare les caractères tient en une comparaison de durées.
+
+- **F**, feu fixe. La lumière ne s'interrompt pas.
+- **Fl**, feu à éclats. La durée de lumière est **plus courte** que la durée
+  d'obscurité. Un chiffre entre parenthèses donne le nombre d'éclats du groupe :
+  Fl(2), deux éclats groupés.
+- **LFl**, éclat long. Un éclat qui dure au moins deux secondes.
+- **Oc**, feu à occultations. La durée de lumière est **plus longue** que la
+  durée d'obscurité : c'est l'inverse exact du feu à éclats, et la confusion la
+  plus fréquente. Oc(2) désigne un groupe de deux occultations.
+- **Iso**, feu isophase. Lumière et obscurité durent le même temps.
+- **Q**, feu scintillant, de cinquante à soixante-dix-neuf éclats par minute.
+  **VQ**, scintillant rapide, de cent à cent cinquante-neuf. **UQ**, ultra
+  rapide, au-delà.
+- **Mo**, feu à signal Morse, suivi de sa lettre : Mo(A) bat un point puis un
+  trait.
+- **Al**, feu alternatif, qui change de couleur d'une phase à l'autre.
+
+Le caractère se lit avant la couleur et la période. Dans « Fl(2) R 10s 12m 9M »,
+Fl(2) est le caractère, R la couleur, 10s la période, 12m la hauteur du feu
+au-dessus du niveau de la mer et 9M sa portée.
+
+Deux pièges se tendent tout seuls. Le chiffre entre parenthèses compte les
+éclats du groupe, jamais des secondes ; la période, elle, est le nombre suivi de
+« s ». Et un feu sans chiffre entre parenthèses n'est pas un feu fixe : Fl est
+un feu à un éclat isolé, F est le feu qui ne s'éteint pas.
+
 ## Notions de marée
 
 Le marnage est la différence de hauteur entre une pleine mer et la basse mer qui

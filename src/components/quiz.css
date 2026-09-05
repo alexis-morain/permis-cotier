@@ -104,9 +104,13 @@
 
 .jeu__visuel {
   display: block;
+  /* `width` plutôt que `max-width` : les SVG sont dessinés à deux cent quarante
+     pixels et doivent grandir jusqu'à la mesure de lecture, pas seulement
+     rétrécir. La hauteur maximale reste une contrainte de téléphone ; quand elle
+     mord, le navigateur recalcule la largeur et le rapport des côtés tient. */
+  width: min(100%, 26rem);
+  height: auto;
   max-height: 34vh;
-  max-width: 100%;
-  width: auto;
   margin: 0;
   border: 2px solid var(--filet);
   border-radius: var(--rayon);

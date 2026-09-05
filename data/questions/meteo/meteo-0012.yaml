@@ -1,0 +1,35 @@
+id: meteo-0012
+option: cotier
+theme: meteo
+notion: meteo-decision
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu prépares une sortie à la journée par vent de terre annoncé force 5. Sur quoi juges-tu
+  la sortie ?
+propositions:
+  - id: a
+    texte: Sur le trajet complet, retour compris
+  - id: b
+    texte: Sur l'état de la mer que tu vois depuis le port
+  - id: c
+    texte: Sur la seule force du vent annoncée
+  - id: d
+    texte: Sur l'heure du coucher du soleil
+reponses:
+  - a
+explication: >-
+  Un vent de terre laisse une mer plate au départ et une mer formée au large : ce qu'on
+  voit du port ne dit rien de ce qui attend dehors. La sortie se juge sur le trajet complet,
+  parce qu'une brise de mer qui monte l'après-midi transforme un aller au portant en
+  un retour au près dans un vent doublé. La force annoncée est une donnée parmi quatre,
+  avec le bateau, l'équipage et la zone.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « Décider
+      de sa sortie »'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-04'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

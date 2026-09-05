@@ -1,0 +1,40 @@
+id: balisage-0034
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu relèves cette marque, et elle ne figure sur aucun de tes documents nautiques.
+  Qu'en conclus-tu ?
+visuel:
+  fichier: balisage/danger-nouveau.svg
+  alt: "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune en forme de X."
+  credit: code
+propositions:
+  - id: a
+    texte: Elle double le balisage normal d'un danger récemment découvert
+  - id: b
+    texte: Son absence des documents est normale, le danger vient d'être découvert
+  - id: c
+    texte: C'est une marque spéciale, sa croix jaune en X le dit
+  - id: d
+    texte: Ton édition de carte est périmée, la marque figure sur la suivante
+reponses:
+  - a
+  - b
+explication: >-
+  Les bandes verticales bleues et jaunes désignent la marque de danger nouveau. Elle
+  s'ajoute au balisage normal d'un danger tout juste découvert, une épave par exemple,
+  précisément parce qu'il n'est pas encore porté sur les documents nautiques : la trouver
+  absente de tes cartes n'est donc pas une anomalie, c'est sa raison d'être. Sa croix
+  jaune la fait ressembler à une marque spéciale, mais celle-ci a un corps entièrement
+  jaune et ne signale aucun danger.
+sources:
+  - texte: Balisage AISM, marque de danger nouveau
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

@@ -1,0 +1,39 @@
+id: balisage-0031
+option: cotier
+theme: balisage
+notion: balisage-danger-isole
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves cette marque droit devant. Que t'apprend-elle sur les eaux qui l'entourent ?
+visuel:
+  fichier: balisage/danger-isole.svg
+  alt: "Bouée noire à large bande rouge, surmontée de deux sphères noires superposées."
+  credit: code
+propositions:
+  - id: a
+    texte: Le danger est de faible étendue et se tient sous la marque elle-même
+  - id: b
+    texte: Les eaux sont saines tout autour, tu peux la contourner par l'un ou l'autre bord
+  - id: c
+    texte: Le danger s'étend loin autour d'elle, il faut passer au large
+  - id: d
+    texte: Le danger vient d'être découvert et ne figure pas encore sur tes cartes
+reponses:
+  - a
+  - b
+explication: >-
+  Le corps noir à large bande rouge et les deux sphères noires superposées désignent la
+  marque de danger isolé. Elle est mouillée sur le danger même, qui est de faible étendue
+  et entouré d'eaux saines : tu la contournes donc par le bord qui t'arrange, sans t'en
+  écarter démesurément. C'est ce qui la sépare d'une cardinale, qui impose un côté, et de
+  la marque de danger nouveau, à bandes bleues et jaunes, qui signale un danger tout juste
+  découvert.
+sources:
+  - texte: Balisage AISM, marque de danger isolé
+    ref: aism-mbs
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'

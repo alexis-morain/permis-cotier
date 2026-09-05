@@ -1,0 +1,41 @@
+id: signaux-0030
+option: cotier
+theme: signaux
+notion: signaux-brume
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans la brume, tu entends ce signal à la cloche. Que peux-tu dire du navire qui
+  l'émet ?
+visuel:
+  fichier: sons/brume-mouillage.svg
+  alt: "La cloche sonnée rapidement pendant cinq secondes environ, une suite serrée de coups et non un son tenu."
+  credit: code
+propositions:
+  - id: a
+    texte: Il est au mouillage.
+  - id: b
+    texte: Il peut y ajouter au sifflet un son bref, un son prolongé et un son bref.
+  - id: c
+    texte: Sa cloche fait entendre un son prolongé de cinq secondes.
+  - id: d
+    texte: Il est échoué.
+reponses:
+  - a
+  - b
+explication: >-
+  La règle 35 g) fait sonner la cloche rapidement au navire au mouillage, et le même
+  alinéa lui permet d'ajouter au sifflet un son bref, un son prolongé et un son bref
+  pour signaler sa position à un navire qui s'approche : c'est le signal de la question
+  qui précède. Retiens que la cloche est frappée, pas tenue : on entend une volée de
+  coups serrés, jamais un son prolongé, qui appartient au sifflet et à lui seul. Le navire
+  échoué sonne bien cette volée, mais il l'encadre de trois coups séparés et distincts,
+  d'après le paragraphe h) : sans ces coups de part et d'autre, le navire est au mouillage.
+sources:
+  - texte: RIPAM, règle 35 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-05'
