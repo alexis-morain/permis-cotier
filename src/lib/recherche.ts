@@ -22,7 +22,7 @@
  */
 
 /** Ce qu'une entrée désigne. L'ordre des mots ne compte pas, celui des poids si. */
-export type Genre = 'lecon' | 'notion' | 'theme' | 'guide' | 'page' | 'question';
+export type Genre = 'cours' | 'lecon' | 'notion' | 'theme' | 'guide' | 'page' | 'question';
 
 export interface Entree {
   readonly genre: Genre;
@@ -77,6 +77,9 @@ const MOTS_VIDES: ReadonlySet<string> = new Set([
  * c'est la leçon qu'on cherchait.
  */
 const FACTEUR_GENRE: Readonly<Record<Genre, number>> = {
+  // Le cours d'un thème passe devant une de ses leçons : qui tape « balisage »
+  // veut l'apprendre en entier, pas tomber au milieu d'une notion.
+  cours: 2.6,
   lecon: 2.2,
   notion: 2,
   theme: 1.8,
@@ -216,8 +219,12 @@ export function chercher(
     // déjà ce qu'on cherche. La prime est hors genre, exprès — taper « examen »
     // doit mener à l'examen blanc, pas à la leçon qui en parle.
     if (p.titre.length > 0) {
+      // Le titre tapé en entier gagne, et de loin. Commencer par le mot tapé
+      // ne vaut, lui, que ce que ce mot couvre du titre : « balisage » ouvre
+      // « Balisage des plages et bande des 300 mètres » sans le désigner, et
+      // une prime fixe y mettrait cette notion devant le cours entier.
       if (p.titre === entiere) score += 30;
-      else if (p.titre.startsWith(entiere)) score += 6;
+      else if (p.titre.startsWith(entiere)) score += 10 * (entiere.length / p.titre.length);
     }
 
     trouves.push({ entree: p.entree, score });

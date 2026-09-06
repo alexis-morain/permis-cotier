@@ -3,9 +3,9 @@ import { questionsPubliees, nomDuTheme } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
 import { leconsEcrites } from '../lib/lecons';
 import { NOTIONS } from '../lib/notions';
-import { CHAPITRES, leconsDuParcours } from '../lib/parcours';
+import { COURS, cheminCours, leconsDuParcours } from '../lib/parcours';
 import type { Entree } from '../lib/recherche';
-import { THEMES, themeParCode } from '../lib/themes';
+import { THEMES } from '../lib/themes';
 
 /**
  * L'index de la recherche, écrit une fois au build.
@@ -40,9 +40,9 @@ const PAGES: readonly Entree[] = [
   {
     genre: 'page',
     titre: 'Le cours, leçon par leçon',
-    resume: 'Le programme dans l’ordre où on l’apprend : dix chapitres, une leçon par notion.',
+    resume: 'Le programme dans l’ordre où on l’apprend : un cours par thème, une leçon par notion.',
     url: '/cours',
-    mots: 'lecons chapitres parcours apprendre debuter zero',
+    mots: 'lecons cours parcours apprendre debuter zero',
   },
   {
     genre: 'page',
@@ -109,15 +109,14 @@ export const GET: APIRoute = async () => {
       return {
         genre: 'lecon',
         titre: l.notion.nom,
-        contexte: `Leçon ${l.rang} · ${l.chapitre.titre}`,
+        contexte: `Leçon ${l.rangDansCours} · ${l.cours.titre}`,
         resume: source.accroche,
-        url: `/cours/${l.notion.code}`,
-        mots: [
-          ...source.etapes.map((e) => e.titre),
-          ...source.retenir,
-          source.piege ?? '',
-          l.notion.resume,
-        ].join(' '),
+        // Le chemin vient du parcours et non d'un gabarit recopié : les leçons
+        // ont déjà déménagé une fois, de /cours/<notion> à /cours/<thème>/<notion>.
+        url: l.chemin,
+        // Le résumé de la notion n'est pas repris ici : il est déjà l'entrée
+        // « notion » du même sujet, et l'index se paie au chargement.
+        mots: [...source.etapes.map((e) => e.titre), ...source.retenir, source.piege ?? ''].join(' '),
       };
     });
 
@@ -150,14 +149,17 @@ export const GET: APIRoute = async () => {
     mots: `${p.titre} ${p.question}`,
   }));
 
-  // Les chapitres du cours mènent à leur ancre dans la page du parcours.
-  const chapitres: Entree[] = CHAPITRES.map((c) => ({
-    genre: 'page',
+  // Un cours par thème. Ce qu'il promet et ce qu'il fait rater se cherchent :
+  // « oublier que le sens conventionnel s'inverse » est une vraie requête.
+  // Le « pourquoi » et la « méthode » restent dehors, ils parlent de la façon
+  // d'apprendre et pollueraient les résultats.
+  const cours: Entree[] = COURS.map((c) => ({
+    genre: 'cours',
     titre: c.titre,
-    contexte: 'Chapitre du cours',
+    contexte: 'Cours du thème',
     resume: c.promesse,
-    url: `/cours#${c.code}`,
-    mots: c.themes.map((t) => themeParCode(t)?.nom ?? t).join(' '),
+    url: cheminCours(c.code),
+    mots: [...c.savoirFaire, ...c.pieges].join(' '),
   }));
 
   // L'énoncé seul. L'explication et les propositions doubleraient le poids du
@@ -170,7 +172,7 @@ export const GET: APIRoute = async () => {
     url: `/question/${q.id}`,
   }));
 
-  const index: Entree[] = [...lecons, ...notions, ...themes, ...guide, ...chapitres, ...PAGES, ...banque];
+  const index: Entree[] = [...cours, ...lecons, ...notions, ...themes, ...guide, ...PAGES, ...banque];
 
   return new Response(JSON.stringify(index), {
     headers: {

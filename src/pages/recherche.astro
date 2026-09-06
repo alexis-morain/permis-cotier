@@ -3,9 +3,7 @@ import Base from '../layouts/Base.astro';
 import RecherchePanneau from '../components/RecherchePanneau.astro';
 import { themesAvecComptes } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
-import { codesLeconsEcrites } from '../lib/lecons';
-import { notionsDuTheme } from '../lib/notions';
-import { CHAPITRES, leconsDuChapitre } from '../lib/parcours';
+import { COURS, cheminCours, leconsDuCours } from '../lib/parcours';
 
 /**
  * La page de la recherche, et le sommaire du site.
@@ -13,16 +11,14 @@ import { CHAPITRES, leconsDuChapitre } from '../lib/parcours';
  * Elle a deux raisons d'exister. La première : la loupe de l'en-tête est un
  * lien avant d'être un bouton, et un lien doit mener quelque part, même sans
  * script. La seconde : chercher suppose de savoir quoi taper. Sous le champ,
- * tout est là, à plat — les dix chapitres du cours, les quatorze thèmes et
- * leurs cent cinq notions, le guide. On y parcourt ce qu'on ne sait pas encore
- * nommer.
+ * tout est là, à plat — les quatorze cours, leurs cent cinq leçons, les pages
+ * de thème et le guide. On y parcourt ce qu'on ne sait pas encore nommer.
  *
- * En `noindex` : la page ne dit rien que les fiches de notions ne disent
+ * En `noindex` : la page ne dit rien que les leçons et les fiches ne disent
  * mieux, mais ses liens se suivent.
  */
-const themes = await themesAvecComptes();
-const ecrites = await codesLeconsEcrites();
-const chapitres = CHAPITRES.map((c) => ({ ...c, lecons: leconsDuChapitre(c.code) }));
+const comptes = new Map((await themesAvecComptes()).map((t) => [t.code, t.publiees]));
+const cours = COURS.map((c) => ({ ...c, lecons: leconsDuCours(c.code), questions: comptes.get(c.code) ?? 0 }));
 ---
 
 <Base
@@ -41,57 +37,38 @@ const chapitres = CHAPITRES.map((c) => ({ ...c, lecons: leconsDuChapitre(c.code)
   </div>
 
   <div class="page page--etroite sommaire">
-    <h2 id="cours">Le cours, chapitre par chapitre</h2>
+    <h2 id="cours">Les quatorze cours</h2>
     <p class="discret">
-      Le programme dans l’ordre où on l’apprend. Les leçons rédigées mènent au cours, les
-      autres à la fiche de la notion, le temps d’être écrites.
+      Un cours par thème du programme, dans l’ordre où on l’apprend : d’abord ce qu’on voit sur
+      l’eau, puis les règles de rencontre, puis ce qui se prépare à terre. Une leçon par notion.
     </p>
-    <ol class="sommaire__chapitres">
+    <ol class="sommaire__cours">
       {
-        chapitres.map((c) => (
+        cours.map((c) => (
           <li>
-            <h3><a href={`/cours#${c.code}`}>{c.titre}</a></h3>
+            <h3><a href={cheminCours(c.code)}>{c.titre}</a></h3>
             <p class="discret">{c.promesse}</p>
             <ul class="sommaire__liens">
               {c.lecons.map((l) => (
-                <li>
-                  <a href={ecrites.has(l.notion.code) ? `/cours/${l.notion.code}` : `/notion/${l.notion.code}`}>
-                    {l.notion.nom}
-                  </a>
-                </li>
+                <li><a href={l.chemin}>{l.notion.nom}</a></li>
               ))}
             </ul>
+            <p class="discret sommaire__theme">
+              <a href={`/theme/${c.code}`}>
+                {c.questions > 0 ? `Les ${c.questions} questions du thème` : 'La page du thème'}
+              </a>
+            </p>
           </li>
         ))
       }
     </ol>
 
-    <h2 id="programme">Les quatorze thèmes et leurs notions</h2>
-    <p class="discret">
-      L’ordre de l’arrêté du 28 septembre 2007. Chaque notion a sa fiche : le résumé, les
-      questions de la banque, et le texte dont elles sont tirées.
-    </p>
-    <ul class="sommaire__themes">
-      {
-        themes.map((t) => (
-          <li>
-            <h3>
-              <a href={`/theme/${t.code}`}>{t.nom}</a>{' '}
-              <span class="pastille">{t.publiees > 0 ? `${t.publiees} questions` : 'à venir'}</span>
-            </h3>
-            <ul class="sommaire__liens">
-              {notionsDuTheme(t.code).map((n) => (
-                <li><a href={`/notion/${n.code}`}>{n.nom}</a></li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
-    </ul>
-
-    <h2 id="guide">Le guide</h2>
+    <h2 id="guide">Le guide, et le reste</h2>
     <ul class="sommaire__liens sommaire__liens--large">
       {GUIDE.map((p) => <li><a href={`/guide/${p.slug}`}>{p.court}</a></li>)}
+      <li><a href="/themes">Les quatorze thèmes</a></li>
+      <li><a href="/examen">Examen blanc</a></li>
+      <li><a href="/entrainement">Entraînement par thème</a></li>
       <li><a href="/a-propos">Qui écrit ces questions</a></li>
       <li><a href="/credits">Crédits des visuels</a></li>
       <li><a href="/parametres">Réglages</a></li>
@@ -103,7 +80,7 @@ const chapitres = CHAPITRES.map((c) => ({ ...c, lecons: leconsDuChapitre(c.code)
   .sommaire { padding-block: 1rem 2rem; }
   /* Un sommaire se balaie, il ne se lit pas : la mesure de lecture n'a rien à
      y faire, elle couperait les rangées de liens au milieu. */
-  .sommaire li, .sommaire__chapitres > li p { max-width: none; }
+  .sommaire li, .sommaire__cours > li p { max-width: none; }
   .sommaire h2 {
     margin-top: 3rem;
     padding-top: 1.5rem;
@@ -114,20 +91,18 @@ const chapitres = CHAPITRES.map((c) => ({ ...c, lecons: leconsDuChapitre(c.code)
   .sommaire h3 a { text-decoration: none; }
   .sommaire h3 a:hover { text-decoration: underline; text-decoration-color: var(--jaune); }
 
-  .sommaire__chapitres { list-style: none; margin: 0; padding: 0; counter-reset: chapitre; }
-  .sommaire__chapitres > li { margin-bottom: 1.75rem; }
+  .sommaire__cours { list-style: none; margin: 0; padding: 0; counter-reset: cours; }
+  .sommaire__cours > li { margin-bottom: 1.75rem; }
   /* Le numéro remplace le sur-titre : il situe sans crier. */
-  .sommaire__chapitres > li h3::before {
-    counter-increment: chapitre;
-    content: counter(chapitre) ". ";
+  .sommaire__cours > li h3::before {
+    counter-increment: cours;
+    content: counter(cours) ". ";
     color: var(--texte-doux);
     font-variant-numeric: tabular-nums;
   }
-  .sommaire__chapitres > li p { margin: 0 0 0.5rem; }
+  .sommaire__cours > li p { margin: 0 0 0.5rem; }
 
-  .sommaire__themes { list-style: none; margin: 0; padding: 0; }
-  .sommaire__themes > li { margin-bottom: 1.5rem; }
-  .sommaire__themes .pastille { vertical-align: middle; }
+  .sommaire__theme { margin: 0.5rem 0 0; }
 
   .sommaire__liens {
     list-style: none;

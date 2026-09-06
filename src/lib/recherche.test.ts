@@ -48,6 +48,20 @@ const INDEX: Entree[] = [
     url: '/question/feux-0001',
   },
   {
+    genre: 'cours',
+    titre: 'Lire le balisage',
+    contexte: 'Cours du thème',
+    resume: 'Reconnaître chaque bouée à sa forme et savoir de quel côté passer.',
+    url: '/cours/balisage',
+  },
+  {
+    genre: 'notion',
+    titre: 'Balisage des plages et bande des 300 mètres',
+    contexte: 'Balisage',
+    resume: 'La bande côtière est réservée aux baigneurs.',
+    url: '/notion/balisage-plages',
+  },
+  {
     genre: 'guide',
     titre: 'Le balisage en région B',
     resume: 'Les cardinales ne changent pas en région B, les latérales si.',
@@ -151,6 +165,14 @@ describe('chercher', () => {
     // enterrerait la leçon qu'on cherche.
     const genres = chercher(prete, 'cardinale').map((r) => r.entree.genre);
     expect(genres.slice(0, 2)).toEqual(['lecon', 'notion']);
+  });
+
+  it('préfère le cours court au titre long qui commence par le mot', () => {
+    // « Balisage des plages et bande des 300 mètres » commence par le mot
+    // tapé, « Lire le balisage » ne fait que le contenir. Commencer par un mot
+    // ne vaut que ce que ce mot couvre du titre : sur un mot large, c'est le
+    // cours entier qu'on cherche.
+    expect(chercher(prete, 'balisage')[0]?.entree.url).toBe('/cours/balisage');
   });
 
   it('ne pèse pas l’énoncé d’une question comme un titre', () => {
