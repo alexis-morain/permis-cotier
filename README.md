@@ -83,6 +83,21 @@ résumé de sa fiche, jouable mais en `noindex`. Chaque leçon se termine par
 jusqu'à trois questions de la banque sur la notion ; la progression reste dans
 le navigateur.
 
+## La fiche du candidat
+
+`/profil` dit où on en est, depuis la progression du navigateur : un indice de
+préparation de 0 à 100 (vingt points pour la part de la banque vue, trente-cinq
+pour la part retenue, quarante-cinq pour la moyenne des trois derniers examens
+blancs, et « prêt » seulement avec deux examens reçus sur trois), l'objectif du
+jour, la série de jours, la maîtrise thème par thème, les examens blancs, huit
+jalons, et les réglages : prénom, rythme, date d'examen, apparence.
+
+`/profil/depart` est le questionnaire de départ, six écrans, rien d'obligatoire.
+La première question est pourquoi on passe le permis : la réponse revient sur
+l'accueil, en tête de la fiche, et sur l'écran de résultat quand un examen blanc
+est recalé. Le moteur est dans `src/lib/profil.ts`, l'état dans
+`Etat.profil` et `Etat.activite` (réponses par jour). Rien ne part du navigateur.
+
 ## Ajouter une question
 
 L'ordre ne change jamais : lire l'article, écrire la question, relire. Les
@@ -117,7 +132,7 @@ data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
-                                   session, progression, mesure
+                                   session, progression, profil, apparence, mesure
 src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement
 src/components/                    îlot React du quiz
 functions/api/                     signalement, puis synchronisation

@@ -322,3 +322,46 @@ describe('ce que la série raconte à la mesure', () => {
     });
   });
 });
+
+describe('le rappel de la raison sur le résultat', () => {
+  it('revient quand l’examen est recalé, avec l’écart au précédent', () => {
+    const quatre = [question('a-1'), question('a-2'), question('a-3'), question('a-4'), question('a-5'), question('a-6')];
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [{ date: '2026-09-01', bonnes: 2, total: 6, reussi: false }],
+        profil: { prenom: '', motivations: ['bateau'], phrase: '', depart: null, rythme: null, rempliLe: '2026-09-01' },
+      }),
+    );
+    render(<Quiz mode="examen" questions={quatre} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    // Six questions sans réponse : six erreurs, recalé.
+    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.getByText(/Recalé/)).toBeTruthy();
+    expect(screen.getByText(/Tu passes ce permis pour/)).toBeTruthy();
+    expect(screen.getByText('Ton bateau à toi, et la mer devant.')).toBeTruthy();
+    expect(screen.getByText(/Ton examen d’avant : 2 sur 6/).textContent).toContain('2 de moins');
+  });
+
+  it('se tait quand l’examen est reçu', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [],
+        profil: { prenom: '', motivations: ['bateau'], phrase: '', depart: null, rythme: null, rempliLe: '2026-09-01' },
+      }),
+    );
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    expect(screen.getByText(/Reçu/)).toBeTruthy();
+    expect(screen.queryByText(/Tu passes ce permis pour/)).toBeNull();
+  });
+});

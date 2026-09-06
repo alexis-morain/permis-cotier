@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import ProfilCandidat from '../components/ProfilCandidat.tsx';
+import { questionsPubliees } from '../lib/banque';
+import { leconsDuParcours } from '../lib/parcours';
+
+// La fiche se construit dans le navigateur, depuis la progression locale.
+// Le serveur ne donne que la banque, réduite à l'identifiant et au thème,
+// pour borner les comptes à ce qui est encore publié.
+const banque = (await questionsPubliees()).map((q) => ({ id: q.id, theme: q.theme }));
+const totalLecons = leconsDuParcours().length;
+---
+
+<Base
+  titre="Ta fiche"
+  description="Où tu en es : indice de préparation, objectif du jour, thèmes faibles, examens blancs, jalons, et tes réglages."
+  indexable={false}
+>
+  <div class="page page--etroite">
+    <ProfilCandidat client:only="react" banque={banque} totalLecons={totalLecons} />
+  </div>
+</Base>
