@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { charger, sauvegarder } from '../lib/progression';
 import { evenement } from '../lib/mesure';
+import { programmerRappels } from '../lib/natif';
 
 /**
  * « Ton examen est quand ? » Facultative, gardée dans le navigateur, jamais
@@ -30,6 +31,10 @@ export default function DateExamen() {
     // Une date posée est la meilleure intention que le site puisse lire :
     // elle dit qu'il reste des jours à réviser, pas qu'on passe en visiteur.
     if (valeur) evenement('date-examen-renseignee');
+    // Dans l'app, la date arme les rappels J-7, J-3, J-1 et le matin même.
+    // C'est le seul moment où la permission se demande : le candidat vient de
+    // poser sa date, il voit à quoi elle sert. Sur le site, sans effet.
+    void programmerRappels(valeur || null);
   }
 
   if (!pret) return null;
