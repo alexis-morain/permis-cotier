@@ -1,0 +1,80 @@
+notion: feux-peche
+duree: 4
+accroche: >-
+  Deux feux superposés sur tout l’horizon, au large, la nuit. Le feu du bas est blanc. Ne
+  regarde que celui du haut : sa couleur te dit si ce navire tire un chalut ou pêche
+  autrement, et donc de combien tu dois passer au large.
+etapes:
+  - titre: Vert sur blanc, il tire un chalut
+    texte: >-
+      Un navire en train de chaluter, c’est-à-dire de tirer dans l’eau un chalut ou un
+      autre engin de pêche, montre deux feux superposés visibles sur tout l’horizon, le
+      supérieur vert et l’inférieur blanc.
+
+      Le vert va au chalut, et il est toujours en haut.
+    visuel: feux/chalut.svg
+    alt: "Deux feux superposés visibles sur tout l’horizon, le supérieur vert, l’inférieur blanc."
+  - titre: Rouge sur blanc, il pêche autrement
+    texte: >-
+      Un navire en train de pêcher autrement qu’au chalut montre deux feux superposés
+      visibles sur tout l’horizon, le supérieur rouge et l’inférieur blanc.
+
+      Filets, lignes, casiers : tout ce qui n’est pas tiré dans l’eau entre dans cette
+      seconde famille.
+    visuel: feux/peche-hors-chalut.svg
+    alt: "Deux feux superposés visibles sur tout l’horizon, le supérieur rouge, l’inférieur blanc."
+  - titre: Avec de l’erre, feux de côté et feu de poupe s’ajoutent
+    texte: >-
+      Dès qu’un navire en pêche a de l’erre, c’est-à-dire qu’il se déplace sur l’eau, il
+      montre en plus de ses feux de pêche des feux de côté et un feu de poupe. La règle est
+      la même pour le chalutier et pour les autres.
+
+      Sans erre, ces feux disparaissent et il ne reste que les deux feux superposés.
+  - titre: Un engin déployé à plus de 150 mètres se signale
+    texte: >-
+      Quand un navire qui pêche autrement qu’au chalut déploie son engin sur une distance
+      horizontale supérieure à 150 mètres à partir du navire, il montre aussi, dans
+      l’alignement de l’engin, un feu blanc visible sur tout l’horizon ou un cône la pointe
+      en haut.
+
+      Ce signal indique de quel bord se trouve le matériel. Passe de l’autre côté.
+  - titre: Sous 50 mètres, le feu de tête de mât du chalutier est libre
+    texte: >-
+      Le chalutier montre aussi un feu de tête de mât placé plus haut que le feu vert et à
+      l’arrière de celui-ci. Les navires de longueur inférieure à 50 mètres ne sont pas
+      tenus de le montrer, mais peuvent le faire.
+
+      Ni obligation ni interdiction sous ce seuil. Ce feu ne dépend pas de l’erre.
+  - titre: De jour, deux cônes réunis par la pointe, pour les deux
+    texte: >-
+      À la place des feux, la marque de pêche est formée de deux cônes superposés réunis
+      par la pointe. Elle est la même au chalut et hors chalut : de jour, le dessin ne dit
+      plus laquelle des deux pêches tu as devant toi.
+
+      Le cône unique la pointe en haut ne remplace pas cette marque, il s’ajoute, dans
+      l’alignement de l’engin déployé à plus de 150 mètres.
+  - titre: En pêche, ces feux et rien d’autre
+    texte: >-
+      Un navire en train de pêcher ne montre que les feux et marques de cette règle, qu’il
+      fasse route ou qu’il soit au mouillage. Le feu blanc de mouillage ne s’y ajoute pas.
+
+      À l’inverse, un navire qui n’est pas en train de pêcher ne doit pas montrer ces feux,
+      mais seulement ceux prescrits pour un navire de sa longueur. Chalut remonté, le
+      chalutier qui rentre au port est un navire à moteur ordinaire.
+piege: >-
+  On inverse les deux feux, ou on échange les couleurs entre les deux familles. Retiens le
+  feu du haut : vert au chalut, rouge hors chalut, et blanc dessous dans les deux cas. Le
+  blanc sur rouge, lui, n’est pas une pêche : c’est le bateau-pilote.
+retenir:
+  - "Chalut : vert au-dessus de blanc. Autre pêche : rouge au-dessus de blanc."
+  - "Avec de l’erre : feux de côté et feu de poupe en plus."
+  - "Engin déployé à plus de 150 mètres : feu blanc ou cône la pointe en haut dans son alignement."
+  - "De jour : deux cônes réunis par la pointe, identiques pour les deux pêches."
+  - "En pêche, rien d’autre que ces feux, même au mouillage."
+sources:
+  - texte: RIPAM, règle 26
+    ref: decret-77-733
+    fichier: regle-26
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

@@ -508,7 +508,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'securite',
     nom: 'Nombre de personnes et charge',
     resume:
-      "Le nombre maximal est porté sur la plaque constructeur, et à défaut se calcule. Les enfants de moins de deux ans n'y comptent pas.",
+      "Le nombre maximal est porté sur la plaque constructeur ou dans le manuel du propriétaire. Les enfants de moins d'un an n'y comptent pas.",
     ordre: 2,
     cible: 2,
     ancrage: 'le nombre de personnes ou la charge embarquées',
@@ -919,7 +919,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'environnement',
     nom: 'Pêche sous-marine',
     resume:
-      "Elle est réservée aux majeurs, interdite avec un scaphandre, de nuit, et à proximité des engins de pêche professionnelle. Le plongeur signale sa présence.",
+      "Le fusil-harpon est interdit aux moins de seize ans. Elle est interdite avec un scaphandre, de nuit, et à proximité des engins de pêche professionnelle. Le plongeur signale sa présence.",
     ordre: 5,
     cible: 1,
     ancrage: 'réglementation de la pêche sous-marine',

@@ -1,0 +1,48 @@
+notion: feux-pilote
+duree: 3
+accroche: >-
+  À l’entrée d’un grand port, un bateau court fait des allers-retours vers les navires
+  qui attendent au large. Il monte le pilote à bord. De nuit, deux feux le désignent.
+etapes:
+  - titre: Blanc au-dessus de rouge, il pilote
+    texte: >-
+      Un bateau-pilote en service de pilotage montre, à la tête du mât ou près d’elle,
+      deux feux superposés visibles sur tout l’horizon : le supérieur blanc, l’inférieur
+      rouge.
+
+      Retiens l’ordre par le sens : le blanc en haut, comme le feu qu’on voit de loin.
+    visuel: feux/bateau-pilote.svg
+    alt: "Deux feux superposés sur fond de nuit, le supérieur blanc, l’inférieur rouge."
+  - titre: En route, il ajoute ses feux de navire
+    texte: >-
+      Quand il fait route, le bateau-pilote montre en plus ses feux de côté et son feu
+      de poupe. Ses deux feux de tête de mât te disent ce qu’il fait, ses feux de côté
+      te disent où il va.
+  - titre: Au mouillage, les feux du mouillage
+    texte: >-
+      S’il est au mouillage, il garde ses deux feux blanc sur rouge et ajoute le feu,
+      les feux ou la marque prescrits pour un navire au mouillage.
+  - titre: Hors service, un navire comme un autre
+    texte: >-
+      Un bateau-pilote qui n’est pas en service de pilotage montre les feux ou marques
+      prescrits pour un navire de sa longueur. Il éteint son blanc sur rouge : celui-ci
+      annonce le service, pas le métier du bateau.
+piege: >-
+  L’ordre des deux feux est tout le piège. Rouge au-dessus de blanc désigne un navire
+  qui pêche autrement qu’au chalut. Blanc au-dessus de rouge désigne le pilote. Une
+  inversion, et tu prends un fileyeur pour une vedette de pilotage.
+retenir:
+  - "Bateau-pilote en service : blanc au-dessus de rouge, en tête de mât, sur tout l’horizon."
+  - "Faisant route, il ajoute feux de côté et feu de poupe ; au mouillage, les feux de mouillage."
+  - "Hors service, il montre les feux d’un navire de sa longueur."
+  - "Rouge sur blanc, c’est la pêche hors chalut, pas le pilote."
+sources:
+  - texte: RIPAM, règle 29
+    ref: decret-77-733
+    fichier: regle-29
+  - texte: RIPAM, règle 26
+    ref: decret-77-733
+    fichier: regle-26
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

@@ -1,0 +1,112 @@
+notion: signaux-brume
+duree: 5
+accroche: >-
+  Le banc de brume s’est refermé sur toi. Tu ne vois plus l’avant de ton bateau, et les
+  autres ne te voient pas non plus. Il ne reste que le son : chaque navire annonce ce
+  qu’il est et ce qu’il fait.
+etapes:
+  - titre: Un son prolongé toutes les deux minutes en marche
+    texte: >-
+      Dans une zone de visibilité réduite, ou à son approche, de jour comme de nuit, un
+      navire à propulsion mécanique qui a de l’erre fait entendre un son prolongé. Il le
+      répète à des intervalles ne dépassant pas deux minutes.
+
+      « Avoir de l’erre », c’est avancer sur l’eau. Deux minutes est un maximum, pas un
+      rythme à tenir : plus souvent est permis.
+    visuel: sons/brume-avec-erre.svg
+    alt: "Le tracé d’un signal au sifflet dans le temps : un seul trait long."
+  - titre: Deux sons prolongés quand tu es stoppé
+    texte: >-
+      Le même navire, moteur en route mais stoppé et sans erre, fait entendre deux sons
+      prolongés séparés d’environ deux secondes, toujours à des intervalles ne dépassant
+      pas deux minutes.
+
+      Un seul trait, j’avance. Deux traits, je suis arrêté sur l’eau.
+    visuel: sons/brume-stoppe.svg
+    alt: "Le tracé d’un signal au sifflet : deux traits longs séparés par un court silence."
+  - titre: Un prolongé et deux brefs pour la manœuvre empêchée
+    texte: >-
+      Une famille entière de navires remplace les signaux précédents par trois sons
+      consécutifs, un prolongé suivi de deux brefs, à des intervalles ne dépassant pas
+      deux minutes.
+
+      Ce sont ceux dont la manœuvre est empêchée ou contrainte. Le signal ne dit pas
+      lequel : il dit qu’il faut se méfier.
+    visuel: sons/brume-manoeuvre-restreinte.svg
+    alt: "Le tracé d’un signal au sifflet : un trait long suivi de deux traits courts."
+    liste:
+      - Le navire qui n’est pas maître de sa manœuvre
+      - Le navire à capacité de manœuvre restreinte
+      - Le navire handicapé par son tirant d’eau
+      - Le navire à voile
+      - Le navire en train de pêcher
+      - Le navire qui en remorque ou en pousse un autre
+  - titre: Le remorqué ajoute un bref
+    texte: >-
+      Un navire remorqué, ou le dernier du convoi s’il y en a plusieurs, fait entendre
+      quatre sons consécutifs : un prolongé suivi de trois brefs, à des intervalles ne
+      dépassant pas deux minutes. Il ne le fait que s’il a un équipage à bord, et si
+      possible juste après le signal du remorqueur.
+
+      Prolongé plus deux brefs, puis prolongé plus trois brefs : tu viens d’entendre les
+      deux bouts d’un convoi, et la longueur entre les deux t’est inconnue.
+    visuel: sons/brume-remorque.svg
+    alt: "Le tracé d’un signal au sifflet : un trait long suivi de trois traits courts."
+  - titre: Au mouillage, la cloche
+    texte: >-
+      Un navire au mouillage sonne la cloche rapidement pendant cinq secondes environ, à
+      des intervalles ne dépassant pas une minute. C’est le seul signal de la règle dont
+      la cadence est d’une minute et non de deux.
+
+      Il peut y ajouter, au sifflet, un bref suivi d’un prolongé et d’un bref pour
+      signaler sa position et le risque d’abordage à un navire qui s’approche.
+    visuel: sons/brume-mouillage.svg
+    alt: "Le tracé d’un signal à la cloche : une sonnerie rapide et continue pendant cinq secondes."
+  - titre: Échoué, la cloche encadrée de trois coups
+    texte: >-
+      Un navire échoué sonne la même cloche qu’au mouillage, et il fait entendre en plus
+      trois coups de cloche séparés et distincts juste avant et juste après la sonnerie
+      rapide. Il peut aussi émettre un signal approprié au sifflet.
+
+      Trois coups, la sonnerie, trois coups : ce navire ne bougera pas, contourne-le
+      largement.
+    visuel: sons/brume-echouement.svg
+    alt: "Le tracé d’un signal à la cloche : trois coups espacés, une sonnerie rapide, puis trois coups espacés."
+  - titre: Quatre sons brefs, c’est le pilote
+    texte: >-
+      Un bateau-pilote en service de pilotage peut ajouter à son signal normal un signal
+      d’identification de quatre sons brefs. C’est le seul signal de la règle 35 fait de
+      brefs seulement.
+    visuel: sons/brume-pilote.svg
+    alt: "Le tracé d’un signal au sifflet : quatre traits courts rapprochés."
+  - titre: Sous 12 mètres, un signal efficace suffit
+    texte: >-
+      Un navire de moins de 12 mètres n’est pas tenu d’émettre ces signaux, mais s’il ne
+      les émet pas, il doit faire entendre un autre signal sonore efficace à des
+      intervalles ne dépassant pas deux minutes. Se taire n’est pas une option.
+
+      La règle 33 dit ce qu’il faut à bord : un sifflet à partir de 12 mètres, une cloche
+      en plus à partir de 20 mètres, un gong en plus à partir de 100 mètres. En dessous
+      de 12 mètres, un autre moyen d’émettre un signal sonore efficace, une corne à main
+      par exemple.
+piege: >-
+  Confondre « stoppé sans erre » et « au mouillage ». Le navire stoppé fait route, son
+  ancre est à poste, il émet deux sons prolongés au sifflet toutes les deux minutes. Le
+  navire au mouillage est tenu par son ancre et sonne la cloche cinq secondes toutes les
+  minutes. Le son n’est pas le même, la cadence non plus.
+retenir:
+  - "Avec erre : 1 son prolongé. Stoppé sans erre : 2 sons prolongés. Toutes les 2 minutes au plus."
+  - "1 prolongé et 2 brefs : voilier, pêcheur, remorqueur, non maître de sa manœuvre, capacité restreinte, tirant d’eau."
+  - "1 prolongé et 3 brefs : le navire remorqué."
+  - "Au mouillage : cloche 5 secondes toutes les minutes au plus. Échoué : 3 coups avant et après."
+  - "Moins de 12 mètres : un autre signal sonore efficace, toutes les 2 minutes au plus."
+sources:
+  - texte: RIPAM, règle 35
+    ref: decret-77-733
+    fichier: regle-35
+  - texte: RIPAM, règle 33
+    ref: decret-77-733
+    fichier: regle-33
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

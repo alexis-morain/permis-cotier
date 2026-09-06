@@ -5,6 +5,7 @@ import { questionsDuTheme } from '../../lib/banque';
 import { themeParCode } from '../../lib/themes';
 import { NOTIONS, notionsDuTheme, notionsVoisines } from '../../lib/notions';
 import { SITE, ressource } from '../../lib/seo';
+import { cheminLecon } from '../../lib/parcours';
 
 export async function getStaticPaths() {
   return NOTIONS.map((notion) => ({ params: { code: notion.code }, props: { notion } }));
@@ -117,7 +118,7 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
     <p class="bloc actions">
       <a
         class="bouton bouton--principal"
-        href={`/cours/${notion.code}`}
+        href={cheminLecon(notion)}
         data-mesure="notion-lecon"
         data-mesure-notion={notion.code}
       >

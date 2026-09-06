@@ -1,0 +1,78 @@
+notion: securite-pieces-administratives
+duree: 4
+accroche: >-
+  Une vedette des affaires maritimes vient te parler au moteur et te demande tes papiers.
+  Ce qui compte alors n’est pas de les avoir quelque part : c’est de les sortir tout de
+  suite.
+etapes:
+  - titre: Le permis d’abord, selon la puissance
+    texte: >-
+      La conduite d’un bateau de plaisance à moteur de plus de 4,5 kilowatts est
+      subordonnée à la possession du permis de conduire des bateaux de plaisance. En eaux
+      maritimes, l’option côtière couvre la navigation jusqu’à 6 milles d’un abri,
+      l’extension hauturière au-delà.
+
+      À la voile, même avec un moteur auxiliaire, aucun permis n’est exigé en eaux
+      maritimes.
+  - titre: La radio a sa propre autorisation
+    texte: >-
+      L’utilisation d’une installation radioélectrique à bord est soumise à une
+      autorisation administrative appelée licence de station de navire. Elle vise le
+      navire, pas la personne : le certificat qui autorise la personne à parler est un
+      autre document.
+  - titre: Présenter immédiatement, sinon 2e classe
+    texte: >-
+      Ne pas présenter immédiatement aux agents de l’autorité compétente les autorisations,
+      déclarations et pièces administratives exigées est puni de l’amende prévue pour les
+      contraventions de la 2e classe.
+
+      Celui qui est ensuite invité à justifier dans un délai de 5 jours et ne présente
+      toujours rien au bout du délai encourt l’amende de la 4e classe. Le délai n’efface
+      pas la première contravention, il en ouvre une seconde, plus lourde.
+  - titre: En location, une déclaration en deux exemplaires
+    texte: >-
+      Avant un contrat de location ou un prêt, le locataire renseigne et signe une
+      déclaration conforme au modèle de l’annexe 240-A.6, que le loueur contresigne après
+      avoir vérifié les indications portées.
+    liste:
+      - Un exemplaire est remis à l’utilisateur, présentable à tout instant aux autorités de contrôle
+      - Un second est conservé par le loueur, tenu à la disposition des mêmes autorités
+  - titre: Le rapport de vérification spéciale suit le bateau loué
+    texte: >-
+      Les navires mis en location sont soumis à une vérification spéciale annuelle, faite
+      sous la responsabilité du propriétaire ou de l’exploitant. Une copie du dernier
+      rapport est annexée au contrat de location, et embarquée à bord des navires
+      comportant un espace habitable.
+
+      Tous les rapports sont archivés dans un registre des vérifications spéciales, mis à
+      disposition des usagers au plus tard au moment de leur embarquement, et des autorités
+      de contrôle sur demande.
+piege: >-
+  Croire que le registre du loueur remplace la copie du rapport. L’article 240-3.01 demande
+  les deux : la copie annexée au contrat et embarquée quand le navire a un espace habitable,
+  le registre en plus, dans les locaux du loueur.
+retenir:
+  - "Bateau à moteur de plus de 4,5 kW : permis obligatoire. Option côtière jusqu’à 6 milles."
+  - "Une VHF à bord suppose la licence de station de navire, qui vise le navire."
+  - "Pièces non présentées immédiatement : 2e classe. Toujours rien après 5 jours : 4e classe."
+  - "En location : déclaration signée en deux exemplaires, dont un à bord."
+  - Copie du dernier rapport de vérification spéciale annexée au contrat, et à bord s’il y a un espace habitable.
+sources:
+  - texte: Division 240, article 240-3.01, II
+    ref: division-240
+    fichier: article-240-3-01
+  - texte: Division 240, article 240-3.02, I
+    ref: division-240
+    fichier: article-240-3-02
+  - texte: Division 240, article 240-2.20, I
+    ref: division-240
+    fichier: article-240-2-20
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 18
+    ref: decret-2007-1167
+    fichier: article-18
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+    fichier: article-2
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

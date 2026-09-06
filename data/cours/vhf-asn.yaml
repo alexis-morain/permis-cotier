@@ -1,0 +1,59 @@
+notion: vhf-asn
+duree: 4
+accroche: >-
+  Sur ta VHF, un petit capot rouge protège une touche. Tu le soulèves, tu maintiens la
+  touche, et une alerte part toute seule avec ton identité dessus. Voilà l’appel sélectif
+  numérique.
+etapes:
+  - titre: Une touche envoie ton identité
+    texte: >-
+      L’appel sélectif numérique, l’ASN, est la partie données de la VHF. Tu soulèves le
+      capot rouge, tu maintiens la touche de détresse, et l’appareil émet une alerte
+      numérique. Elle porte le MMSI programmé dans la station, donc le nom du navire
+      auprès de celui qui la reçoit.
+
+      Quand un récepteur de positionnement est raccordé à la VHF, l’alerte emporte aussi
+      la position. Sans ce raccordement, elle part quand même, mais sans position.
+  - titre: L’alerte passe sur le 70, jamais sur le 16
+    texte: >-
+      Le canal 70 est réservé à l’ASN. C’est une voie de données : aucune phonie n’y
+      passe, jamais. Parler sur le 70 ne sert à rien, personne ne t’entend.
+
+      Le canal 16 reste la voie de la détresse, de l’urgence et de l’appel à la voix.
+      Les deux travaillent ensemble, chacun sur son registre.
+  - titre: L’alerte ne remplace pas le message parlé
+    texte: >-
+      L’alerte numérique précède le message, elle ne le remplace pas. Elle dit qui tu es
+      et où tu es, rien de plus : ni la nature de l’avarie, ni ce que tu demandes, ni le
+      nombre de personnes à bord.
+
+      Une fois l’alerte partie, tu passes sur le canal 16 et tu émets le MAYDAY parlé.
+  - titre: Fixe ou portative, l’ASN veut le MMSI
+    texte: >-
+      La division 240 vise les installations fixes et portatives munies de l’ASN :
+      lorsqu’elles sont programmées, elles le sont avec le MMSI attribué par l’autorité
+      qui délivre les licences. Une portative à ASN n’échappe pas à la règle.
+
+      Pour la VHF fixe munie de l’ASN et programmée avec le MMSI, la position doit être
+      fournie automatiquement en permanence, afin d’être incluse dans l’alerte de
+      détresse initiale.
+piege: >-
+  Croire que la touche rouge fait tout. Elle envoie une alerte de données, pas un appel
+  au secours détaillé. Le candidat qui répond « j’attends la réponse sans rien émettre
+  d’autre » laisse le CROSS avec un point sur une carte et aucune idée de ce qui se
+  passe à bord.
+retenir:
+  - "L’alerte ASN part sur le canal 70, la voix suit sur le canal 16."
+  - "L’alerte porte le MMSI, et la position si un récepteur de positionnement est raccordé."
+  - "L’alerte numérique précède le message parlé, elle ne le remplace pas."
+  - "Fixes et portatives munies de l’ASN sont programmées avec le MMSI du navire."
+sources:
+  - texte: 'Fiche VHF : voies, procédures d’appel et SMDSM'
+    ref: fiche-vhf
+    fichier: procedures
+  - texte: Division 240, article 240-2.20
+    ref: division-240
+    fichier: article-240-2-20
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

@@ -1,0 +1,90 @@
+notion: ski-conditions
+duree: 5
+accroche: >-
+  Tu remontes vers la plage, un flotteur de flyboard te barre la route et une ligne de
+  bouées jaunes court le long du rivage. Ces bouées ne sont pas décoratives : elles
+  découpent une zone où tout est réglementé.
+etapes:
+  - titre: La limite des 300 mètres est faite de bouées sphériques
+    texte: >-
+      La limite de la bande littorale des 300 mètres, comme les zones et les chenaux créés
+      en deçà, est matérialisée par des bouées qui portent les caractères des marques
+      spéciales : jaunes.
+
+      Sur la limite extérieure, elles sont sphériques, toutes de mêmes dimensions, d’un
+      diamètre d’au moins 0,80 mètre, et mouillées tous les 200 mètres environ. Elles sont
+      dépourvues de voyant.
+  - titre: Le chenal traversier se lit en accédant au rivage
+    texte: >-
+      Un chenal traversier permet de rejoindre le rivage sans couper la zone de baignade.
+      Ses bouées sont cylindriques à bâbord et coniques à tribord, en accédant au rivage.
+
+      Les deux bouées les plus au large font 0,80 mètre de diamètre, les suivantes de 0,40
+      à 0,60 mètre. Elles se resserrent en approchant : 50 mètres d’intervalle jusqu’à 150
+      mètres du rivage, 25 mètres ensuite, 10 mètres à moins de 50 mètres du bord.
+  - titre: Une bouée sphérique entre deux chenaux
+    texte: >-
+      Quand deux chenaux sont contigus, les bouées de leur limite commune sont sphériques.
+      La sphère te dit que tu es sur une limite, jamais de quel côté passer.
+
+      Les zones réglementées à l’intérieur de la bande sont elles aussi bornées par des
+      sphères, d’au moins 0,40 mètre, plus rapprochées quand elles sont plus petites. Une
+      zone de baignade peut être marquée par de simples sphères de 0,20 mètre reliées par
+      un filin flottant, espacées de 5 à 10 mètres.
+  - titre: Le pictogramme dit permis ou interdit
+    texte: >-
+      Une bouée peut porter un pictogramme qui annonce la réglementation de la zone. Deux
+      formes seulement, et la couleur de fond suffit à les séparer.
+    liste:
+      - "Figure blanche sur fond bleu : l’activité est autorisée"
+      - "Figure noire sur fond blanc bordé et barré de rouge : l’activité est interdite"
+  - titre: Le flyboard navigue de jour, à 2 milles, en zone dégagée
+    texte: >-
+      L’engin à sustentation hydropropulsé effectue une navigation diurne, à une distance
+      d’un abri qui n’excède pas 2 milles, dans des zones dégagées de tout obstacle
+      dangereux pour l’utilisateur.
+
+      Son utilisateur est titulaire du permis plaisance option côtière, ou il est
+      accompagné par un titulaire de ce permis. L’engin et son utilisateur restent soumis
+      au RIPAM : veille visuelle et auditive permanente, et obligation de rester maître de
+      sa manœuvre.
+  - titre: Combinaison, flottabilité, casque en permanence
+    texte: >-
+      L’utilisateur porte en permanence une combinaison, une aide à la flottabilité d’au
+      moins 50 N adaptée à sa morphologie, et un casque adapté à la pratique. Le moyen de
+      repérage lumineux, étanche et d’au moins 6 heures d’autonomie, n’est exigé que
+      lorsqu’il navigue seul.
+
+      L’engin porte un moyen de largage rapide, pour que l’utilisateur ne reste pas
+      solidaire de lui. Le flotteur s’arrête à distance et dès que la liaison se rompt. Et
+      pendant l’utilisation, l’élément support arbore le pavillon « Alpha », d’au moins
+      0,50 mètre de guindant, visible sur tout l’horizon.
+piege: >-
+  Le sens du chenal traversier. Le texte le décrit en accédant au rivage : cylindrique à
+  bâbord, conique à tribord quand tu vas vers la plage. Le réflexe pris sur un chenal de
+  port, qui se lit en venant du large, donne ici la réponse inverse.
+retenir:
+  - "Limite des 300 mètres : bouées jaunes sphériques, 0,80 mètre au moins, tous les 200 mètres, sans voyant."
+  - "Chenal traversier : cylindrique à bâbord, conique à tribord, en accédant au rivage."
+  - "Pictogramme bleu à figure blanche : autorisé. Figure noire barrée de rouge : interdit."
+  - "Engin hydropropulsé : de jour, 2 milles d’un abri, permis côtier, combinaison, 50 N et casque."
+  - "Pavillon « Alpha » de 0,50 mètre sur le flotteur pendant l’utilisation."
+sources:
+  - texte: Arrêté du 27 mars 1991, article 1
+    ref: arrete-1991-03-27
+    fichier: article-1
+  - texte: Arrêté du 27 mars 1991, article 2
+    ref: arrete-1991-03-27
+    fichier: article-2
+  - texte: Arrêté du 27 mars 1991, annexe I
+    ref: arrete-1991-03-27
+    fichier: article-annexe-i
+  - texte: Arrêté du 27 mars 1991, annexe II
+    ref: arrete-1991-03-27
+    fichier: article-annexe-ii
+  - texte: Division 240, article 240-2.13
+    ref: division-240
+    fichier: article-240-2-13
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

@@ -1,0 +1,63 @@
+notion: meteo-beaufort
+duree: 4
+accroche: >-
+  Le CROSS annonce « force 6 » sur ta zone. Ce chiffre n’est pas une note sur 12 : c’est
+  une vitesse de vent, et tu dois savoir laquelle sans réfléchir.
+etapes:
+  - titre: Beaufort mesure le vent moyen, pas les rafales
+    texte: >-
+      Le degré Beaufort décrit le vent moyen, pris sur dix minutes, à dix mètres au-dessus
+      de la surface. Il ne dit rien de l’état de la mer, qui se note à part, ni des
+      rafales.
+
+      Les rafales dépassent couramment le vent moyen d’un tiers. Un force 5 annoncé, c’est
+      un force 5 à tenir avec des pointes de l’ordre du force 6.
+  - titre: De 0 à 6, la brise monte
+    texte: >-
+      Les six premiers degrés couvrent la plaisance ordinaire. Apprends le nom et les
+      nœuds ensemble, le bulletin donne parfois l’un, parfois l’autre.
+    liste:
+      - "0, calme : moins de 1 nœud"
+      - "1, très légère brise : 1 à 3 nœuds"
+      - "2, légère brise : 4 à 6 nœuds"
+      - "3, petite brise : 7 à 10 nœuds"
+      - "4, jolie brise : 11 à 16 nœuds"
+      - "5, bonne brise : 17 à 21 nœuds"
+      - "6, vent frais : 22 à 27 nœuds"
+  - titre: De 7 à 12, on rentre
+    texte: >-
+      À partir de 7, le vent porte un nom qui sert aussi de nom d’avis. Les trois à retenir
+      pour la plaisance côtière sont 7, 8 et 10.
+    liste:
+      - "7, grand frais : 28 à 33 nœuds"
+      - "8, coup de vent : 34 à 40 nœuds"
+      - "9, fort coup de vent : 41 à 47 nœuds"
+      - "10, tempête : 48 à 55 nœuds"
+      - "11, violente tempête : 56 à 63 nœuds"
+      - "12, ouragan : 64 nœuds et plus"
+  - titre: L’avis porte le nom de la force annoncée
+    texte: >-
+      Météo-France diffuse un bulletin météorologique spécial dès qu’un vent de force 7
+      au moins est attendu ou observé. Le nom de l’avis suit la force : avis de grand
+      frais à partir de 7, de coup de vent à partir de 8, de fort coup de vent à 9, de
+      tempête à 10, de violente tempête à 11, d’ouragan à 12.
+
+      Entendre « avis de coup de vent », c’est donc entendre « 34 nœuds au moins ». La
+      sortie en plaisance côtière n’est plus raisonnable.
+piege: >-
+  Le vent frais et le grand frais se ressemblent à l’oreille et se suivent sur l’échelle.
+  Le vent frais est la force 6, 22 à 27 nœuds, sans avis. Le grand frais est la force 7,
+  28 à 33 nœuds, et c’est le premier degré qui déclenche un BMS. Un degré d’écart, cinq
+  nœuds, et une navigation qui change de nature.
+retenir:
+  - "6 vent frais, 22 à 27 nœuds. 7 grand frais, 28 à 33. 8 coup de vent, 34 à 40. 10 tempête, 48 à 55."
+  - Beaufort mesure un vent moyen sur dix minutes à dix mètres, jamais les rafales.
+  - "Les rafales dépassent le vent moyen d’un tiers."
+  - "L’avis commence à force 7 et porte le nom de la force annoncée."
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

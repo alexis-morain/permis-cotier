@@ -1,0 +1,45 @@
+notion: env-antisalissures
+duree: 3
+accroche: >-
+  Fin de saison, la coque est couverte d’algues et de coquillages. Tu la sors, tu la
+  ponces, tu la repeins. C’est le moment où l’antisalissure part ailleurs que sur la
+  coque.
+etapes:
+  - titre: Une antisalissure travaille en relâchant ses produits
+    texte: >-
+      Une peinture antisalissure empêche les organismes de se fixer sur la carène en
+      libérant lentement les substances qu’elle contient. Ces substances agissent sur le
+      vivant, c’est leur raison d’être. Elles ne font pas le tri entre ce qui se fixe sur
+      ta coque et le reste.
+  - titre: Poncer au bord de l’eau, c’est rejeter indirectement
+    texte: >-
+      Le code de l’environnement punit de 100 000 euros d’amende le fait de jeter, de
+      déverser ou de laisser écouler, directement ou indirectement, en mer des substances
+      nuisibles pour la conservation ou la reproduction des animaux et des végétaux marins.
+
+      Le mot qui compte ici est « indirectement ». Une poussière de ponçage et une eau de
+      rinçage qui rejoignent la mer par la cale ou le caniveau sont un rejet, même si tu
+      n’as rien versé par-dessus bord.
+  - titre: Le carénage se fait sur une aire qui récupère tout
+    texte: >-
+      La conséquence pratique est simple : on carène à terre, sur une aire équipée qui
+      récupère les eaux de lavage et les résidus de peinture. Restes de pots, chiffons et
+      papiers abrasifs suivent le même chemin que les huiles usagées, vers les bacs du port.
+piege: >-
+  Le piège est de croire que le rinçage à l’eau claire d’une coque fraîchement poncée est
+  neutre parce qu’on n’a versé aucun produit. Ce qui part avec l’eau de rinçage, ce sont
+  les particules de peinture, et le texte vise le rejet indirect autant que le rejet direct.
+retenir:
+  - Une antisalissure agit en libérant des substances toxiques pour le vivant.
+  - "Laisser écouler ces substances en mer, même indirectement : 100 000 euros d’amende."
+  - Carénage sur aire équipée, résidus et eaux de lavage récupérés à terre.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+    fichier: article-l218-73
+  - texte: Arrêté du 28 septembre 2007, article 1
+    ref: arrete-2007-09-28
+    fichier: article-1
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

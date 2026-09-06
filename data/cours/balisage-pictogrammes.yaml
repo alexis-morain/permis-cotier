@@ -1,0 +1,58 @@
+notion: balisage-pictogrammes
+duree: 3
+accroche: >-
+  Une bouée jaune à l’entrée d’une baie, et sur son flanc un petit dessin : un plongeur,
+  un skieur, un jet. Le dessin te dit de quelle activité on parle. Ce sont ses couleurs
+  qui te disent si elle est permise ou défendue.
+etapes:
+  - titre: Deux codes, et deux seulement
+    texte: >-
+      Un pictogramme traduit l’autorisation ou l’interdiction d’une activité. Le règlement
+      n’en connaît que deux formes.
+
+      L’autorisation se lit à une figure blanche sur fond bleu. L’interdiction se lit à
+      une figure noire sur fond blanc, bordé et barré de rouge.
+    liste:
+      - "Figure blanche sur fond bleu : l’activité est autorisée."
+      - "Figure noire sur fond blanc bordé et barré de rouge : l’activité est interdite."
+  - titre: La figure nomme l’activité, le fond tranche
+    texte: >-
+      Lis le pictogramme en deux temps. La figure au centre désigne l’activité concernée,
+      la baignade, la plongée, le ski nautique, un engin à moteur. Le fond et le liséré
+      disent ce que la réglementation en fait.
+
+      Un même dessin change donc de sens selon ses couleurs. Le bleu ouvre, le rouge barré
+      ferme.
+  - titre: Ils sont posés sur le balisage du littoral
+    texte: >-
+      Ces pictogrammes appartiennent au balisage de la bande littorale des 300 mètres. Les
+      bouées qui matérialisent la limite de cette bande, ainsi que celles des zones et des
+      chenaux réglementés créés en deçà, peuvent porter un pictogramme faisant ressortir
+      la nature de la réglementation applicable.
+
+      Ces bouées présentent les caractères des marques spéciales et sont dépourvues de
+      voyant. Le pictogramme est donc la seule chose qui te renseigne sur l’activité
+      réglementée dans la zone.
+piege: >-
+  Le réflexe associe un panneau à une contrainte, et fait répondre « interdit » devant un
+  pictogramme bleu. C’est l’inverse : le fond bleu à figure blanche est le signe de
+  l’autorisation. L’interdiction, elle, se reconnaît toujours au rouge qui borde et barre
+  un fond blanc.
+retenir:
+  - "Figure blanche sur fond bleu : activité autorisée."
+  - "Figure noire sur fond blanc bordé et barré de rouge : activité interdite."
+  - La figure désigne l’activité, les couleurs disent si elle est permise.
+  - "Les bouées porteuses sont des marques spéciales, sans voyant, sur la bande des 300 mètres."
+sources:
+  - texte: Arrêté du 27 mars 1991, annexe II, paragraphe 1
+    ref: arrete-1991-03-27
+    fichier: article-annexe-ii
+  - texte: Arrêté du 27 mars 1991, article 3
+    ref: arrete-1991-03-27
+    fichier: article-3
+  - texte: Arrêté du 27 mars 1991, article 1er
+    ref: arrete-1991-03-27
+    fichier: article-1
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

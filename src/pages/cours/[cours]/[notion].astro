@@ -1,25 +1,44 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Lecon from '../../components/Lecon.tsx';
-import { leconsDuParcours, leconsDuChapitre, type Lecon as LeconDuParcours } from '../../lib/parcours';
-import { leconDeLaNotion } from '../../lib/lecons';
-import { themeParCode } from '../../lib/themes';
-import { SITE, ressource } from '../../lib/seo';
+import Base from '../../../layouts/Base.astro';
+import Lecon, { type Suite } from '../../../components/Lecon.tsx';
+import {
+  leconsDuParcours,
+  leconsDuCours,
+  coursSuivant,
+  cheminCours,
+  type Lecon as LeconDuParcours,
+} from '../../../lib/parcours';
+import { leconDeLaNotion } from '../../../lib/lecons';
+import { themeParCode } from '../../../lib/themes';
+import { SITE, ressource } from '../../../lib/seo';
 
 export async function getStaticPaths() {
-  return leconsDuParcours().map((lecon) => ({ params: { code: lecon.notion.code }, props: { lecon } }));
+  return leconsDuParcours().map((lecon) => ({
+    params: { cours: lecon.cours.code, notion: lecon.notion.code },
+    props: { lecon },
+  }));
 }
 
 const { lecon } = Astro.props as { lecon: LeconDuParcours };
-const { notion, chapitre } = lecon;
+const { notion, cours } = lecon;
 const affichable = await leconDeLaNotion(notion);
 const theme = themeParCode(notion.theme);
 const nomTheme = theme?.nom ?? notion.theme;
-const chemin = `/cours/${notion.code}`;
+const chemin = lecon.chemin;
 const base = Astro.site ?? SITE.domaine;
 
-const duChapitre = leconsDuChapitre(chapitre.code);
-const suivante = leconsDuParcours()[lecon.rang];
+const duCours = leconsDuCours(cours.code);
+const apres = leconsDuParcours()[lecon.rang];
+
+// Ce qui vient après : la leçon suivante tant qu'on est dans le cours, puis
+// le cours d'après. La dernière leçon du parcours ne mène nulle part.
+let suite: Suite | undefined;
+if (apres && apres.cours.code === cours.code) {
+  suite = { type: 'lecon', chemin: apres.chemin, nom: apres.notion.nom };
+} else {
+  const suivant = coursSuivant(cours.code);
+  if (suivant) suite = { type: 'cours', chemin: cheminCours(suivant.code), titre: suivant.titre };
+}
 
 // Une leçon courte n'est que le résumé de sa fiche : elle se joue, elle ne
 // s'indexe pas, la fiche de notion est déjà là pour ça.
@@ -33,7 +52,7 @@ const description = affichable.accroche ?? notion.resume;
   indexable={indexable}
   miettes={[
     { nom: 'Cours', chemin: '/cours' },
-    { nom: chapitre.titre, chemin: `/cours#${chapitre.code}` },
+    { nom: cours.titre, chemin: cheminCours(cours.code) },
     { nom: notion.nom, chemin },
   ]}
   jsonLd={
@@ -59,16 +78,16 @@ const description = affichable.accroche ?? notion.resume;
   <script is:inline>document.documentElement.classList.add('js');</script>
 
   <article class="page page--etroite" style="padding-block:2.5rem 0">
-    <p class="chapitre"><a href="/cours">Cours</a></p>
+    <p class="chapitre"><a href={cheminCours(cours.code)}>{cours.titre}</a></p>
     <h1>{notion.nom}</h1>
 
     <Lecon
       client:load
       lecon={affichable}
-      chapitre={{ code: chapitre.code, titre: chapitre.titre }}
-      rang={lecon.rangDansChapitre}
-      total={duChapitre.length}
-      suivante={suivante ? { code: suivante.notion.code, nom: suivante.notion.nom } : undefined}
+      cours={{ code: cours.code, titre: cours.titre, chemin: cheminCours(cours.code) }}
+      rang={lecon.rangDansCours}
+      total={duCours.length}
+      suite={suite}
       theme={{ code: notion.theme, nom: nomTheme }}
     />
   </article>
@@ -105,6 +124,8 @@ const description = affichable.accroche ?? notion.resume;
     )}
     <p class="discret origine__liens">
       Programme de l’épreuve, arrêté du 28 septembre 2007, art. 1er § 1.2 : « {notion.ancrage} ».
+      Leçon {lecon.rangDansCours} sur {duCours.length} du cours
+      « <a href={cheminCours(cours.code)}>{cours.titre}</a> ».
       Thème <a href={`/theme/${notion.theme}`}>{nomTheme.toLowerCase()}</a>,
       fiche <a href={`/notion/${notion.code}`}>{notion.nom.toLowerCase()}</a>.
     </p>

@@ -1,0 +1,67 @@
+notion: meteo-facteurs
+duree: 5
+accroche: >-
+  Le bulletin annonce force 4 sur ta zone. À 15 h, devant le cap, tu en trouves le double.
+  Le bulletin ne mentait pas : il décrit une zone entière, et trois effets locaux se
+  superposent à ce qu’il annonce.
+etapes:
+  - titre: Le vent va des hautes pressions vers les basses
+    texte: >-
+      Le vent général vient de la répartition des pressions. Il souffle des hautes
+      pressions vers les basses, d’autant plus fort que les isobares sont resserrés sur
+      la carte. Des isobares espacés annoncent un vent faible.
+
+      Une pression qui baisse vite annonce un renforcement.
+  - titre: Autour d’une dépression, le vent tourne à l’envers des aiguilles
+    texte: >-
+      Dans l’hémisphère nord, le vent tourne dans le sens inverse des aiguilles d’une
+      montre autour d’une dépression, et dans le sens des aiguilles autour d’un
+      anticyclone.
+  - titre: La brise de mer s’établit en début d’après-midi
+    texte: >-
+      Le jour, la terre chauffe plus vite que la mer. L’air monte au-dessus du rivage et
+      l’air marin vient le remplacer : la brise de mer s’établit en début d’après-midi et
+      souffle de la mer vers la terre.
+
+      Elle peut ajouter deux à trois degrés Beaufort à un vent général faible. C’est elle
+      qui fait les après-midi ventés là où le matin était calme. La nuit, le mécanisme
+      s’inverse et donne la brise de terre, plus faible, en fin de nuit.
+  - titre: Le relief accélère le vent
+    texte: >-
+      Au débouché d’une vallée, à la pointe d’un cap, au pied d’une falaise, le vent se
+      renforce et change de direction sur quelques centaines de mètres. C’est l’effet de
+      site.
+
+      L’inverse existe aussi : sous une côte au vent de terre, on trouve une zone abritée
+      où la mer reste plate et le vent tombe. Cette accalmie ne dit rien de ce qui attend
+      au large.
+  - titre: Les rafales dépassent le vent moyen d’un tiers
+    texte: >-
+      Le degré Beaufort annoncé décrit un vent moyen. Les rafales le dépassent couramment
+      d’un tiers, davantage sous un grain. Un force 5 annoncé se prépare avec des pointes
+      de l’ordre du force 6.
+  - titre: La brume vient d’un air doux sur une mer froide
+    texte: >-
+      La brume et le brouillard de mer se forment quand de l’air doux et humide passe
+      au-dessus d’une mer plus froide. Ils s’installent par vent faible, souvent au petit
+      matin ou au retour d’une brise de mer, et se lèvent aussi vite qu’ils sont venus.
+
+      La visibilité est l’une des quatre rubriques du bulletin de côte, avec le vent, la
+      mer et le temps. C’est celle qu’on néglige le plus.
+piege: >-
+  Se fier au calme du matin sous la côte pour juger l’après-midi et le large. La zone
+  abritée sous une côte au vent de terre et la brise de mer qui monte vers 14 h sont deux
+  raisons distinctes de trouver, quelques heures et quelques milles plus loin, un vent
+  sans rapport avec celui du mouillage.
+retenir:
+  - Isobares resserrés, vent fort. Pression qui baisse vite, renforcement.
+  - "Hémisphère nord : sens inverse des aiguilles autour d’une dépression, sens des aiguilles autour d’un anticyclone."
+  - "Brise de mer en début d’après-midi, de la mer vers la terre. Brise de terre en fin de nuit, plus faible."
+  - "Effet de site aux caps et aux vallées, rafales à un tiers au-dessus du vent moyen."
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

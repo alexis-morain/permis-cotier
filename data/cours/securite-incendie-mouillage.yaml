@@ -1,0 +1,67 @@
+notion: securite-incendie-mouillage
+duree: 4
+accroche: >-
+  Deux lignes de l’armement basique se ressemblent peu et se retiennent mal : l’extincteur
+  et la ligne de mouillage. La première renvoie au manuel du bateau, la seconde a ses
+  dispensés.
+etapes:
+  - titre: Le manuel du propriétaire d’abord, l’annexe à défaut
+    texte: >-
+      L’armement basique impose un ou plusieurs extincteurs portatifs d’incendie. Le type
+      d’extincteur, son emplacement et sa signalisation sont définis par le manuel du
+      propriétaire ou, à défaut, par l’annexe 240-A3 de la division 240.
+
+      L’ordre compte. À bord d’un navire marqué CE, les extincteurs sont installés selon
+      les préconisations du fabricant reprises dans le manuel. L’annexe ne prend le relais
+      que si le manuel ne peut pas être fourni, ou si le navire est exclu du marquage CE.
+  - titre: Ce que l’annexe exige des extincteurs
+    texte: >-
+      Les extincteurs sont marqués « barre à roue », « MMF » ou « NF EN 3 ». Leur durée de
+      vie et la périodicité de leurs contrôles sont fixées par leur fabricant.
+
+      Deux interdits chiffrés tombent souvent à l’examen. Aucun agent extincteur contenant
+      du Halon 1211, 1301, 2402 ou du perfluorocarbone n’est autorisé. Et la capacité d’un
+      extincteur portatif au dioxyde de carbone ne peut pas dépasser 2 kg.
+  - titre: Accessible tout de suite, et signalé
+    texte: >-
+      Chaque extincteur portatif doit être immédiatement et facilement accessible. Il peut
+      être rangé dans un placard ou un autre espace clos ou protégé, mais la porte porte
+      alors le symbole approprié.
+
+      Les emplacements du matériel de lutte contre l’incendie sont signalés par des
+      pictogrammes. L’extincteur au CO2 ne se place que dans un local d’habitation
+      contenant des équipements électriques sous tension ou des liquides inflammables, et
+      jamais plus d’un par espace habitable.
+  - titre: Une ligne de mouillage dès l’armement basique
+    texte: >-
+      La ligne de mouillage fait partie du matériel basique, donc de toute navigation, même
+      à 300 mètres du bord. Elle est appropriée au navire et à la zone de navigation :
+      c’est le fond et la profondeur du coin qui commandent sa longueur, pas une valeur
+      unique du texte.
+  - titre: Trois dispensés, et eux seuls
+    texte: >-
+      Sous la responsabilité du chef de bord, la ligne de mouillage n’est pas exigée de :
+    liste:
+      - "Les navires à voile dont le déplacement lège est inférieur à 250 kg"
+      - "Les navires motorisés dont le déplacement lège est inférieur à 250 kg et dont la puissance propulsive est inférieure ou égale à 4,5 kW (6,1 ch)"
+      - "Les véhicules nautiques à moteur"
+piege: >-
+  Pour un navire à moteur, le poids seul ne suffit pas. Les deux conditions se cumulent :
+  moins de 250 kg de déplacement lège et 4,5 kW au plus. Un bateau de 200 kg poussé par
+  6 kW doit sa ligne de mouillage. Et la dispense ne tient jamais à la zone de navigation.
+retenir:
+  - "Extincteur : type, emplacement et signalisation viennent du manuel du propriétaire, à défaut de l’annexe 240-A3."
+  - "Halon et perfluorocarbone interdits ; extincteur au CO2 limité à 2 kg."
+  - "Extincteur immédiatement accessible, placard signalé par un pictogramme."
+  - "La ligne de mouillage est due dès l’armement basique, appropriée au navire et à la zone."
+  - "Dispensés : voilier de moins de 250 kg, navire à moteur de moins de 250 kg et 4,5 kW, VNM."
+sources:
+  - texte: Division 240, article 240-2.03
+    ref: division-240
+    fichier: article-240-2-03
+  - texte: Division 240, annexe 240-A3
+    ref: division-240
+    fichier: article-annexe-240-a-3
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
