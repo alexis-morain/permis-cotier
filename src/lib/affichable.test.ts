@@ -15,6 +15,13 @@ import type { Question } from './schema';
  */
 
 /** Une question qui remplit tous les champs, y compris les facultatifs. */
+const source = {
+  texte: 'Arrêté du 30 novembre 2017, annexe I',
+  ref: 'arrete-2017-11-30',
+  url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000036194045',
+  version: '2026-09-04',
+} as const;
+
 const complete: Question = {
   id: 'balisage-0001',
   option: 'cotier',
@@ -31,14 +38,7 @@ const complete: Question = {
   reponses: ['a'],
   explication:
     'En région A, la marque latérale tribord est verte et conique ; on la laisse à tribord en venant du large.',
-  sources: [
-    {
-      texte: 'Arrêté du 30 novembre 2017, annexe I',
-      ref: 'arrete-2017-11-30',
-      url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000036194045',
-      version: '2026-09-04',
-    },
-  ],
+  sources: [{ ...source }],
   meta: { cree_le: '2026-09-01', genere_par: 'claude', relu_par: 'alexis', relu_le: '2026-09-02' },
 };
 
@@ -60,7 +60,11 @@ describe('les champs qui atteignent les écrans', () => {
   });
 
   it('sert tout ce qu’une source décrit, sauf ce qui est retenu exprès', () => {
-    const servis = Object.keys(versAffichable(complete).sources[0]);
+    const [servie] = versAffichable(complete).sources;
+    // `noUncheckedIndexedAccess` : on vérifie qu'il y a bien une source plutôt
+    // que de l'affirmer, sinon un tableau vide passerait pour un succès.
+    expect(servie).toBeDefined();
+    const servis = Object.keys(servie ?? {});
     const attendus = Object.keys(schemaSource.shape).filter(
       (champ) => !CHAMPS_SOURCE_RETENUS.includes(champ),
     );
@@ -78,13 +82,7 @@ describe('les champs qui atteignent les écrans', () => {
       difficulte: complete.difficulte,
       propositions: complete.propositions,
       reponses: complete.reponses,
-      sources: [
-        {
-          texte: complete.sources[0].texte,
-          ref: complete.sources[0].ref,
-          url: complete.sources[0].url,
-        },
-      ],
+      sources: [{ texte: source.texte, ref: source.ref, url: source.url }],
       visuel: complete.visuel,
     });
   });
@@ -99,7 +97,7 @@ describe('les champs qui atteignent les écrans', () => {
     const vue = versAffichable(depouillee);
     expect(vue.notion).toBeUndefined();
     expect(vue.visuel).toBeUndefined();
-    expect(vue.sources[0].url).toBeUndefined();
+    expect(vue.sources[0]?.url).toBeUndefined();
     expect(vue.enonce).toBe(complete.enonce);
   });
 
