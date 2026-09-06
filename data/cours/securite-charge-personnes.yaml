@@ -1,0 +1,44 @@
+notion: securite-charge-personnes
+duree: 3
+accroche: >-
+  Vous êtes sept sur le ponton, le bateau en annonce six. La mer est plate, la sortie
+  dure une heure. La division 240 ne compte pas comme ça.
+etapes:
+  - titre: Le chiffre est écrit sur le bateau
+    texte: >-
+      Le nombre maximal de personnes à bord et la charge maximale recommandée sont
+      indiqués sur la plaque constructeur ou sur la plaque signalétique. Pour les engins
+      qui en sont dépourvus, ces valeurs figurent sur le manuel d’utilisateur.
+
+      Aucun document administratif ne les porte : l’acte de francisation et les pièces
+      d’immatriculation identifient le navire, ils ne disent rien de sa charge.
+  - titre: On ne dépasse jamais, sauf force majeure
+    texte: >-
+      Sauf en cas de force majeure, ces deux valeurs ne sont jamais dépassées en
+      navigation. Le beau temps, la courte distance et l’accord de tout le monde à bord
+      n’ouvrent aucune tolérance.
+
+      Le nombre de personnes et la charge se lisent ensemble : six adultes chargés de
+      matériel peuvent dépasser la charge maximale sans dépasser le nombre.
+  - titre: Les enfants de moins d’1 an ne comptent pas
+    texte: >-
+      Seuls les enfants de moins d’1 an sont écartés du calcul du nombre de personnes à
+      bord. Tous les autres passagers comptent pour une personne, quel que soit leur âge
+      ou leur poids.
+piege: >-
+  Le seuil de 30 kg existe bien dans le même article, et c’est là que la confusion se
+  fait. Il fixe le niveau de l’équipement individuel de flottabilité d’un enfant, pas le
+  décompte des personnes. Un enfant de 20 kg occupe une place sur la plaque ; un
+  nourrisson de 8 mois, non.
+retenir:
+  - "Le nombre maximal et la charge maximale sont sur la plaque, à défaut dans le manuel d’utilisateur."
+  - "Sauf force majeure, ces valeurs ne sont jamais dépassées en navigation."
+  - "Seuls les enfants de moins d’1 an ne comptent pas dans le nombre de personnes."
+  - "30 kg, c’est le seuil de l’équipement de flottabilité, pas celui du décompte."
+sources:
+  - texte: Division 240, article 240-2.01
+    ref: division-240
+    fichier: article-240-2-01
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

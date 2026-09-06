@@ -1,0 +1,63 @@
+notion: meteo-etat-mer
+duree: 4
+accroche: >-
+  Le bulletin annonce « vent force 5, mer agitée ». Deux chiffres, deux échelles
+  différentes. Celle de la mer va de 0 à 9 et parle de la hauteur des vagues.
+etapes:
+  - titre: L’état de la mer se note de 0 à 9
+    texte: >-
+      L’échelle d’état de la mer décrit la hauteur significative des vagues. Elle est
+      indépendante de celle de Beaufort, et le bulletin donne les deux séparément, dans
+      cet ordre : vent, puis mer.
+  - titre: De 0 à 4, la mer de la plaisance côtière
+    texte: >-
+      Ce sont les cinq degrés que tu verras le plus souvent dans un bulletin de côte.
+    liste:
+      - "0, calme vitreuse : 0 m"
+      - "1, calme ridée : 0 à 0,1 m"
+      - "2, belle, vaguelettes : 0,1 à 0,5 m"
+      - "3, peu agitée : 0,5 à 1,25 m"
+      - "4, agitée : 1,25 à 2,5 m"
+  - titre: De 5 à 9, la mer qu’on ne va pas voir
+    texte: >-
+      À partir de la mer forte, les vagues se comptent en mètres et les degrés du haut de
+      l’échelle appartiennent au large.
+    liste:
+      - "5, forte : 2,5 à 4 m"
+      - "6, très forte : 4 à 6 m"
+      - "7, grosse : 6 à 9 m"
+      - "8, très grosse : 9 à 14 m"
+      - "9, énorme : plus de 14 m"
+  - titre: La hauteur annoncée est une moyenne, pas un maximum
+    texte: >-
+      La hauteur significative est la moyenne du tiers des vagues les plus hautes. Elle
+      correspond à peu près à ce qu’estime un observateur exercé.
+
+      Des vagues dépassent donc nettement le chiffre annoncé. Une mer forte donnée à
+      3 mètres en cache de plus grosses.
+  - titre: La mer ne se déduit pas du vent
+    texte: >-
+      À vent égal, la mer n’est pas la même. Quatre choses la font varier : le fetch,
+      c’est-à-dire la distance sur laquelle le vent a soufflé, la durée pendant laquelle
+      il a soufflé, le courant et la profondeur.
+
+      Un force 6 établi depuis deux jours au large ne fait pas la même mer qu’un force 6
+      qui vient de se lever sous la côte. Et dans une passe ou un raz, un courant qui sort
+      face au vent lève une mer courte et creuse, hors de proportion avec la force
+      annoncée.
+piege: >-
+  Lire l’état de la mer comme un degré Beaufort. « Mer 5 » ne veut pas dire « vent
+  force 5 » : c’est une mer forte, de 2,5 à 4 mètres. Les deux échelles n’ont ni le même
+  nombre de degrés, ni la même unité, ni la même signification.
+retenir:
+  - "État de la mer : 0 à 9, hauteur significative des vagues."
+  - "3 peu agitée, 0,5 à 1,25 m. 4 agitée, 1,25 à 2,5 m. 5 forte, 2,5 à 4 m. 6 très forte, 4 à 6 m."
+  - La hauteur significative est la moyenne du tiers des vagues les plus hautes.
+  - "À vent égal, le fetch, la durée, le courant et la profondeur changent la mer."
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

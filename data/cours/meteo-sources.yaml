@@ -1,0 +1,61 @@
+notion: meteo-sources
+duree: 4
+accroche: >-
+  Il est 7 h, tu prépares une sortie à la journée. Avant de charger la glacière, tu vas
+  chercher la météo. Elle se trouve à trois endroits, et elle ne s’arrête pas au départ
+  du port.
+etapes:
+  - titre: Le bulletin de côte est celui qui te concerne
+    texte: >-
+      Météo-France publie trois portées de bulletin marine. Le bulletin côte va jusqu’à
+      20 milles des côtes, le bulletin large jusqu’à 200 milles, le bulletin grand large
+      au-delà.
+
+      L’option côtière te tient à moins de 6 milles d’un abri. Toute ta navigation se
+      passe donc dans la zone du bulletin de côte.
+  - titre: À terre, avant de partir
+    texte: >-
+      Météo-France donne ses bulletins par son site, son application et son répondeur.
+      Le port les affiche aussi : le tableau de la capitainerie et celui du bureau du
+      port portent le bulletin du jour et l’avis en cours.
+
+      C’est le moment où la décision coûte le moins cher. Tu lis, et tu décides à quai.
+  - titre: En mer, le CROSS annonce sur le 16 et diffuse ailleurs
+    texte: >-
+      Les CROSS diffusent les bulletins et les avis sur des canaux VHF de travail. Ils
+      annoncent d’abord sur le canal 16, puis tu bascules sur la voie qu’ils indiquent.
+      Les heures de vacation sont publiées dans les instructions nautiques et les
+      almanachs.
+
+      Le Navtex, en zone couverte, reçoit les mêmes bulletins et les mêmes avis, en texte.
+      Un bulletin météorologique spécial part dès sa parution, sans attendre l’heure de
+      la vacation.
+  - titre: À partir de 6 milles, recevoir la météo à bord est obligatoire
+    texte: >-
+      Le matériel d’armement et de sécurité semi-hauturier, exigé pour une navigation de
+      6 à moins de 60 milles d’un abri, comprend un dispositif permettant de recevoir les
+      prévisions météorologiques marines à bord.
+
+      Le texte ne dit pas lequel. Une VHF qui capte les vacations des CROSS, un récepteur
+      Navtex ou un autre moyen font l’affaire. En deçà de 6 milles, l’armement côtier ne
+      l’exige pas, mais partir sans avoir consulté la météo reste une faute de chef de
+      bord.
+piege: >-
+  Beaucoup croient que le canal 16 diffuse le bulletin en continu. Il ne fait que
+  l’annoncer. Le 16 se garde libre pour l’appel et la détresse, et l’écoute du bulletin
+  se fait sur la voie de travail annoncée.
+retenir:
+  - "Trois portées : côte 20 milles, large 200 milles, grand large au-delà."
+  - "En mer : annonce sur le canal 16, diffusion sur une voie de travail."
+  - "De 6 à moins de 60 milles d’un abri : un dispositif de réception des prévisions à bord."
+  - Un BMS est diffusé dès sa parution, hors des heures de vacation.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+  - texte: Division 240, article 240-2.05
+    ref: division-240
+    fichier: article-240-2-05
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

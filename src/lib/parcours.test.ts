@@ -1,31 +1,59 @@
 import { describe, it, expect } from 'vitest';
-import { CHAPITRES, chapitreDeLaNotion, leconsDuParcours, prochaineLecon, avancement } from './parcours';
-import { CODES_THEMES } from './themes';
+import {
+  COURS,
+  coursParCode,
+  coursDeLaNotion,
+  coursSuivant,
+  leconsDuParcours,
+  leconsDuCours,
+  leconParCode,
+  prochaineLecon,
+  avancement,
+  cheminCours,
+  cheminLecon,
+  themesHorsParcours,
+} from './parcours';
+import { CODES_THEMES, themeParCode } from './themes';
 import { NOTIONS } from './notions';
 
-describe('les chapitres couvrent le programme', () => {
-  it('rangent chaque thème dans un chapitre et un seul', () => {
-    const vus = CHAPITRES.flatMap((c) => c.themes);
-    expect([...vus].sort()).toEqual([...CODES_THEMES].sort());
+describe('les cours couvrent le programme', () => {
+  it('donnent un cours à chaque thème, et un seul', () => {
+    expect([...COURS.map((c) => c.code)].sort()).toEqual([...CODES_THEMES].sort());
+    expect(themesHorsParcours()).toEqual([]);
   });
 
-  it('ont des codes uniques', () => {
-    const codes = CHAPITRES.map((c) => c.code);
-    expect(new Set(codes).size).toBe(codes.length);
+  it('portent le code de leur thème', () => {
+    for (const c of COURS) expect(themeParCode(c.code)).toBeDefined();
+  });
+
+  it('disent ce qu’on saura faire et ce qu’on rate, sans tic d’écriture', () => {
+    for (const c of COURS) {
+      expect(c.savoirFaire.length, c.code).toBeGreaterThanOrEqual(2);
+      expect(c.pieges.length, c.code).toBeGreaterThanOrEqual(2);
+      const texte = [c.titre, c.promesse, c.pourquoi, c.methode, ...c.savoirFaire, ...c.pieges].join('\n');
+      expect(texte, c.code).not.toMatch(/—/);
+      expect(texte, c.code).not.toMatch(/\b(en effet|par ailleurs|en outre|il convient de|il est important de)\b/i);
+    }
+  });
+
+  it('commencent par le balisage : ce qu’on voit avant ce qu’on lit', () => {
+    expect(COURS[0]!.code).toBe('balisage');
   });
 });
 
 describe('les leçons du parcours', () => {
   const lecons = leconsDuParcours();
 
-  it('reprennent chaque notion une fois, dans l’ordre des chapitres puis des thèmes', () => {
+  it('reprennent chaque notion une fois, dans l’ordre des cours', () => {
     expect(lecons.map((l) => l.notion.code).sort()).toEqual(NOTIONS.map((n) => n.code).sort());
-    expect(lecons[0]!.chapitre.code).toBe(CHAPITRES[0]!.code);
-    expect(lecons[0]!.notion.theme).toBe(CHAPITRES[0]!.themes[0]);
+    expect(lecons[0]!.cours.code).toBe(COURS[0]!.code);
   });
 
-  it('numérotent de 1 à n sans trou', () => {
+  it('numérotent de 1 à n sans trou, et de 1 à n dans chaque cours', () => {
     expect(lecons.map((l) => l.rang)).toEqual(lecons.map((_, i) => i + 1));
+    for (const c of COURS) {
+      expect(leconsDuCours(c.code).map((l) => l.rangDansCours)).toEqual(leconsDuCours(c.code).map((_, i) => i + 1));
+    }
   });
 
   it('gardent l’ordre de progression du thème', () => {
@@ -33,9 +61,23 @@ describe('les leçons du parcours', () => {
     expect(balisage).toEqual([...balisage].sort((a, b) => a - b));
   });
 
-  it('retrouvent le chapitre d’une notion', () => {
-    expect(chapitreDeLaNotion('balisage-cardinal')?.code).toBe(CHAPITRES[0]!.code);
-    expect(chapitreDeLaNotion('inconnue')).toBeUndefined();
+  it('ont une adresse sous celle de leur cours', () => {
+    const lecon = leconParCode('balisage-cardinal')!;
+    expect(cheminCours('balisage')).toBe('/cours/balisage');
+    expect(cheminLecon(lecon.notion)).toBe('/cours/balisage/balisage-cardinal');
+    expect(lecon.chemin).toBe('/cours/balisage/balisage-cardinal');
+  });
+
+  it('retrouvent le cours d’une notion', () => {
+    expect(coursDeLaNotion('balisage-cardinal')?.code).toBe('balisage');
+    expect(coursDeLaNotion('inconnue')).toBeUndefined();
+    expect(coursParCode('vhf')?.code).toBe('vhf');
+    expect(coursParCode('inconnu')).toBeUndefined();
+  });
+
+  it('enchaînent les cours dans l’ordre du parcours, sans boucler', () => {
+    expect(coursSuivant(COURS[0]!.code)?.code).toBe(COURS[1]!.code);
+    expect(coursSuivant(COURS[COURS.length - 1]!.code)).toBeUndefined();
   });
 });
 
@@ -55,13 +97,19 @@ describe('la prochaine leçon', () => {
     const faites = Object.fromEntries(lecons.map((l) => [l.notion.code, true]));
     expect(prochaineLecon(faites).notion.code).toBe(lecons[0]!.notion.code);
   });
+
+  it('se borne à un cours quand on le lui demande', () => {
+    const vhf = leconsDuCours('vhf');
+    const faites = { [vhf[0]!.notion.code]: true, [lecons[0]!.notion.code]: true };
+    expect(prochaineLecon(faites, 'vhf').notion.code).toBe(vhf[1]!.notion.code);
+  });
 });
 
-describe('l’avancement d’un chapitre', () => {
-  it('compte les leçons faites sur le total du chapitre', () => {
-    const premier = CHAPITRES[0]!;
-    const codes = leconsDuParcours().filter((l) => l.chapitre.code === premier.code).map((l) => l.notion.code);
-    const faites = { [codes[0]!]: true, [codes[1]!]: true, 'hors-chapitre': true };
+describe('l’avancement d’un cours', () => {
+  it('compte les leçons faites sur le total du cours', () => {
+    const premier = COURS[0]!;
+    const codes = leconsDuCours(premier.code).map((l) => l.notion.code);
+    const faites = { [codes[0]!]: true, [codes[1]!]: true, 'hors-cours': true };
     expect(avancement(premier.code, faites)).toEqual({ faites: 2, total: codes.length });
   });
 });

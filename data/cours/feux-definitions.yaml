@@ -1,0 +1,68 @@
+notion: feux-definitions
+duree: 4
+accroche: >-
+  Deux points lumineux dans la nuit, un blanc et un rouge. Avant de savoir qui doit
+  s’écarter, il faut savoir lire ces feux. Chacun a une couleur, une place à bord et un
+  secteur d’horizon qui lui est propre.
+etapes:
+  - titre: Du coucher au lever du soleil, et dans la brume
+    texte: >-
+      Les règles sur les feux s’observent du coucher au lever du soleil. Pendant cet
+      intervalle, tu ne montres aucun autre feu qui pourrait être confondu avec eux, gêner
+      leur visibilité ou leur caractère distinctif, ou empêcher d’exercer une veille
+      satisfaisante. La guirlande de pont attend le mouillage.
+
+      Les mêmes feux se montrent aussi du lever au coucher du soleil par visibilité
+      réduite, et chaque fois que c’est jugé nécessaire. Les marques, elles, s’observent
+      de jour.
+  - titre: Le feu de tête de mât éclaire 225 degrés vers l’avant
+    texte: >-
+      C’est un feu blanc placé au-dessus de l’axe longitudinal du navire. Il projette une
+      lumière ininterrompue sur un arc de 225 degrés, depuis l’avant jusqu’à 22,5 degrés
+      sur l’arrière du travers de chaque bord.
+
+      Il regarde devant. Quelqu’un placé derrière le navire ne le voit pas.
+  - titre: Vert à tribord, rouge à bâbord, 112,5 degrés chacun
+    texte: >-
+      Les feux de côté sont un feu vert placé à tribord et un feu rouge placé à bâbord.
+      Chacun couvre 112,5 degrés, depuis l’avant jusqu’à 22,5 degrés sur l’arrière du
+      travers de son bord. Les deux réunis balaient les mêmes 225 degrés que le feu de
+      tête de mât.
+
+      À bord d’un navire de longueur inférieure à 20 mètres, ils peuvent être combinés en
+      un seul fanal placé dans l’axe longitudinal.
+  - titre: Le feu de poupe ferme les 135 degrés qui restent
+    texte: >-
+      Feu blanc placé aussi près que possible de la poupe, sur un arc de 135 degrés, soit
+      67,5 degrés de chaque bord à partir de l’arrière.
+
+      225 et 135 font 360 : le feu de tête de mât et le feu de poupe se relaient sans se
+      recouvrir, et les feux de côté doublent le secteur avant en donnant la couleur.
+  - titre: Le feu jaune de même secteur est le feu de remorquage
+    texte: >-
+      Le feu de remorquage est jaune et a les mêmes caractéristiques que le feu de poupe :
+      135 degrés, vers l’arrière. Seule la couleur change.
+
+      Deux définitions restent. Un feu visible sur tout l’horizon projette sa lumière sur
+      360 degrés. Un feu à éclats, au sens de la règle, bat 120 éclats ou plus par minute.
+piege: >-
+  Les quatre secteurs se ressemblent et l’épreuve les échange. 112,5 degrés est celui d’un
+  feu de côté, 225 celui du feu de tête de mât, 135 celui du feu de poupe et du feu de
+  remorquage, 360 celui d’un feu visible sur tout l’horizon. Second échange fréquent : la
+  combinaison des feux de côté en un fanal unique est permise sous 20 mètres, pas sous 12.
+retenir:
+  - "Tête de mât : blanc, 225 degrés, vers l’avant."
+  - "Feux de côté : vert à tribord, rouge à bâbord, 112,5 degrés chacun."
+  - "Poupe : blanc, 135 degrés. Remorquage : jaune, 135 degrés."
+  - "Tout l’horizon : 360 degrés. Feu à éclats : 120 éclats par minute au moins."
+  - Les feux se montrent la nuit, et de jour par visibilité réduite.
+sources:
+  - texte: RIPAM, règle 20
+    ref: decret-77-733
+    fichier: regle-20
+  - texte: RIPAM, règle 21
+    ref: decret-77-733
+    fichier: regle-21
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

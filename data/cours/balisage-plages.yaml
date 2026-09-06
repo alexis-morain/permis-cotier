@@ -15,8 +15,8 @@ etapes:
       traversier, balisé de jaune lui aussi : bouées cylindriques d’un côté, coniques de
       l’autre.
 
-      Le sens de lecture est celui de la sortie. En sortant vers le large, les cylindres
-      sont à bâbord et les cônes à tribord.
+      Le sens de lecture est celui de l’arrivée à la plage. En accédant au rivage, les
+      cylindres sont à bâbord et les cônes à tribord.
   - titre: Dans le chenal, on reste lent
     texte: >-
       Le chenal traversier est dans la bande des 300 mètres : la limite de 5 nœuds s’y
@@ -24,19 +24,20 @@ etapes:
       moteur qui rejoignent le large. Les baigneurs n’y ont pas leur place, et toi tu
       n’as pas la tienne dans la zone de baignade.
 piege: >-
-  Le chenal traversier se lit dans le sens de la sortie, à l’inverse du chenal de port
-  qui se lit en entrant. Cylindre à bâbord en sortant, donc à tribord quand tu rentres à
-  la plage.
+  Le chenal traversier se lit en accédant au rivage, pas en venant du large comme un
+  chenal de port. Cylindre à bâbord en allant vers la plage, donc à tribord quand tu
+  ressors vers le large.
 retenir:
   - "Bande des 300 mètres : bouées jaunes sphériques, vitesse 5 nœuds."
-  - "Chenal traversier : bouées jaunes, cylindres à bâbord et cônes à tribord dans le sens de la sortie."
+  - "Chenal traversier : bouées jaunes, cylindres à bâbord et cônes à tribord en accédant au rivage."
   - On n’entre jamais dans une zone de baignade, on passe par le chenal.
 sources:
+  - texte: Arrêté du 27 mars 1991, annexe I
+    ref: arrete-1991-03-27
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, balisage des plages
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'

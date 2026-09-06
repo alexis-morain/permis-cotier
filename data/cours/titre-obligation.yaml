@@ -1,0 +1,61 @@
+notion: titre-obligation
+duree: 4
+accroche: >-
+  Un bateau au ponton, un moteur derrière, et la question avant de larguer : faut-il un
+  permis pour le conduire ? Deux choses commandent la réponse, la puissance du moteur et
+  l’endroit où tu navigues.
+etapes:
+  - titre: Au-delà de 4,5 kilowatts, le permis est exigé
+    texte: >-
+      La conduite d’un bateau de plaisance à moteur est subordonnée à la possession du
+      permis dès que la puissance motrice dépasse 4,5 kilowatts, soit environ 6 chevaux.
+      En dessous de ce seuil, aucun titre n’est demandé.
+
+      Le seuil porte sur la puissance du moteur. Ni la longueur du bateau, ni le nombre de
+      personnes à bord, ni la distance que tu comptes parcourir n’entrent dans ce calcul.
+  - titre: Bateau de plaisance, et bateau de plaisance à moteur
+    texte: >-
+      Un bateau de plaisance est un bateau destiné au loisir ou au sport, quel que soit son
+      type et son mode de propulsion. Un bateau de plaisance à moteur est un bateau
+      exclusivement motorisé.
+
+      Un bateau à voile y est rattaché quand le rapport entre sa surface de voilure, en
+      mètres carrés, et sa masse, en kilogrammes, tombe sous un coefficient fixé par
+      arrêté. Un flotteur très peu toilé pour son poids relève donc du permis, malgré sa
+      voile.
+  - titre: En mer, le voilier échappe au permis
+    texte: >-
+      En eaux maritimes, la conduite des bateaux de plaisance à voile n’est pas
+      subordonnée à la possession d’un permis, même quand ils portent un moteur auxiliaire.
+
+      La dispense tient au bateau, pas à ce qui le fait avancer à l’instant. Un voilier de
+      10 mètres qui rentre au moteur reste un voilier au sens du texte, quelle que soit la
+      puissance de son auxiliaire.
+  - titre: Sur les rivières et les canaux, ce même voilier redevient soumis
+    texte: >-
+      Sur les rivières et canaux, la conduite d’un bateau de plaisance à voile équipé d’un
+      moteur de plus de 4,5 kilowatts exige un permis valable en eaux intérieures, et
+      correspondant à la longueur du bateau.
+
+      La dispense de voile ne vaut donc qu’en eaux maritimes.
+piege: >-
+  Le piège porte sur le voilier au moteur. Beaucoup répondent que le seuil de 4,5 kilowatts
+  s’applique à tout le monde, et cochent « oui, il faut le permis » pour un voilier
+  auxiliaire en mer. C’est faux : en eaux maritimes, le voilier est dispensé quelle que
+  soit la puissance du moteur. Le même voilier sur un canal, lui, exige un titre eaux
+  intérieures.
+retenir:
+  - "Puissance motrice supérieure à 4,5 kilowatts : le permis est exigé."
+  - "Le seuil porte sur le moteur, pas sur la longueur du bateau ni sur la distance."
+  - "En eaux maritimes, un voilier n’exige pas de permis, même avec son moteur auxiliaire."
+  - "Sur rivières et canaux, un voilier motorisé à plus de 4,5 kilowatts exige un titre eaux intérieures."
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 1
+    ref: decret-2007-1167
+    fichier: article-1
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+    fichier: article-2
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

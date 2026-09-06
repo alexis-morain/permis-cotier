@@ -1,0 +1,53 @@
+notion: feux-portee
+duree: 3
+accroche: >-
+  Tu vois un feu de côté à 1 mille. Le navire qui le porte, lui, est peut-être visible
+  bien plus tôt par son feu de tête de mât. La portée minimale d’un feu dépend de sa
+  fonction et de la longueur du navire qui le montre.
+etapes:
+  - titre: La longueur du navire commande la portée
+    texte: >-
+      La règle fixe des distances minimales de visibilité, pas des distances maximales.
+      Elle range les navires en trois tranches : moins de 12 mètres, de 12 à moins de 50
+      mètres, 50 mètres et plus. Plus le navire est grand, plus ses feux portent loin.
+
+      Dans chaque tranche, le feu de côté est toujours le plus faible.
+  - titre: Sous 12 mètres, le feu de côté porte 1 mille
+    texte: >-
+      C’est la tranche de la plupart des bateaux de plaisance, et celle que l’épreuve
+      demande.
+    liste:
+      - "Feu de tête de mât : 2 milles"
+      - "Feux de côté : 1 mille"
+      - "Feu de poupe : 2 milles"
+      - "Feu de remorquage : 2 milles"
+      - "Feu blanc, rouge, vert ou jaune visible sur tout l’horizon : 2 milles"
+  - titre: De 12 à 50 mètres, les feux de côté passent à 2 milles
+    texte: >-
+      Le feu de tête de mât porte 5 milles, ramenés à 3 milles si le navire mesure moins
+      de 20 mètres. Feux de côté, feu de poupe, feu de remorquage et feux visibles sur
+      tout l’horizon : 2 milles.
+  - titre: À partir de 50 mètres, 6 milles et 3 milles
+    texte: >-
+      Le feu de tête de mât porte 6 milles. Tous les autres feux, côté, poupe, remorquage
+      et feux visibles sur tout l’horizon, portent 3 milles.
+
+      Un cas particulier vient s’ajouter : un navire ou un objet remorqué partiellement
+      submergé et difficile à apercevoir montre un feu blanc visible sur tout l’horizon
+      de 3 milles, quelle que soit sa taille.
+piege: >-
+  Sous 12 mètres, on donne facilement 2 milles à tous les feux du bateau. Le feu de côté
+  est le seul à 1 mille, alors qu’il porte l’information la plus utile, le bord par lequel
+  tu vois l’autre. Un feu de côté vu, c’est déjà un navire proche.
+retenir:
+  - "Moins de 12 mètres : tête de mât 2 milles, côté 1 mille, poupe 2 milles."
+  - "De 12 à 50 mètres : tête de mât 5 milles, 3 milles sous 20 mètres, les autres 2 milles."
+  - "50 mètres et plus : tête de mât 6 milles, les autres 3 milles."
+  - Le feu de côté est toujours le feu qui porte le moins loin.
+sources:
+  - texte: RIPAM, règle 22
+    ref: decret-77-733
+    fichier: regle-22
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

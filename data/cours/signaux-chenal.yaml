@@ -1,0 +1,69 @@
+notion: signaux-chenal
+duree: 4
+accroche: >-
+  Chenal étroit, un navire plus rapide te suit. Il ne peut pas passer sans que tu lui
+  fasses de la place. Avant de doubler, il te le demande au sifflet.
+etapes:
+  - titre: On demande, on accorde, puis on double
+    texte: >-
+      Dans un chenal étroit ou une voie d’accès, quand le dépassement n’est possible que
+      si le navire rattrapé manœuvre, celui qui veut doubler annonce son intention au
+      sifflet. Le rattrapé répond, puis manœuvre pour laisser passer.
+
+      Les signaux ne valent que là, et entre deux navires en vue l’un de l’autre. En mer
+      libre, on double sans rien annoncer.
+  - titre: Deux prolongés, un bref, je te rattrape sur tribord
+    texte: >-
+      Deux sons prolongés groupés en tête annoncent une intention de dépasser. Le nombre
+      de sons brefs qui suit donne le côté.
+
+      Un seul bref après les deux prolongés : « Je compte vous rattraper sur tribord »,
+      c’est-à-dire par ta droite.
+    visuel: sons/depassement-tribord.svg
+    alt: "Deux impulsions sonores tenues, suivies d’une impulsion courte."
+  - titre: Deux prolongés, deux brefs, par bâbord
+    texte: >-
+      Deux sons prolongés suivis de deux sons brefs : « Je compte vous rattraper sur
+      bâbord », par ta gauche.
+
+      Le comptage des brefs est le même que dans les signaux de manœuvre : un pour
+      tribord, deux pour bâbord.
+    visuel: sons/depassement-babord.svg
+    alt: "Deux impulsions sonores tenues, suivies de deux impulsions courtes."
+  - titre: Prolongé, bref, prolongé, bref, d’accord
+    texte: >-
+      Le navire sur le point d’être rattrapé indique son accord par un son prolongé, un
+      son bref, un son prolongé et un son bref, dans cet ordre. Puis il manœuvre pour
+      permettre un dépassement en sécurité.
+
+      Reconnais l’alternance : deux prolongés collés en tête, c’est une demande ; des
+      prolongés et des brefs qui alternent, c’est la réponse.
+    visuel: sons/accord-depassement.svg
+    alt: "Une impulsion tenue, une courte, une tenue, une courte, dans cet ordre."
+  - titre: Pas de signal de refus
+    texte: >-
+      Aucun signal ne dit non. Celui qui est rattrapé et qui doute émet la série rapide
+      d’au moins cinq sons brefs, le signal du doute.
+
+      L’accord ne change rien aux priorités : le navire qui rattrape reste tenu de
+      s’écarter de la route du navire rattrapé jusqu’à ce qu’il l’ait dépassé et
+      complètement paré.
+piege: >-
+  Confondre ces signaux avec ceux de la règle 34 a). Un simple son bref ne veut pas dire
+  « je te double par tribord » : il dit « je viens sur tribord ». Ce sont les deux sons
+  prolongés en tête qui font du signal une demande de dépassement.
+retenir:
+  - "2 prolongés puis 1 bref : je te rattrape sur tribord. 2 prolongés puis 2 brefs : sur bâbord."
+  - "Accord du rattrapé : prolongé, bref, prolongé, bref."
+  - Il n’existe pas de signal de refus ; le doute se dit par au moins 5 sons brefs.
+  - Le navire qui rattrape s’écarte jusqu’à être complètement paré.
+sources:
+  - texte: RIPAM, règle 34
+    ref: decret-77-733
+    fichier: regle-34
+  - texte: RIPAM, règle 9
+    ref: decret-77-733
+    fichier: regle-09
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

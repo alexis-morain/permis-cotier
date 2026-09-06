@@ -1,0 +1,47 @@
+notion: maree-principe
+duree: 3
+accroche: >-
+  Tu laisses ton bateau au ponton le matin, la mer est haute. Tu reviens six heures plus
+  tard, l’eau a baissé de quatre mètres et la vasière est à sec. Le même jour, à la même
+  place.
+etapes:
+  - titre: La Lune et le Soleil tirent l’eau
+    texte: >-
+      La mer est attirée par la Lune, et plus faiblement par le Soleil. Cette attraction
+      la creuse et la gonfle, et sur la Manche et l’Atlantique la mer monte et descend
+      deux fois par jour.
+
+      La différence de hauteur entre une pleine mer et la basse mer qui la suit s’appelle
+      le marnage. C’est lui qui varie d’un jour à l’autre.
+  - titre: Les deux astres alignés donnent la vive-eau
+    texte: >-
+      Autour de la pleine lune et de la nouvelle lune, le Soleil et la Lune tirent dans le
+      même sens. Leurs effets s’ajoutent et le marnage est maximal : c’est la vive-eau.
+
+      La mer monte plus haut et descend plus bas que d’ordinaire, deux fois par mois.
+  - titre: Les deux astres en croix donnent la morte-eau
+    texte: >-
+      Aux quartiers de lune, le Soleil et la Lune tirent en croix. Leurs effets se
+      contrarient et le marnage est minimal : c’est la morte-eau. Elle revient elle aussi
+      deux fois par mois, entre deux vives-eaux.
+  - titre: La Méditerranée est un cas à part
+    texte: >-
+      Le marnage y est de quelques dizaines de centimètres au plus. La marée n’y commande
+      pas la navigation, contrairement à la Manche et à l’Atlantique où elle décide de
+      l’heure d’un passage ou de l’entrée d’un port.
+piege: >-
+  Le candidat associe volontiers la vive-eau à la seule pleine lune, parce qu’une grosse
+  lune fait penser à une grosse marée. La nouvelle lune donne les mêmes vives-eaux : ce
+  qui compte est l’alignement des deux astres, pas la face éclairée de la Lune.
+retenir:
+  - "Le marnage est la différence entre une pleine mer et la basse mer qui la suit."
+  - "Vive-eau : pleine et nouvelle lune, astres alignés, marnage maximal."
+  - "Morte-eau : quartiers de lune, astres en croix, marnage minimal."
+  - "En Méditerranée, le marnage se compte en dizaines de centimètres."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

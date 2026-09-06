@@ -1,0 +1,53 @@
+notion: signaux-portuaires
+duree: 3
+accroche: >-
+  Tu rentres au port, la nuit tombe, et un mât près de la jetée porte trois feux les uns
+  au-dessus des autres. Ce n’est pas du balisage : c’est le port qui te parle.
+etapes:
+  - titre: Trois feux rouges en colonne, passage interdit
+    texte: >-
+      Les signaux de trafic portuaire sont une disposition spéciale de feux de couleurs
+      différentes, qui sert à contrôler les mouvements dans les ports et à leur approche.
+
+      Le message principal se lit sans rien apprendre par cœur : trois feux verticaux
+      rouges, passage interdit. Tu attends au large de l’entrée.
+  - titre: Trois feux verts, passage autorisé sous conditions
+    texte: >-
+      Trois feux verticaux verts signifient « passage autorisé, sous certaines
+      conditions ». Le vert ouvre le passage, il ne le rend pas libre : la veille, la
+      vitesse et les règlements du port continuent de s’appliquer.
+  - titre: Les feux en plus se lisent dans les documents
+    texte: >-
+      Le message principal peut être complété par des signaux auxiliaires qui donnent des
+      informations supplémentaires. Leur compréhension demande les publications nautiques.
+
+      Les ports mettent aussi en place des mesures locales de balisage, souvent couvertes
+      par des règlements particuliers de police. Avant une première entrée dans une zone,
+      tu te renseignes sur ces dispositions locales.
+  - titre: Le même système sur les écluses et les ponts mobiles
+    texte: >-
+      Ce système peut également être utilisé sur des écluses ou des ponts mobiles,
+      lorsqu’aucune autre règle n’entre en conflit avec lui.
+
+      Il reste distinct du balisage maritime : les deux donnent des informations
+      différentes et ne doivent pas être superposés, pour qu’aucune confusion ne soit
+      possible.
+piege: >-
+  Lire les trois feux verts comme un feu vert de carrefour et entrer à la vitesse où l’on
+  arrive. Le texte dit « sous certaines conditions » : ces conditions sont dans les
+  signaux auxiliaires et dans le règlement du port, pas dans la couleur.
+retenir:
+  - "Trois feux verticaux rouges : passage interdit."
+  - "Trois feux verticaux verts : passage autorisé, sous certaines conditions."
+  - Les signaux auxiliaires se lisent dans les publications nautiques et le règlement local.
+  - Le même système sert aussi sur les écluses et les ponts mobiles.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe V, 6.15
+    ref: arrete-2017-11-30
+    fichier: article-annexe-v
+  - texte: Arrêté du 30 novembre 2017, annexe I, 8.7
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

@@ -1,0 +1,58 @@
+notion: conduite-homme-a-la-mer
+duree: 4
+accroche: >-
+  Un équipier passe par-dessus bord. Dans le clapot, une tête disparaît en quelques
+  secondes. Tout ce qui suit sert à ne pas perdre ce point de vue.
+etapes:
+  - titre: Un équipier ne fait plus que la regarder
+    texte: >-
+      Tu cries « homme à la mer » et tu désignes un équipier qui ne quittera plus la
+      personne des yeux, bras tendu vers elle.
+
+      C’est son seul rôle. Il ne manœuvre pas, il ne cherche pas la bouée, il ne parle pas
+      à la VHF. Il montre.
+  - titre: La bouée part tout de suite
+    texte: >-
+      Tu jettes immédiatement la bouée de repérage, même loin de la personne. Elle marque
+      la zone et donne un point flottant visible de loin.
+
+      Puis tu marques la position au GPS, par la fonction MOB si l’appareil en a une.
+  - titre: Revenir en dégageant l’arrière
+    texte: >-
+      Tu manœuvres pour revenir en écartant l’arrière du bateau de la personne. Sous voiles,
+      on abat puis on revient. Au moteur, on vire du côté opposé, pour éloigner l’hélice.
+  - titre: Face au vent, hélice débrayée
+    texte: >-
+      Tu approches face au vent, doucement : le bateau ralentit alors de lui-même et reste
+      manœuvrant. Vent arrière, il se jette sur la personne.
+
+      Tu débrayes l’hélice avant le contact. L’hélice qui tourne est le danger principal de
+      la récupération.
+  - titre: Récupérer sous le vent, à l’horizontale
+    texte: >-
+      La récupération se fait par le côté sous le vent, à l’aide d’un bout, d’une échelle ou
+      d’un palan.
+
+      Une personne épuisée ou en hypothermie ne se hisse pas seule, et se récupère autant
+      que possible à l’horizontale.
+  - titre: Si elle n’est pas retrouvée, MAYDAY
+    texte: >-
+      Si la personne n’est pas retrouvée tout de suite, tu alertes sans attendre. Le message
+      est un MAYDAY, et tu donnes la position du point de chute, pas celle où tu te trouves
+      en parlant.
+piege: >-
+  Approcher vent arrière et récupérer par le tableau arrière, moteur au ralenti. Vent
+  arrière le bateau ne freine pas, et l’arrière est là où tourne l’hélice : c’est
+  exactement la partie du bateau qu’il faut tenir éloignée de la personne.
+retenir:
+  - Un équipier désigné ne quitte plus la personne des yeux, bras tendu.
+  - Bouée jetée tout de suite, position marquée au GPS.
+  - Approche face au vent, hélice débrayée avant le contact.
+  - "Récupération par le côté sous le vent, à l’horizontale. Personne non retrouvée : MAYDAY."
+sources:
+  - texte: Fiche conduite à tenir
+    ref: fiche-conduite-urgence
+    fichier: conduite-a-tenir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

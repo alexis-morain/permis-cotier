@@ -150,3 +150,5 @@ html:not(.js) .lecon__mode { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .ecran--courant { animation: none; }
 }
+
+.fin__cours { font-weight: 600; margin: 0 0 0.5rem; }

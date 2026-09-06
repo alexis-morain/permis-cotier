@@ -1,0 +1,59 @@
+notion: signaux-manoeuvre
+duree: 4
+accroche: >-
+  Tu fais route au moteur. Un navire à moteur, bien visible devant toi, lâche deux coups
+  de sifflet courts. Il ne t’appelle pas : il t’annonce ce qu’il fait de sa barre.
+etapes:
+  - titre: Deux durées de son, et rien d’autre
+    texte: >-
+      Tout le code sonore du RIPAM tient sur deux sons. Le son bref dure environ une
+      seconde. Le son prolongé dure de quatre à six secondes.
+
+      Les signaux de manœuvre n’emploient que le son bref. Ce que tu comptes, c’est le
+      nombre de coups.
+  - titre: Un son bref, je viens sur tribord
+    texte: >-
+      Un seul coup court : celui qui l’émet abat sur sa droite. C’est le premier des
+      trois signaux, et le plus court.
+    visuel: sons/manoeuvre-tribord.svg
+    alt: "Une impulsion sonore courte et isolée, tracée dans le temps."
+  - titre: Deux sons brefs, je viens sur bâbord
+    texte: >-
+      Deux coups courts séparés d’un silence de même ordre : il abat sur sa gauche.
+
+      L’ordre est facile à tenir : un pour tribord, deux pour bâbord, dans l’ordre où on
+      les compte.
+    visuel: sons/manoeuvre-babord.svg
+    alt: "Deux impulsions sonores courtes séparées par un silence de même durée."
+  - titre: Trois sons brefs, je bats en arrière
+    texte: >-
+      Trois coups courts : il inverse sa propulsion. Il ne recule pas forcément encore,
+      il freine ou il va reculer.
+    visuel: sons/manoeuvre-arriere.svg
+    alt: "Trois impulsions sonores courtes émises à la suite."
+  - titre: Trois conditions, sinon le signal n’est pas dû
+    texte: >-
+      Ces signaux sont ceux d’un navire à propulsion mécanique, faisant route, en vue
+      d’un autre navire. Les trois conditions vont ensemble.
+
+      Un voilier qui marche à la voile seule n’y est pas tenu. Un navire au mouillage non
+      plus. Et dans la brume, où l’on ne se voit pas, ce sont d’autres signaux qui
+      s’appliquent.
+piege: >-
+  L’inversion bâbord tribord fait tomber la moitié des candidats : un son bref, c’est
+  tribord, pas bâbord. Autre erreur, croire que ces signaux valent pour tous les navires.
+  Tu vires de bord à la voile en vue d’un autre bateau : tu n’as aucun signal à émettre.
+retenir:
+  - "Un bref : je viens sur tribord. Deux brefs : je viens sur bâbord. Trois brefs : je bats en arrière."
+  - "Le son bref dure environ 1 seconde, le son prolongé de 4 à 6 secondes."
+  - "Signaux du navire à moteur faisant route, en vue d’un autre. Pas à la voile seule."
+sources:
+  - texte: RIPAM, règle 32
+    ref: decret-77-733
+    fichier: regle-32
+  - texte: RIPAM, règle 34
+    ref: decret-77-733
+    fichier: regle-34
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
