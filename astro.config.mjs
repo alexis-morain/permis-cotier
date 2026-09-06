@@ -66,8 +66,12 @@ export default defineConfig({
         lang: 'fr',
         start_url: '/',
         display: 'standalone',
-        background_color: '#f2ecdd',
-        theme_color: '#16231f',
+        // Les jetons de la direction artistique, `--brume` et `--marine`. Le
+        // beige et le vert sombre d'avant traînaient encore ici, et c'est la
+        // couleur de l'écran de démarrage : elle serait fausse dès le premier
+        // lancement.
+        background_color: '#f3f6fb',
+        theme_color: '#0b1d3a',
         icons: [
           { src: '/icone-192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icone-512.png', sizes: '512x512', type: 'image/png' },
@@ -78,7 +82,14 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
+        // `json` depuis que la banque est sortie du HTML : sans elle au
+        // precache, /examen ne rendrait plus rien hors ligne. Son nom porte la
+        // version, donc une publication la remplace au lieu de l'empiler.
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
+        // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
+        // c'est le point que l'app iOS interroge pour savoir si sa banque a
+        // vieilli, et le site n'en a aucun usage.
+        globIgnores: ['**/node_modules/**/*', 'banque/derniere.json'],
         navigateFallback: '/',
         cleanupOutdatedCaches: true,
       },
