@@ -41,6 +41,13 @@ l'autre, et le compte ne se remplit que depuis `lepermiscotier.fr` — ni une
 préversion, ni un poste de développement n'y entrent. Chacun peut s'en retirer
 depuis les réglages. Les noms d'événements sont dans `src/lib/mesure.ts`.
 
+Les mots tapés dans la recherche sont comptés, eux aussi : ceux qui ne trouvent
+rien disent quelle leçon écrire ensuite. Le mot part seul, mis en minuscules et
+sans accents, une fois la frappe finie, jamais lettre par lettre. Rien ne part
+s'il ressemble à une adresse électronique, à un lien ou à une suite de six
+chiffres, ni au-delà de soixante signes. La règle est dans `termeMesurable`,
+`src/lib/recherche.ts`, avec ses tests.
+
 ## Le format de l'épreuve
 
 QCM de 40 questions, 5 erreurs admises, bénéfice de 18 mois. Arrêté du

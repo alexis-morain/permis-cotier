@@ -128,6 +128,7 @@ const DEPART = [
     motsDeLaRequete,
     passages,
     preparer,
+    termeMesurable,
     type Entree,
     type EntreePreparee,
     type Genre,
@@ -149,6 +150,13 @@ const DEPART = [
    * loupe, lui, marche partout : il est voulu.
    */
   const ECRANS_DE_JEU = /^\/(examen|revoir)$|^\/entrainement\//;
+
+  /**
+   * Le temps qu'on laisse à la frappe avant de compter le terme. Sans lui,
+   * « c », « ca », « car » et « card » compteraient chacun pour une recherche,
+   * et le tableau ne dirait plus rien.
+   */
+  const ATTENTE_COMPTE = 1500;
 
   /** L'index, chargé une fois, à la première frappe ou au premier survol. */
   let chargement: Promise<EntreePreparee[]> | null = null;
@@ -232,7 +240,12 @@ const DEPART = [
       }
     }
 
-    function ligne(resultat: Resultat, rang: number, mots: readonly string[]): HTMLLIElement {
+    function ligne(
+      resultat: Resultat,
+      rang: number,
+      mots: readonly string[],
+      terme: string | null,
+    ): HTMLLIElement {
       const { entree } = resultat;
       const li = document.createElement('li');
       li.setAttribute('role', 'presentation');
@@ -246,6 +259,9 @@ const DEPART = [
       lien.setAttribute('aria-selected', 'false');
       lien.dataset.mesure = 'recherche-resultat';
       lien.dataset.mesureGenre = entree.genre;
+      // Le terme est repris sur le lien : savoir ce qu'on ouvre sous « feu
+      // vert » vaut mieux que savoir qu'on a ouvert une leçon.
+      if (terme) lien.dataset.mesureTerme = terme;
 
       const genre = document.createElement('span');
       genre.className = 'resultat__genre';
@@ -280,7 +296,8 @@ const DEPART = [
 
     function rendre(mots: readonly string[]): void {
       const cherche = mots.length > 0;
-      liste.replaceChildren(...resultats.map((r, i) => ligne(r, i, mots)));
+      const terme = termeMesurable(champ.value);
+      liste.replaceChildren(...resultats.map((r, i) => ligne(r, i, mots, terme)));
       liste.hidden = resultats.length === 0;
       rien.hidden = !cherche || resultats.length > 0;
       panne.hidden = true;
@@ -333,7 +350,39 @@ const DEPART = [
       rendre(mots);
     }
 
-    champ.addEventListener('input', () => void lancer());
+    // ------------------------------------------------ ce qu'on compte
+
+    let dernierCompte = '';
+    let minuteur: number | undefined;
+
+    /**
+     * Le terme cherché, une fois. Ce qui intéresse n'est pas le clic mais la
+     * recherche elle-même : celle qui ne trouve rien dit quelle question
+     * écrire ensuite, et elle n'aurait jamais été comptée autrement.
+     */
+    function compter(): void {
+      window.clearTimeout(minuteur);
+      const terme = termeMesurable(champ.value);
+      if (!terme || terme === dernierCompte) return;
+      dernierCompte = terme;
+      evenement('recherche-terme', { terme, resultats: resultats.length });
+    }
+
+    function compterQuandLaFrappeSArrete(): void {
+      window.clearTimeout(minuteur);
+      minuteur = window.setTimeout(compter, ATTENTE_COMPTE);
+    }
+
+    // Ouvrir un résultat, fermer la fenêtre ou quitter la page ne doit pas
+    // faire perdre le terme : l'envoi survit au changement de page.
+    liste.addEventListener('click', compter, true);
+    panneau.closest('dialog')?.addEventListener('close', compter);
+    window.addEventListener('pagehide', compter);
+
+    champ.addEventListener('input', () => {
+      compterQuandLaFrappeSArrete();
+      void lancer();
+    });
     champ.addEventListener('focus', () => void index().catch(() => {}));
 
     champ.addEventListener('keydown', (touche) => {
@@ -380,6 +429,7 @@ const DEPART = [
       const demandee = new URLSearchParams(location.search).get('q');
       if (demandee) {
         champ.value = demandee;
+        compterQuandLaFrappeSArrete();
         void lancer();
       }
     }
