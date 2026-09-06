@@ -5,19 +5,28 @@
  *     node scripts/partage.mjs            # écrit public/partage/
  *     node scripts/partage.mjs --verifier # échoue si le fichier livré a dérivé
  *
- * C'est la seule image que voient ceux qui n'ont pas encore ouvert le site :
- * une carte posée sur la table, terre en haut, eau en bas, filet gradué comme
- * une neatline. La palette est celle de `src/styles/global.css`, à la valeur
- * près, pour qu'un lien partagé ressemble à la page qu'il ouvre.
+ * C'est la seule image que voient ceux qui n'ont pas encore ouvert le site.
+ * Elle montre donc la page qu'elle ouvre : la bande marine de l'accueil, sa
+ * ligne de flottaison jaune, le panneau blanc et ses deux grands nombres, et
+ * un bouton à bord plein. Palette et formes sont celles de `global.css` et de
+ * DESIGN.md, à la valeur près.
  *
- * Le nombre de questions est lu dans `data/questions/` à l'exécution : écrit en
- * dur, il aurait vieilli au premier lot.
+ * Le nombre de questions et celui des leçons sont lus sur le disque à
+ * l'exécution : écrits en dur, ils auraient vieilli au premier lot.
  *
- * Une réserve à connaître avant de toucher au dessin : la rastérisation ne voit
- * pas les polices du site, qui ne sont livrées qu'en woff2. Le titre est donc
- * composé dans la pile de sérifs du système, celle-là même que `--serif` cite
- * en repli. Toute mesure de texte est faite à l'œil sur le PNG produit, pas par
- * le code : rallonger une phrase demande de rouvrir l'image.
+ * Deux réserves à connaître avant de toucher au dessin.
+ *
+ * La rastérisation ne voit pas Archivo, qui n'est livrée qu'en woff2 : le
+ * texte est composé dans la pile de replis de `--sans`, donc en Helvetica
+ * Neue. Elle n'a pas d'axe de largeur, et librsvg ignore `textLength` ; la
+ * largeur 125 % du display est donc rendue par une mise à l'échelle
+ * horizontale, `LARGE` ci-dessous, appliquée aux seuls titres et grands
+ * nombres, comme `font-stretch` sur le site. Helvetica n'ayant pas de graisse
+ * au-delà du gras, 800 y rend comme 700.
+ *
+ * Aucune mesure de texte n'est faite par le code : les retours à la ligne
+ * sont écrits à la main et jugés sur le PNG produit. Rallonger une phrase
+ * demande de rouvrir l'image.
  */
 import { mkdirSync, readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -26,6 +35,7 @@ import sharp from 'sharp';
 
 const RACINE = dirname(dirname(fileURLToPath(import.meta.url)));
 const QUESTIONS = join(RACINE, 'data', 'questions');
+const COURS = join(RACINE, 'data', 'cours');
 const SORTIE = join(RACINE, 'public', 'partage');
 const FICHIER = join(SORTIE, 'le-permis-cotier.png');
 
@@ -33,19 +43,23 @@ const LARGEUR = 1200;
 const HAUTEUR = 630;
 
 // Reprises telles quelles de `:root` dans src/styles/global.css.
-const PAPIER = '#f2ecdd';
-const EAU = '#cddfe2';
-const EAU_PROFONDE = '#a8c4c9';
-const ENCRE = '#16231f';
-const ENCRE_DOUCE = '#4a5a54';
-const MAGENTA = '#b0005c';
-const FILET = '#b9ae95';
+const MARINE = '#0b1d3a';
+const BLANC = '#ffffff';
+const JAUNE = '#ffc72c';
+const JAUNE_SOMBRE = '#c99a00';
+const BANDE_DOUX = '#bcc9df';
+const TEXTE_DOUX = '#4c5c78';
+const FILET = '#cfd8e6';
 
-/** La pile de sérifs de `--serif`, sans la variable, qui n'existe pas ici. */
-const SERIF = "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif";
-/** Celle de `--sans`. Archivo n'est pas installée, Helvetica prend le relais.
- */
+/** La pile de replis de `--sans` : Archivo n'est pas installée. */
 const SANS = "'Helvetica Neue', Helvetica, Arial, sans-serif";
+/** Ce que `--large`, la largeur 125 % d'Archivo, devient ici. */
+const LARGE = 1.08;
+/** `--rayon` et `--bord`, en pixels. */
+const RAYON = 16;
+const BORD = 3;
+/** La ligne de flottaison sous la bande d'accueil : 6 px de jaune. */
+const FLOTTAISON = 6;
 
 /**
  * Compte les questions publiées. On lit le statut à la ligne plutôt que de
@@ -66,82 +80,110 @@ function questionsPubliees() {
   return total;
 }
 
+/** Les leçons écrites : un fichier par notion, comme le veut `lecons.ts`. */
+function leconsEcrites() {
+  return readdirSync(COURS).filter((f) => f.endsWith('.yaml')).length;
+}
+
 function versionBanque() {
   return readFileSync(join(RACINE, 'data', 'VERSION'), 'utf-8').trim();
 }
 
 /**
- * La graduation d'une carte marine : des segments alternés, noirs et blancs,
- * le long du cadre. C'est ce qui fait reconnaître une carte avant même d'avoir
- * lu quoi que ce soit.
+ * Le display : Archivo étendue et très grasse sur le site, ici Helvetica
+ * grasse élargie à la main. L'échelle porte sur le texte seul, jamais sur la
+ * géométrie autour, qui garderait sinon des épaisseurs fausses.
  */
-function graduation(x, y, longueur, pas, horizontale) {
-  const traits = [];
-  for (let i = 0; i * pas < longueur; i += 1) {
-    if (i % 2 === 1) continue;
-    const debut = i * pas;
-    const fin = Math.min(debut + pas, longueur);
-    traits.push(
-      horizontale
-        ? `<rect x="${x + debut}" y="${y}" width="${fin - debut}" height="4" fill="${ENCRE}"/>`
-        : `<rect x="${x}" y="${y + debut}" width="4" height="${fin - debut}" fill="${ENCRE}"/>`,
-    );
-  }
-  return traits.join('');
+function display(x, y, taille, contenu, remplissage) {
+  return `<text transform="translate(${x} ${y}) scale(${LARGE} 1)" x="0" y="0"
+        font-family="${SANS}" font-size="${taille}" font-weight="700"
+        letter-spacing="${(-0.01 * taille).toFixed(2)}" fill="${remplissage}">${contenu}</text>`;
 }
 
-function composer({ questions, themes }) {
-  // Le cadre : une réserve claire, un filet gradué, une marge intérieure.
-  const M = 34; // marge du cadre
-  const cadre = { x: M, y: M, l: LARGEUR - 2 * M, h: HAUTEUR - 2 * M };
-  // Le trait de côte : au-dessus la terre en papier, au-dessous l'eau.
-  const cote = 430;
+/** Le corps : largeur normale, comme sur le site. */
+function corps(x, y, taille, contenu, remplissage, graisse = 400) {
+  return `<text x="${x}" y="${y}" font-family="${SANS}" font-size="${taille}"
+        font-weight="${graisse}" fill="${remplissage}">${contenu}</text>`;
+}
+
+/**
+ * Le glyphe de la marque, repris de `Base.astro` : le cône d'une cardinale
+ * sur sa tourelle. Sur la bande marine il s'inverse, exactement comme le
+ * fait le site en apparence sombre.
+ */
+function marque(x, y, cote) {
+  return `<g transform="translate(${x} ${y}) scale(${cote / 32})">
+    <rect width="32" height="32" rx="8" fill="${JAUNE}"/>
+    <path d="M16 6.5 L25.5 21.5 H6.5 Z" fill="${MARINE}"/>
+    <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" fill="${MARINE}"/>
+  </g>`;
+}
+
+/**
+ * Le bouton d'action, et la seule profondeur de la charte : un bord plein de
+ * 3 px sous la forme, pas une ombre portée. Il s'obtient en posant la même
+ * forme trois pixels plus bas, dans le jaune sombre.
+ */
+function bouton(x, y, l, h, libelle) {
+  return `<rect x="${x}" y="${y + BORD}" width="${l}" height="${h}" rx="${RAYON}" fill="${JAUNE_SOMBRE}"/>
+  <rect x="${x}" y="${y}" width="${l}" height="${h}" rx="${RAYON}" fill="${JAUNE}"/>
+  <!-- Le libellé se centre à l'œil : la moitié de la hauteur, plus la
+       demi-hauteur d'x. -->
+  <text x="${x + l / 2}" y="${y + h / 2 + 8}" text-anchor="middle" font-family="${SANS}"
+        font-size="22" font-weight="700" fill="${MARINE}">${libelle}</text>`;
+}
+
+function composer({ questions, themes, lecons }) {
+  const MG = 76; // la marge de la colonne de gauche
+  // Le panneau blanc, posé à droite comme sur l'accueil : aligné sur le haut
+  // du titre, et fermé à la même ligne que le bouton.
+  const p = { x: 752, y: 162, l: 372, h: 393 };
+  const px = p.x + 30; // sa marge intérieure
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${LARGEUR}" height="${HAUTEUR}" viewBox="0 0 ${LARGEUR} ${HAUTEUR}">
-  <rect width="${LARGEUR}" height="${HAUTEUR}" fill="${PAPIER}"/>
+  <rect width="${LARGEUR}" height="${HAUTEUR}" fill="${MARINE}"/>
 
-  <!-- L'eau, et deux lignes de sonde qui s'en éloignent. -->
-  <rect x="0" y="${cote}" width="${LARGEUR}" height="${HAUTEUR - cote}" fill="${EAU}"/>
-  <path d="M0 ${cote + 52} C 220 ${cote + 26}, 430 ${cote + 78}, 700 ${cote + 44} S 1050 ${cote + 20}, ${LARGEUR} ${cote + 58}"
-        fill="none" stroke="${EAU_PROFONDE}" stroke-width="2"/>
-  <path d="M0 ${cote + 118} C 260 ${cote + 96}, 470 ${cote + 142}, 760 ${cote + 108} S 1080 ${cote + 88}, ${LARGEUR} ${cote + 124}"
-        fill="none" stroke="${EAU_PROFONDE}" stroke-width="2" stroke-dasharray="10 8"/>
-  <line x1="0" y1="${cote}" x2="${LARGEUR}" y2="${cote}" stroke="${ENCRE}" stroke-width="2"/>
+  <!-- L'en-tête du site : le glyphe et le nom. -->
+  ${marque(MG, 56, 46)}
+  ${display(MG + 62, 88, 27, 'Permis côtier', BLANC)}
 
-  <!-- Le cadre gradué. -->
-  <rect x="${cadre.x}" y="${cadre.y}" width="${cadre.l}" height="${cadre.h}"
-        fill="none" stroke="${FILET}" stroke-width="1"/>
-  <rect x="${cadre.x - 10}" y="${cadre.y - 10}" width="${cadre.l + 20}" height="${cadre.h + 20}"
-        fill="none" stroke="${FILET}" stroke-width="1"/>
-  ${graduation(cadre.x, cadre.y - 8, cadre.l, 40, true)}
-  ${graduation(cadre.x, cadre.y + cadre.h + 4, cadre.l, 40, true)}
-  ${graduation(cadre.x - 8, cadre.y, cadre.h, 40, false)}
-  ${graduation(cadre.x + cadre.l + 4, cadre.y, cadre.h, 40, false)}
+  <!-- Le titre de l'accueil, coupé à seize signes comme la page le fait. -->
+  ${display(MG, 214, 62, 'Révise le permis', BLANC)}
+  ${display(MG, 282, 62, 'côtier au format', BLANC)}
+  ${display(MG, 350, 62, 'de l’épreuve.', BLANC)}
 
-  <!-- Terre : le nom, la promesse. -->
-  <text x="86" y="150" font-family="${SANS}" font-size="21" letter-spacing="4.5"
-        fill="${ENCRE_DOUCE}">RÉVISION DU PERMIS PLAISANCE, OPTION CÔTIÈRE</text>
-  <line x1="86" y1="178" x2="330" y2="178" stroke="${MAGENTA}" stroke-width="3"/>
+  <!-- La promesse, dans le bleu pâle que la bande réserve au secondaire. -->
+  ${corps(MG, 412, 23, 'Le cours, l’entraînement par thème, et l’examen blanc', BANDE_DOUX)}
+  ${corps(MG, 446, 23, 'chronométré, comme le jour J. Gratuit, sans compte.', BANDE_DOUX)}
 
-  <text x="82" y="286" font-family="${SERIF}" font-size="104" fill="${ENCRE}">Le Permis Côtier</text>
+  ${bouton(MG, 494, 322, 58, 'Passer un examen blanc')}
 
-  <text x="86" y="356" font-family="${SANS}" font-size="30" fill="${ENCRE_DOUCE}">Examens blancs au format de l’épreuve, et entraînement par thème.</text>
+  <!-- Le panneau blanc, ses deux grands nombres et la traçabilité. -->
+  <rect x="${p.x}" y="${p.y}" width="${p.l}" height="${p.h}" rx="${RAYON}" fill="${BLANC}"/>
+  ${display(px, p.y + 80, 58, questions, MARINE)}
+  ${corps(px, p.y + 114, 17, 'questions publiées, sur les', MARINE, 600)}
+  ${corps(px, p.y + 136, 17, `${themes} thèmes du programme`, MARINE, 600)}
+  ${display(px, p.y + 214, 58, lecons, MARINE)}
+  ${corps(px, p.y + 248, 17, 'leçons écrites depuis les textes,', MARINE, 600)}
+  ${corps(px, p.y + 270, 17, 'pas depuis un manuel', MARINE, 600)}
+  <line x1="${px}" y1="${p.y + 300}" x2="${p.x + p.l - 30}" y2="${p.y + 300}" stroke="${FILET}" stroke-width="2"/>
+  ${corps(px, p.y + 334, 16, 'Sous chaque réponse, l’article', TEXTE_DOUX)}
+  ${corps(px, p.y + 356, 16, 'dont elle sort et son numéro.', TEXTE_DOUX)}
 
-  <!-- Eau : ce que la banque contient, et sa marque de correction. -->
-  <circle cx="98" cy="${cote + 76}" r="9" fill="${MAGENTA}"/>
-  <text x="126" y="${cote + 87}" font-family="${SANS}" font-size="32" font-weight="600" fill="${ENCRE}">${questions} questions publiées, sur les ${themes} thèmes du programme.</text>
-  <text x="126" y="${cote + 140}" font-family="${SANS}" font-size="25" fill="${ENCRE_DOUCE}">Chacune cite le texte réglementaire dont elle est tirée. Gratuit, sans inscription.</text>
+  <!-- La ligne de flottaison, qui ferme la bande. -->
+  <rect x="0" y="${HAUTEUR - FLOTTAISON}" width="${LARGEUR}" height="${FLOTTAISON}" fill="${JAUNE}"/>
 </svg>`;
 }
 
 const questions = questionsPubliees();
+const lecons = leconsEcrites();
 // Les quatorze thèmes de l'arrêté : la table vit dans src/lib/themes.ts, qui
 // est du TypeScript ; on y compte les entrées plutôt que d'écrire le nombre.
 const themes = (
   readFileSync(join(RACINE, 'src', 'lib', 'themes.ts'), 'utf-8').match(/^ {4}code: '/gm) ?? []
 ).length;
 
-const svg = composer({ questions, themes });
+const svg = composer({ questions, themes, lecons });
 // Rendu au double, puis réduit : le texte y gagne, la rastérisation ne
 // disposant d'aucun hinting. `density` 144 vaut deux fois les 72 ppp que
 // librsvg prend par défaut pour un pixel d'SVG.
@@ -161,6 +203,6 @@ if (process.argv.includes('--verifier')) {
   writeFileSync(FICHIER, png);
   console.log(
     `partage : ${FICHIER.replace(RACINE + '/', '')} — ${LARGEUR}×${HAUTEUR}, ` +
-      `${questions} questions, ${themes} thèmes, banque ${versionBanque()}.`,
+      `${questions} questions, ${lecons} leçons, ${themes} thèmes, banque ${versionBanque()}.`,
   );
 }
