@@ -6,6 +6,7 @@ import ReprendreCours from '../components/ReprendreCours.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
 import { leconsDuParcours, COURS } from '../lib/parcours';
+import { POUR_APP } from '../lib/cible';
 import { compteLeconsEcrites } from '../lib/lecons';
 
 const themes = await themesAvecComptes();
@@ -78,6 +79,11 @@ const cours = await compteLeconsEcrites();
     <ReprendreCours client:load lecons={lecons} />
   </section>
 
+  {/* « Comment c'est fait » parle du site : sa fabrication, son ouverture,
+      son absence d'agrément. C'est le propos de /a-propos, qui reste
+      accessible, et c'est le genre de section qui fait lire une app comme une
+      page d'accueil de site. Elle sort de la coquille. */}
+  {!POUR_APP && (
   <section class="page page--etroite methode">
     <h2>Comment c’est fait</h2>
     <p>
@@ -97,6 +103,7 @@ const cours = await compteLeconsEcrites();
       ne publie aucune banque de questions.
     </p>
   </section>
+  )}
 
   <section class="page page--etroite guide">
     <h2>Avant de réviser</h2>

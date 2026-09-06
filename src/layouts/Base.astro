@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/app.css';
 import Mesure from '../components/Mesure.astro';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
@@ -70,10 +71,20 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-app={POUR_APP ? '' : undefined}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* `viewport-fit=cover` dans la coquille : la page va jusque sous
+        l'encoche et la barre d'accueil, et `app.css` reprend les marges par
+        `env(safe-area-inset-*)`. Sur le site, rien à couvrir. */}
+    <meta
+      name="viewport"
+      content={
+        POUR_APP
+          ? 'width=device-width, initial-scale=1, viewport-fit=cover'
+          : 'width=device-width, initial-scale=1'
+      }
+    />
     <title>{titreComplet}</title>
     <meta name="description" content={descriptionCourte} />
     <link rel="canonical" href={url} />
