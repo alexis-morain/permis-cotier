@@ -335,6 +335,14 @@
 .resultat__verdict--reussi { color: var(--vert-texte); }
 .resultat__verdict--echoue { color: var(--rouge-texte); }
 
+.resultat__ecart { margin: -0.75rem 0 1.25rem; font-weight: 600; color: var(--texte-doux); }
+
+/* Le rappel de la raison, quand l'examen est recalé : jaune pâle, comme sur
+   la fiche. Le style de base est dans profil.css. */
+.resultat__rappel { margin-bottom: 0.5rem; }
+.resultat__rappel .discret { margin-top: 0.4rem; }
+.resultat__rappel q { quotes: '« ' ' »'; }
+
 /* Le détail par thème, avec une jauge sous chaque ligne : `--part` est la
    part de bonnes réponses, posée par l'écran. */
 .parTheme { list-style: none; margin: 1.5rem 0; padding: 0; max-width: 34rem; }

@@ -18,6 +18,11 @@
  *   qu'aucun lien interne ne pointe encore vers une adresse redirigée, faute de
  *   quoi le lien serait mort dans l'app sans l'être sur le site.
  *
+ * Le second contrôle est plus général et vaut pour tout ce qu'on élague : un
+ * lien vers une page qui n'est pas dans le bundle. Les 483 pages `question/`
+ * ne sont pas construites, et l'accueil pointait vers l'une d'elles. Sur le
+ * site le lien marche, dans la coquille il ouvre l'accueil sans rien dire.
+ *
  * Usage : node scripts/elaguer-app.mjs [dossier]   (par défaut dist-app)
  */
 import { readdir, readFile, rm, stat } from 'node:fs/promises';
@@ -128,8 +133,41 @@ for (const [nom, raison, taille] of retirés) {
 if (retirés.length === 0) console.log('  (rien à retirer)');
 console.log(`\n  ${mo(avant)} → ${mo(après)}`);
 
-const pages = (await fichiers(racine)).filter((f) => f.endsWith('.html'));
+const tousLesFichiers = await fichiers(racine);
+const pages = tousLesFichiers.filter((f) => f.endsWith('.html'));
 console.log(`  ${pages.length} pages embarquées`);
+
+/**
+ * Résout une adresse comme le fait `ios/App/App/RouteurDuSite.swift` : une
+ * extension, le fichier tel quel ; sinon `<chemin>/index.html` puis
+ * `<chemin>.html`. Rend `null` quand rien ne répond.
+ */
+function resout(adresse) {
+  const chemin = adresse.split(/[?#]/)[0].replace(/\/$/, '') || '/';
+  if (chemin === '/') return join(racine, 'index.html');
+  if (/\.[a-z0-9]+$/i.test(chemin)) {
+    const direct = join(racine, chemin);
+    return existsSync(direct) ? direct : null;
+  }
+  for (const candidat of [`${chemin}/index.html`, `${chemin}.html`]) {
+    const essai = join(racine, candidat);
+    if (existsSync(essai)) return essai;
+  }
+  return null;
+}
+
+/** Les liens internes qui n'ouvrent rien : la coquille rendrait l'accueil. */
+async function liensMorts(pages) {
+  const trouves = new Map();
+  for (const page of pages) {
+    const html = await readFile(page, 'utf-8');
+    for (const [, adresse] of html.matchAll(/(?:href|src)="(\/[^"]*)"/g)) {
+      if (resout(adresse) !== null) continue;
+      if (!trouves.has(adresse)) trouves.set(adresse, relative(racine, page));
+    }
+  }
+  return trouves;
+}
 
 const morts = await liensRedirigés(pages);
 if (morts.length > 0) {
@@ -141,3 +179,17 @@ if (morts.length > 0) {
   process.exit(1);
 }
 console.log('  Aucun lien interne ne compte sur une redirection.');
+
+const inconnus = await liensMorts(pages);
+if (inconnus.size > 0) {
+  console.error(`\nLiens vers une adresse absente du bundle (${inconnus.size}) :`);
+  for (const [adresse, page] of [...inconnus].slice(0, 20)) {
+    console.error(`  · ${adresse}   (dans ${page})`);
+  }
+  console.error(
+    '\nDans la coquille, ils ouvrent l’accueil sans rien dire. Les masquer' +
+      '\nderrière `POUR_APP`, ou construire la page.',
+  );
+  process.exit(1);
+}
+console.log('  Aucun lien interne ne pointe hors du bundle.');

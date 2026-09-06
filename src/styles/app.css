@@ -28,6 +28,18 @@ html[data-app] body {
   padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 
+/* La recherche s'ouvre en plein écran sur téléphone, `<dialog>` par-dessus
+   tout : ni l'en-tête ni le pied ne la rembourrent. Sans ces deux lignes, le
+   mot cherché s'écrit sous l'heure, et la liste des résultats finit sous la
+   barre d'onglets. */
+html[data-app] .recherche__barre {
+  padding-top: env(safe-area-inset-top);
+}
+
+html[data-app] .recherche__corps {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 /* Le pied de page est le dernier bloc : c'est lui qui dégage la barre
    d'onglets. `2rem` de respiration au-dessus de la zone sûre, pour que la
    dernière ligne ne colle pas au verre. */

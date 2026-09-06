@@ -1,6 +1,7 @@
 ---
 import { guidesDeLaNotion } from '../../lib/guide';
 import Base from '../../layouts/Base.astro';
+import LienQuestion from '../../components/LienQuestion.astro';
 import { questionsDuTheme } from '../../lib/banque';
 import { themeParCode } from '../../lib/themes';
 import { NOTIONS, notionsDuTheme, notionsVoisines } from '../../lib/notions';
@@ -83,7 +84,7 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
         <ul class="questions">
           {questions.map((q) => (
             <li>
-              <a href={`/question/${q.id}`}>{q.enonce}</a>
+              <LienQuestion id={q.id} enonce={q.enonce} />
               <span class="discret"> — {q.sources.map((s) => s.texte).join(', ')}</span>
             </li>
           ))}
