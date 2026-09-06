@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Mesure from '../components/Mesure.astro';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
+import { POUR_APP } from '../lib/cible';
 import {
   SITE,
   titrePage,
@@ -100,7 +101,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
 
-    <Mesure />
+    {/* Le traceur ne part pas dans la coquille : voir `src/lib/cible.ts`. */}
+    {!POUR_APP && <Mesure />}
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
@@ -115,6 +117,11 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           </svg>
           <span class="marque__nom">Permis côtier</span>
         </a>
+        {/* Dans la coquille, la barre d'onglets native pilote la navigation.
+            Deux barres l'une sous l'autre diraient deux fois la même chose, et
+            une nav dessinée en HTML est justement ce que la revue Apple lit
+            comme « pas assez différent d'une navigation dans Safari ». */}
+        {!POUR_APP && (
         <nav aria-label="Navigation principale">
           <a href="/cours" aria-current={courant('/cours')}>Cours</a>
           <a href="/examen" aria-current={courant('/examen')}>Examen</a>
@@ -123,6 +130,7 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
           <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
         </nav>
+        )}
       </div>
     </header>
 
@@ -169,6 +177,9 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
             )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
+        {/* Le plan du site est de la navigation web : la barre d'onglets et
+            les écrans le disent déjà dans la coquille. */}
+        {!POUR_APP && (
         <nav class="pied__plan" aria-label="Plan du site">
           <a href="/cours">Le cours, leçon par leçon</a>
           <a href="/examen">Examen blanc</a>
@@ -179,6 +190,7 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <a href="/credits">Crédits</a>
           <a href="/parametres">Réglages</a>
         </nav>
+        )}
         <p class="discret">
           Code sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>,
           banque de questions sous <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>.

@@ -13,6 +13,11 @@ const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), '
 // domaine dans les résultats.
 const site = process.env.SITE_URL ?? 'https://lepermiscotier.fr';
 
+// La cible du build. `CIBLE=app` sort dans `dist-app/` ce que la coquille iOS
+// embarque : les mêmes écrans, sans ce qui ne sert qu'à être trouvé par
+// Google. Le détail des différences est commenté dans `src/lib/cible.ts`.
+const pourApp = process.env.CIBLE === 'app';
+
 // Une leçon du cours n'entre au sitemap que si elle est écrite : une leçon
 // courte n'est que le résumé de sa fiche de notion, la page la déclare en
 // `noindex`, et un sitemap qui l'annoncerait dirait le contraire. Une leçon
@@ -25,12 +30,21 @@ const leconIndexable = (page) => {
 
 export default defineConfig({
   site,
+  outDir: pourApp ? './dist-app' : './dist',
   trailingSlash: 'never',
   // `file` et non `directory` : avec `trailingSlash: 'never'`, un dossier
   // ferait rediriger /examen vers /examen/ à chaque navigation.
-  build: { format: 'file' },
+  //
+  // Sauf dans la coquille, où c'est l'inverse : le serveur d'assets iOS de
+  // Capacitor, sur un chemin sans extension, y ajoute `/index.html`. Avec le
+  // format fichier, chaque lien de la navigation rendrait 404. Cloudflare, lui,
+  // fait la correspondance par `html_handling = "drop-trailing-slash"`.
+  build: { format: pourApp ? 'directory' : 'file' },
   integrations: [
     react(),
+    // Le sitemap et la PWA ne concernent que le site : dans un bundle, le
+    // premier n'a pas de lecteur et le second doublerait un cache local.
+    ...(pourApp ? [] : [
     sitemap({
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
@@ -95,10 +109,12 @@ export default defineConfig({
       },
       devOptions: { enabled: false },
     }),
+    ]),
   ],
   vite: {
     define: {
       __VERSION_BANQUE__: JSON.stringify(versionBanque),
+      __POUR_APP__: JSON.stringify(pourApp),
     },
   },
 });

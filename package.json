@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "node scripts/valider-si-possible.mjs && astro build",
+    "build:app": "CIBLE=app npm run build && node scripts/elaguer-app.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",

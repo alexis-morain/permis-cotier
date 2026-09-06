@@ -3,8 +3,17 @@ import Base from '../../layouts/Base.astro';
 import { questionsPubliees, nomDuTheme } from '../../lib/banque';
 import { SITE, quiz, titreQuestion, descriptionPage } from '../../lib/seo';
 import { notionParCode } from '../../lib/notions';
+import { POUR_APP } from '../../lib/cible';
 
+/**
+ * Une page par question : sept mégaoctets et demi de pur référencement. Rien
+ * dans le parcours de l'app n'y mène — la banque y arrive en JSON, la
+ * correction s'affiche dans l'écran de jeu — et les embarquer doublerait le
+ * poids du bundle pour personne. Elles ne sont donc pas construites du tout
+ * plutôt qu'élaguées après coup : le build de la coquille y gagne aussi.
+ */
 export async function getStaticPaths() {
+  if (POUR_APP) return [];
   const questions = await questionsPubliees();
   return questions.map((q) => ({ params: { id: q.id }, props: { q } }));
 }
