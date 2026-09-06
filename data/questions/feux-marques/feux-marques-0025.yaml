@@ -12,10 +12,6 @@ propositions:
     texte: Non, sauf si tu participes à des opérations de plongée
   - id: b
     texte: Non, sans aucune exception
-  - id: c
-    texte: Oui, dans tous les cas
-  - id: d
-    texte: Non, mais seulement de jour pour les marques
 reponses:
   - a
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

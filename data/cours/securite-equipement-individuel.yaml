@@ -1,0 +1,79 @@
+notion: securite-equipement-individuel
+duree: 4
+accroche: >-
+  Le gilet, tout le monde en a un sous le banc. Ce que l’épreuve demande, c’est le
+  chiffre écrit dessus : 50, 100, 150. Il change avec la distance de l’abri.
+etapes:
+  - titre: Un par personne, adapté à sa morphologie
+    texte: >-
+      Les équipements individuels de flottabilité à bord sont adaptés à la morphologie
+      des personnes embarquées. Un modèle unique pour toute la famille ne suffit pas.
+
+      Lorsqu’ils ne sont pas portés, ils sont rangés de manière à pouvoir être accessibles
+      rapidement et aisément. Le fond d’un coffre encombré ne l’est pas, et les locaux de
+      machines sont interdits à tout matériel de sécurité.
+  - titre: Le niveau monte avec la distance
+    texte: >-
+      À moins de 2 milles d’un abri, l’armement basique demande un niveau de performance
+      d’au moins 50 par personne. De 2 à moins de 6 milles, l’armement côtier demande
+      autant d’équipements de niveau d’au moins 100 que de personnes embarquées. À partir
+      de 6 milles, le semi-hauturier passe au niveau 150.
+  - titre: Les enfants de 30 kg au maximum sont au niveau 100 partout
+    texte: >-
+      Dès que le navire est soumis à l’emport d’un équipement individuel de flottabilité,
+      les enfants de 30 kg maximum disposent d’un équipement de niveau de performance
+      100, quelle que soit la distance d’éloignement d’un abri. Le niveau 50, qui suffit à
+      un adulte près de la côte, ne convient jamais pour eux.
+  - titre: La combinaison, à condition d’être portée
+    texte: >-
+      À moins de 2 milles, une combinaison humide en néoprène ou sèche tient lieu
+      d’équipement si elle est portée et qu’elle protège au minimum le torse et
+      l’abdomen, avec une flottabilité positive et une protection thermique.
+
+      Au-delà de 2 milles, la personne qui sait nager peut se passer du niveau 100 si elle
+      porte effectivement un équipement de niveau d’au moins 50, ou une combinaison de
+      flottabilité intrinsèque d’au moins 50 N, de couleur vive au cou ou aux épaules.
+  - titre: Le dispositif lumineux, collectif ou individuel
+    texte: >-
+      Le dispositif lumineux de l’armement basique se choisit sous deux formes. Collectif,
+      c’est une lampe torche étanche d’une autonomie d’au moins 6 heures. Individuel, il
+      est étanche, tient au moins 6 heures lui aussi, se porte ou se fixe à l’équipement
+      individuel de flottabilité, et peut être une lampe flash, une lampe torche ou un
+      cyalume.
+  - titre: Seul à bord, porte-le
+    texte: >-
+      La division 240 recommande à toute personne qui navigue en solitaire de porter en
+      permanence un équipement de niveau d’au moins 50, auquel est assujettie une VHF
+      portable. Tombé à l’eau, le solitaire n’a que ce qu’il a sur lui.
+piege: >-
+  Savoir nager ne dispense de rien à soi seul. Au-delà de 2 milles, la dispense du niveau
+  100 exige deux choses en même temps : savoir nager, et porter effectivement un
+  équipement de niveau 50 ou une combinaison conforme. Un gilet de niveau 50 rangé sous
+  le banc ne vaut pas dispense.
+retenir:
+  - "Un équipement individuel de flottabilité par personne, adapté à sa morphologie."
+  - "Niveau 50 à moins de 2 milles, 100 de 2 à 6 milles, 150 à partir de 6 milles."
+  - "Enfant de 30 kg au maximum : niveau 100, quelle que soit la distance."
+  - "Rangé accessible rapidement et aisément, jamais dans les locaux de machines."
+  - "Dispositif lumineux : 6 heures d’autonomie, collectif ou individuel."
+sources:
+  - texte: Division 240, article 240-2.01
+    ref: division-240
+    fichier: article-240-2-01
+  - texte: Division 240, article 240-2.03
+    ref: division-240
+    fichier: article-240-2-03
+  - texte: Division 240, article 240-2.04
+    ref: division-240
+    fichier: article-240-2-04
+  - texte: Division 240, article 240-2.05
+    ref: division-240
+    fichier: article-240-2-05
+  - texte: Division 240, article 240-2.16
+    ref: division-240
+    fichier: article-240-2-16
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

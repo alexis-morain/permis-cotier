@@ -8,15 +8,13 @@ enonce: >-
   Tu déclenches par erreur une alerte de détresse en manipulant ta VHF. Que fais-tu ?
 propositions:
   - id: a
-    texte: Rien, l'alerte s'annulera d'elle-même faute de confirmation
-  - id: b
     texte: Tu éteins la VHF pour que l'alerte cesse
-  - id: c
+  - id: b
     texte: Tu annules aussitôt sur le canal 16, en le disant clairement
-  - id: d
+  - id: c
     texte: Tu attends que le CROSS te rappelle pour t'expliquer
 reponses:
-  - c
+  - b
 explication: >-
   Une fausse alerte mobilise des moyens de secours pour rien et les retire à ceux qui
   en ont besoin ailleurs. Elle s'annule en le disant sur le canal 16, sans attendre :
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

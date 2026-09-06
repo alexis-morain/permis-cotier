@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Maintenir ta vitesse, un navire qui ralentit devenant imprévisible.
   - id: c
-    texte: Augmenter ta vitesse pour passer devant et sortir de la situation.
-  - id: d
     texte: Rien de particulier, la règle 8 ne traite que des changements de cap.
 reponses:
   - a
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

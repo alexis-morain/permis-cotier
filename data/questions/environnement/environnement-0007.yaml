@@ -8,15 +8,13 @@ enonce: >-
   Tu vides à la mer un bidon de produit d'entretien. Que risques-tu ?
 propositions:
   - id: a
-    texte: Rien, la dilution en mer rend le rejet inoffensif
-  - id: b
     texte: Une amende de 100 000 euros
-  - id: c
+  - id: b
     texte: Une simple contravention de quatrième classe
-  - id: d
+  - id: c
     texte: Rien si le rejet a lieu au-delà de trois milles
 reponses:
-  - b
+  - a
 explication: >-
   Jeter, déverser ou laisser écouler en mer des substances nuisibles pour la conservation
   ou la reproduction des mammifères marins, poissons, crustacés, coquillages, mollusques
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

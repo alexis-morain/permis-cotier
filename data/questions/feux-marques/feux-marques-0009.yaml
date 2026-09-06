@@ -8,15 +8,13 @@ enonce: >-
   À partir de quel rythme un feu à éclats réguliers est-il appelé « feu à éclats » ?
 propositions:
   - id: a
-    texte: 60 éclats ou plus par minute
-  - id: b
     texte: 90 éclats ou plus par minute
-  - id: c
+  - id: b
     texte: 120 éclats ou plus par minute
-  - id: d
+  - id: c
     texte: 180 éclats ou plus par minute
 reponses:
-  - c
+  - b
 explication: >-
   La règle 21 f) réserve l'expression « feu à éclats » à un feu à éclats réguliers dont
   le rythme est de 120 éclats ou plus par minute. C'est un seuil chiffré, et les distracteurs
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

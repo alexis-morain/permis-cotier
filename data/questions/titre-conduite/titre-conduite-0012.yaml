@@ -8,15 +8,11 @@ enonce: >-
   Qui délivre le permis de conduire des bateaux de plaisance ?
 propositions:
   - id: a
-    texte: Le maire de la commune de résidence
-  - id: b
     texte: Le préfet du département dans lequel le service instructeur a son siège
-  - id: c
-    texte: La fédération française de voile
-  - id: d
+  - id: b
     texte: L'établissement de formation agréé
 reponses:
-  - b
+  - a
 explication: >-
   Le permis est délivré par le préfet du département dans lequel le service qui a instruit
   la candidature a son siège. L'établissement de formation agréé, lui, ne délivre rien
@@ -28,5 +24,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

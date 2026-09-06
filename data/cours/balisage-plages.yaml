@@ -6,32 +6,52 @@ accroche: >-
 etapes:
   - titre: La bande des 300 mètres
     texte: >-
-      Le long des côtes, une bande littorale de 300 mètres est réservée aux baigneurs et
-      aux engins de plage. Sa limite au large est marquée par des bouées jaunes
-      sphériques. À l’intérieur, la vitesse est limitée à 5 nœuds pour tout le monde.
+      Une bande littorale de 300 mètres longe la côte, et la vitesse y est limitée à
+      5 nœuds pour tout le monde. Sa limite au large est marquée par des bouées jaunes
+      sphériques.
   - titre: Le chenal traversier
     texte: >-
       Pour rejoindre la plage sans traverser la zone de baignade, on emprunte un chenal
       traversier, balisé de jaune lui aussi : bouées cylindriques d’un côté, coniques de
       l’autre.
 
-      Le sens de lecture est celui de la sortie. En sortant vers le large, les cylindres
-      sont à bâbord et les cônes à tribord.
+      Le sens de lecture est celui de l’arrivée à la plage. En accédant au rivage, les
+      cylindres sont à bâbord et les cônes à tribord.
   - titre: Dans le chenal, on reste lent
     texte: >-
       Le chenal traversier est dans la bande des 300 mètres : la limite de 5 nœuds s’y
       applique aussi. Il est réservé aux engins de plage et aux véhicules nautiques à
-      moteur qui rejoignent le large. Les baigneurs n’y ont pas leur place, et toi tu
-      n’as pas la tienne dans la zone de baignade.
+      moteur.
+  - titre: Formes et espacements des bouées
+    texte: >-
+      La limite des 300 mètres est marquée par des bouées sphériques d’au moins 0,80 mètre,
+      mouillées tous les 200 mètres environ. Là où deux chenaux se touchent, la limite
+      latérale commune est elle aussi tenue par des bouées sphériques.
+
+      Dans un chenal traversier, les deux bouées les plus au large mesurent 0,80 mètre, les
+      suivantes de 0,40 à 0,60 mètre, et elles se resserrent à mesure qu’on approche du
+      rivage.
+    liste:
+      - "Entre la ligne des 300 mètres et 150 mètres du rivage : une bouée tous les 50 mètres."
+      - "Entre 150 et 50 mètres du rivage : une bouée tous les 25 mètres."
+      - "À moins de 50 mètres du rivage : une bouée tous les 10 mètres."
+      - "Zones réglementées dans la bande des 300 mètres : sphères d’au moins 0,40 mètre."
+      - "Zones de baignade : sphères de 0,20 mètre possibles, sur un filin flottant, tous les 5 à 10 mètres."
 piege: >-
-  Le chenal traversier se lit dans le sens de la sortie, à l’inverse du chenal de port
-  qui se lit en entrant. Cylindre à bâbord en sortant, donc à tribord quand tu rentres à
-  la plage.
+  Le chenal traversier se lit en accédant au rivage, pas en venant du large comme un
+  chenal de port. Cylindre à bâbord en allant vers la plage, donc à tribord quand tu
+  ressors vers le large.
 retenir:
   - "Bande des 300 mètres : bouées jaunes sphériques, vitesse 5 nœuds."
-  - "Chenal traversier : bouées jaunes, cylindres à bâbord et cônes à tribord dans le sens de la sortie."
-  - On n’entre jamais dans une zone de baignade, on passe par le chenal.
+  - "Chenal traversier : bouées jaunes, cylindres à bâbord et cônes à tribord en accédant au rivage."
+  - Le chenal traversier est réservé aux engins de plage et aux véhicules nautiques à moteur.
 sources:
+  - texte: Arrêté du 27 mars 1991, annexe I
+    ref: arrete-1991-03-27
+    fichier: article-annexe-i
+  - texte: Arrêté du 27 mars 1991, article 1
+    ref: arrete-1991-03-27
+    fichier: article-1
   - texte: Balisage AISM, région A, balisage des plages
     ref: aism-mbs
     fichier: region-a
@@ -39,4 +59,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_le: '2026-09-06'

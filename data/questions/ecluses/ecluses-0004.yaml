@@ -15,8 +15,6 @@ propositions:
     texte: Les menues embarcations passent d'abord, elles manœuvrent plus vite
   - id: c
     texte: Tu peux exiger un éclusage spécial pour ne pas gêner la péniche
-  - id: d
-    texte: La péniche te cède le passage, la plaisance est prioritaire dans les écluses
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

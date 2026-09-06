@@ -1,0 +1,64 @@
+notion: env-equipement-sanitaire
+duree: 4
+accroche: >-
+  Ton bateau a des toilettes. À partir de là, la division 245 te demande de savoir où
+  vont les eaux usées, et elle ne laisse que deux réponses.
+etapes:
+  - titre: Des toilettes à bord, donc un dispositif
+    texte: >-
+      Lorsqu’un navire est équipé de toilettes, il comporte au moins l’un des deux
+      dispositifs suivants : un ensemble de capacités de rétention des eaux usées des
+      toilettes, ou une installation de traitement de ces eaux usées.
+
+      C’est bien « au moins l’un des deux ». Tu choisis, tu ne cumules pas.
+  - titre: Réservoir fixé à demeure, raccord de vidange normalisé
+    texte: >-
+      Les bateaux dont les réservoirs sont fixés à demeure doivent être équipés d’un
+      raccord de vidange normalisé. Il permet de brancher les tuyaux des installations
+      de réception du port sur le tuyau de vidange du bateau.
+
+      Un raccord au format du port, sinon la cuve reste pleine.
+  - titre: 1,5 litre par personne pouvant être embarquée
+    texte: >-
+      Quand le navire est équipé de réservoirs fixes de rétention des eaux usées des
+      toilettes, leur capacité atteint au minimum 1,5 litre par personne pouvant être
+      embarquée.
+
+      Le calcul se fait sur le nombre de personnes que le bateau a le droit d’embarquer,
+      pas sur le nombre de personnes à bord ce jour-là.
+  - titre: La norme NF EN ISO 8099 vaut équivalence
+    texte: >-
+      Les installations de rétention des eaux usées qui répondent à la norme NF EN ISO
+      8099 satisfont de manière équivalente aux exigences de l’article. Une installation
+      certifiée à cette norme n’a rien de plus à démontrer.
+  - titre: Chaque décharge de WC a sa vanne de coque
+    texte: >-
+      Chaque prise d’eau et chaque décharge de WC marin est pourvue d’une vanne de coque.
+      Quand le fond de la cuvette se situe à 300 mm ou plus sous la flottaison, et sans
+      indication du fabricant sur le montage, un dispositif empêche l’effet de siphon.
+
+      À bord des voiliers, les tuyauteries des prises d’eau et des décharges des toilettes
+      ou de leurs caisses de rétention forment un col de cygne qui passe au-dessus de la
+      flottaison en charge.
+piege: >-
+  Le piège porte sur ce qui déclenche l’obligation. Ce n’est ni la taille du bateau, ni
+  celle du réservoir, ni le type de dispositif : ce sont les toilettes. Dès qu’il y en a
+  à bord d’un navire soumis à la division 245, il faut une rétention ou un traitement.
+  Un broyeur qui rejette directement à la mer n’est ni l’un ni l’autre.
+retenir:
+  - "Des toilettes à bord : capacités de rétention ou installation de traitement, au choix."
+  - Réservoir fixé à demeure, donc raccord de vidange normalisé pour le port.
+  - "Réservoir fixe : 1,5 litre au minimum par personne pouvant être embarquée."
+  - La norme NF EN ISO 8099 vaut équivalence.
+sources:
+  - texte: Division 245, article 245-5.37, I
+    ref: division-245
+    fichier: article-245-5-37
+  - texte: Division 245, article 245-4.05, IX
+    ref: division-245
+    fichier: article-245-4-05
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

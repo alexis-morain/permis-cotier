@@ -18,8 +18,6 @@ propositions:
     texte: Il n'est pas maître de sa manœuvre.
   - id: c
     texte: Il ne comprend pas tes intentions.
-  - id: d
-    texte: Il est échoué.
 reponses:
   - a
 explication: >-
@@ -36,5 +34,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

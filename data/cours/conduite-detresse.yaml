@@ -1,0 +1,61 @@
+notion: conduite-detresse
+duree: 4
+accroche: >-
+  Le moteur fume, la mer se lève, et tu hésites à appeler. Ce qui suit dit à quel
+  moment on alerte, par quel moyen, et dans quel ordre on agit.
+etapes:
+  - titre: Les brassières s’enfilent quand ça se dégrade
+    texte: >-
+      Tu fais porter les brassières à tout l’équipage dès que la situation se dégrade, pas
+      quand elle est perdue.
+
+      Une brassière s’enfile mal dans l’eau, à froid, avec un bateau qui bouge. Le bon
+      moment est toujours plus tôt que celui qu’on croit.
+  - titre: On alerte sur le doute, pas sur la certitude
+    texte: >-
+      Tu alertes dès que tu doutes de pouvoir te tirer seul de la situation avec les moyens
+      du bord.
+
+      Une alerte lancée trop tôt s’annule en une phrase sur le canal 16, et ce n’est pas
+      une faute. Une alerte lancée trop tard arrive après la panne d’électricité, quand la
+      VHF ne porte plus. Laisser courir une alerte partie par erreur, ça, c’en est une.
+  - titre: La VHF avant le téléphone
+    texte: >-
+      En mer, la VHF prime sur le téléphone : elle est entendue par les CROSS et par tous
+      les navires autour, qui sont les premiers secours possibles.
+
+      Depuis un téléphone, le 196 joint le CROSS. Passer par un proche à terre ajoute un
+      intermédiaire, du délai et des erreurs de position.
+  - titre: MAYDAY ou PAN PAN, selon la gravité
+    texte: >-
+      Le choix du signal est celui de la gravité. MAYDAY quand un danger grave et imminent
+      menace le navire ou une personne et qu’une assistance immédiate est demandée. PAN PAN
+      quand la situation est urgente sans être immédiatement menaçante.
+
+      Une avarie de moteur sans danger imminent est un PAN PAN.
+  - titre: On reste à bord tant que le bateau flotte
+    texte: >-
+      Un bateau même à demi rempli reste plus repérable, plus flottant et plus chaud qu’un
+      homme à l’eau. On ne monte au radeau ou à l’annexe que lorsque le bateau s’enfonce
+      sous soi.
+
+      Et une règle négative vaut dans tous les cas : on ne se met pas en danger pour du
+      matériel. Un objet perdu se remplace, pas un équipier.
+piege: >-
+  Attendre d’être sûr de ne plus s’en sortir pour appeler. Le critère est le doute, pas la
+  certitude : une alerte lancée trop tard arrive après la panne d’électricité, quand la
+  VHF ne porte plus.
+retenir:
+  - Brassières dès que la situation se dégrade, pas quand elle est perdue.
+  - On alerte sur le doute, avec la VHF de préférence, ou le 196 depuis un téléphone.
+  - "MAYDAY : danger grave et imminent. PAN PAN : urgence sans menace immédiate."
+  - On reste à bord tant que le bateau flotte, et on ne risque personne pour du matériel.
+sources:
+  - texte: Fiche conduite à tenir
+    ref: fiche-conduite-urgence
+    fichier: conduite-a-tenir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

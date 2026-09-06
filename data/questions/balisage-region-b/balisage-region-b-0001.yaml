@@ -14,8 +14,6 @@ propositions:
     texte: Rouge
   - id: c
     texte: Jaune
-  - id: d
-    texte: Noire à bande rouge
 reponses:
   - a
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

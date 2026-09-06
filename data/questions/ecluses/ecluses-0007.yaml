@@ -15,8 +15,6 @@ propositions:
       garages
   - id: c
     texte: Le dépassement est libre, seul le dépassement sous les ponts mobiles est interdit
-  - id: d
-    texte: Tu peux le dépasser après avoir émis deux sons brefs
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

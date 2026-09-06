@@ -1,0 +1,55 @@
+notion: vhf-smdsm-zones
+duree: 3
+accroche: >-
+  Une alerte de détresse doit atteindre quelqu’un. Selon l’endroit où tu te trouves,
+  ce n’est pas le même moyen radio qui la porte : le SMDSM découpe la mer en quatre
+  zones d’après ce moyen.
+etapes:
+  - titre: Les zones se lisent par le moyen qui porte l’alerte
+    texte: >-
+      Le système mondial de détresse et de sécurité en mer classe les eaux du globe
+      selon le matériel capable d’y transmettre une alerte jusqu’à terre.
+  - titre: A1, la portée d’une station VHF
+    texte: >-
+      La zone A1 est celle où l’on se trouve dans la portée d’une station côtière VHF
+      équipée de l’appel sélectif numérique, en pratique une vingtaine à une trentaine
+      de milles de la côte.
+  - titre: A2, la portée d’une station en ondes hectométriques
+    texte: >-
+      La zone A2 est la portée d’une station côtière en ondes hectométriques, hors zone
+      A1, de l’ordre de cent à cent cinquante milles.
+  - titre: A3 et A4, le satellite puis les pôles
+    texte: >-
+      La zone A3 est la couverture des satellites géostationnaires, hors A1 et A2, soit
+      approximativement entre 70° de latitude nord et 70° de latitude sud.
+
+      La zone A4 est tout le reste, les régions polaires, où seules les ondes
+      décamétriques passent.
+  - titre: La plaisance côtière navigue en A1
+    texte: >-
+      L’option côtière du permis limite la navigation à 6 milles d’un abri. Tu restes
+      donc largement dans la portée d’une station côtière VHF, et ta VHF suffit à
+      alerter.
+piege: >-
+  Ne confonds pas les 6 milles du permis côtier avec la limite de la zone A1. Les
+  6 milles sont une limite administrative de titre de conduite ; A1 est une portée
+  radio, une vingtaine à une trentaine de milles. L’une n’a pas été calculée sur
+  l’autre.
+retenir:
+  - "A1 : portée d’une station côtière VHF avec ASN, 20 à 30 milles."
+  - "A2 : portée d’une station en ondes hectométriques, 100 à 150 milles."
+  - "A3 : satellites géostationnaires, entre 70° nord et 70° sud environ."
+  - "A4 : les régions polaires, en ondes décamétriques."
+  - La plaisance côtière navigue en A1.
+sources:
+  - texte: "Fiche VHF : voies, procédures d’appel et SMDSM"
+    ref: fiche-vhf
+    fichier: procedures
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+    fichier: article-2
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

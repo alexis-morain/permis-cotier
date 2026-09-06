@@ -13,10 +13,6 @@ propositions:
   - id: b
     texte: Le permis de conduire en mer les bateaux de plaisance à moteur, qui suffit
       partout.
-  - id: c
-    texte: Le certificat restreint de radiotéléphoniste du service mobile fluvial.
-  - id: d
-    texte: Aucun titre, la VHF est libre d'usage hors des eaux territoriales.
 reponses:
   - a
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

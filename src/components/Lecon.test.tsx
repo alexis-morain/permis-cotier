@@ -52,10 +52,10 @@ const courte: LeconAffichable = {
 };
 
 const cadre = {
-  chapitre: { code: 'balisage', titre: 'Lire le balisage' },
+  cours: { code: 'balisage', titre: 'Lire le balisage', chemin: '/cours/balisage' },
   rang: 1,
   total: 12,
-  suivante: { code: 'balisage-chenal-prefere', nom: 'Chenal préféré' },
+  suite: { type: 'lecon' as const, chemin: '/cours/balisage/balisage-chenal-prefere', nom: 'Chenal préféré' },
   theme: { code: 'balisage', nom: 'Balisage' },
 };
 
@@ -125,7 +125,7 @@ describe('l’écran de leçon', () => {
 
     expect(screen.getByText('Leçon faite')).toBeTruthy();
     expect(screen.getByText(/à la vérification/).textContent).toContain('1 sur 2');
-    expect(screen.getByRole('link', { name: /Leçon suivante/ }).getAttribute('href')).toBe('/cours/balisage-chenal-prefere');
+    expect(screen.getByRole('link', { name: /Leçon suivante/ }).getAttribute('href')).toBe('/cours/balisage/balisage-chenal-prefere');
 
     const etat = charger();
     expect(etat.lecons['balisage-lateral']).toMatchObject({ bonnes: 1, total: 2 });
@@ -134,11 +134,18 @@ describe('l’écran de leçon', () => {
   });
 
   it('termine une leçon courte sans question, marquée faite à zéro sur zéro', () => {
-    render(<Lecon lecon={courte} {...cadre} suivante={undefined} />);
+    render(<Lecon lecon={courte} {...cadre} suite={undefined} />);
     fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
     expect(screen.getByText('Leçon faite')).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Retour au cours' })).toBeTruthy();
     expect(charger().lecons['signaux-portuaires']).toMatchObject({ bonnes: 0, total: 0 });
+  });
+
+  it('tend le cours suivant après la dernière leçon d’un cours', () => {
+    render(<Lecon lecon={courte} {...cadre} suite={{ type: 'cours', chemin: '/cours/barre-route', titre: 'Se croiser sans se toucher' }} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+    expect(screen.getByText(/dernière leçon de « Lire le balisage »/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Cours suivant : Se croiser sans se toucher' }).getAttribute('href')).toBe('/cours/barre-route');
   });
 
   it('bascule en lecture continue et revient au pas à pas', () => {

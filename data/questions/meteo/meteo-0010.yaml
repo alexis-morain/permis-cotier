@@ -12,10 +12,6 @@ propositions:
     texte: La brise de mer, qui souffle de la mer vers la terre
   - id: b
     texte: La brise de terre, qui souffle de la terre vers la mer
-  - id: c
-    texte: Un effet de site, qui souffle le long de la côte
-  - id: d
-    texte: Un grain, qui souffle en tournant
 reponses:
   - a
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

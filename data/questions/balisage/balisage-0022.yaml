@@ -18,8 +18,6 @@ propositions:
     texte: Une cardinale Est
   - id: c
     texte: Une cardinale Sud
-  - id: d
-    texte: Une cardinale Nord
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

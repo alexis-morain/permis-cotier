@@ -1,0 +1,67 @@
+notion: securite-responsabilite-armement
+duree: 4
+accroche: >-
+  Tu embarques trois amis pour la journée. Un gilet traîne au fond du coffre, les feux à
+  main sont périmés depuis l’hiver, et personne à bord ne le sait. C’est toi que la
+  division 240 va chercher.
+etapes:
+  - titre: Le chef de bord est celui qui conduit
+    texte: >-
+      La division 240 définit le chef de bord comme le membre d’équipage responsable de la
+      conduite du navire, de la tenue du journal de bord quand il est exigé, du respect des
+      règlements et de la sécurité des personnes embarquées.
+
+      Ce n’est ni un titre ni un diplôme : c’est une fonction.
+  - titre: Quatre vérifications sur la même ligne
+    texte: >-
+      Le chef de bord s’assure de la présence à bord, du bon état et de la validité de tous
+      les équipements et matériels de sécurité, ainsi que de leur adaptation aux personnes
+      embarquées. Les quatre exigences sont écrites d’un seul trait, aucune n’est
+      facultative.
+    liste:
+      - La présence à bord du matériel
+      - Son bon état de fonctionnement
+      - Sa validité, donc les visites techniques qui lui sont applicables
+      - Son adaptation aux personnes embarquées, taille et poids compris
+  - titre: Emporter ne suffit pas, il faut s’en servir
+    texte: >-
+      Le même article ajoute une troisième obligation : la mise en œuvre de ces matériels
+      lorsque les circonstances l’exigent. Le vent forcit, la mer se creuse, tu fais mettre
+      les équipements individuels de flottabilité. L’emport se vérifie au ponton, l’usage
+      se décide en mer.
+  - titre: Une navigation à la taille du bateau
+    texte: >-
+      Première obligation de l’article, celle qu’on oublie : le chef de bord s’assure de
+      l’adéquation de sa navigation avec les caractéristiques de son navire. Le programme
+      de la sortie se choisit d’après le bateau et la météo annoncée, pas d’après l’envie
+      du jour.
+  - titre: Un matériel prêt à servir, pas enfoui
+    texte: >-
+      Le matériel est adapté au bateau, maintenu en bon état de fonctionnement, à jour de
+      ses visites techniques et prêt à servir en cas d’urgence. Rien n’est rangé dans les
+      locaux de machines. Faute de place ailleurs, il peut aller à l’extérieur, en sacs ou
+      boîtes étanches fermés et assujettis à la structure.
+piege: >-
+  Répondre que le bon état et la validité regardent le propriétaire ou le loueur, et que
+  le chef de bord n’a qu’à constater la présence du matériel. L’article 240-1.03 ne
+  partage rien : les quatre vérifications sont à sa charge, et la mise en œuvre aussi.
+retenir:
+  - "Chef de bord : conduite du navire, respect des règlements, sécurité des personnes embarquées."
+  - "Présence, bon état, validité, adaptation aux personnes : les quatre vérifications sont les siennes."
+  - Il s’assure aussi de la mise en œuvre du matériel quand les circonstances l’exigent.
+  - Sa navigation doit rester à la mesure de son navire.
+sources:
+  - texte: Division 240, article 240-1.03
+    ref: division-240
+    fichier: article-240-1-03
+  - texte: Division 240, article 240-1.02, IV. 3
+    ref: division-240
+    fichier: article-240-1-02
+  - texte: Division 240, article 240-2.01
+    ref: division-240
+    fichier: article-240-2-01
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

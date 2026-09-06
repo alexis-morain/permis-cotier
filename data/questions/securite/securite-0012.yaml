@@ -13,10 +13,6 @@ propositions:
   - id: b
     texte: Sur la seule présence à bord du matériel de sécurité, que tu as vérifiée avant
       d'appareiller.
-  - id: c
-    texte: Sur la seule adéquation de ta navigation avec les caractéristiques de ton navire.
-  - id: d
-    texte: Sur la vérification de la validité des équipements, à refaire en cours de navigation.
 reponses:
   - a
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

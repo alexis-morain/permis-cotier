@@ -21,14 +21,19 @@ import './lecon.css';
  * celles de l'entraînement : une question ratée ici repasse dans `/revoir`.
  */
 
+/** Ce qui vient après la leçon : la suivante du cours, ou le cours d'après. */
+export type Suite =
+  | { type: 'lecon'; chemin: string; nom: string }
+  | { type: 'cours'; chemin: string; titre: string };
+
 interface Props {
   lecon: LeconAffichable;
-  chapitre: { code: string; titre: string };
-  /** Rang de la leçon dans son chapitre, à partir de 1. */
+  cours: { code: string; titre: string; chemin: string };
+  /** Rang de la leçon dans son cours, à partir de 1. */
   rang: number;
-  /** Nombre de leçons du chapitre. */
+  /** Nombre de leçons du cours. */
   total: number;
-  suivante?: { code: string; nom: string };
+  suite?: Suite;
   theme: { code: string; nom: string };
 }
 
@@ -185,7 +190,7 @@ function Verification({
   );
 }
 
-export default function Lecon({ lecon, chapitre, rang, total, suivante, theme }: Props) {
+export default function Lecon({ lecon, cours, rang, total, suite, theme }: Props) {
   const ecrans = useMemo(() => ecransDe(lecon), [lecon]);
   const [index, setIndex] = useState(0);
   const [pasAPas, setPasAPas] = useState(true);
@@ -198,8 +203,8 @@ export default function Lecon({ lecon, chapitre, rang, total, suivante, theme }:
 
   useEffect(() => {
     setMonte(true);
-    evenement('lecon-commencee', { notion: lecon.code, chapitre: chapitre.code });
-  }, [lecon.code, chapitre.code]);
+    evenement('lecon-commencee', { notion: lecon.code, cours: cours.code });
+  }, [lecon.code, cours.code]);
 
   const ecran = ecrans[index] ?? ecrans[0]!;
   const dernierAvantFin = index === ecrans.length - 2 && ecrans[index + 1]?.type === 'fin';
@@ -211,8 +216,8 @@ export default function Lecon({ lecon, chapitre, rang, total, suivante, theme }:
     terminee.current = true;
     const resultat = score ?? { bonnes: 0, total: 0 };
     sauvegarder(terminerLecon(charger(), lecon.code, resultat, aujourdhui()));
-    evenement('lecon-terminee', { notion: lecon.code, chapitre: chapitre.code, ...resultat });
-  }, [ecran.type, score, lecon.code, chapitre.code]);
+    evenement('lecon-terminee', { notion: lecon.code, cours: cours.code, ...resultat });
+  }, [ecran.type, score, lecon.code, cours.code]);
 
   const aller = (i: number) => {
     setIndex(i);
@@ -244,7 +249,7 @@ export default function Lecon({ lecon, chapitre, rang, total, suivante, theme }:
     <div className={classeRacine} ref={racine}>
       <div className="lecon__entete">
         <p className="lecon__chapitre">
-          <a href={`/cours#${chapitre.code}`}>{chapitre.titre}</a>
+          <a href={cours.chemin}>{cours.titre}</a>
           <span className="discret"> · leçon {rang} sur {total} · {lecon.duree} min</span>
         </p>
         <div className="lecon__barre" aria-hidden="true">
@@ -325,6 +330,11 @@ export default function Lecon({ lecon, chapitre, rang, total, suivante, theme }:
             {e.type === 'fin' && (
               <div className="fin">
                 <p className="fin__titre display">Leçon faite</p>
+                {suite?.type !== 'lecon' && (
+                  <p className="fin__cours">
+                    C’était la dernière leçon de « {cours.titre} ».
+                  </p>
+                )}
                 {score && score.total > 0 ? (
                   <p className="fin__score">
                     <b>{score.bonnes}</b> sur <b>{score.total}</b> à la vérification
@@ -338,9 +348,13 @@ export default function Lecon({ lecon, chapitre, rang, total, suivante, theme }:
                   </p>
                 )}
                 <div className="fin__actions">
-                  {suivante ? (
-                    <a className="bouton bouton--principal" href={`/cours/${suivante.code}`} data-mesure="lecon-suivante" data-mesure-notion={suivante.code}>
-                      Leçon suivante : {suivante.nom}
+                  {suite?.type === 'lecon' ? (
+                    <a className="bouton bouton--principal" href={suite.chemin} data-mesure="lecon-suivante" data-mesure-notion={suite.chemin}>
+                      Leçon suivante : {suite.nom}
+                    </a>
+                  ) : suite?.type === 'cours' ? (
+                    <a className="bouton bouton--principal" href={suite.chemin} data-mesure="lecon-cours-suivant" data-mesure-cours={suite.chemin}>
+                      Cours suivant : {suite.titre}
                     </a>
                   ) : (
                     <a className="bouton bouton--principal" href="/cours" data-mesure="lecon-retour-cours">

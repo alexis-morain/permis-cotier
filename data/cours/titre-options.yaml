@@ -1,0 +1,76 @@
+notion: titre-options
+duree: 5
+accroche: >-
+  Un seul permis, plusieurs cases. Celle qui est cochée sur ton titre décide jusqu’où tu
+  peux aller en mer, et ce que tu as le droit de conduire sur un canal.
+etapes:
+  - titre: En mer, l’option côtière s’arrête à 6 milles d’un abri
+    texte: >-
+      En eaux maritimes, l’option « côtière » vaut pour une navigation jusqu’à 6 milles
+      d’un abri. C’est l’option de base, celle que tu prépares ici.
+
+      Ce seuil de 6 milles se retrouve ailleurs : c’est aussi là que l’armement de sécurité
+      passe de côtier à semi-hauturier.
+  - titre: Au-delà de 6 milles, l’extension hauturière
+    texte: >-
+      Pour naviguer au-delà de 6 milles d’un abri, il faut l’extension « hauturière ». Elle
+      ne se passe pas seule : pour s’inscrire, il faut déjà détenir l’option côtière, le
+      permis A de conduire en mer les navires de plaisance à moteur, ou le permis mer
+      « côtier ».
+  - titre: L’épreuve hauturière se joue sur la carte
+    texte: >-
+      L’extension s’obtient par une épreuve théorique de navigation d’une heure trente, sur
+      la carte spéciale examen n° 9999 du service hydrographique et océanographique de la
+      marine.
+
+      Pour être reçu, il faut au moins 10 sur l’ensemble, et au moins 7 à l’épreuve sur
+      carte. Les deux conditions vont ensemble.
+    liste:
+      - "Épreuve sur carte, notée sur 12"
+      - "Calcul de marée, noté sur 4"
+      - "Deux questions sur les aides électroniques à la navigation, 0,5 chacune"
+      - "Deux questions de météorologie, 1 point chacune"
+      - "Une question de réglementation sur le matériel de sécurité, 1 point"
+  - titre: En eaux intérieures, la longueur commande
+    texte: >-
+      Sur le domaine fluvial, l’option « eaux intérieures » couvre les bateaux de plaisance
+      de moins de 20 mètres. Au-delà, à partir de 20 mètres, il faut l’extension « grande
+      plaisance eaux intérieures ».
+
+      Ce n’est plus la distance qui découpe, c’est la taille du bateau.
+  - titre: Le côtier vaut sur les lacs, pas sur les canaux
+    texte: >-
+      L’option côtière et l’extension hauturière valent l’option « eaux intérieures » pour
+      conduire sur les lacs et les plans d’eau fermés. Les titres de conduite en mer
+      délivrés sous les réglementations antérieures le valent aussi.
+
+      Sur les rivières et les canaux, cette équivalence ne joue pas.
+piege: >-
+  Le piège classique : croire que le côtier ouvre toutes les eaux intérieures. Il ne vaut
+  l’option eaux intérieures que sur les lacs et les plans d’eau fermés. Pour descendre un
+  canal avec un bateau à moteur de 12 mètres, il faut l’option eaux intérieures, pas le
+  côtier.
+retenir:
+  - "Option côtière : jusqu’à 6 milles d’un abri. Extension hauturière : au-delà."
+  - "L’inscription à l’hauturière suppose déjà l’option côtière ou un titre côtier équivalent."
+  - "Hauturière : au moins 10 sur l’ensemble et au moins 7 à l’épreuve sur carte."
+  - "Eaux intérieures : moins de 20 mètres pour l’option, 20 mètres et plus pour la grande plaisance."
+  - "Le côtier vaut l’option eaux intérieures sur les lacs et plans d’eau fermés seulement."
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+    fichier: article-2
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 12
+    ref: decret-2007-1167
+    fichier: article-12
+  - texte: Arrêté du 28 septembre 2007, article 4
+    ref: arrete-2007-09-28
+    fichier: article-4
+  - texte: Division 240, article 240-2.05
+    ref: division-240
+    fichier: article-240-2-05
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

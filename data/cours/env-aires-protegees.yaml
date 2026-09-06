@@ -1,0 +1,52 @@
+notion: env-aires-protegees
+duree: 3
+accroche: >-
+  Tu prépares une sortie et la carte annonce un parc naturel marin sur ta route. Avant de
+  savoir ce qui s’y fait, il faut savoir ce que le code appelle une aire marine protégée.
+etapes:
+  - titre: Une aire marine protégée est une catégorie de la liste
+    texte: >-
+      Le code de l’environnement ne définit pas l’aire marine protégée par une règle de
+      navigation. Il en dresse la liste : une zone est une aire marine protégée parce
+      qu’elle appartient à l’une des catégories énumérées, pas parce qu’elle est balisée
+      ou fréquentée.
+  - titre: Les catégories à reconnaître
+    texte: >-
+      Les principales, celles qu’on croise en côtière, tiennent en quelques lignes. La
+      liste du code en compte d’autres : les réserves nationales de chasse et de faune
+      sauvage ayant une partie maritime, et les aires délimitées au titre de conventions
+      internationales et régionales.
+    liste:
+      - Les parcs nationaux ayant une partie maritime
+      - Les réserves naturelles ayant une partie maritime, et leurs périmètres de protection
+      - Les arrêtés de protection des biotopes, des habitats naturels et des sites d’intérêt géologique ayant une partie maritime
+      - Les parcs naturels marins
+      - Les sites Natura 2000 ayant une partie maritime
+      - Les parties maritimes du domaine du Conservatoire du littoral
+      - Les zones de conservation halieutiques
+      - Les parties maritimes des parcs naturels régionaux
+  - titre: Chaque aire a son texte, et c’est lui qui commande
+    texte: >-
+      La liste rassemble des régimes très différents sous un même nom. Un parc national,
+      une réserve naturelle, un parc naturel marin et un site Natura 2000 sont créés par
+      des textes distincts. Chaque catégorie relève de son propre régime, et ce qui est
+      permis dépend de l’aire où tu es.
+piege: >-
+  Le piège tient à des zones qui y ressemblent sans en être. Une zone de mouillages et
+  d’équipements légers, un mouillage organisé de port de plaisance, un chenal traversier
+  de plage organisent la circulation et le stationnement des bateaux. Ils ne figurent pas
+  dans la liste des aires marines protégées.
+retenir:
+  - "Aire marine protégée : une catégorie de la liste du code de l’environnement, rien d’autre."
+  - "Parcs nationaux et réserves naturelles avec partie maritime, arrêtés de biotope, parcs naturels marins, sites Natura 2000 en mer : oui."
+  - "Zone de mouillage organisé, chenal traversier de plage : non."
+  - "Chaque catégorie relève de son propre régime : ce qui est permis dépend de l’aire où tu es."
+sources:
+  - texte: Code de l'environnement, article L. 334-1
+    ref: code-environnement
+    fichier: article-l334-1
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

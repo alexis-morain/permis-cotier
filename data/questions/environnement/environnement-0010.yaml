@@ -13,8 +13,6 @@ propositions:
     texte: Oui, pour les activités qui affectent l'état des ressources halieutiques
   - id: c
     texte: Oui, mais uniquement pour la pêche à pied
-  - id: d
-    texte: Oui, uniquement pour les membres d'une organisation sportive
 reponses:
   - b
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

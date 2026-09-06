@@ -13,10 +13,6 @@ propositions:
     texte: Tu maintiens ta route et ta vitesse, c'est à lui de s'écarter.
   - id: b
     texte: Tu t'écartes de sa route.
-  - id: c
-    texte: Vous manœuvrez tous les deux, chacun venant sur tribord.
-  - id: d
-    texte: Tu t'écartes seulement s'il t'adresse un signal sonore.
 reponses:
   - b
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

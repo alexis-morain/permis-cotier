@@ -1,0 +1,56 @@
+notion: signaux-lumineux
+duree: 3
+accroche: >-
+  De nuit, le vent porte mal et le sifflet se perd. Un navire double alors ses coups de
+  sifflet par des éclats de lumière, qui disent la même chose.
+etapes:
+  - titre: Un éclat par son bref
+    texte: >-
+      Les signaux lumineux reprennent le comptage des signaux au sifflet. Un éclat pour
+      « Je viens sur tribord », deux éclats pour « Je viens sur bâbord », trois éclats
+      pour « Je bats en arrière ».
+
+      Rien de nouveau à apprendre : tu comptes les éclats comme tu comptais les sons.
+  - titre: Ils complètent, ils ne remplacent pas
+    texte: >-
+      Tous les navires peuvent compléter les signaux au sifflet par ces signaux lumineux,
+      répétés selon les besoins pendant la durée de la manœuvre. C’est une faculté, et
+      elle vient en plus du sifflet.
+
+      Le signal du doute suit la même logique : la série d’au moins cinq sons brefs peut
+      être doublée d’au moins cinq éclats brefs et rapides.
+  - titre: Le feu qui les émet
+    texte: >-
+      Le feu utilisé pour ce signal, s’il existe, est un feu blanc, visible sur tout
+      l’horizon, d’une portée de cinq milles au moins.
+
+      Blanc, pas jaune. Tout l’horizon, pas un secteur : ce n’est pas le feu de tête de
+      mât, qui ne couvre que 225°.
+  - titre: Les durées
+    texte: >-
+      Le rythme est fixé, pour qu’on puisse compter les éclats sans se tromper.
+    liste:
+      - Chaque éclat dure une seconde environ
+      - L’intervalle entre deux éclats dure une seconde environ
+      - L’intervalle entre deux signaux successifs est de dix secondes au moins
+piege: >-
+  Les quatre à six secondes sont la durée du son prolongé au sifflet, jamais celle d’un
+  éclat. Un éclat dure une seconde environ. L’autre confusion porte sur le feu : cinq
+  milles de portée sur tout l’horizon, pas trois, et pas un secteur de 225°.
+retenir:
+  - "1 éclat tribord, 2 éclats bâbord, 3 éclats arrière : le même comptage qu’au sifflet."
+  - "Feu blanc, visible sur tout l’horizon, 5 milles au moins."
+  - "Éclat 1 seconde, intervalle 1 seconde, 10 secondes au moins entre deux signaux."
+  - Le signal lumineux complète le sifflet, il ne le remplace pas.
+sources:
+  - texte: RIPAM, règle 34
+    ref: decret-77-733
+    fichier: regle-34
+  - texte: RIPAM, règle 21
+    ref: decret-77-733
+    fichier: regle-21
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

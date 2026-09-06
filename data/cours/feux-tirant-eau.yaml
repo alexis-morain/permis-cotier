@@ -1,0 +1,59 @@
+notion: feux-tirant-eau
+duree: 3
+accroche: >-
+  Un cargo chargé à ras bord remonte un chenal dragué. Sous sa quille, il reste un mètre
+  d’eau. Il ne peut pas sortir de son chenal pour t’éviter, et il te le dit.
+etapes:
+  - titre: Trois feux rouges superposés
+    texte: >-
+      Un navire handicapé par son tirant d’eau montre, à l’endroit le plus visible, trois
+      feux rouges superposés visibles sur tout l’horizon. Ils s’ajoutent aux feux qu’il
+      porte déjà comme navire à propulsion mécanique : tête de mât, feux de côté, feu
+      de poupe.
+
+      Compte les feux avant de conclure. Deux rouges, il n’est pas maître de sa manœuvre.
+      Trois dont celui du milieu est blanc, sa capacité de manœuvre est restreinte. Trois
+      rouges, c’est son tirant d’eau.
+    visuel: feux/handicape-par-son-tirant-d-eau.svg
+    alt: "Trois feux rouges superposés sur fond de nuit, visibles sur tout l’horizon."
+  - titre: De jour, un cylindre
+    texte: >-
+      La marque de jour correspondante est un cylindre, montré à l’endroit le plus
+      visible. Aucune autre règle de feux et marques ne prévoit de cylindre.
+  - titre: Il peut, il ne doit pas
+    texte: >-
+      Le texte dit que ce navire « peut » montrer ces feux ou cette marque. La
+      signalisation est une faculté, pas une obligation. Un navire sans feux rouges
+      supplémentaires peut donc être gêné par son tirant d’eau sans le montrer.
+  - titre: Tu évites de gêner son passage
+    texte: >-
+      Tout navire, sauf un navire qui n’est pas maître de sa manœuvre et un navire à
+      capacité de manœuvre restreinte, évite de gêner le libre passage d’un navire
+      handicapé par son tirant d’eau qui montre ces signaux, si les circonstances le
+      permettent.
+
+      Lui, de son côté, navigue avec une prudence particulière. Éviter de gêner n’est
+      pas la même chose que s’écarter : tu manœuvres tôt et largement pour qu’aucune
+      situation rapprochée ne se forme.
+piege: >-
+  Beaucoup lisent ces trois feux rouges comme un privilège absolu, et croient devoir
+  s’écarter comme devant un navire non maître de sa manœuvre. Le règlement demande
+  seulement d’éviter de gêner son libre passage, et il réserve le cas des circonstances
+  qui ne le permettent pas.
+retenir:
+  - "Trois feux rouges superposés sur tout l’horizon, en plus des feux de moteur : handicapé par son tirant d’eau."
+  - "De jour, un cylindre : aucune autre règle de feux et marques n’en prévoit."
+  - "Deux rouges : pas maître de sa manœuvre. Rouge, blanc, rouge : manœuvre restreinte. Trois rouges : tirant d’eau."
+  - Tu évites de gêner son libre passage.
+sources:
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+    fichier: regle-28
+  - texte: RIPAM, règle 18
+    ref: decret-77-733
+    fichier: regle-18
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

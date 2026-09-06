@@ -1,0 +1,65 @@
+notion: conduite-incendie-voie-eau
+duree: 4
+accroche: >-
+  Deux avaries, deux ordres à connaître par cœur. Le feu et l’eau ne laissent pas le temps
+  de réfléchir, et dans les deux cas le premier geste n’est pas celui qu’on croit.
+etapes:
+  - titre: Un feu privé de son alimentation s’éteint souvent seul
+    texte: >-
+      Premier geste face à un incendie : couper ce qui l’alimente. Vanne de carburant,
+      coupe-batterie, robinet de gaz.
+
+      Beaucoup de départs de feu s’arrêtent là, avant même que l’extincteur ne serve.
+  - titre: Mettre le feu sous le vent
+    texte: >-
+      Tu manœuvres pour venir au vent, de sorte que les flammes et la fumée soient poussées
+      loin de l’équipage.
+
+      Un bateau qui fuit devant son propre incendie l’attise sur lui-même.
+  - titre: À la base des flammes, capot fermé
+    texte: >-
+      L’extincteur s’attaque à la base des flammes, jamais au sommet. On n’utilise pas
+      d’eau sur un feu électrique ou d’hydrocarbures.
+
+      On n’ouvre pas grand le capot d’un compartiment moteur en feu : l’appel d’air relance
+      le feu. On utilise l’orifice prévu à cet effet quand il existe.
+  - titre: Alerter, préparer l’évacuation
+    texte: >-
+      Tu alertes dès que le feu n’est pas maîtrisé en quelques instants.
+
+      Tu prépares l’évacuation sans l’exécuter tant que le bateau flotte.
+  - titre: Voie d’eau, l’ordre commande
+    texte: >-
+      Quatre gestes, dans cet ordre, après avoir fait porter les brassières.
+    liste:
+      - "Localiser l’entrée d’eau"
+      - "Aveugler, de l’intérieur comme de l’extérieur"
+      - "Assécher, pompe et écope, et vérifier que le niveau baisse"
+      - "Alerter et rallier l’abri le plus proche"
+  - titre: Où l’eau entre, le plus souvent
+    texte: >-
+      Presse-étoupe, passe-coque, vanne, gouvernail et fixations de quille sont les points à
+      regarder en premier. Une simple fermeture de vanne suffit souvent, et un cône
+      d’obturation bouche un passe-coque cassé. Un coussin, une voile, un pain de bois font
+      le reste.
+
+      Si le niveau ne baisse pas malgré la pompe, la fuite dépasse les moyens du bord. Si la
+      coque le permet, s’échouer volontairement sur un fond sain vaut mieux que couler au
+      large.
+piege: >-
+  Écoper d’abord et chercher la fuite ensuite. Tant que la voie d’eau n’est pas bouchée, la
+  pompe ne fait que retarder l’issue : l’ordre est de localiser, aveugler, puis assécher.
+retenir:
+  - "Incendie : couper l’alimentation, mettre le feu sous le vent, attaquer à la base des flammes."
+  - Ouvrir grand un capot moteur en feu fait un appel d’air qui relance le feu.
+  - "Voie d’eau : localiser, aveugler, assécher, alerter."
+  - On rallie l’abri le plus proche, ou l’on s’échoue sur un fond sain plutôt que de couler au large.
+sources:
+  - texte: Fiche conduite à tenir
+    ref: fiche-conduite-urgence
+    fichier: conduite-a-tenir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

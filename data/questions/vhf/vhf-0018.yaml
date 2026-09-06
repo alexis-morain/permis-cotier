@@ -11,10 +11,6 @@ propositions:
     texte: La puissance d'émission de l'appareil
   - id: b
     texte: La hauteur des antennes
-  - id: c
-    texte: La qualité du câble d'antenne
-  - id: d
-    texte: L'état de la mer
 reponses:
   - b
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

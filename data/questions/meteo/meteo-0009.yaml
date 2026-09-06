@@ -13,10 +13,6 @@ propositions:
   - id: b
     texte: Non, l'état de la mer dépend aussi du fetch, de la durée du coup de vent, du
       courant et de la profondeur
-  - id: c
-    texte: Oui, mais seulement en Méditerranée
-  - id: d
-    texte: Non, parce que l'état de la mer se mesure sur la même échelle que le vent
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

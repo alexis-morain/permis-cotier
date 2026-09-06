@@ -15,9 +15,11 @@ const site = process.env.SITE_URL ?? 'https://lepermiscotier.fr';
 
 // Une leçon du cours n'entre au sitemap que si elle est écrite : une leçon
 // courte n'est que le résumé de sa fiche de notion, la page la déclare en
-// `noindex`, et un sitemap qui l'annoncerait dirait le contraire.
+// `noindex`, et un sitemap qui l'annoncerait dirait le contraire. Une leçon
+// est à `/cours/<thème>/<notion>` ; la page d'un cours, `/cours/<thème>`,
+// entre toujours.
 const leconIndexable = (page) => {
-  const code = /\/cours\/([a-z0-9-]+)(?:\.html)?$/.exec(new URL(page).pathname)?.[1];
+  const code = /\/cours\/[a-z0-9-]+\/([a-z0-9-]+)(?:\.html)?$/.exec(new URL(page).pathname)?.[1];
   return !code || existsSync(new URL(`./data/cours/${code}.yaml`, import.meta.url));
 };
 
@@ -44,6 +46,7 @@ export default defineConfig({
         // qui répondent à une question, puis le programme, puis la banque.
         if (chemin === '/' || chemin === '') item.priority = 1.0;
         else if (chemin === '/cours' || chemin.startsWith('/guide')) item.priority = 0.9;
+        else if (/^\/cours\/[a-z0-9-]+$/.test(chemin)) item.priority = 0.8;
         else if (chemin.startsWith('/cours/')) item.priority = 0.7;
         else if (chemin === '/themes' || chemin.startsWith('/theme/')) item.priority = 0.8;
         else if (chemin.startsWith('/notion/')) item.priority = 0.7;

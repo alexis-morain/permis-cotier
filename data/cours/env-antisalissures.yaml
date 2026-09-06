@@ -1,0 +1,44 @@
+notion: env-antisalissures
+duree: 3
+accroche: >-
+  Fin de saison, la coque est couverte d’algues et de coquillages. Tu la sors, tu la
+  ponces, tu la repeins. C’est le moment où l’antisalissure part ailleurs que sur la
+  coque.
+etapes:
+  - titre: Une antisalissure agit sur le vivant
+    texte: >-
+      Une antisalissure est faite pour que rien ne se fixe sur la carène. Ce qui la rend
+      efficace contre les algues et les coquillages n’est pas anodin pour le reste du
+      vivant.
+  - titre: Poncer au bord de l’eau, c’est rejeter indirectement
+    texte: >-
+      Le code de l’environnement punit de 100 000 euros d’amende le fait de jeter, de
+      déverser ou de laisser écouler, directement ou indirectement, en mer des substances
+      nuisibles pour la conservation ou la reproduction des animaux et des végétaux marins.
+
+      Le mot qui compte ici est « indirectement ». Une poussière de ponçage et une eau de
+      rinçage qui rejoignent la mer par la cale ou le caniveau sont un rejet, même si tu
+      n’as rien versé par-dessus bord.
+  - titre: "La conséquence pratique : caréner à terre"
+    texte: >-
+      La conséquence pratique : on carène à terre, sur une aire équipée qui récupère les
+      eaux de lavage et les résidus de peinture. C’est la façon de ne rien laisser
+      écouler. Restes de pots, chiffons et papiers abrasifs suivent le même chemin que les
+      huiles usagées, vers les bacs du port.
+piege: >-
+  Le piège est de croire que le rinçage à l’eau claire d’une coque fraîchement poncée est
+  neutre parce qu’on n’a versé aucun produit. Ce qui part avec l’eau de rinçage, ce sont
+  les particules de peinture, et le texte vise le rejet indirect autant que le rejet direct.
+retenir:
+  - Une antisalissure contient des substances qui agissent sur le vivant.
+  - "Laisser écouler ces substances en mer, même indirectement : 100 000 euros d’amende."
+  - "La conséquence pratique : carénage sur aire équipée, la façon de ne rien laisser écouler."
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+    fichier: article-l218-73
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

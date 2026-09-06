@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Tu orientes le faisceau vers la passerelle du navire menacé.
   - id: c
-    texte: Tu balaies l'horizon avec le faisceau jusqu'à obtenir une réponse.
-  - id: d
     texte: Tu reproduis avec le faisceau le rythme du feu de l'aide à la navigation la
       plus proche.
 reponses:
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -1,0 +1,56 @@
+notion: signaux-avertissement
+duree: 3
+accroche: >-
+  Un navire se rapproche, tu ne sais pas où il va, et rien dans sa route ne te rassure.
+  Le RIPAM te donne un signal pour dire exactement ça.
+etapes:
+  - titre: Au moins cinq sons brefs et rapides
+    texte: >-
+      Le signal du doute est une série rapide d’au moins cinq sons brefs au sifflet. Une
+      série, pas un compte : elle s’entend d’un bloc, et on peut aller au-delà de cinq.
+
+      Elle se distingue des signaux de manœuvre par sa longueur et par sa cadence. Trois
+      coups posés annoncent une marche arrière ; cinq coups pressés disent un doute.
+    visuel: sons/avertissement-doute.svg
+    alt: "Cinq impulsions sonores courtes en série rapide, les silences plus courts que les sons."
+  - titre: Il dit deux choses
+    texte: >-
+      Le signal couvre deux situations, quand deux navires en vue l’un de l’autre
+      s’approchent.
+    liste:
+      - Je ne comprends pas tes intentions ou tes manœuvres
+      - Je me demande si tu prends des mesures suffisantes pour éviter l’abordage
+  - titre: Il s’émet tout de suite
+    texte: >-
+      Le texte demande au navire qui a des doutes de les exprimer immédiatement. Ce n’est
+      pas un dernier recours quand la situation est déjà mauvaise : c’est ce qu’on fait
+      dès que le doute naît, tant qu’il reste de la place pour manœuvrer.
+
+      Il peut être complété par un signal lumineux d’au moins cinq éclats brefs et
+      rapides.
+  - titre: Dans un chenal étroit aussi
+    texte: >-
+      La règle 9 renvoie à ce même signal deux fois. Les navires qui ne peuvent naviguer
+      en sécurité que dans le chenal peuvent l’employer s’ils doutent des intentions d’un
+      navire qui le traverse. Et le navire sur le point d’être rattrapé peut l’émettre s’il
+      doute du dépassement qu’on lui propose.
+piege: >-
+  Le doute n’est pas une détresse. Cinq sons brefs ne demandent aucune assistance et
+  n’imposent rien à personne : ils disent que tu ne comprends pas. Les signaux de
+  détresse forment une liste fermée, à l’annexe IV, et le sifflet n’en fait pas partie.
+retenir:
+  - "Au moins 5 sons brefs en série rapide : je ne comprends pas, ou je doute que tu en fasses assez."
+  - Le doute s’exprime immédiatement, pas au dernier moment.
+  - Il peut être doublé d’au moins 5 éclats brefs et rapides.
+sources:
+  - texte: RIPAM, règle 34
+    ref: decret-77-733
+    fichier: regle-34
+  - texte: RIPAM, règle 9
+    ref: decret-77-733
+    fichier: regle-09
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

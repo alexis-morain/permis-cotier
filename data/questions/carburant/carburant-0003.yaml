@@ -8,15 +8,13 @@ enonce: >-
   À quoi sert le troisième tiers de la règle des tiers ?
 propositions:
   - id: a
-    texte: À la consommation du moteur auxiliaire
-  - id: b
     texte: À l'aller, le deuxième tiers étant pour le retour et le premier pour le démarrage
-  - id: c
+  - id: b
     texte: À constituer une réserve pour l'imprévu
-  - id: d
+  - id: c
     texte: À rien, c'est la marge d'erreur de la jauge
 reponses:
-  - c
+  - b
 explication: >-
   Un tiers pour aller, un tiers pour revenir, un tiers de réserve. Le dernier tiers n'est
   pas une marge de calcul, c'est ce qui couvre ce qui n'était pas prévu : un vent contraire
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

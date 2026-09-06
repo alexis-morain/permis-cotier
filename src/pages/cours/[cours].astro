@@ -1,0 +1,276 @@
+---
+import Base from '../../layouts/Base.astro';
+import Parcours from '../../components/Parcours.tsx';
+import { COURS, coursSuivant, leconsDuCours, cheminCours, type Cours } from '../../lib/parcours';
+import { leconDeLaNotion, leconsEcrites } from '../../lib/lecons';
+import { questionsDuTheme } from '../../lib/banque';
+import { themeParCode, cibleTotaleJ1 } from '../../lib/themes';
+import { SITE, cours as coursJsonLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  return COURS.map((cours) => ({ params: { cours: cours.code }, props: { cours } }));
+}
+
+const { cours } = Astro.props as { cours: Cours };
+const theme = themeParCode(cours.code);
+if (!theme) throw new Error(`cours sans thème : ${cours.code}`);
+
+const chemin = cheminCours(cours.code);
+const base = Astro.site ?? SITE.domaine;
+const rang = COURS.findIndex((c) => c.code === cours.code) + 1;
+const suivant = coursSuivant(cours.code);
+const precedent = rang > 1 ? COURS[rang - 2] : undefined;
+
+const ecrites = await leconsEcrites();
+const lecons = await Promise.all(
+  leconsDuCours(cours.code).map(async (l) => ({
+    code: l.notion.code,
+    nom: l.notion.nom,
+    chemin: l.chemin,
+    ecrite: ecrites.has(l.notion.code),
+    duree: ecrites.get(l.notion.code)?.duree ?? 1,
+    affichable: await leconDeLaNotion(l.notion),
+  })),
+);
+const minutes = lecons.reduce((t, l) => t + l.duree, 0);
+const nbEcrites = lecons.filter((l) => l.ecrite).length;
+const relues = lecons.filter((l) => l.affichable.reluPar).length;
+const questions = await questionsDuTheme(cours.code);
+
+// Les textes derrière le cours : l'union des sources des leçons, dans l'ordre
+// de première apparition. Un texte cité par trois leçons n'est listé qu'une fois.
+const textes = new Map<string, string | undefined>();
+for (const l of lecons) for (const s of l.affichable.sources) if (!textes.has(s.texte)) textes.set(s.texte, s.url);
+
+// La part du thème dans le tirage de l'examen blanc : une hypothèse de
+// travail, `cibleJ1`, ramenée à quarante questions. La page le dit.
+const part = Math.round((theme.cibleJ1 / cibleTotaleJ1()) * 40);
+
+const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minutes, chacune vérifiée sur les questions de la banque.`;
+---
+
+<Base
+  titre={`${cours.titre} : le cours`}
+  description={description}
+  miettes={[
+    { nom: 'Cours', chemin: '/cours' },
+    { nom: cours.titre, chemin },
+  ]}
+  jsonLd={[
+    coursJsonLd(
+      {
+        code: cours.code,
+        titre: cours.titre,
+        promesse: cours.promesse,
+        theme: theme.nom,
+        minutes,
+        lecons: lecons.map((l) => ({ nom: l.nom, chemin: l.chemin, ecrite: l.ecrite })),
+      },
+      base,
+    ),
+  ]}
+>
+  <article class="page page--etroite" style="padding-block:2.5rem 0">
+    <p class="chapitre"><a href="/cours">Cours</a> · {rang} sur {COURS.length}</p>
+    <h1>{cours.titre}</h1>
+    <p class="chapo">{cours.promesse}</p>
+
+    <dl class="chiffres">
+      <div><dt>Leçons</dt><dd><b class="display">{lecons.length}</b></dd></div>
+      <div><dt>Minutes</dt><dd><b class="display">{minutes}</b></dd></div>
+      <div><dt>Questions dans la banque</dt><dd><b class="display">{questions.length}</b></dd></div>
+      <div>
+        <dt>Sur 40 à l’examen blanc</dt>
+        <dd><b class="display">{part === 0 ? '<1' : `~${part}`}</b></dd>
+      </div>
+    </dl>
+    <p class="discret chiffres__note">
+      La part dans l’examen blanc est notre estimation : aucune pondération officielle par thème
+      n’est publiée. Le thème du programme s’appelle « {theme.intitule} ».
+    </p>
+
+    <h2>Pourquoi ce cours compte</h2>
+    <p>{cours.pourquoi}</p>
+
+    <h2>Ce que tu sauras faire</h2>
+    <ul class="savoir">
+      {cours.savoirFaire.map((s) => <li>{s}</li>)}
+    </ul>
+
+    <h2>Par quel bout le prendre</h2>
+    <p>{cours.methode}</p>
+  </article>
+
+  <section class="page page--etroite lecons" id="lecons">
+    <h2>Les leçons, dans l’ordre</h2>
+    <p class="discret">
+      Chaque leçon se termine par des questions de la banque sur sa notion, corrigées une par
+      une avec le texte dont la réponse est tirée. Ta progression reste dans ton navigateur.
+      {nbEcrites < lecons.length && (
+        <Fragment>
+          {' '}{lecons.length - nbEcrites} leçon{lecons.length - nbEcrites > 1 ? 's' : ''} de ce cours
+          {lecons.length - nbEcrites > 1 ? ' tiennent' : ' tient'} encore en un résumé.
+        </Fragment>
+      )}
+    </p>
+    <Parcours
+      client:load
+      cours={{ code: cours.code, titre: cours.titre, lecons: lecons.map(({ affichable: _, ...l }) => l) }}
+      suivant={suivant ? { chemin: cheminCours(suivant.code), titre: suivant.titre } : undefined}
+    />
+  </section>
+
+  <section class="page page--etroite bloc">
+    <h2>Les pièges du thème</h2>
+    <p class="discret">Les erreurs que l’épreuve fait faire. Chaque leçon a le sien, ceux-là reviennent d’une leçon à l’autre.</p>
+    <ul class="pieges">
+      {cours.pieges.map((p) => <li>{p}</li>)}
+    </ul>
+  </section>
+
+  <section class="page page--etroite bloc">
+    <h2>Après le cours</h2>
+    <p>
+      Le cours dit ce qu’il faut savoir. L’entraînement dit ce qu’il te reste à savoir :
+      {questions.length > 0
+        ? ` ${questions.length} question${questions.length > 1 ? 's' : ''} de la banque sur ce thème, corrigées une par une.`
+        : ' les questions de ce thème sont en cours d’écriture.'}
+    </p>
+    <p class="actions">
+      {questions.length > 0 && (
+        <a class="bouton bouton--principal" href={`/entrainement/${cours.code}`} data-mesure="cours-entrainement" data-mesure-theme={cours.code}>
+          S’entraîner sur {theme.nom.toLowerCase()}
+        </a>
+      )}
+      <a class="bouton" href={`/theme/${cours.code}`}>La fiche du thème</a>
+    </p>
+  </section>
+
+  <aside class="page page--etroite bloc textes">
+    <h2>Les textes derrière ce cours</h2>
+    {textes.size > 0 ? (
+      <ul>
+        {[...textes.entries()].map(([texte, url]) => (
+          <li>{url ? <a href={url} rel="noreferrer noopener" data-mesure="source-ouverte">{texte}</a> : texte}</li>
+        ))}
+      </ul>
+    ) : (
+      <p class="discret">Les leçons de ce cours ne sont pas encore rédigées : elles reprennent le résumé de leur fiche.</p>
+    )}
+    <p class="discret">
+      {relues === lecons.length ? (
+        <Fragment>Les {lecons.length} leçons sont écrites depuis ces textes et relues par Alexis Morain.</Fragment>
+      ) : relues > 0 ? (
+        <Fragment>
+          {relues} leçon{relues > 1 ? 's' : ''} sur {lecons.length} {relues > 1 ? 'sont relues' : 'est relue'} par Alexis Morain ;
+          les autres sont écrites depuis ces textes et attendent leur relecture. Une erreur est possible :
+          le bouton de signalement est sous chaque leçon.
+        </Fragment>
+      ) : (
+        <Fragment>
+          Les leçons sont écrites depuis ces textes et attendent leur relecture par une personne.
+          Une erreur est possible : le bouton de signalement est sous chaque leçon.
+        </Fragment>
+      )}
+    </p>
+  </aside>
+
+  <nav class="page page--etroite bloc" aria-label="Cours voisins">
+    <ul class="voisins">
+      <li>
+        {precedent ? (
+          <a href={cheminCours(precedent.code)}>
+            <span class="discret">Cours précédent</span>
+            <span>{precedent.titre}</span>
+          </a>
+        ) : (
+          <span class="discret">Premier cours du parcours.</span>
+        )}
+      </li>
+      <li class="voisins__suivant">
+        {suivant ? (
+          <a href={cheminCours(suivant.code)}>
+            <span class="discret">Cours suivant</span>
+            <span>{suivant.titre}</span>
+          </a>
+        ) : (
+          <span class="discret">Dernier cours du parcours.</span>
+        )}
+      </li>
+    </ul>
+  </nav>
+</Base>
+
+<style>
+  h1 { margin-bottom: 0.75rem; }
+  .chapo {
+    font-stretch: var(--large);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+  }
+
+  /* Les chiffres du cours, en display, sur une ligne. Pas une rangée de stats
+     décorative : chacun dit quelque chose qu'on lit avant de commencer. */
+  .chiffres {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1.5rem;
+    margin: 0;
+    padding: 1.1rem 1.25rem;
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    background: var(--fond-carte);
+  }
+  .chiffres div { display: flex; flex-direction: column-reverse; gap: 0.1rem; }
+  .chiffres dt { font-size: 0.85rem; color: var(--texte-doux); font-weight: 600; }
+  .chiffres dd { margin: 0; }
+  .chiffres .display { font-size: 2rem; line-height: 1; }
+  .chiffres__note { margin: 0.6rem 0 0; }
+  @media (min-width: 40rem) {
+    .chiffres { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  article h2 { font-size: 1.25rem; margin-top: 2rem; }
+  .savoir { padding-left: 1.2rem; margin: 0; }
+  .savoir li { margin-bottom: 0.4rem; }
+
+  .lecons { margin-top: 3rem; }
+  .bloc { margin-top: 3rem; }
+
+  .pieges { list-style: none; padding: 0; margin: 0; }
+  .pieges li {
+    border-top: 2px solid var(--filet);
+    padding: 0.75rem 0;
+    max-width: 60ch;
+  }
+  .pieges li:last-child { border-bottom: 2px solid var(--filet); }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; max-width: none; }
+
+  .textes {
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    padding: 1.25rem 1.4rem;
+  }
+  .textes h2 { font-size: 1.05rem; }
+  .textes ul { padding-left: 1.1rem; margin: 0 0 0.8rem; }
+  .textes li { margin-bottom: 0.3rem; }
+  .textes p:last-child { margin: 0; }
+
+  .voisins {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--filet);
+  }
+  .voisins a { display: block; text-decoration: none; }
+  .voisins a:hover span:last-child { text-decoration: underline; text-decoration-color: var(--accent); }
+  .voisins span { display: block; }
+  .voisins__suivant { text-align: right; margin-left: auto; }
+</style>

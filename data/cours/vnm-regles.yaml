@@ -1,0 +1,71 @@
+notion: vnm-regles
+duree: 5
+accroche: >-
+  Tu pousses le scooter au large, la plage recule, et tu n’as sur toi qu’un short de bain.
+  La division 240 en fait une embarcation, le véhicule nautique à moteur, avec ses propres
+  règles de distance, de tenue et de matériel.
+etapes:
+  - titre: Sa navigation est exclusivement diurne
+    texte: >-
+      Le véhicule nautique à moteur effectue une navigation exclusivement diurne. Le
+      soleil se couche, tu rentres.
+
+      Aucun feu, aucune proximité de la côte ne lève cette limite.
+  - titre: 2 ou 6 milles, selon le nombre de places
+    texte: >-
+      La limite de distance d’un abri dépend de la conception du véhicule, pas du nombre
+      de personnes réellement à bord. Conçu pour embarquer au maximum une personne : 2
+      milles. Conçu pour en embarquer plus d’une : 6 milles.
+
+      Hors des eaux territoriales françaises, le pavillon national est arboré.
+  - titre: Flottabilité et néoprène en permanence
+    texte: >-
+      Quelle que soit la distance d’un abri, y compris à moins de 300 mètres de celui-ci,
+      le pratiquant porte en permanence deux choses.
+    liste:
+      - "Un équipement individuel de flottabilité : niveau 50 jusqu’à 2 milles, niveau 100 de 2 à 6 milles"
+      - "Un équipement néoprène de 2 mm au moins, short, shorty ou combinaison intégrale"
+  - titre: Le néoprène protège du jet de la turbine
+    texte: >-
+      Le texte donne sa finalité : prévenir les risques de blessures que peut provoquer le
+      jet de la turbine en cas de chute à l’arrière du véhicule.
+  - titre: Trois exigences à moins de 2 milles
+    texte: >-
+      À moins de 2 milles d’un abri, le véhicule embarque le matériel d’armement et de
+      sécurité basique des véhicules nautiques à moteur.
+    liste:
+      - "Un moyen de repérage lumineux individuel, étanche, d’au moins 6 heures d’autonomie"
+      - "Un dispositif de remorquage : point d’amarrage et bout"
+      - "Un moyen de connaître les heures et coefficients de marée du jour et de la zone considérée, ou leur connaissance"
+  - titre: Cinq de plus au-delà de 2 milles
+    texte: >-
+      De 2 à 6 milles d’un abri, le matériel côtier des véhicules nautiques à moteur
+      s’ajoute au basique.
+    liste:
+      - "Trois feux rouges à main"
+      - "Un compas magnétique de route"
+      - "Les cartes marines officielles de la zone, tenues à jour"
+      - "Le RIPAM, ou son résumé textuel et graphique"
+      - "Un document décrivant le balisage de la zone"
+piege: >-
+  Retenir 2 milles comme la limite du scooter des mers. Cette valeur ne vaut que pour les
+  monoplaces ; un véhicule conçu pour trois personnes va jusqu’à 6 milles. Et 2 milles sert
+  aussi de seuil entre le matériel basique et le matériel côtier : la même valeur répond à
+  deux questions différentes.
+retenir:
+  - Le véhicule nautique à moteur ne navigue que de jour.
+  - "Distance d’un abri : 2 milles s’il est conçu pour une personne, 6 milles pour plus d’une."
+  - "En permanence, même près du bord : un équipement de flottabilité et un néoprène de 2 mm."
+  - "Flottabilité 50 jusqu’à 2 milles, 100 de 2 à 6 milles."
+sources:
+  - texte: Division 240, article 240-2.12
+    ref: division-240
+    fichier: article-240-2-12
+  - texte: Division 240, article 240-1.02
+    ref: division-240
+    fichier: article-240-1-02
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

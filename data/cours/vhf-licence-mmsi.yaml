@@ -1,0 +1,61 @@
+notion: vhf-licence-mmsi
+duree: 4
+accroche: >-
+  Tu as acheté une VHF et tu l’as posée au poste de barre. Elle est conforme, elle
+  s’allume, et pourtant tu n’as pas encore le droit de t’en servir : il manque deux
+  choses administratives.
+etapes:
+  - titre: La licence autorise la station, pas la personne
+    texte: >-
+      L’utilisation d’une installation radioélectrique à bord d’un navire est soumise à
+      une autorisation administrative appelée licence de station de navire. Elle est
+      délivrée en France par l’Agence nationale des fréquences.
+
+      La licence suit le navire. Le certificat restreint de radiotéléphoniste, lui,
+      suit la personne qui manœuvre l’appareil. Il faut les deux, et l’un ne remplace
+      jamais l’autre.
+  - titre: Le MMSI est le numéro d’identité du navire
+    texte: >-
+      Le MMSI, Maritime Mobile Service Identity, identifie la station en neuf chiffres.
+      Les trois premiers forment le MID, l’indicatif du pays : 226, 227 et 228 pour la
+      France métropolitaine.
+
+      Il est attribué avec la licence, par l’autorité compétente pour l’attribution des
+      licences de stations mobiles maritimes, et programmé une fois pour toutes dans
+      l’appareil. Il ne change pas d’une sortie à l’autre.
+  - titre: Une VHF à ASN se programme avec ce numéro
+    texte: >-
+      Les installations munies de l’appel sélectif numérique, fixes comme portatives,
+      doivent être programmées avec le MMSI attribué au navire lorsqu’elles le sont.
+      Sans MMSI, l’alerte numérique partirait sans dire qui appelle.
+  - titre: La position part avec l’alerte
+    texte: >-
+      Quand la VHF fixe est munie de l’ASN et programmée avec le MMSI, des
+      renseignements sur la position du navire doivent être fournis automatiquement et
+      en permanence, afin d’être inclus dans l’alerte de détresse initiale.
+
+      Tout l’intérêt du bouton rouge tient là : l’alerte part avec l’identité et la
+      position, sans que personne ait à les dicter. Encore faut-il que le récepteur de
+      positionnement soit raccordé à la VHF.
+piege: >-
+  Le piège consiste à faire de la licence et du certificat deux noms du même document,
+  ou à croire que la licence dispense du certificat. La licence autorise l’installation
+  à bord, le certificat autorise l’opérateur. Le CROSS, de son côté, ne délivre rien :
+  il coordonne les secours.
+retenir:
+  - "Licence de station de navire : autorisation d’utiliser la radio à bord, délivrée par l’Agence nationale des fréquences."
+  - "MMSI : neuf chiffres, les trois premiers désignent le pays, 226, 227 ou 228 en France métropolitaine."
+  - Une VHF à ASN se programme avec le MMSI du navire.
+  - "VHF fixe à ASN programmée : la position est fournie en permanence pour l’alerte de détresse."
+sources:
+  - texte: Division 240, article 240-2.20
+    ref: division-240
+    fichier: article-240-2-20
+  - texte: "Fiche VHF : voies, procédures d’appel et SMDSM"
+    ref: fiche-vhf
+    fichier: procedures
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

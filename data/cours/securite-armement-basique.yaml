@@ -1,0 +1,83 @@
+notion: securite-armement-basique
+duree: 5
+accroche: >-
+  Tu sors pour l’après-midi, un mille au large du port. C’est la zone la plus courante de
+  la plaisance, et elle a sa liste de matériel : l’armement basique.
+etapes:
+  - titre: À moins de 2 milles d’un abri, huit lignes
+    texte: >-
+      Le matériel d’armement et de sécurité basique d’un navire de plaisance comprend au
+      minimum les éléments suivants.
+    liste:
+      - "Pour chaque personne embarquée, à l’exception des enfants de 30 kg maximum, un équipement individuel de flottabilité accessible rapidement et aisément, de niveau de performance d’au moins 50, ou une combinaison humide ou sèche si elle est portée"
+      - "Un dispositif lumineux"
+      - "Un ou plusieurs extincteurs portatifs d’incendie"
+      - "Un dispositif d’assèchement manuel, écope, seau ou pompe à main"
+      - "Un dispositif permettant le remorquage, point d’amarrage et bout de remorquage"
+      - "Une ligne de mouillage appropriée au navire et à la zone de navigation"
+      - "Un moyen de connaître les heures et coefficients de marée du jour et de la zone considérés"
+      - "En dehors des eaux territoriales, le pavillon national doit être arboré"
+  - titre: Trois lignes ne sont pas dues par tout le monde
+    texte: >-
+      Le dispositif d’assèchement manuel n’est exigé que des navires non auto-videurs ou
+      de ceux qui comportent au moins un espace habitable. Un cockpit qui se vide seul en
+      est dispensé.
+
+      Le moyen de connaître les marées n’est pas requis en Méditerranée. Et la ligne de
+      mouillage connaît trois dispensés, sous la responsabilité du chef de bord : le
+      voilier de moins de 250 kg de déplacement lège, le navire motorisé de moins de
+      250 kg dont la puissance propulsive ne dépasse pas 4,5 kW, et le véhicule nautique
+      à moteur.
+  - titre: Rien dans les locaux de machines
+    texte: >-
+      Aucun matériel d’armement et de sécurité n’est conservé dans les locaux de
+      machines. Faute d’autre rangement, il peut être stocké à l’extérieur, éventuellement
+      sous un plancher amovible, en sacs ou boîtes étanches fermés et assujettis à la
+      structure. Le lieu de stockage reste propre et sans coulures d’hydrocarbures dans
+      les fonds.
+  - titre: Le coupe-circuit se relie dès que le moteur tourne
+    texte: >-
+      Sur un hors-bord à commande à la barre ou en déporté, comme sur un véhicule
+      nautique à moteur, quand le navire en est équipé, le coupe-circuit filaire est relié
+      au poignet, à la jambe ou à un point fixe de l’équipement de flottabilité porté par
+      le conducteur, dès lors que le moteur est allumé. Pour ce coupe-circuit filaire, ni
+      la vitesse, ni la distance de l’abri, ni le nombre de personnes n’y changent quoi
+      que ce soit.
+
+      Le cordon ne doit en aucun cas être rallongé ni déplacé. Pour te déplacer à bord,
+      tu éteins le moteur ou tu t’assures qu’il est au point mort et que l’hélice ne peut
+      pas tourner.
+
+      Sur un navire équipé d’un coupe-circuit électromagnétique non filaire, la même règle
+      s’applique. Quand plusieurs personnes sont à bord, l’une d’elles reste en permanence
+      au poste de pilotage.
+  - titre: Un second coupe-circuit reste à bord
+    texte: >-
+      Si le conducteur passe par-dessus bord, le cordon part avec lui et le moteur
+      s’arrête. En navigation, un second coupe-circuit filaire doit pouvoir être
+      rapidement et facilement accessible, son emplacement identifié par tout le monde à
+      bord : pour redémarrer le moteur, et pour aller chercher la personne tombée à
+      l’eau.
+piege: >-
+  Le cordon du coupe-circuit gêne, et la tentation est de le rallonger ou de le
+  décrocher le temps d’aller à l’avant. Le texte l’interdit sans nuance : rallonger,
+  déplacer, modifier, jamais. L’hélice tourne encore quand la main n’est plus à portée de
+  la commande.
+retenir:
+  - "À moins de 2 milles d’un abri, c’est l’armement basique de l’article 240-2.03."
+  - "Marées : pas requis en Méditerranée. Assèchement : seulement si non auto-videur ou habitable."
+  - "Ligne de mouillage : dispensés, le voilier et le navire à moteur de moins de 250 kg à 4,5 kW près, et le VNM."
+  - "Le coupe-circuit filaire est relié au conducteur dès que le moteur est allumé."
+  - "Aucun matériel de sécurité dans les locaux de machines."
+sources:
+  - texte: Division 240, article 240-2.01
+    ref: division-240
+    fichier: article-240-2-01
+  - texte: Division 240, article 240-2.03
+    ref: division-240
+    fichier: article-240-2-03
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

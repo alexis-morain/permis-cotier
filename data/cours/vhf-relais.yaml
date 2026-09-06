@@ -1,0 +1,46 @@
+notion: vhf-relais
+duree: 3
+accroche: >-
+  Un MAYDAY sort de ta VHF sur le canal 16. Le navire appelle, tu attends la réponse
+  du CROSS, rien ne vient. Personne ne lui répond. C’est à toi de relayer, tout de
+  suite.
+etapes:
+  - titre: Tu es peut-être le seul à l’avoir entendu
+    texte: >-
+      La VHF porte à vue, un peu au-delà de l’horizon optique. La portée dépend de la
+      hauteur des antennes, pas de la puissance.
+
+      Un navire bas sur l’eau, loin de la côte, peut être entendu de toi et de personne
+      d’autre. Ton silence serait alors le silence de tout le monde.
+  - titre: MAYDAY RELAY, à ton nom, pour son compte
+    texte: >-
+      MAYDAY RELAY est le relais, par un navire ou une station, d’un message de détresse
+      émis par un autre et resté sans réponse.
+
+      Sur le canal 16, tu émets MAYDAY RELAY, ton identité comme station qui relaie, et
+      ce que tu as capté du navire en détresse, identité et position d’abord.
+  - titre: Ce que le relais n’est pas
+    texte: >-
+      Émettre un MAYDAY à ton propre nom ferait croire que c’est toi qui es en détresse,
+      et enverrait les secours sur ta position.
+
+      Passer sur une voie de travail pour prévenir un autre bateau ne servirait pas
+      davantage : ces voies ne sont veillées par personne en particulier, alors que le
+      canal 16 l’est en permanence par les CROSS.
+piege: >-
+  Attendre encore, en se disant que le CROSS finira bien par entendre. Rien ne le
+  garantit. Le relais se fait tout de suite, pas après plusieurs répétitions restées
+  sans écho.
+retenir:
+  - "MAYDAY RELAY : relayer une détresse entendue et restée sans réponse."
+  - Tu donnes l’identité et la position du navire en détresse, pas les tiennes comme sinistré.
+  - Le relais se fait sur le canal 16, la voie que les CROSS veillent.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d’appel et SMDSM'
+    ref: fiche-vhf
+    fichier: procedures
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

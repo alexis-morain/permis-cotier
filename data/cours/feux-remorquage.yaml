@@ -1,0 +1,72 @@
+notion: feux-remorquage
+duree: 4
+accroche: >-
+  Deux feux blancs superposés dans l’axe, un feu jaune au-dessus du feu de poupe. Ce
+  navire traîne quelque chose derrière lui, et ce quelque chose peut être à 200 mètres.
+etapes:
+  - titre: Deux feux de tête de mât superposés annoncent le remorquage
+    texte: >-
+      Un navire à propulsion mécanique en train de remorquer montre, au lieu de son feu de
+      tête de mât ordinaire, deux feux de tête de mât superposés. Il garde ses feux de côté
+      et son feu de poupe.
+
+      Cette pile de feux blancs est le premier signe. Un navire à moteur ordinaire n’en
+      montre jamais deux superposés sur la même verticale.
+  - titre: Trois feux superposés au-delà de 200 mètres
+    texte: >-
+      Dès que la longueur du train de remorque dépasse 200 mètres, le remorqueur montre
+      trois feux de tête de mât superposés au lieu de deux.
+
+      La longueur se mesure de l’arrière du navire remorquant à l’extrémité arrière du
+      train de remorque, pas du seul câble.
+  - titre: Le feu jaune se place au-dessus du feu de poupe
+    texte: >-
+      Le remorqueur ajoute un feu de remorquage, jaune, placé à la verticale au-dessus de
+      son feu de poupe.
+
+      Vu de l’arrière, c’est sa signature : un feu blanc et, juste au-dessus, un feu jaune.
+      Ce couple appartient au remorqueur seul.
+  - titre: Le remorqué ne montre que feux de côté et feu de poupe
+    texte: >-
+      Un navire remorqué montre des feux de côté et un feu de poupe, sans feu de
+      remorquage : celui-là reste au navire qui tire.
+
+      Quand le train de remorque dépasse 200 mètres, il montre aussi une marque
+      biconique à l’endroit le plus visible.
+  - titre: De jour, la marque biconique dit « plus de 200 mètres »
+    texte: >-
+      Au-delà de 200 mètres de train de remorque, le navire remorquant montre lui aussi
+      une marque biconique à l’endroit le plus visible. Deux cônes accolés par la base.
+
+      Cette marque n’annonce ni une avarie ni une pêche. Elle dit une seule chose : le
+      câble est long, passe loin derrière.
+  - titre: Pousser en avant ou remorquer à couple, sans feu jaune
+    texte: >-
+      Un navire à propulsion mécanique qui pousse en avant ou qui remorque à couple montre
+      deux feux de tête de mât superposés, des feux de côté et un feu de poupe. Le feu de
+      remorquage n’est pas prévu ici, il appartient au remorquage à la traîne.
+  - titre: L’unité composite se montre comme un seul navire
+    texte: >-
+      Un pousseur et un navire poussé reliés par un raccordement rigide forment une unité
+      composite. Ils sont considérés comme un seul navire à propulsion mécanique et
+      montrent les feux ordinaires du navire à moteur faisant route.
+piege: >-
+  Deux confusions se répètent. Donner le feu jaune de remorquage au navire remorqué, alors
+  qu’il est au remorqueur. Et répondre « deux feux superposés » quand l’énoncé précise que
+  le train dépasse 200 mètres : dans ce cas la réponse est trois, et la marque biconique
+  s’ajoute de jour.
+retenir:
+  - "Remorqueur : deux feux de tête de mât superposés, trois si le train dépasse 200 mètres."
+  - "Feu de remorquage jaune, à la verticale au-dessus du feu de poupe, remorqueur seulement."
+  - "Remorqué : feux de côté et feu de poupe."
+  - "Plus de 200 mètres : marque biconique de jour, sur le remorqueur comme sur le remorqué."
+  - "Pousseur relié par un raccordement rigide : feux du navire à moteur ordinaire."
+sources:
+  - texte: RIPAM, règle 24
+    ref: decret-77-733
+    fichier: regle-24
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

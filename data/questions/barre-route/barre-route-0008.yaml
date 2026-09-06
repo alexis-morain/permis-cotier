@@ -15,8 +15,6 @@ propositions:
     texte: Une situation de routes directement opposées.
   - id: c
     texte: Une situation de routes qui se croisent.
-  - id: d
-    texte: Aucune situation particulière tant que le relèvement ne change pas.
 reponses:
   - b
 explication: >-
@@ -32,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

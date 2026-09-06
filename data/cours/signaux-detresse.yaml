@@ -1,0 +1,79 @@
+notion: signaux-detresse
+duree: 5
+accroche: >-
+  Voie d’eau, moteur mort, un équipier à la mer : tu as besoin d’aide et tu dois le faire
+  savoir tout de suite, à un navire qui passe ou à un avion qui cherche.
+etapes:
+  - titre: Une règle d’une phrase, une annexe pour la liste
+    texte: >-
+      La règle 37 tient en une ligne : un navire en détresse et qui demande assistance
+      doit utiliser ou montrer les signaux décrits à l’annexe IV du Règlement. Les deux
+      conditions vont ensemble, la détresse et la demande d’assistance.
+
+      C’est donc l’annexe IV, et elle seule, qui donne la liste. Les signaux qui disent
+      « détresse » forment une liste fermée, écrite d’avance, la même pour tous les marins
+      du monde. Ils peuvent être utilisés ou montrés ensemble ou séparément.
+  - titre: Le rouge, de jour comme de nuit
+    texte: >-
+      Les signaux pyrotechniques rouges figurent à la liste : les fusées ou bombes
+      projetant des étoiles rouges, lancées une à une à de courts intervalles ; la fusée à
+      parachute produisant une lumière rouge ; le feu à main produisant une lumière rouge.
+
+      Le rouge est la couleur de la détresse. Une étoile verte ou blanche ne l’est pas.
+  - titre: L’orange se voit du ciel
+    texte: >-
+      Le signal fumigène produisant une fumée de couleur orange est un signal de détresse.
+      L’annexe cite aussi, parmi les signaux auxquels prêter attention, le morceau de toile
+      orange portant un carré et un cercle noirs, pour le repérage aérien, et le colorant.
+
+      Rouge pour être vu d’un navire, orange pour être vu d’un aéronef, de jour.
+  - titre: Ce qui se hisse et ce qui brûle
+    texte: >-
+      Trois signaux visuels ne demandent aucun matériel pyrotechnique.
+    liste:
+      - "Le pavillon carré avec une boule ou un objet analogue au-dessus ou en dessous"
+      - "Le signal NC du Code international de signaux, fait des pavillons N et C"
+      - "Les flammes sur le navire, telles qu’on en produit en brûlant un baril de goudron ou d’huile"
+  - titre: Les sons et les mots
+    texte: >-
+      Le coup de canon, ou tout autre signal explosif, tiré à des intervalles d’une minute
+      environ. Le son continu produit par un appareil quelconque pour signaux de brume. Le
+      groupe SOS du code Morse, trois points, trois traits, trois points, émis par
+      n’importe quel système de signalisation. Le mot MAYDAY en radiotéléphonie.
+
+      Le son continu se distingue de tous les signaux de brume de la règle 35, qui sont
+      rythmés, faits de sons brefs et prolongés séparés d’intervalles.
+  - titre: Les alertes électroniques
+    texte: >-
+      L’annexe range aussi parmi les signaux de détresse l’alerte par appel sélectif
+      numérique sur la voie 70 en ondes métriques, l’alerte émise par une station terrienne
+      de communication par satellite, les signaux des radiobalises de localisation des
+      sinistres et ceux des répondeurs radar pour embarcations et radeaux de sauvetage.
+  - titre: Rien à bord, les bras suffisent
+    texte: >-
+      Le dernier signal ne coûte rien : les battements lents et répétés des bras étendus de
+      chaque côté. Lents et répétés, c’est ce qui le distingue d’un salut.
+piege: >-
+  Tirer une fusée périmée pour fêter une arrivée, ou un feu à main pour éclairer une
+  manœuvre. L’annexe IV interdit l’usage de l’un quelconque de ces signaux en dehors d’un
+  cas de détresse ou d’un besoin d’assistance, et interdit aussi tout autre signal
+  susceptible d’être confondu avec eux. Une fusée tirée pour rien fait sortir les secours
+  pour rien, et son auteur en répond.
+retenir:
+  - "Règle 37 : le navire en détresse qui demande assistance utilise les signaux de l’annexe IV."
+  - "Rouge : fusées à étoiles rouges, fusée à parachute, feu à main. Orange : le fumigène."
+  - "Pavillon carré et boule, signal NC, flammes sur le navire, SOS, MAYDAY, son continu."
+  - Battements lents et répétés des bras étendus de chaque côté.
+  - Aucun de ces signaux ne s’emploie hors détresse ou besoin d’assistance.
+sources:
+  - texte: RIPAM, règle 37
+    ref: decret-77-733
+    fichier: regle-37
+  - texte: RIPAM, annexe IV
+    ref: decret-77-733
+    fichier: annexe-iv
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

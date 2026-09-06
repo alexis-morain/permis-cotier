@@ -13,6 +13,7 @@ import {
   cheminServi,
   titreQuestion,
   couperAuMot,
+  cours,
 } from './seo';
 
 const BASE = new URL('https://lepermiscotier.fr');
@@ -246,5 +247,46 @@ describe('couperAuMot', () => {
     // Ce qui reste est un préfixe de la source, arrêté sur une frontière de mot.
     expect(source.startsWith(coupe)).toBe(true);
     expect(source[coupe.length]).toBe(' ');
+  });
+});
+
+describe('cours', () => {
+  const noeud = cours(
+    {
+      code: 'balisage',
+      titre: 'Lire le balisage',
+      promesse: 'Reconnaître chaque bouée.',
+      theme: 'Balisage',
+      minutes: 37,
+      lecons: [
+        { nom: 'Marques latérales', chemin: '/cours/balisage/balisage-lateral', ecrite: true },
+        { nom: 'Pictogrammes', chemin: '/cours/balisage/balisage-pictogrammes', ecrite: false },
+      ],
+    },
+    BASE,
+  );
+
+  it('est un Course gratuit, en ligne, à son rythme, avec sa charge de travail', () => {
+    expect(noeud).toMatchObject({
+      '@type': 'Course',
+      '@id': 'https://lepermiscotier.fr/cours/balisage#cours',
+      name: 'Lire le balisage',
+      description: 'Reconnaître chaque bouée.',
+      url: 'https://lepermiscotier.fr/cours/balisage',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', category: 'Free' },
+      hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'Online', courseWorkload: 'PT37M' },
+    });
+  });
+
+  it('ne liste que les leçons écrites : une leçon courte n’est pas indexée', () => {
+    const parties = noeud.hasPart as { name: string; url: string }[];
+    expect(parties.map((p) => p.name)).toEqual(['Marques latérales']);
+    expect(parties[0]!.url).toBe('https://lepermiscotier.fr/cours/balisage/balisage-lateral');
+  });
+
+  it('cite l’auteur comme fournisseur et rattache le cours au site', () => {
+    expect(noeud.provider).toMatchObject({ '@id': 'https://lepermiscotier.fr/a-propos#auteur' });
+    expect(noeud.isPartOf).toEqual({ '@id': 'https://lepermiscotier.fr/#site' });
   });
 });

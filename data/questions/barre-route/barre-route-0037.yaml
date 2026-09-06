@@ -18,8 +18,6 @@ propositions:
     texte: Ton feu arrière et le feu de côté le plus proche de lui.
   - id: c
     texte: Tes deux feux de côté, sans ton feu arrière.
-  - id: d
-    texte: Ton feu de mât et ton feu arrière.
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

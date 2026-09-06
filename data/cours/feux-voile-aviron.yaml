@@ -1,0 +1,67 @@
+notion: feux-voile-aviron
+duree: 4
+accroche: >-
+  Un feu vert et un feu rouge bas sur l’eau, un feu blanc derrière, et rien en hauteur.
+  Ce navire marche à la voile. L’absence de feu de tête de mât est ce qui le distingue
+  d’un bateau à moteur.
+etapes:
+  - titre: À la voile, pas de feu de tête de mât
+    texte: >-
+      Un navire à voile qui fait route montre des feux de côté et un feu de poupe. C’est
+      tout.
+
+      Le feu de tête de mât appartient au navire à propulsion mécanique. Le montrer à la
+      voile reviendrait à annoncer autre chose que ce que tu fais, et les autres
+      appliqueraient les mauvaises règles de barre.
+  - titre: Sous 20 mètres, un fanal unique en tête de mât
+    texte: >-
+      À bord d’un voilier de longueur inférieure à 20 mètres, les feux de côté et le feu
+      de poupe peuvent être réunis en un seul fanal, placé au sommet ou à la partie
+      supérieure du mât, à l’endroit le plus visible.
+
+      Le fanal réunit bien les trois feux, pas seulement les deux feux de côté. Et la
+      limite est 20 mètres, pas 12.
+  - titre: Le rouge sur vert est facultatif, et jamais avec le fanal
+    texte: >-
+      En plus de ses feux, un voilier faisant route peut montrer au sommet ou à la partie
+      supérieure du mât deux feux superposés visibles sur tout l’horizon : le supérieur
+      rouge, l’inférieur vert.
+
+      Ces feux sont une faculté. La même règle interdit de les montrer en même temps que
+      le fanal unique autorisé sous 20 mètres. Ensemble, ils rendraient le voilier
+      illisible.
+  - titre: Sous 7 mètres et à l’aviron, une lampe blanche prête
+    texte: >-
+      Un voilier de longueur inférieure à 7 mètres montre si possible les feux ci-dessus.
+      S’il ne le fait pas, il doit être prêt à montrer immédiatement, pour prévenir un
+      abordage, une lampe électrique ou un fanal allumé à feu blanc.
+
+      Un navire à l’aviron peut montrer les feux prévus pour les voiliers. S’il ne le fait
+      pas, la même lampe blanche doit rester à portée de main.
+  - titre: À la voile et au moteur, un cône la pointe en bas
+    texte: >-
+      Un navire qui fait route à la fois à la voile et au moyen de son appareil propulsif
+      montre à l’avant, à l’endroit le plus visible, une marque de forme conique la pointe
+      en bas.
+
+      C’est une marque de jour. Elle prévient les autres que, malgré la voilure, tu es
+      tenu aux règles du navire à propulsion mécanique.
+piege: >-
+  Le sens du cône se retourne facilement : pointe en bas au moteur et à la voile, pas
+  pointe en haut. Et l’ordre des deux feux facultatifs s’inverse aussi vite : rouge
+  au-dessus, vert au-dessous.
+retenir:
+  - "Voilier faisant route : feux de côté et feu de poupe, jamais de feu de tête de mât."
+  - "Moins de 20 mètres : les trois feux peuvent être réunis en un fanal unique en tête de mât."
+  - "Facultatif : rouge au-dessus de vert en tête de mât, jamais avec le fanal unique."
+  - "Moins de 7 mètres ou à l’aviron : une lampe blanche prête à montrer immédiatement."
+  - "Voile et moteur ensemble : cône la pointe en bas, à l’avant."
+sources:
+  - texte: RIPAM, règle 25
+    ref: decret-77-733
+    fichier: regle-25
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

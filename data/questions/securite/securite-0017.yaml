@@ -12,10 +12,6 @@ propositions:
     texte: Non, la navigation y est interdite aux planches à pagaie
   - id: b
     texte: Oui, jusqu'à six milles avec l'armement côtier spécifique
-  - id: c
-    texte: Oui, jusqu'à six milles si la pratique est encadrée
-  - id: d
-    texte: Oui, sans limite de distance tant que la mer est belle
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
