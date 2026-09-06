@@ -55,7 +55,7 @@ retenir:
   - "Moins de 20 mètres : les trois feux peuvent être réunis en un fanal unique en tête de mât."
   - "Facultatif : rouge au-dessus de vert en tête de mât, jamais avec le fanal unique."
   - "Moins de 7 mètres ou à l’aviron : une lampe blanche prête à montrer immédiatement."
-  - "Voile et moteur ensemble : cône noir la pointe en bas, à l’avant."
+  - "Voile et moteur ensemble : cône la pointe en bas, à l’avant."
 sources:
   - texte: RIPAM, règle 25
     ref: decret-77-733
@@ -63,3 +63,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

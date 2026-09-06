@@ -8,8 +8,8 @@ etapes:
   - titre: Au-delà de 4,5 kilowatts, le permis est exigé
     texte: >-
       La conduite d’un bateau de plaisance à moteur est subordonnée à la possession du
-      permis dès que la puissance motrice dépasse 4,5 kilowatts, soit environ 6 chevaux.
-      En dessous de ce seuil, aucun titre n’est demandé.
+      permis dès que la puissance motrice dépasse 4,5 kilowatts, soit 6,1 chevaux. À
+      4,5 kilowatts ou moins, aucun titre n’est demandé.
 
       Le seuil porte sur la puissance du moteur. Ni la longueur du bateau, ni le nombre de
       personnes à bord, ni la distance que tu comptes parcourir n’entrent dans ce calcul.
@@ -31,7 +31,7 @@ etapes:
       La dispense tient au bateau, pas à ce qui le fait avancer à l’instant. Un voilier de
       10 mètres qui rentre au moteur reste un voilier au sens du texte, quelle que soit la
       puissance de son auxiliaire.
-  - titre: Sur les rivières et les canaux, ce même voilier redevient soumis
+  - titre: Sur les canaux, ce voilier redevient soumis
     texte: >-
       Sur les rivières et canaux, la conduite d’un bateau de plaisance à voile équipé d’un
       moteur de plus de 4,5 kilowatts exige un permis valable en eaux intérieures, et
@@ -56,6 +56,11 @@ sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 2
     ref: decret-2007-1167
     fichier: article-2
+  - texte: Division 240, article 240-1.02
+    ref: division-240
+    fichier: article-240-1-02
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

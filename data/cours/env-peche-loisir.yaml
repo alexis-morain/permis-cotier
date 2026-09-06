@@ -2,7 +2,7 @@ notion: env-peche-loisir
 duree: 5
 accroche: >-
   Tu rentres d’une belle sortie, la glacière pleine. Un restaurateur du port te propose
-  de te les acheter. La réponse tient dans la définition même de la pêche de loisir.
+  de t’acheter ta pêche. La réponse tient dans la définition même de la pêche de loisir.
 etapes:
   - titre: Ta pêche se mange en famille, elle ne se vend pas
     texte: >-
@@ -34,8 +34,8 @@ etapes:
       celles des professionnels.
   - titre: Ce que tu embarques est une liste fermée
     texte: >-
-      À bord, seuls la détention et l’usage des engins suivants sont autorisés. Tout ce qui
-      n’y figure pas est interdit, à commencer par le chalut.
+      À bord des navires visés par l’article, seuls la détention et l’usage des engins
+      suivants sont autorisés. Tout ce qui n’y figure pas est interdit.
     liste:
       - Deux palangres de trente hameçons chacune
       - Deux casiers
@@ -59,13 +59,13 @@ etapes:
       Les activités de pêche de loisir qui affectent l’état des ressources halieutiques
       peuvent être soumises à un régime d’autorisations. L’autorisation fixe alors ce que
       tu peux pêcher, détenir à bord, transborder et débarquer, l’effort de pêche, les
-      types d’engins et les autres conditions d’exercice. Le thon rouge en est l’exemple
-      le plus connu.
+      types d’engins et les autres conditions d’exercice.
 piege: >-
   Les douze hameçons sont un total, pas un nombre par ligne : c’est l’ensemble des lignes
-  en action de pêche qui est compté, et un leurre vaut un hameçon. Deuxième piège du même
-  article, la limite de 800 watts. Elle ne rend pas le vire-casier électrique permis : elle
-  encadre les seuls vire-lignes et moulinets, dans la limite de trois par navire.
+  en action de pêche qui est compté, et un leurre vaut un hameçon. Le même article prévoit
+  qu’un arrêté ministériel peut ramener la limite à cinq hameçons par personne. Deuxième
+  piège du même article, la limite de 800 watts. Elle ne rend pas le vire-casier électrique
+  permis : elle encadre les seuls vire-lignes et moulinets, dans la limite de trois par navire.
 retenir:
   - Le produit de la pêche de loisir ne se colporte pas, ne se vend pas, ne s’achète pas.
   - Tailles minimales, zones et périodes des professionnels s’appliquent, jamais plus souples.
@@ -91,3 +91,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

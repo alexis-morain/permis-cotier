@@ -10,7 +10,7 @@ etapes:
       Les règles sur les feux s’observent du coucher au lever du soleil. Pendant cet
       intervalle, tu ne montres aucun autre feu qui pourrait être confondu avec eux, gêner
       leur visibilité ou leur caractère distinctif, ou empêcher d’exercer une veille
-      satisfaisante. La guirlande de pont attend le mouillage.
+      satisfaisante. L’interdiction vaut aussi au mouillage.
 
       Les mêmes feux se montrent aussi du lever au coucher du soleil par visibilité
       réduite, et chaque fois que c’est jugé nécessaire. Les marques, elles, s’observent
@@ -44,7 +44,8 @@ etapes:
       135 degrés, vers l’arrière. Seule la couleur change.
 
       Deux définitions restent. Un feu visible sur tout l’horizon projette sa lumière sur
-      360 degrés. Un feu à éclats, au sens de la règle, bat 120 éclats ou plus par minute.
+      360 degrés. Un feu à éclats, au sens de la règle, bat 120 éclats réguliers ou plus par
+      minute.
 piege: >-
   Les quatre secteurs se ressemblent et l’épreuve les échange. 112,5 degrés est celui d’un
   feu de côté, 225 celui du feu de tête de mât, 135 celui du feu de poupe et du feu de
@@ -66,3 +67,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

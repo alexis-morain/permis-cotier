@@ -1,8 +1,7 @@
 notion: balisage-pictogrammes
 duree: 3
 accroche: >-
-  Une bouée jaune à l’entrée d’une baie, et sur son flanc un petit dessin : un plongeur,
-  un skieur, un jet. Le dessin te dit de quelle activité on parle. Ce sont ses couleurs
+  Une bouée jaune à l’entrée d’une baie, et sur son flanc un petit dessin. Le dessin te dit de quelle activité on parle. Ce sont ses couleurs
   qui te disent si elle est permise ou défendue.
 etapes:
   - titre: Deux codes, et deux seulement
@@ -18,8 +17,8 @@ etapes:
   - titre: La figure nomme l’activité, le fond tranche
     texte: >-
       Lis le pictogramme en deux temps. La figure au centre désigne l’activité concernée,
-      la baignade, la plongée, le ski nautique, un engin à moteur. Le fond et le liséré
-      disent ce que la réglementation en fait.
+      par exemple une activité de plage ou un engin à moteur. Le fond et le liséré disent
+      ce que la réglementation en fait.
 
       Un même dessin change donc de sens selon ses couleurs. Le bleu ouvre, le rouge barré
       ferme.
@@ -31,8 +30,7 @@ etapes:
       la nature de la réglementation applicable.
 
       Ces bouées présentent les caractères des marques spéciales et sont dépourvues de
-      voyant. Le pictogramme est donc la seule chose qui te renseigne sur l’activité
-      réglementée dans la zone.
+      voyant. Le pictogramme te renseigne sur l’activité réglementée dans la zone.
 piege: >-
   Le réflexe associe un panneau à une contrainte, et fait répondre « interdit » devant un
   pictogramme bleu. C’est l’inverse : le fond bleu à figure blanche est le signe de
@@ -53,6 +51,11 @@ sources:
   - texte: Arrêté du 27 mars 1991, article 1er
     ref: arrete-1991-03-27
     fichier: article-1
+  - texte: Arrêté du 27 mars 1991, article 2
+    ref: arrete-1991-03-27
+    fichier: article-2
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

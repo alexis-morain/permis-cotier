@@ -1,13 +1,14 @@
 notion: meteo-bulletin
 duree: 4
 accroche: >-
-  Tu ouvres le bulletin de côte de ta zone. Il est toujours bâti pareil, et il commence
-  par ce qui est le plus urgent.
+  Tu ouvres le bulletin de côte de ta zone. Il est toujours bâti pareil et commence par
+  la situation générale. L’avis, lui, arrive à part et ne t’attend pas.
 etapes:
   - titre: L’avis passe avant tout le reste
     texte: >-
-      Le bulletin météorologique spécial, ou BMS, est un avis diffusé hors des heures
-      normales dès qu’un vent de force 7 au moins est attendu ou observé sur une zone.
+      Le bulletin météorologique spécial, ou BMS, est un avis diffusé à part, hors des
+      heures normales, dès qu’un vent de force 7 au moins est attendu ou observé sur une
+      zone. Il ne fait pas partie du bulletin de côte et prime sur lui.
 
       Son nom donne la force annoncée.
     liste:
@@ -26,9 +27,8 @@ etapes:
       mer, temps, visibilité. La marée et la pression n’en sont pas des rubriques.
   - titre: Vent, mer, temps, visibilité
     texte: >-
-      Le vent est donné en degrés Beaufort, avec sa direction. La mer est donnée sur
-      l’échelle d’état de la mer, de 0 à 9 : les deux chiffres ne se déduisent pas l’un
-      de l’autre.
+      Le vent est donné en degrés Beaufort. La mer est donnée sur l’échelle d’état de la
+      mer, de 0 à 9 : les deux chiffres ne se déduisent pas l’un de l’autre.
 
       La visibilité ferme la liste, et c’est celle qu’on lit le plus vite alors qu’une
       brume change une navigation côtière du tout au tout.
@@ -55,3 +55,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

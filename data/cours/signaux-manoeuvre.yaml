@@ -27,8 +27,8 @@ etapes:
     alt: "Deux impulsions sonores courtes séparées par un silence de même durée."
   - titre: Trois sons brefs, je bats en arrière
     texte: >-
-      Trois coups courts : il inverse sa propulsion. Il ne recule pas forcément encore,
-      il freine ou il va reculer.
+      Trois coups courts, pour dire « je bats en arrière » : celui qui les émet inverse
+      sa propulsion.
     visuel: sons/manoeuvre-arriere.svg
     alt: "Trois impulsions sonores courtes émises à la suite."
   - titre: Trois conditions, sinon le signal n’est pas dû
@@ -40,9 +40,9 @@ etapes:
       plus. Et dans la brume, où l’on ne se voit pas, ce sont d’autres signaux qui
       s’appliquent.
 piege: >-
-  L’inversion bâbord tribord fait tomber la moitié des candidats : un son bref, c’est
-  tribord, pas bâbord. Autre erreur, croire que ces signaux valent pour tous les navires.
-  Tu vires de bord à la voile en vue d’un autre bateau : tu n’as aucun signal à émettre.
+  L’inversion bâbord tribord : un son bref, c’est tribord, pas bâbord. Autre erreur,
+  croire que ces signaux valent pour tous les navires. Tu vires de bord à la voile en vue
+  d’un autre bateau : tu n’as aucun signal à émettre.
 retenir:
   - "Un bref : je viens sur tribord. Deux brefs : je viens sur bâbord. Trois brefs : je bats en arrière."
   - "Le son bref dure environ 1 seconde, le son prolongé de 4 à 6 secondes."
@@ -57,3 +57,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

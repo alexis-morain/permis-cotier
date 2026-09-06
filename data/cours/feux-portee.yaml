@@ -11,7 +11,8 @@ etapes:
       Elle range les navires en trois tranches : moins de 12 mètres, de 12 à moins de 50
       mètres, 50 mètres et plus. Plus le navire est grand, plus ses feux portent loin.
 
-      Dans chaque tranche, le feu de côté est toujours le plus faible.
+      Sous 12 mètres, le feu de côté est le seul à 1 mille ; au-dessus, il porte autant
+      que le feu de poupe.
   - titre: Sous 12 mètres, le feu de côté porte 1 mille
     texte: >-
       C’est la tranche de la plupart des bateaux de plaisance, et celle que l’épreuve
@@ -43,7 +44,7 @@ retenir:
   - "Moins de 12 mètres : tête de mât 2 milles, côté 1 mille, poupe 2 milles."
   - "De 12 à 50 mètres : tête de mât 5 milles, 3 milles sous 20 mètres, les autres 2 milles."
   - "50 mètres et plus : tête de mât 6 milles, les autres 3 milles."
-  - Le feu de côté est toujours le feu qui porte le moins loin.
+  - "Sous 12 mètres, le feu de côté est le seul à 1 mille ; au-dessus, il porte autant que le feu de poupe."
 sources:
   - texte: RIPAM, règle 22
     ref: decret-77-733
@@ -51,3 +52,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

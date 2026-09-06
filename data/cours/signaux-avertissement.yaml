@@ -26,14 +26,14 @@ etapes:
       pas un dernier recours quand la situation est déjà mauvaise : c’est ce qu’on fait
       dès que le doute naît, tant qu’il reste de la place pour manœuvrer.
 
-      De nuit, il peut être complété par un signal lumineux d’au moins cinq éclats brefs
-      et rapides.
+      Il peut être complété par un signal lumineux d’au moins cinq éclats brefs et
+      rapides.
   - titre: Dans un chenal étroit aussi
     texte: >-
       La règle 9 renvoie à ce même signal deux fois. Les navires qui ne peuvent naviguer
-      en sécurité que dans le chenal l’emploient s’ils doutent des intentions d’un navire
-      qui le traverse. Et le navire sur le point d’être rattrapé l’émet s’il doute du
-      dépassement qu’on lui propose.
+      en sécurité que dans le chenal peuvent l’employer s’ils doutent des intentions d’un
+      navire qui le traverse. Et le navire sur le point d’être rattrapé peut l’émettre s’il
+      doute du dépassement qu’on lui propose.
 piege: >-
   Le doute n’est pas une détresse. Cinq sons brefs ne demandent aucune assistance et
   n’imposent rien à personne : ils disent que tu ne comprends pas. Les signaux de
@@ -41,7 +41,7 @@ piege: >-
 retenir:
   - "Au moins 5 sons brefs en série rapide : je ne comprends pas, ou je doute que tu en fasses assez."
   - Le doute s’exprime immédiatement, pas au dernier moment.
-  - "De nuit, il peut être doublé d’au moins 5 éclats brefs et rapides."
+  - Il peut être doublé d’au moins 5 éclats brefs et rapides.
 sources:
   - texte: RIPAM, règle 34
     ref: decret-77-733
@@ -52,3 +52,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -11,8 +11,7 @@ etapes:
       conduite du navire, de la tenue du journal de bord quand il est exigé, du respect des
       règlements et de la sécurité des personnes embarquées.
 
-      Ce n’est ni un titre ni un diplôme : c’est une fonction. À bord d’un bateau loué,
-      c’est le locataire qui la tient dès qu’il prend la barre.
+      Ce n’est ni un titre ni un diplôme : c’est une fonction.
   - titre: Quatre vérifications sur la même ligne
     texte: >-
       Le chef de bord s’assure de la présence à bord, du bon état et de la validité de tous
@@ -22,7 +21,7 @@ etapes:
     liste:
       - La présence à bord du matériel
       - Son bon état de fonctionnement
-      - Sa validité, donc les dates de péremption et les visites
+      - Sa validité, donc les visites techniques qui lui sont applicables
       - Son adaptation aux personnes embarquées, taille et poids compris
   - titre: Emporter ne suffit pas, il faut s’en servir
     texte: >-
@@ -64,3 +63,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

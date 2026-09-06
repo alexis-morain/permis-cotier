@@ -23,8 +23,7 @@ etapes:
       on abat puis on revient. Au moteur, on vire du côté opposé, pour éloigner l’hélice.
   - titre: Face au vent, hélice débrayée
     texte: >-
-      Tu approches face au vent, doucement : le bateau ralentit alors de lui-même et reste
-      manœuvrant. Vent arrière, il se jette sur la personne.
+      Tu approches face au vent, doucement.
 
       Tu débrayes l’hélice avant le contact. L’hélice qui tourne est le danger principal de
       la récupération.
@@ -41,8 +40,8 @@ etapes:
       est un MAYDAY, et tu donnes la position du point de chute, pas celle où tu te trouves
       en parlant.
 piege: >-
-  Approcher vent arrière et récupérer par le tableau arrière, moteur au ralenti. Vent
-  arrière le bateau ne freine pas, et l’arrière est là où tourne l’hélice : c’est
+  Approcher vent arrière et récupérer par le tableau arrière, moteur au ralenti.
+  L’approche se fait face au vent, et l’arrière est là où tourne l’hélice : c’est
   exactement la partie du bateau qu’il faut tenir éloignée de la personne.
 retenir:
   - Un équipier désigné ne quitte plus la personne des yeux, bras tendu.
@@ -56,3 +55,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

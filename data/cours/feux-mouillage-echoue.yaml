@@ -12,20 +12,20 @@ etapes:
 
       Deux blancs à des hauteurs différentes, sans rien de coloré : le navire est immobile
       et son avant est du côté du feu le plus haut.
-    visuel: feux/au-mouillage-moins-de-50-m.svg
-    alt: "Un seul feu blanc sur fond de nuit, visible sur tout l’horizon."
   - titre: En dessous de 50 mètres, un seul feu suffit
     texte: >-
       Un navire au mouillage de longueur inférieure à 50 mètres peut montrer un seul feu
       blanc visible sur tout l’horizon, à l’endroit le plus visible, au lieu des deux
-      feux. C’est le cas de tous les bateaux de plaisance.
+      feux. C’est le cas de la quasi-totalité des bateaux de plaisance.
 
       Ce feu unique te renseigne donc sur deux choses à la fois : le navire est au
       mouillage, et il fait moins de 50 mètres. À partir de 100 mètres, l’illumination
       des ponts devient obligatoire.
+    visuel: feux/au-mouillage-moins-de-50-m.svg
+    alt: "Un seul feu blanc sur fond de nuit, visible sur tout l’horizon."
   - titre: De jour, une boule à l’avant
     texte: >-
-      La marque du mouillage est une boule noire, montrée à l’avant, à l’endroit le plus
+      La marque du mouillage est une boule, montrée à l’avant, à l’endroit le plus
       visible. Une seule, quelle que soit la longueur du navire.
   - titre: Échoué, deux feux rouges en plus
     texte: >-
@@ -64,3 +64,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

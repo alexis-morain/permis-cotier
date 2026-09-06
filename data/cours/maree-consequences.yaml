@@ -8,24 +8,22 @@ etapes:
   - titre: La marée décide de l’heure du passage
     texte: >-
       La hauteur d’eau disponible sur un haut-fond ou sur un seuil d’entrée de port change
-      de plusieurs mètres au fil de la journée en Manche et en Atlantique. Ce n’est pas la
+      au fil de la journée en Manche et en Atlantique. Ce n’est pas la
       route qui change, c’est l’heure à laquelle elle est praticable.
 
       Le raisonnement est toujours le même : la sonde portée sur la carte, plus la hauteur
       de marée du moment, moins ton tirant d’eau, et une marge.
-  - titre: Un coefficient fort creuse et accélère
+  - titre: Un coefficient fort creuse le passage
     texte: >-
-      En vive-eau, les hauts-fonds découvrent largement à basse mer et les courants sont
-      plus forts dans les passages resserrés. En morte-eau, l’écart et les courants
-      restent modérés.
+      En vive-eau, les hauts-fonds découvrent largement à basse mer. En morte-eau, l’écart
+      reste modéré.
 
       Un même passage ne se juge donc pas de la même façon à coefficient 40 et à
       coefficient 100.
   - titre: La Méditerranée n’a pas ce souci
     texte: >-
       Le marnage y est de quelques dizaines de centimètres au plus. La marée n’y commande
-      pas la navigation : une sonde de carte y reste valable à toute heure, à la décote
-      près.
+      pas la navigation : une sonde de carte y reste valable à toute heure.
   - titre: Le moyen de connaître la marée est obligatoire à bord
     texte: >-
       Le matériel d’armement et de sécurité basique d’un navire de plaisance comprend un
@@ -49,8 +47,8 @@ piege: >-
   pratique sur la navigation.
 retenir:
   - "En Manche et en Atlantique, la marée décide de l’heure d’un passage ou d’une entrée de port."
-  - "Profondeur du moment = sonde de la carte + hauteur de marée. Il reste à retirer ton tirant d’eau."
-  - "Coefficient fort : hauts-fonds découverts et courants renforcés."
+  - "Profondeur du moment = sonde + hauteur de marée. Ton tirant d’eau se retranche pour connaître l’eau sous la quille."
+  - "Coefficient fort : hauts-fonds largement découverts à basse mer."
   - "Un moyen de connaître heures et coefficients de marée est obligatoire à bord, sauf en Méditerranée."
   - "La règle des douzièmes relève de l’extension hauturière, pas de l’option côtière."
 sources:
@@ -66,3 +64,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -8,10 +8,7 @@ etapes:
   - titre: Les zones se lisent par le moyen qui porte l’alerte
     texte: >-
       Le système mondial de détresse et de sécurité en mer classe les eaux du globe
-      selon le matériel capable d’y transmettre une alerte jusqu’à terre. Ce classement
-      commande l’équipement radio attendu à bord.
-
-      Retiens l’ordre : plus le numéro monte, plus on s’éloigne de la côte.
+      selon le matériel capable d’y transmettre une alerte jusqu’à terre.
   - titre: A1, la portée d’une station VHF
     texte: >-
       La zone A1 est celle où l’on se trouve dans la portée d’une station côtière VHF
@@ -48,6 +45,11 @@ sources:
   - texte: "Fiche VHF : voies, procédures d’appel et SMDSM"
     ref: fiche-vhf
     fichier: procedures
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+    fichier: article-2
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

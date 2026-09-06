@@ -8,7 +8,7 @@ etapes:
   - titre: Le coefficient va de 20 à 120
     texte: >-
       Le coefficient de marée est propre aux cartes et aux annuaires français. Son échelle
-      va de 20 à 120. Il chiffre l’amplitude de la marée du jour, dans une zone donnée.
+      va de 20 à 120. Il chiffre l’amplitude de la marée du jour.
   - titre: Trois repères suffisent à le lire
     texte: >-
       Retiens trois valeurs et tu situes n’importe quel coefficient sur l’échelle.
@@ -19,11 +19,9 @@ etapes:
   - titre: Plus il est fort, plus la mer bouge
     texte: >-
       Un coefficient élevé annonce un fort marnage : la mer monte plus haut et descend plus
-      bas dans la même journée. Les hauts-fonds découvrent largement à basse mer et les
-      courants sont plus forts dans les passages.
+      bas dans la même journée. Les hauts-fonds découvrent largement à basse mer.
 
-      Un coefficient faible annonce l’inverse : peu d’écart entre pleine et basse mer, et
-      des courants modérés.
+      Un coefficient faible annonce l’inverse : peu d’écart entre pleine et basse mer.
   - titre: Il dit l’amplitude, pas la hauteur
     texte: >-
       Le coefficient ne donne ni l’heure de la pleine mer ni la hauteur d’eau en mètres à
@@ -44,3 +42,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

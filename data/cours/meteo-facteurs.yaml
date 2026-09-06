@@ -12,7 +12,7 @@ etapes:
       la carte. Des isobares espacés annoncent un vent faible.
 
       Une pression qui baisse vite annonce un renforcement.
-  - titre: Autour d’une dépression, le vent tourne à l’envers des aiguilles
+  - titre: Le vent tourne à l’envers autour d’une dépression
     texte: >-
       Dans l’hémisphère nord, le vent tourne dans le sens inverse des aiguilles d’une
       montre autour d’une dépression, et dans le sens des aiguilles autour d’un
@@ -65,3 +65,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

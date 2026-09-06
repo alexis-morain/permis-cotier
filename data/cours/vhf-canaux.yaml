@@ -1,8 +1,8 @@
 notion: vhf-canaux
 duree: 4
 accroche: >-
-  Tu allumes la VHF et le sélecteur défile sur des dizaines de canaux. Trois d’entre
-  eux suffisent à passer l’examen, et à te sortir d’affaire en mer.
+  Tu allumes la VHF et le sélecteur défile sur des dizaines de canaux. Quelques-uns
+  suffisent à passer l’examen, et à te sortir d’affaire en mer.
 etapes:
   - titre: Le 16 est la voie de détresse et d’appel
     texte: >-
@@ -64,3 +64,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

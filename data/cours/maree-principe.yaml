@@ -7,9 +7,8 @@ accroche: >-
 etapes:
   - titre: La Lune et le Soleil tirent l’eau
     texte: >-
-      La mer est attirée par la Lune, et plus faiblement par le Soleil. Cette attraction
-      la creuse et la gonfle, et sur la Manche et l’Atlantique la mer monte et descend
-      deux fois par jour.
+      La mer est attirée par la Lune et par le Soleil. Ce sont eux qui la font monter,
+      puis redescendre.
 
       La différence de hauteur entre une pleine mer et la basse mer qui la suit s’appelle
       le marnage. C’est lui qui varie d’un jour à l’autre.
@@ -18,12 +17,11 @@ etapes:
       Autour de la pleine lune et de la nouvelle lune, le Soleil et la Lune tirent dans le
       même sens. Leurs effets s’ajoutent et le marnage est maximal : c’est la vive-eau.
 
-      La mer monte plus haut et descend plus bas que d’ordinaire, deux fois par mois.
+      La mer monte plus haut et descend plus bas que d’ordinaire.
   - titre: Les deux astres en croix donnent la morte-eau
     texte: >-
       Aux quartiers de lune, le Soleil et la Lune tirent en croix. Leurs effets se
-      contrarient et le marnage est minimal : c’est la morte-eau. Elle revient elle aussi
-      deux fois par mois, entre deux vives-eaux.
+      contrarient et le marnage est minimal : c’est la morte-eau.
   - titre: La Méditerranée est un cas à part
     texte: >-
       Le marnage y est de quelques dizaines de centimètres au plus. La marée n’y commande
@@ -45,3 +43,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

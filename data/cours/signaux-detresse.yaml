@@ -2,8 +2,7 @@ notion: signaux-detresse
 duree: 5
 accroche: >-
   Voie d’eau, moteur mort, un équipier à la mer : tu as besoin d’aide et tu dois le faire
-  savoir. Les signaux qui disent « détresse » sont une liste fermée, écrite d’avance, la
-  même pour tous les marins du monde.
+  savoir tout de suite, à un navire qui passe ou à un avion qui cherche.
 etapes:
   - titre: Une règle d’une phrase, une annexe pour la liste
     texte: >-
@@ -11,11 +10,12 @@ etapes:
       doit utiliser ou montrer les signaux décrits à l’annexe IV du Règlement. Les deux
       conditions vont ensemble, la détresse et la demande d’assistance.
 
-      C’est donc l’annexe IV, et elle seule, qui donne la liste. Les signaux peuvent être
-      utilisés ou montrés ensemble ou séparément.
+      C’est donc l’annexe IV, et elle seule, qui donne la liste. Les signaux qui disent
+      « détresse » forment une liste fermée, écrite d’avance, la même pour tous les marins
+      du monde. Ils peuvent être utilisés ou montrés ensemble ou séparément.
   - titre: Le rouge, de jour comme de nuit
     texte: >-
-      Trois signaux pyrotechniques rouges figurent à la liste : les fusées ou bombes
+      Les signaux pyrotechniques rouges figurent à la liste : les fusées ou bombes
       projetant des étoiles rouges, lancées une à une à de courts intervalles ; la fusée à
       parachute produisant une lumière rouge ; le feu à main produisant une lumière rouge.
 
@@ -75,3 +75,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

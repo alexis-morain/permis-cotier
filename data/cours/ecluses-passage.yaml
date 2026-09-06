@@ -20,17 +20,15 @@ etapes:
       de même dans les garages, dès lors qu’elles ne sont pas utilisées.
 
       L’emploi de défenses est obligatoire, et elles doivent être flottantes lorsqu’elles
-      sont amovibles. Une défense qui tombe à l’eau et coule va gêner les portes et les
-      vannes.
+      sont amovibles.
   - titre: Amarré, et les amarres manœuvrées
     texte: >-
       Pendant le remplissage et la vidange du sas, et jusqu’au moment où la sortie est
-      autorisée, les bateaux sont amarrés. La manœuvre des amarres est assurée de manière
-      à empêcher tout choc contre les bajoyers, les portes, les dispositifs de protection
-      ou les autres bateaux.
+      autorisée, les bateaux sont amarrés.
 
-      Le niveau bouge : les amarres doivent suivre. On file en descendant, on reprend en
-      montant, et on ne raidit jamais une amarre sur un taquet.
+      Le niveau bouge, les amarres doivent suivre. La manœuvre des amarres doit empêcher
+      tout choc contre les bajoyers, les portes, les dispositifs de protection ou les
+      autres bateaux.
   - titre: Le moteur ne tient pas le bateau
     texte: >-
       Dès que le bateau est amarré et jusqu’au moment où la sortie est autorisée, il est
@@ -74,3 +72,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

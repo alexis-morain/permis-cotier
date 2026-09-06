@@ -41,9 +41,9 @@ etapes:
       ou de leurs caisses de rétention forment un col de cygne qui passe au-dessus de la
       flottaison en charge.
 piege: >-
-  Le piège porte sur ce qui déclenche l’obligation. Beaucoup la croient réservée aux
-  navires habitables ou aux grandes unités. Le texte ne parle ni d’habitabilité ni de
-  longueur : dès qu’il y a des toilettes à bord, il faut une rétention ou un traitement.
+  Le piège porte sur ce qui déclenche l’obligation. Ce n’est ni la taille du bateau, ni
+  celle du réservoir, ni le type de dispositif : ce sont les toilettes. Dès qu’il y en a
+  à bord d’un navire soumis à la division 245, il faut une rétention ou un traitement.
   Un broyeur qui rejette directement à la mer n’est ni l’un ni l’autre.
 retenir:
   - "Des toilettes à bord : capacités de rétention ou installation de traitement, au choix."
@@ -60,3 +60,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

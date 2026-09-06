@@ -134,6 +134,7 @@ porté sur les documents nautiques, une épave par exemple.
 
 - zone réservée aux baigneurs : bouées sphériques jaunes
 - chenal traversier réservé aux engins de plage et aux véhicules nautiques à
-  moteur : bouées cylindriques jaunes à bâbord, coniques jaunes à tribord, dans
-  le sens de sortie
+  moteur : bouées cylindriques jaunes à bâbord, coniques jaunes à tribord, en
+  accédant au rivage (arrêté du 27 mars 1991, annexe I, § 2 ; une version
+  antérieure de cette fiche disait « dans le sens de sortie », à tort)
 - vitesse limitée à 5 nœuds dans la bande littorale des 300 mètres

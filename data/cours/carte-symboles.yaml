@@ -7,8 +7,7 @@ accroche: >-
 etapes:
   - titre: Le vert découvre, le bleu reste sous l’eau
     texte: >-
-      Entre le trait de côte plein et la laisse de basse mer en tireté, la carte teinte
-      l’estran en vert : cette bande est sous l’eau à pleine mer et à sec à basse mer.
+      La carte teinte en vert l’estran, la zone qui découvre entre haute et basse mer.
       Au-delà, le bleu porte les petits fonds, d’autant plus sombre qu’on est près de la
       côte, puis le blanc les eaux profondes. Le jaune ou le beige est la terre.
 
@@ -50,10 +49,8 @@ etapes:
       Un feu porté sur la carte est décrit par son caractère, c’est-à-dire la façon dont
       il partage le temps entre lumière et obscurité. Tout se joue sur une comparaison.
 
-      Un scintillant continu, Q ou VQ, n’est coupé par aucune pause : c’est le feu de la
-      marque cardinale Nord.
-    visuel: rythmes/caractere-a-occultations.svg
-    alt: "Un feu dont la lumière reste allumée longtemps, coupée par de brèves extinctions, avec le tracé de ce rythme dans le temps."
+      Un scintillant continu, Q ou VQ, n’est coupé par aucune pause : c’est le feu blanc de
+      la marque cardinale Nord.
     liste:
       - "F, fixe : la lumière ne s’interrompt pas"
       - "Fl, à éclats : la lumière dure moins que l’obscurité"
@@ -62,6 +59,13 @@ etapes:
       - "LFl : un éclat long, d’au moins 2 secondes"
       - "Q, scintillant : de 50 à 79 éclats par minute ; VQ, rapide : de 100 à 159"
       - "Mo, morse : Mo(A) bat un point puis un trait ; Al, alternatif, change de couleur"
+  - titre: Un feu à occultations, vu de nuit
+    texte: >-
+      Oc est le cas où la lumière l’emporte sur le noir. De loin, tu vois un feu allumé
+      presque tout le temps, coupé par de brèves extinctions. Un feu à éclats fait
+      l’inverse.
+    visuel: rythmes/caractere-a-occultations.svg
+    alt: "Un feu blanc sur fond de nuit, longtemps allumé, brièvement éteint, avec sous lui le tracé de son rythme dans le temps."
   - titre: Les parenthèses comptent des éclats, jamais des secondes
     texte: >-
       Dans « Fl(2) R 10s », Fl(2) est le caractère et annonce deux éclats groupés, R la
@@ -82,9 +86,11 @@ sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
     ref: fiche-carte-marine
     fichier: symboles
-  - texte: Balisage AISM région A, marques cardinales
+  - texte: Balisage AISM, région A, marques cardinales
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

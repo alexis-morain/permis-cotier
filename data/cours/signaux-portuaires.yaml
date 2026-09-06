@@ -10,7 +10,7 @@ etapes:
       différentes, qui sert à contrôler les mouvements dans les ports et à leur approche.
 
       Le message principal se lit sans rien apprendre par cœur : trois feux verticaux
-      rouges, passage interdit. Tu attends au large de l’entrée.
+      rouges, passage interdit. Tu attends avant l’entrée.
   - titre: Trois feux verts, passage autorisé sous conditions
     texte: >-
       Trois feux verticaux verts signifient « passage autorisé, sous certaines
@@ -51,3 +51,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -9,11 +9,11 @@ etapes:
     texte: >-
       L’appel sélectif numérique, l’ASN, est la partie données de la VHF. Tu soulèves le
       capot rouge, tu maintiens la touche de détresse, et l’appareil émet une alerte
-      numérique. Elle porte le MMSI programmé dans la station, donc le nom du navire
-      auprès de celui qui la reçoit.
+      numérique. Elle porte le MMSI programmé dans la station, donc l’identité de la
+      station.
 
       Quand un récepteur de positionnement est raccordé à la VHF, l’alerte emporte aussi
-      la position. Sans ce raccordement, elle part quand même, mais sans position.
+      la position.
   - titre: L’alerte passe sur le 70, jamais sur le 16
     texte: >-
       Le canal 70 est réservé à l’ASN. C’est une voie de données : aucune phonie n’y
@@ -57,3 +57,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -1,8 +1,8 @@
 notion: ecluses-approche
 duree: 4
 accroche: >-
-  Le bassin s’élargit avant l’écluse : c’est le garage, la file d’attente des bateaux. Une
-  péniche y est déjà rangée, un autre bateau ralentit devant toi. Tout se joue avant
+  Le bassin s’élargit avant l’écluse : c’est le garage, les bateaux y attendent leur tour.
+  Une péniche y est déjà rangée, un autre bateau ralentit devant toi. Tout se joue avant
   d’entrer.
 etapes:
   - titre: On ralentit avant le garage
@@ -25,16 +25,16 @@ etapes:
   - titre: Aucun dépassement à l’approche
     texte: >-
       À l’approche des écluses, et notamment dans les garages, tout dépassement est
-      interdit. Sans exception de taille, de vitesse ou de type de bateau.
+      interdit.
 
       La raison se lit dans la règle précédente : le passage se faisant dans l’ordre
       d’arrivée, un dépassement détruirait cet ordre.
-  - titre: Deux bateaux passent quand même avant toi
+  - titre: Deux catégories passent quand même avant toi
     texte: >-
-      Deux catégories dérogent à l’ordre d’arrivée. Les bateaux de service qui se
-      déplacent pour des raisons urgentes, et ceux auxquels l’autorité chargée de la
-      police de la navigation a expressément accordé ce droit, reconnaissables à la flamme
-      rouge qu’ils portent.
+      Deux catégories dérogent à l’ordre d’arrivée. Les bateaux visés par le règlement qui
+      se déplacent pour des raisons urgentes de service, et ceux auxquels l’autorité
+      chargée de la police de la navigation a expressément accordé ce droit, ceux-là
+      reconnaissables à la flamme rouge qu’ils portent.
 
       Quand ils approchent du garage ou y stationnent, les autres bateaux leur facilitent
       au maximum le passage.
@@ -69,3 +69,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

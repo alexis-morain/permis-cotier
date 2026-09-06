@@ -66,6 +66,11 @@ sources:
   - texte: Arrêté du 28 septembre 2007, article 4
     ref: arrete-2007-09-28
     fichier: article-4
+  - texte: Division 240, article 240-2.05
+    ref: division-240
+    fichier: article-240-2-05
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

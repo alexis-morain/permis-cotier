@@ -21,28 +21,28 @@ etapes:
       interdit aussi l’usage de tout autre signal susceptible d’être confondu avec l’un
       d’eux.
 
-      Relayer la détresse d’un autre navire n’entre pas là-dedans : le MAYDAY RELAY est
-      un devoir. Montrer plusieurs signaux ensemble non plus, le paragraphe 1 les prévoit
-      utilisés ensemble ou séparément.
+      Relayer la détresse d’un autre navire n’entre pas là-dedans : le MAYDAY RELAY
+      n’est pas visé par l’interdiction. Montrer plusieurs signaux ensemble non plus, le
+      paragraphe 1 les prévoit utilisés ensemble ou séparément.
   - titre: Une fausse alerte coûte à quelqu’un d’autre
     texte: >-
       Une alerte injustifiée engage des moyens humains et matériels pour rien. Ces moyens
       manquent alors ailleurs, là où quelqu’un est vraiment en danger.
 
-      Le programme de l’examen demande d’ailleurs de savoir décrire les moyens engagés
-      après un signal de détresse, et d’apprécier les conséquences d’un déclenchement
-      abusif.
+      Le programme de l’examen demande de savoir décrire les moyens humains et matériels
+      susceptibles d’être engagés après un signal de détresse, et d’« appréhender les
+      conséquences d’un déclenchement abusif d’un signal pyrotechnique de détresse ». La
+      leçon en tire la même logique pour une alerte VHF partie pour rien.
   - titre: Une alerte partie par erreur s’annule aussitôt
     texte: >-
-      Tu passes sur le canal 16 et tu dis clairement que l’alerte est annulée, en donnant
-      le nom de ton navire et ton MMSI. Sans attendre.
+      Tu passes sur le canal 16 et tu dis clairement que l’alerte est annulée. Sans
+      attendre.
 
-      Couper la VHF est la pire réponse : le CROSS reste devant une alerte sans réponse,
-      donc devant une détresse présumée, et il engage les moyens.
+      Couper la VHF ne retire pas l’alerte : elle est déjà partie.
 piege: >-
   Croire qu’une alerte non confirmée s’éteint d’elle-même, ou qu’éteindre l’appareil
-  efface le signal. L’alerte est déjà partie et elle est enregistrée. Seul un message
-  d’annulation sur le canal 16 remet les choses en place.
+  efface le signal. L’alerte est déjà partie. Seul un message d’annulation sur le
+  canal 16 remet les choses en place.
 retenir:
   - Le canal 16 sert à appeler, puis on dégage sur une voie de travail.
   - "L’annexe IV du RIPAM interdit le signal de détresse hors détresse, et tout signal qui pourrait être confondu avec lui."
@@ -61,3 +61,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -18,8 +18,7 @@ etapes:
     texte: >-
       L’utilisation d’une installation radioélectrique à bord est soumise à une
       autorisation administrative appelée licence de station de navire. Elle vise le
-      navire, pas la personne : le certificat qui autorise la personne à parler est un
-      autre document.
+      navire, pas la personne.
   - titre: Présenter immédiatement, sinon 2e classe
     texte: >-
       Ne pas présenter immédiatement aux agents de l’autorité compétente les autorisations,
@@ -50,7 +49,8 @@ etapes:
 piege: >-
   Croire que le registre du loueur remplace la copie du rapport. L’article 240-3.01 demande
   les deux : la copie annexée au contrat et embarquée quand le navire a un espace habitable,
-  le registre en plus, dans les locaux du loueur.
+  le registre en plus, mis à la disposition des usagers au plus tard au moment de leur
+  embarquement.
 retenir:
   - "Bateau à moteur de plus de 4,5 kW : permis obligatoire. Option côtière jusqu’à 6 milles."
   - "Une VHF à bord suppose la licence de station de navire, qui vise le navire."
@@ -76,3 +76,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

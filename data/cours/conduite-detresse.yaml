@@ -1,8 +1,8 @@
 notion: conduite-detresse
 duree: 4
 accroche: >-
-  Le moteur fume, la mer se lève, et tu hésites à appeler. Cette hésitation est la
-  situation la plus fréquente en mer, et c’est elle qui coûte le plus cher.
+  Le moteur fume, la mer se lève, et tu hésites à appeler. Ce qui suit dit à quel
+  moment on alerte, par quel moyen, et dans quel ordre on agit.
 etapes:
   - titre: Les brassières s’enfilent quand ça se dégrade
     texte: >-
@@ -43,8 +43,8 @@ etapes:
       matériel. Un objet perdu se remplace, pas un équipier.
 piege: >-
   Attendre d’être sûr de ne plus s’en sortir pour appeler. Le critère est le doute, pas la
-  certitude : à l’instant où l’on est certain, il ne reste souvent ni électricité, ni
-  temps, ni équipage disponible pour parler dans un micro.
+  certitude : une alerte lancée trop tard arrive après la panne d’électricité, quand la
+  VHF ne porte plus.
 retenir:
   - Brassières dès que la situation se dégrade, pas quand elle est perdue.
   - On alerte sur le doute, avec la VHF de préférence, ou le 196 depuis un téléphone.
@@ -57,3 +57,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

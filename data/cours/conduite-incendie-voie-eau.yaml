@@ -15,18 +15,19 @@ etapes:
       Tu manœuvres pour venir au vent, de sorte que les flammes et la fumée soient poussées
       loin de l’équipage.
 
-      Un bateau qui fuit devant son propre incendie l’attise sur lui-même : le vent apparent
-      rabat le feu vers l’arrière, c’est-à-dire vers toi.
+      Un bateau qui fuit devant son propre incendie l’attise sur lui-même.
   - titre: À la base des flammes, capot fermé
     texte: >-
-      L’extincteur s’attaque à la base des flammes, jamais au sommet, sinon le produit
-      passe au-dessus du foyer. On n’utilise pas d’eau sur un feu électrique ou
-      d’hydrocarbures.
+      L’extincteur s’attaque à la base des flammes, jamais au sommet. On n’utilise pas
+      d’eau sur un feu électrique ou d’hydrocarbures.
 
       On n’ouvre pas grand le capot d’un compartiment moteur en feu : l’appel d’air relance
-      le feu. On utilise l’orifice prévu à cet effet quand il existe. Tu alertes dès que le
-      feu n’est pas maîtrisé en quelques instants, et tu prépares l’évacuation sans
-      l’exécuter tant que le bateau flotte.
+      le feu. On utilise l’orifice prévu à cet effet quand il existe.
+  - titre: Alerter, préparer l’évacuation
+    texte: >-
+      Tu alertes dès que le feu n’est pas maîtrisé en quelques instants.
+
+      Tu prépares l’évacuation sans l’exécuter tant que le bateau flotte.
   - titre: Voie d’eau, l’ordre commande
     texte: >-
       Quatre gestes, dans cet ordre, après avoir fait porter les brassières.
@@ -52,7 +53,7 @@ retenir:
   - "Incendie : couper l’alimentation, mettre le feu sous le vent, attaquer à la base des flammes."
   - Ouvrir grand un capot moteur en feu fait un appel d’air qui relance le feu.
   - "Voie d’eau : localiser, aveugler, assécher, alerter."
-  - On rallie l’abri le plus proche, pas le large.
+  - On rallie l’abri le plus proche, ou l’on s’échoue sur un fond sain plutôt que de couler au large.
 sources:
   - texte: Fiche conduite à tenir
     ref: fiche-conduite-urgence
@@ -60,3 +61,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -4,12 +4,12 @@ accroche: >-
   Tu sors pour l’après-midi, un mille au large du port. C’est la zone la plus courante de
   la plaisance, et elle a sa liste de matériel : l’armement basique.
 etapes:
-  - titre: Jusqu’à 2 milles d’un abri, huit lignes
+  - titre: À moins de 2 milles d’un abri, huit lignes
     texte: >-
       Le matériel d’armement et de sécurité basique d’un navire de plaisance comprend au
       minimum les éléments suivants.
     liste:
-      - "Pour chaque personne embarquée, un équipement individuel de flottabilité accessible rapidement et aisément, de niveau de performance d’au moins 50, ou une combinaison humide ou sèche si elle est portée"
+      - "Pour chaque personne embarquée, à l’exception des enfants de 30 kg maximum, un équipement individuel de flottabilité accessible rapidement et aisément, de niveau de performance d’au moins 50, ou une combinaison humide ou sèche si elle est portée"
       - "Un dispositif lumineux"
       - "Un ou plusieurs extincteurs portatifs d’incendie"
       - "Un dispositif d’assèchement manuel, écope, seau ou pompe à main"
@@ -38,14 +38,19 @@ etapes:
   - titre: Le coupe-circuit se relie dès que le moteur tourne
     texte: >-
       Sur un hors-bord à commande à la barre ou en déporté, comme sur un véhicule
-      nautique à moteur, le coupe-circuit filaire est relié au poignet, à la jambe ou à un
-      point fixe de l’équipement de flottabilité porté par le conducteur, dès lors que le
-      moteur est allumé. Ni la vitesse, ni la distance de l’abri, ni le nombre de
-      personnes n’y changent quoi que ce soit.
+      nautique à moteur, quand le navire en est équipé, le coupe-circuit filaire est relié
+      au poignet, à la jambe ou à un point fixe de l’équipement de flottabilité porté par
+      le conducteur, dès lors que le moteur est allumé. Pour ce coupe-circuit filaire, ni
+      la vitesse, ni la distance de l’abri, ni le nombre de personnes n’y changent quoi
+      que ce soit.
 
       Le cordon ne doit en aucun cas être rallongé ni déplacé. Pour te déplacer à bord,
       tu éteins le moteur ou tu t’assures qu’il est au point mort et que l’hélice ne peut
       pas tourner.
+
+      Sur un navire équipé d’un coupe-circuit électromagnétique non filaire, la même règle
+      s’applique. Quand plusieurs personnes sont à bord, l’une d’elles reste en permanence
+      au poste de pilotage.
   - titre: Un second coupe-circuit reste à bord
     texte: >-
       Si le conducteur passe par-dessus bord, le cordon part avec lui et le moteur
@@ -59,7 +64,7 @@ piege: >-
   déplacer, modifier, jamais. L’hélice tourne encore quand la main n’est plus à portée de
   la commande.
 retenir:
-  - "Jusqu’à 2 milles d’un abri, c’est l’armement basique de l’article 240-2.03."
+  - "À moins de 2 milles d’un abri, c’est l’armement basique de l’article 240-2.03."
   - "Marées : pas requis en Méditerranée. Assèchement : seulement si non auto-videur ou habitable."
   - "Ligne de mouillage : dispensés, le voilier et le navire à moteur de moins de 250 kg à 4,5 kW près, et le VNM."
   - "Le coupe-circuit filaire est relié au conducteur dès que le moteur est allumé."
@@ -74,3 +79,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -8,11 +8,8 @@ etapes:
   - titre: Un mot par lettre, et un seul
     texte: >-
       Chaque lettre a son mot, fixé par le Règlement des radiocommunications. Ces mots
-      sont les mêmes dans toutes les langues et pour toutes les stations du monde :
-      c’est ce qui les rend compréhensibles quand la voix passe mal.
-
-      On épelle ainsi le nom du navire, son indicatif et son MMSI dès qu’un doute est
-      possible.
+      sont ceux de l’appendice 14 du Règlement des radiocommunications, le même pour
+      toutes les stations.
   - titre: De A à G
     texte: >-
       Les sept premières lettres. Alfa s’écrit avec un f, pas avec ph.
@@ -49,7 +46,7 @@ etapes:
       - "U : Uniform"
   - titre: De V à Z
     texte: >-
-      Les cinq dernières, celles qu’on oublie le plus souvent à l’examen.
+      Les cinq dernières. X-ray prend un trait d’union.
     liste:
       - "V : Victor"
       - "W : Whiskey"
@@ -71,7 +68,7 @@ retenir:
   - Hotel India Juliett Kilo Lima Mike November.
   - Oscar Papa Quebec Romeo Sierra Tango Uniform.
   - Victor Whiskey X-ray Yankee Zulu.
-  - Un mot par lettre, le même pour toutes les langues.
+  - Un mot par lettre, le même pour toutes les stations.
 sources:
   - texte: "Fiche VHF : voies, procédures d’appel et SMDSM"
     ref: fiche-vhf
@@ -79,3 +76,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

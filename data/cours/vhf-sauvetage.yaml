@@ -7,19 +7,17 @@ etapes:
   - titre: Le CROSS reçoit l’alerte et coordonne
     texte: >-
       En France, les CROSS, centres régionaux opérationnels de surveillance et de
-      sauvetage, reçoivent l’alerte et coordonnent les moyens engagés. Chacun couvre une
-      zone.
+      sauvetage, reçoivent l’alerte et coordonnent les moyens engagés.
 
       Ils veillent le canal 16 en permanence. C’est pour cela que le 16 se garde libre :
       c’est la porte d’entrée du secours en mer.
   - titre: Le 196 depuis un téléphone
     texte: >-
       Depuis un téléphone, le 196 est le numéro d’urgence maritime unique : il aboutit
-      directement au CROSS. Le 112 fonctionne aussi, mais il fait passer par un
-      intermédiaire.
+      directement au CROSS. Le 112 fonctionne aussi.
 
-      Le téléphone a ses limites : il dépend de la couverture du réseau, et il ne joint
-      que celui que tu appelles.
+      Le téléphone a ses limites, et le programme te demande de savoir les présenter :
+      un seul correspondant, quand la VHF est entendue de tous.
   - titre: La VHF est entendue de tout le monde
     texte: >-
       Un appel VHF est reçu par le CROSS et par tous les navires à portée. Ceux-là sont
@@ -34,9 +32,6 @@ etapes:
       Une fois l’alerte reçue et les moyens engagés, le canal 6 est la voie de sécurité :
       il sert à la coordination des opérations de recherche et de sauvetage entre navires
       et aéronefs.
-
-      Le navire en détresse, lui, garde le CROSS comme interlocuteur et suit ses
-      instructions.
 piege: >-
   Appeler la capitainerie du port le plus proche, ou sortir le téléphone en premier. Les
   capitaineries tiennent les voies portuaires, 9, 12, 14, pas le sauvetage. Et un appel
@@ -56,3 +51,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

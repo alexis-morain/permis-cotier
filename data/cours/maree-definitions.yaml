@@ -17,8 +17,7 @@ etapes:
       Le zéro des cartes est le niveau des plus basses mers astronomiques, le plus bas que
       la marée puisse atteindre. C’est le niveau de référence de la carte.
 
-      La hauteur d’eau du moment, celle que donne l’annuaire des marées, se compte depuis
-      ce zéro. Elle est donc toujours positive ou nulle.
+      La hauteur d’eau prévue par l’annuaire des marées se compte depuis ce zéro.
   - titre: La sonde est un minimum, pas une mesure du jour
     texte: >-
       Une sonde est une profondeur, en mètres sur les cartes françaises, comptée elle
@@ -50,3 +49,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

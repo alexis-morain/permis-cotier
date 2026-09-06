@@ -45,9 +45,14 @@ sources:
   - texte: Code rural et de la pêche maritime, article R. 921-83
     ref: peche-loisir
     fichier: article-r921-83
+  - texte: Code rural et de la pêche maritime, article R. 921-84
+    ref: peche-loisir
+    fichier: article-r921-84
   - texte: Code rural et de la pêche maritime, article L. 945-4, I, 3°
     ref: peche-loisir
     fichier: article-l945-4
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'
