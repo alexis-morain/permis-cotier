@@ -81,10 +81,15 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        // `json` y est pour l'index de la recherche : sans lui, la loupe ne
-        // trouverait plus rien dès que le réseau tombe, sur un site dont tout
-        // le reste marche hors ligne.
+        // `json` y est pour l'index de la recherche et, depuis que la banque
+        // est sortie du HTML, pour la banque elle-même : sans elle au
+        // precache, /examen ne rendrait plus rien hors ligne. Son nom porte la
+        // version, donc une publication la remplace au lieu de l'empiler.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
+        // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
+        // c'est un pointeur vers la version en ligne, le site n'en a aucun
+        // usage hors ligne.
+        globIgnores: ['**/node_modules/**/*', 'banque/derniere.json'],
         navigateFallback: '/',
         cleanupOutdatedCaches: true,
       },
