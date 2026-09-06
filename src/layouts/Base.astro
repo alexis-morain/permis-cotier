@@ -144,11 +144,11 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         </a>
         <nav aria-label="Navigation principale">
           <a href="/cours" aria-current={courant('/cours')}>Cours</a>
-          <a href="/examen" aria-current={courant('/examen')}>Examen</a>
           <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
-          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Thèmes</a>
+          <a href="/examen" aria-current={courant('/examen')}>Examen blanc</a>
+          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Programme</a>
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
-          <a href="/profil" aria-current={courant('/profil')}>Profil</a>
+          <a href="/profil" aria-current={courant('/profil')}>Ma fiche</a>
         </nav>
       </div>
     </header>
@@ -200,13 +200,13 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         </p>
         <nav class="pied__plan" aria-label="Plan du site">
           <a href="/cours">Le cours, leçon par leçon</a>
-          <a href="/examen">Examen blanc</a>
           <a href="/entrainement">Entraînement par thème</a>
-          <a href="/themes">Les quatorze thèmes</a>
+          <a href="/examen">Examen blanc</a>
+          <a href="/themes">Le programme, thème par thème</a>
           <a href="/guide">Guide du permis côtier</a>
+          <a href="/profil">Ta fiche</a>
           <a href="/a-propos">Qui écrit ces questions</a>
           <a href="/credits">Crédits</a>
-          <a href="/profil">Ta fiche</a>
           <a href="/parametres">Réglages</a>
         </nav>
         <p class="discret">
