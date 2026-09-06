@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Mesure from '../components/Mesure.astro';
+import Recherche from '../components/Recherche.astro';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
 import {
   SITE,
@@ -115,6 +116,29 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           </svg>
           <span class="marque__nom">Permis côtier</span>
         </a>
+        <a
+          class="ouvrir-recherche"
+          href="/recherche"
+          aria-label="Rechercher"
+          title="Rechercher (touche /)"
+          data-recherche-ouvrir
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="10.5" cy="10.5" r="6.5"></circle>
+            <path d="M15.5 15.5 L21 21"></path>
+          </svg>
+          <span class="ouvrir-recherche__mot">Rechercher</span>
+          <kbd class="touche ouvrir-recherche__touche" aria-hidden="true">/</kbd>
+        </a>
         <nav aria-label="Navigation principale">
           <a href="/cours" aria-current={courant('/cours')}>Cours</a>
           <a href="/examen" aria-current={courant('/examen')}>Examen</a>
@@ -125,6 +149,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         </nav>
       </div>
     </header>
+
+    <Recherche />
 
     {miettes.length > 0 && (
       <nav class="page ariane" aria-label="Fil d’Ariane">
@@ -211,15 +237,21 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         background: var(--fond-carte);
         border-bottom: 2px solid var(--filet);
       }
+      /* Trois pièces, deux dispositions : la marque et la loupe vont ensemble,
+         la navigation se met où elle tient. En grille et non en flux, parce
+         qu'elles n'ont pas le même ordre sur un téléphone et sur un écran. */
       .entete__interieur {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-areas: 'marque recherche nav';
+        grid-template-columns: auto auto minmax(0, 1fr);
         align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem 1.5rem;
+        gap: 0.5rem 1.25rem;
         min-height: 3.75rem;
         padding-block: 0.5rem;
       }
+      .marque { grid-area: marque; }
+      .ouvrir-recherche { grid-area: recherche; }
+      .entete nav { grid-area: nav; justify-self: end; }
       .marque {
         display: inline-flex;
         align-items: center;
@@ -245,13 +277,19 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         gap: 0 0.25rem;
         margin-inline: -0.6rem;
       }
-      /* Sous 40 rem, la navigation prend sa propre ligne. Six entrées ne
-         tiennent pas sur 375 px : la ligne file jusqu'aux bords de l'écran et
-         se fait glisser au doigt, le fondu à droite le dit. Les réglages sont
-         aussi dans le plan du site, en pied de page. */
-      @media (max-width: 39.999rem) {
-        .entete__interieur { flex-direction: column; align-items: stretch; gap: 0; padding-block: 0.5rem 0.25rem; }
+      /* Sous 48 rem, la navigation prend sa propre ligne. Six entrées, la
+         marque et la loupe ne tiennent pas côte à côte : la ligne file jusqu'aux
+         bords de l'écran et se fait glisser au doigt, le fondu à droite le dit.
+         Les réglages sont aussi dans le plan du site, en pied de page. */
+      @media (max-width: 47.999rem) {
+        .entete__interieur {
+          grid-template-areas: 'marque recherche' 'nav nav';
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 0;
+          padding-block: 0.5rem 0.25rem;
+        }
         .entete nav {
+          justify-self: stretch;
           justify-content: flex-start;
           gap: 0 0.15rem;
           margin-inline: -1.25rem;

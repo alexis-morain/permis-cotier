@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import RecherchePanneau from '../components/RecherchePanneau.astro';
+import { themesAvecComptes } from '../lib/banque';
+import { GUIDE } from '../lib/guide';
+import { codesLeconsEcrites } from '../lib/lecons';
+import { notionsDuTheme } from '../lib/notions';
+import { CHAPITRES, leconsDuChapitre } from '../lib/parcours';
+
+/**
+ * La page de la recherche, et le sommaire du site.
+ *
+ * Elle a deux raisons d'exister. La première : la loupe de l'en-tête est un
+ * lien avant d'être un bouton, et un lien doit mener quelque part, même sans
+ * script. La seconde : chercher suppose de savoir quoi taper. Sous le champ,
+ * tout est là, à plat — les dix chapitres du cours, les quatorze thèmes et
+ * leurs cent cinq notions, le guide. On y parcourt ce qu'on ne sait pas encore
+ * nommer.
+ *
+ * En `noindex` : la page ne dit rien que les fiches de notions ne disent
+ * mieux, mais ses liens se suivent.
+ */
+const themes = await themesAvecComptes();
+const ecrites = await codesLeconsEcrites();
+const chapitres = CHAPITRES.map((c) => ({ ...c, lecons: leconsDuChapitre(c.code) }));
+---
+
+<Base
+  titre="Chercher dans le site"
+  description="Trouver une notion, une leçon, un thème ou une question du permis côtier."
+  indexable={false}
+>
+  <div class="page page--etroite" style="padding-block:2.5rem 0">
+    <h1>Chercher</h1>
+    <p class="chapo">
+      Tape un mot du programme — <b>cardinale</b>, <b>feu vert</b>, <b>VHF</b>, <b>marée</b> — et
+      tombe sur la leçon, la fiche ou la question qui en parle.
+    </p>
+
+    <RecherchePanneau mode="page" />
+  </div>
+
+  <div class="page page--etroite sommaire">
+    <h2 id="cours">Le cours, chapitre par chapitre</h2>
+    <p class="discret">
+      Le programme dans l’ordre où on l’apprend. Les leçons rédigées mènent au cours, les
+      autres à la fiche de la notion, le temps d’être écrites.
+    </p>
+    <ol class="sommaire__chapitres">
+      {
+        chapitres.map((c) => (
+          <li>
+            <h3><a href={`/cours#${c.code}`}>{c.titre}</a></h3>
+            <p class="discret">{c.promesse}</p>
+            <ul class="sommaire__liens">
+              {c.lecons.map((l) => (
+                <li>
+                  <a href={ecrites.has(l.notion.code) ? `/cours/${l.notion.code}` : `/notion/${l.notion.code}`}>
+                    {l.notion.nom}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+
+    <h2 id="programme">Les quatorze thèmes et leurs notions</h2>
+    <p class="discret">
+      L’ordre de l’arrêté du 28 septembre 2007. Chaque notion a sa fiche : le résumé, les
+      questions de la banque, et le texte dont elles sont tirées.
+    </p>
+    <ul class="sommaire__themes">
+      {
+        themes.map((t) => (
+          <li>
+            <h3>
+              <a href={`/theme/${t.code}`}>{t.nom}</a>{' '}
+              <span class="pastille">{t.publiees > 0 ? `${t.publiees} questions` : 'à venir'}</span>
+            </h3>
+            <ul class="sommaire__liens">
+              {notionsDuTheme(t.code).map((n) => (
+                <li><a href={`/notion/${n.code}`}>{n.nom}</a></li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 id="guide">Le guide</h2>
+    <ul class="sommaire__liens sommaire__liens--large">
+      {GUIDE.map((p) => <li><a href={`/guide/${p.slug}`}>{p.court}</a></li>)}
+      <li><a href="/a-propos">Qui écrit ces questions</a></li>
+      <li><a href="/credits">Crédits des visuels</a></li>
+      <li><a href="/parametres">Réglages</a></li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .sommaire { padding-block: 1rem 2rem; }
+  /* Un sommaire se balaie, il ne se lit pas : la mesure de lecture n'a rien à
+     y faire, elle couperait les rangées de liens au milieu. */
+  .sommaire li, .sommaire__chapitres > li p { max-width: none; }
+  .sommaire h2 {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--filet);
+    font-size: 1.5rem;
+  }
+  .sommaire h3 { font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .sommaire h3 a { text-decoration: none; }
+  .sommaire h3 a:hover { text-decoration: underline; text-decoration-color: var(--jaune); }
+
+  .sommaire__chapitres { list-style: none; margin: 0; padding: 0; counter-reset: chapitre; }
+  .sommaire__chapitres > li { margin-bottom: 1.75rem; }
+  /* Le numéro remplace le sur-titre : il situe sans crier. */
+  .sommaire__chapitres > li h3::before {
+    counter-increment: chapitre;
+    content: counter(chapitre) ". ";
+    color: var(--texte-doux);
+    font-variant-numeric: tabular-nums;
+  }
+  .sommaire__chapitres > li p { margin: 0 0 0.5rem; }
+
+  .sommaire__themes { list-style: none; margin: 0; padding: 0; }
+  .sommaire__themes > li { margin-bottom: 1.5rem; }
+  .sommaire__themes .pastille { vertical-align: middle; }
+
+  .sommaire__liens {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+  }
+  .sommaire__liens a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0 0.65rem;
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon-petit);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .sommaire__liens a:hover { background: var(--fond-2); border-color: var(--filet-fort); }
+  .sommaire__liens--large a { font-size: 0.9375rem; }
+</style>

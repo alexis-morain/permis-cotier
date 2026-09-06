@@ -83,6 +83,21 @@ résumé de sa fiche, jouable mais en `noindex`. Chaque leçon se termine par
 jusqu'à trois questions de la banque sur la notion ; la progression reste dans
 le navigateur.
 
+## Chercher
+
+La loupe de l'en-tête ouvre une fenêtre de recherche : une notion, une leçon, un
+thème, une page du guide ou une question, en tapant deux ou trois lettres. Les
+touches `/` et `Ctrl+K` l'ouvrent aussi, sauf sur un écran de jeu, où le chrono
+tourne. Sans JavaScript, la loupe reste un lien vers `/recherche`, qui liste tout
+le programme à la main.
+
+L'index est un fichier construit au build, `/recherche.json`, chargé à la
+première ouverture et non au chargement des pages, puis gardé dans le cache hors
+ligne. Le classement est dans `src/lib/recherche.ts` : le titre pèse plus que le
+corps, tous les mots tapés doivent porter, et l'énoncé d'une question compte
+comme du corps — sinon quatre cent quatre-vingts énoncés enterreraient la leçon
+qui les explique.
+
 ## Ajouter une question
 
 L'ordre ne change jamais : lire l'article, écrire la question, relire. Les
@@ -117,9 +132,10 @@ data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
-                                   session, progression, mesure
-src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement
-src/components/                    îlot React du quiz
+                                   session, progression, mesure, recherche
+src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement,
+                                   recherche et son index recherche.json
+src/components/                    îlot React du quiz, panneau de recherche
 functions/api/                     signalement, puis synchronisation
 ```
 

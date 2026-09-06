@@ -33,7 +33,7 @@ export default defineConfig({
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
       filter: (page) =>
-        !/\/(examen|revoir|parametres|signaler)(\.html)?$/.test(page) &&
+        !/\/(examen|revoir|parametres|signaler|recherche)(\.html)?$/.test(page) &&
         !page.includes('/entrainement/') &&
         leconIndexable(page),
       changefreq: 'weekly',
@@ -75,7 +75,10 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
+        // `json` y est pour l'index de la recherche : sans lui, la loupe ne
+        // trouverait plus rien dès que le réseau tombe, sur un site dont tout
+        // le reste marche hors ligne.
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
         navigateFallback: '/',
         cleanupOutdatedCaches: true,
       },
