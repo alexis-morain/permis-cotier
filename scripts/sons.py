@@ -59,8 +59,10 @@ SORTIE = RACINE / "public" / "visuels" / "sons"
 # pas les deux familles.
 BRUME = "#dbe4e8"
 BRUME_BANDE = "#c9d6dc"
-ENCRE = "#16231f"
-ENCRE_DOUCE = "#4a5a54"
+# L'encre suit celle du site, DESIGN.md : le motif est une notation, pas une
+# scène, et il se lit comme le texte qui l'entoure.
+ENCRE = "#0b1d3a"         # --marine
+ENCRE_DOUCE = "#4c5c78"   # --texte-doux
 FRISE = "#8fa3ac"
 LAITON = "#a8823c"        # le sifflet et la cloche, en cuivre
 

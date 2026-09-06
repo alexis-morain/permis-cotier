@@ -41,15 +41,24 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[1]
 SORTIE = RACINE / "public" / "visuels" / "situations"
 
-# La palette du site, reprise telle quelle : le visuel appartient à la page.
+# Deux familles, qu'il ne faut pas mélanger. La mer et l'écume sont des couleurs
+# de scène : elles décrivent le monde et ne suivent personne. L'encre, l'accent
+# et le filet sont empruntés au site, DESIGN.md, parce qu'ils ne décrivent rien :
+# ils désignent, ils tracent, ils distinguent. Ceux-là suivent la page.
 EAU = "#cddfe2"
 EAU_PROFONDE = "#a8c4c9"
-ENCRE = "#16231f"
-ENCRE_DOUCE = "#4a5a54"
-ACCENT = "#b0005c"
-FILET = "#b9ae95"
-VOILE = "#f7f3e8"
 ECUME = "#ffffff"
+ENCRE = "#0b1d3a"         # --marine
+ENCRE_DOUCE = "#4c5c78"   # --texte-doux
+ACCENT = "#ffc72c"        # --jaune
+# Le jaune ne fait que 1,1:1 contre l'eau : seule sa silhouette le détoure, d'où
+# le contour plein de `_navire`. Et rien de clair ne se lit dessus, d'où le rouf
+# marine, comme le site pose du marine sur ses boutons jaunes.
+SUR_ACCENT = ENCRE
+# --filet-fort, et non --filet : ce dernier tombe à 1,04:1 contre l'eau, la route
+# parcourue s'effacerait. Le trait porte une information, il se voit.
+FILET = "#a9b7cc"
+VOILE = "#f3f6fb"         # --brume, une voile de dacron ; l'ancien crème est parti
 
 LARGEUR = 240
 HAUTEUR = 200
@@ -73,19 +82,25 @@ def _navire(cap: float, couleur: str, voile: str | None = None) -> str:
     porte, donc le côté opposé au vent : une voile bordée à bâbord se lit
     « tribord amures ».
     """
+    # Le rouf prend ce qui se lit sur sa propre coque : clair sur la coque marine,
+    # marine et plein sur la coque jaune, où un rouf clair ne se verrait pas et
+    # où un marine translucide virerait au kaki.
+    rouf, rouf_opacite = (SUR_ACCENT, 1) if couleur == ACCENT else (ECUME, 0.42)
     pieces = [
         f'<path d="{SILLAGE}" fill="{ECUME}" fill-opacity="0.3" />',
         f'<path d="{COQUE}" fill="{couleur}" />',
-        # Un pont plus clair, pour que l'étrave se distingue de la poupe.
-        # Un rouf clair au tiers avant : il donne le sens de la coque d'un coup d'œil.
-        f'<rect x="-4.5" y="-6" width="9" height="11" rx="1.5" fill="{ECUME}" fill-opacity="0.42" />',
-        f'<path d="{COQUE}" fill="none" stroke="{ENCRE}" stroke-width="0.7" stroke-opacity="0.25" />',
+        # Un rouf au tiers avant : il donne le sens de la coque d'un coup d'œil.
+        f'<rect x="-4.5" y="-6" width="9" height="11" rx="1.5" fill="{rouf}" '
+        f'fill-opacity="{rouf_opacite}" />',
+        # Le contour est plein, et non plus un liseré : c'est lui qui détoure la
+        # coque jaune sur l'eau claire. Sur la coque marine il ne se voit pas.
+        f'<path d="{COQUE}" fill="none" stroke="{ENCRE}" stroke-width="1.1" />',
     ]
     if voile is not None:
         signe = -1 if voile == "babord" else 1
         pieces.append(
             f'<path d="M0,-10 L{signe * 19},13 L0,17 Z" fill="{VOILE}" '
-            f'stroke="{ENCRE}" stroke-width="0.8" stroke-opacity="0.55" />'
+            f'stroke="{ENCRE}" stroke-width="0.9" stroke-opacity="0.7" />'
         )
     return f'<g transform="rotate({cap})">{"".join(pieces)}</g>'
 
@@ -265,8 +280,10 @@ def svg_de_scene(nom: str) -> str:
         x0, y0 = depart(n)
         x1, y1 = n["a"]
         routes.append(
+            # Opacité pleine : le filet marine est plus pâle que l'ancien parchemin,
+            # et sous `prefers-reduced-motion` ce trait est la seule route visible.
             f'<line x1="{x0}" y1="{y0}" x2="{x1}" y2="{y1}" stroke="{FILET}" '
-            f'stroke-width="1.2" stroke-dasharray="3 4" stroke-opacity="0.75" />'
+            f'stroke-width="1.2" stroke-dasharray="3 4" />'
         )
         couleur = ACCENT if n["role"] == "toi" else ENCRE
         coques.append(
@@ -315,8 +332,11 @@ def svg_relevement_constant() -> str:
     dx, dy = autre[-1][0] - autre[0][0], autre[-1][1] - autre[0][1]
     cap_autre = round(math.degrees(math.atan2(dx, -dy)) % 360)
 
-    # Le plus ancien instant est le plus pâle : on lit le sens du temps.
-    opacites = [0.38, 0.62, 1.0]
+    # Le plus ancien instant est le plus pâle : on lit le sens du temps. Le
+    # plancher ne descend pas plus bas que 0,55 : une coque jaune très délavée se
+    # confondrait avec l'eau, et le premier instant porte autant la leçon que les
+    # deux autres, puisque c'est leur alignement qu'on démontre.
+    opacites = [0.55, 0.78, 1.0]
     styles = [
         ".instant{animation-duration:6s;animation-timing-function:linear;"
         "animation-iteration-count:infinite}",
