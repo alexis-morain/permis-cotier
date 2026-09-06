@@ -1,0 +1,82 @@
+notion: responsabilite-chef-de-bord
+duree: 5
+accroche: >-
+  Vous êtes six à bord, le bateau appartient à ton beau-frère et c’est toi qui barres. Si
+  quelque chose tourne mal, la question ne sera pas de savoir à qui est le bateau, mais
+  qui en était le chef de bord.
+etapes:
+  - titre: Le chef de bord est celui qui répond du bord
+    texte: >-
+      La division 240 le définit : le chef de bord est le membre d’équipage responsable de
+      la conduite du navire, de la tenue du journal de bord lorsqu’il est exigé, du respect
+      des règlements et de la sécurité des personnes embarquées.
+
+      Ni le propriétaire, ni le plus âgé, ni le plus expérimenté. Celui qui assume la
+      conduite.
+  - titre: Avant de partir, il s’assure de trois choses
+    texte: >-
+      L’article 240-1.03 dit ce que le chef de bord vérifie. La liste est courte et elle
+      est tombable telle quelle.
+    liste:
+      - "L’adéquation de sa navigation avec les caractéristiques de son navire"
+      - "La présence à bord, le bon état et la validité des équipements et matériels de sécurité, et leur adaptation aux personnes embarquées"
+      - "Leur mise en œuvre lorsque les circonstances l’exigent"
+  - titre: Appliquer les règles ne suffit pas
+    texte: >-
+      La règle 2 du RIPAM pose qu’aucune de ses dispositions n’exonère le navire, son
+      propriétaire, son capitaine ou son équipage des conséquences d’une négligence, qu’elle
+      porte sur l’application des règles ou sur toute précaution que commandent l’expérience
+      ordinaire du marin et les circonstances.
+
+      Le RIPAM fixe un minimum. Être dans son droit ne met à l’abri de rien.
+  - titre: Les circonstances peuvent obliger à s’écarter des règles
+    texte: >-
+      La règle 2 ajoute qu’on tient compte de tous les dangers de la navigation, des risques
+      d’abordage et des limites d’utilisation des navires en cause, qui peuvent obliger à
+      s’écarter des règles pour éviter un danger immédiat.
+
+      La règle 5 pose la veille : visuelle et auditive, permanente, par tous les moyens
+      adaptés aux circonstances. C’est elle qui donne les moyens de juger.
+  - titre: Ce que le décret punit
+    texte: >-
+      Le permis est exigé pour conduire un bateau de plaisance à moteur de plus de 4,5
+      kilowatts. Le décret du 2 août 2007 attache des peines d’amende au manquement.
+    liste:
+      - "Conduire sans permis, sans respecter l’âge requis ou malgré une interdiction de navigation : contravention de 5e classe"
+      - "Accompagner un conducteur dispensé de permis sans détenir soi-même le permis depuis trois ans : 5e classe"
+      - "Ne pas présenter immédiatement ses pièces au contrôle : 2e classe, puis 4e classe si elles ne sont pas produites sous cinq jours"
+piege: >-
+  Croire qu’un abordage survenu alors qu’on tenait sa route et sa vitesse est
+  automatiquement la faute de l’autre. La règle 2 dit l’inverse : la négligence se juge
+  aussi sur les précautions que commandent l’expérience du marin et les circonstances, pas
+  seulement sur la lettre des règles de barre.
+retenir:
+  - Le chef de bord répond de la conduite, du respect des règlements et de la sécurité des personnes embarquées.
+  - Il s’assure de l’adéquation de sa navigation, de la présence et du bon état du matériel de sécurité, et de sa mise en œuvre.
+  - Respecter les règles n’exonère pas d’une négligence.
+  - "Conduire sans permis : contravention de 5e classe."
+sources:
+  - texte: Division 240, article 240-1.02
+    ref: division-240
+    fichier: article-240-1-02
+  - texte: Division 240, article 240-1.03
+    ref: division-240
+    fichier: article-240-1-03
+  - texte: RIPAM, règle 2
+    ref: decret-77-733
+    fichier: regle-02
+  - texte: RIPAM, règle 5
+    ref: decret-77-733
+    fichier: regle-05
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 15
+    ref: decret-2007-1167
+    fichier: article-15
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 16
+    ref: decret-2007-1167
+    fichier: article-16
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 18
+    ref: decret-2007-1167
+    fichier: article-18
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

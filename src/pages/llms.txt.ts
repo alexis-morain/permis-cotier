@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { SITE } from '../lib/seo';
+import { COURS, cheminCours } from '../lib/parcours';
 import { THEMES } from '../lib/themes';
 
 /**
@@ -91,6 +92,12 @@ export const GET: APIRoute = ({ site }) => {
     '## L’essentiel',
     '',
     ...ESSENTIEL.map((l) => ligne(l, base)),
+    '',
+    '## Le cours',
+    '',
+    'Un cours par thème, dans l’ordre où on apprend. Chaque cours dit pourquoi il compte, ce qu’on saura faire, et liste ses leçons.',
+    '',
+    ...COURS.map((c) => ligne({ titre: c.titre, chemin: cheminCours(c.code), description: c.promesse }, base)),
     '',
     '## Le programme',
     '',

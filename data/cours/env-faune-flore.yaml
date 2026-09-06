@@ -1,0 +1,65 @@
+notion: env-faune-flore
+duree: 4
+accroche: >-
+  Un ami embarque un fusil de chasse « pour les gros poissons » et une bouteille d’eau de
+  javel « pour faire sortir les poulpes des trous ». Les deux valent la même amende, et
+  elle est lourde.
+etapes:
+  - titre: Ni explosif, ni arme à feu, ni produit
+    texte: >-
+      Détenir à bord ou utiliser pour la pêche des explosifs, des armes à feu, des
+      substances soporifiques ou toxiques de nature à détruire ou altérer les animaux, les
+      végétaux marins et leur milieu est puni de 22 500 euros d’amende.
+
+      La détention suffit. Tu n’as pas besoin de t’en être servi pour être en infraction,
+      dès lors que c’est à bord et pour la pêche. Ce qui est visé, c’est le moyen qui tue
+      bien au-delà de la prise.
+  - titre: Une zone fermée, une période fermée, personne n’y échappe
+    texte: >-
+      Pratiquer la pêche dans une zone ou à une profondeur interdite, ou pêcher certaines
+      espèces dans une zone, à une profondeur ou à une période où leur pêche est interdite,
+      est puni de 22 500 euros d’amende.
+
+      Ces fermetures protègent une espèce pendant sa reproduction ou un fond pendant qu’il
+      se refait. Le texte ne dit nulle part qu’elles ne concernent que les professionnels.
+  - titre: Un engin interdit reste interdit dans le coffre
+    texte: >-
+      La même amende frappe le fait de détenir à bord un engin, dispositif, instrument ou
+      appareil prohibé, d’en utiliser plus que le nombre autorisé, ou d’employer un engin
+      dans une zone ou à une période où son emploi est interdit.
+
+      Elle frappe aussi le fait de pêcher, de détenir à bord, de débarquer, de transporter
+      ou de vendre des captures qui n’ont pas la taille, le calibre ou le poids requis, ou
+      d’enfreindre les règles de marquage et de tri.
+  - titre: Ce que tu verses à l’eau remonte la même chaîne
+    texte: >-
+      La protection ne s’arrête pas aux prises. Jeter, déverser ou laisser écouler en mer
+      des substances ou organismes nuisibles pour la conservation ou la reproduction des
+      mammifères marins, poissons, crustacés, coquillages, mollusques ou végétaux est puni
+      de 100 000 euros d’amende.
+
+      Deux montants à ne pas confondre : 22 500 euros pour les infractions de pêche,
+      100 000 euros pour les rejets nuisibles.
+piege: >-
+  Le piège classique est de croire qu’une fermeture de pêche, une taille minimale ou un
+  engin prohibé ne visent que les professionnels. Le texte de répression ne fait pas cette
+  distinction : il punit « le fait de », quel que soit celui qui le commet. Remettre la
+  prise à l’eau après coup n’efface pas l’infraction non plus.
+retenir:
+  - "Explosifs, armes à feu, substances toxiques à bord pour la pêche : 22 500 euros d’amende."
+  - "Zone, profondeur ou période interdite : 22 500 euros d’amende, loisir compris."
+  - Détenir un engin prohibé suffit, l’avoir utilisé n’est pas exigé.
+  - "Rejeter en mer une substance nuisible à la faune ou à la flore : 100 000 euros."
+sources:
+  - texte: Code rural et de la pêche maritime, article L. 945-4, I, 3°
+    ref: peche-loisir
+    fichier: article-l945-4
+  - texte: Code rural et de la pêche maritime, article L. 945-4, I, 7°
+    ref: peche-loisir
+    fichier: article-l945-4
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+    fichier: article-l218-73
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

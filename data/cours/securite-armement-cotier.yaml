@@ -1,0 +1,72 @@
+notion: securite-armement-cotier
+duree: 5
+accroche: >-
+  Tu passes la bouée des 2 milles. Rien ne change à l’horizon, mais le bateau vient de
+  changer de catégorie d’armement : c’est l’armement côtier, jusqu’à moins de 6 milles
+  d’un abri.
+etapes:
+  - titre: Le basique, plus sept lignes
+    texte: >-
+      Le matériel côtier reprend le matériel basique de l’article 240-2.03, les
+      équipements individuels de flottabilité mis à part, et y ajoute :
+    liste:
+      - "Un dispositif de repérage et d’assistance pour personne tombée à l’eau, type bouée fer à cheval ou bouée couronne"
+      - "Autant d’équipements individuels de flottabilité de niveau de performance d’au moins 100 que de personnes embarquées"
+      - "Trois feux rouges à main"
+      - "Un compas magnétique de route, étanche, fixé au navire et visible depuis le poste de conduite"
+      - "La ou les cartes marines officielles de la zone, à jour, sur papier ou sur support électronique"
+      - "Le règlement international pour prévenir les abordages en mer, ou un résumé textuel et graphique"
+      - "Un document décrivant le système de balisage de la zone fréquentée"
+  - titre: Trois feux rouges à main, pas deux
+    texte: >-
+      Le texte nomme le nombre et l’artifice : trois feux rouges à main, conformes à la
+      division 311 du règlement. Le fumigène flottant est un autre matériel, il ne les
+      remplace pas.
+  - titre: Le compas tient sans électricité
+    texte: >-
+      Le compas magnétique de route est de classe A ou B, compensé si nécessaire, éclairé
+      par l’intérieur ou par un éclairage externe, et affiche le cap au poste de barre
+      principal.
+
+      Surtout, il est indépendant de toute source d’énergie, à l’exception de son
+      éclairage : une panne de batterie ne doit pas te priver de cap. Sa fixation peut
+      être temporaire ou permanente.
+  - titre: La bouée qui repère l’homme à la mer
+    texte: >-
+      Le dispositif de repérage et d’assistance flotte à 142 newtons au moins, se largue
+      à l’eau sans source d’énergie extérieure, reste efficace quelle que soit sa position
+      dans l’eau et se saisit facilement depuis l’eau.
+
+      Son feu est étanche, a une autonomie d’au moins 6 heures et se voit sur tout
+      l’horizon jusqu’à 0,5 mille. Il porte le nom et le numéro d’immatriculation du
+      navire.
+  - titre: Ce qui n’arrive qu’à partir de 6 milles
+    texte: >-
+      L’armement semi-hauturier, de 6 à moins de 60 milles d’un abri, ajoute la VHF fixe,
+      le ou les radeaux de survie gonflables, le livre des feux, le journal de bord, la
+      trousse de secours, les harnais et le projecteur de recherche. Il porte aussi les
+      équipements individuels de flottabilité au niveau 150.
+piege: >-
+  Le journal de bord et le livre des feux passent pour du matériel côtier, parce qu’ils
+  sonnent comme des documents de base. Ils n’entrent qu’avec l’armement semi-hauturier, à
+  partir de 6 milles. À moins de 6 milles, les documents dus sont les cartes, le RIPAM et
+  le document de balisage.
+retenir:
+  - "De 2 à moins de 6 milles : armement côtier, le basique plus sept lignes."
+  - "Trois feux rouges à main, un compas de classe A ou B, une bouée de repérage."
+  - "EIF de niveau 100 par personne embarquée."
+  - "Cartes à jour, RIPAM ou résumé, document de balisage de la zone."
+  - "Radeau de survie, VHF fixe, journal de bord : à partir de 6 milles."
+sources:
+  - texte: Division 240, article 240-2.04
+    ref: division-240
+    fichier: article-240-2-04
+  - texte: Division 240, article 240-2.05
+    ref: division-240
+    fichier: article-240-2-05
+  - texte: Division 240, article 240-2.17
+    ref: division-240
+    fichier: article-240-2-17
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

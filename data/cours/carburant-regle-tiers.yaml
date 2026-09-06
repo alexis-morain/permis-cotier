@@ -1,0 +1,55 @@
+notion: carburant-regle-tiers
+duree: 4
+accroche: >-
+  Tu as calculé ton autonomie : 6 heures de route. Tu te dis que 3 heures d’aller et 3
+  heures de retour, ça tombe bien. C’est exactement le raisonnement qui laisse des bateaux
+  en panne sèche à quelques milles du port.
+etapes:
+  - titre: Le carburant se partage en trois
+    texte: >-
+      L’usage partage le carburant embarqué en trois parts égales : un tiers pour aller,
+      un tiers pour revenir, un tiers de réserve.
+
+      La conséquence est immédiate. La distance à laquelle tu peux t’éloigner se calcule
+      sur un tiers du carburant, pas sur la totalité.
+  - titre: Le calcul, étape par étape
+    texte: >-
+      Prends un bateau avec 150 litres réellement utilisables, un moteur qui consomme 25
+      litres par heure et une vitesse de 20 nœuds. Voilà jusqu’où tu peux t’éloigner.
+    liste:
+      - "Le tiers de l’aller : 150 litres divisés par 3, soit 50 litres."
+      - "La durée de l’aller : 50 litres divisés par 25 litres par heure, soit 2 heures."
+      - "La distance de l’aller : 2 heures multipliées par 20 nœuds, soit 40 milles."
+      - "Pour vérifier : l’autonomie totale est de 150 divisés par 25, soit 6 heures, donc 120 milles de route au total. Les 40 milles de l’aller en sont bien le tiers."
+  - titre: La réserve n’est pas une marge de calcul
+    texte: >-
+      Le troisième tiers ne compense pas une jauge imprécise. Il couvre ce qui n’était pas
+      prévu : un vent contraire au retour, un courant, une mer formée qui fait monter la
+      consommation, un détour pour éviter un grain, une recherche de mouillage,
+      l’assistance à un autre bateau.
+
+      Ce sont des situations qui allongent la route ou alourdissent la consommation, et
+      qui arrivent presque toujours au retour, quand le réservoir est déjà entamé.
+  - titre: Aucun texte ne l’impose
+    texte: >-
+      La règle des tiers n’est écrite dans aucun texte réglementaire. C’est un usage de
+      bonne pratique maritime, enseigné et interrogé à l’examen.
+
+      Le programme, lui, demande bien des notions d’autonomie en matière de carburant : la
+      question tombe, et la réponse attendue est celle des trois tiers.
+piege: >-
+  L’erreur classique consiste à calculer l’éloignement sur la totalité du réservoir. Dans
+  l’exemple, cela donnerait 120 milles : de quoi arriver là-bas, et rien pour revenir. Le
+  chiffre à donner est celui du tiers, 40 milles.
+retenir:
+  - Un tiers pour aller, un tiers pour revenir, un tiers de réserve.
+  - "L’éloignement maximal se calcule sur le tiers du carburant disponible, jamais sur le plein."
+  - "Le troisième tiers couvre l’imprévu : vent contraire, courant, mer formée, détour, assistance."
+  - Aucun texte n’impose la règle des tiers, c’est un usage de bonne pratique.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+    fichier: autonomie
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

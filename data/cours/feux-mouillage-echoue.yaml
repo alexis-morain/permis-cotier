@@ -1,0 +1,66 @@
+notion: feux-mouillage-echoue
+duree: 4
+accroche: >-
+  Tu rentres de nuit dans une baie. Un feu blanc immobile, seul, sans feu de côté ni feu
+  de poupe. Ce n’est pas un navire qui fait route : c’est un bateau sur son ancre.
+etapes:
+  - titre: Au mouillage, du blanc sur tout l’horizon
+    texte: >-
+      Un navire au mouillage montre à l’endroit le plus visible, à l’avant, un feu blanc
+      visible sur tout l’horizon, et à l’arrière ou près de l’arrière un second feu blanc
+      visible sur tout l’horizon, plus bas que le premier.
+
+      Deux blancs à des hauteurs différentes, sans rien de coloré : le navire est immobile
+      et son avant est du côté du feu le plus haut.
+    visuel: feux/au-mouillage-moins-de-50-m.svg
+    alt: "Un seul feu blanc sur fond de nuit, visible sur tout l’horizon."
+  - titre: En dessous de 50 mètres, un seul feu suffit
+    texte: >-
+      Un navire au mouillage de longueur inférieure à 50 mètres peut montrer un seul feu
+      blanc visible sur tout l’horizon, à l’endroit le plus visible, au lieu des deux
+      feux. C’est le cas de tous les bateaux de plaisance.
+
+      Ce feu unique te renseigne donc sur deux choses à la fois : le navire est au
+      mouillage, et il fait moins de 50 mètres. À partir de 100 mètres, l’illumination
+      des ponts devient obligatoire.
+  - titre: De jour, une boule à l’avant
+    texte: >-
+      La marque du mouillage est une boule noire, montrée à l’avant, à l’endroit le plus
+      visible. Une seule, quelle que soit la longueur du navire.
+  - titre: Échoué, deux feux rouges en plus
+    texte: >-
+      Un navire échoué montre les feux du mouillage et, à l’endroit le plus visible, deux
+      feux rouges superposés visibles sur tout l’horizon. De jour, il montre trois boules
+      superposées.
+
+      Compte les boules : une au mouillage, deux quand on ne se gouverne plus, trois quand
+      on ne flotte plus.
+  - titre: Les deux dispenses, et leurs limites
+    texte: >-
+      Les seuils ne sont pas les mêmes selon ce que tu montres.
+    liste:
+      - "Moins de 7 mètres au mouillage : ni feu ni boule exigés"
+      - "Sauf dans un chenal étroit, une voie d’accès, un ancrage, à proximité, ou sur une route fréquentée"
+      - "Moins de 12 mètres échoué : ni les deux feux rouges, ni les trois boules"
+      - "La dispense d’échouement ne dispense pas du feu de mouillage"
+piege: >-
+  Le feu blanc unique n’est pas réservé au mouillage. Un navire à propulsion mécanique
+  de moins de 7 mètres dont la vitesse ne dépasse pas 7 nœuds montre lui aussi un feu
+  blanc visible sur tout l’horizon, en faisant route. Ce qui tranche, c’est le mouvement
+  et la présence des feux de côté, pas la couleur.
+retenir:
+  - "Au mouillage : un feu blanc sur tout l’horizon à l’avant, un second plus bas à l’arrière au-delà de 50 mètres."
+  - "De jour, une boule à l’avant."
+  - "Échoué : les feux de mouillage, plus deux feux rouges superposés, et trois boules de jour."
+  - "Moins de 7 mètres au mouillage : rien d’exigé, sauf chenal, ancrage ou route fréquentée."
+  - "Moins de 12 mètres échoué : pas de feux rouges ni de boules d’échouement."
+sources:
+  - texte: RIPAM, règle 30
+    ref: decret-77-733
+    fichier: regle-30
+  - texte: RIPAM, règle 23
+    ref: decret-77-733
+    fichier: regle-23
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

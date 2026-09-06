@@ -1,0 +1,62 @@
+notion: titre-sanctions
+duree: 4
+accroche: >-
+  Un permis plaisance ne s’use pas et ne se renouvelle pas. Il se perd, en revanche, quand
+  la conduite l’a mérité. L’administration peut le retirer, pour un temps ou pour de bon.
+etapes:
+  - titre: Trois familles de motifs
+    texte: >-
+      Le permis, comme les titres de conduite délivrés sous les réglementations
+      antérieures, peut être retiré temporairement ou définitivement dans trois cas.
+    liste:
+      - "Inobservation des règlements de police de la circulation en eaux maritimes ou intérieures"
+      - "Négligence ou imprudence grave compromettant la sécurité du conducteur, des passagers ou de tiers"
+      - "Conduite en état d’ébriété ou après consommation de stupéfiants"
+  - titre: Qui constate
+    texte: >-
+      En eaux maritimes, ces manquements sont constatés par les officiers et agents de
+      police judiciaire, et par les personnes habilitées à constater les infractions à la
+      police de la navigation maritime. En eaux intérieures, ce sont les officiers et agents
+      de police judiciaire et les agents habilités pour les voies navigables.
+  - titre: Un an au plus pour le retrait temporaire
+    texte: >-
+      Le retrait temporaire est prononcé pour une durée maximum d’une année. Le retrait
+      définitif, lui, n’a pas de terme fixé.
+
+      Les deux sont prononcés par l’autorité administrative dont dépend le service
+      instructeur dans le ressort duquel l’infraction a eu lieu, après que le titulaire a
+      été mis à même de présenter ses observations.
+  - titre: L’urgence permet de retirer d’abord, huit jours seulement
+    texte: >-
+      En cas d’urgence motivée, le retrait peut intervenir avant que le titulaire ait été
+      entendu. Cette anticipation vaut pour une période de huit jours, durant laquelle
+      l’intéressé doit être entendu.
+  - titre: Trois ans avant d’en redemander un
+    texte: >-
+      La personne qui a fait l’objet d’un retrait définitif n’est admise à solliciter un
+      nouveau permis qu’à l’expiration d’un délai de trois ans à compter de ce retrait. Le
+      retrait définitif n’est donc pas éternel, mais il coûte trois années.
+
+      Un conducteur étranger sans permis français ne peut pas se voir retirer un titre
+      qu’il n’a pas : pour les mêmes motifs, il se voit interdire, temporairement ou
+      définitivement, de naviguer au départ des ports français ou dans les eaux
+      territoriales françaises.
+piege: >-
+  Les deux durées se confondent vite. Une année, c’est le maximum du retrait temporaire.
+  Trois ans, c’est le délai d’attente avant de pouvoir solliciter un nouveau permis après
+  un retrait définitif. Et huit jours, c’est le seul cas où l’on retire avant d’entendre.
+retenir:
+  - "Retrait pour inobservation des règlements de police, imprudence grave, ébriété ou stupéfiants."
+  - "Retrait temporaire : une année au maximum."
+  - "Retrait définitif : trois ans avant de pouvoir solliciter un nouveau permis."
+  - "Urgence motivée : retrait avant audition, pour huit jours, pendant lesquels l’intéressé est entendu."
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 6
+    ref: decret-2007-1167
+    fichier: article-6
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 7
+    ref: decret-2007-1167
+    fichier: article-7
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { charger, leconsFaites } from '../lib/progression';
 
 interface Props {
-  /** Les leçons dans l'ordre du parcours, code et nom. */
-  lecons: { code: string; nom: string }[];
+  /** Les leçons dans l'ordre du parcours : code, nom, adresse. */
+  lecons: { code: string; nom: string; chemin: string }[];
 }
 
 /**
@@ -25,7 +25,7 @@ export default function ReprendreCours({ lecons }: Props) {
           <b>{nombre}</b> leçon{nombre > 1 ? 's' : ''} faite{nombre > 1 ? 's' : ''} sur {lecons.length}.{' '}
         </span>
       )}
-      <a className="bouton bouton--principal" href={`/cours/${prochaine.code}`} data-mesure="accueil-cours" data-mesure-notion={prochaine.code}>
+      <a className="bouton bouton--principal" href={prochaine.chemin} data-mesure="accueil-cours" data-mesure-notion={prochaine.code}>
         {nombre > 0 ? `Reprendre : ${prochaine.nom}` : 'Commencer le cours'}
       </a>
       <style>{`

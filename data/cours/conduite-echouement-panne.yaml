@@ -1,0 +1,57 @@
+notion: conduite-echouement-panne
+duree: 4
+accroche: >-
+  Le bateau touche et s’arrête. Ou le moteur se tait, et la côte se rapproche. Deux
+  situations sans gravité immédiate, que le mauvais premier geste transforme en naufrage.
+etapes:
+  - titre: Posé, le bateau ne coule pas
+    texte: >-
+      Face à un échouement, tu vérifies d’abord l’état de la coque et l’absence de voie
+      d’eau. Tant qu’il est posé, le bateau ne coule pas : c’est le moment d’aller voir.
+
+      Se déséchouer en force sur une coque percée transforme un échouement en naufrage. Tu
+      fais aussi porter les brassières et tu comptes l’équipage.
+  - titre: La marée décide de l’urgence
+    texte: >-
+      À marée montante, on attend. On peut gîter le bateau ou porter une ancre au large pour
+      se haler quand l’eau revient.
+
+      À marée descendante, l’urgence est réelle : chaque minute perdue enfonce davantage. Tu
+      alertes si le bateau est sur un fond de roche, s’il y a de la mer, ou si la marée
+      descend.
+  - titre: Vérifier l’hélice avant de relancer
+    texte: >-
+      Tu ne remets pas le moteur en marche avant de t’être assuré que l’hélice et le circuit
+      de refroidissement ne sont pas obstrués par le sable ou la vase.
+
+      Un moteur relancé dans le sable ajoute une panne à l’échouement.
+  - titre: En panne, l’ancre avant le diagnostic
+    texte: >-
+      Si tu dérives vers un danger, une côte, des cailloux ou un chenal fréquenté, tu
+      mouilles sans attendre. L’ancre est le premier geste, avant d’ouvrir le capot.
+
+      Ensuite seulement, tu cherches les causes simples : niveau de carburant, robinet,
+      coupe-batterie, cordon coupe-circuit, filtre à eau, crépine d’aspiration, hélice
+      engagée dans un bout ou un filet.
+  - titre: PAN PAN, et pas n’importe quelle remorque
+    texte: >-
+      Une avarie sans danger imminent se signale par PAN PAN, pas par MAYDAY.
+
+      Et tu refuses le remorquage improvisé d’un navire mal adapté quand le sauvetage
+      organisé est en route : une remorque qui casse fait deux avaries au lieu d’une.
+piege: >-
+  Mettre plein gaz en marche arrière dès qu’on a touché, pour se dégager avant que ça
+  n’empire. Sans avoir regardé la coque, on risque d’ouvrir la brèche et de couler dans
+  l’eau libre ; et l’hélice pleine de sable lâche au pire moment.
+retenir:
+  - "Échouement : d’abord la coque et la voie d’eau, ensuite la marée."
+  - Marée montante on attend, marée descendante chaque minute compte.
+  - On vérifie l’hélice et le refroidissement avant de relancer le moteur.
+  - "Panne avec dérive vers un danger : on mouille d’abord. Avarie sans danger imminent : PAN PAN."
+sources:
+  - texte: Fiche conduite à tenir
+    ref: fiche-conduite-urgence
+    fichier: conduite-a-tenir
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

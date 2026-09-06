@@ -1,0 +1,64 @@
+notion: carte-dangers-amers
+duree: 4
+accroche: >-
+  Devant l’entrée du port, la carte est semée de petites croix, d’un fuseau barré et
+  d’une étoile magenta suivie d’une ligne de lettres. Ce sont les cailloux à éviter et
+  les repères à viser.
+etapes:
+  - titre: Une croix ou un astérisque, c’est une roche qui découvre
+    texte: >-
+      Une roche qui sort de l’eau à basse mer est dessinée par une croix ou un astérisque,
+      souvent accompagnée de sa hauteur soulignée, comptée au-dessus du zéro des cartes.
+
+      Une roche à fleur d’eau ou dangereuse est entourée d’un pointillé de danger : le
+      pointillé enferme la zone à ne pas couper, même quand le symbole paraît minuscule.
+  - titre: Le fuseau est une épave, l’ancre un mouillage
+    texte: >-
+      Une épave se dessine par un symbole en fuseau, barré ou non selon qu’elle est
+      dangereuse pour la navigation. Une ancre marque un mouillage.
+
+      Une limite en tireté magenta entoure une zone interdite ou réglementée, avec la
+      mention qui dit laquelle.
+  - titre: Un feu porte sa carte d’identité
+    texte: >-
+      Un phare ou un feu est marqué par une étoile ou un point avec un éclat magenta,
+      suivi de la description du feu. Elle se lit toujours dans le même ordre : le
+      caractère, la couleur, la période, la hauteur, la portée.
+
+      « Fl(2) R 10s 12m 9M » se lit donc : deux éclats rouges groupés, motif répété toutes
+      les 10 secondes, feu à 12 mètres au-dessus du niveau de la mer, portée 9 milles.
+  - titre: Le m minuscule est une hauteur, le M majuscule une portée
+    texte: >-
+      Les deux derniers champs se ressemblent et ne se distinguent que par la casse de la
+      lettre. 12m est la hauteur du feu, comptée depuis le niveau moyen des pleines mers
+      de vive-eau. 9M est la portée, en milles.
+  - titre: Deux amers superposés font un alignement
+    texte: >-
+      Un alignement est un groupe de deux marques ou feux placés dans le même plan
+      vertical, de telle manière que tu suives le même relèvement en les gardant
+      superposés. Il matérialise l’axe d’un chenal ou une route sûre, de jour comme de
+      nuit.
+
+      Ses structures n’ont ni couleur ni forme imposées : l’autorité choisit ce qui se
+      détache le mieux du fond.
+piege: >-
+  Confondre 12m et 9M coûte une question à chaque fois. Le candidat lit « 12 » et pense
+  portée parce que c’est le plus grand des deux nombres. La casse tranche seule : m
+  minuscule pour les mètres de hauteur, M majuscule pour les milles de portée, et la
+  hauteur est toujours écrite avant la portée.
+retenir:
+  - "Croix ou astérisque : roche qui découvre. Pointillé de danger : roche à fleur d’eau."
+  - "Fuseau : épave. Ancre : mouillage. Tireté magenta : zone réglementée."
+  - "Un feu se lit dans l’ordre : caractère, couleur, période, hauteur, portée."
+  - "12m est la hauteur du feu, 9M sa portée en milles."
+  - "Un alignement : deux marques dans le même plan vertical, gardées superposées."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+  - texte: Arrêté du 30 novembre 2017, annexe I, 8.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
