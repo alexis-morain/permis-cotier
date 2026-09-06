@@ -75,13 +75,18 @@ npm run dev
 
 ## Le cours
 
-`/cours` prend les 105 notions du programme dans un ordre d'apprentissage, dix
-chapitres, une leçon par notion. Une leçon écrite est un fichier
-`data/cours/<notion>.yaml` : accroche, étapes, piège, mémo, sources, comme une
-question elle cite ses textes. Une notion sans fichier a une leçon courte, le
-résumé de sa fiche, jouable mais en `noindex`. Chaque leçon se termine par
-jusqu'à trois questions de la banque sur la notion ; la progression reste dans
-le navigateur.
+`/cours` prend les 105 notions du programme dans un ordre d'apprentissage.
+Chaque thème a son cours, `/cours/<thème>`, quatorze en tout, qui dit pourquoi
+il compte, ce qu'on saura faire, par quel bout le prendre, ses pièges, et liste
+ses leçons ; une leçon par notion, à `/cours/<thème>/<notion>`. Une leçon est un
+fichier `data/cours/<notion>.yaml` : accroche, étapes, piège, mémo, sources,
+comme une question elle cite ses textes. Une notion sans fichier aurait une
+leçon courte, le résumé de sa fiche, jouable mais en `noindex` ; toutes sont
+rédigées à ce jour. Chaque leçon se termine par jusqu'à trois questions de la
+banque sur la notion ; la progression reste dans le navigateur. Les leçons
+écrites par le modèle sans `meta.relu_par` le disent en page : une relecture
+humaine est attendue. Les anciennes adresses `/cours/<notion>` redirigent en 301
+depuis `public/_redirects`.
 
 ## Ajouter une question
 

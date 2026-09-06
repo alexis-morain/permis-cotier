@@ -1,0 +1,67 @@
+notion: carburant-autonomie
+duree: 4
+accroche: >-
+  Tu pars pour la journée. La jauge annonce un plein, le moteur tourne rond, la mer est
+  belle. Avant de larguer, une question à laquelle il faut un chiffre : combien de temps
+  ce carburant te fait-il tenir, et jusqu’où ?
+etapes:
+  - titre: L’autonomie est d’abord une durée
+    texte: >-
+      L’autonomie en durée est le temps pendant lequel le moteur peut tourner avec le
+      carburant embarqué. Elle se calcule en divisant le carburant disponible par la
+      consommation horaire au régime tenu.
+
+      Avec 120 litres réellement utilisables et un moteur qui consomme 15 litres par
+      heure, l’autonomie est de 120 divisé par 15, soit 8 heures.
+  - titre: La durée devient une distance
+    texte: >-
+      La distance franchissable est l’autonomie multipliée par la vitesse. Le nœud étant
+      un mille par heure, la multiplication tombe juste, sans conversion.
+
+      Reprends les 8 heures précédentes. À 12 nœuds, elles portent à 8 fois 12, soit 96
+      milles. À 6 nœuds, les mêmes 8 heures ne font que 48 milles.
+  - titre: La consommation dépend du régime, pas du bateau
+    texte: >-
+      La consommation horaire n’est pas une constante inscrite sur la coque, c’est une
+      caractéristique du régime moteur. Sur une coque planante, elle monte beaucoup plus
+      vite que la vitesse : gagner 2 nœuds au-dessus du régime économique peut coûter la
+      moitié de l’autonomie.
+
+      Ce que le bateau affronte compte aussi. Une mer formée, un vent debout, une carène
+      sale, une surcharge font monter la consommation.
+  - titre: Le réservoir annoncé n’est pas le carburant disponible
+    texte: >-
+      La capacité annoncée par le constructeur n’est pas entièrement utilisable. Le fond
+      du réservoir, la gîte, l’assiette et l’imprécision de la jauge en retirent une part.
+
+      On calcule donc sur le carburant réellement disponible, à l’allure réellement tenue,
+      pas sur le chiffre de la plaquette et le régime théorique.
+  - titre: Ce que l’examen en attend
+    texte: >-
+      Le programme de l’épreuve théorique de l’option côtière demande des notions
+      d’autonomie en matière de carburant. Les questions portent sur de l’arithmétique
+      vérifiable : une division pour la durée, une multiplication pour la distance.
+
+      Aucun texte ne fixe en revanche la façon de répartir ce carburant. La règle des
+      tiers est un usage de bonne pratique maritime, enseigné et interrogé, mais qui ne
+      relève pas du droit.
+piege: >-
+  La distance franchissable n’est pas la distance à laquelle tu peux t’éloigner. Ces 96
+  milles sont la route totale, aller et retour compris, réservoir vidé jusqu’à la dernière
+  goutte. Le candidat qui répond 96 milles à la question « jusqu’où peux-tu aller »
+  arrive là-bas avec un réservoir sec.
+retenir:
+  - "Autonomie en heures = carburant disponible en litres divisé par la consommation horaire."
+  - "Distance en milles = autonomie en heures multipliée par la vitesse en nœuds, sans conversion."
+  - La consommation dépend du régime et monte plus vite que la vitesse.
+  - On compte sur le carburant réellement disponible, pas sur la capacité annoncée.
+sources:
+  - texte: Fiche autonomie en carburant
+    ref: fiche-carburant
+    fichier: autonomie
+  - texte: Arrêté du 28 septembre 2007, article 1er, point 1.2
+    ref: arrete-2007-09-28
+    fichier: article-1
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

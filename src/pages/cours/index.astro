@@ -1,51 +1,150 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Parcours from '../../components/Parcours.tsx';
-import { CHAPITRES, leconsDuChapitre } from '../../lib/parcours';
+import ListeCours from '../../components/ListeCours.tsx';
+import { COURS, leconsDuCours, cheminCours } from '../../lib/parcours';
 import { leconsEcrites, compteLeconsEcrites } from '../../lib/lecons';
+import { SITE, faq, absolue } from '../../lib/seo';
 
 const ecrites = await leconsEcrites();
 const compte = await compteLeconsEcrites();
+const base = Astro.site ?? SITE.domaine;
 
-const chapitres = CHAPITRES.map((c) => ({
-  code: c.code,
-  titre: c.titre,
-  promesse: c.promesse,
-  lecons: leconsDuChapitre(c.code).map((l) => ({
+const cours = COURS.map((c) => {
+  const lecons = leconsDuCours(c.code).map((l) => ({
     code: l.notion.code,
     nom: l.notion.nom,
+    chemin: l.chemin,
     ecrite: ecrites.has(l.notion.code),
     duree: ecrites.get(l.notion.code)?.duree ?? 1,
+  }));
+  return {
+    code: c.code,
+    titre: c.titre,
+    promesse: c.promesse,
+    chemin: cheminCours(c.code),
+    minutes: lecons.reduce((t, l) => t + l.duree, 0),
+    lecons,
+  };
+});
+const minutes = cours.reduce((t, c) => t + c.minutes, 0);
+const heures = Math.round(minutes / 60);
+
+const questions = [
+  {
+    question: 'Combien de temps prend le cours du permis côtier ?',
+    reponse: `Environ ${heures} heures de lecture en tout, en ${compte.total} leçons de deux à six minutes, réparties en ${COURS.length} cours, un par thème du programme. On le suit à son rythme, dans l’ordre ou non.`,
+  },
+  {
+    question: 'Faut-il un compte pour suivre le cours ?',
+    reponse:
+      'Non. Le cours est gratuit et sans inscription. La progression, leçons faites et scores, reste dans le navigateur, et le site fonctionne hors ligne une fois visité.',
+  },
+  {
+    question: 'Dans quel ordre apprendre le programme du permis côtier ?',
+    reponse:
+      'Ce cours ne suit pas l’ordre de l’arrêté mais celui de l’apprentissage : le balisage d’abord, parce qu’il se voit, puis les règles de rencontre, les feux, les signaux, le bateau, le permis, la VHF, la météo, la carte, les écluses et l’environnement.',
+  },
+  {
+    question: 'D’où viennent les leçons ?',
+    reponse:
+      'Chaque leçon est écrite depuis les textes qu’elle cite, RIPAM, division 240, arrêtés et décrets, et les affiche sous son contenu. Une leçon sans source n’entre pas.',
+  },
+];
+
+const liste = {
+  '@type': 'ItemList',
+  name: 'Le cours du permis côtier, thème par thème',
+  numberOfItems: cours.length,
+  itemListElement: cours.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.titre,
+    url: absolue(c.chemin, base),
   })),
-}));
+};
 ---
 
 <Base
-  titre="Le cours du permis côtier, leçon par leçon"
-  description="Le programme dans l’ordre où on l’apprend : le balisage, les règles de rencontre, les feux, puis le reste. Des leçons de trois minutes, chacune vérifiée sur les questions de la banque."
+  titre="Le cours du permis côtier, thème par thème"
+  description={`Quatorze cours, un par thème du programme, dans l’ordre où on l’apprend : le balisage, les règles de rencontre, les feux, puis le reste. ${compte.total} leçons de trois minutes, chacune vérifiée sur les questions de la banque.`}
   miettes={[{ nom: 'Cours', chemin: '/cours' }]}
+  jsonLd={[liste, faq(questions)]}
 >
   <div class="page page--etroite" style="padding-block:3rem 0">
-    <h1>Le cours, leçon par leçon</h1>
+    <h1>Le cours, thème par thème</h1>
     <p class="chapo">
-      Tu pars de zéro ? Ce cours prend le programme dans l’ordre où on l’apprend, pas dans
-      celui de l’arrêté : d’abord ce qu’on voit sur l’eau, puis les règles de rencontre,
-      puis ce qui se prépare à terre.
+      Tu pars de zéro ? Chaque thème du programme a son cours, et les quatorze cours se
+      suivent dans l’ordre où on apprend, pas dans celui de l’arrêté : d’abord ce qu’on voit
+      sur l’eau, puis les règles de rencontre, puis ce qui se prépare à terre.
     </p>
     <p>
-      {compte.total} leçons de deux à cinq minutes, une par notion du programme. Chacune
-      se termine par des questions de la banque, corrigées une par une avec le texte dont
-      la réponse est tirée. Ta progression reste dans ton navigateur, sans compte.
+      {compte.total} leçons de deux à six minutes, une par notion du programme, {heures} heures
+      en tout. Chacune se termine par des questions de la banque, corrigées une par une avec le
+      texte dont la réponse est tirée. Ta progression reste dans ton navigateur, sans compte.
     </p>
-    <p class="discret">
-      {compte.ecrites} leçons sont rédigées à ce jour. Les autres tiennent en un résumé, le
-      temps de les écrire depuis les textes : elles sont marquées « résumé seulement ».
-    </p>
+    {compte.ecrites < compte.total && (
+      <p class="discret">
+        {compte.ecrites} leçons sont rédigées à ce jour. Les autres tiennent en un résumé, le
+        temps de les écrire depuis les textes : elles sont marquées « résumé seulement ».
+      </p>
+    )}
 
-    <Parcours client:load chapitres={chapitres} />
+    <ListeCours client:load cours={cours} />
   </div>
+
+  <section class="page page--etroite bloc">
+    <h2>Comment se passe une leçon</h2>
+    <p>
+      Une leçon commence par une situation, vue du bateau : une bouée devant toi, un feu dans
+      la nuit, un bulletin qui annonce force 6. Puis la règle, en quelques étapes d’une idée
+      chacune, avec le dessin quand il y en a un. Puis le piège, l’erreur que l’épreuve fait
+      faire. Puis trois lignes à retenir, celles qu’on relit la veille.
+    </p>
+    <p>
+      Elle se termine par une vérification : jusqu’à trois questions de la banque sur la
+      notion, une ou deux bonnes réponses comme à l’épreuve, corrigées tout de suite avec la
+      source. Une question ratée repasse dans ta révision. Sur téléphone, une idée à la fois ;
+      un bouton permet de tout lire d’une traite.
+    </p>
+  </section>
+
+  <section class="page page--etroite bloc">
+    <h2>Pourquoi cet ordre</h2>
+    <p>
+      L’arrêté du 28 septembre 2007 liste les thèmes dans l’ordre d’un programme d’examen. Ce
+      n’est pas celui dans lequel on apprend. Le balisage vient en premier parce qu’il est
+      concret et visuel, et parce qu’il pèse lourd. Les règles de barre et les feux suivent : ce
+      sont les deux thèmes les plus lourds de l’épreuve, et ils se répondent. Le bateau, le permis
+      et la VHF viennent ensuite, puis ce qui se lit à terre : la météo, la carte, la marée.
+    </p>
+    <p>
+      Rien n’oblige à suivre cet ordre. Chaque cours se prend seul, depuis sa page ou depuis la
+      fiche de son thème, et la reprise te ramène toujours à la première leçon que tu n’as pas
+      faite.
+    </p>
+  </section>
+
+  <section class="page page--etroite bloc">
+    <h2>Questions sur le cours</h2>
+    <dl class="questions">
+      {questions.map((q) => (
+        <div>
+          <dt>{q.question}</dt>
+          <dd>{q.reponse}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
 </Base>
 
 <style>
   .chapo { font-size: 1.15rem; }
+  .bloc { margin-top: 3.5rem; }
+  .bloc h2 { margin-bottom: 1rem; }
+
+  .questions { margin: 0; }
+  .questions div { border-top: 2px solid var(--filet); padding: 1rem 0; }
+  .questions div:last-child { border-bottom: 2px solid var(--filet); }
+  .questions dt { font-weight: 700; margin-bottom: 0.4rem; max-width: var(--mesure); }
+  .questions dd { margin: 0; max-width: var(--mesure); }
 </style>

@@ -1,0 +1,48 @@
+notion: signaux-attirer-attention
+duree: 3
+accroche: >-
+  Un navire fait route droit sur une roche que tu vois et qu’il ne voit pas. Tu veux le
+  prévenir, tout de suite, sans lui envoyer un message qui veut dire autre chose.
+etapes:
+  - titre: Un signal qui ne ressemble à aucun autre
+    texte: >-
+      Tout navire peut, s’il juge nécessaire d’appeler l’attention d’un autre, émettre des
+      signaux lumineux ou sonores. La seule condition tient en un mot : ils ne doivent pas
+      pouvoir être confondus avec un autre signal autorisé par le Règlement.
+
+      Un coup de klaxon libre, une lampe agitée, un cri : tout va, tant que ça ne copie
+      pas un signal qui a déjà un sens.
+  - titre: Le projecteur montre le danger, pas le navire
+    texte: >-
+      L’autre moyen prévu par la règle est le projecteur, orienté en direction du danger
+      qui menace le navire, de façon que le faisceau ne puisse gêner d’autres navires.
+
+      Tu éclaires la roche, la digue, l’épave. Éclairer la passerelle éblouit le
+      timonier et détruit sa vision de nuit au moment où il en a le plus besoin.
+  - titre: Pas de gyrophare
+    texte: >-
+      Un feu destiné à attirer l’attention ne doit pas pouvoir être confondu avec une aide
+      à la navigation. La règle demande d’éviter l’emploi de feux intermittents ou
+      tournants à haute intensité, du type phare gyroscopique.
+
+      Vu de loin, dans le clapot, un feu qui tourne ressemble à une bouée cardinale ou à
+      un feu de port. Le marin qui le lit ainsi fera fausse route.
+piege: >-
+  Tirer une fusée rouge pour se faire remarquer d’un bateau qui ne t’a pas vu. La fusée
+  rouge est un signal de détresse de l’annexe IV, et son usage est interdit hors d’un cas
+  de détresse ou d’un besoin d’assistance. Elle déclenche des secours, elle n’attire pas
+  l’attention.
+retenir:
+  - "Attirer l’attention : tout signal lumineux ou sonore qui ne peut être confondu avec un signal du Règlement."
+  - Le projecteur se dirige vers le danger, jamais vers le navire ni vers l’horizon.
+  - Les feux intermittents ou tournants à haute intensité sont à éviter.
+sources:
+  - texte: RIPAM, règle 36
+    ref: decret-77-733
+    fichier: regle-36
+  - texte: RIPAM, annexe IV
+    ref: decret-77-733
+    fichier: annexe-iv
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

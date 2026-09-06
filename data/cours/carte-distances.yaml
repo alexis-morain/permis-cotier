@@ -1,0 +1,47 @@
+notion: carte-distances
+duree: 3
+accroche: >-
+  Tu veux savoir combien il y a d’ici à la pointe. Tu prends ton compas à pointes sèches,
+  tu écartes les branches sur la carte. Reste à savoir sur quel bord de la carte tu vas
+  reporter cet écartement.
+etapes:
+  - titre: Une minute de latitude vaut un mille marin
+    texte: >-
+      Un mille marin vaut 1 852 mètres, et c’est exactement ce que mesure une minute de
+      latitude. L’égalité tient à toute latitude, du sud de la Corse au nord de la Manche.
+
+      La carte porte donc sa propre règle graduée : l’échelle des latitudes.
+  - titre: On mesure sur les bords verticaux
+    texte: >-
+      L’échelle des latitudes court sur les bords droit et gauche de la carte. Tu reportes
+      l’écartement de ton compas dessus, à la hauteur de la zone où tu mesures, et tu lis
+      le nombre de minutes. Autant de minutes, autant de milles.
+  - titre: Jamais sur les bords horizontaux
+    texte: >-
+      Les bords haut et bas portent l’échelle des longitudes. Les méridiens se rejoignent
+      aux pôles : la minute de longitude rétrécit à mesure qu’on s’éloigne de l’équateur,
+      et sous nos latitudes elle ne vaut plus un mille.
+
+      Mesurer dessus donne une distance fausse, d’autant plus fausse qu’on est plus au
+      nord.
+  - titre: Le dixième de mille est une encablure
+    texte: >-
+      Pour les courtes distances, on parle en encablures. Une encablure est le dixième du
+      mille, soit 185,2 mètres, qu’on arrondit à 185 mètres.
+piege: >-
+  Le piège est de prendre les deux échelles pour la même graduation parce qu’elles se
+  ressemblent, et de mesurer en haut de la carte parce que c’est plus commode. Seule la
+  minute de latitude vaut un mille. Un relevé fait sur les longitudes annonce une
+  distance plus courte que la réalité.
+retenir:
+  - "1 minute de latitude = 1 mille marin = 1 852 mètres."
+  - "Les distances se mesurent sur les bords verticaux, jamais sur les bords horizontaux."
+  - "La minute de longitude rétrécit vers le nord, elle ne vaut pas un mille."
+  - "Une encablure est le dixième du mille, environ 185 mètres."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

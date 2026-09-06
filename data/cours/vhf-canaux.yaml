@@ -1,0 +1,66 @@
+notion: vhf-canaux
+duree: 4
+accroche: >-
+  Tu allumes la VHF et le sélecteur défile sur des dizaines de canaux. Trois d’entre
+  eux suffisent à passer l’examen, et à te sortir d’affaire en mer.
+etapes:
+  - titre: Le 16 est la voie de détresse et d’appel
+    texte: >-
+      Le canal 16, sur 156,800 MHz, est la voie internationale de détresse, d’urgence
+      et d’appel. On y lance l’appel, puis on bascule aussitôt sur une voie de travail
+      pour la conversation : le 16 se garde libre.
+
+      La division 240 va plus loin. Tout navire équipé d’une VHF fixe ou portative
+      doit, à la mer et lorsque c’est possible, rester en permanence à l’écoute du 16,
+      depuis le poste de navigation habituel. C’est ainsi qu’on entend un MAYDAY voisin
+      ou un avis du CROSS.
+  - titre: Le 70 ne porte que des données
+    texte: >-
+      Le canal 70 est réservé à l’appel sélectif numérique. Aucune phonie n’y passe,
+      jamais : c’est par lui que part l’alerte quand on soulève le capot rouge. Le
+      RIPAM range d’ailleurs parmi les signaux de détresse l’alerte émise par ASN sur
+      la voie 70 en ondes métriques.
+
+      Une fois l’alerte numérique partie, la parole se fait sur le 16.
+  - titre: Les autres voies, chacune son usage
+    texte: >-
+      Le reste du sélecteur se répartit par métier. Tu appelles une capitainerie sur sa
+      voie portuaire, tu bavardes avec un autre bateau sur une voie de travail.
+    liste:
+      - "Canal 6 : sécurité, coordination des recherches et du sauvetage entre navires et aéronefs"
+      - "Canaux 9, 12, 14 et voisins : voies portuaires, capitaineries"
+      - "Canaux 72, 77 et voisins : voies de travail entre navires"
+  - titre: La portée vient de la hauteur, pas des watts
+    texte: >-
+      Une VHF fixe émet au plus 25 watts, une portative 6 watts. La VHF porte à vue, un
+      peu au-delà de l’horizon optique : c’est la hauteur des antennes qui commande la
+      portée.
+
+      D’un bateau à l’autre, avec des antennes basses, elle vaut quelques milles. Vers
+      une station côtière haut perchée, elle atteint plusieurs dizaines de milles. Une
+      portative tenue à la main porte donc beaucoup moins qu’une fixe reliée à une
+      antenne en tête de mât, à puissance pourtant proche.
+piege: >-
+  Le piège tient en un réflexe : passer en pleine puissance pour joindre un bateau
+  lointain. Les 25 watts ne franchissent pas l’horizon. Un correspondant à quarante
+  milles reste hors de portée d’un bateau à l’autre, quelle que soit la position du
+  bouton.
+retenir:
+  - "Canal 16, 156,800 MHz : détresse, urgence et appel. On appelle, on dégage sur une voie de travail."
+  - "Canal 70 : appel sélectif numérique seulement, aucune phonie."
+  - "Canal 6 : sécurité et sauvetage. 9, 12, 14 : ports. 72, 77 : entre navires."
+  - "25 watts en fixe, 6 en portative : la portée dépend de la hauteur des antennes."
+  - "VHF à bord et navire à la mer : veille permanente du canal 16 quand c’est possible."
+sources:
+  - texte: "Fiche VHF : voies, procédures d’appel et SMDSM"
+    ref: fiche-vhf
+    fichier: procedures
+  - texte: Division 240, article 240-2.07
+    ref: division-240
+    fichier: article-240-2-07
+  - texte: RIPAM, annexe IV
+    ref: decret-77-733
+    fichier: annexe-iv
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

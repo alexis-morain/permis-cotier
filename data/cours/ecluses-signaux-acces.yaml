@@ -1,0 +1,98 @@
+notion: ecluses-signaux-acces
+duree: 5
+accroche: >-
+  Tu arrives devant l’écluse. Des feux sont allumés au-dessus de la porte. De leur couleur
+  et de leur disposition dépend ce que tu fais dans la minute qui vient : entrer, attendre,
+  ou repartir.
+etapes:
+  - titre: "Deux rouges superposés : rien à attendre"
+    texte: >-
+      L’accès d’une écluse est réglé de jour comme de nuit par des signaux visuels placés
+      d’un côté ou de chaque côté de l’ouvrage. Le premier d’entre eux est le plus
+      définitif : deux feux rouges superposés, l’un au-dessus de l’autre, veulent dire
+      accès interdit, écluse hors service.
+
+      Le service est interrompu. Inutile de patienter dans le garage, cette écluse ne
+      s’ouvrira pas.
+    visuel: ecluses/acces-deux-rouges-superposes.svg
+    alt: "Deux feux rouges allumés, l’un au-dessus de l’autre."
+  - titre: "Un rouge isolé : écluse fermée"
+    texte: >-
+      Un feu rouge isolé veut dire accès interdit, écluse fermée. La différence avec le
+      signal précédent tient à la disposition, pas au nombre de feux : ici l’écluse
+      fonctionne, elle est fermée pour le moment. Ton tour viendra.
+    visuel: ecluses/acces-rouge-isole.svg
+    alt: "Un feu rouge isolé allumé."
+  - titre: Deux rouges côte à côte disent la même chose
+    texte: >-
+      Le règlement met deux feux rouges juxtaposés dans la même phrase que le feu rouge
+      isolé : accès interdit, écluse fermée. Un seul rouge ou deux rouges côte à côte
+      portent le même message, et tous deux annoncent une attente qui prendra fin.
+    visuel: ecluses/acces-deux-rouges-juxtaposes.svg
+    alt: "Deux feux rouges allumés, côte à côte."
+  - titre: Un rouge qui s’éteint annonce sans autoriser
+    texte: >-
+      Deux feux rouges étaient allumés côte à côte, l’un vient de s’éteindre. Ce
+      changement veut dire accès interdit, écluse en préparation pour l’ouverture. C’est
+      le premier des trois signaux de préparation.
+
+      Le moment est venu de relever les ancres et de sortir les défenses, pas d’avancer.
+    visuel: ecluses/acces-un-rouge-eteint.svg
+    alt: "Deux feux côte à côte, celui de gauche rouge et allumé, celui de droite éteint."
+  - titre: Un rouge et un vert côte à côte, on attend encore
+    texte: >-
+      Un feu rouge et un feu vert juxtaposés : accès interdit, écluse en préparation pour
+      l’ouverture. Le vert est bien là, il n’ouvre rien. Tant qu’un rouge est allumé,
+      l’accès reste fermé.
+    visuel: ecluses/acces-rouge-vert-juxtaposes.svg
+    alt: "Deux feux allumés côte à côte, un rouge et un vert."
+  - titre: Un rouge au-dessus d’un vert, on attend aussi
+    texte: >-
+      Troisième signal de préparation : un feu rouge au-dessus d’un feu vert. Il dit
+      exactement ce que disent les deux précédents, accès interdit, écluse en préparation
+      pour l’ouverture.
+
+      Retiens les trois ensemble : un rouge éteint sur deux, un rouge et un vert côte à
+      côte, un rouge au-dessus d’un vert. Dans les trois cas, un rouge est encore allumé.
+    visuel: ecluses/acces-rouge-sur-vert.svg
+    alt: "Un feu rouge allumé au-dessus d’un feu vert allumé."
+  - titre: Un vert isolé ouvre l’accès
+    texte: >-
+      Un feu vert isolé veut dire accès autorisé. C’est l’un des deux seuls signaux qui
+      ouvrent l’écluse.
+
+      L’autorisation ne dispense de rien pour autant. À l’entrée, tu réduis ta vitesse de
+      façon à éviter tout choc contre les portes, les dispositifs de protection ou les
+      autres bateaux.
+    visuel: ecluses/acces-vert-isole.svg
+    alt: "Un feu vert isolé allumé."
+  - titre: Deux verts côte à côte ouvrent aussi
+    texte: >-
+      Deux feux verts juxtaposés valent le feu vert isolé : accès autorisé. Aucun autre
+      signal ne l’ouvre.
+
+      À la sortie, le code est plus simple. Un ou deux feux rouges : sortie interdite. Un
+      ou deux feux verts : sortie autorisée. Rien qui annonce une préparation, rien qui
+      annonce un hors-service.
+    visuel: ecluses/acces-deux-verts-juxtaposes.svg
+    alt: "Deux feux verts allumés, côte à côte."
+piege: >-
+  Le vert d’un signal mixte fait entrer les candidats dans le sas. Un feu rouge et un feu
+  vert juxtaposés, comme un rouge au-dessus d’un vert, interdisent l’accès : ils annoncent
+  l’ouverture, ils ne la donnent pas. Le vert n’autorise que seul, ou avec un autre vert.
+retenir:
+  - "Un rouge allumé, quelle que soit sa place : accès interdit."
+  - "Deux rouges superposés : hors service. Un rouge isolé ou deux rouges côte à côte : fermée."
+  - "Un rouge éteint sur deux, rouge et vert côte à côte, rouge au-dessus d’un vert : en préparation, on attend."
+  - "Vert isolé ou deux verts côte à côte : accès autorisé."
+  - "À la sortie : le rouge interdit, le vert autorise, sans autre nuance."
+sources:
+  - texte: Code des transports, article A. 4241-53-31
+    ref: rgpni-ecluses
+    fichier: article-a4241-53-31
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+    fichier: article-a4241-53-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

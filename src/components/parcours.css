@@ -87,3 +87,76 @@
 .etape__corps { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
 .etape__nom { font-weight: 700; font-size: 1.05rem; }
 .etape__meta { font-size: 0.85rem; }
+
+.parcours__boutons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; width: 100%; }
+
+/* La liste des cours : même grammaire que les leçons, en plus grand. Le rang
+   dans un cercle, le titre en display, la promesse dessous. Fait, le cercle
+   passe jaune ; en cours, marine. */
+.coursListe__liste {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  position: relative;
+}
+.coursListe__liste::before {
+  content: "";
+  position: absolute;
+  left: 1.35rem;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: var(--filet);
+}
+.coursListe__item { max-width: none; position: relative; }
+.coursListe__item a {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 0.9rem 0.5rem 0.9rem 0;
+  text-decoration: none;
+  border-radius: var(--rayon-petit);
+}
+.coursListe__item a:hover .coursListe__titre {
+  text-decoration: underline;
+  text-decoration-color: var(--jaune);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+}
+.coursListe__rang {
+  flex: 0 0 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--fond-carte);
+  border: 2px solid var(--filet-fort);
+  color: var(--texte);
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  z-index: 1;
+}
+.coursListe__item--fait .coursListe__rang {
+  background: var(--jaune);
+  border-color: var(--jaune);
+  color: var(--marine);
+}
+.coursListe__item--encours .coursListe__rang {
+  background: var(--texte);
+  border-color: var(--texte);
+  color: var(--fond-carte);
+}
+.coursListe__corps { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; padding-top: 0.35rem; }
+.coursListe__titre {
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.coursListe__item--encours .coursListe__titre { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 3px; text-underline-offset: 0.16em; }
+.coursListe__promesse { max-width: 52ch; }
+.coursListe__meta { font-size: 0.85rem; }

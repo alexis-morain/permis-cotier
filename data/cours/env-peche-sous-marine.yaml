@@ -1,0 +1,53 @@
+notion: env-peche-sous-marine
+duree: 3
+accroche: >-
+  Ton neveu de quinze ans veut essayer le fusil-harpon pendant que tu tiens le bateau
+  au-dessus. Le code rural et de la pêche maritime répond sur ce point précis, et il
+  répond non.
+etapes:
+  - titre: Pas de fusil-harpon avant seize ans
+    texte: >-
+      L’exercice de la pêche sous-marine au moyen d’un fusil-harpon est interdit aux
+      personnes âgées de moins de seize ans.
+
+      La règle vise l’engin, pas la plongée. Nager, descendre en apnée et remonter des
+      coquillages à la main ne tombe pas sous cette limite d’âge.
+  - titre: Sous l’eau, tu fais de la pêche de loisir
+    texte: >-
+      La pêche maritime de loisir s’exerce depuis une embarcation, en action de nage ou de
+      plongée, ou à pied. La chasse sous-marine est l’un de ces trois cas, pas une activité
+      à part.
+
+      Tout ce qui vaut pour la pêche de loisir vaut donc pour elle : le produit se mange en
+      famille et ne se vend pas, les tailles minimales des professionnels s’appliquent, les
+      zones et les périodes de fermeture aussi.
+  - titre: Les zones et périodes fermées valent aussi sous l’eau
+    texte: >-
+      Pêcher dans une zone ou à une profondeur interdite, ou pêcher une espèce dans une
+      zone, à une profondeur ou à une période où sa pêche est interdite, est puni de
+      22 500 euros d’amende. Le texte ne distingue ni le loisir du professionnel, ni la
+      surface de la plongée.
+
+      Avant de mettre à l’eau, tu vérifies l’arrêté en vigueur sur ta façade.
+piege: >-
+  Le piège est l’âge. La réponse attendue est seize ans, pas dix-huit : beaucoup calent sur
+  la majorité par réflexe. Second détail, la limite porte sur le fusil-harpon, donc un jeune
+  de quinze ans peut plonger et pêcher à la main sans enfreindre cet article.
+retenir:
+  - "Fusil-harpon : interdit aux personnes de moins de seize ans."
+  - La limite vise l’engin, pas l’apnée ni la pêche à la main.
+  - La chasse sous-marine est une pêche de loisir, avec ses tailles, ses zones et ses périodes.
+  - "Pêcher dans une zone ou à une période interdite : 22 500 euros d’amende."
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-90
+    ref: peche-loisir
+    fichier: article-r921-90
+  - texte: Code rural et de la pêche maritime, article R. 921-83
+    ref: peche-loisir
+    fichier: article-r921-83
+  - texte: Code rural et de la pêche maritime, article L. 945-4, I, 3°
+    ref: peche-loisir
+    fichier: article-l945-4
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

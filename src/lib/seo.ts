@@ -254,6 +254,52 @@ export function ressource(
 }
 
 /**
+ * Un cours du programme, un par thème, en `Course`. On ne déclare que ce que
+ * la page tient : gratuit, en ligne, à son rythme, et la charge de travail,
+ * qui est la somme des durées des leçons. Les leçons écrites sont ses
+ * parties ; une leçon courte, en `noindex`, n'y entre pas.
+ */
+export function cours(
+  params: {
+    code: string;
+    titre: string;
+    promesse: string;
+    theme: string;
+    /** Minutes de lecture, toutes leçons comprises. */
+    minutes: number;
+    lecons: readonly { nom: string; chemin: string; ecrite: boolean }[];
+  },
+  base: URL | string,
+): JsonLd {
+  const chemin = `/cours/${params.code}`;
+  return {
+    '@type': 'Course',
+    '@id': absolue(`${chemin}#cours`, base),
+    name: params.titre,
+    description: params.promesse,
+    url: absolue(chemin, base),
+    about: { '@type': 'Thing', name: params.theme },
+    educationalLevel: 'beginner',
+    inLanguage: SITE.langue,
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', category: 'Free' },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Online',
+      courseWorkload: `PT${Math.max(1, Math.round(params.minutes))}M`,
+    },
+    numberOfCredits: 0,
+    hasPart: params.lecons
+      .filter((l) => l.ecrite)
+      .map((l) => ({ '@type': 'LearningResource', name: l.nom, url: absolue(l.chemin, base) })),
+    provider: { '@id': absolue('/a-propos#auteur', base) },
+    isPartOf: { '@id': absolue('/#site', base) },
+    author: personneAuteur(base),
+    license: 'https://creativecommons.org/licenses/by-sa/4.0/deed.fr',
+  };
+}
+
+/**
  * Une page rédigée qui répond à une question, avec les textes sur lesquels elle
  * s'appuie. `citation` est ce qui distingue ce site d'un blog : chaque page dit
  * d'où elle tient ce qu'elle affirme.

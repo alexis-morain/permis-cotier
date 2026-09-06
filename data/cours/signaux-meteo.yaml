@@ -1,0 +1,51 @@
+notion: signaux-meteo
+duree: 3
+accroche: >-
+  Le tableau de la capitainerie affiche « avis de coup de vent ». Ce n’est pas une
+  impression de vent frais : c’est un signal codé, avec un seuil chiffré derrière chaque
+  mot.
+etapes:
+  - titre: L’avis porte le nom de la force annoncée
+    texte: >-
+      Le bulletin météorologique spécial, ou BMS, est un avis diffusé hors des heures
+      normales dès qu’un vent de force 7 au moins est attendu ou observé. Son nom dit la
+      force.
+    liste:
+      - "Avis de grand frais : à partir de force 7"
+      - "Avis de coup de vent : à partir de force 8"
+      - "Avis de fort coup de vent : à partir de force 9"
+      - "Avis de tempête : à partir de force 10"
+      - "Avis de violente tempête : à partir de force 11"
+      - "Avis d’ouragan : à force 12"
+  - titre: Le bulletin dit vent, mer, temps et visibilité
+    texte: >-
+      Trois portées de bulletin marine existent : le bulletin côte jusqu’à 20 milles des
+      côtes, le bulletin large jusqu’à 200 milles, le bulletin grand large au-delà. Pour
+      la côtière, c’est le bulletin côte.
+
+      Il donne d’abord la situation générale, puis, pour chaque zone, le vent, la mer, le
+      temps et la visibilité.
+  - titre: Où le signal t’atteint
+    texte: >-
+      À terre, avant de partir : Météo-France, par son site, son application ou son
+      répondeur, et l’affichage de la capitainerie.
+
+      En mer, les CROSS diffusent les bulletins et les BMS sur des canaux VHF de travail,
+      annoncés au préalable sur le canal 16, aux heures publiées dans les instructions
+      nautiques et les almanachs. Le Navtex reçoit les avis en texte dans les zones
+      couvertes. Un BMS est diffusé dès sa parution, sans attendre l’heure du bulletin.
+piege: >-
+  Confondre l’avis de grand frais et l’avis de coup de vent. Le grand frais commence à
+  force 7, le coup de vent à force 8. Un degré Beaufort sépare les deux, soit environ 6 nœuds de vent moyen,
+  et une mer qui change de nature.
+retenir:
+  - "Un BMS est émis dès force 7 attendue ou observée. Coup de vent : force 8."
+  - "Bulletin côte : jusqu’à 20 milles. Il donne vent, mer, temps et visibilité par zone."
+  - Les CROSS annoncent leurs vacations sur le canal 16 et diffusent sur un canal de travail.
+sources:
+  - texte: "Fiche météorologie : échelle de Beaufort et état de la mer"
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

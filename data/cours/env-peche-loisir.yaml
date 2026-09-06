@@ -1,0 +1,93 @@
+notion: env-peche-loisir
+duree: 5
+accroche: >-
+  Tu rentres d’une belle sortie, la glacière pleine. Un restaurateur du port te propose
+  de te les acheter. La réponse tient dans la définition même de la pêche de loisir.
+etapes:
+  - titre: Ta pêche se mange en famille, elle ne se vend pas
+    texte: >-
+      La pêche maritime de loisir est une pêcherie non commerciale dont le produit est
+      destiné à la consommation exclusive du pêcheur et de sa famille. Il ne peut être
+      colporté, exposé à la vente, vendu sous quelque forme que ce soit, ni acheté en
+      connaissance de cause.
+
+      L’interdiction vise aussi l’acheteur. Le restaurateur qui sait d’où viennent les
+      poissons est en faute autant que toi. La pêche peut aussi consister à relâcher le
+      poisson vivant immédiatement après la capture.
+  - titre: Sportive ou récréative, les mêmes règles
+    texte: >-
+      La pêche est dite sportive quand celui qui la pratique est membre d’une organisation
+      sportive nationale ou titulaire d’une licence sportive nationale, récréative dans le
+      cas contraire. La distinction ne change rien à l’interdiction de vendre.
+
+      Elle s’exerce depuis une embarcation ou un navire qui n’a pas de rôle d’équipage de
+      pêche, en action de nage ou de plongée, ou à pied sur le domaine public maritime et
+      dans la partie salée des fleuves, rivières et canaux.
+  - titre: Les tailles minimales des professionnels s’imposent à toi
+    texte: >-
+      La pêche de loisir est soumise aux mêmes textes que les professionnels pour la taille
+      minimale des captures, les caractéristiques et conditions d’emploi des engins, les
+      modes et procédés, les zones, les périodes, les interdictions et les arrêtés de pêche.
+
+      Le ministre peut fixer par arrêté des règles de poids ou de taille propres à la pêche
+      de loisir. Le texte les borde : elles ne peuvent jamais être plus favorables que
+      celles des professionnels.
+  - titre: Ce que tu embarques est une liste fermée
+    texte: >-
+      À bord, seuls la détention et l’usage des engins suivants sont autorisés. Tout ce qui
+      n’y figure pas est interdit, à commencer par le chalut.
+    liste:
+      - Deux palangres de trente hameçons chacune
+      - Deux casiers
+      - Une foëne
+      - Une épuisette, ou « salabre »
+      - "Des lignes gréées de douze hameçons au total en action de pêche, un leurre comptant pour un hameçon"
+      - "En Méditerranée : une grappette à dents"
+      - "En mer du Nord, Manche ou Atlantique : un filet maillant calé ou un trémail de 50 mètres de long et 2 mètres de haut au plus"
+      - "En Bretagne, Pays de la Loire et Aquitaine : un carrelet par navire et trois balances par personne embarquée"
+  - titre: Pas de mécanisation, sauf trois moulinets électriques
+    texte: >-
+      Il est interdit de détenir et d’utiliser à bord tout vire-casier, vire-filet, treuil,
+      potence mécanisée ou mécanisme d’assistance électrique ou hydraulique permettant de
+      remonter les lignes et les engins.
+
+      La seule tolérance porte sur les vire-lignes ou moulinets électriques, dans la limite
+      de trois engins par navire et de 800 watts chacun. Tout dispositif d’immersion qui
+      empêche à tout moment de remonter les engins pour un contrôle est interdit.
+  - titre: Certaines pêches demandent une autorisation
+    texte: >-
+      Les activités de pêche de loisir qui affectent l’état des ressources halieutiques
+      peuvent être soumises à un régime d’autorisations. L’autorisation fixe alors ce que
+      tu peux pêcher, détenir à bord, transborder et débarquer, l’effort de pêche, les
+      types d’engins et les autres conditions d’exercice. Le thon rouge en est l’exemple
+      le plus connu.
+piege: >-
+  Les douze hameçons sont un total, pas un nombre par ligne : c’est l’ensemble des lignes
+  en action de pêche qui est compté, et un leurre vaut un hameçon. Deuxième piège du même
+  article, la limite de 800 watts. Elle ne rend pas le vire-casier électrique permis : elle
+  encadre les seuls vire-lignes et moulinets, dans la limite de trois par navire.
+retenir:
+  - Le produit de la pêche de loisir ne se colporte pas, ne se vend pas, ne s’achète pas.
+  - Tailles minimales, zones et périodes des professionnels s’appliquent, jamais plus souples.
+  - "À bord : deux palangres de trente hameçons, deux casiers, une foëne, une épuisette, douze hameçons en tout sur les lignes."
+  - "Vire-casiers et treuils interdits ; trois vire-lignes ou moulinets électriques de 800 watts au plus."
+  - Une pêche qui pèse sur la ressource peut être soumise à autorisation.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-83
+    ref: peche-loisir
+    fichier: article-r921-83
+  - texte: Code rural et de la pêche maritime, article R. 921-84
+    ref: peche-loisir
+    fichier: article-r921-84
+  - texte: Code rural et de la pêche maritime, article R. 921-85
+    ref: peche-loisir
+    fichier: article-r921-85
+  - texte: Code rural et de la pêche maritime, article R. 921-88
+    ref: peche-loisir
+    fichier: article-r921-88
+  - texte: Code rural et de la pêche maritime, article R. 921-89
+    ref: peche-loisir
+    fichier: article-r921-89
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

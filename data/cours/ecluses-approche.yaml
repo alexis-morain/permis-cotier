@@ -1,0 +1,71 @@
+notion: ecluses-approche
+duree: 4
+accroche: >-
+  Le bassin s’élargit avant l’écluse : c’est le garage, la file d’attente des bateaux. Une
+  péniche y est déjà rangée, un autre bateau ralentit devant toi. Tout se joue avant
+  d’entrer.
+etapes:
+  - titre: On ralentit avant le garage
+    texte: >-
+      À l’approche des garages des écluses, les bateaux ralentissent leur marche. Si tu
+      ne peux pas ou ne veux pas entrer immédiatement dans l’écluse, et qu’un signal
+      d’obligation B.5 est placé sur la rive, tu t’arrêtes en deçà de ce panneau.
+
+      Les bateaux rapides vont plus loin : à l’approche du garage, pendant l’éclusage et
+      au départ, ils limitent leur vitesse pour que leurs remous n’endommagent ni
+      l’ouvrage ni les autres bateaux, et ne mettent personne en danger à bord ou à terre.
+  - titre: Le tour se prend dans l’ordre d’arrivée
+    texte: >-
+      Le passage aux écluses se fait dans l’ordre d’arrivée dans les garages. Celui qui
+      était là avant toi passe avant toi.
+
+      Une menue embarcation ne peut pas exiger un éclusage spécial pour elle seule. Elle
+      prend sa place dans la file comme les autres, et entre dans le sas quand le
+      personnel l’y invite.
+  - titre: Aucun dépassement à l’approche
+    texte: >-
+      À l’approche des écluses, et notamment dans les garages, tout dépassement est
+      interdit. Sans exception de taille, de vitesse ou de type de bateau.
+
+      La raison se lit dans la règle précédente : le passage se faisant dans l’ordre
+      d’arrivée, un dépassement détruirait cet ordre.
+  - titre: Deux bateaux passent quand même avant toi
+    texte: >-
+      Deux catégories dérogent à l’ordre d’arrivée. Les bateaux de service qui se
+      déplacent pour des raisons urgentes, et ceux auxquels l’autorité chargée de la
+      police de la navigation a expressément accordé ce droit, reconnaissables à la flamme
+      rouge qu’ils portent.
+
+      Quand ils approchent du garage ou y stationnent, les autres bateaux leur facilitent
+      au maximum le passage.
+  - titre: Sans feu ni panneau, on n’entre pas
+    texte: >-
+      En l’absence de feux et de panneaux, l’accès et la sortie des écluses sont
+      interdits. Seul un ordre spécial du personnel chargé de la manœuvre, éventuellement
+      donné par un système électronique du gestionnaire, permet de passer.
+
+      Une écluse éteinte n’est donc pas une écluse ouverte.
+piege: >-
+  L’intuition dit qu’un feu éteint ne défend rien, comme un carrefour dont le feu est en
+  panne. Le règlement dit l’inverse : rien d’allumé, rien d’affiché, l’accès est interdit.
+  Le candidat qui répond « j’entre si personne ne se présente » se trompe deux fois, sur
+  l’absence de signal et sur l’ordre du personnel qui reste la seule porte de sortie.
+retenir:
+  - On ralentit à l’approche du garage, et on s’arrête en deçà du panneau B.5 si on n’entre pas tout de suite.
+  - "Le passage se fait dans l’ordre d’arrivée dans les garages : pas d’éclusage spécial pour une menue embarcation."
+  - Tout dépassement est interdit à l’approche des écluses et dans les garages.
+  - "Service urgent et flamme rouge : priorité de passage, on leur facilite le passage au maximum."
+  - "Ni feu ni panneau : accès et sortie interdits, sauf ordre du personnel."
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+    fichier: article-a4241-53-30
+  - texte: Code des transports, article A. 4241-53-31
+    ref: rgpni-ecluses
+    fichier: article-a4241-53-31
+  - texte: Code des transports, article A. 4241-53-32
+    ref: rgpni-ecluses
+    fichier: article-a4241-53-32
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

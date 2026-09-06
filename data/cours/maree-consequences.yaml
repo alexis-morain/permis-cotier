@@ -1,0 +1,68 @@
+notion: maree-consequences
+duree: 4
+accroche: >-
+  Tu veux rentrer par le passage court, entre la pointe et l’îlot. La carte y porte une
+  sonde de 0,6 mètre. Ce passage existe ou n’existe pas selon l’heure à laquelle tu te
+  présentes.
+etapes:
+  - titre: La marée décide de l’heure du passage
+    texte: >-
+      La hauteur d’eau disponible sur un haut-fond ou sur un seuil d’entrée de port change
+      de plusieurs mètres au fil de la journée en Manche et en Atlantique. Ce n’est pas la
+      route qui change, c’est l’heure à laquelle elle est praticable.
+
+      Le raisonnement est toujours le même : la sonde portée sur la carte, plus la hauteur
+      de marée du moment, moins ton tirant d’eau, et une marge.
+  - titre: Un coefficient fort creuse et accélère
+    texte: >-
+      En vive-eau, les hauts-fonds découvrent largement à basse mer et les courants sont
+      plus forts dans les passages resserrés. En morte-eau, l’écart et les courants
+      restent modérés.
+
+      Un même passage ne se juge donc pas de la même façon à coefficient 40 et à
+      coefficient 100.
+  - titre: La Méditerranée n’a pas ce souci
+    texte: >-
+      Le marnage y est de quelques dizaines de centimètres au plus. La marée n’y commande
+      pas la navigation : une sonde de carte y reste valable à toute heure, à la décote
+      près.
+  - titre: Le moyen de connaître la marée est obligatoire à bord
+    texte: >-
+      Le matériel d’armement et de sécurité basique d’un navire de plaisance comprend un
+      moyen de connaître les heures et coefficients de marée du jour et de la zone
+      considérés. Ce document n’est pas requis en Méditerranée.
+
+      Un annuaire des marées, un almanach ou l’extrait imprimé de la zone remplissent
+      cette obligation.
+  - titre: Le calcul par les douzièmes n’est pas au programme
+    texte: >-
+      L’option côtière demande des notions élémentaires sur la marée et ses conséquences.
+      Le calcul d’une hauteur d’eau par la règle des douzièmes relève de l’extension
+      hauturière.
+
+      Savoir qu’une sonde est un minimum, lire un coefficient et consulter l’annuaire
+      suffit à l’épreuve.
+piege: >-
+  La question qui piège n’est pas un calcul, c’est la Méditerranée. Le candidat applique
+  par réflexe le raisonnement de la Manche et répond qu’il faut calculer chaque passage.
+  Avec quelques dizaines de centimètres de marnage, la marée n’y a pas de conséquence
+  pratique sur la navigation.
+retenir:
+  - "En Manche et en Atlantique, la marée décide de l’heure d’un passage ou d’une entrée de port."
+  - "Profondeur du moment = sonde de la carte + hauteur de marée. Il reste à retirer ton tirant d’eau."
+  - "Coefficient fort : hauts-fonds découverts et courants renforcés."
+  - "Un moyen de connaître heures et coefficients de marée est obligatoire à bord, sauf en Méditerranée."
+  - "La règle des douzièmes relève de l’extension hauturière, pas de l’option côtière."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+  - texte: Division 240, article 240-2.03
+    ref: division-240
+    fichier: article-240-2-03
+  - texte: Arrêté du 28 septembre 2007, article 4
+    ref: arrete-2007-09-28
+    fichier: article-4
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude

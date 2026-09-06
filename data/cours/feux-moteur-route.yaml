@@ -1,0 +1,68 @@
+notion: feux-moteur-route
+duree: 4
+accroche: >-
+  Tu sors du port au moteur, la nuit tombe. Quatre feux disent aux autres ce que tu es,
+  où tu vas et par quel bord ils te voient. Sur un petit bateau, la règle en autorise une
+  version simplifiée.
+etapes:
+  - titre: Un navire à moteur montre quatre feux
+    texte: >-
+      Un navire à propulsion mécanique qui fait route montre un feu de tête de mât à
+      l’avant, des feux de côté et un feu de poupe. C’est la signature de base : du blanc
+      devant, du vert et du rouge sur les flancs, du blanc derrière.
+
+      De nuit, un feu blanc au-dessus d’un feu vert et rien d’autre, c’est un navire à
+      moteur faisant route, vu par son tribord.
+  - titre: Le second feu de tête de mât arrive à 50 mètres
+    texte: >-
+      La règle prévoit un second feu de tête de mât, placé à l’arrière du premier et plus
+      haut que lui. Les navires de longueur inférieure à 50 mètres ne sont pas tenus de le
+      montrer, mais peuvent le faire.
+
+      Vus de loin, ces deux feux blancs à des hauteurs différentes donnent l’axe du
+      navire : quand ils s’alignent, il vient droit sur toi.
+  - titre: Sous 12 mètres, un feu blanc peut remplacer les deux blancs
+    texte: >-
+      Un navire à propulsion mécanique de longueur inférieure à 12 mètres peut montrer, au
+      lieu des feux ci-dessus, un feu blanc visible sur tout l’horizon et des feux de côté.
+
+      Les feux de côté restent dus. Ce sont eux qui disent aux autres par quel bord ils te
+      voient.
+  - titre: Sous 7 mètres et 7 nœuds, le feu blanc peut suffire
+    texte: >-
+      Deux conditions réunies, une longueur inférieure à 7 mètres et une vitesse maximale
+      qui ne dépasse pas 7 nœuds, autorisent un feu blanc visible sur tout l’horizon seul.
+      Le navire montre aussi des feux de côté si possible.
+
+      « Si possible » n’est pas « si tu veux » : dès que le bateau peut les porter, il les
+      porte.
+  - titre: Le feu blanc peut sortir de l’axe, sous condition
+    texte: >-
+      Sous 12 mètres, quand il est impossible d’installer le feu de tête de mât ou le feu
+      blanc visible sur tout l’horizon dans l’axe longitudinal, il peut se trouver
+      ailleurs. À une condition : les feux de côté sont combinés en un seul fanal, disposé
+      dans l’axe ou aussi près que possible de l’axe où se trouve ce feu blanc.
+  - titre: Deux feux en plus pour deux engins particuliers
+    texte: >-
+      Un aéroglisseur exploité sans tirant d’eau ajoute aux feux ci-dessus un feu jaune à
+      éclats visible sur tout l’horizon.
+
+      Un navion qui décolle, atterrit ou vole près de la surface ajoute un feu rouge à
+      éclats de forte intensité visible sur tout l’horizon.
+piege: >-
+  Les seuils s’emmêlent. Le second feu de tête de mât devient obligatoire à 50 mètres, pas
+  à 12 : sous 50 mètres, il est permis, jamais interdit. Le feu blanc seul est réservé au
+  cas des 7 mètres et 7 nœuds ; sous 12 mètres, les feux de côté sont exigés.
+retenir:
+  - "Navire à moteur faisant route : feu de tête de mât, feux de côté, feu de poupe."
+  - "Second feu de tête de mât, plus haut et à l’arrière : obligatoire à partir de 50 mètres."
+  - "Moins de 12 mètres : feu blanc sur tout l’horizon plus feux de côté."
+  - "Moins de 7 mètres et 7 nœuds au plus : feu blanc seul, feux de côté si possible."
+  - "Aéroglisseur sans tirant d’eau : feu jaune à éclats en plus."
+sources:
+  - texte: RIPAM, règle 23
+    ref: decret-77-733
+    fichier: regle-23
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
