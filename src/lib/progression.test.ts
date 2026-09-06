@@ -13,6 +13,8 @@ import {
   terminerLecon,
   leconsFaites,
   CLE_STOCKAGE,
+  profilVide,
+  enregistrerProfil,
 } from './progression';
 import type { Stockage } from './progression';
 
@@ -230,5 +232,61 @@ describe('leçons suivies', () => {
       JSON.stringify({ version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null }),
     );
     expect(charger(memoire).lecons).toEqual({});
+  });
+});
+
+describe('profil du candidat', () => {
+  it('est vide au départ, et se relit après écriture', () => {
+    const e = etatInitial();
+    expect(e.profil).toEqual(profilVide());
+    expect(e.activite).toEqual({});
+    const rempli = enregistrerProfil(e, {
+      prenom: 'Léa',
+      motivations: ['famille', 'location'],
+      phrase: 'Sortir en mer avec les enfants cet été.',
+      depart: 'zero',
+      rythme: 20,
+      rempliLe: '2026-09-05',
+    });
+    sauvegarder(rempli, memoire);
+    expect(charger(memoire).profil.prenom).toBe('Léa');
+    expect(charger(memoire).profil.motivations).toEqual(['famille', 'location']);
+  });
+
+  it('ne perd pas un état écrit avant le profil', () => {
+    memoire.setItem(
+      'permis-cotier:progression',
+      JSON.stringify({ version: VERSION_STOCKAGE, questions: {}, examens: [] }),
+    );
+    const lu = charger(memoire);
+    expect(lu.profil).toEqual(profilVide());
+    expect(lu.activite).toEqual({});
+  });
+
+  it('ignore un profil mal formé plutôt que de planter', () => {
+    memoire.setItem(
+      'permis-cotier:progression',
+      JSON.stringify({ version: VERSION_STOCKAGE, questions: {}, examens: [], profil: { prenom: 3, motivations: 'x' } }),
+    );
+    expect(charger(memoire).profil).toEqual(profilVide());
+  });
+});
+
+describe('activité par jour', () => {
+  it('compte chaque réponse sur son jour', () => {
+    let e = enregistrerReponse(etatInitial(), 'vhf-0001', true, '2026-09-10');
+    e = enregistrerReponse(e, 'vhf-0002', false, '2026-09-10');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-11');
+    expect(e.activite).toEqual({ '2026-09-10': 2, '2026-09-11': 1 });
+  });
+
+  it('ne garde que les quatre cents jours les plus récents', () => {
+    let e = etatInitial();
+    for (let i = 0; i < 410; i++) {
+      const d = new Date(Date.UTC(2025, 0, 1) + i * 86_400_000).toISOString().slice(0, 10);
+      e = enregistrerReponse(e, 'vhf-0001', true, d);
+    }
+    expect(Object.keys(e.activite)).toHaveLength(400);
+    expect(e.activite['2025-01-01']).toBeUndefined();
   });
 });
