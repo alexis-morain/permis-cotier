@@ -13,6 +13,11 @@ const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), '
 // domaine dans les résultats.
 const site = process.env.SITE_URL ?? 'https://lepermiscotier.fr';
 
+// La cible du build. `CIBLE=app` sort dans `dist-app/` ce que la coquille iOS
+// embarque : les mêmes écrans, sans ce qui ne sert qu'à être trouvé par
+// Google. Le détail des différences est commenté dans `src/lib/cible.ts`.
+const pourApp = process.env.CIBLE === 'app';
+
 // Une leçon du cours n'entre au sitemap que si elle est écrite : une leçon
 // courte n'est que le résumé de sa fiche de notion, la page la déclare en
 // `noindex`, et un sitemap qui l'annoncerait dirait le contraire. Une leçon
@@ -25,12 +30,21 @@ const leconIndexable = (page) => {
 
 export default defineConfig({
   site,
+  outDir: pourApp ? './dist-app' : './dist',
   trailingSlash: 'never',
   // `file` et non `directory` : avec `trailingSlash: 'never'`, un dossier
   // ferait rediriger /examen vers /examen/ à chaque navigation.
-  build: { format: 'file' },
+  //
+  // Sauf dans la coquille, où c'est l'inverse : le serveur d'assets iOS de
+  // Capacitor, sur un chemin sans extension, y ajoute `/index.html`. Avec le
+  // format fichier, chaque lien de la navigation rendrait 404. Cloudflare, lui,
+  // fait la correspondance par `html_handling = "drop-trailing-slash"`.
+  build: { format: pourApp ? 'directory' : 'file' },
   integrations: [
     react(),
+    // Le sitemap et la PWA ne concernent que le site : dans un bundle, le
+    // premier n'a pas de lecteur et le second doublerait un cache local.
+    ...(pourApp ? [] : [
     sitemap({
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
@@ -66,8 +80,12 @@ export default defineConfig({
         lang: 'fr',
         start_url: '/',
         display: 'standalone',
-        background_color: '#f2ecdd',
-        theme_color: '#16231f',
+        // Les jetons de la direction artistique, `--brume` et `--marine`. Le
+        // beige et le vert sombre d'avant traînaient encore ici, et c'est la
+        // couleur de l'écran de démarrage : elle serait fausse dès le premier
+        // lancement.
+        background_color: '#f3f6fb',
+        theme_color: '#0b1d3a',
         icons: [
           { src: '/icone-192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icone-512.png', sizes: '512x512', type: 'image/png' },
@@ -78,19 +96,27 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        // `json` y est pour l'index de la recherche : sans lui, la loupe ne
-        // trouverait plus rien dès que le réseau tombe, sur un site dont tout
-        // le reste marche hors ligne.
+        // `json` porte deux choses : l'index de la recherche, sans quoi la
+        // loupe ne trouverait plus rien dès que le réseau tombe, et la banque
+        // depuis qu'elle est sortie du HTML, sans quoi /examen ne rendrait plus
+        // rien hors ligne. Le nom de la banque porte sa version, donc une
+        // publication la remplace au lieu de l'empiler.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
+        // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
+        // c'est le point que l'app iOS interroge pour savoir si sa banque a
+        // vieilli, et le site n'en a aucun usage.
+        globIgnores: ['**/node_modules/**/*', 'banque/derniere.json'],
         navigateFallback: '/',
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },
     }),
+    ]),
   ],
   vite: {
     define: {
       __VERSION_BANQUE__: JSON.stringify(versionBanque),
+      __POUR_APP__: JSON.stringify(pourApp),
     },
   },
 });

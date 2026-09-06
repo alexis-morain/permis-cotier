@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Révision au permis plaisance option côtière : examens blancs au format 2022 et entraînement par thème.",
+  "description": "R\u00e9vision au permis plaisance option c\u00f4ti\u00e8re : examens blancs au format 2022 et entra\u00eenement par th\u00e8me.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/valider-si-possible.mjs && astro build",
+    "build": "node scripts/valider-si-possible.mjs && astro build && node scripts/verifier-cible.mjs",
+    "build:app": "CIBLE=app node scripts/valider-si-possible.mjs && CIBLE=app astro build && node scripts/elaguer-app.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
@@ -29,11 +30,21 @@
     "planche": "python3 scripts/planche.py",
     "generer": "python3 scripts/generer.py",
     "partage": "node scripts/partage.mjs",
-    "build:pages": "astro build"
+    "build:pages": "astro build",
+    "verifier:cible": "node scripts/verifier-cible.mjs",
+    "icones:ios": "node scripts/icones-ios.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",
     "@astrojs/sitemap": "^3.7.4",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/core": "^8.5.1",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.1",
+    "@capacitor/local-notifications": "^8.3.1",
+    "@capacitor/share": "^8.0.1",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3",
     "@fontsource-variable/archivo": "^5.3.0",
     "astro": "^5.18.2",
     "react": "^19.2.8",
@@ -41,6 +52,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@capacitor/cli": "^8.5.1",
     "@testing-library/react": "^16.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

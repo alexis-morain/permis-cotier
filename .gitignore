@@ -30,3 +30,10 @@ npm-debug.log*
 
 # caches de travail
 data/questions/_inbox/*.yaml
+
+# build de la coquille iOS
+dist-app/
+ios/App/App/public/
+ios/App/build/
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/

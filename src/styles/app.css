@@ -1,0 +1,85 @@
+/* Ce que la coquille iOS change à l'affichage, et rien d'autre.
+
+   Toutes les règles sont sous `html[data-app]`, que seul le build « app »
+   pose. Sur le site elles ne s'appliquent jamais ; elles pèsent moins d'un
+   kilo-octet dans la même feuille, ce qui vaut mieux qu'une seconde requête
+   ou qu'un fichier qu'on oublierait de tenir à jour.
+
+   Deux sujets : les zones sûres, et les réflexes de navigateur qui n'ont rien
+   à faire dans une app. */
+
+/* --------------------------------------------------------- Zones sûres
+
+   `viewport-fit=cover` étend la page sous l'encoche et sous la barre
+   d'accueil ; sans les marges qui suivent, l'en-tête passerait sous l'heure
+   et le pied sous la barre d'onglets. La barre d'onglets étant native, sa
+   hauteur arrive dans `safe-area-inset-bottom` : UIKit la déclare à la
+   webview, on n'a pas à la coder en dur. */
+
+html[data-app] .entete {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Les côtés se traitent sur le corps, pas sur `.page` : celle-ci calcule sa
+   largeur en `min(100% - 2.5rem, …)`, une marge ajoutée dedans la doublerait.
+   En portrait ces valeurs sont nulles et rien ne bouge ; en paysage, elles
+   écartent le contenu du logement des capteurs. */
+html[data-app] body {
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+
+/* La recherche s'ouvre en plein écran sur téléphone, `<dialog>` par-dessus
+   tout : ni l'en-tête ni le pied ne la rembourrent. Sans ces deux lignes, le
+   mot cherché s'écrit sous l'heure, et la liste des résultats finit sous la
+   barre d'onglets. */
+html[data-app] .recherche__barre {
+  padding-top: env(safe-area-inset-top);
+}
+
+html[data-app] .recherche__corps {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Le pied de page est le dernier bloc : c'est lui qui dégage la barre
+   d'onglets. `2rem` de respiration au-dessus de la zone sûre, pour que la
+   dernière ligne ne colle pas au verre. */
+html[data-app] .pied__interieur {
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+}
+
+/* La barre d'action de l'examen n'a rien à recevoir ici : `quiz.css` la
+   rembourre déjà en `max(0.75rem, env(safe-area-inset-bottom))`, et cette
+   valeur porte la hauteur de la barre d'onglets native puisque UIKit la
+   déclare à la webview. Une seconde marge ferait flotter les boutons. */
+
+/* ------------------------------------------- Réflexes de navigateur
+
+   Un appui long sur une proposition ouvre le menu « Copier / Rechercher » de
+   Safari. Au milieu d'un examen à vingt secondes par question, c'est une
+   question perdue. Les propositions, les boutons et la barre d'onglets web ne
+   se sélectionnent donc pas ; le texte des leçons, des explications et des
+   sources reste sélectionnable, parce qu'on peut vouloir en copier un
+   extrait. */
+html[data-app] .proposition,
+html[data-app] .bouton,
+html[data-app] .jeu__entete,
+html[data-app] .jeu__actions,
+html[data-app] .entete,
+html[data-app] .tabbar {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Le rebond de fin de page et le glissement horizontal disent « page web ».
+   Le défilement vertical, lui, reste normal. */
+html[data-app],
+html[data-app] body {
+  overscroll-behavior: none;
+}
+
+/* Un lien touché ne clignote pas en gris : les états sont déjà dessinés. */
+html[data-app] a,
+html[data-app] button {
+  -webkit-tap-highlight-color: transparent;
+}

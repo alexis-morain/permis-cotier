@@ -1,9 +1,11 @@
 ---
 import '../styles/global.css';
+import '../styles/app.css';
 import Mesure from '../components/Mesure.astro';
 import Recherche from '../components/Recherche.astro';
 import { SCRIPT_APPARENCE } from '../lib/apparence';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
+import { POUR_APP } from '../lib/cible';
 import {
   SITE,
   titrePage,
@@ -71,10 +73,20 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-app={POUR_APP ? '' : undefined}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* `viewport-fit=cover` dans la coquille : la page va jusque sous
+        l'encoche et la barre d'accueil, et `app.css` reprend les marges par
+        `env(safe-area-inset-*)`. Sur le site, rien à couvrir. */}
+    <meta
+      name="viewport"
+      content={
+        POUR_APP
+          ? 'width=device-width, initial-scale=1, viewport-fit=cover'
+          : 'width=device-width, initial-scale=1'
+      }
+    />
     <title>{titreComplet}</title>
     <meta name="description" content={descriptionCourte} />
     <link rel="canonical" href={url} />
@@ -104,7 +116,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
 
-    <Mesure />
+    {/* Le traceur ne part pas dans la coquille : voir `src/lib/cible.ts`. */}
+    {!POUR_APP && <Mesure />}
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
@@ -119,6 +132,9 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           </svg>
           <span class="marque__nom">Permis côtier</span>
         </a>
+        {/* La loupe reste dans la coquille : chercher une notion est du
+            contenu, pas de la navigation de site, et la barre d'onglets ne
+            sait pas le faire. */}
         <a
           class="ouvrir-recherche"
           href="/recherche"
@@ -142,6 +158,12 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <span class="ouvrir-recherche__mot">Rechercher</span>
           <kbd class="touche ouvrir-recherche__touche" aria-hidden="true">/</kbd>
         </a>
+        {/* La navigation web, elle, sort : dans la coquille c'est la barre
+            d'onglets native qui la remplace. Deux barres l'une sous l'autre
+            diraient deux fois la même chose, et une nav dessinée en HTML est
+            justement ce que la revue Apple lit comme « pas assez différent
+            d'une navigation dans Safari ». */}
+        {!POUR_APP && (
         <nav aria-label="Navigation principale">
           <a href="/cours" aria-current={courant('/cours')}>Cours</a>
           <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
@@ -150,6 +172,7 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
           <a href="/profil" aria-current={courant('/profil')}>Ma fiche</a>
         </nav>
+        )}
       </div>
     </header>
 
@@ -198,6 +221,9 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
             )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
+        {/* Le plan du site est de la navigation web : la barre d'onglets et
+            les écrans le disent déjà dans la coquille. */}
+        {!POUR_APP && (
         <nav class="pied__plan" aria-label="Plan du site">
           <a href="/cours">Le cours, leçon par leçon</a>
           <a href="/entrainement">Entraînement par thème</a>
@@ -209,6 +235,7 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <a href="/credits">Crédits</a>
           <a href="/parametres">Réglages</a>
         </nav>
+        )}
         <p class="discret">
           Code sous <a href="https://opensource.org/licenses/MIT">licence MIT</a>,
           banque de questions sous <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>.

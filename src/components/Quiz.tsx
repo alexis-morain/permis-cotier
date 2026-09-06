@@ -29,12 +29,25 @@ import type { QuestionAffichable } from '../lib/banque';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import { rappel } from '../lib/profil';
+import { POUR_APP } from '../lib/cible';
+import { partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
+import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
+import type { BanqueServie } from '../lib/banque-locale';
 import './quiz.css';
 
 interface Props {
   mode: Mode;
-  /** Toute la banque en examen, les questions du thème en entraînement. */
-  questions: QuestionAffichable[];
+  /**
+   * Toute la banque en examen, les questions du thème en entraînement. Les
+   * pages ne la passent plus : elles donnent `source`, et la banque arrive en
+   * un JSON commun. Le tableau reste pour les tests, qui n'ont pas de réseau.
+   */
+  questions?: QuestionAffichable[];
+  /**
+   * URL du JSON de banque. Un des deux, jamais les deux : quand elle est là,
+   * l'écran attend le téléchargement, puis filtre sur `theme` s'il y en a un.
+   */
+  source?: string;
   theme?: string;
   /** Série des seules questions ratées, tous thèmes mêlés. */
   revoir?: boolean;
@@ -89,7 +102,13 @@ function Signaler({ id }: { id: string }) {
   );
 }
 
-export default function Quiz({ mode, questions, theme, revoir = false }: Props) {
+/**
+ * L'écran de jeu proprement dit. Il reçoit une banque déjà là : tous ses états
+ * se calculent au montage — le tirage, la reprise, la progression lue une
+ * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
+ * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
+ */
+function Partie({ mode, questions, theme, revoir = false }: Props & { questions: QuestionAffichable[] }) {
   // La progression est lue une fois, au montage : le tirage et la reprise
   // doivent partir du même état, pas d'un état qui bouge sous eux.
   const [depart] = useState(() => charger());
@@ -145,13 +164,24 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
   // Un onglet caché voit son intervalle étranglé par le navigateur. Le chrono
   // est une horloge murale, il ne se fige donc pas, mais l'affichage peut
   // retarder : au retour, on recale sans attendre le prochain battement.
+  //
+  // Une app suspendue fait pire qu'un onglet caché : elle gèle l'intervalle
+  // tout net. `appStateChange` est le seul signal qui arrive à coup sûr au
+  // retour — `visibilitychange` ne part pas toujours dans une WKWebView
+  // rendue au premier plan. Les deux sont branchés, un `tic` de trop ne
+  // coûte rien puisqu'il ne fait que relire l'heure.
   useEffect(() => {
     if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
+    const recaler = () => envoyer({ type: 'tic', maintenant: Date.now() });
     const surRetour = () => {
-      if (!document.hidden) envoyer({ type: 'tic', maintenant: Date.now() });
+      if (!document.hidden) recaler();
     };
     document.addEventListener('visibilitychange', surRetour);
-    return () => document.removeEventListener('visibilitychange', surRetour);
+    const debrancher = surRetourAuPremierPlan(recaler);
+    return () => {
+      document.removeEventListener('visibilitychange', surRetour);
+      debrancher();
+    };
   }, [session.mode, session.phase]);
 
   // Écriture de la progression locale, au fil des réponses.
@@ -230,10 +260,14 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
   }, [session.phase === 'en-cours', nomSerie, theme]);
 
   // La correction tombait sous la ligne de flottaison sur mobile : valider
-  // n'avait l'air de rien faire. On la remonte dans le champ de vision.
+  // n'avait l'air de rien faire. On la remonte dans le champ de vision, et
+  // dans l'app le verdict se sent avant de se lire : le pouce est encore sur
+  // le bouton quand la réponse tombe. Sur le site, `vibrer` ne fait rien.
   useEffect(() => {
     if (!session.corrigee) return;
     verdict.current?.scrollIntoView({ block: 'nearest', behavior: douceur() });
+    void vibrer(session.juste ? 'juste' : 'faux');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.corrigee, session.index]);
 
   // Même chose au passage au résultat : le score est en haut de l'écran.
@@ -502,6 +536,27 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
             </button>
           )}
           <a className="bouton bouton--principal" href={retour}>Recommencer</a>
+          {/* Le partage natif, dans l'app seulement : sur le site, le bouton
+              de partage du navigateur est déjà là et un doublon dessiné en
+              HTML n'ajoute rien. Un examen interrompu ne se partage pas — le
+              score ne veut rien dire, et personne n'a envie de l'annoncer. */}
+          {POUR_APP && mode === 'examen' && !session.interrompu && r.total > 0 && (
+            <button
+              className="bouton"
+              type="button"
+              onClick={() =>
+                void partager(
+                  'Mon examen blanc du permis côtier',
+                  r.reussi
+                    ? `Reçu à l’examen blanc : ${r.bonnes} sur ${r.total}, ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
+                    : `${r.bonnes} sur ${r.total} à l’examen blanc, ${r.erreurs} erreurs. L’épreuve en admet ${ERREURS_ADMISES}. On y retourne.`,
+                  'https://lepermiscotier.fr',
+                )
+              }
+            >
+              Partager
+            </button>
+          )}
           <a className="bouton bouton--discret" href="/">Accueil</a>
         </div>
 
@@ -628,7 +683,10 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
                 aria-pressed={cochee}
                 aria-keyshortcuts={LETTRES[p.id] ?? undefined}
                 disabled={session.corrigee || (plein && !cochee)}
-                onClick={() => envoyer({ type: 'basculer', proposition: p.id })}
+                onClick={() => {
+                  void vibrer('choix');
+                  envoyer({ type: 'basculer', proposition: p.id });
+                }}
               >
                 <span className="proposition__lettre" aria-hidden="true">{LETTRES[p.id] ?? p.id}</span>
                 <span>{p.texte}</span>
@@ -715,4 +773,124 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       )}
     </div>
   );
+}
+
+/**
+ * L'attente.
+ *
+ * L'îlot est en `client:only` : rien n'est rendu au serveur, donc le
+ * téléchargement ajoute un vide visible là où la page était déjà pleine. Une
+ * silhouette de question tient la place — même gouttière, mêmes hauteurs de
+ * carte — plutôt qu'un tourniquet, qui n'annonce rien de ce qui vient.
+ *
+ * `aria-busy` et le texte hors écran disent au lecteur d'écran ce que l'œil
+ * comprend tout seul.
+ */
+function Silhouette({ propositions }: { propositions: number }) {
+  return (
+    <div className="jeu silhouette" aria-busy="true" aria-live="polite">
+      <p className="visuellement-cache">Chargement des questions.</p>
+      <div className="silhouette__enonce">
+        <span className="silhouette__ligne" />
+        <span className="silhouette__ligne silhouette__ligne--courte" />
+      </div>
+      <ul className="propositions">
+        {Array.from({ length: propositions }, (_, rang) => (
+          <li key={rang}>
+            <span className="proposition silhouette__proposition">
+              <span className="silhouette__pastille" />
+              <span className="silhouette__ligne" />
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * La banque n'est pas venue. Sur le site, c'est une coupure de réseau au
+ * premier chargement : le service worker garde le JSON, donc ça ne se produit
+ * qu'avant la première visite hors ligne. Dans la coquille iOS, le fichier est
+ * dans le bundle et ce cas n'existe pas.
+ */
+function Panne({ reessayer }: { reessayer: () => void }) {
+  return (
+    <div className="encadre">
+      <h1 className="encadre__titre">Les questions ne sont pas arrivées.</h1>
+      <p className="discret">
+        La connexion a lâché pendant le téléchargement de la banque. Rien n’est perdu : ta
+        progression est sur cet appareil.
+      </p>
+      <p>
+        <button className="bouton bouton--principal" type="button" onClick={reessayer}>
+          Réessayer
+        </button>
+      </p>
+    </div>
+  );
+}
+
+/**
+ * L'écran de jeu, banque comprise.
+ *
+ * Deux entrées, jamais les deux à la fois : `questions`, que les tests
+ * donnent en tableau, et `source`, l'URL du JSON que les pages donnent. Le
+ * corps du jeu ne monte qu'une fois la banque là, sans quoi son tirage et sa
+ * reprise partiraient d'un tableau vide.
+ */
+export default function Quiz({ source, questions, ...reste }: Props) {
+  const [chargees, setChargees] = useState<QuestionAffichable[] | null>(questions ?? null);
+  const [echec, setEchec] = useState(false);
+  // Change à chaque « Réessayer » : c'est ce qui relance l'effet.
+  const [essai, setEssai] = useState(0);
+
+  useEffect(() => {
+    if (!source || questions) return;
+    let vivant = true;
+    setEchec(false);
+
+    void (async () => {
+      try {
+        // La banque du bundle, toujours : elle est locale, donc instantanée,
+        // et c'est elle qui fait tenir le mode avion.
+        const reponse = await fetch(source);
+        if (!reponse.ok) throw new Error(`banque : ${reponse.status}`);
+        const embarquee = (await reponse.json()) as BanqueServie;
+
+        // Une banque téléchargée depuis, si elle est plus récente. Sur le
+        // site, `banqueGardee` rend toujours null.
+        const gardee = await banqueGardee();
+        const retenue =
+          gardee && plusRecente(gardee.version, embarquee.version) ? gardee : embarquee;
+        if (!vivant) return;
+        setChargees(retenue.questions);
+
+        // Puis on demande au site s'il y a mieux, sans rien attendre : la
+        // série qui commence joue ce qu'elle a en main, la suivante aura le
+        // reste. Aucun message, aucune erreur affichée.
+        void chercherMiseAJour(retenue.version);
+      } catch {
+        if (vivant) setEchec(true);
+      }
+    })();
+
+    return () => {
+      vivant = false;
+    };
+  }, [source, questions, essai]);
+
+  // Le JSON porte toute la banque, une seule fois pour les seize écrans de
+  // jeu. L'entraînement par thème y taille sa part ici.
+  const servies = useMemo(() => {
+    if (!chargees) return null;
+    if (questions) return chargees;
+    return reste.theme ? chargees.filter((q) => q.theme === reste.theme) : chargees;
+  }, [chargees, questions, reste.theme]);
+
+  if (echec) return <Panne reessayer={() => setEssai((n) => n + 1)} />;
+  // Quatre propositions : c'est le format visé par la banque, et une silhouette
+  // qui se trompe d'une ligne ne se remarque pas ; une qui saute, si.
+  if (!servies) return <Silhouette propositions={4} />;
+  return <Partie {...reste} questions={servies} />;
 }

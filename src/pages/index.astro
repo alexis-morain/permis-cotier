@@ -5,6 +5,7 @@ import Reprise from '../components/Reprise.tsx';
 import ReprendreCours from '../components/ReprendreCours.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
+import { POUR_APP } from '../lib/cible';
 import { COURS, cheminCours, leconsDuCours, leconsDuParcours } from '../lib/parcours';
 import { codesLeconsEcrites, compteLeconsEcrites } from '../lib/lecons';
 import { SITE, absolue } from '../lib/seo';
@@ -186,8 +187,15 @@ const liste = {
             {demo.sources.map((s) => s.texte).join(' ; ')}
           </p>
           <p class="discret preuve__lien">
-            <a href={`/question/${demo.id}`} data-mesure="accueil-question">Voir cette question sur sa page</a>,
-            ou <a href="/themes" data-mesure="accueil-themes">parcourir les {total} autres</a>.
+            {/* Les pages `question/` sont du pur référencement et ne sont pas
+                construites dans la coquille : le lien y serait mort. */}
+            {!POUR_APP && (
+              <Fragment>
+                <a href={`/question/${demo.id}`} data-mesure="accueil-question">Voir cette question sur sa page</a>,
+                ou{' '}
+              </Fragment>
+            )}
+            <a href="/themes" data-mesure="accueil-themes">parcourir les {total} autres</a>.
           </p>
         </div>
       </div>
