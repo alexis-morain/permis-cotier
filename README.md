@@ -97,11 +97,12 @@ depuis `public/_redirects`.
 
 ## Chercher
 
-La loupe de l'en-tête ouvre une fenêtre de recherche : une notion, une leçon, un
-thème, une page du guide ou une question, en tapant deux ou trois lettres. Les
+La loupe de l'en-tête ouvre une fenêtre de recherche : un cours, une leçon, une
+notion, un thème, une page du guide ou une question, en tapant deux ou trois
+lettres. Les
 touches `/` et `Ctrl+K` l'ouvrent aussi, sauf sur un écran de jeu, où le chrono
 tourne. Sans JavaScript, la loupe reste un lien vers `/recherche`, qui liste tout
-le programme à la main.
+le programme à la main : les quatorze cours, leurs cent cinq leçons, le guide.
 
 L'index est un fichier construit au build, `/recherche.json`, chargé à la
 première ouverture et non au chargement des pages, puis gardé dans le cache hors
