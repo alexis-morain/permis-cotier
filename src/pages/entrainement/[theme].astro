@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Quiz from '../../components/Quiz.tsx';
-import { questionsDuTheme } from '../../lib/banque';
+import { versionBanque } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
 
 export async function getStaticPaths() {
@@ -9,7 +9,10 @@ export async function getStaticPaths() {
 }
 
 const { theme } = Astro.props;
-const questions = await questionsDuTheme(theme.code);
+// Le JSON porte toute la banque, et l'écran y taille la part du thème : les
+// quatorze pages d'entraînement partagent ainsi un seul fichier déjà en cache
+// depuis l'examen blanc, au lieu d'embarquer chacune sa copie.
+const banque = `/banque/${versionBanque()}.json`;
 ---
 
 <Base
@@ -19,6 +22,6 @@ const questions = await questionsDuTheme(theme.code);
 >
   <div class="page page--etroite">
     <p class="chapitre" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
-    <Quiz client:only="react" mode="entrainement" questions={questions} theme={theme.code} />
+    <Quiz client:only="react" mode="entrainement" source={banque} theme={theme.code} />
   </div>
 </Base>
