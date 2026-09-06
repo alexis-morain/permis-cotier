@@ -1,0 +1,11 @@
+---
+/**
+ * La fenêtre de recherche, posée une fois par `Base.astro`. La loupe de
+ * l'en-tête l'ouvre ; sans script, elle reste un lien vers `/recherche`.
+ */
+import RecherchePanneau from './RecherchePanneau.astro';
+---
+
+<dialog class="recherche-fenetre" id="recherche-fenetre" aria-label="Rechercher sur le site">
+  <RecherchePanneau mode="dialogue" />
+</dialog>
