@@ -5,8 +5,9 @@ import Reprise from '../components/Reprise.tsx';
 import ReprendreCours from '../components/ReprendreCours.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
-import { leconsDuParcours, COURS } from '../lib/parcours';
-import { compteLeconsEcrites } from '../lib/lecons';
+import { COURS, cheminCours, leconsDuCours, leconsDuParcours } from '../lib/parcours';
+import { codesLeconsEcrites, compteLeconsEcrites } from '../lib/lecons';
+import { SITE, absolue, faq } from '../lib/seo';
 
 const themes = await themesAvecComptes();
 const questions = await questionsPubliees();
@@ -14,122 +15,259 @@ const total = questions.length;
 const couverts = themes.filter((t) => t.publiees > 0).length;
 const lecons = leconsDuParcours().map((l) => ({ code: l.notion.code, nom: l.notion.nom, chemin: l.chemin }));
 const cours = await compteLeconsEcrites();
+const ecrites = await codesLeconsEcrites();
+const base = Astro.site ?? new URL(SITE.domaine);
+
+// Le parcours : un cours par thème, avec ce que chacun tient aujourd'hui. Les
+// comptes sont lus, jamais écrits à la main : un thème qui se remplit se voit
+// ici sans qu'on y touche.
+const parcours = COURS.map((c) => ({
+  code: c.code,
+  titre: c.titre,
+  promesse: c.promesse,
+  chemin: cheminCours(c.code),
+  lecons: leconsDuCours(c.code).filter((l) => ecrites.has(l.notion.code)).length,
+  questions: themes.find((t) => t.code === c.code)?.publiees ?? 0,
+}));
+
+/**
+ * La question montrée en exemple. Depuis que la page ne signe plus d'un nom,
+ * la preuve doit venir du produit : une vraie question, sa bonne réponse, son
+ * explication et l'article dessous. Celle-ci est choisie pour son visuel, une
+ * cardinale disant le sujet sans un mot. Si elle sortait de la banque, on
+ * retombe sur la première question illustrée plutôt que de casser le build.
+ */
+const MONTREE = 'balisage-0019';
+const demo = questions.find((q) => q.id === MONTREE) ?? questions.find((q) => q.visuel);
+const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
+const bonnes = demo ? demo.propositions.filter((p) => demo.reponses.includes(p.id)) : [];
+
+// Les quatorze cours en `ItemList`, et les questions du guide en `FAQPage` :
+// elles sont posées telles quelles dans les recherches associées, et leur
+// réponse est visible sur la page, comme Google l'exige.
+const liste = {
+  '@type': 'ItemList',
+  name: 'Le cours du permis côtier, un par thème du programme',
+  numberOfItems: parcours.length,
+  itemListElement: parcours.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.titre,
+    url: absolue(c.chemin, base),
+  })),
+};
 ---
 
 <Base
-  titre="Permis côtier : tests et examens blancs gratuits"
-  description="Examens blancs de 40 questions chronométrés comme à l’épreuve, et entraînement par thème. Gratuit, sans inscription, chaque question cite le texte réglementaire dont elle est tirée."
+  titre="Permis côtier : cours, code, QCM et test gratuit"
+  description={`Le cours en ${cours.ecrites} leçons, l’entraînement par thème et l’examen blanc au format de l’épreuve. Gratuit, sans inscription, chaque réponse cite son article.`}
+  jsonLd={[liste, faq(GUIDE.map((p) => ({ question: p.question, reponse: p.reponse })))]}
 >
   <section class="ouverture">
     <div class="page ouverture__grille">
       <div class="ouverture__texte">
         <h1>Révise le permis côtier au format de l’épreuve.</h1>
         <p class="ouverture__promesse">
-          Quarante questions, vingt secondes chacune, cinq erreurs admises. Comme le jour J,
-          sauf que tu peux recommencer autant que tu veux. Gratuit, sans compte, et chaque
-          réponse renvoie au texte dont elle est tirée.
+          Le cours d’abord, {cours.ecrites} leçons de trois minutes. L’entraînement ensuite,
+          thème par thème, avec la correction après chaque réponse. L’examen blanc pour finir,
+          quarante questions et cinq erreurs admises, comme le jour J. Gratuit, sans compte, et
+          chaque réponse cite l’article dont elle sort.
         </p>
 
         <div class="ouverture__actions">
-          <a class="bouton bouton--principal" href="/examen" data-mesure="accueil-examen">
-            Commencer un examen blanc
-          </a>
-          <a class="bouton bouton--discret" href="/entrainement" data-mesure="accueil-entrainement">
-            ou s’entraîner thème par thème
-          </a>
+          <ReprendreCours client:load lecons={lecons} />
+          <a class="bouton" href="/examen" data-mesure="accueil-examen">Passer un examen blanc</a>
         </div>
 
-        <p class="ouverture__debut">
-          Tu pars de zéro ? <a href="/cours" data-mesure="accueil-cours-lien">Commence par le cours</a>,
-          leçon par leçon.
+        <p class="ouverture__deja">
+          Déjà en bateau-école ?
+          <a href="/entrainement" data-mesure="accueil-entrainement">Entraîne-toi thème par thème</a>,
+          sans chrono, ou <a href="/cours" data-mesure="accueil-cours-lien">regarde le plan du cours</a>.
         </p>
-
-        <Reprise client:only="react" banque={questions.map((q) => ({ id: q.id, theme: q.theme }))} />
       </div>
 
       <aside class="ouverture__cote">
         <p class="compteur">
           <b class="display">{total}</b>
-          <span>question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}, {couverts} thème{couverts > 1 ? 's' : ''} sur 14</span>
+          <span>
+            {couverts === themes.length
+              ? 'questions publiées, et les quatorze thèmes du programme couverts'
+              : `questions publiées, sur ${couverts} des quatorze thèmes du programme`}
+          </span>
         </p>
-        <p class="discret">
-          Objectif 500 d’ici décembre. Chaque question cite l’article dont elle sort.
+        <p class="compteur">
+          <b class="display">{cours.ecrites}</b>
+          <span>leçons écrites depuis les textes, pas depuis un manuel</span>
         </p>
         <hr />
-        <DateExamen client:only="react" ids={questions.map((q) => q.id)} />
+        <p class="discret ouverture__tracabilite">
+          Sous chaque réponse, l’article et son numéro.
+          <a href="/a-propos" data-mesure="accueil-a-propos">Comment ces questions sont écrites</a>.
+        </p>
       </aside>
     </div>
   </section>
 
-  <section class="page page--etroite cours">
-    <h2>Apprendre avant de répondre</h2>
-    <p>
-      Les examens blancs disent où tu en es. Le cours dit ce qu’il faut savoir : un cours par
-      thème, {COURS.length} en tout, dans l’ordre où on l’apprend, {COURS[0]?.titre.toLowerCase()}
-      d’abord, puis se croiser sans se toucher, puis les feux, les signaux, le bateau, la VHF.
-      {cours.total} leçons de trois minutes, chacune fermée par des questions de la banque, avec la
-      source sous chaque réponse.
+  <section class="page trois">
+    <h2>Le cours apprend, l’entraînement corrige, l’examen blanc mesure</h2>
+    <p class="trois__chapo">
+      Rien n’oblige à les prendre dans cet ordre, mais c’est dans cet ordre qu’ils se
+      répondent : une leçon se termine sur les questions de la banque, et ce que tu rates à
+      l’entraînement revient en premier la fois suivante.
     </p>
-    <p class="discret">
-      {cours.ecrites === cours.total
-        ? 'Toutes les leçons sont rédigées depuis les textes. La progression reste dans ton navigateur.'
-        : `${cours.ecrites} leçons rédigées à ce jour, les autres tiennent en un résumé. La progression reste dans ton navigateur.`}
-    </p>
-    <ReprendreCours client:load lecons={lecons} />
+    <ol class="trois__liste">
+      <li>
+        <h3><a href="/cours" data-mesure="accueil-trois-cours">Le cours</a></h3>
+        <p class="pastille">{cours.ecrites} leçons</p>
+        <p>
+          Quatorze cours, un par thème, rangés dans l’ordre où on l’apprend et non dans celui
+          de l’arrêté : le balisage d’abord, parce qu’il se voit, puis se croiser sans se
+          toucher, les feux, la VHF, la météo. Trois minutes par leçon, la source sous chaque
+          affirmation.
+        </p>
+      </li>
+      <li>
+        <h3><a href="/entrainement" data-mesure="accueil-trois-entrainement">L’entraînement</a></h3>
+        <p class="pastille">{couverts} thèmes ouverts</p>
+        <p>
+          Un thème à la fois, sans chrono. La correction tombe après chaque réponse, avec
+          l’explication et le texte dont elle vient. Tu peux aussi
+          <a href="/revoir" data-mesure="accueil-revoir">rejouer tes seules erreurs</a>, tous
+          thèmes mêlés.
+        </p>
+      </li>
+      <li>
+        <h3><a href="/examen" data-mesure="accueil-trois-examen">L’examen blanc</a></h3>
+        <p class="pastille">40 questions</p>
+        <p>
+          Quarante questions tirées dans les quatorze thèmes, cinq erreurs admises, le chrono
+          qui tourne. Vingt secondes par question : la durée n’est pas dans l’arrêté, elle
+          vient des opérateurs agréés, et on la reprend pour que le rythme ne surprenne pas.
+        </p>
+      </li>
+    </ol>
   </section>
 
-  <section class="page page--etroite methode">
-    <h2>Comment c’est fait</h2>
-    <p>
-      Chaque question part d’un article : le RIPAM pour les feux, les marques et les règles de
-      barre, l’arrêté du 28 septembre 2007 pour le programme et le format, les textes de la
-      division 240 pour l’armement. On lit l’article, on écrit la question, on relit. Jamais
-      l’inverse, et jamais en recopiant un éditeur.
+  {demo && (
+    <section class="page preuve">
+      <h2>À quoi ressemble une question</h2>
+      <p class="preuve__chapo">
+        Celle-ci sort de la banque telle quelle. Ce qui compte est en bas : le texte dont la
+        réponse est tirée, avec son numéro. C’est la seule chose que ce site fait et que les
+        autres ne font pas.
+      </p>
+
+      <div class="preuve__cadre encadre">
+        {demo.visuel && (
+          <figure class="preuve__figure">
+            <img
+              src={`/visuels/${demo.visuel.fichier}`}
+              alt={demo.visuel.alt}
+              width="240"
+              height="240"
+              loading="lazy"
+            />
+          </figure>
+        )}
+
+        <div class="preuve__corps">
+          <p class="preuve__enonce">{demo.enonce}</p>
+          <ol class="propositionsListe">
+            {demo.propositions.map((p) => (
+              <li class={demo.reponses.includes(p.id) ? 'bonne' : ''}>
+                <span class="lettre">{lettres[p.id] ?? p.id}</span>
+                <span>{p.texte}</span>
+              </li>
+            ))}
+          </ol>
+          <p class="preuve__explication">{demo.explication}</p>
+          <p class="preuve__source">
+            <span class="preuve__etiquette">Source</span>
+            {demo.sources.map((s) => s.texte).join(' ; ')}
+          </p>
+          <p class="discret preuve__lien">
+            <a href={`/question/${demo.id}`} data-mesure="accueil-question">Voir cette question sur sa page</a>,
+            ou <a href="/themes" data-mesure="accueil-themes">parcourir les {total} autres</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="page reprendre">
+    <h2>Sans compte, et rien qui sorte de ton navigateur</h2>
+    <p class="reprendre__chapo">
+      Pas d’inscription, pas de mot de passe, pas de paiement. Ce que tu fais reste chez toi :
+      les leçons faites, les questions ratées, la date de ton examen. Le site marche hors ligne
+      une fois visité, et tout se relit ou s’efface depuis <a href="/profil">ta fiche</a>.
     </p>
-    <p>
-      Résultat : sous chaque explication, tu as la règle exacte et son numéro. Si une question
-      te paraît fausse, le bouton de signalement est juste dessous, et la correction arrive dans
-      la semaine. Le site est ouvert, le code et la banque sont sur GitHub, et le détail de la
-      fabrication est sur la page <a href="/a-propos">qui écrit ces questions</a>.
-    </p>
-    <p class="discret">
-      Ce site prépare au format de l’épreuve. Il n’est ni officiel, ni agréé, et l’administration
-      ne publie aucune banque de questions.
-    </p>
+    <div class="reprendre__grille">
+      <div class="reprendre__etat">
+        <Reprise client:only="react" banque={questions.map((q) => ({ id: q.id, theme: q.theme }))} />
+      </div>
+      <div class="reprendre__date encadre">
+        <DateExamen client:only="react" ids={questions.map((q) => q.id)} />
+      </div>
+    </div>
   </section>
 
-  <section class="page page--etroite guide">
-    <h2>Avant de réviser</h2>
-    <p>
-      Jusqu’où le permis côtier autorise à aller, ce que l’épreuve demande, ce que le
-      titre coûte : les réponses sont dans le décret du 2 août 2007 et dans l’arrêté du
-      28 septembre 2007, et le guide cite l’article à chaque fois.
+  <section class="page cours">
+    <h2>Les quatorze cours</h2>
+    <p class="discret cours__note">
+      Un cours par thème du programme, dans l’ordre de l’apprentissage. Pour l’ordre de
+      l’arrêté, thème par thème, va au <a href="/themes">programme</a>.
     </p>
-    <ul class="guide__liens">
-      {GUIDE.map((p) => (
-        <li><a href={`/guide/${p.slug}`}>{p.question}</a></li>
-      ))}
-    </ul>
-  </section>
-
-  <section class="page themes">
-    <h2>Les quatorze thèmes du programme</h2>
-    <p class="discret themes__note">
-      Dans l’ordre de l’arrêté. Le compte est ce qui est publié aujourd’hui, pas ce qui est promis.
-    </p>
-    <ul class="listeThemes">
-      {themes.map((t) => (
+    <ul class="listeCours">
+      {parcours.map((c) => (
         <li>
-          <a href={`/theme/${t.code}`}>
-            <span class="listeThemes__nom">{t.nom}</span>
+          <a href={c.chemin} data-mesure="accueil-cours-theme" data-mesure-theme={c.code}>
+            <span class="listeCours__nom">{c.titre}</span>
             <span class="pastille">
-              {t.publiees > 0 ? `${t.publiees} question${t.publiees > 1 ? 's' : ''}` : 'à venir'}
+              {c.lecons > 0 ? `${c.lecons} leçon${c.lecons > 1 ? 's' : ''}` : 'en résumé'}
             </span>
           </a>
-          <p class="discret">{t.intitule}</p>
+          <p class="discret">{c.promesse}</p>
         </li>
       ))}
     </ul>
+  </section>
+
+  <section class="page guide">
+    <h2>Ce qu’on se demande avant de s’inscrire</h2>
+    <p>
+      Jusqu’où le titre autorise à aller, ce qu’il coûte, ce que l’épreuve demande. Ces
+      réponses sont dans le décret du 2 août 2007 et dans l’arrêté du 28 septembre 2007, et le
+      guide cite l’article à chaque fois.
+    </p>
+    <ul class="guide__liens">
+      {GUIDE.map((p) => (
+        <li>
+          <a href={`/guide/${p.slug}`} data-mesure="accueil-guide" data-mesure-page={p.slug}>{p.question}</a>
+          <p class="discret">{p.reponse}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="page quoi">
+    <h2>Ce que ce site est, et ce qu’il n’est pas</h2>
+    <p>
+      C’est un site de révision indépendant, écrit et tenu par une personne. Il prépare
+      <strong>au format de l’épreuve</strong>. Il n’est ni officiel, ni agréé, il ne délivre
+      aucun titre, et il ne reproduit la banque de personne : l’administration n’en publie
+      aucune.
+    </p>
+    <p>
+      Chaque question part d’un article : le RIPAM pour les feux, les marques et les règles de
+      barre, l’arrêté du 28 septembre 2007 pour le programme et le barème, la division 240 pour
+      l’armement. On lit l’article, on écrit la question, on relit. Jamais l’inverse, et jamais
+      en recopiant un éditeur.
+    </p>
+    <p>
+      Le code et la banque sont publics, sous licence libre. Si une question te paraît fausse,
+      le bouton de signalement est juste dessous et la correction arrive dans la semaine.
+      Le détail de la fabrication est sur la page <a href="/a-propos">qui écrit ces questions</a>.
+    </p>
   </section>
 </Base>
 
@@ -146,23 +284,20 @@ const cours = await compteLeconsEcrites();
     padding-block: 3rem 3.5rem;
   }
   .ouverture h1 { max-width: 16ch; }
-  .ouverture__promesse { font-size: 1.15rem; max-width: 42ch; color: var(--bande-doux); }
+  .ouverture__promesse { font-size: 1.15rem; max-width: 46ch; color: var(--bande-doux); }
   .ouverture__actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem 1.5rem;
+    gap: 0.85rem 1rem;
     margin-top: 2rem;
   }
-  .ouverture .bouton--discret { color: var(--bande-texte); }
-  .ouverture__debut { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; }
-  .ouverture__debut a { color: var(--bande-texte); }
-  .ouverture :global(.reprise) {
-    border-top-color: color-mix(in srgb, var(--bande-texte) 25%, transparent);
-    color: var(--bande-doux);
-  }
-  .ouverture :global(.reprise b) { color: var(--bande-texte); }
-  .ouverture :global(.reprise a) { color: var(--bande-texte); }
+  /* L'îlot rend son propre paragraphe : il s'aligne sur la rangée plutôt que
+     de la casser avec sa marge. */
+  .ouverture__actions :global(.reprendreCours) { margin: 0; }
+  .ouverture__actions :global(.reprendreCours__compte) { color: var(--bande-doux); }
+  .ouverture__deja { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 48ch; }
+  .ouverture__deja a { color: var(--bande-texte); }
 
   /* Le panneau blanc posé sur la bande. */
   .ouverture__cote {
@@ -175,35 +310,119 @@ const cours = await compteLeconsEcrites();
     border-radius: var(--rayon);
     padding: 1.5rem;
   }
-  .compteur { display: flex; flex-direction: column; gap: 0.15rem; margin: 0 0 0.5rem; }
-  .compteur .display { font-size: 3.4rem; line-height: 1; }
-  .compteur span { font-weight: 600; }
+  .compteur { display: flex; flex-direction: column; gap: 0.15rem; margin: 0 0 1rem; }
+  .compteur:last-of-type { margin-bottom: 0; }
+  .compteur .display { font-size: 3.2rem; line-height: 1; }
+  .compteur span { font-weight: 600; font-size: 0.95rem; }
   .ouverture__cote hr { margin: 1.25rem 0; }
+  .ouverture__tracabilite { margin: 0; }
+
+  /* Les trois façons de réviser. Trois colonnes séparées par un filet, comme
+     les listes du site, et non trois cartes : rien n'y est encadré. */
+  .trois { padding-block: 3.5rem 0; }
+  .trois__chapo { max-width: 62ch; margin-bottom: 2rem; }
+  .trois__liste {
+    list-style: none;
+    display: grid;
+    gap: 0 3rem;
+    margin: 0;
+    padding: 0;
+  }
+  .trois__liste li {
+    border-top: 2px solid var(--filet);
+    padding-top: 1rem;
+    padding-bottom: 1.4rem;
+    max-width: none;
+  }
+  .trois__liste h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
+  .trois__liste h3 a { text-decoration: none; }
+  .trois__liste h3 a:hover { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+  .trois__liste .pastille { margin-bottom: 0.75rem; }
+  .trois__liste p { max-width: 42ch; margin-bottom: 0; }
+  .trois__liste p + p { margin-top: 0.75rem; }
+
+  /* La question montrée : le seul endroit de la page où le contenu est encadré. */
+  .preuve { padding-block: 3.5rem 0; }
+  .preuve__chapo { max-width: 62ch; margin-bottom: 1.75rem; }
+  .preuve__cadre {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 60rem;
+  }
+  .preuve__figure { margin: 0; }
+  .preuve__figure img {
+    width: min(100%, 13rem);
+    height: auto;
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    background: var(--fond-carte);
+  }
+  .preuve__corps > :last-child { margin-bottom: 0; }
+  .preuve__enonce { font-size: 1.15rem; font-weight: 700; line-height: 1.3; max-width: 46ch; }
+  .preuve .propositionsListe { list-style: none; margin: 1.25rem 0 1.5rem; padding: 0; }
+  .preuve .propositionsListe li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.7rem 0.9rem;
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    background: var(--fond-carte);
+    margin-bottom: 0.5rem;
+    max-width: none;
+  }
+  .preuve .propositionsListe .bonne { border-color: var(--vert); background: var(--vert-pale); }
+  .preuve .lettre {
+    flex: 0 0 1.85rem; height: 1.85rem;
+    display: grid; place-items: center;
+    border: 2px solid var(--filet-fort);
+    border-radius: 999px;
+    font-size: 0.85rem; font-weight: 800;
+  }
+  .preuve .bonne .lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
+  .preuve__explication { max-width: 62ch; }
+  .preuve__source {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 2px solid var(--filet);
+    font-weight: 600;
+    max-width: 62ch;
+  }
+  .preuve__etiquette {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.1em 0.55em;
+    border-radius: var(--rayon-petit);
+    background: var(--jaune);
+    color: var(--marine);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .preuve__lien { margin-top: 1rem; }
+
+  /* L'absence de compte, dite puis montrée : où on en est, et la date qu'on
+     peut poser. Hors du premier écran, parce qu'elle ne parle qu'à celui qui
+     a déjà commencé. */
+  .reprendre { padding-block: 3.5rem 0; }
+  .reprendre__chapo { max-width: 62ch; margin-bottom: 1.75rem; }
+  .reprendre__grille { display: grid; gap: 1.5rem; align-items: start; }
+  .reprendre__etat { min-width: 0; }
+  .reprendre__date { max-width: 26rem; }
+  .reprendre :global(.reprise) { border-top: 0; padding-top: 0; margin-top: 0; }
 
   .cours { padding-block: 3.5rem 0; }
-  .cours h2 { margin-bottom: 1rem; }
-
-  .methode { padding-block: 3.5rem 2rem; }
-  .methode h2 { margin-bottom: 1rem; }
-
-  .guide { padding-top: 3rem; }
-  .guide h2 { margin-bottom: 1rem; }
-  .guide__liens { list-style: none; margin: 1.2rem 0 0; padding: 0; }
-  .guide__liens li { border-top: 1px solid var(--filet); padding: 0.7rem 0; }
-  .guide__liens li:last-child { border-bottom: 1px solid var(--filet); }
-  .guide__liens a { text-decoration: none; }
-  .guide__liens a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
-
-  .themes { padding-top: 2.5rem; }
-  .themes__note { margin-bottom: 1.5rem; }
-  .listeThemes { list-style: none; margin: 0; padding: 0; }
-  .listeThemes li {
+  .cours__note { margin-bottom: 1.5rem; max-width: 62ch; }
+  .listeCours { list-style: none; margin: 0; padding: 0; }
+  .listeCours li {
     border-top: 2px solid var(--filet);
     padding: 1rem 0 1.1rem;
     max-width: none;
   }
-  .listeThemes li:last-child { border-bottom: 2px solid var(--filet); }
-  .listeThemes a {
+  .listeCours li:last-child { border-bottom: 2px solid var(--filet); }
+  .listeCours a {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -212,9 +431,19 @@ const cours = await compteLeconsEcrites();
     min-height: 2.75rem;
     text-decoration: none;
   }
-  .listeThemes a:hover .listeThemes__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
-  .listeThemes__nom { font-size: 1.2rem; font-weight: 700; }
-  .listeThemes p { margin: 0.1rem 0 0; max-width: 60ch; }
+  .listeCours a:hover .listeCours__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+  .listeCours__nom { font-size: 1.2rem; font-weight: 700; }
+  .listeCours p { margin: 0.1rem 0 0; max-width: 60ch; }
+
+  .guide { padding-block: 3.5rem 0; }
+  .guide__liens { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 46rem; }
+  .guide__liens li { border-top: 1px solid var(--filet); padding: 0.9rem 0; max-width: none; }
+  .guide__liens li:last-child { border-bottom: 1px solid var(--filet); }
+  .guide__liens > li > a { font-weight: 700; text-decoration: none; }
+  .guide__liens > li > a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+  .guide__liens p { margin: 0.35rem 0 0; }
+
+  .quoi { padding-block: 3.5rem 0; }
 
   @media (min-width: 52rem) {
     .ouverture__grille {
@@ -222,8 +451,12 @@ const cours = await compteLeconsEcrites();
       gap: 4rem;
       padding-block: 5rem 5.5rem;
     }
-    .themes { padding-top: 3.5rem; }
-    .listeThemes { column-count: 2; column-gap: 3rem; }
-    .listeThemes li { break-inside: avoid; }
+    .trois__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .preuve__cadre:has(.preuve__figure) { grid-template-columns: auto minmax(0, 1fr); }
+    .preuve__cadre { gap: 2rem; padding: 2rem; }
+    .preuve__figure img { width: 13rem; }
+    .reprendre__grille { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 3rem; }
+    .listeCours { column-count: 2; column-gap: 3rem; }
+    .listeCours li { break-inside: avoid; }
   }
 </style>
