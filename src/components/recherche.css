@@ -77,7 +77,7 @@ kbd.touche {
   max-height: min(78vh, 40rem);
   margin: 7vh auto auto;
   padding: 0;
-  border: 2px solid var(--marine);
+  border: 2px solid var(--fenetre-filet);
   border-radius: var(--rayon);
   background: var(--fond-carte);
   color: var(--texte);
@@ -88,15 +88,7 @@ kbd.touche {
   flex-direction: column;
 }
 .recherche-fenetre::backdrop {
-  background: rgb(11 29 58 / 0.6);
-}
-@media (prefers-color-scheme: dark) {
-  .recherche-fenetre {
-    border-color: var(--filet-fort);
-  }
-  .recherche-fenetre::backdrop {
-    background: rgb(3 8 18 / 0.72);
-  }
+  background: var(--voile);
 }
 
 /* Sur un téléphone, la fenêtre prend l'écran : le clavier en mange déjà la

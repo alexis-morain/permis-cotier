@@ -61,6 +61,17 @@
   --bande-texte: var(--blanc);
   --bande-doux: #bcc9df;
   --anneau: var(--marine);
+  /* Le glyphe de la marque et le panneau posé sur la bande d'accueil
+     s'inversent en sombre : deux jetons plutôt que deux requêtes média. */
+  --marque-fond: var(--marine);
+  --marque-cone: var(--jaune);
+  --panneau: var(--fond-carte);
+  --panneau-filet: var(--fond-carte);
+  /* La fenêtre de recherche : son filet et le voile qu'elle pose sur la page.
+     Deux jetons plutôt que deux requêtes média, sinon elle suivrait le système
+     et non le réglage d'apparence. */
+  --fenetre-filet: var(--marine);
+  --voile: rgb(11 29 58 / 0.6);
 
   --sans: 'Archivo Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --large: 125%;
@@ -76,8 +87,12 @@
   caret-color: var(--marine);
 }
 
+/* Le sombre suit le système, sauf si le candidat a choisi depuis sa fiche :
+   `data-apparence` sur <html>, posé avant le premier rendu par un script en
+   tête de page. Le même bloc deux fois, c'est voulu : un navigateur qui ne
+   connaît pas light-dark() garderait sinon une page sans couleur. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-apparence="clair"]) {
     --fond: #0a1730;
     --fond-2: #0f1f3d;
     --fond-carte: var(--marine-2);
@@ -92,9 +107,39 @@
     --rouge-pale: #3e1614;
     --bande: var(--marine-2);
     --anneau: var(--jaune);
+    --marque-fond: var(--jaune);
+    --marque-cone: var(--marine);
+    --panneau: var(--fond);
+    --panneau-filet: var(--filet);
+    --fenetre-filet: var(--filet-fort);
+    --voile: rgb(3 8 18 / 0.72);
     accent-color: var(--jaune);
     caret-color: var(--jaune);
   }
+}
+:root[data-apparence="sombre"] {
+    --fond: #0a1730;
+    --fond-2: #0f1f3d;
+    --fond-carte: var(--marine-2);
+    --texte: #eef2f9;
+    --texte-doux: #b3c0d6;
+    --filet: #2a3f66;
+    --filet-fort: #3d5684;
+    --jaune-pale: #3a3212;
+    --vert-texte: #5fd58f;
+    --vert-pale: #10331f;
+    --rouge-texte: #ff8a80;
+    --rouge-pale: #3e1614;
+    --bande: var(--marine-2);
+    --anneau: var(--jaune);
+    --marque-fond: var(--jaune);
+    --marque-cone: var(--marine);
+    --panneau: var(--fond);
+    --panneau-filet: var(--filet);
+    --fenetre-filet: var(--filet-fort);
+    --voile: rgb(3 8 18 / 0.72);
+    accent-color: var(--jaune);
+    caret-color: var(--jaune);
 }
 
 *,
@@ -273,6 +318,58 @@ img { max-width: 100%; height: auto; }
   font-weight: 700;
   white-space: nowrap;
 }
+
+/* Le rappel de la raison de passer le permis, dite au questionnaire de
+   départ. Il revient en tête de la fiche, sur l'accueil et sur l'écran de
+   résultat quand l'examen est recalé : d'où sa place ici. */
+.rappel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-radius: var(--rayon);
+  background: var(--jaune-pale);
+  max-width: 40rem;
+}
+.rappel__amorce { font-size: 0.9rem; font-weight: 700; color: var(--texte-doux); }
+.rappel q {
+  font-stretch: var(--large);
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  quotes: '« ' ' »';
+}
+.rappel__modifier { align-self: flex-start; font-size: 0.85rem; font-weight: 600; color: var(--texte-doux); margin-top: 0.3rem; }
+
+
+/* Le contrôle segmenté : des boutons collés, l'enfoncé est marine. Sert au
+   rythme et à l'apparence, sur la fiche comme sur les réglages du site. */
+.segmente {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 2px solid var(--filet-fort);
+  border-radius: var(--rayon-petit);
+  overflow: hidden;
+  background: var(--fond-carte);
+}
+.segmente__option {
+  min-height: 2.75rem;
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.segmente__option + .segmente__option { border-left: 2px solid var(--filet-fort); }
+.segmente__option:hover { background: var(--fond-2); }
+.segmente__option[aria-pressed='true'] { background: var(--texte); color: var(--fond-carte); }
+.segmente__option[aria-pressed='true'] .discret { color: inherit; opacity: 0.8; }
+.segmente__option:focus-visible { outline-offset: -3px; }
 
 /* Champs de formulaire. */
 .champ {
