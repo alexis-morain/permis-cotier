@@ -1,9 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Quiz from '../components/Quiz.tsx';
-import { questionsPubliees } from '../lib/banque';
+import { versionBanque } from '../lib/banque';
 
-const questions = await questionsPubliees();
+// La banque n'est plus sérialisée dans la page : elle arrive par un JSON dont
+// le nom porte la version, commun aux seize écrans de jeu et gardé en cache
+// immuable. La page tombe de sept cents kilo-octets à quelques-uns.
+const banque = `/banque/${versionBanque()}.json`;
 ---
 
 <Base
@@ -12,6 +15,6 @@ const questions = await questionsPubliees();
   indexable={false}
 >
   <div class="page page--etroite">
-    <Quiz client:only="react" mode="examen" questions={questions} />
+    <Quiz client:only="react" mode="examen" source={banque} />
   </div>
 </Base>

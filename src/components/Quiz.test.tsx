@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Quiz from './Quiz';
 import type { QuestionAffichable } from '../lib/banque';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
@@ -320,5 +320,101 @@ describe('ce que la série raconte à la mesure', () => {
       reussi: true,
       interrompu: false,
     });
+  });
+});
+
+/**
+ * La banque arrive maintenant par un JSON commun aux seize écrans de jeu, au
+ * lieu d'être sérialisée dans chaque page. Le corps du jeu ne doit monter
+ * qu'une fois qu'elle est là : son tirage, sa reprise et sa lecture de la
+ * progression se font tous au montage, et un tableau qui arriverait après les
+ * prendrait à froid.
+ */
+describe('la banque téléchargée', () => {
+  function servir(questions: QuestionAffichable[], version = '1.10.2') {
+    return vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ version, questions }),
+    })) as unknown as typeof fetch;
+  }
+
+  it('tient la place avec une silhouette, puis monte le jeu', async () => {
+    vi.stubGlobal('fetch', servir(trois));
+    render(<Quiz mode="examen" source="/banque/1.10.2.json" />);
+
+    // Rien de sonore ni de tournant : une question en creux, annoncée.
+    expect(document.querySelector('.silhouette')).toBeTruthy();
+    expect(screen.getByText('Chargement des questions.')).toBeTruthy();
+
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy(),
+    );
+    expect(document.querySelector('.silhouette')).toBeNull();
+  });
+
+  it('taille la part du thème dans la banque entière', async () => {
+    const melange = [
+      question('ecluses-0001', 'ecluses'),
+      question('meteo-0001', 'meteo'),
+      question('meteo-0002', 'meteo'),
+    ];
+    vi.stubGlobal('fetch', servir(melange));
+    render(<Quiz mode="entrainement" source="/banque/1.10.2.json" theme="meteo" />);
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de meteo-0001/)).toBeTruthy());
+    // La question d'un autre thème n'entre pas dans la série.
+    expect(screen.queryByText(/Énoncé de ecluses-0001/)).toBeNull();
+  });
+
+  it('appelle bien l’URL qu’on lui donne, une seule fois', async () => {
+    const appel = servir(trois);
+    vi.stubGlobal('fetch', appel);
+    render(<Quiz mode="examen" source="/banque/1.10.2.json" />);
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy(),
+    );
+    expect(appel).toHaveBeenCalledTimes(1);
+    expect(appel).toHaveBeenCalledWith('/banque/1.10.2.json');
+  });
+
+  it('ne va rien chercher quand les questions sont déjà là', () => {
+    const appel = servir(trois);
+    vi.stubGlobal('fetch', appel);
+    render(<Quiz mode="examen" questions={trois} source="/banque/1.10.2.json" />);
+    expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy();
+    expect(appel).not.toHaveBeenCalled();
+  });
+
+  it('dit la coupure sans parler d’erreur, et réessaie', async () => {
+    let tour = 0;
+    const appel = vi.fn(async () => {
+      tour += 1;
+      if (tour === 1) throw new TypeError('réseau');
+      return { ok: true, status: 200, json: async () => ({ version: '1.10.2', questions: trois }) };
+    }) as unknown as typeof fetch;
+    vi.stubGlobal('fetch', appel);
+    render(<Quiz mode="examen" source="/banque/1.10.2.json" />);
+
+    await waitFor(() =>
+      expect(screen.getByText(/Les questions ne sont pas arrivées/)).toBeTruthy(),
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Réessayer' }));
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy(),
+    );
+  });
+
+  it('traite un 404 comme une coupure, pas comme une banque vide', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({ ok: false, status: 404, json: async () => ({}) })) as unknown as typeof fetch,
+    );
+    render(<Quiz mode="examen" source="/banque/1.10.2.json" />);
+    await waitFor(() =>
+      expect(screen.getByText(/Les questions ne sont pas arrivées/)).toBeTruthy(),
+    );
+    // Surtout pas « Aucune question publiée », qui serait un mensonge.
+    expect(screen.queryByText(/Aucune question publiée/)).toBeNull();
   });
 });

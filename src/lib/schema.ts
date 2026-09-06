@@ -74,7 +74,14 @@ export const schemaMeta = z.object({
   relu_par_2: z.string().min(1).optional(),
 });
 
-export const schemaQuestion = z
+/**
+ * Le corps du schéma, sans les contrôles croisés. Il est exporté pour une
+ * seule raison : `affichable.test.ts` parcourt ses clés pour vérifier qu'aucun
+ * champ n'a été ajouté ici sans qu'on décide s'il part vers les écrans. Le
+ * `.superRefine` d'en dessous rendrait un `ZodEffects`, dont les clés ne se
+ * lisent pas.
+ */
+export const objetQuestion = z
   .object({
     id: z.string().regex(ID_QUESTION, 'identifiant attendu : <theme>-<4 chiffres>'),
     option: z.literal('cotier'),
@@ -97,7 +104,9 @@ export const schemaQuestion = z
     explication: texteNonVide(20),
     sources: z.array(schemaSource).min(1),
     meta: schemaMeta,
-  })
+  });
+
+export const schemaQuestion = objetQuestion
   .superRefine((q, ctx) => {
     if (!q.id.startsWith(`${q.theme}-`)) {
       ctx.addIssue({
