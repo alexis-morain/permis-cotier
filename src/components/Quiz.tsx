@@ -28,6 +28,7 @@ import {
 import type { QuestionAffichable } from '../lib/banque';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
+import { rappel } from '../lib/profil';
 import './quiz.css';
 
 interface Props {
@@ -412,6 +413,15 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
     const r = session.resultat;
     const ratees = new Set(r.ratees);
     const jouees = session.questions.slice(0, r.total);
+    // Le coup de mou : un examen recalé, ou un entraînement sous la moitié.
+    // C'est là qu'on rappelle la raison dite au départ, pas ailleurs.
+    const coupDeMou = r.total > 0 && (mode === 'examen'
+      ? !session.interrompu && !r.reussi
+      : r.bonnes * 2 < r.total);
+    const raison = coupDeMou ? rappel(depart.profil) : null;
+    // L'examen d'avant, lu au montage : celui-ci n'y est pas encore.
+    const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
+    const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
     return (
       <div className="jeu">
         <h1 className="visuellement-cache">{titre}, résultat</h1>
@@ -446,9 +456,29 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
                   </p>
                 )
               )}
+              {precedent && (
+                <p className="resultat__ecart">
+                  Ton examen d’avant : {precedent.bonnes} sur {precedent.total}.{' '}
+                  {ecart > 0 && `${ecart} de plus aujourd’hui.`}
+                  {ecart < 0 && `${-ecart} de moins aujourd’hui.`}
+                  {ecart === 0 && 'Le même score.'}
+                </p>
+              )}
             </>
           )}
         </div>
+
+        {raison && (
+          <p className="rappel resultat__rappel">
+            <span className="rappel__amorce">Tu passes ce permis pour</span>
+            <q>{raison}</q>
+            <span className="discret">
+              {mode === 'examen'
+                ? 'Les questions ratées sont dans la revue, et elles reviennent en entraînement jusqu’à ce que tu les tiennes.'
+                : 'Chaque question ratée revient jusqu’à ce que tu la tiennes. C’est le principe.'}
+            </span>
+          </p>
+        )}
 
         {r.total > 0 && (
           <ul className="parTheme">
