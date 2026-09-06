@@ -785,7 +785,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'ski-responsabilites',
     nom: 'Ski nautique et engins tractés',
     resume:
-      "La bande des 300 mètres est balisée de bouées jaunes et se traverse par un chenal balisé, cylindres à bâbord en accédant au rivage. L'engin hydropropulsé se pratique de jour, à moins de 2 milles d'un abri, avec le permis côtier.",
+      "Le ski nautique se pratique de jour, au-delà des 300 mètres, par un chenal, avec deux personnes à bord : une qui conduit, une de 16 ans au moins qui surveille le skieur. Gilet sur le skieur, flamme orange sur le bateau. L'engin hydropropulsé a ses propres règles.",
     ordre: 1,
     cible: 2,
     ancrage: 'règles de la pratique du ski nautique et des engins tractés',
