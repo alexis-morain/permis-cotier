@@ -5,7 +5,9 @@ import {
   preparer,
   chercher,
   passages,
+  termeMesurable,
   MAX_QUESTIONS,
+  LONGUEUR_TERME_MAX,
   type Entree,
 } from './recherche';
 
@@ -195,5 +197,44 @@ describe('passages', () => {
 
   it('rend le texte entier quand rien ne porte', () => {
     expect(passages('Marques', ['feu'])).toEqual([{ texte: 'Marques', trouve: false }]);
+  });
+});
+
+describe('termeMesurable', () => {
+  it('rend le terme mis à plat, casse et accents en moins', () => {
+    expect(termeMesurable('Marée')).toBe('maree');
+    expect(termeMesurable('  Feu   VERT ')).toBe('feu vert');
+  });
+
+  it('garde la faute de frappe, qui est le signal le plus utile', () => {
+    expect(termeMesurable('cardinalle')).toBe('cardinalle');
+  });
+
+  it('ne compte pas ce qui est trop court pour être une recherche', () => {
+    expect(termeMesurable('')).toBeNull();
+    expect(termeMesurable('  ')).toBeNull();
+    expect(termeMesurable('fe')).toBeNull();
+  });
+
+  it('ne compte pas un collage plus long qu’une recherche', () => {
+    expect(termeMesurable('a'.repeat(LONGUEUR_TERME_MAX + 1))).toBeNull();
+    expect(termeMesurable('a'.repeat(LONGUEUR_TERME_MAX))).not.toBeNull();
+  });
+
+  it('ne compte rien de ce qui ressemble à une donnée personnelle', () => {
+    // Un champ libre finit toujours par recevoir autre chose qu'une
+    // recherche. Ce site promet de ne rien savoir de personne : le doute
+    // suffit à ne pas envoyer.
+    expect(termeMesurable('alexis@morain.fr')).toBeNull();
+    expect(termeMesurable('https://exemple.fr/page')).toBeNull();
+    expect(termeMesurable('www.exemple.fr')).toBeNull();
+    expect(termeMesurable('0612345678')).toBeNull();
+    expect(termeMesurable('permis n° 1234567')).toBeNull();
+  });
+
+  it('laisse passer les chiffres du programme', () => {
+    expect(termeMesurable('canal 16')).toBe('canal 16');
+    expect(termeMesurable('arrêté du 28 septembre 2007')).toBe('arrete du 28 septembre 2007');
+    expect(termeMesurable('règle 13')).toBe('regle 13');
   });
 });

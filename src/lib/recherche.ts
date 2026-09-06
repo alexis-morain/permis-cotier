@@ -251,6 +251,43 @@ function plafonner(trouves: readonly Resultat[], limite: number): Resultat[] {
 }
 
 /**
+ * Au-delà, ce n'est plus une recherche mais un collage. La question la plus
+ * longue de la banque fait deux cent quarante signes : quelqu'un qui en colle
+ * une entière cherche pour de bon, et on perd ce cas-là. C'est le prix à payer
+ * pour que le champ le plus exposé du site n'expédie jamais un paragraphe
+ * entier vers un serveur.
+ */
+export const LONGUEUR_TERME_MAX = 60;
+
+/**
+ * Ce qui n'a rien à faire dans un compteur : une adresse électronique, une
+ * adresse web, une longue suite de chiffres. On regarde la requête brute, pas
+ * la forme mise à plat — celle-ci a déjà mangé l'arobase et les points, et ne
+ * laisserait plus rien à reconnaître.
+ *
+ * Six chiffres d'affilée : « canal 16 », « règle 13 » et « arrêté du
+ * 28 septembre 2007 » passent, un numéro de téléphone ou de carte non.
+ */
+const SUSPECT = /@|https?:|www\.|\d{6,}/i;
+
+/**
+ * Le terme tel qu'on le compte, ou rien du tout.
+ *
+ * Savoir ce que les gens cherchent dit quoi écrire ensuite, et surtout ce
+ * qu'ils ne trouvent pas. Mais un champ libre finit toujours par recevoir
+ * autre chose qu'une recherche, et ce site promet de ne rien savoir de
+ * personne : au moindre doute, on n'envoie pas. La casse et les accents
+ * tombent pour regrouper « Marée » et « maree » ; la faute de frappe reste,
+ * c'est elle qui apprend le plus.
+ */
+export function termeMesurable(requete: string): string | null {
+  if (SUSPECT.test(requete)) return null;
+  const terme = normaliser(requete);
+  if (terme.length < 3 || terme.length > LONGUEUR_TERME_MAX) return null;
+  return terme;
+}
+
+/**
  * Le texte découpé en morceaux, ceux que la requête a touchés marqués. L'écran
  * en fait des `<mark>` sans jamais recoller de HTML : chaque morceau reste du
  * texte.

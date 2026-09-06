@@ -24,8 +24,14 @@ const total = (await questionsPubliees()).length;
     <p>
       Aucun compte, aucun mot de passe, aucune adresse. La progression et la date d’examen restent
       dans ce navigateur. La fréquentation est mesurée avec Umami, auto-hébergé et sans cookie :
-      pas d’identifiant, pas de suivi entre les sites. Ce qu’il enregistre tient en trois choses —
-      la page vue, d’où tu viens, et si tu lances puis termines une série de questions.
+      pas d’identifiant, pas de suivi entre les sites. Ce qu’il enregistre tient en quatre choses —
+      la page vue, d’où tu viens, si tu lances puis termines une série de questions, et ce que tu
+      tapes dans la recherche.
+    </p>
+    <p>
+      Les mots cherchés sont comptés pour une raison précise : ceux qui ne trouvent rien disent
+      quelle leçon écrire ensuite. Le mot part seul, sans rien qui te désigne, et rien ne part
+      s’il ressemble à une adresse électronique, à un lien ou à une longue suite de chiffres.
     </p>
 
     <MesureReglage client:only="react" />
