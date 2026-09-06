@@ -7,12 +7,14 @@
  *
  * C'est la seule image que voient ceux qui n'ont pas encore ouvert le site.
  * Elle montre donc la page qu'elle ouvre : la bande marine de l'accueil, sa
- * ligne de flottaison jaune, le panneau blanc et ses deux grands nombres, et
- * un bouton à bord plein. Palette et formes sont celles de `global.css` et de
- * DESIGN.md, à la valeur près.
+ * ligne de flottaison jaune, le panneau blanc et ses deux grands nombres, et,
+ * en bas, une vraie question de la banque avec une proposition cochée.
+ * Palette et formes sont celles de `global.css` et de DESIGN.md, à la valeur
+ * près, aux deux écarts que `proposition()` explique.
  *
- * Le nombre de questions et celui des leçons sont lus sur le disque à
- * l'exécution : écrits en dur, ils auraient vieilli au premier lot.
+ * Rien de chiffré ni de cité n'est écrit en dur sans garde : les comptes sont
+ * lus sur le disque à l'exécution, et la question montrée est confrontée à son
+ * fichier avant d'être dessinée. Voir `VITRINE`.
  *
  * Deux réserves à connaître avant de toucher au dessin.
  *
@@ -47,6 +49,7 @@ const MARINE = '#0b1d3a';
 const BLANC = '#ffffff';
 const JAUNE = '#ffc72c';
 const JAUNE_SOMBRE = '#c99a00';
+const JAUNE_PALE = '#fff1c2';
 const BANDE_DOUX = '#bcc9df';
 const TEXTE_DOUX = '#4c5c78';
 const FILET = '#cfd8e6';
@@ -60,6 +63,55 @@ const RAYON = 16;
 const BORD = 3;
 /** La ligne de flottaison sous la bande d'accueil : 6 px de jaune. */
 const FLOTTAISON = 6;
+
+/**
+ * La question montrée en vitrine, comme l'accueil montre la sienne. Une
+ * proposition seule ne veut rien dire, et une question sans son énoncé est
+ * fausse : les deux vont ensemble ou pas du tout.
+ *
+ * Le texte est recopié ici parce que ses coupes sont réglées à l'œil, mais il
+ * est confronté au fichier de la banque à chaque rendu. Une question retouchée,
+ * dépubliée ou dont la bonne réponse change arrête le script au lieu de laisser
+ * l'image mentir dans le dos de tout le monde.
+ */
+const VITRINE = {
+  id: 'titre-conduite-0007',
+  theme: 'titre-conduite',
+  enonce: 'Jusqu’où l’option « côtière » permet-elle de naviguer ?',
+  lettre: 'b',
+  texte: 'Jusqu’à 6 milles d’un abri',
+};
+
+/**
+ * La banque écrit ses apostrophes droites, la charte les veut courbes : le
+ * dessin suit la charte, et la comparaison ignore la différence.
+ */
+function memeTexte(a, b) {
+  const plat = (t) => t.replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
+  return plat(a).includes(plat(b));
+}
+
+/** Confronte la vitrine à la banque. Toute dérive arrête le rendu. */
+function verifierVitrine() {
+  const chemin = join(QUESTIONS, VITRINE.theme, `${VITRINE.id}.yaml`);
+  if (!existsSync(chemin)) {
+    throw new Error(`partage : ${VITRINE.id} n'est plus dans la banque. Reprendre VITRINE.`);
+  }
+  const brut = readFileSync(chemin, 'utf-8');
+  const dire = (quoi) => {
+    throw new Error(`partage : ${VITRINE.id} ${quoi}. Reprendre VITRINE dans scripts/partage.mjs.`);
+  };
+  if (!/^statut:\s*publie\s*$/m.test(brut)) dire('n’est plus publiée');
+  if (!memeTexte(brut, VITRINE.enonce)) dire('n’a plus cet énoncé');
+  if (!memeTexte(brut, `texte: ${VITRINE.texte}`)) dire('n’a plus cette proposition');
+  // Une seule bonne réponse, et c'est bien la lettre montrée : le contraire
+  // ferait cocher une mauvaise case en vitrine.
+  const reponses = (brut.match(/^reponses:\n((?:\s+- \w+\n)+)/m) ?? [])[1] ?? '';
+  const lettres = [...reponses.matchAll(/- (\w+)/g)].map((m) => m[1]);
+  if (lettres.length !== 1 || lettres[0] !== VITRINE.lettre) {
+    dire(`ne répond plus « ${VITRINE.lettre} » et elle seule, mais « ${lettres.join(', ')} »`);
+  }
+}
 
 /**
  * Compte les questions publiées. On lit le statut à la ligne plutôt que de
@@ -120,24 +172,43 @@ function marque(x, y, cote) {
 }
 
 /**
- * Le bouton d'action, et la seule profondeur de la charte : un bord plein de
- * 3 px sous la forme, pas une ombre portée. Il s'obtient en posant la même
- * forme trois pixels plus bas, dans le jaune sombre.
+ * Une proposition du quiz, dans l'état coché : carte jaune pâle, bordure
+ * marine, la lettre dans un cercle plein. C'est aussi le seul endroit où la
+ * charte autorise une profondeur, le bord plein de 3 px sous la carte, qui
+ * n'est pas une ombre portée mais la même forme posée trois pixels plus bas.
+ *
+ * Deux écarts assumés, parce que la carte est ici posée sur la bande marine,
+ * là où le site ne la pose jamais que sur la brume claire de la page.
+ *
+ * Le bord plein prend le jaune sombre, celui du bouton principal, au lieu du
+ * marine de l'état coché : marine sur marine, la seule profondeur de la charte
+ * ne se verrait pas, et un bord plein qu'on ne voit pas n'en est plus un. La
+ * bordure marine, elle, reste écrite telle quelle et se fond dans le fond ;
+ * c'est la forme jaune pâle qui découpe la carte.
+ *
+ * Le vert du verdict se verrait aussi, mais il ferait de l'image une image
+ * verte : on garde les deux couleurs qu'on reconnaît de loin.
  */
-function bouton(x, y, l, h, libelle) {
+function proposition(x, y, l, h, lettre, texte) {
+  const r = 17; // le cercle de la lettre, 1,85 rem sur une carte de 3,5 rem
+  const cx = x + 20 + r;
+  const cy = y + h / 2;
   return `<rect x="${x}" y="${y + BORD}" width="${l}" height="${h}" rx="${RAYON}" fill="${JAUNE_SOMBRE}"/>
-  <rect x="${x}" y="${y}" width="${l}" height="${h}" rx="${RAYON}" fill="${JAUNE}"/>
-  <!-- Le libellé se centre à l'œil : la moitié de la hauteur, plus la
-       demi-hauteur d'x. -->
-  <text x="${x + l / 2}" y="${y + h / 2 + 8}" text-anchor="middle" font-family="${SANS}"
-        font-size="22" font-weight="700" fill="${MARINE}">${libelle}</text>`;
+  <rect x="${x}" y="${y}" width="${l}" height="${h}" rx="${RAYON}" fill="${JAUNE_PALE}"
+        stroke="${MARINE}" stroke-width="2.5"/>
+  <circle cx="${cx}" cy="${cy}" r="${r}" fill="${MARINE}"/>
+  <text x="${cx}" y="${cy + 6}" text-anchor="middle" font-family="${SANS}" font-size="17"
+        font-weight="700" fill="${BLANC}">${lettre.toUpperCase()}</text>
+  <text x="${cx + r + 16}" y="${cy + 8}" font-family="${SANS}" font-size="22"
+        fill="${MARINE}">${texte}</text>`;
 }
 
 function composer({ questions, themes, lecons }) {
   const MG = 76; // la marge de la colonne de gauche
+  const COL = 620; // sa largeur : au-delà, le texte touche le panneau
   // Le panneau blanc, posé à droite comme sur l'accueil : aligné sur le haut
-  // du titre, et fermé à la même ligne que le bouton.
-  const p = { x: 752, y: 162, l: 372, h: 393 };
+  // du titre, et fermé à la même ligne que la proposition.
+  const p = { x: 752, y: 150, l: 372, h: 414 };
   const px = p.x + 30; // sa marge intérieure
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${LARGEUR}" height="${HAUTEUR}" viewBox="0 0 ${LARGEUR} ${HAUTEUR}">
@@ -148,33 +219,36 @@ function composer({ questions, themes, lecons }) {
   ${display(MG + 62, 88, 27, 'Permis côtier', BLANC)}
 
   <!-- Le titre de l'accueil, coupé à seize signes comme la page le fait. -->
-  ${display(MG, 214, 62, 'Révise le permis', BLANC)}
-  ${display(MG, 282, 62, 'côtier au format', BLANC)}
-  ${display(MG, 350, 62, 'de l’épreuve.', BLANC)}
+  ${display(MG, 194, 62, 'Révise le permis', BLANC)}
+  ${display(MG, 262, 62, 'côtier au format', BLANC)}
+  ${display(MG, 330, 62, 'de l’épreuve.', BLANC)}
 
   <!-- La promesse, dans le bleu pâle que la bande réserve au secondaire. -->
-  ${corps(MG, 412, 23, 'Le cours, l’entraînement par thème, et l’examen blanc', BANDE_DOUX)}
-  ${corps(MG, 446, 23, 'chronométré, comme le jour J. Gratuit, sans compte.', BANDE_DOUX)}
+  ${corps(MG, 392, 23, 'Le cours, l’entraînement par thème, et l’examen blanc', BANDE_DOUX)}
+  ${corps(MG, 426, 23, 'chronométré, comme le jour J. Gratuit, sans compte.', BANDE_DOUX)}
 
-  ${bouton(MG, 494, 322, 58, 'Passer un examen blanc')}
+  <!-- Une vraie question de la banque, et une de ses propositions cochée. -->
+  ${corps(MG, 478, 21, VITRINE.enonce, BLANC)}
+  ${proposition(MG, 499, COL, 62, VITRINE.lettre, VITRINE.texte)}
 
   <!-- Le panneau blanc, ses deux grands nombres et la traçabilité. -->
   <rect x="${p.x}" y="${p.y}" width="${p.l}" height="${p.h}" rx="${RAYON}" fill="${BLANC}"/>
-  ${display(px, p.y + 80, 58, questions, MARINE)}
-  ${corps(px, p.y + 114, 17, 'questions publiées, sur les', MARINE, 600)}
-  ${corps(px, p.y + 136, 17, `${themes} thèmes du programme`, MARINE, 600)}
-  ${display(px, p.y + 214, 58, lecons, MARINE)}
-  ${corps(px, p.y + 248, 17, 'leçons écrites depuis les textes,', MARINE, 600)}
-  ${corps(px, p.y + 270, 17, 'pas depuis un manuel', MARINE, 600)}
-  <line x1="${px}" y1="${p.y + 300}" x2="${p.x + p.l - 30}" y2="${p.y + 300}" stroke="${FILET}" stroke-width="2"/>
-  ${corps(px, p.y + 334, 16, 'Sous chaque réponse, l’article', TEXTE_DOUX)}
-  ${corps(px, p.y + 356, 16, 'dont elle sort et son numéro.', TEXTE_DOUX)}
+  ${display(px, p.y + 82, 58, questions, MARINE)}
+  ${corps(px, p.y + 116, 17, 'questions publiées, sur les', MARINE, 600)}
+  ${corps(px, p.y + 138, 17, `${themes} thèmes du programme`, MARINE, 600)}
+  ${display(px, p.y + 222, 58, lecons, MARINE)}
+  ${corps(px, p.y + 256, 17, 'leçons écrites depuis les textes,', MARINE, 600)}
+  ${corps(px, p.y + 278, 17, 'pas depuis un manuel', MARINE, 600)}
+  <line x1="${px}" y1="${p.y + 312}" x2="${p.x + p.l - 30}" y2="${p.y + 312}" stroke="${FILET}" stroke-width="2"/>
+  ${corps(px, p.y + 348, 16, 'Sous chaque réponse, l’article', TEXTE_DOUX)}
+  ${corps(px, p.y + 370, 16, 'dont elle sort et son numéro.', TEXTE_DOUX)}
 
   <!-- La ligne de flottaison, qui ferme la bande. -->
   <rect x="0" y="${HAUTEUR - FLOTTAISON}" width="${LARGEUR}" height="${FLOTTAISON}" fill="${JAUNE}"/>
 </svg>`;
 }
 
+verifierVitrine();
 const questions = questionsPubliees();
 const lecons = leconsEcrites();
 // Les quatorze thèmes de l'arrêté : la table vit dans src/lib/themes.ts, qui
