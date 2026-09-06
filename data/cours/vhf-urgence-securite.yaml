@@ -1,0 +1,56 @@
+notion: vhf-urgence-securite
+duree: 4
+accroche: >-
+  Ton moteur cale à quatre milles de la côte. La mer est belle, personne n’est blessé,
+  tu dérives doucement. Tu as besoin d’aide, mais tu n’es pas en train de couler. Il y a
+  un mot pour ça, et ce n’est pas MAYDAY.
+etapes:
+  - titre: Trois signaux, trois niveaux, un ordre
+    texte: >-
+      La radio maritime range les messages par priorité. MAYDAY passe avant PAN PAN, qui
+      passe avant SÉCURITÉ. Seul le premier impose le silence à tous.
+
+      Les trois s’annoncent sur le canal 16, chacun à sa place.
+  - titre: PAN PAN, urgent mais sans danger imminent
+    texte: >-
+      PAN PAN est le signal d’urgence : un message urgent concerne la sécurité du navire
+      ou d’une personne, sans danger imminent.
+
+      Les cas types : une avarie de moteur au large, un blessé à bord dont l’état n’est
+      pas critique, un homme à la mer récupéré. Tu demandes de l’aide, mais aucune vie
+      ne se joue dans la minute.
+  - titre: SÉCURITÉ, un avis à ceux qui naviguent
+    texte: >-
+      SÉCURITÉ annonce un message qui concerne la sécurité de la navigation ou un
+      avertissement météorologique. C’est le signal que les CROSS émettent avant un
+      bulletin ou un avis de coup de vent.
+  - titre: Ne pas monter d’un cran par confort
+    texte: >-
+      Le RIPAM interdit l’usage d’un signal de détresse hors d’un cas de détresse ou d’un
+      besoin d’assistance, et interdit de même tout signal susceptible d’être confondu
+      avec l’un d’eux.
+
+      Choisir MAYDAY pour être sûr d’être entendu mobilise des moyens hors de proportion
+      et retire des secours à ceux qui en ont vraiment besoin.
+piege: >-
+  Traduire « je suis en panne, je suis coincé » par MAYDAY. La panne moteur par mer
+  belle, sans blessé, relève de PAN PAN. Inversement, un blessé qui saigne mais reste
+  conscient et stable relève encore de PAN PAN, pas de SÉCURITÉ : SÉCURITÉ ne parle
+  jamais de l’état d’une personne, il parle de la navigation et de la météo.
+retenir:
+  - "MAYDAY, puis PAN PAN, puis SÉCURITÉ : la détresse, l’urgence, la sécurité."
+  - "PAN PAN : sécurité du navire ou d’une personne, sans danger imminent."
+  - "SÉCURITÉ : navigation ou météo, comme l’avis de coup de vent du CROSS."
+  - Employer un signal de détresse hors détresse est interdit par le RIPAM.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d’appel et SMDSM'
+    ref: fiche-vhf
+    fichier: procedures
+  - texte: RIPAM, annexe IV
+    ref: decret-77-733
+    fichier: annexe-iv
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

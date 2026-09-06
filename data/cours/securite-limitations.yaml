@@ -1,0 +1,95 @@
+notion: securite-limitations
+duree: 5
+accroche: >-
+  Tu veux aller voir l’île, à quatre milles de la plage. La question n’est pas de savoir
+  si le bateau en est capable : c’est de savoir ce que la division 240 autorise pour ce
+  bateau-là, et avec quel matériel.
+etapes:
+  - titre: Tout se compte depuis l’abri, pas depuis la côte
+    texte: >-
+      Un abri est un endroit de la côte où le navire et son équipage peuvent se mettre en
+      sécurité en mouillant, en atterrissant ou en accostant, et en repartir sans
+      assistance. La définition tient compte de la météo et de la mer du moment, et des
+      caractéristiques du bateau.
+
+      Une plage tranquille par vent de terre cesse d’être un abri quand le vent bascule au
+      large. L’abri n’est donc pas un point fixe sur la carte.
+  - titre: Trois bornes découpent le large
+    texte: >-
+      Le tableau de l’article 240-2.01 range les navires par tranche d’éloignement d’un
+      abri, et chaque tranche appelle son armement.
+    liste:
+      - "À moins de 2 milles : armement basique"
+      - "De 2 à moins de 6 milles : armement côtier"
+      - "De 6 à moins de 60 milles : armement semi-hauturier"
+      - "À partir de 60 milles : armement hauturier"
+  - titre: Le matériel n’ouvre pas la porte à tout le monde
+    texte: >-
+      Le même tableau donne une ligne à chaque type d’embarcation, et beaucoup de cases
+      portent la mention « Navigation interdite ». Une annexe s’arrête à 300 mètres d’un
+      abri, le navire porteur comptant comme abri. Un engin de plage aussi, de jour
+      seulement, et il ne va jusqu’à 2 milles que dans une activité encadrée par une
+      structure agréée.
+
+      Embarquer plus de matériel ne rachète rien : la limite tient à l’embarcation, pas à
+      son armement.
+  - titre: Planches, pagaies et kayaks n’ont pas la même limite
+    texte: >-
+      Les planches à voile, les planches aérotractées et les planches nautiques à moteur
+      naviguent de jour, jusqu’à 2 milles d’un abri, avec flottabilité et moyen de repérage
+      lumineux portés dès 300 mètres.
+
+      Les embarcations à propulsion humaine s’arrêtent aussi à 2 milles. À l’exception des
+      planches à pagaie, celles qui ne sont pas des engins de plage vont jusqu’à 6 milles,
+      à deux embarcations de conserve au moins ; seule, si le pratiquant adhère à une
+      association déclarée pour cette pratique et emporte une VHF. Chaque groupe de deux
+      embarcations dispose d’une VHF étanche qui ne coule pas.
+  - titre: Le véhicule nautique à moteur et sa deuxième place
+    texte: >-
+      Un véhicule nautique à moteur peut aller de 2 à moins de 6 milles d’un abri, à
+      condition de compter au moins 2 places, avec l’armement côtier spécifique. À 6 milles
+      et au-delà, la navigation lui est interdite.
+  - titre: Le long du bord, 5 nœuds
+    texte: >-
+      Dans la bande littorale des 300 mètres, la vitesse est limitée à 5 nœuds. La zone
+      réservée aux baigneurs est balisée de bouées sphériques jaunes, et les engins la
+      quittent par un chenal traversier, bouées cylindriques jaunes à bâbord et coniques
+      jaunes à tribord en accédant au rivage.
+piege: >-
+  Compter la distance depuis le port ou depuis la côte visible. La règle parle de la
+  distance d’un abri, et un abri se juge avec la météo du moment : par vent de mer établi,
+  la crique la plus proche n’en est plus un, et la limite des 2 milles se déplace avec
+  elle.
+retenir:
+  - "L’abri : on s’y met en sécurité et on en repart sans assistance, selon la météo et le bateau."
+  - "Les bornes de l’armement : 2 milles, 6 milles, 60 milles."
+  - "Annexes et engins de plage : 300 mètres. Planches et propulsion humaine : 2 milles."
+  - "Propulsion humaine jusqu’à 6 milles à deux embarcations de conserve, VHF étanche. Planche à pagaie : 2 milles."
+  - Dans la bande des 300 mètres, 5 nœuds au maximum.
+sources:
+  - texte: Division 240, article 240-1.02, IV. 2
+    ref: division-240
+    fichier: article-240-1-02
+  - texte: Division 240, article 240-2.01, point 8
+    ref: division-240
+    fichier: article-240-2-01
+  - texte: Division 240, article 240-2.08
+    ref: division-240
+    fichier: article-240-2-08
+  - texte: Division 240, article 240-2.09
+    ref: division-240
+    fichier: article-240-2-09
+  - texte: Division 240, article 240-2.10
+    ref: division-240
+    fichier: article-240-2-10
+  - texte: Division 240, article 240-2.11
+    ref: division-240
+    fichier: article-240-2-11
+  - texte: Balisage AISM, région A, balisage des plages
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -1,0 +1,74 @@
+notion: vhf-detresse
+duree: 5
+accroche: >-
+  Une voie d’eau, la pompe ne suit plus, et la côte est loin. Tu prends le micro sur le
+  canal 16. Ce que tu vas dire est écrit d’avance, dans un ordre qui ne change pas.
+etapes:
+  - titre: MAYDAY, et seulement en danger grave et imminent
+    texte: >-
+      MAYDAY est le signal radiotéléphonique de détresse retenu par le RIPAM. Il
+      s’emploie quand un danger grave et imminent menace le navire ou une personne, et
+      qu’une assistance immédiate est demandée.
+
+      Il prime sur tout autre trafic. Dès qu’un MAYDAY passe, le silence radio s’impose
+      à tous : tu écoutes et tu te tais.
+  - titre: Le message, dans cet ordre
+    texte: >-
+      Sur le canal 16, tu déroules toujours la même liste. L’ordre n’est pas un caprice :
+      il met l’identité avant tout le reste, parce qu’une position entendue à moitié sans
+      nom ne sert à personne.
+    liste:
+      - MAYDAY, MAYDAY, MAYDAY
+      - "ICI, puis le nom du navire, trois fois, et son MMSI ou son indicatif"
+      - "MAYDAY, le nom du navire une fois"
+      - "la position, en latitude et longitude ou par relèvement et distance d’un point connu"
+      - la nature de la détresse
+      - l’assistance demandée
+      - "le nombre de personnes à bord et tout autre renseignement utile"
+      - À VOUS
+  - titre: La position se donne d’une des deux façons
+    texte: >-
+      Latitude et longitude, lues sur le GPS. Ou bien un relèvement et une distance
+      depuis un point connu : un phare, un cap, une bouée cardinale.
+
+      Le port d’où tu es parti ce matin ne dit rien de l’endroit où tu te trouves
+      maintenant.
+  - titre: Ce que le CROSS attend à la fin
+    texte: >-
+      L’assistance demandée et le nombre de personnes à bord ferment le message, avant
+      les renseignements utiles et le « À VOUS ». Ces deux éléments commandent les moyens
+      engagés : ce qu’il faut faire, et pour combien de gens.
+
+      « À VOUS » ferme le message.
+  - titre: L’ASN d’abord, la voix ensuite
+    texte: >-
+      Si ta VHF est munie de l’appel sélectif numérique, tu soulèves le capot rouge et tu
+      maintiens la touche de détresse avant de parler. L’alerte part sur le canal 70 avec
+      ton MMSI, et ta position si un récepteur de positionnement est raccordé.
+
+      Puis tu passes sur le 16 et tu émets le message parlé.
+piege: >-
+  Commencer par la position, parce qu’elle semble la plus urgente. Après les trois
+  MAYDAY vient « ICI » et le nom du navire, répété trois fois, avec le MMSI ou
+  l’indicatif. Autre erreur : fermer le message par « TERMINÉ ». Le mot de la fin est
+  « À VOUS », parce que tu attends une réponse.
+retenir:
+  - "MAYDAY : danger grave et imminent, assistance immédiate demandée."
+  - "L’ordre : MAYDAY trois fois, ICI et le nom trois fois, MAYDAY et le nom, position, nature, assistance, personnes à bord, À VOUS."
+  - "La position se donne en latitude et longitude, ou par relèvement et distance d’un point connu."
+  - Un MAYDAY entendu impose le silence radio à tous.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d’appel et SMDSM'
+    ref: fiche-vhf
+    fichier: procedures
+  - texte: RIPAM, annexe IV
+    ref: decret-77-733
+    fichier: annexe-iv
+  - texte: RIPAM, règle 37
+    ref: decret-77-733
+    fichier: regle-37
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

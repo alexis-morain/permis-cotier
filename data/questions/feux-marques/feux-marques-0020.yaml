@@ -12,10 +12,6 @@ propositions:
     texte: Rouge au-dessus, vert au-dessous.
   - id: b
     texte: Vert au-dessus, rouge au-dessous.
-  - id: c
-    texte: Rouge au-dessus, blanc au-dessous.
-  - id: d
-    texte: Vert au-dessus, blanc au-dessous.
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

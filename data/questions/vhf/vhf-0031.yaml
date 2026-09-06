@@ -14,8 +14,6 @@ propositions:
     texte: Le CROSS
   - id: c
     texte: Le sémaphore le plus proche
-  - id: d
-    texte: La gendarmerie maritime
 reponses:
   - b
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

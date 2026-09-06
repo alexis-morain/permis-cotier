@@ -1,0 +1,65 @@
+notion: securite-categories-conception
+duree: 4
+accroche: >-
+  Sur la plaque du bateau, une lettre : A, B, C ou D. Elle ne dit ni jusqu’où tu as le
+  droit d’aller, ni combien vous pouvez être à bord. Elle dit le temps que la coque est
+  conçue pour encaisser.
+etapes:
+  - titre: Une lettre, un vent, une vague
+    texte: >-
+      La catégorie de conception d’un navire lui attache une force de vent sur
+      l’échelle de Beaufort et une hauteur significative de vagues. Deux valeurs, une
+      seule ligne du tableau : elles vont toujours ensemble.
+
+      La hauteur significative est la hauteur moyenne du tiers des vagues les plus
+      hautes, à peu près ce qu’un observateur expérimenté annonce à l’œil.
+  - titre: De D à A, quatre crans
+    texte: >-
+      Chaque cran monte d’un côté comme de l’autre : plus de vent, plus de vague.
+
+      Une prudence à la lecture de l’article : son tableau affiche 0,5 mètre pour la
+      catégorie D, qui est la hauteur des vagues occasionnelles ; le texte sous le tableau
+      donne 0,3 mètre.
+    liste:
+      - "A : vents pouvant dépasser la force 8, vagues pouvant dépasser 4 mètres"
+      - "B : vents jusqu’à la force 8 comprise, vagues jusqu’à 4 mètres compris"
+      - "C : vents jusqu’à la force 6 comprise, vagues jusqu’à 2 mètres compris"
+      - "D : vents jusqu’à la force 4 comprise, vagues jusqu’à 0,3 mètre compris, avec des vagues occasionnelles d’une hauteur maximale de 0,5 mètre"
+  - titre: La catégorie A exclut les conditions exceptionnelles
+    texte: >-
+      Un navire de catégorie A est conçu pour des vents qui peuvent dépasser la force 8
+      et des vagues qui peuvent dépasser 4 mètres, à l’exclusion des conditions
+      exceptionnelles : tempêtes, tempêtes violentes, tornades, conditions maritimes
+      extrêmes, vagues scélérates. La lettre la plus haute ne promet pas le gros temps.
+  - titre: Le bateau-école côtier est au moins en catégorie C
+    texte: >-
+      Le bateau utilisé pour la formation pratique à l’option côtière doit avoir fait
+      l’objet d’un marquage CE et être au moins en catégorie de conception C, ou être
+      d’un type approuvé au moins en 5e catégorie de navigation de plaisance. Il porte
+      l’armement correspondant à la catégorie côtière, mesure 5,50 mètres au minimum et
+      embarque une VHF.
+piege: >-
+  La catégorie n’est pas une autorisation d’éloignement. Un bateau de catégorie A ne te
+  laisse pas t’écarter plus loin d’un abri qu’un autre : la distance dépend du matériel
+  d’armement embarqué, fixé par la division 240. Le nombre de personnes, lui, se lit sur
+  la plaque, jamais sur la lettre.
+retenir:
+  - "La catégorie de conception dit un vent et une hauteur de vague, rien d’autre."
+  - "D jusqu’à force 4, C jusqu’à force 6, B jusqu’à force 8, A au-delà."
+  - "Les vagues qui vont avec : 0,3 mètre en D, 2 mètres en C, 4 mètres en B."
+  - "Le bateau de la formation côtière est marqué CE et au moins en catégorie C."
+sources:
+  - texte: Division 240, article 240-2.01
+    ref: division-240
+    fichier: article-240-2-01
+  - texte: Division 245, article 245-1.02
+    ref: division-245
+    fichier: article-245-1-02
+  - texte: Arrêté du 28 septembre 2007, article 7
+    ref: arrete-2007-09-28
+    fichier: article-7
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

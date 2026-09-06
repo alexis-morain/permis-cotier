@@ -1,0 +1,46 @@
+notion: maree-coefficient
+duree: 3
+accroche: >-
+  L’annuaire annonce 102 pour demain matin. Ce nombre ne se lit ni en mètres ni en
+  pourcentage : c’est le coefficient de marée, et il te dit d’un seul chiffre à quelle
+  marée t’attendre.
+etapes:
+  - titre: Le coefficient va de 20 à 120
+    texte: >-
+      Le coefficient de marée est propre aux cartes et aux annuaires français. Son échelle
+      va de 20 à 120. Il chiffre l’amplitude de la marée du jour.
+  - titre: Trois repères suffisent à le lire
+    texte: >-
+      Retiens trois valeurs et tu situes n’importe quel coefficient sur l’échelle.
+    liste:
+      - "45 : morte-eau moyenne, marnage faible"
+      - "95 : vive-eau moyenne, marnage important"
+      - "120 : la plus forte marée astronomique"
+  - titre: Plus il est fort, plus la mer bouge
+    texte: >-
+      Un coefficient élevé annonce un fort marnage : la mer monte plus haut et descend plus
+      bas dans la même journée. Les hauts-fonds découvrent largement à basse mer.
+
+      Un coefficient faible annonce l’inverse : peu d’écart entre pleine et basse mer.
+  - titre: Il dit l’amplitude, pas la hauteur
+    texte: >-
+      Le coefficient ne donne ni l’heure de la pleine mer ni la hauteur d’eau en mètres à
+      un instant donné. Ces valeurs se lisent dans l’annuaire des marées, port par port.
+piege: >-
+  Le candidat lit le coefficient comme un pourcentage et cherche une échelle de 0 à 100.
+  Un coefficient de 110 lui paraît alors impossible. L’échelle va bien de 20 à 120, et le
+  chiffre n’a pas d’unité.
+retenir:
+  - "Le coefficient de marée va de 20 à 120."
+  - "45, morte-eau moyenne. 95, vive-eau moyenne. 120, la plus forte marée astronomique."
+  - "Plus le coefficient est fort, plus le marnage est grand."
+  - "Le coefficient donne l’amplitude, pas l’heure ni la hauteur d’eau du moment."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

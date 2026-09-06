@@ -13,10 +13,6 @@ propositions:
   - id: b
     texte: Non, en eaux maritimes la conduite d'un bateau de plaisance à voile n'est pas
       subordonnée au permis, même avec un moteur auxiliaire
-  - id: c
-    texte: Oui, dès que le voilier dépasse 8 mètres
-  - id: d
-    texte: Non, mais seulement si tu navigues à la voile
 reponses:
   - b
 explication: >-
@@ -32,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -11,11 +11,7 @@ propositions:
   - id: a
     texte: quand ton navire est en détresse et que tu demandes assistance
   - id: b
-    texte: quand une avarie t'oblige à réduire ton allure
-  - id: c
     texte: quand tu n'es plus maître de ta manœuvre
-  - id: d
-    texte: quand tu entres dans une zone de visibilité réduite
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

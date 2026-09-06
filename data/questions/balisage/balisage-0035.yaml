@@ -17,8 +17,6 @@ propositions:
     texte: Une marque de danger isolé
   - id: c
     texte: Une cardinale Est
-  - id: d
-    texte: Une marque spéciale
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

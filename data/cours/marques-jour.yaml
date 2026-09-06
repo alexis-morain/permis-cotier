@@ -1,0 +1,86 @@
+notion: marques-jour
+duree: 4
+accroche: >-
+  De jour, les feux ne se voient pas. Un navire qui a quelque chose à dire hisse alors
+  une forme à l’endroit le plus visible. Quatre formes disent presque tout :
+  boule, cône, bicône, cylindre.
+etapes:
+  - titre: Les boules se comptent
+    texte: >-
+      La boule est la forme la plus employée, et c’est son nombre qui donne le sens. Une
+      boule à l’avant, le navire est au mouillage. Deux boules superposées, il n’est pas
+      maître de sa manœuvre. Trois boules superposées, il est échoué.
+
+      Une au mouillage, deux quand on ne se gouverne plus, trois quand on ne flotte plus.
+      La progression suit la gravité de la situation.
+  - titre: Un cône pointe en bas, il marche aussi au moteur
+    texte: >-
+      Un navire qui fait route à la voile et au moyen d’un appareil propulsif montre à
+      l’avant, à l’endroit le plus visible, une marque conique la pointe en bas.
+
+      C’est la marque du plaisancier, celle qu’il oublie le plus souvent. Voiles hautes
+      et moteur en marche, tu es un navire à propulsion mécanique pour le règlement.
+  - titre: Deux cônes pointes jointes, il pêche
+    texte: >-
+      Un navire en train de pêcher, au chalut ou autrement, peut montrer une marque formée
+      de deux cônes superposés réunis par la pointe.
+
+      S’il pêche autrement qu’au chalut et que son engin s’étend à plus de 150 mètres,
+      il ajoute un cône la pointe en haut dans l’alignement de l’engin. Ce cône te dit
+      de quel côté sont ses filets.
+  - titre: Le bicône, la remorque et le travail
+    texte: >-
+      Une marque biconique, montrée à l’endroit le plus visible par le remorqueur et par
+      le remorqué, signale un train de remorque de plus de 200 mètres. En dessous, aucune
+      marque n’est exigée, sauf pour un remorquage partiellement submergé et difficile
+      à apercevoir, qui porte une marque biconique à son extrémité arrière.
+
+      Le bicône se retrouve au milieu des trois marques du navire à capacité de manœuvre
+      restreinte : une boule, un bicône, une boule.
+  - titre: Le cylindre, le tirant d’eau
+    texte: >-
+      Un navire handicapé par son tirant d’eau peut montrer une marque cylindrique. Le
+      cylindre ne sert qu’à cela : une seule forme, un seul sens.
+  - titre: Le pavillon « A », des plongeurs à l’eau
+    texte: >-
+      Un navire qui participe à des opérations de plongée et qui ne peut, vu ses
+      dimensions, montrer toutes les marques prescrites, montre une reproduction rigide
+      du pavillon « A » du Code international de signaux, d’au moins 1 mètre de hauteur,
+      visible sur tout l’horizon.
+
+      Un pavillon en tissu qui retombe le long du mât ne remplit pas la condition.
+piege: >-
+  Le cône du navire à la voile et au moteur pointe vers le bas, celui qui montre l’engin
+  de pêche pointe vers le haut, et la pêche se signale par deux cônes réunis par leurs
+  pointes. Un seul cône pointe en bas n’a jamais voulu dire « je pêche » : il veut dire
+  « mon moteur tourne, je ne suis plus un voilier ».
+retenir:
+  - "Une boule au mouillage, deux boules non maître de sa manœuvre, trois boules échoué."
+  - "Un cône pointe en bas : à la voile et au moteur."
+  - "Deux cônes pointes jointes : en train de pêcher ; un cône pointe en haut vers un engin de plus de 150 mètres."
+  - "Un bicône : train de remorque de plus de 200 mètres. Boule, bicône, boule : capacité de manœuvre restreinte."
+  - "Un cylindre : handicapé par son tirant d’eau. Pavillon « A » rigide : plongeurs à l’eau."
+sources:
+  - texte: RIPAM, règle 24
+    ref: decret-77-733
+    fichier: regle-24
+  - texte: RIPAM, règle 25
+    ref: decret-77-733
+    fichier: regle-25
+  - texte: RIPAM, règle 26
+    ref: decret-77-733
+    fichier: regle-26
+  - texte: RIPAM, règle 27
+    ref: decret-77-733
+    fichier: regle-27
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+    fichier: regle-28
+  - texte: RIPAM, règle 30
+    ref: decret-77-733
+    fichier: regle-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

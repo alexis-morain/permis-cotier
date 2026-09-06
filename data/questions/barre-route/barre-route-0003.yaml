@@ -14,8 +14,6 @@ propositions:
     texte: Tu maintiens ta route, car c'est au voilier au vent de s'écarter.
   - id: c
     texte: Tu maintiens ta route tant que tu n'as pas identifié son bord de vent.
-  - id: d
-    texte: Tu t'écartes seulement si tu constates qu'il reçoit le vent de tribord.
 reponses:
   - a
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

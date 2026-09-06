@@ -14,8 +14,6 @@ propositions:
     texte: Qu'elles présentent des caractéristiques suffisantes pour assurer le trafic
       de détresse dans les zones où tu navigues
   - id: c
-    texte: Qu'elles ont été vérifiées par un professionnel dans l'année
-  - id: d
     texte: Qu'elles portent le marquage CE, ce qui suffit
 reponses:
   - b
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

@@ -13,8 +13,6 @@ propositions:
   - id: b
     texte: Des eaux saines tout autour, milieu de chenal
   - id: c
-    texte: Une zone particulière, mouillage ou câble
-  - id: d
     texte: Un danger nouveau, pas encore porté sur les cartes
 reponses:
   - a
@@ -31,5 +29,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

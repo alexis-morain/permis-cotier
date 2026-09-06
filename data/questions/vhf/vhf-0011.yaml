@@ -12,10 +12,6 @@ propositions:
     texte: Une VHF portative de six watts suffit
   - id: b
     texte: Une installation radioélectrique VHF fixe
-  - id: c
-    texte: Une radiobalise de localisation des sinistres
-  - id: d
-    texte: Aucun, la VHF n'est jamais obligatoire en plaisance
 reponses:
   - b
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

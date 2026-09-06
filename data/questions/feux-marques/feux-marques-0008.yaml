@@ -10,10 +10,8 @@ propositions:
   - id: a
     texte: Jaune, sur un arc de 135 degrés.
   - id: b
-    texte: Jaune, visible sur tout l'horizon.
-  - id: c
     texte: Blanc, sur un arc de 135 degrés.
-  - id: d
+  - id: c
     texte: Jaune, sur un arc de 225 degrés.
 reponses:
   - a
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

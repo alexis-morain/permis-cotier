@@ -16,8 +16,6 @@ propositions:
     texte: Tu maintiens ton cap et ta vitesse en toutes circonstances, jusqu'au bout.
   - id: c
     texte: Tu manœuvres immédiatement, deux manœuvres valant mieux qu'une.
-  - id: d
-    texte: Tu maintiens ta vitesse, mais tu es libre de ton cap.
 reponses:
   - a
 explication: >-
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

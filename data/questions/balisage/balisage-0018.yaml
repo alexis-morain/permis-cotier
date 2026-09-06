@@ -19,8 +19,6 @@ propositions:
     texte: Par le nord
   - id: c
     texte: Par l'ouest
-  - id: d
-    texte: Par l'est
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

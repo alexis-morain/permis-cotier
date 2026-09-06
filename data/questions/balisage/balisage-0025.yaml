@@ -18,8 +18,6 @@ propositions:
     texte: Une sphère rouge
   - id: c
     texte: Deux cônes noirs superposés
-  - id: d
-    texte: Une croix jaune en forme de X
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

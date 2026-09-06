@@ -1,0 +1,96 @@
+notion: carte-symboles
+duree: 6
+accroche: >-
+  Sur une carte marine, presque tout est abrégé. Une lettre pour le fond, un chiffre
+  souligné pour un caillou, deux lettres pour un rythme de feu. Ce sont toujours les
+  mêmes, et elles se retiennent.
+etapes:
+  - titre: Le vert découvre, le bleu reste sous l’eau
+    texte: >-
+      La carte teinte en vert l’estran, la zone qui découvre entre haute et basse mer.
+      Au-delà, le bleu porte les petits fonds, d’autant plus sombre qu’on est près de la
+      côte, puis le blanc les eaux profondes. Le jaune ou le beige est la terre.
+
+      Le vert est donc la zone qu’on ne franchit qu’en connaissant la marée.
+    visuel: carte/estran-et-sondes.svg
+    alt: "Extrait de carte marine : une bande jaune de terre, puis une bande verte entre le trait de côte plein et la laisse de basse mer en tireté, puis deux bleus qui s’éclaircissent vers le large et enfin du blanc. Deux chiffres soulignés sont portés dans la bande verte, les autres chiffres dans le bleu et dans le blanc."
+  - titre: Un chiffre souligné est une hauteur
+    texte: >-
+      Le soulignement retourne le sens du chiffre. Une sonde ordinaire est une profondeur,
+      comptée sous le zéro des cartes. Une valeur soulignée est la hauteur d’un haut-fond
+      qui découvre, comptée au-dessus du zéro des cartes.
+
+      Les altitudes à terre et les hauteurs de feux, elles, se comptent depuis le niveau
+      moyen des pleines mers de vive-eau.
+  - titre: La nature du fond tient en une ou deux lettres
+    texte: >-
+      Elle est notée en abréviations, utiles au moment de mouiller. Quatre d’entre elles
+      sont les mêmes sur une carte française et sur une carte à la norme internationale.
+    liste:
+      - "S : sable"
+      - "R : roche"
+      - "G : gravier"
+      - "Co : corail"
+  - titre: Les autres abréviations changent de langue
+    texte: >-
+      La vase s’abrège V sur les cartes françaises anciennes et M sur les cartes conformes
+      à la norme internationale, pour l’anglais mud. Les coquilles sont Cq en français et
+      Sh en anglais. Devant une abréviation inhabituelle, tu lis la légende de la carte.
+  - titre: La position d’une bouée est au petit cercle
+    texte: >-
+      Une bouée est dessinée par sa silhouette coloriée selon la marque, avec son nom en
+      italique et un petit cercle à sa base. C’est ce cercle qui donne la position exacte,
+      pas le milieu du dessin.
+
+      Une limite en tireté magenta entoure une zone interdite ou réglementée, avec sa
+      mention. Le magenta est la couleur du réglementaire et des feux sur la carte.
+  - titre: Le caractère d’un feu compare deux durées
+    texte: >-
+      Un feu porté sur la carte est décrit par son caractère, c’est-à-dire la façon dont
+      il partage le temps entre lumière et obscurité. Tout se joue sur une comparaison.
+
+      Un scintillant continu, Q ou VQ, n’est coupé par aucune pause : c’est le feu blanc de
+      la marque cardinale Nord.
+    liste:
+      - "F, fixe : la lumière ne s’interrompt pas"
+      - "Fl, à éclats : la lumière dure moins que l’obscurité"
+      - "Oc, à occultations : la lumière dure plus que l’obscurité"
+      - "Iso, isophase : lumière et obscurité durent le même temps"
+      - "LFl : un éclat long, d’au moins 2 secondes"
+      - "Q, scintillant : de 50 à 79 éclats par minute ; VQ, rapide : de 100 à 159"
+      - "Mo, morse : Mo(A) bat un point puis un trait ; Al, alternatif, change de couleur"
+  - titre: Un feu à occultations, vu de nuit
+    texte: >-
+      Oc est le cas où la lumière l’emporte sur le noir. De loin, tu vois un feu allumé
+      presque tout le temps, coupé par de brèves extinctions. Un feu à éclats fait
+      l’inverse.
+    visuel: rythmes/caractere-a-occultations.svg
+    alt: "Un feu blanc sur fond de nuit, longtemps allumé, brièvement éteint, avec sous lui le tracé de son rythme dans le temps."
+  - titre: Les parenthèses comptent des éclats, jamais des secondes
+    texte: >-
+      Dans « Fl(2) R 10s », Fl(2) est le caractère et annonce deux éclats groupés, R la
+      couleur, 10s la période : le motif entier se répète toutes les 10 secondes. Le
+      caractère se lit toujours avant la couleur et la période.
+piege: >-
+  Un feu noté Fl, sans chiffre entre parenthèses, n’est pas un feu fixe. L’absence de
+  parenthèses dit seulement que ses éclats sont isolés au lieu d’être groupés. Seul F
+  reste allumé. Et la confusion la plus fréquente reste Fl contre Oc : une occultation
+  est un trou noir dans une lumière, un éclat une lumière dans le noir.
+retenir:
+  - "Vert estran, bleu petits fonds, blanc eaux profondes, jaune terre."
+  - "Chiffre souligné : hauteur d’un haut-fond au-dessus du zéro des cartes."
+  - "S sable, R roche, G gravier, Co corail. La vase est V ou M selon la convention."
+  - "Oc, la lumière domine. Fl, l’obscurité domine. Iso, à égalité. F ne s’éteint jamais."
+  - "Le chiffre entre parenthèses compte les éclats ; la période est le nombre suivi de s."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+  - texte: Balisage AISM, région A, marques cardinales
+    ref: aism-mbs
+    fichier: region-a
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

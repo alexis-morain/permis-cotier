@@ -14,8 +14,6 @@ propositions:
     texte: Une figure noire sur fond blanc bordé et barré de rouge
   - id: c
     texte: Une figure rouge sur fond blanc bordé de noir
-  - id: d
-    texte: Une figure noire sur fond jaune barré de rouge
 reponses:
   - b
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

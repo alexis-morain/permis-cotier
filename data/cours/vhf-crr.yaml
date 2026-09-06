@@ -1,0 +1,66 @@
+notion: vhf-crr
+duree: 4
+accroche: >-
+  Tu prends le micro pour appeler la capitainerie. Personne ne te demandera ton titre
+  avant de te répondre, mais parler dans une VHF suppose une autorisation, et elle
+  dépend de l’eau où tu navigues.
+etapes:
+  - titre: Le certificat autorise la personne
+    texte: >-
+      Le certificat restreint de radiotéléphoniste du service mobile maritime, le CRR,
+      autorise celui qui manœuvre la station. Il ne se confond pas avec la licence de
+      station, qui autorise l’installation à bord du navire.
+  - titre: En eaux territoriales françaises, le permis suffit
+    texte: >-
+      Pour manœuvrer une VHF depuis un navire de plaisance qui navigue uniquement dans
+      les eaux territoriales françaises, deux titres sont admis au choix : le CRR, ou
+      le permis de conduire en mer les bateaux de plaisance à moteur.
+
+      Le certificat du service mobile fluvial, lui, vise les voies de navigation
+      intérieure.
+  - titre: En eaux internationales, le CRR est exigé
+    texte: >-
+      Dès que le navire de plaisance sort des eaux territoriales françaises, le permis
+      plaisance ne vaut plus titre radio. Le CRR devient obligatoire pour manœuvrer la
+      station.
+  - titre: La petite portative échappe à l’obligation
+    texte: >-
+      L’obligation vise toute station VHF « autre qu’un équipement portatif d’une
+      puissance maximale de six watts dépourvu de l’appel sélectif numérique ». Un
+      portatif de cinq watts sans ASN sort donc du champ, en eaux territoriales
+      françaises.
+
+      Les deux conditions se cumulent : un portatif équipé de l’ASN retombe sous
+      l’obligation de titre, même s’il reste sous six watts.
+  - titre: Les titres supérieurs dispensent du CRR
+    texte: >-
+      Les titulaires, en cours de validité, du brevet d’officier radioélectronicien de
+      1re ou 2e classe de la marine marchande, du certificat général d’opérateur, du
+      certificat spécial d’opérateur ou du certificat restreint d’opérateur manœuvrent
+      une VHF en mer comme en eaux intérieures sans avoir à détenir le CRR.
+  - titre: L’examen se présente à 16 ans
+    texte: >-
+      Les candidats à l’examen du certificat doivent avoir seize ans au moins à la date
+      de l’examen.
+piege: >-
+  L’erreur classique : partir vers l’Espagne ou l’Italie avec le seul permis plaisance
+  et croire qu’il couvre la VHF partout. Il n’en tient lieu que dans les eaux
+  territoriales françaises. Au-delà, il faut le CRR.
+retenir:
+  - "Licence : le navire. Certificat : la personne."
+  - "Eaux territoriales françaises : CRR ou permis plaisance à moteur."
+  - "Eaux internationales : CRR obligatoire."
+  - "Portatif de 6 watts au plus, sans ASN, en eaux territoriales françaises : aucun titre exigé."
+  - Examen du CRR à partir de 16 ans.
+sources:
+  - texte: Arrêté du 18 mai 2005, article 1
+    ref: arrete-2005-05-18
+    fichier: article-1
+  - texte: Arrêté du 18 mai 2005, article 4
+    ref: arrete-2005-05-18
+    fichier: article-4
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

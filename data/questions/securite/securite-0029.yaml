@@ -11,10 +11,6 @@ propositions:
     texte: Le vent et la hauteur de vague qu'il est conçu pour affronter
   - id: b
     texte: La distance d'un abri jusqu'à laquelle tu es autorisé à t'éloigner
-  - id: c
-    texte: Le nombre maximal de personnes que tu peux embarquer
-  - id: d
-    texte: La liste du matériel de sécurité à embarquer
 reponses:
   - a
 explication: >-
@@ -29,5 +25,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -1,0 +1,76 @@
+notion: ecluses-passage
+duree: 5
+accroche: >-
+  Le vert s’allume, tu entres dans le sas. Les murs sont hauts, l’eau va monter de
+  plusieurs mètres et ton bateau va monter avec elle. Ce qui se passe pendant ces
+  quelques minutes tient à tes amarres et à tes défenses.
+etapes:
+  - titre: On entre au ralenti, la menue embarcation en dernier
+    texte: >-
+      Lors de l’entrée dans les écluses, les bateaux réduisent leur vitesse de façon à
+      éviter tout choc contre les portes, les dispositifs de protection ou les autres
+      bateaux.
+
+      Une menue embarcation ne pénètre dans le sas qu’après y avoir été invitée par le
+      personnel chargé de la manœuvre. Éclusée en commun avec d’autres bateaux, elle entre
+      après eux, et se tient à distance d’eux une fois dedans.
+  - titre: Ancres relevées, défenses flottantes
+    texte: >-
+      Dans les écluses, les ancres doivent être en position complètement relevée. Il en va
+      de même dans les garages, dès lors qu’elles ne sont pas utilisées.
+
+      L’emploi de défenses est obligatoire, et elles doivent être flottantes lorsqu’elles
+      sont amovibles.
+  - titre: Amarré, et les amarres manœuvrées
+    texte: >-
+      Pendant le remplissage et la vidange du sas, et jusqu’au moment où la sortie est
+      autorisée, les bateaux sont amarrés.
+
+      Le niveau bouge, les amarres doivent suivre. La manœuvre des amarres doit empêcher
+      tout choc contre les bajoyers, les portes, les dispositifs de protection ou les
+      autres bateaux.
+  - titre: Le moteur ne tient pas le bateau
+    texte: >-
+      Dès que le bateau est amarré et jusqu’au moment où la sortie est autorisée, il est
+      interdit de faire usage des moyens mécaniques de propulsion. Ce sont les amarres qui
+      tiennent la position, pas l’hélice.
+
+      Les règlements particuliers de police peuvent déroger à cette interdiction selon les
+      conditions locales. Le conducteur limite alors autant que possible les remous dans
+      le sas.
+  - titre: Entre les limites, sans rien rejeter, sans débarquer
+    texte: >-
+      Si des limites sont indiquées sur les bajoyers, les murs latéraux du sas, les
+      bateaux se tiennent entre ces limites. Il est interdit de rejeter ou de laisser
+      s’écouler de l’eau sur les terre-pleins ou sur les autres bateaux.
+
+      Sauf autorisation particulière du personnel chargé de la manœuvre, il est interdit
+      de débarquer lors du passage aux écluses.
+  - titre: La radio reste à l’écoute
+    texte: >-
+      Dans les garages des écluses et dans les écluses, un bateau équipé d’une
+      installation de radiotéléphonie permettant les communications sur le réseau des
+      informations nautiques doit être à l’écoute sur la voie allotie à l’écluse.
+
+      C’est par là qu’arrivent les instructions du personnel de manœuvre, auxquelles les
+      bateaux se conforment, y compris quand elles dérogent au règlement.
+piege: >-
+  Beaucoup de plaisanciers gardent le moteur embrayé au ralenti pour tenir le bateau au
+  milieu du sas. Le règlement l’interdit : une fois amarré, plus de propulsion mécanique
+  jusqu’à l’autorisation de sortie. Le bateau se tient à l’amarre, filée ou reprise à
+  mesure que l’eau monte ou descend.
+retenir:
+  - On entre au ralenti, et la menue embarcation entre après les autres, sur invitation du personnel.
+  - "Ancres complètement relevées, défenses obligatoires et flottantes si amovibles."
+  - Amarré pendant le remplissage et la vidange, amarres manœuvrées pour éviter tout choc.
+  - "Bateau amarré : plus de moyens mécaniques de propulsion jusqu’à l’autorisation de sortie."
+  - Radio à l’écoute sur la voie allotie à l’écluse, et débarquement interdit sauf autorisation.
+sources:
+  - texte: Code des transports, article A. 4241-53-30
+    ref: rgpni-ecluses
+    fichier: article-a4241-53-30
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -17,8 +17,6 @@ propositions:
   - id: b
     texte: Tu attends, l'écluse se prépare seulement à ouvrir
   - id: c
-    texte: Tu attends l'extinction de l'un des deux feux
-  - id: d
     texte: Tu entres seulement si l'éclusier te fait signe, le vert ne suffit pas
 reponses:
   - a
@@ -33,5 +31,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

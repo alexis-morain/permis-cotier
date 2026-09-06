@@ -1,0 +1,50 @@
+notion: signaux-meteo
+duree: 3
+accroche: >-
+  Le tableau de la capitainerie affiche « avis de coup de vent ». Ce n’est pas une
+  impression de vent frais : c’est un signal codé, avec un seuil chiffré derrière chaque
+  mot.
+etapes:
+  - titre: L’avis porte le nom de la force annoncée
+    texte: >-
+      Un avis est émis dès qu’un vent de force 7 au moins est attendu ou observé sur une
+      zone. Son nom ne décrit rien d’autre que cette force, prise sur l’échelle de
+      Beaufort.
+    liste:
+      - "Avis de grand frais : à partir de force 7"
+      - "Avis de coup de vent : à partir de force 8"
+      - "Avis de fort coup de vent : à partir de force 9"
+      - "Avis de tempête : à partir de force 10"
+      - "Avis de violente tempête : à partir de force 11"
+      - "Avis d’ouragan : à force 12"
+  - titre: Un avis en cours n’attend pas l’heure du bulletin
+    texte: >-
+      L’avis prend la forme d’un bulletin météorologique spécial, diffusé hors des heures
+      normales. En mer, les CROSS le passent sur un canal VHF de travail, annoncé au
+      préalable sur le canal 16. Le Navtex le reçoit en texte, en zone couverte.
+
+      Le contenu du bulletin marine et la liste complète des sources sont détaillés dans
+      les leçons du chapitre météo.
+  - titre: Ce que l’avis change pour toi
+    texte: >-
+      Force 7 ou plus annoncée sur ta zone, la sortie côtière se reporte. La décision se
+      prend à quai, au moment où elle ne coûte rien : une fois dehors, les options se
+      réduisent.
+piege: >-
+  Croire qu’un avis de coup de vent parle de force 7. Il parle de force 8. Le grand frais
+  commence à force 7, le coup de vent à force 8 : un degré Beaufort sépare les deux, soit
+  environ 6 nœuds de vent moyen.
+retenir:
+  - "Un avis est émis dès force 7 attendue ou observée. Coup de vent : force 8."
+  - "Grand frais 7, coup de vent 8, fort coup de vent 9, tempête 10, violente tempête 11, ouragan 12."
+  - Un avis en cours est diffusé hors des heures normales, par les CROSS sur VHF et par Navtex.
+  - Force 7 ou plus annoncée sur ta zone, la sortie côtière se reporte.
+sources:
+  - texte: "Fiche météorologie : échelle de Beaufort et état de la mer"
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

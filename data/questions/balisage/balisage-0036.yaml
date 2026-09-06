@@ -14,10 +14,6 @@ propositions:
   - id: a
     texte: Sa couleur marque la limite bâbord du chenal, tu le laisses sur bâbord
   - id: b
-    texte: Il faut compter ses éclats pour savoir de quel côté le laisser
-  - id: c
-    texte: Son rythme à éclats groupés en fait une marque de danger isolé
-  - id: d
     texte: La couleur ne dit rien du côté, seul le voyant vu de jour le donne
 reponses:
   - a
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

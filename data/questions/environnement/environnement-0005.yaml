@@ -14,8 +14,6 @@ propositions:
     texte: Non, tout vire-casier et vire-filet est interdit à la pêche de loisir
   - id: c
     texte: Oui, à condition de ne pas dépasser 800 watts
-  - id: d
-    texte: Oui, dans la limite de trois par navire
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

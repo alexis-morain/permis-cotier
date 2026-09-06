@@ -9,15 +9,13 @@ enonce: >-
   avec la totalité de ton carburant ?
 propositions:
   - id: a
-    texte: 23 milles
-  - id: b
     texte: 60 milles
-  - id: c
+  - id: b
     texte: 90 milles
-  - id: d
+  - id: c
     texte: 3,6 milles
 reponses:
-  - c
+  - b
 explication: >-
   La distance franchissable est l'autonomie multipliée par la vitesse. Le nœud étant un
   mille par heure, 5 heures à 18 nœuds font 90 milles, sans conversion. Attention à ce
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

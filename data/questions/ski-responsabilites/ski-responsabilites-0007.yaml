@@ -12,10 +12,6 @@ propositions:
     texte: Dès que tu doutes de pouvoir t'en sortir avec les moyens du bord
   - id: b
     texte: Quand tu es certain de ne plus pouvoir t'en sortir seul
-  - id: c
-    texte: Quand la batterie faiblit et que la VHF risque de lâcher
-  - id: d
-    texte: Après avoir prévenu un proche à terre, qui relaiera
 reponses:
   - a
 explication: >-
@@ -30,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

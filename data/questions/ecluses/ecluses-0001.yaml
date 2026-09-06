@@ -18,8 +18,6 @@ propositions:
   - id: c
     texte: L'accès est interdit et l'écluse est simplement fermée, elle rouvrira à ton
       tour
-  - id: d
-    texte: L'accès est autorisé, la superposition ne fait que doubler le signal
 reponses:
   - a
 explication: >-
@@ -34,5 +32,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

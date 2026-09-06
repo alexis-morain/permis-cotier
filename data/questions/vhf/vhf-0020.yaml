@@ -8,15 +8,13 @@ enonce: >-
   Depuis un téléphone portable, quel numéro appeler pour une urgence en mer ?
 propositions:
   - id: a
-    texte: Le 15
-  - id: b
     texte: Le 18
-  - id: c
+  - id: b
     texte: Le 196
-  - id: d
+  - id: c
     texte: Le 112 uniquement
 reponses:
-  - c
+  - b
 explication: >-
   Le 196 est le numéro d'urgence maritime : il aboutit directement au CROSS, qui reçoit
   l'alerte et coordonne les moyens de secours. Le 112 fonctionne aussi et sera réorienté,
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

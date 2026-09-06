@@ -1,0 +1,72 @@
+notion: securite-visibilite-restreinte
+duree: 4
+accroche: >-
+  La côte s’efface, l’horizon devient laiteux, tu ne distingues plus la bouée que tu
+  visais. Rien n’a changé autour de toi, sauf que tu ne vois plus. Ce que tu fais dans les
+  cinq minutes qui suivent se joue en quatre gestes.
+etapes:
+  - titre: Ralentir, machine prête
+    texte: >-
+      Tout navire navigue à une vitesse de sécurité adaptée aux circonstances existantes et
+      aux conditions de visibilité réduite. Un navire à propulsion mécanique tient aussi
+      ses machines prêtes à manœuvrer immédiatement.
+
+      La vitesse de sécurité est celle qui te laisse t’arrêter sur la distance où tu vois.
+      La visibilité arrive en tête des facteurs à prendre en compte, devant la densité du
+      trafic et la capacité de manœuvre du navire.
+  - titre: Renforcer la veille, aussi avec les oreilles
+    texte: >-
+      Tout navire assure en permanence une veille visuelle et auditive appropriée, en
+      utilisant tous les moyens disponibles adaptés aux circonstances. Dans la brume, les
+      oreilles voient plus loin que les yeux : on coupe la musique, on poste un équipier à
+      l’avant, on écoute.
+  - titre: Se signaler au sifflet
+    texte: >-
+      De jour comme de nuit, dans une zone de visibilité réduite ou à proximité, un navire à
+      propulsion mécanique ayant de l’erre fait entendre un son prolongé à des intervalles
+      qui ne dépassent pas 2 minutes.
+    visuel: sons/brume-avec-erre.svg
+    alt: "Un son long, seul, répété à intervalle régulier."
+  - titre: Stoppé, deux sons prolongés
+    texte: >-
+      Un navire à propulsion mécanique faisant route mais stoppé et sans erre fait entendre
+      deux sons prolongés séparés d’environ 2 secondes, toujours à des intervalles qui ne
+      dépassent pas 2 minutes. Au mouillage, c’est la cloche, sonnée rapidement pendant
+      environ 5 secondes, à des intervalles qui ne dépassent pas 1 minute.
+    visuel: sons/brume-stoppe.svg
+    alt: "Deux sons longs qui se suivent, séparés par un court silence, répétés à intervalle régulier."
+  - titre: Un son devant, vitesse au minimum
+    texte: >-
+      Sauf s’il est établi qu’il n’y a pas de risque d’abordage, un navire qui entend le
+      signal de brume d’un autre dans une direction qui lui paraît être sur l’avant du
+      travers réduit sa vitesse au minimum nécessaire pour maintenir son cap. Si nécessaire
+      il casse son erre, et il navigue avec une extrême précaution jusqu’à ce que le risque
+      soit passé.
+piege: >-
+  Croire que la règle impose de mouiller et d’attendre le retour de la visibilité, ou de
+  venir sur bâbord pour dégager. La règle 19 b) demande une vitesse de sécurité et des
+  machines prêtes, rien de plus ; et le changement de cap sur bâbord vers un navire situé
+  sur l’avant du travers est précisément la manœuvre que la règle 19 d) demande d’éviter.
+retenir:
+  - "Visibilité réduite : vitesse de sécurité, machines prêtes à manœuvrer immédiatement."
+  - Veille visuelle et auditive permanente, par tous les moyens disponibles.
+  - "Avec de l’erre : 1 son prolongé toutes les 2 minutes au plus. Stoppé : 2 sons prolongés."
+  - "Signal de brume sur l’avant du travers : vitesse au minimum, extrême précaution."
+sources:
+  - texte: RIPAM, règle 19
+    ref: decret-77-733
+    fichier: regle-19
+  - texte: RIPAM, règle 6
+    ref: decret-77-733
+    fichier: regle-06
+  - texte: RIPAM, règle 5
+    ref: decret-77-733
+    fichier: regle-05
+  - texte: RIPAM, règle 35
+    ref: decret-77-733
+    fichier: regle-35
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

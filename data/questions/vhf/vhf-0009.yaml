@@ -13,8 +13,6 @@ propositions:
     texte: MAYDAY
   - id: c
     texte: PAN PAN
-  - id: d
-    texte: DÉTRESSE
 reponses:
   - b
 explication: >-
@@ -28,5 +26,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

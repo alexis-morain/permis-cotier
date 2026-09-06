@@ -1,0 +1,53 @@
+notion: maree-definitions
+duree: 3
+accroche: >-
+  La carte annonce 3,5 mètres à l’endroit où tu veux passer, et ton bateau tire 1,2 mètre.
+  Reste à savoir ce que ce 3,5 raconte exactement, parce que ce n’est pas la profondeur du
+  moment.
+etapes:
+  - titre: Pleine mer et basse mer bornent le cycle
+    texte: >-
+      La pleine mer est le point haut du cycle, la basse mer son point bas. Entre les deux,
+      l’eau monte puis redescend.
+
+      La différence de hauteur entre une pleine mer et la basse mer qui la suit est le
+      marnage. C’est une hauteur, en mètres, jamais une durée.
+  - titre: Tout se compte depuis le zéro des cartes
+    texte: >-
+      Le zéro des cartes est le niveau des plus basses mers astronomiques, le plus bas que
+      la marée puisse atteindre. C’est le niveau de référence de la carte.
+
+      La hauteur d’eau prévue par l’annuaire des marées se compte depuis ce zéro.
+  - titre: La sonde est un minimum, pas une mesure du jour
+    texte: >-
+      Une sonde est une profondeur, en mètres sur les cartes françaises, comptée elle
+      aussi depuis le zéro des cartes. Elle t’annonce la profondeur minimale que tu
+      trouveras à cet endroit.
+
+      La profondeur réelle est donc la sonde plus la hauteur de la marée du moment. La
+      convention joue dans le sens de la sécurité : la marée astronomique ne descend jamais
+      sous ce niveau.
+  - titre: Vive-eau et morte-eau nomment l’amplitude
+    texte: >-
+      On parle de vive-eau autour de la pleine et de la nouvelle lune, quand le marnage est
+      maximal, et de morte-eau aux quartiers, quand il est minimal. Ces deux mots qualifient
+      l’amplitude de la marée, pas son heure.
+piege: >-
+  Le marnage est souvent pris pour une durée, celle qui sépare deux pleines mers. C’est
+  une différence de hauteur. Autre confusion voisine : croire que la sonde est la
+  profondeur à pleine mer, et donc s’attendre à trouver moins d’eau que la carte n’annonce.
+  C’est l’inverse, la sonde est un plancher.
+retenir:
+  - "Marnage : différence de hauteur entre une pleine mer et la basse mer qui la suit."
+  - "Le zéro des cartes est le niveau des plus basses mers astronomiques."
+  - "Hauteur d’eau et sonde se comptent toutes deux depuis le zéro des cartes."
+  - "Profondeur réelle = sonde portée sur la carte + hauteur de la marée du moment."
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+    fichier: symboles
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

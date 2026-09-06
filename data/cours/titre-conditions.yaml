@@ -1,0 +1,96 @@
+notion: titre-conditions
+duree: 5
+accroche: >-
+  Avant de t’inscrire, l’administration regarde trois choses : ton âge, ton aptitude
+  physique, et la formation que tu as suivie. Le titre n’arrive qu’après, et il ne vient
+  pas de l’école de conduite.
+etapes:
+  - titre: Seize ans, dix-huit pour la grande plaisance
+    texte: >-
+      L’âge minimum requis pour obtenir le permis est de seize ans. Une seule exception :
+      l’extension « grande plaisance eaux intérieures », qui demande dix-huit ans.
+
+      Dès quatorze ans et jusqu’à seize, les personnes appartenant à un organisme affilié à
+      une fédération sportive agréée peuvent conduire de jour un bateau de plaisance de
+      moins de 20 mètres, dans le cadre des activités de cet organisme et sous les
+      conditions d’encadrement fixées par arrêté. C’est une autorisation de conduire, pas
+      une délivrance de titre.
+  - titre: L’aptitude physique se vérifie avant l’examen
+    texte: >-
+      Les conditions d’aptitude physique requises pour se présenter à l’examen sont fixées
+      par l’annexe VI de l’arrêté. Elles portent sur la vue, l’audition, les membres et
+      l’état général.
+    liste:
+      - "Acuité visuelle : 6/10 d’un œil et 4/10 de l’autre, ou 5/10 de chaque œil, correction admise"
+      - "Champ visuel périphérique normal, sens chromatique satisfaisant"
+      - "Voix chuchotée perçue à 0,50 mètre, voix haute à 5 mètres, de chaque oreille"
+      - "Prise en main satisfaisante, membres inférieurs fonctionnels"
+      - "Toute affection exposant à une perte brutale de connaissance entraîne l’inaptitude"
+  - titre: L’inaptitude des membres inférieurs n’interdit pas l’examen
+    texte: >-
+      Si les conditions relatives aux membres inférieurs ne sont pas remplies, le candidat
+      est quand même autorisé à passer l’examen. En cas de succès, il ne peut pas embarquer
+      seul : une tierce personne d’au moins seize ans, apte sans restriction, doit
+      l’accompagner. Cette personne n’a pas besoin d’être elle-même titulaire du permis.
+  - titre: Cinq heures de théorie, trois heures trente de pratique
+    texte: >-
+      La formation théorique en salle, en présence du formateur, ne peut être inférieure à
+      cinq heures.
+
+      La formation pratique, commune aux deux options, ne peut être inférieure à trois
+      heures trente : une heure trente, qui peut être collective, sur la sécurité, la
+      décision de sortie et la responsabilité du chef de bord, puis deux heures de conduite
+      effective par candidat, avec quatre élèves embarqués au plus. Chaque personne à bord
+      porte un équipement individuel de flottabilité.
+  - titre: C’est le préfet qui délivre
+    texte: >-
+      Le permis est délivré aux candidats qui ont réussi l’examen théorique et dont la
+      formation pratique a été effectuée et validée par un établissement agréé. Il est
+      délivré par le préfet du département dans lequel le service qui a instruit la
+      candidature a son siège.
+
+      L’établissement de formation ne délivre pas de permis : il forme, il valide la
+      pratique, il remet une attestation.
+  - titre: La conduite accompagnée, un an sous le titre d’un autre
+    texte: >-
+      Dès seize ans, on peut conduire pendant une année un bateau de plaisance à moteur sans
+      permis, en étant accompagné d’une personne titulaire depuis au moins trois ans d’un
+      permis ou d’un titre de conduite. La conduite reste dans les limites du titre de
+      l’accompagnateur.
+
+      Elle doit être précédée d’une déclaration de l’accompagnateur à l’autorité
+      administrative, valable un an.
+piege: >-
+  Ne confonds pas les deux durées de formation. Cinq heures, c’est la théorie en salle.
+  Trois heures trente, c’est la pratique, dont deux heures de conduite effective par
+  candidat. L’énoncé qui propose « cinq heures dont trois de conduite » mélange les deux.
+retenir:
+  - "Seize ans pour le permis, dix-huit pour la grande plaisance eaux intérieures."
+  - "De quatorze à seize ans, conduite de jour possible en club affilié, sur moins de 20 mètres."
+  - "Formation théorique : cinq heures au minimum. Formation pratique : trois heures trente, dont deux heures de conduite."
+  - "Le permis est délivré par le préfet du département du service instructeur."
+  - "Conduite accompagnée : un an, dès seize ans, avec un titulaire depuis trois ans et une déclaration préalable."
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 3
+    ref: decret-2007-1167
+    fichier: article-3
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 4
+    ref: decret-2007-1167
+    fichier: article-4
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 9
+    ref: decret-2007-1167
+    fichier: article-9
+  - texte: Arrêté du 28 septembre 2007, article 1
+    ref: arrete-2007-09-28
+    fichier: article-1
+  - texte: Arrêté du 28 septembre 2007, article 3
+    ref: arrete-2007-09-28
+    fichier: article-3
+  - texte: Arrêté du 28 septembre 2007, annexe VI
+    ref: arrete-2007-09-28
+    fichier: article-annexe-vi
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

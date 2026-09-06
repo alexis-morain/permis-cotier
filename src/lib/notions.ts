@@ -138,7 +138,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'balisage',
     nom: 'Pictogrammes',
     resume:
-      "Un pictogramme rond cerclé de rouge et barré interdit, un pictogramme rond bleu à figure blanche oblige, un carré informe. Ils s'affichent à terre et régissent la bande littorale.",
+      "Deux codes : une figure blanche sur fond bleu autorise, une figure noire sur fond blanc cerclé et barré de rouge interdit. Ils se portent sur les bouées de la bande des 300 mètres.",
     ordre: 10,
     cible: 2,
     ancrage: 'pictogrammes',
@@ -364,7 +364,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'signaux',
     nom: 'Signaux portuaires',
     resume:
-      "Trois feux rouges en colonne interdisent l'entrée et la sortie, trois verts les autorisent. Un feu blanc au-dessus signale un mouvement en cours.",
+      "Trois feux rouges en colonne interdisent l'entrée et la sortie, trois verts les autorisent sous conditions. Les signaux auxiliaires sont ceux des publications nautiques du port.",
     ordre: 9,
     cible: 2,
     ancrage: 'signaux régissant le trafic portuaire',
@@ -374,7 +374,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'signaux',
     nom: 'Signaux météorologiques',
     resume:
-      "Le sémaphore signale les avis de vent fort par des feux ou des pavillons, et l'avis de coup de vent annonce force 8. Les signaux annoncent la zone et l'échéance.",
+      "Les avis de vent fort portent le nom de la force annoncée : grand frais à 7, coup de vent à 8, jusqu'à l'ouragan à 12. Un avis en cours est diffusé par un bulletin météorologique spécial, par les CROSS en VHF et par Navtex.",
     ordre: 10,
     cible: 2,
     ancrage: 'signaux météorologiques',
@@ -508,7 +508,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'securite',
     nom: 'Nombre de personnes et charge',
     resume:
-      "Le nombre maximal est porté sur la plaque constructeur, et à défaut se calcule. Les enfants de moins de deux ans n'y comptent pas.",
+      "Le nombre maximal est porté sur la plaque constructeur ou dans le manuel du propriétaire. Les enfants de moins d'un an n'y comptent pas.",
     ordre: 2,
     cible: 2,
     ancrage: 'le nombre de personnes ou la charge embarquées',
@@ -568,7 +568,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'securite',
     nom: 'Limitations de navigation',
     resume:
-      "Zones interdites, limitation à 5 nœuds dans la bande des 300 mètres, distance de sécurité autour du pavillon de plongée, interdiction de circuler sur les zones de conchyliculture.",
+      "La distance d'un abri commande l'armement, par tranches : moins de 2, 6, 60 milles et au-delà. Annexes, engins de plage, planches, kayaks et véhicules nautiques à moteur ont chacun leur limite. Dans la bande des 300 mètres, 5 nœuds.",
     ordre: 8,
     cible: 3,
     ancrage: 'les limitations de la navigation',
@@ -578,7 +578,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'securite',
     nom: 'Signalisation des plongeurs',
     resume:
-      "Un pavillon Alpha ou un pavillon rouge à bande blanche diagonale signale des plongeurs en immersion. On s'en écarte et on réduit sa vitesse.",
+      "Un pavillon Alpha rigide d'au moins 1 mètre, ou de nuit trois feux rouge, blanc, rouge, signalent un navire en plongée. On s'écarte de sa route.",
     ordre: 9,
     cible: 1,
     ancrage: 'signalisation des plongeurs sous-marins et distance de sécurité',
@@ -598,7 +598,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'securite',
     nom: 'Pièces administratives',
     resume:
-      "Titre de navigation, titre de conduite, licence de station radio, acte de francisation au-delà de 7 mètres, et les marques extérieures d'immatriculation sur la coque.",
+      "Titre de navigation, titre de conduite, licence de station radio, et pour un bateau loué la déclaration et le registre du loueur.",
     ordre: 11,
     cible: 3,
     ancrage: 'les pièces administratives à posséder à bord',
@@ -693,7 +693,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'vhf',
     nom: 'Canaux et puissances',
     resume:
-      "Le canal 16 est celui de la détresse et de l'appel, le 70 celui de l'ASN. On appelle sur 16 puis on dégage sur un canal de travail. La puissance se réduit à 1 watt en portée courte.",
+      "Le canal 16 est celui de la détresse et de l'appel, le 70 celui de l'ASN. On appelle sur 16 puis on dégage sur un canal de travail. Une fixe émet 25 watts, une portative 6, et la portée dépend de la hauteur des antennes.",
     ordre: 4,
     cible: 2,
     ancrage: 'fréquences, voies',
@@ -763,7 +763,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'vhf',
     nom: 'Protection des fréquences',
     resume:
-      "Le canal 16 est veillé et réservé. Une fausse alerte se corrige immédiatement par un message annulant l'appel, et les essais se font sur un canal de travail.",
+      "Le canal 16 est veillé et réservé. Une fausse alerte se corrige immédiatement en le disant sur le canal 16, sans attendre. Déclencher un signal de détresse sans détresse est interdit.",
     ordre: 11,
     cible: 2,
     ancrage: 'protection des fréquences de détresse',
@@ -773,7 +773,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'vhf',
     nom: 'Organisation du sauvetage',
     resume:
-      "Le CROSS coordonne le sauvetage dans sa zone, engage les moyens et reste l'interlocuteur du navire en détresse. La convention SAR découpe les responsabilités entre États.",
+      "Le CROSS veille le canal 16 et coordonne le sauvetage. Depuis un téléphone, le 196 le joint directement. Le canal 6 sert à la coordination entre navires et aéronefs.",
     ordre: 12,
     cible: 2,
     ancrage: 'organisation du sauvetage en mer',
@@ -785,7 +785,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'ski-responsabilites',
     nom: 'Ski nautique et engins tractés',
     resume:
-      "Le remorquage se fait de jour, hors bande des 300 mètres sauf chenal, avec une personne à bord chargée de surveiller le skieur en plus du pilote.",
+      "La bande des 300 mètres est balisée de bouées jaunes et se traverse par un chenal balisé, cylindres à bâbord en accédant au rivage. L'engin hydropropulsé se pratique de jour, à moins de 2 milles d'un abri, avec le permis côtier.",
     ordre: 1,
     cible: 2,
     ancrage: 'règles de la pratique du ski nautique et des engins tractés',
@@ -795,7 +795,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'ski-responsabilites',
     nom: 'Véhicules nautiques à moteur',
     resume:
-      "Le scooter des mers navigue de jour seulement et dans une limite de distance d'abri qui dépend du nombre de places. Le port du gilet et le coupe-circuit y sont la règle.",
+      "Le véhicule nautique à moteur navigue de jour seulement, à 2 ou 6 milles d'un abri selon sa conception. Le gilet est porté, et une combinaison en néoprène protège du jet de la turbine.",
     ordre: 2,
     cible: 2,
     ancrage: 'règles de la pratique du ski nautique et des engins tractés',
@@ -919,7 +919,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'environnement',
     nom: 'Pêche sous-marine',
     resume:
-      "Elle est réservée aux majeurs, interdite avec un scaphandre, de nuit, et à proximité des engins de pêche professionnelle. Le plongeur signale sa présence.",
+      "Le fusil-harpon est interdit aux moins de seize ans. Elle est interdite avec un scaphandre, de nuit, et à proximité des engins de pêche professionnelle. Le plongeur signale sa présence.",
     ordre: 5,
     cible: 1,
     ancrage: 'réglementation de la pêche sous-marine',
@@ -929,7 +929,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'environnement',
     nom: 'Faune et flore',
     resume:
-      "On ne poursuit pas les cétacés, on garde ses distances et on ne coupe pas leur route. Le mouillage sur herbier de posidonie est interdit là où il est réglementé.",
+      "Explosifs, armes à feu et substances toxiques pour la pêche, zones et périodes fermées, engins prohibés : 22 500 euros d'amende, loisir compris. Rejeter une substance nuisible à la faune ou à la flore : 100 000 euros.",
     ordre: 6,
     cible: 2,
     ancrage: 'protection de la faune et de la flore',
@@ -981,7 +981,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'meteo',
     nom: 'Facteurs météorologiques',
     resume:
-      "Dépression et anticyclone commandent le vent, la brise thermique se lève l'après-midi près des côtes, et les vents de Méditerranée — mistral, tramontane — se lèvent vite et fort.",
+      "Dépression et anticyclone commandent le vent, la brise de mer se lève en début d'après-midi près des côtes, et le relief accélère le vent : deux à trois degrés Beaufort de plus au passage d'un cap.",
     ordre: 4,
     cible: 2,
     ancrage: 'la météorologie',
@@ -1115,7 +1115,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'ecluses',
     nom: 'Passage et amarrage',
     resume:
-      "Les commerciaux passent avant la plaisance. On s'amarre avant et arrière sans raidir, on file ou on reprend au fur et à mesure, moteur prêt et pare-battages en place.",
+      "On entre au ralenti, dans l'ordre d'arrivée, les menues embarcations en dernier sur invitation. Amarré avant et arrière, amarres manœuvrées pour éviter tout choc, défenses flottantes, propulsion coupée.",
     ordre: 3,
     cible: 2,
     ancrage: 'règles d’utilisation des écluses gardées ou automatiques',

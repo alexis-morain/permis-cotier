@@ -13,8 +13,6 @@ propositions:
     texte: 0,5 à 1,25 mètre
   - id: c
     texte: 1,25 à 2,5 mètres
-  - id: d
-    texte: 2,5 à 4 mètres
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -13,8 +13,6 @@ propositions:
     texte: La portée d'une station côtière en ondes hectométriques, hors zone A1
   - id: c
     texte: La couverture des satellites géostationnaires
-  - id: d
-    texte: Les régions polaires, où seules les ondes décamétriques passent
 reponses:
   - b
 explication: >-
@@ -29,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

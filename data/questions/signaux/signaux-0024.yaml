@@ -18,8 +18,6 @@ propositions:
     texte: Il vient sur tribord.
   - id: c
     texte: Il bat en arrière.
-  - id: d
-    texte: Il compte te rattraper sur bâbord.
 reponses:
   - a
 explication: >-
@@ -35,5 +33,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -1,0 +1,65 @@
+notion: vhf-fausses-alertes
+duree: 4
+accroche: >-
+  Tu ranges le micro, ta manche accroche le capot rouge, et l’alerte de détresse part.
+  Personne n’est en danger à bord. Ce que tu fais dans les secondes qui suivent compte
+  plus que l’erreur elle-même.
+etapes:
+  - titre: Le canal 16 se garde libre
+    texte: >-
+      Le canal 16, 156,800 MHz, est la voie internationale de détresse, d’urgence et
+      d’appel. On y prend contact, puis on bascule sur une voie de travail, 72 ou 77 par
+      exemple, pour la conversation.
+
+      Poursuivre un bavardage sur le 16 occupe la seule voie où l’appel de détresse d’un
+      autre pourra passer. Le canal 70 ne porte que des données, et le canal 6 sert à la
+      coordination des opérations de recherche et de sauvetage.
+  - titre: Deux interdictions, pas une
+    texte: >-
+      Le paragraphe 2 de l’annexe IV du RIPAM interdit l’usage d’un signal de détresse
+      autrement que pour indiquer un cas de détresse ou un besoin d’assistance. Il
+      interdit aussi l’usage de tout autre signal susceptible d’être confondu avec l’un
+      d’eux.
+
+      Relayer la détresse d’un autre navire n’entre pas là-dedans : le MAYDAY RELAY
+      n’est pas visé par l’interdiction. Montrer plusieurs signaux ensemble non plus, le
+      paragraphe 1 les prévoit utilisés ensemble ou séparément.
+  - titre: Une fausse alerte coûte à quelqu’un d’autre
+    texte: >-
+      Une alerte injustifiée engage des moyens humains et matériels pour rien. Ces moyens
+      manquent alors ailleurs, là où quelqu’un est vraiment en danger.
+
+      Le programme de l’examen demande de savoir décrire les moyens humains et matériels
+      susceptibles d’être engagés après un signal de détresse, et d’« appréhender les
+      conséquences d’un déclenchement abusif d’un signal pyrotechnique de détresse ». La
+      leçon en tire la même logique pour une alerte VHF partie pour rien.
+  - titre: Une alerte partie par erreur s’annule aussitôt
+    texte: >-
+      Tu passes sur le canal 16 et tu dis clairement que l’alerte est annulée. Sans
+      attendre.
+
+      Couper la VHF ne retire pas l’alerte : elle est déjà partie.
+piege: >-
+  Croire qu’une alerte non confirmée s’éteint d’elle-même, ou qu’éteindre l’appareil
+  efface le signal. L’alerte est déjà partie. Seul un message d’annulation sur le
+  canal 16 remet les choses en place.
+retenir:
+  - Le canal 16 sert à appeler, puis on dégage sur une voie de travail.
+  - "L’annexe IV du RIPAM interdit le signal de détresse hors détresse, et tout signal qui pourrait être confondu avec lui."
+  - Une fausse alerte s’annule tout de suite sur le canal 16, en le disant.
+  - Une fausse alerte retire des secours à ceux qui en ont besoin ailleurs.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d’appel et SMDSM'
+    ref: fiche-vhf
+    fichier: procedures
+  - texte: RIPAM, annexe IV
+    ref: decret-77-733
+    fichier: annexe-iv
+  - texte: Arrêté du 28 septembre 2007, annexe I, objectif n° 7
+    ref: arrete-2007-09-28
+    fichier: article-annexe-i
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

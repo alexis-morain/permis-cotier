@@ -14,10 +14,6 @@ propositions:
   - id: b
     texte: Réunir les seuls feux de côté en un fanal unique placé à l'avant, le feu de
       poupe restant séparé.
-  - id: c
-    texte: Les remplacer par un feu blanc visible sur tout l'horizon.
-  - id: d
-    texte: Rien de particulier, ce fanal unique n'est permis qu'au-dessous de 12 mètres.
 reponses:
   - a
 explication: >-
@@ -32,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

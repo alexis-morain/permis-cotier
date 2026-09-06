@@ -1,0 +1,75 @@
+notion: titre-examen
+duree: 4
+accroche: >-
+  Le jour de l’épreuve, tu as devant toi un questionnaire à choix multiple et rien d’autre.
+  Quarante questions, et une marge d’erreur que le texte fixe au chiffre près.
+etapes:
+  - titre: Quarante questions, cinq erreurs admises
+    texte: >-
+      L’obtention de l’option « côtière » passe par une épreuve théorique bâtie sur un
+      questionnaire à choix multiple. L’épreuve comporte quarante questions, et cinq
+      erreurs sont admises.
+
+      À la sixième réponse fausse, l’épreuve est manquée. Trois ou six erreurs sonnent
+      plausible dans un énoncé de test, mais le texte ne retient que cinq.
+  - titre: La théorie reste acquise dix-huit mois
+    texte: >-
+      Le candidat conserve le bénéfice de la réussite à l’épreuve théorique pendant
+      dix-huit mois. Pendant ce délai, il lui reste à faire valider sa formation pratique.
+
+      Passé dix-huit mois sans cette validation, la théorie tombe et il faut la repasser.
+  - titre: Cinq heures de salle avant l’épreuve
+    texte: >-
+      La formation théorique en salle, en présence du formateur, ne peut être inférieure à
+      cinq heures. Elle peut être collective.
+
+      Les candidats déjà titulaires de l’option « eaux intérieures », ou d’un titre
+      équivalent, ne sont pas soumis à cette obligation. L’épreuve théorique, elle, reste
+      à passer.
+  - titre: L’inscription se paie par timbre dématérialisé
+    texte: >-
+      L’inscription aux sessions d’examen théorique de l’option « côtière » ou de l’option
+      « eaux intérieures » organisées par l’administration donne lieu au paiement d’une
+      redevance. Son tarif est fixé par arrêté du ministre chargé de la mer, et elle
+      s’acquitte au moyen d’un timbre dématérialisé.
+
+      Avant le début de l’épreuve, l’identité de chaque candidat est vérifiée.
+  - titre: La théorie d’abord, l’attestation de pratique ensuite
+    texte: >-
+      Le formateur valide les compétences pratiques au fur et à mesure, puis l’établissement
+      agréé délivre une attestation de réussite à la formation. Cette attestation ne peut
+      pas être délivrée avant la réussite à l’épreuve théorique.
+
+      L’ordre est donc fixé : le QCM, puis l’attestation, puis le titre.
+piege: >-
+  L’erreur fréquente est de croire que réussir le QCM donne le permis. Le titre est délivré
+  aux candidats qui ont subi l’examen avec succès et dont la formation pratique a été
+  effectuée et validée par un établissement agréé. Tant que la formation pratique n’est pas
+  validée, il n’y a pas de permis, et la réussite théorique s’éteint au bout de dix-huit
+  mois.
+retenir:
+  - "Épreuve théorique côtière : quarante questions, cinq erreurs admises."
+  - "Le bénéfice de la réussite théorique se conserve dix-huit mois."
+  - "Cinq heures de formation théorique en salle au minimum, sauf pour les titulaires de l’option eaux intérieures."
+  - "L’attestation de formation pratique n’est jamais délivrée avant la réussite à la théorie."
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 1
+    ref: arrete-2007-09-28
+    fichier: article-1
+  - texte: Arrêté du 28 septembre 2007, article 3
+    ref: arrete-2007-09-28
+    fichier: article-3
+  - texte: Arrêté du 28 septembre 2007, article 6
+    ref: arrete-2007-09-28
+    fichier: article-6
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 4
+    ref: decret-2007-1167
+    fichier: article-4
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 8-1
+    ref: decret-2007-1167
+    fichier: article-8-1
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

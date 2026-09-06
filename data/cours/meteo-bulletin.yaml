@@ -1,0 +1,59 @@
+notion: meteo-bulletin
+duree: 4
+accroche: >-
+  Tu ouvres le bulletin de côte de ta zone. Il est toujours bâti pareil et commence par
+  la situation générale. L’avis, lui, arrive à part et ne t’attend pas.
+etapes:
+  - titre: L’avis passe avant tout le reste
+    texte: >-
+      Le bulletin météorologique spécial, ou BMS, est un avis diffusé à part, hors des
+      heures normales, dès qu’un vent de force 7 au moins est attendu ou observé sur une
+      zone. Il ne fait pas partie du bulletin de côte et prime sur lui.
+
+      Son nom donne la force annoncée.
+    liste:
+      - "Avis de grand frais : à partir de force 7"
+      - "Avis de coup de vent : à partir de force 8"
+      - "Avis de fort coup de vent : à partir de force 9"
+      - "Avis de tempête : à partir de force 10"
+      - "Avis de violente tempête : à partir de force 11"
+      - "Avis d’ouragan : à force 12"
+  - titre: La situation générale, puis chaque zone
+    texte: >-
+      Le bulletin de côte, qui couvre jusqu’à 20 milles des côtes, donne d’abord la
+      situation générale.
+
+      Vient ensuite la prévision par zone, en quatre rubriques et dans cet ordre : vent,
+      mer, temps, visibilité. La marée et la pression n’en sont pas des rubriques.
+  - titre: Vent, mer, temps, visibilité
+    texte: >-
+      Le vent est donné en degrés Beaufort. La mer est donnée sur l’échelle d’état de la
+      mer, de 0 à 9 : les deux chiffres ne se déduisent pas l’un de l’autre.
+
+      La visibilité ferme la liste, et c’est celle qu’on lit le plus vite alors qu’une
+      brume change une navigation côtière du tout au tout.
+  - titre: Un bulletin vaut pour une zone et pour une durée
+    texte: >-
+      La prévision porte sur une zone entière et sur une durée de validité annoncée. Elle
+      ne décrit pas ton mouillage, et elle cesse d’être vraie passé son échéance.
+
+      En mer, la vacation VHF du CROSS donne la mise à jour. À terre, l’affichage de la
+      capitainerie fait le même travail.
+piege: >-
+  Attendre l’heure du bulletin pour savoir s’il y a un avis. Le BMS est diffusé dès sa
+  parution, hors des heures normales, justement parce qu’il ne peut pas attendre. Un
+  bulletin lu la veille au soir peut être périmé par un BMS émis pendant la nuit.
+retenir:
+  - "BMS dès force 7 attendue ou observée, diffusé hors des heures normales."
+  - "L’avis porte le nom de la force : grand frais 7, coup de vent 8, tempête 10."
+  - "Bulletin de côte : situation générale, puis par zone vent, mer, temps, visibilité."
+  - Une prévision vaut pour une zone entière et pour une durée de validité.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

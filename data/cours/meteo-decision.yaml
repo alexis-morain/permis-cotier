@@ -1,0 +1,77 @@
+notion: meteo-decision
+duree: 5
+accroche: >-
+  Le bulletin donne force 6 demain sur ta zone. Il ne te dit pas si tu peux sortir : ça,
+  personne ne le décide à ta place. Le chef de bord croise la prévision avec quatre
+  choses.
+etapes:
+  - titre: Le bulletin est une prévision, pas une autorisation
+    texte: >-
+      Il porte sur une zone entière et sur une durée de validité. La décision de sortir se
+      construit ensuite, en confrontant ce chiffre au bateau, à l’équipage, à la zone et
+      au retour.
+  - titre: Le bateau, par sa catégorie de conception
+    texte: >-
+      La plaque du constructeur porte une lettre. Elle dit la force de vent et la hauteur
+      significative de vague pour lesquelles le bateau a été conçu.
+    liste:
+      - "A : au-delà de force 8 et de 4 mètres"
+      - "B : jusqu’à force 8 comprise et 4 mètres compris"
+      - "C : jusqu’à force 6 comprise et 2 mètres compris"
+      - "D : jusqu’à force 4 comprise et 0,3 mètre compris, avec des vagues occasionnelles de 0,5 mètre au maximum"
+  - titre: L’équipage ramène la limite de plusieurs degrés
+    texte: >-
+      Compte le nombre de personnes capables de manœuvrer, leur fatigue et leur mal de
+      mer. Un équipage inexpérimenté ramène la limite acceptable de plusieurs degrés
+      Beaufort sous celle du bateau.
+
+      La catégorie de conception est une limite de construction, pas une promesse de
+      confort ni un objectif à atteindre.
+  - titre: La zone, et le temps qu’il faut pour rejoindre un abri
+    texte: >-
+      Un vent de terre laisse une mer plate au départ et une mer formée au large. Un vent
+      contre le courant, dans un raz ou une passe, lève une mer courte et creuse hors de
+      proportion avec la force annoncée.
+
+      Un abri est un endroit de la côte où le bateau et son équipage peuvent se mettre en
+      sécurité et repartir sans assistance. La définition tient compte des conditions
+      météorologiques et de mer du moment : un mouillage qui abrite par force 3 n’abrite
+      plus par force 7. La distance à l’abri le plus proche fixe le temps dont tu disposes
+      si la situation tourne.
+  - titre: La sortie se juge sur le trajet complet
+    texte: >-
+      Le retour compte autant que l’aller. Une brise de mer qui monte l’après-midi
+      transforme un aller au portant en un retour au près, dans un vent doublé et contre
+      une mer levée.
+  - titre: Renoncer se décide à quai
+    texte: >-
+      Renoncer ou reporter fait partie de la décision, et se décide à terre, avant
+      d’appareiller, quand cela ne coûte rien. Une fois dehors, les options se réduisent.
+
+      En cas de doute sur un bulletin, la vacation VHF du CROSS et l’affichage de la
+      capitainerie donnent la mise à jour la plus récente.
+piege: >-
+  Juger la sortie sur ce qu’on voit depuis le port. Par vent de terre, la mer est plate
+  le long du quai et formée deux milles plus loin : le plan d’eau visible est justement
+  celui que le vent ne travaille pas.
+retenir:
+  - Le bulletin donne une prévision de zone, jamais une autorisation de sortir.
+  - "Catégories de conception : C jusqu’à force 6 et 2 mètres, D jusqu’à force 4 et 0,3 mètre."
+  - Un équipage inexpérimenté ramène la limite de plusieurs degrés Beaufort.
+  - Un abri s’apprécie selon les conditions du moment, pas sur la carte seule.
+  - La sortie se juge sur le trajet complet, retour compris.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+    fichier: beaufort-et-mer
+  - texte: Division 245, article 245-1.02
+    ref: division-245
+    fichier: article-245-1-02
+  - texte: Division 240, article 240-1.02
+    ref: division-240
+    fichier: article-240-1-02
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

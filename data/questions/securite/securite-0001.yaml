@@ -12,10 +12,6 @@ propositions:
     texte: Sur l'acte de francisation
   - id: b
     texte: Dans le manuel d'utilisateur
-  - id: c
-    texte: Sur la carte de circulation
-  - id: d
-    texte: Sur le certificat d'immatriculation
 reponses:
   - b
 explication: >-
@@ -31,5 +27,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

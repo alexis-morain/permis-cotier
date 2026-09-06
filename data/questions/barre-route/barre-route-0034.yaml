@@ -16,10 +16,6 @@ propositions:
     texte: L'autre voilier, il reçoit le vent de bâbord.
   - id: b
     texte: Toi, tu reçois le vent de bâbord.
-  - id: c
-    texte: Toi, tu le vois sur ta tribord.
-  - id: d
-    texte: Personne, chacun de vous vient sur tribord.
 reponses:
   - a
 explication: >-
@@ -34,5 +30,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -1,0 +1,55 @@
+notion: securite-plongeurs
+duree: 3
+accroche: >-
+  Un petit bateau immobile près d’une pointe rocheuse, et sur son roof un panneau bleu et
+  blanc qui ne bouge pas avec le vent. Sous lui, il y a des gens dans l’eau.
+etapes:
+  - titre: Le pavillon « A » annonce des plongeurs
+    texte: >-
+      Un navire participant à des opérations de plongée, trop petit pour montrer tous les
+      feux et marques d’un navire à capacité de manœuvre restreinte, montre une
+      reproduction rigide du pavillon « A » du Code international de signaux, d’au moins
+      1 mètre de hauteur, et prend les mesures pour qu’elle soit visible sur tout
+      l’horizon.
+
+      Rigide, parce qu’un pavillon en tissu retombe le long du mât dès que le vent tombe,
+      et qu’il faut le lire de partout.
+  - titre: De nuit, rouge, blanc, rouge
+    texte: >-
+      Le même navire montre à l’endroit le plus visible trois feux superposés visibles sur
+      tout l’horizon : rouge en haut, blanc au milieu, rouge en bas.
+    visuel: feux/capacite-de-manoeuvre-restreinte.svg
+    alt: "Trois feux superposés vus de face sur un mât : un rouge en haut, un blanc au milieu, un rouge en bas."
+  - titre: Tu t’écartes, quelle que soit ta propulsion
+    texte: >-
+      Un navire en plongée est un navire à capacité de manœuvre restreinte. Un navire à
+      propulsion mécanique faisant route s’écarte de sa route, et un voilier faisant route
+      aussi. Tu passes au large, sans remous, et tu gardes en tête que les plongeurs
+      dérivent parfois loin du bateau qui les signale.
+  - titre: Une taille ne dispense de rien
+    texte: >-
+      Les navires de moins de 12 mètres ne sont pas tenus de montrer les feux et marques de
+      la règle 27. Les navires participant à des opérations de plongée sont la seule
+      exception : eux les montrent, quelle que soit leur longueur.
+piege: >-
+  Lire ce pavillon ou ces trois feux comme un appel au secours et se dérouter pour porter
+  assistance. La règle 27 le dit à la fin : ses signaux ne sont pas des signaux de détresse.
+  Les signaux de détresse sont à l’annexe IV. Autre confusion classique, le déminage, qui
+  se montre par trois feux verts ou trois boules.
+retenir:
+  - "Pavillon « A » rigide, au moins 1 mètre, visible sur tout l’horizon : opérations de plongée."
+  - "De nuit : rouge, blanc, rouge superposés."
+  - "Un navire en plongée est à capacité de manœuvre restreinte : moteur comme voile s’en écartent."
+  - Ces signaux ne sont pas des signaux de détresse.
+sources:
+  - texte: RIPAM, règle 27
+    ref: decret-77-733
+    fichier: regle-27
+  - texte: RIPAM, règle 18
+    ref: decret-77-733
+    fichier: regle-18
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

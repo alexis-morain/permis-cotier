@@ -13,8 +13,6 @@ propositions:
     texte: Seize ans
   - id: c
     texte: Dix-huit ans
-  - id: d
-    texte: Aucun âge minimal n'est fixé
 reponses:
   - b
 explication: >-
@@ -30,5 +28,4 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude

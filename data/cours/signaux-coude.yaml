@@ -1,0 +1,57 @@
+notion: signaux-coude
+duree: 3
+accroche: >-
+  Tu remontes un chenal. Devant toi, la digue coupe la vue : tu ne vois pas ce qui arrive
+  de l’autre côté du coude, et l’autre ne te voit pas non plus.
+etapes:
+  - titre: Un son prolongé avant le coude
+    texte: >-
+      Un navire qui s’approche d’un coude, ou d’une partie de chenal ou de voie d’accès
+      où d’autres navires peuvent être cachés par un obstacle, fait entendre un son
+      prolongé. Quatre à six secondes de sifflet, tenues.
+
+      Tu ne signales pas une manœuvre : tu signales ta présence à quelqu’un qui ne peut
+      pas te voir.
+    visuel: sons/coude.svg
+    alt: "Une impulsion sonore tenue, bien plus longue qu’un son bref, tracée dans le temps."
+  - titre: L’autre répond à l’identique
+    texte: >-
+      Tout navire venant dans sa direction qui entend ce signal de l’autre côté du coude
+      ou derrière l’obstacle doit répondre par un son prolongé.
+
+      La réponse est le même son. C’est ce qui permet à chacun de savoir qu’il a été
+      entendu, et qu’il y a quelqu’un en face.
+  - titre: Le signal ne dispense pas de ralentir
+    texte: >-
+      La règle 9 demande de naviguer dans cette zone avec une prudence et une vigilance
+      particulières, et de faire entendre le signal. Les deux vont ensemble.
+
+      Un son prolongé ne réserve pas le passage. Tu abordes le coude à une vitesse qui te
+      laisse t’arrêter sur la distance que tu vois.
+piege: >-
+  Le même son prolongé isolé sert au navire à moteur qui a de l’erre par visibilité
+  réduite, toutes les deux minutes. C’est le contexte qui tranche : en vue, dans un
+  chenal, à l’approche d’un coude, c’est le signal du coude. Ne réponds pas non plus par
+  un son bref : la réponse est un son prolongé, comme l’appel.
+retenir:
+  - "Coude ou obstacle qui masque la vue : 1 son prolongé."
+  - Celui qui l’entend de l’autre côté répond par 1 son prolongé.
+  - Le signal s’accompagne d’une prudence et d’une vigilance particulières.
+sources:
+  - texte: RIPAM, règle 34
+    ref: decret-77-733
+    fichier: regle-34
+  - texte: RIPAM, règle 9
+    ref: decret-77-733
+    fichier: regle-09
+  - texte: RIPAM, règle 32
+    ref: decret-77-733
+    fichier: regle-32
+  - texte: RIPAM, règle 35
+    ref: decret-77-733
+    fichier: regle-35
+meta:
+  cree_le: '2026-09-05'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'
