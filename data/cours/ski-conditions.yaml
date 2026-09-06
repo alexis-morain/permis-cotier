@@ -1,35 +1,51 @@
 notion: ski-conditions
-duree: 5
+duree: 6
 accroche: >-
-  Tu remontes vers la plage, un flotteur de flyboard te barre la route et une ligne de
-  bouées jaunes court le long du rivage. Ces bouées ne sont pas décoratives : elles
-  découpent une zone où tout est réglementé.
+  Ton beau-frère veut faire du ski nautique derrière le bateau. Vous êtes deux à bord, lui
+  et toi. Avant même de savoir où le tracter, la question est : qui tient la barre, et qui
+  le regarde ?
 etapes:
-  - titre: La limite des 300 mètres est faite de bouées sphériques
+  - titre: Deux personnes à bord, une qui barre, une qui regarde
     texte: >-
-      La limite de la bande littorale des 300 mètres, comme les zones et les chenaux créés
-      en deçà, est matérialisée par des bouées qui portent les caractères des marques
-      spéciales : jaunes.
+      Les règles du ski nautique en mer sont posées par chaque préfet maritime, façade par
+      façade. Elles disent la même chose sur l’essentiel. Deux personnes doivent être à bord
+      de tout navire qui remorque un ou plusieurs skieurs : l’une se consacre à la conduite
+      du navire, l’autre à la surveillance des skieurs.
 
-      Sur la limite extérieure, elles sont sphériques, toutes de mêmes dimensions, d’un
-      diamètre d’au moins 0,80 mètre, et mouillées tous les 200 mètres environ. Elles sont
-      dépourvues de voyant.
-  - titre: Le chenal traversier se lit en accédant au rivage
+      La personne qui surveille a au moins 16 ans, l’âge requis pour passer le permis
+      plaisance. Un moniteur titulaire du brevet d’État de ski nautique peut, lui, assurer seul
+      la conduite et la surveillance, à condition que le bateau ait un rétroviseur.
+  - titre: De jour, au-delà des 300 mètres, par le chenal
     texte: >-
+      Le ski nautique et les disciplines associées, wakeboard compris, se pratiquent
+      exclusivement de jour et au-delà de la bande littorale des 300 mètres. Le départ du
+      rivage et le retour se font par un chenal de vitesse, dégagé et libre de tout
+      obstacle.
+
+      Sur la façade Atlantique, l’arrêté ajoute une limite au large : à moins de 2 milles
+      de la côte.
+  - titre: Gilet sur le skieur, flamme orange sur le bateau
+    texte: >-
+      Le skieur porte un équipement individuel de flottabilité conforme à la réglementation.
+      Le navire tracteur arbore une flamme fluorescente orange de 2 mètres, placée assez
+      haut pour être vue. Il doit pouvoir embarquer tous les skieurs en plus de son
+      équipage.
+
+      Les mêmes règles valent pour une bouée ou un engin pneumatique tracté : couleur vive,
+      remorque flottante de couleur vive, et sur le bateau un système de largage rapide de
+      la remorque. Le parachute ascensionnel s’y ajoute : hauteur limitée à 50 mètres, et
+      jamais à plus de 2 milles de la côte.
+  - titre: La bande des 300 mètres et son chenal traversier
+    texte: >-
+      La limite de la bande littorale des 300 mètres est faite de bouées jaunes sphériques,
+      d’au moins 0,80 mètre, mouillées tous les 200 mètres environ et sans voyant. Les zones
+      réglementées à l’intérieur sont bornées par des sphères, une zone de baignade par de
+      simples sphères de 0,20 mètre reliées par un filin flottant.
+
       Un chenal traversier est un passage balisé entre le large et le rivage. Ses bouées
-      sont cylindriques à bâbord et coniques à tribord, en accédant au rivage.
-
-      Les deux bouées les plus au large font 0,80 mètre de diamètre, les suivantes de 0,40
-      à 0,60 mètre. Elles se resserrent en approchant : 50 mètres d’intervalle jusqu’à 150
-      mètres du rivage, 25 mètres ensuite, 10 mètres à moins de 50 mètres du bord.
-  - titre: Une bouée sphérique entre deux chenaux
-    texte: >-
-      Quand deux chenaux sont contigus, les bouées de leur limite commune sont sphériques.
-
-      Les zones réglementées à l’intérieur de la bande sont elles aussi bornées par des
-      sphères, d’au moins 0,40 mètre, plus rapprochées quand elles sont plus petites. Une
-      zone de baignade peut être marquée par de simples sphères de 0,20 mètre reliées par
-      un filin flottant, espacées de 5 à 10 mètres.
+      sont cylindriques à bâbord et coniques à tribord, en accédant au rivage. Elles se
+      resserrent en approchant : 50 mètres d’intervalle jusqu’à 150 mètres du rivage,
+      25 mètres ensuite, 10 mètres à moins de 50 mètres du bord.
   - titre: Le pictogramme dit permis ou interdit
     texte: >-
       Une bouée peut porter un pictogramme qui annonce la réglementation de la zone. Deux
@@ -59,16 +75,21 @@ etapes:
       pendant l’utilisation, l’élément support arbore le pavillon « Alpha », d’au moins
       0,50 mètre de guindant, visible sur tout l’horizon.
 piege: >-
-  Le sens du chenal traversier. Le texte le décrit en accédant au rivage : cylindrique à
-  bâbord, conique à tribord quand tu vas vers la plage. Le réflexe pris sur un chenal de
-  port, qui se lit en venant du large, donne ici la réponse inverse.
+  Tracter un skieur en étant seul à bord, parce que le rétroviseur permet de le voir. Le
+  rétroviseur ne dispense de l’observateur que le moniteur titulaire du brevet d’État. Pour
+  toi, il faut une deuxième personne, d’au moins 16 ans, qui ne fait que surveiller.
+  Deuxième piège, le chenal traversier : il se lit en accédant au rivage, cylindre à
+  bâbord, à l’inverse du réflexe pris sur un chenal de port.
 retenir:
-  - "Limite des 300 mètres : bouées jaunes sphériques, 0,80 mètre au moins, tous les 200 mètres, sans voyant."
+  - "Ski nautique : deux personnes à bord, une qui conduit, une de 16 ans au moins qui surveille."
+  - "De jour, au-delà des 300 mètres, départ et retour par un chenal. Gilet sur le skieur, flamme orange de 2 mètres sur le bateau."
   - "Chenal traversier : cylindrique à bâbord, conique à tribord, en accédant au rivage."
   - "Pictogramme bleu à figure blanche : autorisé. Figure noire barrée de rouge : interdit."
-  - "Engin hydropropulsé : de jour, 2 milles d’un abri, permis côtier, combinaison, 50 N et casque."
-  - "Pavillon « Alpha » de 0,50 mètre sur le flotteur pendant l’utilisation."
+  - "Engin hydropropulsé : de jour, 2 milles d’un abri, permis côtier, combinaison, 50 N et casque, pavillon « Alpha »."
 sources:
+  - texte: "Fiche ski nautique : arrêtés des préfets maritimes, Méditerranée n° 125/2013 art. 4 et 5, Atlantique n° 2018/090 art. 3-3"
+    ref: fiche-ski-nautique
+    fichier: activites-tractees
   - texte: Arrêté du 27 mars 1991, article 1
     ref: arrete-1991-03-27
     fichier: article-1
