@@ -19,7 +19,7 @@ explication: >-
   L'avis de tempête est émis à partir de force 10, soit 48 à 55 nœuds. Les avis se nomment
   par la force annoncée : grand frais à 7, coup de vent à 8, fort coup de vent à 9, tempête
   à 10, violente tempête à 11, ouragan à 12. Confondre avis de coup de vent et avis de
-  tempête, c'est se tromper de deux degrés et de quinze nœuds.
+  tempête, c'est se tromper de deux degrés : de 34 à 40 nœuds, on passe à 48 à 55.
 sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
     ref: fiche-meteo
