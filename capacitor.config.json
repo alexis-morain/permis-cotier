@@ -1,0 +1,16 @@
+{
+  "appId": "fr.lepermiscotier.app",
+  "appName": "Le Permis Côtier",
+  "webDir": "dist-app",
+  "ios": {
+    "contentInset": "never"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 600,
+      "launchAutoHide": true,
+      "backgroundColor": "#f3f6fb",
+      "showSpinner": false
+    }
+  }
+}
