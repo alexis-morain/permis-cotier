@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import '../styles/app.css';
 import Mesure from '../components/Mesure.astro';
+import Recherche from '../components/Recherche.astro';
+import { SCRIPT_APPARENCE } from '../lib/apparence';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 import {
@@ -108,6 +110,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- L'apparence choisie sur la fiche, posée avant le premier rendu. -->
+    <script is:inline set:html={SCRIPT_APPARENCE} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
@@ -128,22 +132,51 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           </svg>
           <span class="marque__nom">Permis côtier</span>
         </a>
-        {/* Dans la coquille, la barre d'onglets native pilote la navigation.
-            Deux barres l'une sous l'autre diraient deux fois la même chose, et
-            une nav dessinée en HTML est justement ce que la revue Apple lit
-            comme « pas assez différent d'une navigation dans Safari ». */}
+        {/* La loupe reste dans la coquille : chercher une notion est du
+            contenu, pas de la navigation de site, et la barre d'onglets ne
+            sait pas le faire. */}
+        <a
+          class="ouvrir-recherche"
+          href="/recherche"
+          aria-label="Rechercher"
+          title="Rechercher (touche /)"
+          data-recherche-ouvrir
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="10.5" cy="10.5" r="6.5"></circle>
+            <path d="M15.5 15.5 L21 21"></path>
+          </svg>
+          <span class="ouvrir-recherche__mot">Rechercher</span>
+          <kbd class="touche ouvrir-recherche__touche" aria-hidden="true">/</kbd>
+        </a>
+        {/* La navigation web, elle, sort : dans la coquille c'est la barre
+            d'onglets native qui la remplace. Deux barres l'une sous l'autre
+            diraient deux fois la même chose, et une nav dessinée en HTML est
+            justement ce que la revue Apple lit comme « pas assez différent
+            d'une navigation dans Safari ». */}
         {!POUR_APP && (
         <nav aria-label="Navigation principale">
           <a href="/cours" aria-current={courant('/cours')}>Cours</a>
-          <a href="/examen" aria-current={courant('/examen')}>Examen</a>
           <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
-          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Thèmes</a>
+          <a href="/examen" aria-current={courant('/examen')}>Examen blanc</a>
+          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Programme</a>
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
-          <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
+          <a href="/profil" aria-current={courant('/profil')}>Ma fiche</a>
         </nav>
         )}
       </div>
     </header>
+
+    <Recherche />
 
     {miettes.length > 0 && (
       <nav class="page ariane" aria-label="Fil d’Ariane">
@@ -193,10 +226,11 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         {!POUR_APP && (
         <nav class="pied__plan" aria-label="Plan du site">
           <a href="/cours">Le cours, leçon par leçon</a>
-          <a href="/examen">Examen blanc</a>
           <a href="/entrainement">Entraînement par thème</a>
-          <a href="/themes">Les quatorze thèmes</a>
+          <a href="/examen">Examen blanc</a>
+          <a href="/themes">Le programme, thème par thème</a>
           <a href="/guide">Guide du permis côtier</a>
+          <a href="/profil">Ta fiche</a>
           <a href="/a-propos">Qui écrit ces questions</a>
           <a href="/credits">Crédits</a>
           <a href="/parametres">Réglages</a>
@@ -234,15 +268,21 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         background: var(--fond-carte);
         border-bottom: 2px solid var(--filet);
       }
+      /* Trois pièces, deux dispositions : la marque et la loupe vont ensemble,
+         la navigation se met où elle tient. En grille et non en flux, parce
+         qu'elles n'ont pas le même ordre sur un téléphone et sur un écran. */
       .entete__interieur {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-areas: 'marque recherche nav';
+        grid-template-columns: auto auto minmax(0, 1fr);
         align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem 1.5rem;
+        gap: 0.5rem 1.25rem;
         min-height: 3.75rem;
         padding-block: 0.5rem;
       }
+      .marque { grid-area: marque; }
+      .ouvrir-recherche { grid-area: recherche; }
+      .entete nav { grid-area: nav; justify-self: end; }
       .marque {
         display: inline-flex;
         align-items: center;
@@ -250,12 +290,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         min-height: 2.75rem;
         text-decoration: none;
       }
-      .marque__fond { fill: var(--marine); }
-      .marque__cone { fill: var(--jaune); }
-      @media (prefers-color-scheme: dark) {
-        .marque__fond { fill: var(--jaune); }
-        .marque__cone { fill: var(--marine); }
-      }
+      .marque__fond { fill: var(--marque-fond); }
+      .marque__cone { fill: var(--marque-cone); }
       .marque__nom {
         font-stretch: var(--large);
         font-weight: 800;
@@ -268,13 +304,19 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         gap: 0 0.25rem;
         margin-inline: -0.6rem;
       }
-      /* Sous 40 rem, la navigation prend sa propre ligne. Six entrées ne
-         tiennent pas sur 375 px : la ligne file jusqu'aux bords de l'écran et
-         se fait glisser au doigt, le fondu à droite le dit. Les réglages sont
-         aussi dans le plan du site, en pied de page. */
-      @media (max-width: 39.999rem) {
-        .entete__interieur { flex-direction: column; align-items: stretch; gap: 0; padding-block: 0.5rem 0.25rem; }
+      /* Sous 48 rem, la navigation prend sa propre ligne. Six entrées, la
+         marque et la loupe ne tiennent pas côte à côte : la ligne file jusqu'aux
+         bords de l'écran et se fait glisser au doigt, le fondu à droite le dit.
+         Les réglages sont aussi dans le plan du site, en pied de page. */
+      @media (max-width: 47.999rem) {
+        .entete__interieur {
+          grid-template-areas: 'marque recherche' 'nav nav';
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 0;
+          padding-block: 0.5rem 0.25rem;
+        }
         .entete nav {
+          justify-self: stretch;
           justify-content: flex-start;
           gap: 0 0.15rem;
           margin-inline: -1.25rem;

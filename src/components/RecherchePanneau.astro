@@ -1,0 +1,487 @@
+---
+/**
+ * Le panneau de recherche : un champ, une liste de résultats, et de quoi
+ * commencer quand rien n'est tapé.
+ *
+ * Le même panneau sert dans la fenêtre qu'ouvre la loupe de l'en-tête et en
+ * haut de `/recherche`. Ce qui change tient dans l'enveloppe, et le script
+ * ci-dessous branche indifféremment tous les panneaux de la page.
+ *
+ * Sans JavaScript, la loupe reste un lien vers `/recherche`, qui liste tout le
+ * programme à la main : la recherche est un raccourci, jamais le seul chemin.
+ */
+import './recherche.css';
+
+interface Props {
+  /** `dialogue` : la fenêtre de l'en-tête. `page` : le panneau de /recherche. */
+  mode: 'dialogue' | 'page';
+}
+
+const { mode } = Astro.props;
+const id = `recherche-${mode}`;
+
+/** Ce qu'on propose tant que rien n'est tapé : les cinq portes d'entrée du site. */
+const DEPART = [
+  { titre: 'Le cours, leçon par leçon', url: '/cours' },
+  { titre: 'Examen blanc', url: '/examen' },
+  { titre: 'Entraînement par thème', url: '/entrainement' },
+  { titre: 'Les quatorze thèmes', url: '/themes' },
+  { titre: 'Guide du permis côtier', url: '/guide' },
+];
+---
+
+<div class="recherche" data-recherche data-recherche-mode={mode}>
+  <div class="recherche__barre">
+    <svg
+      class="recherche__loupe"
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="10.5" cy="10.5" r="6.5"></circle>
+      <path d="M15.5 15.5 L21 21"></path>
+    </svg>
+
+    <input
+      class="recherche__champ"
+      id={`${id}-champ`}
+      type="search"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls={`${id}-liste`}
+      aria-autocomplete="list"
+      aria-label="Chercher une notion, un thème, une question"
+      placeholder="Une notion, un thème, une question…"
+      autocomplete="off"
+      autocapitalize="off"
+      autocorrect="off"
+      spellcheck="false"
+      enterkeyhint="go"
+      data-recherche-champ
+      {...(mode === 'page' ? { autofocus: true } : {})}
+    />
+
+    {
+      mode === 'dialogue' && (
+        <button type="button" class="recherche__fermer" data-recherche-fermer aria-label="Fermer la recherche">
+          <span class="recherche__fermer-mot">Fermer</span>
+          <span class="recherche__fermer-croix" aria-hidden="true">✕</span>
+        </button>
+      )
+    }
+  </div>
+
+  <p class="visuellement-cache" role="status" aria-live="polite" data-recherche-etat></p>
+
+  <div class="recherche__corps">
+    <ul
+      class="recherche__liste"
+      id={`${id}-liste`}
+      role="listbox"
+      aria-label="Résultats de la recherche"
+      data-recherche-liste
+      hidden
+    >
+    </ul>
+
+    <p class="recherche__rien" data-recherche-rien hidden>
+      Rien sous ce mot-là. Essaie un mot du programme : <b>cardinale</b>, <b>feu vert</b>, <b>VHF</b>,
+      <b>marée</b>.
+    </p>
+
+    <p class="recherche__attente" data-recherche-attente hidden>Recherche en cours…</p>
+
+    <p class="recherche__panne" data-recherche-panne hidden>
+      La recherche n’a pas pu charger sa liste. Le <a href="/themes">programme</a> et le
+      <a href="/cours">cours</a> restent là.
+    </p>
+
+    <div class="recherche__depart" data-recherche-depart>
+      <p class="recherche__legende">Par où commencer</p>
+      <ul>
+        {
+          DEPART.map((d) => (
+            <li>
+              <a href={d.url}>{d.titre}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <p class="recherche__aide">
+    <kbd class="touche">↑</kbd> <kbd class="touche">↓</kbd> parcourir · <kbd class="touche">Entrée</kbd> ouvrir ·
+    <kbd class="touche">Échap</kbd> fermer
+  </p>
+</div>
+
+<script>
+  import { evenement } from '../lib/mesure';
+  import {
+    chercher,
+    motsDeLaRequete,
+    passages,
+    preparer,
+    termeMesurable,
+    type Entree,
+    type EntreePreparee,
+    type Genre,
+    type Resultat,
+  } from '../lib/recherche';
+
+  const NOM_GENRE: Record<Genre, string> = {
+    cours: 'Cours',
+    lecon: 'Leçon',
+    notion: 'Notion',
+    theme: 'Thème',
+    guide: 'Guide',
+    page: 'Page',
+    question: 'Question',
+  };
+
+  /**
+   * Les écrans où une touche perdue ne doit rien ouvrir : l'examen blanc est
+   * chronométré, et l'entraînement est une série en cours. Le clic sur la
+   * loupe, lui, marche partout : il est voulu.
+   */
+  const ECRANS_DE_JEU = /^\/(examen|revoir)$|^\/entrainement\//;
+
+  /**
+   * Le temps qu'on laisse à la frappe avant de compter le terme. Sans lui,
+   * « c », « ca », « car » et « card » compteraient chacun pour une recherche,
+   * et le tableau ne dirait plus rien.
+   */
+  const ATTENTE_COMPTE = 1500;
+
+  /** L'index, chargé une fois, à la première frappe ou au premier survol. */
+  let chargement: Promise<EntreePreparee[]> | null = null;
+
+  function index(): Promise<EntreePreparee[]> {
+    if (!chargement) {
+      chargement = fetch('/recherche.json')
+        .then((reponse) => {
+          if (!reponse.ok) throw new Error(`recherche.json : ${reponse.status}`);
+          return reponse.json() as Promise<Entree[]>;
+        })
+        .then(preparer)
+        .catch((erreur) => {
+          // Un échec ne condamne pas la session : la frappe suivante retente.
+          chargement = null;
+          throw erreur;
+        });
+    }
+    return chargement;
+  }
+
+  /** Le texte, découpé, les morceaux trouvés en `<mark>`. Rien n'est recollé en HTML. */
+  function poser(texte: string, mots: readonly string[], cible: HTMLElement): void {
+    for (const morceau of passages(texte, mots)) {
+      if (!morceau.trouve) {
+        cible.appendChild(document.createTextNode(morceau.texte));
+        continue;
+      }
+      const marque = document.createElement('mark');
+      marque.textContent = morceau.texte;
+      cible.appendChild(marque);
+    }
+  }
+
+  /** Les morceaux d'un panneau, une fois tous trouvés. */
+  interface Pieces {
+    panneau: HTMLElement;
+    champ: HTMLInputElement;
+    liste: HTMLUListElement;
+    etat: HTMLElement;
+    rien: HTMLElement;
+    panne: HTMLElement;
+    attente: HTMLElement;
+    depart: HTMLElement;
+  }
+
+  /** Un panneau incomplet n'est pas branché : mieux vaut le lien vers /recherche. */
+  function brancher(panneau: HTMLElement): void {
+    const champ = panneau.querySelector<HTMLInputElement>('[data-recherche-champ]');
+    const liste = panneau.querySelector<HTMLUListElement>('[data-recherche-liste]');
+    const etat = panneau.querySelector<HTMLElement>('[data-recherche-etat]');
+    const rien = panneau.querySelector<HTMLElement>('[data-recherche-rien]');
+    const panne = panneau.querySelector<HTMLElement>('[data-recherche-panne]');
+    const attente = panneau.querySelector<HTMLElement>('[data-recherche-attente]');
+    const depart = panneau.querySelector<HTMLElement>('[data-recherche-depart]');
+    if (!champ || !liste || !etat || !rien || !panne || !attente || !depart) return;
+    piloter({ panneau, champ, liste, etat, rien, panne, attente, depart });
+  }
+
+  function piloter({ panneau, champ, liste, etat, rien, panne, attente, depart }: Pieces): void {
+    let resultats: Resultat[] = [];
+    let actif = -1;
+    let frappe = 0;
+
+    const options = () => Array.from(liste.querySelectorAll<HTMLAnchorElement>('a[role="option"]'));
+
+    function viser(rang: number): void {
+      const cibles = options();
+      actif = cibles.length === 0 ? -1 : Math.max(0, Math.min(rang, cibles.length - 1));
+      cibles.forEach((option, i) => {
+        const vise = i === actif;
+        option.setAttribute('aria-selected', String(vise));
+        option.classList.toggle('resultat--vise', vise);
+      });
+      const vise = cibles[actif];
+      if (vise) {
+        champ.setAttribute('aria-activedescendant', vise.id);
+        vise.scrollIntoView({ block: 'nearest' });
+      } else {
+        champ.removeAttribute('aria-activedescendant');
+      }
+    }
+
+    function ligne(
+      resultat: Resultat,
+      rang: number,
+      mots: readonly string[],
+      terme: string | null,
+    ): HTMLLIElement {
+      const { entree } = resultat;
+      const li = document.createElement('li');
+      li.setAttribute('role', 'presentation');
+
+      const lien = document.createElement('a');
+      lien.className = 'resultat';
+      lien.href = entree.url;
+      lien.id = `${liste.id}-${rang}`;
+      lien.tabIndex = -1;
+      lien.setAttribute('role', 'option');
+      lien.setAttribute('aria-selected', 'false');
+      lien.dataset.mesure = 'recherche-resultat';
+      lien.dataset.mesureGenre = entree.genre;
+      // Le terme est repris sur le lien : savoir ce qu'on ouvre sous « feu
+      // vert » vaut mieux que savoir qu'on a ouvert une leçon.
+      if (terme) lien.dataset.mesureTerme = terme;
+
+      const genre = document.createElement('span');
+      genre.className = 'resultat__genre';
+      genre.textContent = NOM_GENRE[entree.genre];
+      lien.appendChild(genre);
+
+      const titre = document.createElement('span');
+      titre.className = 'resultat__titre';
+      poser(entree.titre, mots, titre);
+      lien.appendChild(titre);
+
+      if (entree.contexte) {
+        const contexte = document.createElement('span');
+        contexte.className = 'resultat__contexte';
+        contexte.textContent = entree.contexte;
+        lien.appendChild(contexte);
+      }
+
+      // Le premier résultat seul est développé : c'est celui qu'on ouvrira
+      // neuf fois sur dix, et une liste dont chaque ligne pèse pareil ne se
+      // parcourt pas.
+      if (rang === 0 && entree.resume) {
+        const resume = document.createElement('span');
+        resume.className = 'resultat__resume';
+        resume.textContent = entree.resume;
+        lien.appendChild(resume);
+      }
+
+      li.appendChild(lien);
+      return li;
+    }
+
+    function rendre(mots: readonly string[]): void {
+      const cherche = mots.length > 0;
+      const terme = termeMesurable(champ.value);
+      liste.replaceChildren(...resultats.map((r, i) => ligne(r, i, mots, terme)));
+      liste.hidden = resultats.length === 0;
+      rien.hidden = !cherche || resultats.length > 0;
+      panne.hidden = true;
+      attente.hidden = true;
+      depart.hidden = cherche;
+      champ.setAttribute('aria-expanded', String(resultats.length > 0));
+      viser(0);
+      etat.textContent = !cherche
+        ? ''
+        : resultats.length === 0
+          ? 'Aucun résultat.'
+          : `${resultats.length} résultat${resultats.length > 1 ? 's' : ''}.`;
+    }
+
+    async function lancer(): Promise<void> {
+      const requete = champ.value;
+      const mots = motsDeLaRequete(requete);
+      const mien = ++frappe;
+
+      if (mots.length === 0) {
+        resultats = [];
+        rendre(mots);
+        return;
+      }
+
+      // L'index arrive en un aller-retour, prévenu dès le survol de la loupe.
+      // Sur un réseau lent il se fait attendre : le dire vaut mieux que laisser
+      // l'écran figé sur les raccourcis de départ.
+      attente.hidden = false;
+      depart.hidden = true;
+
+      let prepare: EntreePreparee[];
+      try {
+        prepare = await index();
+      } catch {
+        if (mien !== frappe) return;
+        resultats = [];
+        liste.replaceChildren();
+        liste.hidden = true;
+        rien.hidden = true;
+        attente.hidden = true;
+        depart.hidden = true;
+        panne.hidden = false;
+        etat.textContent = 'La recherche n’a pas pu charger sa liste.';
+        return;
+      }
+      if (mien !== frappe) return;
+
+      resultats = chercher(prepare, requete);
+      rendre(mots);
+    }
+
+    // ------------------------------------------------ ce qu'on compte
+
+    let dernierCompte = '';
+    let minuteur: number | undefined;
+
+    /**
+     * Le terme cherché, une fois. Ce qui intéresse n'est pas le clic mais la
+     * recherche elle-même : celle qui ne trouve rien dit quelle question
+     * écrire ensuite, et elle n'aurait jamais été comptée autrement.
+     */
+    function compter(): void {
+      window.clearTimeout(minuteur);
+      const terme = termeMesurable(champ.value);
+      if (!terme || terme === dernierCompte) return;
+      dernierCompte = terme;
+      evenement('recherche-terme', { terme, resultats: resultats.length });
+    }
+
+    function compterQuandLaFrappeSArrete(): void {
+      window.clearTimeout(minuteur);
+      minuteur = window.setTimeout(compter, ATTENTE_COMPTE);
+    }
+
+    // Ouvrir un résultat, fermer la fenêtre ou quitter la page ne doit pas
+    // faire perdre le terme : l'envoi survit au changement de page.
+    liste.addEventListener('click', compter, true);
+    panneau.closest('dialog')?.addEventListener('close', compter);
+    window.addEventListener('pagehide', compter);
+
+    champ.addEventListener('input', () => {
+      compterQuandLaFrappeSArrete();
+      void lancer();
+    });
+    champ.addEventListener('focus', () => void index().catch(() => {}));
+
+    champ.addEventListener('keydown', (touche) => {
+      if (touche.key === 'ArrowDown') {
+        touche.preventDefault();
+        viser(actif + 1);
+      } else if (touche.key === 'ArrowUp') {
+        touche.preventDefault();
+        viser(actif - 1);
+      } else if (touche.key === 'Enter') {
+        const vise = options()[actif];
+        if (vise) {
+          touche.preventDefault();
+          vise.click();
+        }
+      } else if (touche.key === 'Escape') {
+        // Sur un `type="search"`, le navigateur vide le champ au lieu de
+        // fermer : dans une fenêtre, ce n'est pas ce qu'on attend d'Échap.
+        const fenetre = panneau.closest('dialog');
+        if (fenetre) {
+          touche.preventDefault();
+          fenetre.close();
+        } else if (champ.value) {
+          touche.preventDefault();
+          champ.value = '';
+          void lancer();
+        }
+      }
+    });
+
+    // La souris et le clavier visent le même résultat : sans cela, survoler
+    // une ligne puis appuyer sur Entrée ouvrirait l'autre.
+    liste.addEventListener('pointermove', (mouvement) => {
+      const cible = mouvement.target;
+      if (!(cible instanceof Element)) return;
+      const option = cible.closest<HTMLAnchorElement>('a[role="option"]');
+      if (!option || option.classList.contains('resultat--vise')) return;
+      viser(options().indexOf(option));
+    });
+
+    // La requête de `/recherche?q=…` : un résultat se partage et se remet en
+    // marque-page.
+    if (panneau.dataset.rechercheMode === 'page') {
+      const demandee = new URLSearchParams(location.search).get('q');
+      if (demandee) {
+        champ.value = demandee;
+        compterQuandLaFrappeSArrete();
+        void lancer();
+      }
+    }
+  }
+
+  for (const panneau of document.querySelectorAll<HTMLElement>('[data-recherche]')) brancher(panneau);
+
+  // ------------------------------------------------------------ la fenêtre
+
+  const fenetre = document.querySelector<HTMLDialogElement>('#recherche-fenetre');
+
+  function ouvrir(par: 'loupe' | 'clavier'): void {
+    if (!fenetre) return;
+    if (!fenetre.open) {
+      fenetre.showModal();
+      // Un seul événement, quel que soit le geste : savoir par où la recherche
+      // s'ouvre dit s'il faut garder le raccourci, ou mieux montrer la loupe.
+      evenement('recherche-ouverte', { par });
+    }
+    const champ = fenetre.querySelector<HTMLInputElement>('[data-recherche-champ]');
+    champ?.focus();
+    champ?.select();
+  }
+
+  for (const ouvreur of document.querySelectorAll<HTMLElement>('[data-recherche-ouvrir]')) {
+    ouvreur.addEventListener('click', (clic) => {
+      // Sans fenêtre — script en panne, navigateur sans `<dialog>` — le lien
+      // vers /recherche fait le travail. Un clic milieu ou avec modificateur
+      // aussi : il ouvre l'onglet que la personne a demandé.
+      if (!fenetre || typeof fenetre.showModal !== 'function') return;
+      if (clic.metaKey || clic.ctrlKey || clic.shiftKey || clic.altKey || clic.button !== 0) return;
+      clic.preventDefault();
+      ouvrir('loupe');
+    });
+    ouvreur.addEventListener('pointerenter', () => void index().catch(() => {}));
+  }
+
+  fenetre?.addEventListener('click', (clic) => {
+    // Le fond de la fenêtre, c'est l'élément lui-même : le panneau est dedans.
+    if (clic.target === fenetre) fenetre.close();
+  });
+
+  fenetre?.querySelector('[data-recherche-fermer]')?.addEventListener('click', () => fenetre.close());
+
+  document.addEventListener('keydown', (touche) => {
+    if (!fenetre || fenetre.open || ECRANS_DE_JEU.test(location.pathname)) return;
+    const cible = touche.target;
+    if (cible instanceof HTMLElement && cible.closest('input, textarea, select, [contenteditable="true"]')) return;
+    const raccourci = touche.key === '/' || ((touche.metaKey || touche.ctrlKey) && touche.key.toLowerCase() === 'k');
+    if (!raccourci) return;
+    touche.preventDefault();
+    ouvrir('clavier');
+  });
+</script>

@@ -2,17 +2,23 @@
 import Base from '../layouts/Base.astro';
 import Parametres from '../components/Parametres.tsx';
 import MesureReglage from '../components/MesureReglage.tsx';
+import Apparence from '../components/Apparence.tsx';
 import { versionBanque, questionsPubliees } from '../lib/banque';
 
 const version = versionBanque();
 const total = (await questionsPubliees()).length;
 ---
 
-<Base titre="Réglages" description="Ta progression, la version de la banque et les licences." indexable={false}>
+<Base titre="Réglages du site" description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false}>
   <div class="page page--etroite" style="padding-block:3rem 0">
-    <h1>Réglages</h1>
+    <h1>Réglages du site</h1>
 
+    <h2>Ta progression</h2>
     <Parametres client:only="react" />
+
+    <h2 id="apparence">Apparence</h2>
+    <Apparence client:only="react" idTitre="apparence" />
+    <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
 
     <h2>Cette version</h2>
     <p>
@@ -24,8 +30,14 @@ const total = (await questionsPubliees()).length;
     <p>
       Aucun compte, aucun mot de passe, aucune adresse. La progression et la date d’examen restent
       dans ce navigateur. La fréquentation est mesurée avec Umami, auto-hébergé et sans cookie :
-      pas d’identifiant, pas de suivi entre les sites. Ce qu’il enregistre tient en trois choses —
-      la page vue, d’où tu viens, et si tu lances puis termines une série de questions.
+      pas d’identifiant, pas de suivi entre les sites. Ce qu’il enregistre tient en quatre choses —
+      la page vue, d’où tu viens, si tu lances puis termines une série de questions, et ce que tu
+      tapes dans la recherche.
+    </p>
+    <p>
+      Les mots cherchés sont comptés pour une raison précise : ceux qui ne trouvent rien disent
+      quelle leçon écrire ensuite. Le mot part seul, sans rien qui te désigne, et rien ne part
+      s’il ressemble à une adresse électronique, à un lien ou à une longue suite de chiffres.
     </p>
 
     <MesureReglage client:only="react" />

@@ -41,6 +41,13 @@ l'autre, et le compte ne se remplit que depuis `lepermiscotier.fr` — ni une
 préversion, ni un poste de développement n'y entrent. Chacun peut s'en retirer
 depuis les réglages. Les noms d'événements sont dans `src/lib/mesure.ts`.
 
+Les mots tapés dans la recherche sont comptés, eux aussi : ceux qui ne trouvent
+rien disent quelle leçon écrire ensuite. Le mot part seul, mis en minuscules et
+sans accents, une fois la frappe finie, jamais lettre par lettre. Rien ne part
+s'il ressemble à une adresse électronique, à un lien ou à une suite de six
+chiffres, ni au-delà de soixante signes. La règle est dans `termeMesurable`,
+`src/lib/recherche.ts`, avec ses tests.
+
 ## Le format de l'épreuve
 
 QCM de 40 questions, 5 erreurs admises, bénéfice de 18 mois. Arrêté du
@@ -111,6 +118,36 @@ banque sur la notion ; la progression reste dans le navigateur. Les leçons
 humaine est attendue. Les anciennes adresses `/cours/<notion>` redirigent en 301
 depuis `public/_redirects`.
 
+## La fiche du candidat
+
+`/profil` dit où on en est, depuis la progression du navigateur : un indice de
+préparation de 0 à 100 (vingt points pour la part de la banque vue, trente-cinq
+pour la part retenue, quarante-cinq pour la moyenne des trois derniers examens
+blancs, et « prêt » seulement avec deux examens reçus sur trois), l'objectif du
+jour, la série de jours, la maîtrise thème par thème, les examens blancs, huit
+jalons, et les réglages : prénom, rythme, date d'examen, apparence.
+
+`/profil/depart` est le questionnaire de départ, six écrans, rien d'obligatoire.
+La première question est pourquoi on passe le permis : la réponse revient sur
+l'accueil, en tête de la fiche, et sur l'écran de résultat quand un examen blanc
+est recalé. Le moteur est dans `src/lib/profil.ts`, l'état dans
+`Etat.profil` et `Etat.activite` (réponses par jour). Rien ne part du navigateur.
+
+## Chercher
+
+La loupe de l'en-tête ouvre une fenêtre de recherche : un cours, une leçon, une
+notion, un thème, une page du guide ou une question, en tapant deux ou trois
+lettres. Les touches `/` et `Ctrl+K` l'ouvrent aussi, sauf sur un écran de jeu, où le chrono
+tourne. Sans JavaScript, la loupe reste un lien vers `/recherche`, qui liste tout
+le programme à la main : les quatorze cours, leurs cent cinq leçons, le guide.
+
+L'index est un fichier construit au build, `/recherche.json`, chargé à la
+première ouverture et non au chargement des pages, puis gardé dans le cache hors
+ligne. Le classement est dans `src/lib/recherche.ts` : le titre pèse plus que le
+corps, tous les mots tapés doivent porter, et l'énoncé d'une question compte
+comme du corps : sans cela, quatre cent quatre-vingts énoncés enterreraient la
+leçon qui les explique.
+
 ## Ajouter une question
 
 L'ordre ne change jamais : lire l'article, écrire la question, relire. Les
@@ -145,9 +182,10 @@ data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
-                                   session, progression, mesure
-src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement
-src/components/                    îlot React du quiz
+                                   session, progression, profil, apparence, mesure, recherche
+src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement,
+                                   profil, recherche et son index recherche.json
+src/components/                    îlot React du quiz, panneau de recherche
 functions/api/                     signalement, puis synchronisation
 ```
 

@@ -1,0 +1,404 @@
+/* La recherche : la loupe de l'en-tête, la fenêtre qu'elle ouvre, et le
+   panneau de /recherche, qui est le même objet sans l'enveloppe.
+
+   Le vocabulaire est celui de DESIGN.md. Le bord plein de trois pixels ne sert
+   qu'au bouton loupe, qui est un bouton ; la fenêtre, elle, n'a qu'un filet de
+   deux pixels et pas d'ombre. Le résultat visé reprend l'état de la
+   proposition cochée de l'écran de jeu, jaune pâle et bordure marine : c'est
+   déjà, sur ce site, ce que veut dire « celui-là ». */
+
+/* ------------------------------------------------------ la loupe de l'en-tête */
+
+.ouvrir-recherche {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.6rem;
+  border: 2px solid var(--filet-fort);
+  border-radius: var(--rayon-petit);
+  background: var(--fond-carte);
+  color: var(--texte-doux);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 var(--bord) 0 var(--filet-fort);
+  transition: background var(--transition), color var(--transition), transform var(--transition),
+    box-shadow var(--transition);
+}
+.ouvrir-recherche:hover {
+  background: var(--fond-2);
+  color: var(--texte);
+}
+.ouvrir-recherche:active {
+  transform: translateY(var(--bord));
+  box-shadow: 0 0 0 var(--filet-fort);
+}
+.ouvrir-recherche__mot,
+.ouvrir-recherche__touche {
+  display: none;
+}
+/* Le mot et le raccourci n'apparaissent que là où la navigation laisse la
+   place, c'est-à-dire à partir du grand écran. Ailleurs, la loupe suffit :
+   elle est comprise partout, et son nom accessible reste écrit. */
+@media (min-width: 64rem) {
+  .ouvrir-recherche {
+    padding: 0 0.75rem;
+  }
+  .ouvrir-recherche__mot,
+  .ouvrir-recherche__touche {
+    display: inline-block;
+  }
+}
+
+/* --------------------------------------------------------- touches affichées */
+
+kbd.touche {
+  min-width: 1.5rem;
+  padding: 0.05rem 0.35rem;
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon-petit);
+  background: var(--fond-2);
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------- la fenêtre */
+
+.recherche-fenetre {
+  width: min(100% - 2.5rem, 40rem);
+  max-width: none;
+  max-height: min(78vh, 40rem);
+  margin: 7vh auto auto;
+  padding: 0;
+  border: 2px solid var(--fenetre-filet);
+  border-radius: var(--rayon);
+  background: var(--fond-carte);
+  color: var(--texte);
+  overflow: hidden;
+}
+.recherche-fenetre[open] {
+  display: flex;
+  flex-direction: column;
+}
+.recherche-fenetre::backdrop {
+  background: var(--voile);
+}
+
+/* Sur un téléphone, la fenêtre prend l'écran : le clavier en mange déjà la
+   moitié, et une carte flottante au milieu n'y tiendrait pas. */
+@media (max-width: 47.999rem) {
+  .recherche-fenetre {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+/* -------------------------------------------------------------- le panneau */
+
+.recherche {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.recherche__barre {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding-inline: 0.9rem;
+  flex: 0 0 auto;
+}
+.recherche__loupe {
+  flex: 0 0 auto;
+  color: var(--texte-doux);
+}
+.recherche__champ {
+  flex: 1;
+  min-width: 0;
+  min-height: 3.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.recherche__champ::placeholder {
+  color: var(--texte-doux);
+  font-weight: 400;
+  opacity: 1;
+}
+.recherche__champ:focus {
+  outline: none;
+}
+.recherche__champ::-webkit-search-decoration,
+.recherche__champ::-webkit-search-results-button {
+  -webkit-appearance: none;
+}
+
+[data-recherche-mode='dialogue'] .recherche__barre {
+  border-bottom: 2px solid var(--filet);
+}
+
+/* Hors fenêtre, la barre redevient un champ : c'est elle qui porte le cadre et
+   l'anneau de focus, puisque le champ nu n'en a plus. */
+[data-recherche-mode='page'] .recherche__barre {
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon-petit);
+  background: var(--fond-carte);
+  transition: border-color var(--transition);
+}
+[data-recherche-mode='page'] .recherche__barre:hover {
+  border-color: var(--filet-fort);
+}
+[data-recherche-mode='page'] .recherche__barre:focus-within {
+  border-color: var(--anneau);
+  outline: 3px solid var(--anneau);
+  outline-offset: 2px;
+}
+[data-recherche-mode='page'] .recherche:focus-within .recherche__loupe {
+  color: var(--texte);
+}
+
+.recherche__fermer {
+  flex: 0 0 auto;
+  min-height: 2.5rem;
+  padding: 0 0.7rem;
+  border: 2px solid transparent;
+  border-radius: var(--rayon-petit);
+  background: transparent;
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.recherche__fermer:hover {
+  background: var(--fond-2);
+  color: var(--texte);
+}
+.recherche__fermer-croix {
+  display: none;
+}
+@media (max-width: 30rem) {
+  .recherche__fermer-mot {
+    display: none;
+  }
+  .recherche__fermer-croix {
+    display: inline;
+    font-size: 1.1rem;
+  }
+}
+
+.recherche__corps {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.5rem;
+}
+[data-recherche-mode='page'] .recherche__corps {
+  padding: 0.75rem 0 0;
+}
+
+/* --------------------------------------------------------- les résultats */
+
+/* Le site borne les paragraphes et les listes à la mesure de lecture. Ici on
+   ne lit pas au fil du texte, on balaie une liste : la mesure ne s'applique
+   qu'au résumé du premier résultat, qui est la seule vraie phrase de l'écran. */
+.recherche p,
+.recherche li {
+  max-width: none;
+}
+
+.recherche__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resultat {
+  display: grid;
+  grid-template-columns: 5.25rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.15rem 0.7rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--rayon-petit);
+  color: inherit;
+  text-decoration: none;
+}
+
+.resultat__genre {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  background: var(--fond-2);
+  color: var(--texte-doux);
+  /* 12 px : le plancher que le site se donne, pastille comprise. */
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.resultat__titre {
+  grid-column: 2;
+  grid-row: 1;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.resultat__contexte {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+}
+
+/* Seul le premier résultat dit ce qu'il contient. Les suivants se lisent en
+   diagonale : une liste où chaque ligne pèse pareil ne se parcourt pas. */
+.resultat__resume {
+  grid-column: 2;
+  grid-row: 3;
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.resultat mark {
+  background: var(--jaune-pale);
+  color: inherit;
+  font-weight: 800;
+  border-radius: 3px;
+  padding: 0 0.08em;
+}
+
+.resultat--vise {
+  background: var(--jaune-pale);
+  box-shadow: inset 0 0 0 2px var(--anneau);
+}
+.resultat--vise .resultat__genre {
+  background: var(--fond-carte);
+  color: var(--texte);
+}
+.resultat--vise .resultat__contexte,
+.resultat--vise .resultat__resume {
+  color: inherit;
+}
+.resultat--vise mark {
+  background: var(--jaune);
+  color: var(--marine);
+}
+
+@media (max-width: 26rem) {
+  .resultat {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .resultat__genre {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .resultat__titre {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .resultat__contexte {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .resultat__resume {
+    grid-column: 1;
+    grid-row: 4;
+  }
+}
+
+/* ------------------------------------------- rien tapé, rien trouvé, panne */
+
+.recherche__depart,
+.recherche__rien,
+.recherche__panne,
+.recherche__attente {
+  padding: 0.4rem 0.7rem 0.9rem;
+}
+.recherche__rien,
+.recherche__panne,
+.recherche__attente {
+  margin: 0;
+  color: var(--texte-doux);
+}
+.recherche__legende {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+}
+.recherche__depart ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.recherche__depart a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon-petit);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.recherche__depart a:hover {
+  background: var(--fond-2);
+  border-color: var(--filet-fort);
+}
+
+.recherche__aide {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  border-top: 2px solid var(--filet);
+  background: var(--fond-2);
+  font-size: 0.75rem;
+  color: var(--texte-doux);
+}
+[data-recherche-mode='page'] .recherche__aide {
+  display: none;
+}
+/* Au doigt, un rappel de raccourcis clavier n'apprend rien à personne. */
+@media (hover: none) {
+  .recherche__aide {
+    display: none;
+  }
+}

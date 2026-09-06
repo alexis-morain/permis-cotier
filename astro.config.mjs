@@ -49,7 +49,7 @@ export default defineConfig({
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
       filter: (page) =>
-        !/\/(examen|revoir|parametres|signaler)(\.html)?$/.test(page) &&
+        !/\/(examen|revoir|parametres|signaler|recherche)(\.html)?$/.test(page) &&
         !page.includes('/entrainement/') &&
         leconIndexable(page),
       changefreq: 'weekly',
@@ -96,9 +96,11 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        // `json` depuis que la banque est sortie du HTML : sans elle au
-        // precache, /examen ne rendrait plus rien hors ligne. Son nom porte la
-        // version, donc une publication la remplace au lieu de l'empiler.
+        // `json` porte deux choses : l'index de la recherche, sans quoi la
+        // loupe ne trouverait plus rien dès que le réseau tombe, et la banque
+        // depuis qu'elle est sortie du HTML, sans quoi /examen ne rendrait plus
+        // rien hors ligne. Le nom de la banque porte sa version, donc une
+        // publication la remplace au lieu de l'empiler.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
         // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
         // c'est le point que l'app iOS interroge pour savoir si sa banque a
