@@ -30,6 +30,8 @@ import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import { POUR_APP } from '../lib/cible';
 import { partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
+import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
+import type { BanqueServie } from '../lib/banque-locale';
 import './quiz.css';
 
 interface Props {
@@ -743,12 +745,6 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   );
 }
 
-/** Ce que sert `dist/banque/<version>.json`. */
-interface BanqueServie {
-  version: string;
-  questions: QuestionAffichable[];
-}
-
 /**
  * L'attente.
  *
@@ -823,17 +819,32 @@ export default function Quiz({ source, questions, ...reste }: Props) {
     if (!source || questions) return;
     let vivant = true;
     setEchec(false);
-    fetch(source)
-      .then((reponse) => {
+
+    void (async () => {
+      try {
+        // La banque du bundle, toujours : elle est locale, donc instantanée,
+        // et c'est elle qui fait tenir le mode avion.
+        const reponse = await fetch(source);
         if (!reponse.ok) throw new Error(`banque : ${reponse.status}`);
-        return reponse.json() as Promise<BanqueServie>;
-      })
-      .then((banque) => {
-        if (vivant) setChargees(banque.questions);
-      })
-      .catch(() => {
+        const embarquee = (await reponse.json()) as BanqueServie;
+
+        // Une banque téléchargée depuis, si elle est plus récente. Sur le
+        // site, `banqueGardee` rend toujours null.
+        const gardee = await banqueGardee();
+        const retenue =
+          gardee && plusRecente(gardee.version, embarquee.version) ? gardee : embarquee;
+        if (!vivant) return;
+        setChargees(retenue.questions);
+
+        // Puis on demande au site s'il y a mieux, sans rien attendre : la
+        // série qui commence joue ce qu'elle a en main, la suivante aura le
+        // reste. Aucun message, aucune erreur affichée.
+        void chercherMiseAJour(retenue.version);
+      } catch {
         if (vivant) setEchec(true);
-      });
+      }
+    })();
+
     return () => {
       vivant = false;
     };
