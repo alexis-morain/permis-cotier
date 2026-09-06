@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import Questionnaire from '../../components/Questionnaire.tsx';
+import { questionsPubliees } from '../../lib/banque';
+
+const total = (await questionsPubliees()).length;
+---
+
+<Base
+  titre="Pourquoi tu passes le permis"
+  description="Six questions pour régler le site à ta main : ta raison, ton point de départ, ton rythme, ta date d’examen."
+  indexable={false}
+>
+  <div class="page page--etroite">
+    <Questionnaire client:only="react" totalQuestions={total} />
+  </div>
+</Base>

@@ -44,7 +44,7 @@ const cours = await compteLeconsEcrites();
           leçon par leçon.
         </p>
 
-        <Reprise client:only="react" ids={questions.map((q) => q.id)} />
+        <Reprise client:only="react" banque={questions.map((q) => ({ id: q.id, theme: q.theme }))} />
       </div>
 
       <aside class="ouverture__cote">
@@ -56,7 +56,7 @@ const cours = await compteLeconsEcrites();
           Objectif 500 d’ici décembre. Chaque question cite l’article dont elle sort.
         </p>
         <hr />
-        <DateExamen client:only="react" />
+        <DateExamen client:only="react" ids={questions.map((q) => q.id)} />
       </aside>
     </div>
   </section>
@@ -162,20 +162,18 @@ const cours = await compteLeconsEcrites();
     color: var(--bande-doux);
   }
   .ouverture :global(.reprise b) { color: var(--bande-texte); }
+  .ouverture :global(.reprise a) { color: var(--bande-texte); }
 
   /* Le panneau blanc posé sur la bande. */
   .ouverture__cote {
     align-self: start;
-    background: var(--fond-carte);
+    /* En sombre, la surface a la couleur de la bande : le panneau se détache
+       par le fond de page et un filet. Les deux jetons sont dans global.css. */
+    background: var(--panneau);
     color: var(--texte);
-    border: 2px solid var(--fond-carte);
+    border: 2px solid var(--panneau-filet);
     border-radius: var(--rayon);
     padding: 1.5rem;
-  }
-  /* En sombre, la surface a la couleur de la bande : le panneau se détache
-     par le fond de page et un filet. */
-  @media (prefers-color-scheme: dark) {
-    .ouverture__cote { background: var(--fond); border-color: var(--filet); }
   }
   .compteur { display: flex; flex-direction: column; gap: 0.15rem; margin: 0 0 0.5rem; }
   .compteur .display { font-size: 3.4rem; line-height: 1; }
