@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Mesure from '../components/Mesure.astro';
 import Recherche from '../components/Recherche.astro';
+import { SCRIPT_APPARENCE } from '../lib/apparence';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
 import {
   SITE,
@@ -97,6 +98,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- L'apparence choisie sur la fiche, posée avant le premier rendu. -->
+    <script is:inline set:html={SCRIPT_APPARENCE} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
@@ -145,7 +148,7 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
           <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Thèmes</a>
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
-          <a href="/parametres" aria-current={courant('/parametres')}>Réglages</a>
+          <a href="/profil" aria-current={courant('/profil')}>Profil</a>
         </nav>
       </div>
     </header>
@@ -203,6 +206,7 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           <a href="/guide">Guide du permis côtier</a>
           <a href="/a-propos">Qui écrit ces questions</a>
           <a href="/credits">Crédits</a>
+          <a href="/profil">Ta fiche</a>
           <a href="/parametres">Réglages</a>
         </nav>
         <p class="discret">
@@ -259,12 +263,8 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
         min-height: 2.75rem;
         text-decoration: none;
       }
-      .marque__fond { fill: var(--marine); }
-      .marque__cone { fill: var(--jaune); }
-      @media (prefers-color-scheme: dark) {
-        .marque__fond { fill: var(--jaune); }
-        .marque__cone { fill: var(--marine); }
-      }
+      .marque__fond { fill: var(--marque-fond); }
+      .marque__cone { fill: var(--marque-cone); }
       .marque__nom {
         font-stretch: var(--large);
         font-weight: 800;

@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
-import { charger, sauvegarder } from '../lib/progression';
+import { aujourdhui, charger, sauvegarder } from '../lib/progression';
 import { evenement } from '../lib/mesure';
+import { joursAvant } from '../lib/profil';
 
 /**
  * « Ton examen est quand ? » Facultative, gardée dans le navigateur, jamais
  * envoyée nulle part. Elle sert à afficher le compte à rebours, et à savoir
  * si les gens révisent la veille ou trois semaines avant.
  */
-function joursAvant(date: string): number | null {
-  const cible = new Date(`${date}T00:00:00`);
-  if (Number.isNaN(cible.getTime())) return null;
-  const aujourdhui = new Date();
-  aujourdhui.setHours(0, 0, 0, 0);
-  return Math.round((cible.getTime() - aujourdhui.getTime()) / 86_400_000);
+interface Props {
+  /** Les identifiants publiés : le compte de ce qui reste à voir s'y borne. */
+  ids?: string[];
 }
 
-export default function DateExamen() {
+export default function DateExamen({ ids = [] }: Props) {
   const [date, setDate] = useState<string>('');
   const [pret, setPret] = useState(false);
+  const [restantes, setRestantes] = useState(0);
 
   useEffect(() => {
-    setDate(charger().dateExamen ?? '');
+    const etat = charger();
+    setDate(etat.dateExamen ?? '');
+    // Le même compte que la fiche : ce qui est publié et jamais rencontré.
+    setRestantes(ids.filter((id) => etat.questions[id] === undefined).length);
     setPret(true);
-  }, []);
+  }, [ids]);
 
   function enregistrer(valeur: string) {
     setDate(valeur);
@@ -34,7 +36,7 @@ export default function DateExamen() {
 
   if (!pret) return null;
 
-  const jours = date ? joursAvant(date) : null;
+  const jours = date ? joursAvant(date, aujourdhui()) : null;
 
   return (
     <div className="dateExamen">
@@ -48,7 +50,9 @@ export default function DateExamen() {
       />
       {jours !== null && (
         <p className="discret" style={{ margin: '0.5rem 0 0' }}>
-          {jours > 1 && `Dans ${jours} jours. Environ ${Math.max(1, Math.ceil(120 / jours))} questions par jour pour tout voir.`}
+          {jours > 1 && (restantes > 0
+            ? `Dans ${jours} jours. Environ ${Math.max(1, Math.ceil(restantes / jours))} questions par jour pour voir les ${restantes} qui restent.`
+            : `Dans ${jours} jours. Tu as tout vu une fois : place aux examens blancs.`)}
           {jours === 1 && 'Demain. Fais deux examens blancs ce soir.'}
           {jours === 0 && 'Aujourd’hui. Bon vent.'}
           {jours < 0 && 'C’est passé. Tu peux effacer la date dans les réglages.'}

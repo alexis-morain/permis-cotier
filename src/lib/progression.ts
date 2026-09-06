@@ -39,6 +39,78 @@ export interface Etat {
    * changer la version, un état écrit avant lui se relit sans rien perdre.
    */
   lecons: Record<string, LeconSuivie>;
+  /**
+   * Ce que le candidat a dit de lui au questionnaire de départ : pourquoi il
+   * passe le permis, d'où il part, à quel rythme il compte réviser. Même
+   * statut que `lecons` : facultatif, sans changement de version.
+   */
+  profil: Profil;
+  /**
+   * Réponses données par jour, `{ '2026-09-05': 23 }`. C'est ce qui fait la
+   * série de jours et l'objectif quotidien de la fiche. Borné aux quatre cents
+   * jours les plus récents.
+   */
+  activite: Record<string, number>;
+}
+
+export interface Profil {
+  /** Facultatif : sert à s'adresser au candidat, jamais envoyé. */
+  prenom: string;
+  /** Codes de `MOTIVATIONS`, dans l'ordre coché. */
+  motivations: string[];
+  /** La raison dite avec ses mots, celle qu'on rappelle en premier. */
+  phrase: string;
+  /** Code de `DEPARTS` : d'où il part. */
+  depart: string | null;
+  /** Questions par jour visées, une valeur de `RYTHMES`. */
+  rythme: number | null;
+  /** Date du questionnaire, `null` tant qu'il n'a pas été rempli. */
+  rempliLe: string | null;
+}
+
+const MAX_JOURS_ACTIVITE = 400;
+
+export function profilVide(): Profil {
+  return { prenom: '', motivations: [], phrase: '', depart: null, rythme: null, rempliLe: null };
+}
+
+/** Un profil relu depuis le stockage : chaque champ est vérifié, sinon il reprend sa valeur vide. */
+function lireProfil(brut: unknown): Profil {
+  const vide = profilVide();
+  if (!brut || typeof brut !== 'object') return vide;
+  const p = brut as Record<string, unknown>;
+  const texte = (v: unknown, defaut: string) => (typeof v === 'string' ? v : defaut);
+  const ouNull = (v: unknown) => (typeof v === 'string' ? v : null);
+  return {
+    prenom: texte(p.prenom, ''),
+    motivations: Array.isArray(p.motivations) ? p.motivations.filter((m): m is string => typeof m === 'string') : [],
+    phrase: texte(p.phrase, ''),
+    depart: ouNull(p.depart),
+    rythme: typeof p.rythme === 'number' && Number.isFinite(p.rythme) ? p.rythme : null,
+    rempliLe: ouNull(p.rempliLe),
+  };
+}
+
+function lireActivite(brut: unknown): Record<string, number> {
+  if (!brut || typeof brut !== 'object') return {};
+  const propre: Record<string, number> = {};
+  for (const [jour, n] of Object.entries(brut as Record<string, unknown>)) {
+    if (typeof n === 'number' && Number.isFinite(n) && n > 0) propre[jour] = n;
+  }
+  return propre;
+}
+
+export function enregistrerProfil(etat: Etat, profil: Profil): Etat {
+  return { ...etat, profil: { ...profil, motivations: [...profil.motivations] } };
+}
+
+/** Une réponse de plus sur ce jour ; au-delà de quatre cents jours, les plus anciens tombent. */
+function compterActivite(activite: Record<string, number>, date: string): Record<string, number> {
+  const suite = { ...activite, [date]: (activite[date] ?? 0) + 1 };
+  const jours = Object.keys(suite);
+  if (jours.length <= MAX_JOURS_ACTIVITE) return suite;
+  const gardes = jours.sort().slice(-MAX_JOURS_ACTIVITE);
+  return Object.fromEntries(gardes.map((j) => [j, suite[j]!]));
 }
 
 export interface LeconSuivie {
@@ -57,7 +129,16 @@ export interface Stockage {
 }
 
 export function etatInitial(): Etat {
-  return { version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null, lecons: {} };
+  return {
+    version: VERSION_STOCKAGE,
+    questions: {},
+    examens: [],
+    dateExamen: null,
+    enCours: null,
+    lecons: {},
+    profil: profilVide(),
+    activite: {},
+  };
 }
 
 /** Une leçon suivie jusqu'au bout. La refaire remplace la fois d'avant. */
@@ -99,6 +180,7 @@ export function enregistrerReponse(etat: Etat, id: string, reussie: boolean, dat
         vueLe: date,
       },
     },
+    activite: compterActivite(etat.activite, date),
   };
 }
 
@@ -156,6 +238,8 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
       dateExamen: lu.dateExamen ?? null,
       enCours: lu.enCours ?? null,
       lecons: lu.lecons && typeof lu.lecons === 'object' ? lu.lecons : {},
+      profil: lireProfil(lu.profil),
+      activite: lireActivite(lu.activite),
     };
   } catch {
     return etatInitial();
