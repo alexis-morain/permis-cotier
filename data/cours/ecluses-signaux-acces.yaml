@@ -58,8 +58,8 @@ etapes:
     alt: "Un feu rouge allumé au-dessus d’un feu vert allumé."
   - titre: Un vert isolé ouvre l’accès
     texte: >-
-      Un feu vert isolé veut dire accès autorisé. C’est l’un des deux seuls signaux qui
-      ouvrent l’écluse.
+      Un feu vert isolé veut dire accès autorisé. C’est l’un des deux feux qui ouvrent
+      l’écluse.
 
       L’autorisation ne dispense de rien pour autant. À l’entrée, tu réduis ta vitesse de
       façon à éviter tout choc contre les portes, les dispositifs de protection ou les
@@ -68,8 +68,10 @@ etapes:
     alt: "Un feu vert isolé allumé."
   - titre: Deux verts côte à côte ouvrent aussi
     texte: >-
-      Deux feux verts juxtaposés valent le feu vert isolé : accès autorisé. Aucun autre
-      signal ne l’ouvre.
+      Deux feux verts juxtaposés valent le feu vert isolé : accès autorisé. Aucun autre feu
+      ne l’ouvre. Le règlement permet de remplacer le feu vert par un panneau d’indication
+      E.1, et le rouge par un panneau A.1 ; sans feu ni panneau, l’accès est interdit, sauf
+      ordre spécial du personnel.
 
       À la sortie, le code est plus simple. Un ou deux feux rouges : sortie interdite. Un
       ou deux feux verts : sortie autorisée. Rien qui annonce une préparation, rien qui
@@ -96,3 +98,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

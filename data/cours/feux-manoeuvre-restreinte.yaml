@@ -25,7 +25,7 @@ etapes:
       poupe. Au mouillage, il ajoute les feux ou marques du mouillage.
     visuel: feux/capacite-de-manoeuvre-restreinte.svg
     alt: "Trois feux superposés sur fond de nuit, rouge en haut, blanc au milieu, rouge en bas."
-  - titre: De jour, les mêmes signaux en noir
+  - titre: De jour, les mêmes signaux en formes
     texte: >-
       Les marques reprennent la même distinction : deux formes pour celui qui ne se
       gouverne plus, trois pour celui qui travaille.
@@ -64,7 +64,7 @@ etapes:
       Les signaux de détresse figurent à l’annexe IV.
 
       Un cas à part : trois feux verts ou trois boules, un près de la tête du mât de
-      misaine et un à chaque bout de la vergue, signalent un déminage. On ne s’approche
+      misaine et un à chaque extrémité de la vergue de misaine, signalent un déminage. On ne s’approche
       pas à moins de 1 000 mètres.
 piege: >-
   Deux feux rouges superposés se retrouvent aussi sur un navire échoué. La différence
@@ -75,9 +75,9 @@ piege: >-
 retenir:
   - "Deux feux rouges superposés, deux boules : pas maître de sa manœuvre."
   - "Rouge, blanc, rouge, et boule, bicône, boule : capacité de manœuvre restreinte."
-  - À moteur comme à la voile, tu t’écartes des deux.
-  - "Drague : tu passes du côté des deux feux verts."
-  - "Moins de 12 mètres dispensé, sauf plongée : pavillon « A » rigide de 1 mètre."
+  - "À moteur comme à la voile, tu t’écartes des deux ; devant une drague, tu passes du côté des deux feux verts."
+  - "Moins de 12 mètres : dispensé des feux et marques de la règle 27, sauf le navire en plongée."
+  - "Navire en plongée trop petit pour tout montrer : pavillon « A » rigide d’au moins 1 mètre."
 sources:
   - texte: RIPAM, règle 27
     ref: decret-77-733
@@ -88,6 +88,14 @@ sources:
   - texte: RIPAM, règle 30
     ref: decret-77-733
     fichier: regle-30
+  - texte: RIPAM, règle 3
+    ref: decret-77-733
+    fichier: regle-03
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+    fichier: regle-28
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

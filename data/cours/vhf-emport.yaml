@@ -8,7 +8,7 @@ etapes:
   - titre: La distance d’un abri commande l’armement
     texte: >-
       La division 240 range le matériel de sécurité en quatre listes, et chaque liste
-      reprend la précédente en y ajoutant. Tu choisis la liste d’après la distance
+      reprend l’essentiel de la précédente en y ajoutant. Tu choisis la liste d’après la distance
       maximale d’un abri que ta navigation atteint.
     liste:
       - "Basique : moins de 2 milles d’un abri"
@@ -20,8 +20,8 @@ etapes:
       La liste basique et la liste côtière ne comportent pas de station VHF. À 4 milles
       d’un abri, sur ton propre bateau, tu n’es donc pas en faute si tu n’en as pas.
 
-      Le texte ne l’impose pas, la mer ne s’en soucie pas : c’est le seul moyen d’être
-      entendu d’un CROSS et des navires autour de toi.
+      Le texte ne l’impose pas, la mer ne s’en soucie pas : la VHF est le seul moyen
+      d’être entendu à la fois du CROSS et des navires autour de toi.
   - titre: À 6 milles, la VHF fixe devient obligatoire
     texte: >-
       Le matériel semi-hauturier, exigé de 6 à moins de 60 milles d’un abri, comprend
@@ -30,14 +30,13 @@ etapes:
   - titre: À 60 milles, une portative et une balise en plus
     texte: >-
       Le matériel hauturier reprend le semi-hauturier et y ajoute une radiobalise de
-      localisation des sinistres et un émetteur-récepteur VHF portatif et étanche. La
-      portative double la fixe quand on abandonne le bord.
+      localisation des sinistres et un émetteur-récepteur VHF portatif et étanche.
 
       Le texte recommande un dispositif de communication par satellite, sans l’imposer.
   - titre: Un bateau de location en emporte une dès 2 milles
     texte: >-
-      Un navire proposé à la location, à moteur de plus de 4,5 kW ou voilier de plus de
-      250 kg, embarque un émetteur-récepteur VHF dès qu’il navigue à plus de 2 milles
+      Un navire proposé à la location, à moteur de plus de 4,5 kW ou voilier de masse
+      lège supérieure à 250 kg, embarque un émetteur-récepteur VHF dès qu’il navigue à plus de 2 milles
       d’un abri, avec un moyen de positionnement électronique et un document
       d’instructions. La location abaisse le seuil.
   - titre: Le chef de bord répond de sa station
@@ -51,10 +50,10 @@ piege: >-
   seuil de l’armement côtier avec celui de la VHF. Le seuil de la VHF est à 6 milles.
   Seul un bateau loué en exige une dès 2 milles.
 retenir:
-  - "Moins de 6 milles d’un abri : aucune VHF imposée."
+  - "Sur ton propre bateau, à moins de 6 milles d’un abri : aucune VHF imposée."
   - "De 6 à moins de 60 milles : une VHF fixe."
-  - "60 milles et plus : la fixe, plus une portative étanche et une balise de détresse."
-  - "Bateau de location au-delà de 2 milles : une VHF, quelle que soit la distance ensuite."
+  - "60 milles et plus : la fixe, plus une portative étanche et une radiobalise de localisation des sinistres."
+  - "En location, une VHF dès 2 milles d’un abri."
   - Le chef de bord répond de l’adéquation de sa station à sa zone.
 sources:
   - texte: Division 240, article 240-2.03
@@ -78,3 +77,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

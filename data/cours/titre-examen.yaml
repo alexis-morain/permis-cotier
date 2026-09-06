@@ -24,8 +24,8 @@ etapes:
       cinq heures. Elle peut être collective.
 
       Les candidats déjà titulaires de l’option « eaux intérieures », ou d’un titre
-      équivalent, ne sont pas soumis à cette obligation : ils ont déjà suivi la partie
-      commune du programme. L’épreuve théorique, elle, reste à passer.
+      équivalent, ne sont pas soumis à cette obligation. L’épreuve théorique, elle, reste
+      à passer.
   - titre: L’inscription se paie par timbre dématérialisé
     texte: >-
       L’inscription aux sessions d’examen théorique de l’option « côtière » ou de l’option
@@ -62,9 +62,14 @@ sources:
   - texte: Arrêté du 28 septembre 2007, article 6
     ref: arrete-2007-09-28
     fichier: article-6
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 4
+    ref: decret-2007-1167
+    fichier: article-4
   - texte: Décret n° 2007-1167 du 2 août 2007, article 8-1
     ref: decret-2007-1167
     fichier: article-8-1
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

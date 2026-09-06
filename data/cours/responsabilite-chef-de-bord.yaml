@@ -1,7 +1,7 @@
 notion: responsabilite-chef-de-bord
 duree: 5
 accroche: >-
-  Vous êtes six à bord, le bateau appartient à ton beau-frère et c’est toi qui barres. Si
+  Tu es à six à bord, le bateau appartient à ton beau-frère et c’est toi qui barres. Si
   quelque chose tourne mal, la question ne sera pas de savoir à qui est le bateau, mais
   qui en était le chef de bord.
 etapes:
@@ -15,8 +15,8 @@ etapes:
       conduite.
   - titre: Avant de partir, il s’assure de trois choses
     texte: >-
-      L’article 240-1.03 dit ce que le chef de bord vérifie. La liste est courte et elle
-      est tombable telle quelle.
+      L’article 240-1.03 dit ce que le chef de bord vérifie : le texte dit qu’il s’assure
+      notamment de trois choses.
     liste:
       - "L’adéquation de sa navigation avec les caractéristiques de son navire"
       - "La présence à bord, le bon état et la validité des équipements et matériels de sécurité, et leur adaptation aux personnes embarquées"
@@ -24,9 +24,9 @@ etapes:
   - titre: Appliquer les règles ne suffit pas
     texte: >-
       La règle 2 du RIPAM pose qu’aucune de ses dispositions n’exonère le navire, son
-      propriétaire, son capitaine ou son équipage des conséquences d’une négligence, qu’elle
-      porte sur l’application des règles ou sur toute précaution que commandent l’expérience
-      ordinaire du marin et les circonstances.
+      propriétaire, son capitaine ou son équipage des conséquences d’une négligence quant à
+      l’application des règles ou quant à toute précaution que commandent l’expérience
+      ordinaire du marin ou les circonstances particulières.
 
       Le RIPAM fixe un minimum. Être dans son droit ne met à l’abri de rien.
   - titre: Les circonstances peuvent obliger à s’écarter des règles
@@ -36,7 +36,8 @@ etapes:
       s’écarter des règles pour éviter un danger immédiat.
 
       La règle 5 pose la veille : visuelle et auditive, permanente, par tous les moyens
-      adaptés aux circonstances. C’est elle qui donne les moyens de juger.
+      adaptés aux circonstances, de manière à permettre une pleine appréciation de la
+      situation et du risque d’abordage.
   - titre: Ce que le décret punit
     texte: >-
       Le permis est exigé pour conduire un bateau de plaisance à moteur de plus de 4,5
@@ -48,8 +49,8 @@ etapes:
 piege: >-
   Croire qu’un abordage survenu alors qu’on tenait sa route et sa vitesse est
   automatiquement la faute de l’autre. La règle 2 dit l’inverse : la négligence se juge
-  aussi sur les précautions que commandent l’expérience du marin et les circonstances, pas
-  seulement sur la lettre des règles de barre.
+  aussi quant à toute précaution que commandent l’expérience ordinaire du marin ou les
+  circonstances particulières, pas seulement sur la lettre des règles de barre.
 retenir:
   - Le chef de bord répond de la conduite, du respect des règlements et de la sécurité des personnes embarquées.
   - Il s’assure de l’adéquation de sa navigation, de la présence et du bon état du matériel de sécurité, et de sa mise en œuvre.
@@ -68,6 +69,9 @@ sources:
   - texte: RIPAM, règle 5
     ref: decret-77-733
     fichier: regle-05
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 2
+    ref: decret-2007-1167
+    fichier: article-2
   - texte: Décret n° 2007-1167 du 2 août 2007, article 15
     ref: decret-2007-1167
     fichier: article-15
@@ -80,3 +84,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

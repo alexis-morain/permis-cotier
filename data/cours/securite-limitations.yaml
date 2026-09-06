@@ -19,7 +19,7 @@ etapes:
       Le tableau de l’article 240-2.01 range les navires par tranche d’éloignement d’un
       abri, et chaque tranche appelle son armement.
     liste:
-      - "Jusqu’à 2 milles : armement basique"
+      - "À moins de 2 milles : armement basique"
       - "De 2 à moins de 6 milles : armement côtier"
       - "De 6 à moins de 60 milles : armement semi-hauturier"
       - "À partir de 60 milles : armement hauturier"
@@ -39,21 +39,22 @@ etapes:
       naviguent de jour, jusqu’à 2 milles d’un abri, avec flottabilité et moyen de repérage
       lumineux portés dès 300 mètres.
 
-      Les embarcations à propulsion humaine s’arrêtent aussi à 2 milles, sauf les kayaks de
-      mer et assimilés qui vont jusqu’à 6 milles à deux embarcations de conserve au moins,
-      chaque groupe de deux ayant une VHF étanche qui ne coule pas. Les planches à pagaie
-      en sont exclues.
+      Les embarcations à propulsion humaine s’arrêtent aussi à 2 milles. À l’exception des
+      planches à pagaie, celles qui ne sont pas des engins de plage vont jusqu’à 6 milles,
+      à deux embarcations de conserve au moins ; seule, si le pratiquant adhère à une
+      association déclarée pour cette pratique et emporte une VHF. Chaque groupe de deux
+      embarcations dispose d’une VHF étanche qui ne coule pas.
   - titre: Le véhicule nautique à moteur et sa deuxième place
     texte: >-
       Un véhicule nautique à moteur peut aller de 2 à moins de 6 milles d’un abri, à
-      condition de compter au moins 2 places, avec l’armement côtier spécifique. Au-delà de
-      6 milles, la navigation lui est interdite.
+      condition de compter au moins 2 places, avec l’armement côtier spécifique. À 6 milles
+      et au-delà, la navigation lui est interdite.
   - titre: Le long du bord, 5 nœuds
     texte: >-
       Dans la bande littorale des 300 mètres, la vitesse est limitée à 5 nœuds. La zone
       réservée aux baigneurs est balisée de bouées sphériques jaunes, et les engins la
       quittent par un chenal traversier, bouées cylindriques jaunes à bâbord et coniques
-      jaunes à tribord dans le sens de la sortie.
+      jaunes à tribord en accédant au rivage.
 piege: >-
   Compter la distance depuis le port ou depuis la côte visible. La règle parle de la
   distance d’un abri, et un abri se juge avec la météo du moment : par vent de mer établi,
@@ -63,7 +64,7 @@ retenir:
   - "L’abri : on s’y met en sécurité et on en repart sans assistance, selon la météo et le bateau."
   - "Les bornes de l’armement : 2 milles, 6 milles, 60 milles."
   - "Annexes et engins de plage : 300 mètres. Planches et propulsion humaine : 2 milles."
-  - "Kayak de mer jusqu’à 6 milles à deux embarcations de conserve, VHF étanche. Planche à pagaie, jamais."
+  - "Propulsion humaine jusqu’à 6 milles à deux embarcations de conserve, VHF étanche. Planche à pagaie : 2 milles."
   - Dans la bande des 300 mètres, 5 nœuds au maximum.
 sources:
   - texte: Division 240, article 240-1.02, IV. 2
@@ -84,9 +85,11 @@ sources:
   - texte: Division 240, article 240-2.11
     ref: division-240
     fichier: article-240-2-11
-  - texte: Balisage AISM région A, balisage des plages
+  - texte: Balisage AISM, région A, balisage des plages
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

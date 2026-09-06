@@ -2,7 +2,7 @@ notion: marques-jour
 duree: 4
 accroche: >-
   De jour, les feux ne se voient pas. Un navire qui a quelque chose à dire hisse alors
-  une forme noire à l’endroit le plus visible. Quatre formes suffisent à tout dire :
+  une forme à l’endroit le plus visible. Quatre formes disent presque tout :
   boule, cône, bicône, cylindre.
 etapes:
   - titre: Les boules se comptent
@@ -32,7 +32,8 @@ etapes:
     texte: >-
       Une marque biconique, montrée à l’endroit le plus visible par le remorqueur et par
       le remorqué, signale un train de remorque de plus de 200 mètres. En dessous, aucune
-      marque n’est exigée.
+      marque n’est exigée, sauf pour un remorquage partiellement submergé et difficile
+      à apercevoir, qui porte une marque biconique à son extrémité arrière.
 
       Le bicône se retrouve au milieu des trois marques du navire à capacité de manœuvre
       restreinte : une boule, un bicône, une boule.
@@ -81,3 +82,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

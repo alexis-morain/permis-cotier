@@ -25,6 +25,9 @@ etapes:
       redescend à terre, dans les bacs que le port met à disposition.
   - titre: Le sauvetage passe avant le milieu
     texte: >-
+      Pour les rejets que régit la convention MARPOL, le code prévoit deux cas qui ne sont
+      pas des infractions.
+
       Un rejet effectué par un navire à des fins de sécurité, de sauvetage ou de lutte
       contre la pollution n’est pas punissable, dès lors qu’il remplit les conditions
       posées par les annexes de la convention MARPOL.
@@ -32,24 +35,24 @@ etapes:
       Un rejet qui se produit au-delà des eaux territoriales et qui provient d’une avarie
       survenue au navire ou à son équipement n’est pas non plus considéré comme une
       infraction, aux mêmes conditions. L’avarie n’est pas le rejet volontaire.
-  - titre: Les hydrocarbures des gros navires relèvent d’une autre échelle
+  - titre: Les hydrocarbures des gros navires, autre échelle
     texte: >-
       Les peines de dix ans d’emprisonnement et 1 000 000 euros d’amende visent les
-      capitaines de navires-citernes d’une jauge brute d’au moins 150 tonneaux et les
-      autres navires d’au moins 500 tonneaux, pour les rejets d’hydrocarbures interdits
-      par la convention MARPOL.
+      capitaines de navires français : les navires-citernes d’une jauge brute d’au moins
+      150 tonneaux et les autres navires d’au moins 500 tonneaux, pour les rejets
+      d’hydrocarbures interdits par la convention MARPOL.
 
-      Ton bateau de plaisance n’entre dans aucune de ces deux catégories. Ce qui te
-      concerne, c’est l’interdiction générale de rejeter des substances nuisibles.
+      Ton bateau de plaisance, par sa jauge, n’entre dans aucune de ces deux catégories.
+      Ce qui te concerne, c’est l’interdiction générale de rejeter des substances nuisibles.
 piege: >-
   Le piège le plus courant est le seuil de distance : beaucoup de candidats répondent
   qu’un rejet devient permis au-delà de 3 milles ou de 12 milles. Le texte qui s’applique
-  au plaisancier n’en contient aucun. La seule porte de sortie est le rejet fait pour la
-  sécurité, le sauvetage ou la lutte contre la pollution.
+  au plaisancier n’en contient aucun. La seule porte de sortie volontaire est le rejet fait
+  pour la sécurité, le sauvetage ou la lutte contre la pollution.
 retenir:
   - "Rejeter en mer une substance nuisible à la faune ou à la flore marines : 100 000 euros d’amende."
   - Aucune distance à la côte ne rend un rejet permis.
-  - "Deux exceptions seulement : la sécurité et le sauvetage, et l’avarie au-delà des eaux territoriales."
+  - "Deux exceptions seulement : le rejet pour la sécurité, le sauvetage ou la lutte contre la pollution, et l’avarie au-delà des eaux territoriales."
   - Ce qui monte à bord et ne se rejette pas en redescend, au bac du port.
 sources:
   - texte: Code de l'environnement, article L. 218-73
@@ -64,3 +67,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

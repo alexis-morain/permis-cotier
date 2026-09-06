@@ -1,17 +1,16 @@
 notion: vnm-regles
 duree: 5
 accroche: >-
-  Un scooter des mers, c’est un bateau. La division 240 le nomme véhicule nautique à
-  moteur et lui applique ses propres limites, plus serrées que celles d’un bateau de
-  plaisance.
+  Tu pousses le scooter au large, la plage recule, et tu n’as sur toi qu’un short de bain.
+  La division 240 en fait une embarcation, le véhicule nautique à moteur, avec ses propres
+  règles de distance, de tenue et de matériel.
 etapes:
   - titre: Sa navigation est exclusivement diurne
     texte: >-
       Le véhicule nautique à moteur effectue une navigation exclusivement diurne. Le
       soleil se couche, tu rentres.
 
-      Aucun feu, aucune proximité de la côte ne lève cette limite. C’est là qu’il diffère
-      d’un bateau de plaisance, qui peut faire route de nuit s’il porte ses feux.
+      Aucun feu, aucune proximité de la côte ne lève cette limite.
   - titre: 2 ou 6 milles, selon le nombre de places
     texte: >-
       La limite de distance d’un abri dépend de la conception du véhicule, pas du nombre
@@ -28,17 +27,16 @@ etapes:
       - "Un équipement néoprène de 2 mm au moins, short, shorty ou combinaison intégrale"
   - titre: Le néoprène protège du jet de la turbine
     texte: >-
-      Ce n’est pas une protection contre le froid. La turbine sort un jet violent à
-      l’arrière du véhicule, et une chute par l’arrière expose à des blessures que le
-      néoprène évite. C’est la raison que donne le texte.
-  - titre: Trois objets à moins de 2 milles
+      Le texte donne sa finalité : prévenir les risques de blessures que peut provoquer le
+      jet de la turbine en cas de chute à l’arrière du véhicule.
+  - titre: Trois exigences à moins de 2 milles
     texte: >-
       À moins de 2 milles d’un abri, le véhicule embarque le matériel d’armement et de
       sécurité basique des véhicules nautiques à moteur.
     liste:
       - "Un moyen de repérage lumineux individuel, étanche, d’au moins 6 heures d’autonomie"
       - "Un dispositif de remorquage : point d’amarrage et bout"
-      - "Un moyen de connaître les heures et coefficients de marée du jour, ou leur connaissance"
+      - "Un moyen de connaître les heures et coefficients de marée du jour et de la zone considérée, ou leur connaissance"
   - titre: Cinq de plus au-delà de 2 milles
     texte: >-
       De 2 à 6 milles d’un abri, le matériel côtier des véhicules nautiques à moteur
@@ -69,3 +67,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

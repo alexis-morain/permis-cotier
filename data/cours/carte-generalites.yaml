@@ -2,7 +2,7 @@ notion: carte-generalites
 duree: 4
 accroche: >-
   Tu déplies une carte marine pour la première fois. Des couleurs, des chiffres partout,
-  une grosse rose graduée au milieu. Trois choses suffisent pour commencer à la lire.
+  une grosse rose graduée au milieu. Voilà de quoi commencer à la lire.
 etapes:
   - titre: La couleur donne la profondeur d’un coup d’œil
     texte: >-
@@ -13,7 +13,7 @@ etapes:
 
       Un coup d’œil te donne donc la zone où tu passes sans réfléchir, celle où tu
       regardes les sondes, et celle où tu ne vas pas.
-  - titre: Les chiffres sont des profondeurs minimales
+  - titre: Les chiffres non soulignés sont des profondeurs
     texte: >-
       Les chiffres semés sur l’eau sont des sondes, en mètres sur les cartes françaises.
       Elles sont comptées depuis le zéro des cartes, qui est le niveau des plus basses
@@ -21,6 +21,9 @@ etapes:
 
       Une sonde est donc la profondeur minimale à cet endroit. La hauteur de la marée du
       moment vient s’y ajouter. La convention joue dans le sens de la sécurité.
+
+      Un chiffre souligné ne se lit pas comme une sonde : c’est une hauteur qui découvre,
+      vue dans la leçon suivante.
   - titre: La rose porte deux nords
     texte: >-
       La rose des vents a deux cercles concentriques. Le cercle extérieur donne les
@@ -30,7 +33,7 @@ etapes:
 
       L’écart entre les deux est la déclinaison magnétique.
     visuel: carte/rose-des-vents.svg
-    alt: "Deux cercles concentriques gradués tous les dix degrés. Le cercle extérieur porte une flèche de nord verticale ; le cercle intérieur, plus petit, porte sa propre flèche, tournée d’une quinzaine de degrés vers la droite."
+    alt: "Deux cercles concentriques gradués tous les dix degrés. Le cercle extérieur porte une flèche de nord verticale ; le cercle intérieur, plus petit, porte sa propre flèche, tournée d’une quinzaine de degrés vers la droite. L’écart est accentué pour la lisibilité."
   - titre: La déclinaison porte une date
     texte: >-
       Au centre de la rose, la carte inscrit la déclinaison avec son sens, son année de
@@ -38,8 +41,8 @@ etapes:
       une rose ancienne demande donc une correction à la date où tu navigues.
   - titre: Une carte à jour fait partie de l’armement
     texte: >-
-      Dès la navigation de 2 à 6 milles d’un abri, la ou les cartes marines officielles,
-      issues d’un service hydrographique national, font partie du matériel d’armement et
+      Dès la navigation de 2 à moins de 6 milles d’un abri, la ou les cartes marines
+      officielles, ou leurs extraits, issus d’un service hydrographique national, font partie du matériel d’armement et
       de sécurité côtier. Elles couvrent les zones fréquentées, sur papier ou sur support
       électronique avec son appareil de lecture, et sont tenues à jour.
 piege: >-
@@ -52,7 +55,7 @@ retenir:
   - "Une sonde est comptée depuis le zéro des cartes : c’est un minimum, la marée s’y ajoute."
   - "Cercle extérieur, nord vrai. Cercle intérieur, nord magnétique. L’écart est la déclinaison."
   - "La déclinaison bouge : sa date et sa variation annuelle sont inscrites au centre de la rose."
-  - "De 2 à 6 milles d’un abri, une carte officielle tenue à jour est obligatoire à bord."
+  - "De 2 à moins de 6 milles d’un abri, une carte officielle tenue à jour est obligatoire à bord."
 sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
     ref: fiche-carte-marine
@@ -63,3 +66,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

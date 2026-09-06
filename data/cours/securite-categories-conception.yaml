@@ -7,7 +7,7 @@ accroche: >-
 etapes:
   - titre: Une lettre, un vent, une vague
     texte: >-
-      La catégorie de conception d’un navire marqué CE lui attache une force de vent sur
+      La catégorie de conception d’un navire lui attache une force de vent sur
       l’échelle de Beaufort et une hauteur significative de vagues. Deux valeurs, une
       seule ligne du tableau : elles vont toujours ensemble.
 
@@ -16,6 +16,10 @@ etapes:
   - titre: De D à A, quatre crans
     texte: >-
       Chaque cran monte d’un côté comme de l’autre : plus de vent, plus de vague.
+
+      Une prudence à la lecture de l’article : son tableau affiche 0,5 mètre pour la
+      catégorie D, qui est la hauteur des vagues occasionnelles ; le texte sous le tableau
+      donne 0,3 mètre.
     liste:
       - "A : vents pouvant dépasser la force 8, vagues pouvant dépasser 4 mètres"
       - "B : vents jusqu’à la force 8 comprise, vagues jusqu’à 4 mètres compris"
@@ -45,6 +49,9 @@ retenir:
   - "Les vagues qui vont avec : 0,3 mètre en D, 2 mètres en C, 4 mètres en B."
   - "Le bateau de la formation côtière est marqué CE et au moins en catégorie C."
 sources:
+  - texte: Division 240, article 240-2.01
+    ref: division-240
+    fichier: article-240-2-01
   - texte: Division 245, article 245-1.02
     ref: division-245
     fichier: article-245-1-02
@@ -54,3 +61,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

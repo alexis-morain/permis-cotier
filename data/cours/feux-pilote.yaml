@@ -9,14 +9,12 @@ etapes:
       Un bateau-pilote en service de pilotage montre, à la tête du mât ou près d’elle,
       deux feux superposés visibles sur tout l’horizon : le supérieur blanc, l’inférieur
       rouge.
-
-      Retiens l’ordre par le sens : le blanc en haut, comme le feu qu’on voit de loin.
     visuel: feux/bateau-pilote.svg
     alt: "Deux feux superposés sur fond de nuit, le supérieur blanc, l’inférieur rouge."
   - titre: En route, il ajoute ses feux de navire
     texte: >-
       Quand il fait route, le bateau-pilote montre en plus ses feux de côté et son feu
-      de poupe. Ses deux feux de tête de mât te disent ce qu’il fait, ses feux de côté
+      de poupe. Ses deux feux en tête de mât te disent ce qu’il fait, ses feux de côté
       te disent où il va.
   - titre: Au mouillage, les feux du mouillage
     texte: >-
@@ -46,3 +44,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

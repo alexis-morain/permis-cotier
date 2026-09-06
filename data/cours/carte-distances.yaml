@@ -8,7 +8,7 @@ etapes:
   - titre: Une minute de latitude vaut un mille marin
     texte: >-
       Un mille marin vaut 1 852 mètres, et c’est exactement ce que mesure une minute de
-      latitude. L’égalité tient à toute latitude, du sud de la Corse au nord de la Manche.
+      latitude. L’égalité tient à toute latitude.
 
       La carte porte donc sa propre règle graduée : l’échelle des latitudes.
   - titre: On mesure sur les bords verticaux
@@ -31,8 +31,8 @@ etapes:
 piege: >-
   Le piège est de prendre les deux échelles pour la même graduation parce qu’elles se
   ressemblent, et de mesurer en haut de la carte parce que c’est plus commode. Seule la
-  minute de latitude vaut un mille. Un relevé fait sur les longitudes annonce une
-  distance plus courte que la réalité.
+  minute de latitude vaut un mille. Un relevé fait sur les longitudes donne une
+  distance fausse, d’autant plus fausse qu’on est au nord.
 retenir:
   - "1 minute de latitude = 1 mille marin = 1 852 mètres."
   - "Les distances se mesurent sur les bords verticaux, jamais sur les bords horizontaux."
@@ -45,3 +45,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

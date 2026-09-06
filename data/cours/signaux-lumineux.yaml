@@ -46,6 +46,11 @@ sources:
   - texte: RIPAM, règle 34
     ref: decret-77-733
     fichier: regle-34
+  - texte: RIPAM, règle 21
+    ref: decret-77-733
+    fichier: regle-21
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -18,9 +18,8 @@ etapes:
     alt: "Trois feux rouges superposés sur fond de nuit, visibles sur tout l’horizon."
   - titre: De jour, un cylindre
     texte: >-
-      La marque de jour correspondante est un cylindre noir, montré à l’endroit le plus
-      visible. C’est la seule marque cylindrique du règlement : ni boule, ni cône, ni
-      bicône.
+      La marque de jour correspondante est un cylindre, montré à l’endroit le plus
+      visible. Aucune autre règle de feux et marques ne prévoit de cylindre.
   - titre: Il peut, il ne doit pas
     texte: >-
       Le texte dit que ce navire « peut » montrer ces feux ou cette marque. La
@@ -43,7 +42,7 @@ piege: >-
   qui ne le permettent pas.
 retenir:
   - "Trois feux rouges superposés sur tout l’horizon, en plus des feux de moteur : handicapé par son tirant d’eau."
-  - "De jour, un cylindre noir. C’est la seule marque cylindrique."
+  - "De jour, un cylindre : aucune autre règle de feux et marques n’en prévoit."
   - "Deux rouges : pas maître de sa manœuvre. Rouge, blanc, rouge : manœuvre restreinte. Trois rouges : tirant d’eau."
   - Tu évites de gêner son libre passage.
 sources:
@@ -56,3 +55,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

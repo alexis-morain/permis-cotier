@@ -35,13 +35,13 @@ etapes:
   - titre: Les titres supérieurs dispensent du CRR
     texte: >-
       Les titulaires, en cours de validité, du brevet d’officier radioélectronicien de
-      1re ou 2e classe, du certificat général d’opérateur, du certificat spécial
-      d’opérateur ou du certificat restreint d’opérateur manœuvrent une VHF en mer
-      comme en eaux intérieures sans avoir à détenir le CRR.
+      1re ou 2e classe de la marine marchande, du certificat général d’opérateur, du
+      certificat spécial d’opérateur ou du certificat restreint d’opérateur manœuvrent
+      une VHF en mer comme en eaux intérieures sans avoir à détenir le CRR.
   - titre: L’examen se présente à 16 ans
     texte: >-
       Les candidats à l’examen du certificat doivent avoir seize ans au moins à la date
-      de l’examen. C’est l’âge de l’option côtière du permis plaisance.
+      de l’examen.
 piege: >-
   L’erreur classique : partir vers l’Espagne ou l’Italie avec le seul permis plaisance
   et croire qu’il couvre la VHF partout. Il n’en tient lieu que dans les eaux
@@ -50,7 +50,7 @@ retenir:
   - "Licence : le navire. Certificat : la personne."
   - "Eaux territoriales françaises : CRR ou permis plaisance à moteur."
   - "Eaux internationales : CRR obligatoire."
-  - "Portatif de 6 watts au plus et sans ASN : aucun titre exigé, les deux conditions se cumulent."
+  - "Portatif de 6 watts au plus, sans ASN, en eaux territoriales françaises : aucun titre exigé."
   - Examen du CRR à partir de 16 ans.
 sources:
   - texte: Arrêté du 18 mai 2005, article 1
@@ -62,3 +62,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

@@ -3,7 +3,7 @@ duree: 4
 accroche: >-
   Deux feux superposés sur tout l’horizon, au large, la nuit. Le feu du bas est blanc. Ne
   regarde que celui du haut : sa couleur te dit si ce navire tire un chalut ou pêche
-  autrement, et donc de combien tu dois passer au large.
+  autrement.
 etapes:
   - titre: Vert sur blanc, il tire un chalut
     texte: >-
@@ -37,7 +37,7 @@ etapes:
       l’alignement de l’engin, un feu blanc visible sur tout l’horizon ou un cône la pointe
       en haut.
 
-      Ce signal indique de quel bord se trouve le matériel. Passe de l’autre côté.
+      Ce signal indique aux autres navires de quel bord passer au large.
   - titre: Sous 50 mètres, le feu de tête de mât du chalutier est libre
     texte: >-
       Le chalutier montre aussi un feu de tête de mât placé plus haut que le feu vert et à
@@ -78,3 +78,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

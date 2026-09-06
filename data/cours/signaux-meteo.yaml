@@ -7,9 +7,9 @@ accroche: >-
 etapes:
   - titre: L’avis porte le nom de la force annoncée
     texte: >-
-      Le bulletin météorologique spécial, ou BMS, est un avis diffusé hors des heures
-      normales dès qu’un vent de force 7 au moins est attendu ou observé. Son nom dit la
-      force.
+      Un avis est émis dès qu’un vent de force 7 au moins est attendu ou observé sur une
+      zone. Son nom ne décrit rien d’autre que cette force, prise sur l’échelle de
+      Beaufort.
     liste:
       - "Avis de grand frais : à partir de force 7"
       - "Avis de coup de vent : à partir de force 8"
@@ -17,31 +17,28 @@ etapes:
       - "Avis de tempête : à partir de force 10"
       - "Avis de violente tempête : à partir de force 11"
       - "Avis d’ouragan : à force 12"
-  - titre: Le bulletin dit vent, mer, temps et visibilité
+  - titre: Un avis en cours n’attend pas l’heure du bulletin
     texte: >-
-      Trois portées de bulletin marine existent : le bulletin côte jusqu’à 20 milles des
-      côtes, le bulletin large jusqu’à 200 milles, le bulletin grand large au-delà. Pour
-      la côtière, c’est le bulletin côte.
+      L’avis prend la forme d’un bulletin météorologique spécial, diffusé hors des heures
+      normales. En mer, les CROSS le passent sur un canal VHF de travail, annoncé au
+      préalable sur le canal 16. Le Navtex le reçoit en texte, en zone couverte.
 
-      Il donne d’abord la situation générale, puis, pour chaque zone, le vent, la mer, le
-      temps et la visibilité.
-  - titre: Où le signal t’atteint
+      Le contenu du bulletin marine et la liste complète des sources sont détaillés dans
+      les leçons du chapitre météo.
+  - titre: Ce que l’avis change pour toi
     texte: >-
-      À terre, avant de partir : Météo-France, par son site, son application ou son
-      répondeur, et l’affichage de la capitainerie.
-
-      En mer, les CROSS diffusent les bulletins et les BMS sur des canaux VHF de travail,
-      annoncés au préalable sur le canal 16, aux heures publiées dans les instructions
-      nautiques et les almanachs. Le Navtex reçoit les avis en texte dans les zones
-      couvertes. Un BMS est diffusé dès sa parution, sans attendre l’heure du bulletin.
+      Force 7 ou plus annoncée sur ta zone, la sortie côtière se reporte. La décision se
+      prend à quai, au moment où elle ne coûte rien : une fois dehors, les options se
+      réduisent.
 piege: >-
-  Confondre l’avis de grand frais et l’avis de coup de vent. Le grand frais commence à
-  force 7, le coup de vent à force 8. Un degré Beaufort sépare les deux, soit environ 6 nœuds de vent moyen,
-  et une mer qui change de nature.
+  Croire qu’un avis de coup de vent parle de force 7. Il parle de force 8. Le grand frais
+  commence à force 7, le coup de vent à force 8 : un degré Beaufort sépare les deux, soit
+  environ 6 nœuds de vent moyen.
 retenir:
-  - "Un BMS est émis dès force 7 attendue ou observée. Coup de vent : force 8."
-  - "Bulletin côte : jusqu’à 20 milles. Il donne vent, mer, temps et visibilité par zone."
-  - Les CROSS annoncent leurs vacations sur le canal 16 et diffusent sur un canal de travail.
+  - "Un avis est émis dès force 7 attendue ou observée. Coup de vent : force 8."
+  - "Grand frais 7, coup de vent 8, fort coup de vent 9, tempête 10, violente tempête 11, ouragan 12."
+  - Un avis en cours est diffusé hors des heures normales, par les CROSS sur VHF et par Navtex.
+  - Force 7 ou plus annoncée sur ta zone, la sortie côtière se reporte.
 sources:
   - texte: "Fiche météorologie : échelle de Beaufort et état de la mer"
     ref: fiche-meteo
@@ -49,3 +46,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

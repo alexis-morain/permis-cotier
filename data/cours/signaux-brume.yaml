@@ -14,7 +14,7 @@ etapes:
       « Avoir de l’erre », c’est avancer sur l’eau. Deux minutes est un maximum, pas un
       rythme à tenir : plus souvent est permis.
     visuel: sons/brume-avec-erre.svg
-    alt: "Le tracé d’un signal au sifflet dans le temps : un seul trait long."
+    alt: Une impulsion sonore tenue, isolée.
   - titre: Deux sons prolongés quand tu es stoppé
     texte: >-
       Le même navire, moteur en route mais stoppé et sans erre, fait entendre deux sons
@@ -23,7 +23,7 @@ etapes:
 
       Un seul trait, j’avance. Deux traits, je suis arrêté sur l’eau.
     visuel: sons/brume-stoppe.svg
-    alt: "Le tracé d’un signal au sifflet : deux traits longs séparés par un court silence."
+    alt: Deux impulsions sonores tenues, séparées par un court silence.
   - titre: Un prolongé et deux brefs pour la manœuvre empêchée
     texte: >-
       Une famille entière de navires remplace les signaux précédents par trois sons
@@ -33,7 +33,7 @@ etapes:
       Ce sont ceux dont la manœuvre est empêchée ou contrainte. Le signal ne dit pas
       lequel : il dit qu’il faut se méfier.
     visuel: sons/brume-manoeuvre-restreinte.svg
-    alt: "Le tracé d’un signal au sifflet : un trait long suivi de deux traits courts."
+    alt: Une impulsion sonore tenue, suivie de deux impulsions courtes.
     liste:
       - Le navire qui n’est pas maître de sa manœuvre
       - Le navire à capacité de manœuvre restreinte
@@ -51,7 +51,7 @@ etapes:
       Prolongé plus deux brefs, puis prolongé plus trois brefs : tu viens d’entendre les
       deux bouts d’un convoi, et la longueur entre les deux t’est inconnue.
     visuel: sons/brume-remorque.svg
-    alt: "Le tracé d’un signal au sifflet : un trait long suivi de trois traits courts."
+    alt: Une impulsion sonore tenue, suivie de trois impulsions courtes.
   - titre: Au mouillage, la cloche
     texte: >-
       Un navire au mouillage sonne la cloche rapidement pendant cinq secondes environ, à
@@ -61,7 +61,7 @@ etapes:
       Il peut y ajouter, au sifflet, un bref suivi d’un prolongé et d’un bref pour
       signaler sa position et le risque d’abordage à un navire qui s’approche.
     visuel: sons/brume-mouillage.svg
-    alt: "Le tracé d’un signal à la cloche : une sonnerie rapide et continue pendant cinq secondes."
+    alt: "Le tracé d’un signal à la cloche : une volée de coups de cloche serrés pendant cinq secondes environ."
   - titre: Échoué, la cloche encadrée de trois coups
     texte: >-
       Un navire échoué sonne la même cloche qu’au mouillage, et il fait entendre en plus
@@ -71,19 +71,23 @@ etapes:
       Trois coups, la sonnerie, trois coups : ce navire ne bougera pas, contourne-le
       largement.
     visuel: sons/brume-echouement.svg
-    alt: "Le tracé d’un signal à la cloche : trois coups espacés, une sonnerie rapide, puis trois coups espacés."
+    alt: "Le tracé d’un signal à la cloche : trois coups espacés, une volée de coups serrés, puis trois coups espacés."
   - titre: Quatre sons brefs, c’est le pilote
     texte: >-
       Un bateau-pilote en service de pilotage peut ajouter à son signal normal un signal
       d’identification de quatre sons brefs. C’est le seul signal de la règle 35 fait de
       brefs seulement.
     visuel: sons/brume-pilote.svg
-    alt: "Le tracé d’un signal au sifflet : quatre traits courts rapprochés."
+    alt: Quatre impulsions sonores courtes et rapprochées.
   - titre: Sous 12 mètres, un signal efficace suffit
     texte: >-
       Un navire de moins de 12 mètres n’est pas tenu d’émettre ces signaux, mais s’il ne
       les émet pas, il doit faire entendre un autre signal sonore efficace à des
       intervalles ne dépassant pas deux minutes. Se taire n’est pas une option.
+
+      Entre 12 et 20 mètres, la règle 35 i) lève une autre obligation : ce navire n’est pas
+      tenu des coups de cloche du mouillage et de l’échouement. Là encore, s’il ne les fait
+      pas, il émet un autre signal sonore efficace toutes les deux minutes au plus.
 
       La règle 33 dit ce qu’il faut à bord : un sifflet à partir de 12 mètres, une cloche
       en plus à partir de 20 mètres, un gong en plus à partir de 100 mètres. En dessous
@@ -94,11 +98,15 @@ piege: >-
   ancre est à poste, il émet deux sons prolongés au sifflet toutes les deux minutes. Le
   navire au mouillage est tenu par son ancre et sonne la cloche cinq secondes toutes les
   minutes. Le son n’est pas le même, la cadence non plus.
+
+  La règle 35 d) pose une réserve : un navire en train de pêcher au mouillage, et un
+  navire à capacité de manœuvre restreinte qui travaille au mouillage, font un son
+  prolongé suivi de deux brefs, pas la cloche.
 retenir:
   - "Avec erre : 1 son prolongé. Stoppé sans erre : 2 sons prolongés. Toutes les 2 minutes au plus."
   - "1 prolongé et 2 brefs : voilier, pêcheur, remorqueur, non maître de sa manœuvre, capacité restreinte, tirant d’eau."
   - "1 prolongé et 3 brefs : le navire remorqué."
-  - "Au mouillage : cloche 5 secondes toutes les minutes au plus. Échoué : 3 coups avant et après."
+  - "Au mouillage : cloche 5 secondes toutes les minutes au plus. Échoué : 3 coups avant et après. Pêcheur et capacité restreinte au mouillage : 1 prolongé et 2 brefs."
   - "Moins de 12 mètres : un autre signal sonore efficace, toutes les 2 minutes au plus."
 sources:
   - texte: RIPAM, règle 35
@@ -110,3 +118,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

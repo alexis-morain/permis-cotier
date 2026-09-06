@@ -1,8 +1,9 @@
 notion: titre-sanctions
 duree: 4
 accroche: >-
-  Un permis plaisance ne s’use pas et ne se renouvelle pas. Il se perd, en revanche, quand
-  la conduite l’a mérité. L’administration peut le retirer, pour un temps ou pour de bon.
+  Un contrôle à la sortie du port, un excès de vitesse dans la bande des 300 mètres, et
+  l’agent qui relève le numéro de ton permis. Ce numéro sert aussi à ça : l’administration
+  peut retirer le titre, pour un temps ou pour de bon.
 etapes:
   - titre: Trois familles de motifs
     texte: >-
@@ -37,8 +38,8 @@ etapes:
       nouveau permis qu’à l’expiration d’un délai de trois ans à compter de ce retrait. Le
       retrait définitif n’est donc pas éternel, mais il coûte trois années.
 
-      Un conducteur étranger sans permis français ne peut pas se voir retirer un titre
-      qu’il n’a pas : pour les mêmes motifs, il se voit interdire, temporairement ou
+      Un conducteur qui ne détient pas de permis français ne peut pas se voir retirer un
+      titre qu’il n’a pas : pour les mêmes motifs, il se voit interdire, temporairement ou
       définitivement, de naviguer au départ des ports français ou dans les eaux
       territoriales françaises.
 piege: >-
@@ -60,3 +61,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

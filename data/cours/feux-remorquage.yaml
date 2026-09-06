@@ -3,7 +3,6 @@ duree: 4
 accroche: >-
   Deux feux blancs superposés dans l’axe, un feu jaune au-dessus du feu de poupe. Ce
   navire traîne quelque chose derrière lui, et ce quelque chose peut être à 200 mètres.
-  Ne coupe jamais entre les deux.
 etapes:
   - titre: Deux feux de tête de mât superposés annoncent le remorquage
     texte: >-
@@ -12,7 +11,7 @@ etapes:
       et son feu de poupe.
 
       Cette pile de feux blancs est le premier signe. Un navire à moteur ordinaire n’en
-      montre jamais deux l’un au-dessus de l’autre.
+      montre jamais deux superposés sur la même verticale.
   - titre: Trois feux superposés au-delà de 200 mètres
     texte: >-
       Dès que la longueur du train de remorque dépasse 200 mètres, le remorqueur montre
@@ -37,8 +36,7 @@ etapes:
   - titre: De jour, la marque biconique dit « plus de 200 mètres »
     texte: >-
       Au-delà de 200 mètres de train de remorque, le navire remorquant montre lui aussi
-      une marque biconique à l’endroit le plus visible. Deux cônes accolés par la base, en
-      noir.
+      une marque biconique à l’endroit le plus visible. Deux cônes accolés par la base.
 
       Cette marque n’annonce ni une avarie ni une pêche. Elle dit une seule chose : le
       câble est long, passe loin derrière.
@@ -70,3 +68,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

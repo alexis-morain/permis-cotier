@@ -47,8 +47,8 @@ etapes:
 piege: >-
   Le vent frais et le grand frais se ressemblent à l’oreille et se suivent sur l’échelle.
   Le vent frais est la force 6, 22 à 27 nœuds, sans avis. Le grand frais est la force 7,
-  28 à 33 nœuds, et c’est le premier degré qui déclenche un BMS. Un degré d’écart, cinq
-  nœuds, et une navigation qui change de nature.
+  28 à 33 nœuds, et c’est le premier degré qui déclenche un BMS. Un degré d’écart, six
+  nœuds de plus sur toute la plage, et une navigation qui change de nature.
 retenir:
   - "6 vent frais, 22 à 27 nœuds. 7 grand frais, 28 à 33. 8 coup de vent, 34 à 40. 10 tempête, 48 à 55."
   - Beaufort mesure un vent moyen sur dix minutes à dix mètres, jamais les rafales.
@@ -61,3 +61,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

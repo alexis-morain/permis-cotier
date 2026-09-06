@@ -10,8 +10,7 @@ etapes:
       Une roche qui sort de l’eau à basse mer est dessinée par une croix ou un astérisque,
       souvent accompagnée de sa hauteur soulignée, comptée au-dessus du zéro des cartes.
 
-      Une roche à fleur d’eau ou dangereuse est entourée d’un pointillé de danger : le
-      pointillé enferme la zone à ne pas couper, même quand le symbole paraît minuscule.
+      Une roche à fleur d’eau ou dangereuse est entourée d’un pointillé de danger.
   - titre: Le fuseau est une épave, l’ancre un mouillage
     texte: >-
       Une épave se dessine par un symbole en fuseau, barré ou non selon qu’elle est
@@ -34,10 +33,9 @@ etapes:
       de vive-eau. 9M est la portée, en milles.
   - titre: Deux amers superposés font un alignement
     texte: >-
-      Un alignement est un groupe de deux marques ou feux placés dans le même plan
-      vertical, de telle manière que tu suives le même relèvement en les gardant
-      superposés. Il matérialise l’axe d’un chenal ou une route sûre, de jour comme de
-      nuit.
+      Un alignement est un groupe de deux ou plusieurs marques ou feux placés dans le même
+      plan vertical, de telle manière que tu suives le même relèvement en les gardant
+      superposés. Il matérialise l’axe d’un chenal ou une route sûre, et peut porter un feu.
 
       Ses structures n’ont ni couleur ni forme imposées : l’autorité choisit ce qui se
       détache le mieux du fond.
@@ -51,7 +49,7 @@ retenir:
   - "Fuseau : épave. Ancre : mouillage. Tireté magenta : zone réglementée."
   - "Un feu se lit dans l’ordre : caractère, couleur, période, hauteur, portée."
   - "12m est la hauteur du feu, 9M sa portée en milles."
-  - "Un alignement : deux marques dans le même plan vertical, gardées superposées."
+  - "Un alignement : deux marques ou plus dans le même plan vertical, gardées superposées."
 sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
     ref: fiche-carte-marine
@@ -62,3 +60,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

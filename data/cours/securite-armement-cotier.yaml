@@ -17,11 +17,16 @@ etapes:
       - "La ou les cartes marines officielles de la zone, à jour, sur papier ou sur support électronique"
       - "Le règlement international pour prévenir les abordages en mer, ou un résumé textuel et graphique"
       - "Un document décrivant le système de balisage de la zone fréquentée"
+  - titre: Les EIF de niveau 100 ont une exception
+    texte: >-
+      Ces équipements individuels de flottabilité de niveau 100 ne sont pas obligatoires
+      pour les personnes qui savent nager et portent effectivement une combinaison de
+      flottabilité intrinsèque (article 240-2.04, point 3) : la leçon sur les équipements
+      individuels le détaille.
   - titre: Trois feux rouges à main, pas deux
     texte: >-
       Le texte nomme le nombre et l’artifice : trois feux rouges à main, conformes à la
-      division 311 du règlement. Le fumigène flottant est un autre matériel, il ne les
-      remplace pas.
+      division 311 du règlement.
   - titre: Le compas tient sans électricité
     texte: >-
       Le compas magnétique de route est de classe A ou B, compensé si nécessaire, éclairé
@@ -70,3 +75,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

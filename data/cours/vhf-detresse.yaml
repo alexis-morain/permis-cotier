@@ -11,8 +11,7 @@ etapes:
       qu’une assistance immédiate est demandée.
 
       Il prime sur tout autre trafic. Dès qu’un MAYDAY passe, le silence radio s’impose
-      à tous : tu écoutes, prêt à relayer si personne ne répond, et tu ne reprends ton
-      propre trafic qu’une fois le trafic de détresse terminé.
+      à tous : tu écoutes et tu te tais.
   - titre: Le message, dans cet ordre
     texte: >-
       Sur le canal 16, tu déroules toujours la même liste. L’ordre n’est pas un caprice :
@@ -40,7 +39,7 @@ etapes:
       les renseignements utiles et le « À VOUS ». Ces deux éléments commandent les moyens
       engagés : ce qu’il faut faire, et pour combien de gens.
 
-      « À VOUS » rend l’antenne et invite les stations à répondre.
+      « À VOUS » ferme le message.
   - titre: L’ASN d’abord, la voix ensuite
     texte: >-
       Si ta VHF est munie de l’appel sélectif numérique, tu soulèves le capot rouge et tu
@@ -71,3 +70,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

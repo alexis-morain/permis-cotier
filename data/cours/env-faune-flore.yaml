@@ -12,8 +12,8 @@ etapes:
       végétaux marins et leur milieu est puni de 22 500 euros d’amende.
 
       La détention suffit. Tu n’as pas besoin de t’en être servi pour être en infraction,
-      dès lors que c’est à bord et pour la pêche. Ce qui est visé, c’est le moyen qui tue
-      bien au-delà de la prise.
+      dès lors que c’est à bord et pour la pêche. Leur point commun : ils tuent bien
+      au-delà de la prise.
   - titre: Une zone fermée, une période fermée, personne n’y échappe
     texte: >-
       Pratiquer la pêche dans une zone ou à une profondeur interdite, ou pêcher certaines
@@ -31,7 +31,7 @@ etapes:
       Elle frappe aussi le fait de pêcher, de détenir à bord, de débarquer, de transporter
       ou de vendre des captures qui n’ont pas la taille, le calibre ou le poids requis, ou
       d’enfreindre les règles de marquage et de tri.
-  - titre: Ce que tu verses à l’eau remonte la même chaîne
+  - titre: "Rejeter une substance nuisible : 100 000 euros"
     texte: >-
       La protection ne s’arrête pas aux prises. Jeter, déverser ou laisser écouler en mer
       des substances ou organismes nuisibles pour la conservation ou la reproduction des
@@ -57,9 +57,14 @@ sources:
   - texte: Code rural et de la pêche maritime, article L. 945-4, I, 7°
     ref: peche-loisir
     fichier: article-l945-4
+  - texte: Code rural et de la pêche maritime, article R. 921-84
+    ref: peche-loisir
+    fichier: article-r921-84
   - texte: Code de l'environnement, article L. 218-73
     ref: code-environnement
     fichier: article-l218-73
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

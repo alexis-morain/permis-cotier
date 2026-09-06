@@ -13,7 +13,8 @@ etapes:
   - titre: Les catégories à reconnaître
     texte: >-
       Les principales, celles qu’on croise en côtière, tiennent en quelques lignes. La
-      liste du code en compte d’autres, dont les aires délimitées au titre de conventions
+      liste du code en compte d’autres : les réserves nationales de chasse et de faune
+      sauvage ayant une partie maritime, et les aires délimitées au titre de conventions
       internationales et régionales.
     liste:
       - Les parcs nationaux ayant une partie maritime
@@ -28,22 +29,18 @@ etapes:
     texte: >-
       La liste rassemble des régimes très différents sous un même nom. Un parc national,
       une réserve naturelle, un parc naturel marin et un site Natura 2000 sont créés par
-      des textes distincts, et c’est l’acte de création de chaque aire qui dit ce qui y est
-      permis.
-
-      Ce qu’il faut faire en pratique : avant de partir, lire l’instruction nautique et
-      l’arrêté qui s’appliquent à la zone, plutôt que chercher une règle unique valable
-      dans toutes les aires.
+      des textes distincts. Chaque catégorie relève de son propre régime, et ce qui est
+      permis dépend de l’aire où tu es.
 piege: >-
   Le piège tient à des zones qui y ressemblent sans en être. Une zone de mouillages et
   d’équipements légers, un mouillage organisé de port de plaisance, un chenal traversier
-  de plage organisent la circulation et le stationnement des bateaux. Ce sont des outils
-  de police de la navigation, ils ne figurent pas dans la liste des aires marines protégées.
+  de plage organisent la circulation et le stationnement des bateaux. Ils ne figurent pas
+  dans la liste des aires marines protégées.
 retenir:
   - "Aire marine protégée : une catégorie de la liste du code de l’environnement, rien d’autre."
   - "Parcs nationaux et réserves naturelles avec partie maritime, arrêtés de biotope, parcs naturels marins, sites Natura 2000 en mer : oui."
   - "Zone de mouillage organisé, chenal traversier de plage : non."
-  - Les règles applicables viennent du texte propre à chaque aire.
+  - "Chaque catégorie relève de son propre régime : ce qui est permis dépend de l’aire où tu es."
 sources:
   - texte: Code de l'environnement, article L. 334-1
     ref: code-environnement
@@ -51,3 +48,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

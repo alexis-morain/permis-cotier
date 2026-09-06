@@ -58,6 +58,11 @@ sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
     ref: fiche-meteo
     fichier: beaufort-et-mer
+  - texte: Division 245, article 245-1.02
+    ref: division-245
+    fichier: article-245-1-02
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'

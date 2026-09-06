@@ -11,7 +11,9 @@ etapes:
       sifflet. Le rattrapé répond, puis manœuvre pour laisser passer.
 
       Les signaux ne valent que là, et entre deux navires en vue l’un de l’autre. En mer
-      libre, on double sans rien annoncer.
+      libre, ce sont les signaux de manœuvre de la règle 34 a) qui s’appliquent : un ou
+      deux sons brefs si tu changes de cap. Les signaux à deux sons prolongés ne valent
+      que dans le chenal.
   - titre: Deux prolongés, un bref, je te rattrape sur tribord
     texte: >-
       Deux sons prolongés groupés en tête annoncent une intention de dépasser. Le nombre
@@ -42,8 +44,8 @@ etapes:
     alt: "Une impulsion tenue, une courte, une tenue, une courte, dans cet ordre."
   - titre: Pas de signal de refus
     texte: >-
-      Aucun signal ne dit non. Celui qui est rattrapé et qui doute émet la série rapide
-      d’au moins cinq sons brefs, le signal du doute.
+      Le Règlement ne prévoit pas de signal de refus. Celui qui est rattrapé et qui doute
+      émet la série rapide d’au moins cinq sons brefs, le signal du doute.
 
       L’accord ne change rien aux priorités : le navire qui rattrape reste tenu de
       s’écarter de la route du navire rattrapé jusqu’à ce qu’il l’ait dépassé et
@@ -64,6 +66,11 @@ sources:
   - texte: RIPAM, règle 9
     ref: decret-77-733
     fichier: regle-09
+  - texte: RIPAM, règle 13
+    ref: decret-77-733
+    fichier: regle-13
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-06'
