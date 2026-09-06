@@ -31,7 +31,8 @@
     "generer": "python3 scripts/generer.py",
     "partage": "node scripts/partage.mjs",
     "build:pages": "astro build",
-    "verifier:cible": "node scripts/verifier-cible.mjs"
+    "verifier:cible": "node scripts/verifier-cible.mjs",
+    "icones:ios": "node scripts/icones-ios.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",
