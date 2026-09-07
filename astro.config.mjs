@@ -66,8 +66,11 @@ export default defineConfig({
         lang: 'fr',
         start_url: '/',
         display: 'standalone',
-        background_color: '#f2ecdd',
-        theme_color: '#16231f',
+        // Le manifeste est vu avant le CSS, notamment à l'installation et au
+        // démarrage de la PWA. Il doit donc suivre les jetons actuels, pas
+        // l'ancienne direction artistique crème et vert sombre.
+        background_color: '#f3f6fb',
+        theme_color: '#0b1d3a',
         icons: [
           { src: '/icone-192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icone-512.png', sizes: '512x512', type: 'image/png' },
