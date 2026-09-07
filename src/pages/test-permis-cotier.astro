@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+
+const sources = [
+  {
+    texte: 'Arrêté du 28 septembre 2007, article 1er',
+    url: 'https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000045740615',
+  },
+  {
+    texte: 'Ministère de la Mer — évolution de l’examen théorique',
+    url: 'https://www.mer.gouv.fr/lexamen-theorique-du-permis-plaisance-evolue',
+  },
+];
+---
+
+<Base
+  titre="Test permis côtier gratuit : QCM et examen blanc"
+  description="Fais un test gratuit du permis côtier : 40 questions, correction sourcée et entraînement par thème, sans compte ni publicité."
+  miettes={[{ nom: 'Test permis côtier', chemin: '/test-permis-cotier' }]}
+>
+  <article class="page page--etroite test" style="padding-block:2.5rem 0">
+    <p class="chapitre">Test gratuit</p>
+    <h1>Teste-toi avant l’examen du permis côtier</h1>
+    <p class="test__chapo">
+      Un examen blanc gratuit de quarante questions, puis la correction complète avec la règle
+      citée sous chaque réponse. Sans inscription : tu peux recommencer autant de fois que tu veux.
+    </p>
+
+    <div class="test__actions">
+      <a class="bouton bouton--principal" href="/examen" data-mesure="test-examen">
+        Lancer le test permis côtier
+      </a>
+      <a class="bouton" href="/entrainement" data-mesure="test-entrainement">
+        M’entraîner par thème
+      </a>
+    </div>
+
+    <section>
+      <h2>Comment se déroule l’examen blanc ?</h2>
+      <ol>
+        <li>40 questions sont tirées dans les quatorze thèmes du programme.</li>
+        <li>Tu as 20 secondes par question et aucun corrigé avant le résultat.</li>
+        <li>À la fin, tu vois ton score, tes erreurs et la source de chaque correction.</li>
+      </ol>
+      <p>
+        L’arrêté fixe quarante questions et cinq erreurs admises. Le rythme de vingt secondes et
+        les questions à une ou deux bonnes réponses sont une pratique décrite par les opérateurs
+        agréés : le site l’indique pour ne jamais présenter une habitude comme une règle de droit.
+      </p>
+    </section>
+
+    <section>
+      <h2>Que faire après le QCM ?</h2>
+      <p>
+        Un score ne suffit pas à apprendre. Rejoue d’abord les erreurs dans le mode
+        <a href="/revoir" data-mesure="test-revoir"> revoir mes erreurs</a>, puis travaille le
+        thème qui t’a coûté le plus de points. Si tu pars de zéro, le
+        <a href="/cours" data-mesure="test-cours"> cours pas à pas</a> explique les notions avant
+        de te les faire vérifier.
+      </p>
+    </section>
+
+    <section>
+      <h2>Un test indépendant et vérifiable</h2>
+      <p>
+        Ce site ne délivre aucun permis et n’est pas lié à l’administration. C’est un outil de
+        révision indépendant : chaque question est écrite depuis un texte, puis sa correction
+        renvoie vers ce texte. Si une règle ou un visuel paraît douteux, tu peux
+        <a href="/signaler" data-mesure="test-signaler"> le signaler</a>.
+      </p>
+      <p class="discret">
+        Sources sur le format : {sources.map((source, index) => (
+          <Fragment>
+            {index > 0 && ' ; '}
+            <a href={source.url} target="_blank" rel="noreferrer noopener">{source.texte}</a>
+          </Fragment>
+        ))}.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .test__chapo {
+    border-left: var(--bord) solid var(--accent);
+    font-size: 1.25rem;
+    font-stretch: var(--large);
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 1.5rem 0 2rem;
+    max-width: 54ch;
+    padding-left: 1.1rem;
+  }
+  .test__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 3rem; }
+  .test section { margin-top: 2.75rem; }
+  .test section p, .test li { max-width: 66ch; }
+  .test li { margin-bottom: 0.5rem; }
+</style>
