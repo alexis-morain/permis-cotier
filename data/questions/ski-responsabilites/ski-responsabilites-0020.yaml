@@ -1,0 +1,29 @@
+id: ski-responsabilites-0020
+option: cotier
+theme: ski-responsabilites
+notion: conduite-echouement-panne
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton moteur s'arrête et tu dérives vers des cailloux. Par quoi commences-tu ?
+propositions:
+  - id: a
+    texte: Tu mouilles sans attendre, avant même de chercher la panne
+  - id: b
+    texte: Tu ouvres le capot moteur et tu cherches la cause
+  - id: c
+    texte: Tu attends de voir si la dérive t'écarte du danger
+reponses:
+  - a
+explication: >-
+  L'ancre est le premier geste quand on dérive vers un danger, une côte, des cailloux
+  ou un chenal fréquenté : elle arrête la dérive et te rend le temps que le diagnostic
+  va prendre. Ensuite seulement viennent les causes simples, niveau de carburant, robinet,
+  coupe-batterie, cordon coupe-circuit, filtre à eau, crépine, hélice engagée dans un bout.
+sources:
+  - texte: Fiche conduite à tenir, section Panne de moteur
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude
