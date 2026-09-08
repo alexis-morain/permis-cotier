@@ -10,7 +10,8 @@ Ce script compare la banque de travail à une référence git et refuse toute
 conversion qui ferait autre chose que retirer des propositions. Il connaît
 deux autres gestes légitimes : la relecture en bloc, qui ne touche que `meta`,
 et le resourcement, qui remplace la citation affichée sans toucher à la
-question et rend la relecture à Claude.
+question et rend la relecture à Claude. Un geste à la fois : convertir et
+resourcer dans le même diff cache les deux vérifications l'une derrière l'autre.
 
     python3 scripts/verifier_conversion.py            # contre HEAD
     python3 scripts/verifier_conversion.py --ref main
@@ -78,6 +79,11 @@ def verifier(avant: dict, apres: dict) -> list[str]:
     # Ce n'est pas une conversion, mais la relecture humaine portait sur une
     # citation que le candidat ne verra plus : elle retombe sur Claude.
     resource = avant.get("sources") != apres.get("sources")
+    if converti and resource:
+        problemes.append(
+            "deux gestes dans le même diff : la question est convertie et resourcée à la fois, "
+            "chacun demande sa vérification, ils se relisent séparément"
+        )
     if resource and relu_par != "claude":
         problemes.append(
             f"source changée mais meta.relu_par vaut {relu_par!r} : la relecture porte sur une citation qui n'est plus la même"
