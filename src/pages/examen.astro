@@ -6,7 +6,7 @@ import { versionBanque } from '../lib/banque';
 // La banque n'est plus sérialisée dans la page : elle arrive par un JSON dont
 // le nom porte la version, commun aux seize écrans de jeu et gardé en cache
 // immuable. La page tombe de sept cents kilo-octets à quelques-uns.
-const banque = `/banque/${versionBanque()}.json`;
+const banque = `/banque/v/${versionBanque()}.json`;
 ---
 
 <Base

@@ -1,15 +1,26 @@
 # En-têtes servis par Cloudflare Workers Static Assets.
 #
+# **Cloudflare additionne les valeurs de toutes les règles qui matchent**, dans
+# l'ordre du fichier, et c'est la première qui gagne. Un `Cache-Control` posé
+# sur `/*` se collait donc devant celui de `/visuels/*` : les visuels
+# annonçaient `max-age=0, must-revalidate, public, max-age=31536000, immutable`
+# et se revalidaient à chaque page. Une adresse ne reçoit son `Cache-Control`
+# que d'une seule règle. `/*` ne porte plus que la sécurité, et les motifs qui
+# posent une durée ne se recouvrent jamais entre eux — d'où la banque servie
+# sous `/banque/v/`, pour que son immuable n'attrape pas le pointeur de
+# fraîcheur `/banque/derniere.json`.
+#
+# Le HTML, lui, n'a plus de règle : Workers Static Assets le sert avec son
+# propre en-tête de revalidation, ce que la page veut, puisque le pied de page
+# compte les questions relues et vieillit à chaque publication.
+#
 # Le www ne se redirige pas ici : `_redirects` matche sur le chemin et ignore
 # l'hôte. La redirection de www vers le domaine nu est une Redirect Rule de la
 # zone, posée dans le tableau de bord Cloudflare.
 
-# Le HTML n'est pas figé : la banque change à chaque publication, et une page
-# gardée trop longtemps en cache montre un compte de questions périmé.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Cache-Control: public, max-age=0, must-revalidate
 
 # Les visuels portent leur contenu dans leur nom : ils peuvent être gardés.
 /visuels/*
@@ -19,12 +30,12 @@
   Cache-Control: public, max-age=86400
 
 # La banque, sortie du HTML. Le nom porte la version : le fichier ne change
-# jamais sous ce nom-là, il se garde donc pour de bon. `derniere.json`, lui,
-# est le seul point qui doive dire la vérité du jour, puisqu'il sert justement
-# à savoir si une banque déjà téléchargée a vieilli.
-/banque/*
+# jamais sous ce nom-là, il se garde donc pour de bon.
+/banque/v/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Le pointeur de fraîcheur, hors de `/banque/v/` pour qu'aucun immuable ne
+# l'attrape : il est le seul point qui doive dire la vérité du jour.
 /banque/derniere.json
   Cache-Control: public, max-age=300, must-revalidate
 
