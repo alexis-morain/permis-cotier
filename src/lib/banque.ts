@@ -1,20 +1,13 @@
 import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
-import type { Question } from './schema';
-import type { QuestionJouable } from './quiz';
+import { versAffichable } from './affichable';
+import type { QuestionAffichable } from './affichable';
 import { THEMES, themeParCode } from './themes';
 
-/** Une question telle que la page la donne à l'îlot React. */
-export interface QuestionAffichable extends QuestionJouable {
-  /** Notion du programme couverte, quand la question a été classée. */
-  notion?: string;
-  enonce: string;
-  explication: string;
-  difficulte: number;
-  propositions: { id: string; texte: string }[];
-  sources: { texte: string; ref: string; url?: string }[];
-  visuel?: { fichier: string; alt: string; credit: string };
-}
+// `QuestionAffichable` et `versAffichable` vivent dans `affichable.ts`, qui
+// n'importe pas `astro:content` : c'est ce qui permet de les tester. Le nom
+// reste importable d'ici, où tout le site allait déjà le chercher.
+export type { QuestionAffichable } from './affichable';
 
 export function versionBanque(): string {
   try {
@@ -22,21 +15,6 @@ export function versionBanque(): string {
   } catch {
     return '0.0.0';
   }
-}
-
-function versAffichable(donnees: Question): QuestionAffichable {
-  return {
-    id: donnees.id,
-    theme: donnees.theme,
-    notion: donnees.notion,
-    enonce: donnees.enonce,
-    explication: donnees.explication,
-    difficulte: donnees.difficulte,
-    propositions: donnees.propositions.map((p) => ({ id: p.id, texte: p.texte })),
-    reponses: donnees.reponses,
-    sources: donnees.sources.map((s) => ({ texte: s.texte, ref: s.ref, url: s.url })),
-    visuel: donnees.visuel,
-  };
 }
 
 /** Seules les questions publiées entrent dans le site. */
