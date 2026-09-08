@@ -30,10 +30,13 @@ avant décembre 2026. En attendant, une erreur est possible : le bouton de
 signalement est sur chaque question, et les signalements sont traités dans la
 semaine.
 
-Le site n'est pas entièrement statique. Deux fonctions serveur tournent sur
-Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de
-synchronisation de progression. Tout le reste est du HTML généré au build.
-Aucun compte, aucune donnée personnelle, aucun cookie.
+Le site n'est pas entièrement statique. Un script Worker, `src/worker.ts`,
+répond à une seule adresse, `POST /api/signaler` : il vérifie un jeton
+Turnstile, puis ouvre une issue publique dans ce dépôt. Tout le reste — chaque
+page, chaque redirection, la page 404 — reste servi par les actifs, qui passent
+avant le script. Le formulaire retombe sur un courrier pré-rempli à la moindre
+panne, endpoint éteint compris. Le signalement ne porte ni adresse, ni adresse
+IP, ni identifiant : aucun compte, aucune donnée personnelle, aucun cookie.
 
 La fréquentation est comptée par une instance Umami auto-hébergée : pas de
 cookie, pas d'identifiant de visiteur, rien qui suive quelqu'un d'un site à
@@ -163,7 +166,8 @@ src/lib/                           moteur : thèmes, notions, parcours, cours, s
 src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement,
                                    profil, recherche et son index recherche.json
 src/components/                    îlot React du quiz, panneau de recherche
-functions/api/                     signalement, puis synchronisation
+src/lib/signalement.ts             validation et mise en inertie du texte reçu
+src/worker.ts                      le Worker : POST /api/signaler, le reste aux actifs
 ```
 
 ## Visuels
