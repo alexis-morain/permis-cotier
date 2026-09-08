@@ -1,0 +1,32 @@
+id: securite-0052
+option: cotier
+theme: securite
+notion: securite-visibilite-restreinte
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans la brume, ton radar te signale un navire que tu ne vois pas. Que te demande la
+  règle 19 d) avant même de manœuvrer ?
+propositions:
+  - id: a
+    texte: De déterminer si une situation très rapprochée est en train de se créer ou si
+      un risque d'abordage existe
+  - id: b
+    texte: D'appeler ce navire sur le canal 16 avant toute autre chose
+  - id: c
+    texte: De stopper immédiatement et d'attendre qu'il soit passé
+reponses:
+  - a
+explication: >-
+  Le radar donne un écho, pas un jugement. La règle 19 d) demande d'abord de déterminer
+  si une situation très rapprochée est en train de se créer ou si un risque d'abordage
+  existe, et seulement ensuite de prendre largement à temps les mesures pour l'éviter.
+  « Largement à temps » est le second mot de la règle : une manœuvre tardive dans la brume
+  n'est pas comprise par l'autre.
+sources:
+  - texte: RIPAM, règle 19 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

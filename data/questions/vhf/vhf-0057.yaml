@@ -1,0 +1,29 @@
+id: vhf-0057
+option: cotier
+theme: vhf
+notion: vhf-relais
+statut: publie
+difficulte: 2
+enonce: >-
+  Sur quelle voie passes-tu un MAYDAY RELAY ?
+propositions:
+  - id: a
+    texte: Le canal 16
+  - id: b
+    texte: Le canal 70
+  - id: c
+    texte: Une voie de travail entre navires, 72 ou 77
+reponses:
+  - a
+explication: >-
+  Le canal 16 est la voie internationale de détresse, d'urgence et d'appel, et les CROSS
+  la veillent en permanence : c'est là que le relais a une chance d'être entendu. Le canal
+  70 ne porte que des données d'appel sélectif numérique, aucune phonie n'y passe jamais.
+  Une voie de travail, elle, n'est veillée par personne en particulier.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

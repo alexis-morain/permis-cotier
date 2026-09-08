@@ -1,0 +1,29 @@
+id: vhf-0058
+option: cotier
+theme: vhf
+notion: vhf-relais
+statut: publie
+difficulte: 2
+enonce: >-
+  Qui peut émettre un MAYDAY RELAY ?
+propositions:
+  - id: a
+    texte: Un navire comme une station, dès lors qu'il relaie la détresse d'un autre
+  - id: b
+    texte: Une station côtière seulement
+  - id: c
+    texte: Le navire en détresse lui-même, pour répéter son appel
+reponses:
+  - a
+explication: >-
+  MAYDAY RELAY est le relais, par un navire ou par une station, d'un message de détresse
+  émis par un autre et resté sans réponse. Rien ne réserve le relais aux stations côtières :
+  un plaisancier peut être le seul à avoir capté l'appel. Et ce n'est pas une répétition
+  par le sinistré lui-même, qui, lui, lance ou relance son MAYDAY.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

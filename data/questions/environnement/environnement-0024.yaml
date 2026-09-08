@@ -1,0 +1,30 @@
+id: environnement-0024
+option: cotier
+theme: environnement
+notion: env-antisalissures
+statut: publie
+difficulte: 3
+enonce: >-
+  Les 100 000 euros d'amende de l'article L. 218-73 sont-ils un plafond que rien ne peut
+  dépasser ?
+propositions:
+  - id: a
+    texte: Oui, c'est un maximum absolu
+  - id: b
+    texte: Non, le montant peut être porté jusqu'au double de l'avantage tiré de l'infraction
+  - id: c
+    texte: Non, le juge peut le tripler sans autre condition
+reponses:
+  - b
+explication: >-
+  L'article prévoit 100 000 euros d'amende, « ce montant pouvant être porté jusqu'au double
+  de l'avantage tiré de la commission de l'infraction ». Autrement dit, celui qui a gagné
+  de l'argent en polluant ne s'en tire pas avec une amende inférieure à son gain. Le
+  chiffre à retenir reste 100 000 euros.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude
