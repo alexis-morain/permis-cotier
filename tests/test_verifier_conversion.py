@@ -109,3 +109,24 @@ def test_un_nom_de_relecteur_pose_sur_une_question_retouchee_est_refuse():
     casse = {**CONVERTIE, "difficulte": 3,
              "meta": {**CONVERTIE["meta"], "relu_par": "alexis"}}
     assert any("retouchée" in p for p in verifier(CONVERTIE, casse))
+
+
+RESOURCEE = apres(
+    sources=[{"texte": "Arrêté du 30 novembre 2017, annexe I, 2.3.1", "ref": "arrete-2017-11-30"}],
+    meta={"relu_par": "claude", "relu_le": None},
+)
+del RESOURCEE["meta"]["relu_le"]
+
+
+def test_un_resourcement_propre_ne_pose_aucun_probleme():
+    # Rendre à une question sa source officielle ne retire aucune proposition :
+    # ce n'est pas une conversion, mais la citation affichée change, donc la
+    # relecture humaine qui portait sur l'ancienne ne vaut plus.
+    avant = {**AVANT, "sources": [{"texte": "Balisage AISM", "ref": "aism-mbs"}]}
+    assert verifier(avant, {**RESOURCEE, "propositions": AVANT["propositions"]}) == []
+
+
+def test_un_resourcement_qui_garde_la_relecture_humaine_est_signale():
+    avant = {**AVANT, "sources": [{"texte": "Balisage AISM", "ref": "aism-mbs"}]}
+    casse = {**avant, "sources": RESOURCEE["sources"]}
+    assert any("citation" in p for p in verifier(avant, casse))
