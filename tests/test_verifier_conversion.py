@@ -130,3 +130,13 @@ def test_un_resourcement_qui_garde_la_relecture_humaine_est_signale():
     avant = {**AVANT, "sources": [{"texte": "Balisage AISM", "ref": "aism-mbs"}]}
     casse = {**avant, "sources": RESOURCEE["sources"]}
     assert any("citation" in p for p in verifier(avant, casse))
+
+
+def test_convertir_et_resourcer_dans_le_meme_geste_est_refuse():
+    # Deux gestes en un : on retire un distracteur et on change la citation.
+    # Chacun demande sa propre vérification — la réponse désigne-t-elle encore
+    # le bon texte, l'article dit-il bien ce que la question affirme — et un
+    # diff qui les mélange ne laisse voir ni l'une ni l'autre. Deux commits.
+    casse = {**CONVERTIE, "sources": [{"texte": "Arrêté du 30 novembre 2017, annexe I, 3.3.2",
+                                       "ref": "arrete-2017-11-30"}]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
