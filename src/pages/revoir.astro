@@ -6,7 +6,7 @@ import { versionBanque } from '../lib/banque';
 // Les questions ratées, tous thèmes mêlés. La série se constitue dans le
 // navigateur, depuis la progression locale : le serveur ne sait rien de ce
 // que le candidat a raté, et la page reste la même pour tout le monde.
-const banque = `/banque/${versionBanque()}.json`;
+const banque = `/banque/v/${versionBanque()}.json`;
 ---
 
 <Base

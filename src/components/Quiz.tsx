@@ -795,6 +795,13 @@ function Panne({ reessayer }: { reessayer: () => void }) {
 }
 
 /**
+ * Ce qu'on attend la banque avant de rendre la main. Quinze secondes : de quoi
+ * laisser passer une 3G lente sur 96 Ko compressés, pas de quoi laisser le
+ * candidat devant une silhouette qui bat pour rien.
+ */
+const ATTENTE_BANQUE = 15_000;
+
+/**
  * L'écran de jeu, banque comprise.
  *
  * Deux entrées, jamais les deux à la fois : `questions`, que les tests
@@ -812,19 +819,30 @@ export default function Quiz({ source, questions, ...reste }: Props) {
     if (!source || questions) return;
     let vivant = true;
     setEchec(false);
-    fetch(source)
+    // Une échéance, parce qu'un réseau muet ne rejette rien : un portail
+    // captif ou un mobile qui a lâché accepte la connexion et se tait. Sans
+    // elle, la silhouette bat sans fin et l'écran n'offre pas même un bouton.
+    const controleur = new AbortController();
+    const echeance = setTimeout(() => {
+      controleur.abort();
+      if (vivant) setEchec(true);
+    }, ATTENTE_BANQUE);
+    fetch(source, { signal: controleur.signal })
       .then((reponse) => {
         if (!reponse.ok) throw new Error(`banque : ${reponse.status}`);
         return reponse.json() as Promise<BanqueServie>;
       })
       .then((banque) => {
+        clearTimeout(echeance);
         if (vivant) setChargees(banque.questions);
       })
       .catch(() => {
+        clearTimeout(echeance);
         if (vivant) setEchec(true);
       });
     return () => {
       vivant = false;
+      clearTimeout(echeance);
     };
   }, [source, questions, essai]);
 

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { questionsPubliees, versionBanque } from '../../lib/banque';
+import { questionsPubliees, versionBanque } from '../../../lib/banque';
 
 /**
  * La banque, servie une fois pour toutes les pages de jeu.

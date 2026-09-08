@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Quiz from './Quiz';
 import type { QuestionAffichable } from '../lib/banque';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
@@ -418,7 +418,8 @@ describe('la banque téléchargée', () => {
       expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy(),
     );
     expect(appel).toHaveBeenCalledTimes(1);
-    expect(appel).toHaveBeenCalledWith('/banque/1.10.2.json');
+    // Le second argument porte le signal d'abandon de l'échéance.
+    expect(appel).toHaveBeenCalledWith('/banque/1.10.2.json', expect.anything());
   });
 
   it('ne va rien chercher quand les questions sont déjà là', () => {
@@ -446,6 +447,26 @@ describe('la banque téléchargée', () => {
     await waitFor(() =>
       expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy(),
     );
+  });
+
+  it('renonce au bout de quinze secondes plutôt que de tourner sans fin', async () => {
+    // Un réseau qui accepte la connexion et ne répond jamais — portail captif,
+    // tunnel, mobile mort — ne rejette pas la promesse : sans échéance, la
+    // silhouette bat indéfiniment et le candidat n'a même pas de bouton.
+    vi.useFakeTimers();
+    try {
+      vi.stubGlobal('fetch', vi.fn(() => new Promise(() => {})) as unknown as typeof fetch);
+      render(<Quiz mode="examen" source="/banque/v/1.10.2.json" />);
+      expect(document.querySelector('.silhouette')).toBeTruthy();
+
+      await act(async () => {
+        vi.advanceTimersByTime(15_000);
+      });
+      expect(screen.getByText(/Les questions ne sont pas arrivées/)).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Réessayer' })).toBeTruthy();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('traite un 404 comme une coupure, pas comme une banque vide', async () => {
