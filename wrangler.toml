@@ -1,6 +1,14 @@
-# Site entièrement statique servi par Workers Static Assets.
-# Pas de script Worker : aucun `main`, le trafic va directement aux fichiers.
+# Site servi par Workers Static Assets, avec un script devant une seule adresse.
+#
+# `main` pose le Worker, mais `run_worker_first` reste absent : les actifs
+# passent toujours en premier. Toute adresse qui correspond à un fichier de
+# `dist/` est servie par le routeur d'actifs sans que le script ne s'exécute,
+# `html_handling` et `not_found_handling` compris. Seuls les chemins sans
+# fichier atteignent `src/worker.ts`, qui ne traite que `POST /api/signaler` et
+# redonne tout le reste au routeur par le binding `ASSETS` — c'est là que les
+# adresses inconnues retrouvent la page 404.
 name = "permis-cotier"
+main = "./src/worker.ts"
 compatibility_date = "2026-09-04"
 # Le site répond sur lepermiscotier.fr. Sans cette ligne, chaque
 # `wrangler deploy` rouvre permis-cotier.alexis-c1f.workers.dev : un second
@@ -10,7 +18,18 @@ workers_dev = false
 
 [assets]
 directory = "./dist"
+# Sans ce binding, le script n'aurait aucun moyen de rendre la main aux actifs :
+# tout ce qui ne correspond pas à un fichier tomberait sur le Worker, et le
+# site entier disparaîtrait derrière l'endpoint.
+binding = "ASSETS"
 # Le build Astro est en format fichier avec trailingSlash à never :
 # /examen doit servir examen.html, sans barre finale.
 html_handling = "drop-trailing-slash"
 not_found_handling = "404-page"
+
+# Les secrets ne sont pas ici. `TURNSTILE_SECRET_KEY`, `GITHUB_BOT_TOKEN`,
+# `GITHUB_REPO` et, si notification par courrier il y a, `RESEND_API_KEY`,
+# `SIGNALEMENT_MAIL_TO` et `SIGNALEMENT_MAIL_FROM` sont posés par
+# `wrangler secret put <NOM>`. Tant que Turnstile ou GitHub manquent,
+# l'endpoint rend 503 et la page retombe sur le `mailto:`.
+# `TURNSTILE_SITE_KEY`, elle, est publique et entre au build.
