@@ -4,10 +4,10 @@ import { questionsPubliees, versionBanque } from '../../lib/banque';
 /**
  * Le seul numéro de version, et le compte de questions qui va avec.
  *
- * C'est le point que l'app interroge au lancement : une version plus récente
- * que celle qu'elle embarque, elle télécharge `banque/<version>.json` et la
- * garde. Pas de réseau, elle joue ce qu'elle a — jamais d'erreur affichée.
- * Le compte sert de contrôle grossier : une banque tronquée se voit.
+ * Les fichiers `banque/<version>.json` portent leur version dans leur nom et
+ * se gardent pour de bon ; celui-ci est le pointeur vers la version en ligne,
+ * pour un client qui a déjà une banque et veut savoir si elle a vieilli. Le
+ * compte sert de contrôle grossier : une banque tronquée se voit.
  *
  * Ce fichier-ci n'est pas figeable en cache, c'est tout son intérêt.
  */

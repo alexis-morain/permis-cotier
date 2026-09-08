@@ -87,8 +87,8 @@ export default defineConfig({
         // version, donc une publication la remplace au lieu de l'empiler.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
         // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
-        // c'est un pointeur vers la version en ligne, le site n'en a aucun
-        // usage hors ligne.
+        // c'est le pointeur vers la version en ligne, et le hors-ligne joue de
+        // toute façon la banque déjà précachée.
         globIgnores: ['**/node_modules/**/*', 'banque/derniere.json'],
         navigateFallback: '/',
         cleanupOutdatedCaches: true,
