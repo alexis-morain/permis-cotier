@@ -26,10 +26,9 @@ explication: >-
   région à l'autre, et c'est elle qui tranche : le cône et le voyant conique sont toujours
   à tribord, le cylindre toujours à bâbord. En région A, cette même marque serait verte.
 sources:
-  - texte: AISM, système de balisage maritime, région B, marque latérale tribord
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

@@ -23,10 +23,11 @@ explication: >-
   bleu et jaune alternés. Le piège vient de cette croix jaune, qu'elle partage avec la
   marque spéciale, laquelle a un corps entièrement jaune et ne signale aucun danger.
 sources:
-  - texte: Balisage AISM région A, marque de danger nouveau
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

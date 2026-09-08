@@ -23,10 +23,9 @@ explication: >-
   aide : 3 pour l'Est, 6 pour le Sud, 9 pour l'Ouest, comme sur un cadran d'horloge. La
   marque de danger isolé, elle, montre deux éclats groupés seulement.
 sources:
-  - texte: Balisage AISM, marques cardinales, feux
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
