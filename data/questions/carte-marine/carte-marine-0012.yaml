@@ -30,10 +30,9 @@ explication: >-
   deux autres descriptions sont des feux à éclats groupés, qui marquent une pause après
   chaque groupe : la cardinale Nord est justement celle qui n'en fait aucune.
 sources:
-  - texte: Balisage AISM région A, marques cardinales, Nord
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.1
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
