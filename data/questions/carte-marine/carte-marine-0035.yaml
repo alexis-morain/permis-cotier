@@ -1,0 +1,29 @@
+id: carte-marine-0035
+option: cotier
+theme: carte-marine
+notion: maree-principe
+statut: publie
+difficulte: 1
+enonce: >-
+  Quels astres commandent le marnage ?
+propositions:
+  - id: a
+    texte: La Lune et le Soleil
+  - id: b
+    texte: La Lune seule
+  - id: c
+    texte: Le Soleil seul
+reponses:
+  - a
+explication: >-
+  Ce sont la Lune et le Soleil qui tirent la mer, et c'est le jeu de leurs deux attractions
+  qui fait varier le marnage d'un jour à l'autre. La Lune pèse le plus, mais raisonner
+  sur elle seule ne permet pas d'expliquer les vives-eaux et les mortes-eaux, qui tiennent
+  à la position des deux astres l'un par rapport à l'autre.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

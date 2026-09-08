@@ -1,0 +1,30 @@
+id: signaux-0051
+option: cotier
+theme: signaux
+notion: signaux-meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es en mer et un avis de vent fort vient de paraître sur ta zone. Comment les CROSS
+  te le passent-ils ?
+propositions:
+  - id: a
+    texte: Sur un canal VHF de travail, annoncé au préalable sur le canal 16
+  - id: b
+    texte: En appel sélectif numérique sur le canal 70
+  - id: c
+    texte: Uniquement au prochain bulletin horaire de Météo-France
+reponses:
+  - a
+explication: >-
+  En mer, les CROSS diffusent les bulletins et les avis sur des canaux VHF de travail,
+  annoncés au préalable sur le canal 16. Le canal 70 ne porte que des données d'appel
+  sélectif numérique, aucune parole n'y passe. Et un avis en cours est diffusé dès sa
+  parution, sans attendre l'heure du bulletin : c'est tout l'intérêt du procédé.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

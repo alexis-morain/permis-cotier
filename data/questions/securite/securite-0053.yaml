@@ -1,0 +1,32 @@
+id: securite-0053
+option: cotier
+theme: securite
+notion: securite-visibilite-restreinte
+statut: publie
+difficulte: 3
+enonce: >-
+  La brume tombe. Les règles de conduite de la section I, veille et vitesse de sécurité,
+  sont-elles suspendues au profit de la seule règle 19 ?
+propositions:
+  - id: a
+    texte: Non, elles continuent de s'appliquer, en tenant dûment compte des circonstances
+      et de la visibilité réduite
+  - id: b
+    texte: Oui, la règle 19 les remplace tant que dure la visibilité réduite
+  - id: c
+    texte: Elles ne s'appliquent qu'aux navires à propulsion mécanique
+reponses:
+  - a
+explication: >-
+  La règle 19 c) le dit en une phrase : tout navire, lorsqu'il applique les règles de
+  la section I, doit tenir dûment compte des circonstances existantes et des conditions
+  de visibilité réduite. La brume n'annule aucune règle, elle en durcit la lecture. Ce
+  qui change, ce sont les règles de barre entre navires en vue les uns des autres, qui,
+  elles, supposent qu'on se voie.
+sources:
+  - texte: RIPAM, règle 19 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

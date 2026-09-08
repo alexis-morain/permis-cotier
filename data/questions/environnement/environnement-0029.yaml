@@ -1,0 +1,30 @@
+id: environnement-0029
+option: cotier
+theme: environnement
+notion: env-peche-sous-marine
+statut: publie
+difficulte: 3
+enonce: >-
+  En chasse sous-marine, tu descends sous une profondeur où la pêche est interdite. Le
+  code rural et de la pêche maritime prévoit-il quelque chose ?
+propositions:
+  - id: a
+    texte: Oui, pêcher à une profondeur interdite est puni de 22 500 euros d'amende
+  - id: b
+    texte: Non, la profondeur n'est jamais un critère
+  - id: c
+    texte: Non, une limite de profondeur ne vise que les engins traînants
+reponses:
+  - a
+explication: >-
+  L'article L. 945-4 punit de 22 500 euros d'amende le fait de pratiquer la pêche dans
+  une zone ou à une profondeur interdite. La profondeur est bien un critère du texte,
+  au même rang que la zone et la période, et rien n'y distingue le plongeur du bateau.
+  Avant de mettre à l'eau, on vérifie l'arrêté en vigueur sur sa façade.
+sources:
+  - texte: Code rural et de la pêche maritime, article L. 945-4, I, 3°
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

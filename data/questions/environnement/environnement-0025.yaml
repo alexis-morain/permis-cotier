@@ -1,0 +1,32 @@
+id: environnement-0025
+option: cotier
+theme: environnement
+notion: env-antisalissures
+statut: publie
+difficulte: 3
+enonce: >-
+  Un résidu de carénage ne tue ni poisson ni coquillage, mais il les rend impropres à la
+  consommation. Échappe-t-il à l'article L. 218-73 ?
+propositions:
+  - id: a
+    texte: Non, l'article vise aussi les substances de nature à rendre ces animaux impropres
+      à la consommation
+  - id: b
+    texte: Oui, il faut une atteinte à la conservation ou à la reproduction
+  - id: c
+    texte: Oui, sauf si la zone est classée pour la conchyliculture
+reponses:
+  - a
+explication: >-
+  L'article vise deux effets et non un seul : les substances nuisibles pour la conservation
+  ou la reproduction des mammifères marins, poissons, crustacés, coquillages, mollusques
+  ou végétaux, et celles de nature à les rendre impropres à la consommation. Un produit
+  qui ne tue rien mais contamine la chair d'un coquillage tombe sous le second membre
+  de phrase.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

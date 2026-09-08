@@ -1,0 +1,30 @@
+id: signaux-0052
+option: cotier
+theme: signaux
+notion: signaux-meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Quel nom porte l'avis que Météo-France diffuse hors des heures normales quand un vent
+  de force 7 au moins est attendu ou observé ?
+propositions:
+  - id: a
+    texte: Le bulletin météorologique spécial, ou BMS
+  - id: b
+    texte: Le bulletin côte
+  - id: c
+    texte: Le bulletin large
+reponses:
+  - a
+explication: >-
+  L'avis prend la forme d'un bulletin météorologique spécial, le BMS. Le bulletin côte
+  et le bulletin large sont autre chose : ce sont les prévisions ordinaires, l'une jusqu'à
+  20 milles des côtes, l'autre jusqu'à 200 milles. Le BMS, lui, ne paraît que lorsque le
+  vent le déclenche, et il porte le nom de la force annoncée.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude
