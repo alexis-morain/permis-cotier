@@ -21,14 +21,15 @@ aucune banque de questions d'État, et personne ne peut prétendre reproduire
 celle de l'examen. Le site prépare **au format de l'épreuve** : 40 questions,
 1 ou 2 bonnes réponses, 5 erreurs admises, 20 secondes par question.
 
-**Toutes les questions publiées à ce jour sont relues par une seule personne,
-Alexis Morain.** Le champ `meta.relu_par` de chaque fichier porte le nom de son
-relecteur : `alexis` une fois relue, `claude` tant qu'un lot écrit par le modèle
-depuis l'article cité attend sa relecture, et le pied de page du site compte
-les deux au moment du build. Une deuxième relecture par un tiers est prévue
-avant décembre 2026. En attendant, une erreur est possible : le bouton de
-signalement est sur chaque question, et les signalements sont traités dans la
-semaine.
+**Une seule personne relit, Alexis Morain, et elle n'a pas encore tout relu.**
+Le champ `meta.relu_par` de chaque fichier porte le nom de son relecteur :
+`alexis` une fois relue, `claude` tant qu'elle attend. Une question y retombe
+aussi quand elle change : celle dont on remplace la citation était relue sur un
+texte que le candidat ne verra plus. Le pied de page du site compte les deux au
+moment du build, il dit donc toujours le vrai chiffre du jour. Une deuxième
+relecture par un tiers est prévue avant décembre 2026. En attendant, une erreur
+est possible : le bouton de signalement est sur chaque question, et les
+signalements sont traités dans la semaine.
 
 Le site n'est pas entièrement statique. Deux fonctions serveur tournent sur
 Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de
@@ -122,8 +123,8 @@ L'index est un fichier construit au build, `/recherche.json`, chargé à la
 première ouverture et non au chargement des pages, puis gardé dans le cache hors
 ligne. Le classement est dans `src/lib/recherche.ts` : le titre pèse plus que le
 corps, tous les mots tapés doivent porter, et l'énoncé d'une question compte
-comme du corps : sans cela, quatre cent quatre-vingts énoncés enterreraient la
-leçon qui les explique.
+comme du corps : sans cela, cinq cents énoncés enterreraient la leçon qui les
+explique.
 
 ## Ajouter une question
 
