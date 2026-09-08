@@ -93,3 +93,19 @@ def test_une_conversion_qui_garde_la_relecture_humaine_est_signalee():
 
 def test_une_question_non_convertie_garde_sa_relecture():
     assert verifier(AVANT, apres(difficulte=1)) == []
+
+
+def test_une_relecture_en_bloc_n_est_pas_une_conversion():
+    # Alexis valide en bloc un lot converti : `relu_par` repasse à son nom et
+    # rien d'autre ne bouge. Ce n'est pas une conversion, le garde-fou n'a rien
+    # à en dire, sans quoi une validation rend 226 lignes rouges pour rien.
+    validee = {**CONVERTIE, "meta": {**CONVERTIE["meta"], "relu_par": "alexis", "relu_le": "2026-09-08"}}
+    assert verifier(CONVERTIE, validee) == []
+
+
+def test_un_nom_de_relecteur_pose_sur_une_question_retouchee_est_refuse():
+    # L'inverse de la relecture en bloc : le fond bouge et le nom du relecteur
+    # apparaît dans le même geste, sur une question que personne n'a relue ainsi.
+    casse = {**CONVERTIE, "difficulte": 3,
+             "meta": {**CONVERTIE["meta"], "relu_par": "alexis"}}
+    assert any("retouchée" in p for p in verifier(CONVERTIE, casse))
