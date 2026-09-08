@@ -1,0 +1,30 @@
+id: ski-responsabilites-0019
+option: cotier
+theme: ski-responsabilites
+notion: conduite-echouement-panne
+statut: publie
+difficulte: 2
+enonce: >-
+  Le bateau vient de se dégager du sable et tu veux repartir. De quoi t'assures-tu avant
+  de remettre le moteur en marche ?
+propositions:
+  - id: a
+    texte: Que l'hélice et le circuit de refroidissement ne sont pas obstrués par le sable
+      ou la vase
+  - id: b
+    texte: Que le réservoir est plein
+  - id: c
+    texte: Que le compas n'a pas été déréglé par le choc
+reponses:
+  - a
+explication: >-
+  Un moteur relancé avec du sable dans la crépine et la vase dans l'hélice ajoute une
+  panne à l'échouement, et la panne arrive au pire moment, juste après le dégagement.
+  On regarde donc l'hélice et le circuit de refroidissement avant de tourner la clé.
+sources:
+  - texte: Fiche conduite à tenir, section Échouement
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

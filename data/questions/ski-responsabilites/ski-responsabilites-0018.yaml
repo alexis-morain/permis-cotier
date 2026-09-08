@@ -1,0 +1,30 @@
+id: ski-responsabilites-0018
+option: cotier
+theme: ski-responsabilites
+notion: conduite-echouement-panne
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu es échoué sur un fond de sable, la coque est saine et la marée monte. Que fais-tu ?
+propositions:
+  - id: a
+    texte: Tu attends l'eau, en gîtant le bateau ou en portant une ancre au large pour
+      te haler
+  - id: b
+    texte: Tu forces en marche arrière avant que le bateau ne s'enfonce
+  - id: c
+    texte: Tu abandonnes le bateau et tu rejoins la plage à la nage
+reponses:
+  - a
+explication: >-
+  La marée décide de l'urgence. Montante, elle travaille pour toi : on attend, on gîte
+  le bateau pour réduire son tirant d'eau, on porte une ancre au large pour se haler quand
+  l'eau revient. Descendante, l'urgence est réelle, chaque minute perdue enfonce davantage,
+  et on alerte. Quitter le bateau ne se fait pas : tant qu'il est posé, il ne coule pas.
+sources:
+  - texte: Fiche conduite à tenir, section Échouement
+    ref: fiche-conduite-urgence
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude
