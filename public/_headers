@@ -20,8 +20,8 @@
 
 # La banque, sortie du HTML. Le nom porte la version : le fichier ne change
 # jamais sous ce nom-là, il se garde donc pour de bon. `derniere.json`, lui,
-# est le seul point qui doive dire la vérité du jour — c'est ce que l'app iOS
-# interroge au lancement pour savoir si sa banque a vieilli.
+# est le seul point qui doive dire la vérité du jour, puisqu'il sert justement
+# à savoir si une banque déjà téléchargée a vieilli.
 /banque/*
   Cache-Control: public, max-age=31536000, immutable
 
