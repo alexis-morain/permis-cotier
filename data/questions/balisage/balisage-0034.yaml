@@ -31,10 +31,11 @@ explication: >-
   jaune la fait ressembler à une marque spéciale, mais celle-ci a un corps entièrement
   jaune et ne signale aucun danger.
 sources:
-  - texte: Balisage AISM, marque de danger nouveau
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

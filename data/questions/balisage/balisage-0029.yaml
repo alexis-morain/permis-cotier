@@ -25,10 +25,11 @@ explication: >-
   donc sur ton bâbord. La proposition qui fait dépendre le côté du sens de ta route
   confond ta route et le sens conventionnel, qui lui ne bouge pas.
 sources:
-  - texte: AISM, système de balisage maritime, région A, marque latérale bâbord
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.1.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

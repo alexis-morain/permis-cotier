@@ -30,10 +30,9 @@ explication: >-
   compte : si tu as vu un éclat long, tu as compté six, pas neuf. Neuf sans éclat long,
   c'est l'Ouest.
 sources:
-  - texte: Balisage AISM région A, marques cardinales, Sud
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
