@@ -31,11 +31,16 @@ retenir:
   - Eaux saines tout autour, passe du côté que tu veux, à distance.
   - "De nuit : feu blanc à deux éclats, comme les deux sphères."
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, marque de danger isolé
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
