@@ -32,11 +32,16 @@ retenir:
   - Elle sert d’atterrissage ou de milieu de chenal, et se laisse d’un côté ou de l’autre.
   - "Feu blanc lent : isophase, occultations, éclat long, ou morse A."
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, marque d’eaux saines
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

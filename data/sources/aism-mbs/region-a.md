@@ -3,7 +3,8 @@
 - Référence : aism-mbs
 - Version consultée le : 2026-09-04
 - Autorité : Association internationale de signalisation maritime (AISM/IALA),
-  système de balisage maritime, région A. La France est en région A.
+  système de balisage maritime, région A. La France métropolitaine est en région A ;
+  quatre littoraux français sont en région B, voir plus bas.
 - Planche officielle : « La signalisation maritime », secrétariat d'État chargé
   de la Mer, novembre 2022, planches « Balisage de jour » et « Balisage de nuit »,
   région de balisage A.
@@ -28,17 +29,32 @@ Bâbord :
 - couleur du corps : rouge
 - forme : cylindrique, dite « en boîte de conserve »
 - voyant : un cylindre rouge
-- feu : rouge, rythme quelconque
+- feu : rouge, rythme quelconque sauf les éclats groupés (2 + 1),
+  réservés au chenal préféré
 
 Tribord :
 - couleur du corps : vert
 - forme : conique
 - voyant : un cône vert, pointe en haut
-- feu : vert, rythme quelconque
+- feu : vert, rythme quelconque sauf les éclats groupés (2 + 1),
+  réservés au chenal préféré
 
-En région B (Amériques, Japon, Corée du Sud, Philippines), les couleurs des
-marques latérales sont inversées : bâbord vert, tribord rouge. Les formes, les
-voyants et tout le reste du système ne changent pas.
+En région B, les couleurs des marques latérales sont inversées : bâbord vert,
+tribord rouge. Le voyant suit la couleur du corps — un cylindre vert à bâbord,
+un cône rouge à tribord — donc lui aussi s'inverse. Seules les formes ne
+changent pas : cylindre à bâbord, cône à tribord dans les deux régions, et le
+reste du système est commun.
+
+Pour l'application de l'arrêté du 30 novembre 2017, sont en région B les
+littoraux de Saint-Pierre-et-Miquelon, de la Guyane, de la Martinique et de la
+Guadeloupe. La métropole, Mayotte, la Réunion, Wallis-et-Futuna, la
+Nouvelle-Calédonie, la Polynésie française et les TAAF sont en région A.
+
+> Corrigé le 2026-09-09 contre l'arrêté du 30 novembre 2017, annexe I, 2.2,
+> 2.4.1 et 2.4.2, qui fait foi : cette fiche situait la région B aux Amériques,
+> au Japon, en Corée du Sud et aux Philippines — en omettant les quatre
+> littoraux français que l'arrêté y range — et donnait les voyants pour
+> invariants alors qu'ils changent de couleur avec le corps.
 
 ## Marques latérales de chenal préféré, région A
 
@@ -147,3 +163,9 @@ identique à la marque qu'il accompagne.
   accédant au rivage (arrêté du 27 mars 1991, annexe I, § 2 ; une version
   antérieure de cette fiche disait « dans le sens de sortie », à tort)
 - vitesse limitée à 5 nœuds dans la bande littorale des 300 mètres
+
+> Cette dernière ligne n'est portée par aucun texte du dépôt. L'arrêté du
+> 27 mars 1991 ne règle que le balisage de cette bande, jamais la vitesse : la
+> limite est posée par les arrêtés de police de la navigation des préfets
+> maritimes, façade par façade, comme les règles du ski nautique. Tant que ces
+> articles ne sont pas reproduits ici, rien ne doit s'appuyer sur cette ligne.

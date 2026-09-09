@@ -6,9 +6,11 @@ accroche: >-
 etapes:
   - titre: Deux régions dans le monde
     texte: >-
-      Le système de balisage AISM partage le monde en deux régions. La France, comme le
-      reste de l’Europe, est en région A. La région B couvre les Amériques, le Japon, la
-      Corée du Sud et les Philippines.
+      Le système de balisage partage le monde en deux régions. Pour l’arrêté du
+      30 novembre 2017, la France métropolitaine est en région A, avec Mayotte, la Réunion,
+      Wallis-et-Futuna, la Nouvelle-Calédonie, la Polynésie française et les TAAF. Sont en
+      région B les littoraux de Saint-Pierre-et-Miquelon, de la Guyane, de la Martinique et
+      de la Guadeloupe : on peut donc y naviguer sans quitter la France.
   - titre: Les couleurs latérales s’inversent
     texte: >-
       En région B, la marque bâbord est verte et la marque tribord est rouge. Le sens
@@ -27,15 +29,23 @@ piege: >-
   L’épreuve n’en demande qu’une initiation, mais la question tombe. Elle se joue sur un
   seul mot, la couleur. Tout le reste, formes, voyants, sens conventionnel, est identique.
 retenir:
-  - "Région B : Amériques, Japon, Corée du Sud, Philippines."
+  - "Région B : Saint-Pierre-et-Miquelon, Guyane, Martinique, Guadeloupe."
   - "Bâbord vert, tribord rouge : les couleurs latérales sont inversées."
   - Les formes et le sens conventionnel ne changent pas.
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région B, marques latérales
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

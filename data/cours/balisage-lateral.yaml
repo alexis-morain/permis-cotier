@@ -14,7 +14,7 @@ etapes:
       ta droite. La bouée n’a pas bougé, c’est toi qui as changé de sens.
   - titre: "Bâbord : rouge, cylindrique"
     texte: >-
-      En région A, dont la France fait partie, la marque bâbord est rouge. Son corps est
+      En région A, dont la France métropolitaine fait partie, la marque bâbord est rouge. Son corps est
       cylindrique, on dit « en boîte de conserve », et son voyant est un cylindre rouge.
 
       En rentrant, tu la laisses sur ta gauche, à bâbord.
@@ -35,7 +35,8 @@ etapes:
       peinture est passée, la silhouette suffit.
 
       De nuit, la couleur passe dans le feu : rouge sur la marque bâbord, vert sur la
-      marque tribord, à un rythme quelconque.
+      marque tribord. Le rythme est quelconque, à une exception près : les éclats
+      diversement groupés (2 + 1) sont réservés au chenal préféré.
     liste:
       - "Bâbord : rouge, cylindre, voyant cylindrique, feu rouge"
       - "Tribord : vert, cône, voyant conique, feu vert"
@@ -48,11 +49,25 @@ retenir:
   - "Bâbord : rouge, cylindre, voyant cylindrique. Tribord : vert, cône, voyant conique."
   - En sortant, tout s’inverse pour toi, pas pour la bouée.
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.1.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, marques latérales
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

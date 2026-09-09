@@ -22,22 +22,31 @@ etapes:
   - titre: Ce qu’elle demande
     texte: >-
       Elle ne dit pas de quel côté passer. Pour savoir quoi faire, il faut savoir ce
-      qu’elle délimite : on ne mouille pas sur un câble, on ne traverse pas une zone de
-      baignade. C’est la carte ou le document nautique qui le dit.
+      qu’elle délimite : on ne mouille pas sur un câble, on ne traverse pas une zone
+      d’exercices militaires ni un champ d’éoliennes en mer. C’est la carte ou le document
+      nautique qui le dit.
 piege: >-
-  La croix est aussi le voyant de la marque de danger nouveau. La différence est sur le
-  corps : tout jaune pour la marque spéciale, bandes bleues et jaunes pour le danger
-  nouveau.
+  La bouée d’épave en cas d’urgence porte elle aussi une croix jaune, mais aux branches
+  droites, verticale et horizontale, quand celle de la marque spéciale est posée en X. Et
+  son corps est à bandes bleues et jaunes, là où la marque spéciale est toute jaune.
 retenir:
   - "Jaune, croix jaune, feu jaune : marque spéciale."
   - Elle délimite une zone ou une installation, pas un danger.
   - "Elle n’indique pas de côté : la carte dit quoi faire."
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, marques spéciales
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
