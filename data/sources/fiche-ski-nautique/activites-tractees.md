@@ -9,7 +9,11 @@
   l'arrêté n° 59/2015 ; préfet maritime de l'Atlantique, arrêté n° 2018/090 du
   28 juin 2018 réglementant la pratique des activités nautiques le long du
   littoral de l'Atlantique, version consolidée au 5 février 2019 (arrêté
-  n° 2019-006).
+  n° 2019-006) ; préfet maritime de la Manche et de la mer du Nord, arrêté
+  n° 41/2018 du 29 mai 2018 réglementant la pratique des loisirs et sports
+  nautiques dans les eaux territoriales et intérieures françaises de la zone
+  maritime de la Manche et de la mer du Nord
+  (https://www.premar-manche.gouv.fr/uploads/ckeditor_storage/manche/41%20-%20Pratique%20des%20loisirs%20et%20sports%20nautiques%20.pdf).
 - Programme : arrêté du 28 septembre 2007, art. 1er § 1.2, tiret « les règles
   de la pratique du ski nautique et des engins tractés ».
 - Licence : documents administratifs publics, réutilisables au titre du code
@@ -27,8 +31,11 @@ articles de deux de ces arrêtés, Méditerranée et Atlantique, dont les
 prescriptions sont les mêmes sur l'essentiel : de jour, au-delà de la bande
 des 300 mètres, sortie et retour par un chenal, deux personnes à bord dont une
 qui surveille, gilet pour les personnes tractées, flamme orange sur le
-tracteur. L'arrêté de la Manche et de la mer du Nord n'est pas reproduit ici ;
-un candidat qui navigue sur cette façade vérifie le texte en vigueur.
+tracteur. L'arrêté de la Manche et de la mer du Nord est reproduit depuis le 2026-09-09 :
+les trois façades métropolitaines sont donc couvertes. Ses prescriptions
+rejoignent les deux autres sur l'essentiel, avec une différence notable sur les
+plongeurs, où il interdit la navigation dans les 100 mètres au lieu de la
+limiter à 5 nœuds, comme l'Atlantique et à l'inverse de la Méditerranée.
 
 Ce que ces arrêtés ne disent pas, la fiche ne le dit pas non plus.
 
@@ -201,3 +208,28 @@ de plongeurs.
 La pratique des activités nautiques, quel que soit le navire ou l'engin
 nautique utilisé, est soumise au respect du règlement international pour
 prévenir les abordages en mer.
+
+
+## Arrêté préfectoral n° 41/2018, préfet maritime de la Manche et de la mer du Nord
+
+### Article 3.7 - Loisirs nautiques tractés par une embarcation motorisée (ski nautique et disciplines associées, engins pneumatiques tractés, …)
+
+La pratique de loisirs nautiques tractés n'est autorisée que de jour et uniquement au-delà de la bande littorale des 300 mètres.
+
+L'organisation de compétitions ou d'évènements médiatiques qui prévoient la pratique de loisirs nautiques tractés dans la bande littorale des 300 mètres au sens du présent arrêté est autorisée uniquement dans le respect des procédures et arrêtés prévus pour les manifestations nautiques. Comme pour toute manifestation nautique, cette pratique est interdite lorsque les conditions de sécurité propres à son déroulement ne sont pas réunies.
+
+Conformément à la réglementation en vigueur, le navire tractant doit arborer une flamme orange fluorescente de 2 mètres placée à une hauteur suffisante pour être clairement visible. Les pratiquants doivent porter des gilets de sécurité flottants et de couleur vive. Ces gilets doivent être conformes à la réglementation relative aux équipements individuels de flottabilité. L'engin tracté ainsi que la remorque doivent être de couleur vive et bénéficier d'une flottabilité positive. De plus, le navire tractant doit être équipé d'un système de largage rapide de la remorque.
+
+Lors de la pratique de loisirs nautiques tractés, deux personnes doivent être présentes à bord du navire tractant. L'une doit se consacrer à la conduite du navire, l'autre à la surveillance de l'engin tracté et au largage éventuel de la remorque. Cette dernière personne doit être en âge de passer le permis de conduire des navires à moteur. Le navire tracteur doit être en mesure d'embarquer à son bord la totalité des personnes transportées par l'engin tracté en plus de son équipage et disposer d'un moyen d'accès adéquat.
+
+Dans le cadre exclusif du ski nautique et des disciplines associées, le brevet d'État de moniteur de ski nautique permet à son titulaire d'assurer la conduite du navire tractant en étant seul à bord, sous réserve que ce navire soit équipé d'un rétroviseur.
+
+### Article 4 - Navigation à proximité des plongeurs sous-marins
+
+Les navires ou embarcations participant à des opérations de plongée ou de chasse sous-marine de loisir doivent porter les marques distinctives prévues par le règlement international pour prévenir les abordages en mer susvisé.
+
+Les activités de plongée ou de chasse sous-marine de loisir doivent être signalées par un pavillon rouge portant la croix de Saint-André ou un pavillon rouge portant une diagonale blanche. Afin d'en garantir la visibilité, ce pavillon sera hissé sur une bouée.
+
+La présence d'un navire ou d'une embarcation d'accompagnement arborant les marques distinctives précédemment évoquées ne dispense en aucun cas de cette obligation.
+
+La navigation de tout navire, embarcation ou engin flottant ne participant pas aux opérations de plongée est interdite dans un rayon de 100 mètres autour d'une marque signalant la présence de plongeurs. Dans le cadre du régime dérogatoire prévu à l'article 8 du présent arrêté, les navires, embarcations et engins concernés doivent autant que possible circuler le plus loin possible de la marque signalant la présence de plongeurs.
