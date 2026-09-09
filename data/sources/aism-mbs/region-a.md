@@ -123,12 +123,21 @@ dépôt, installation de loisirs.
 
 ## Marque de danger nouveau
 
-Elle double le balisage normal d'un danger récemment découvert et pas encore
-porté sur les documents nautiques, une épave par exemple.
+Aussi appelée bouée d'épave en cas d'urgence. Elle signale un danger récemment
+découvert et pas encore porté sur les documents nautiques, une épave par
+exemple. Elle est l'un des moyens prévus pour cela, au même titre qu'une marque
+latérale, cardinale ou de danger isolé ; le doublement d'une marque est autre
+chose, réservé au danger jugé particulièrement grave, et le double est alors
+identique à la marque qu'il accompagne.
 
 - corps : bandes verticales bleues et jaunes
-- voyant : une croix jaune en forme de X
+- voyant : une croix jaune dont les branches sont disposées verticalement et
+  horizontalement, à ne pas confondre avec le X de la marque spéciale
 - feu : bleu et jaune alternés
+
+> Corrigé le 2026-09-09 contre l'arrêté du 30 novembre 2017, annexe I, 7.2 et
+> 7.3, qui fait foi : cette fiche donnait à cette marque le voyant en X de la
+> marque spéciale, et présentait la bouée comme un doublement du balisage.
 
 ## Balisage des plages
 

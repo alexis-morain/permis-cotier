@@ -17,15 +17,20 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le code range la pêche maritime de loisir en trois manières de la pratiquer : depuis une
-  embarcation, en action de nage ou de plongée, ou à pied sur le domaine public maritime. La
-  chasse sous-marine se pratique en plongée, et le code la traite dans les mêmes articles que
-  le reste de la pêche de loisir : c'est là qu'il réserve le fusil-harpon aux seize ans et
-  plus.
+  Le code définit la pêche maritime de loisir par sa destination : une pêcherie non
+  commerciale dont le produit va à la consommation du pêcheur et de sa famille et ne peut être
+  vendu. Il énumère ses manières de faire : depuis une embarcation, en action de nage ou de
+  plongée, ou à pied. Et lorsqu'il nomme la pêche sous-marine, c'est celle « pratiquée à titre
+  non professionnel » qu'il vise. Elle relève donc de ce régime, avec ses règles propres,
+  comme le fusil-harpon réservé aux seize ans et plus.
 sources:
   - texte: Code rural et de la pêche maritime, article R. 921-83, II
     ref: peche-loisir
   - texte: Code rural et de la pêche maritime, article R. 921-90
+    ref: peche-loisir
+  - texte: Code rural et de la pêche maritime, article R. 921-83, I
+    ref: peche-loisir
+  - texte: Code rural et de la pêche maritime, article L. 945-4, 17°
     ref: peche-loisir
 meta:
   cree_le: '2026-09-08'

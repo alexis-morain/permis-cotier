@@ -156,11 +156,13 @@ RYTHMES: dict[str, dict] = {
         "regle": "AISM, région A, marque d'eaux saines, lettre A du code Morse",
     },
     "danger-nouveau": {
-        "motif": [(1.0, "bleu"), (0.2, None), (1.0, "jaune"), (0.2, None)],
+        # 7.3 : « Éclats bleus et jaunes, d'une seconde chacun, séparés par un
+        # intervalle de 0,5 seconde ». L'intervalle était dessiné à 0,2.
+        "motif": [(1.0, "bleu"), (0.5, None), (1.0, "jaune"), (0.5, None)],
         "fenetre": 3,
-        "alt": "Feu alternant le bleu et le jaune, sans obscurité longue entre les "
-               "deux couleurs.",
-        "regle": "AISM, région A, marque de danger nouveau, feu bleu et jaune alternés",
+        "alt": "Feu alternant le bleu et le jaune, une seconde chacun, séparés par un "
+               "court intervalle sombre.",
+        "regle": "Arrêté du 30 novembre 2017, annexe I, 7.3, bouée d'épave en cas d'urgence",
     },
     "caractere-fixe": {
         "motif": [(1.0, "blanc")],

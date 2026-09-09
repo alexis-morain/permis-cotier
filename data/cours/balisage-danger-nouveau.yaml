@@ -22,8 +22,9 @@ etapes:
     alt: "Une bouée à bandes verticales bleues et jaunes, surmontée d’un voyant en croix jaune aux branches droites."
   - titre: Ce qu’elle te demande
     texte: >-
-      Tu passes largement à l’écart. Comme le danger n’est pas cartographié, tu ne sais
-      ni sa taille ni sa forme : la seule bonne réponse est la distance.
+      Comme le danger n’est pas cartographié, tu ne sais ni sa taille ni sa forme. La
+      marque reste en place jusqu’à ce que l’information sur ce danger soit suffisamment
+      diffusée, ou que le danger ait été résolu.
 piege: >-
   Bleu et jaune, ce n’est pas une marque spéciale délavée. La marque spéciale est toute
   jaune et sa croix est posée en X, quand celle de la bouée d’épave a les branches droites.
@@ -33,6 +34,15 @@ retenir:
   - Bandes verticales bleues et jaunes, croix jaune droite, feu bleu et jaune alternés.
   - "On passe loin : le danger n’est pas sur la carte."
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, marque de danger nouveau
     ref: aism-mbs
     fichier: region-a
