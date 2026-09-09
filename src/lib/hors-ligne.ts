@@ -1,0 +1,151 @@
+/**
+ * Ce qui vit hors ligne, et ce qui ne le fait pas.
+ *
+ * Le README promet le site « hors ligne une fois la page visitée ». Deux
+ * choses le tenaient en échec. La première : le service worker était bien
+ * construit et bien déployé, mais aucune page ne l'enregistrait — `sw.js`
+ * répondait 200 en production sans qu'aucun navigateur ne l'installe jamais.
+ * `@vite-pwa/astro` retire le plugin `vite-plugin-pwa:build`, celui dont le
+ * `transformIndexHtml` pose d'ordinaire le manifeste et le script : à Astro de
+ * les poser, ce que `Base.astro` fait désormais.
+ *
+ * La seconde : le précache prenait tout, `**\/*.html` compris, soit les 509
+ * pages de question et les 105 de notion. 891 entrées, 18 Mo, téléchargés en
+ * silence à la première visite d'un site qu'on ouvre souvent sur un téléphone
+ * en 4G. Or la promesse du README n'est pas « tout le site d'avance » mais
+ * « une fois la page visitée » : c'est un cache d'usage, pas un miroir.
+ *
+ * D'où le partage tenu ici :
+ *
+ *   - le **noyau** est précaché, parce qu'il faut qu'il soit là avant d'avoir
+ *     servi : les écrans de jeu, leur code, leurs visuels, et la banque, sans
+ *     laquelle `/examen` ne tire aucune question ;
+ *   - le **contenu** est gardé à la demande, page par page, à mesure qu'il est
+ *     lu — c'est exactement la promesse ;
+ *   - le reste va au **réseau**, notamment le pointeur de fraîcheur, qui ne
+ *     vaut que s'il dit la vérité du jour.
+ *
+ * Le partage vaut ~2 Mo au lieu de 18, et `/examen` comme `/entrainement`
+ * fonctionnent au premier lancement sans réseau.
+ */
+
+/**
+ * Les dossiers de `src/pages/` qui portent du contenu et non du jeu : une
+ * page par question, par notion, par leçon, par thème, par article du guide.
+ * Ils pèsent 16 des 19 Mo du site et ne servent pas à jouer : ils se gardent
+ * quand on les a ouverts. Un test vérifie que chacun est bien un dossier de
+ * pages, faute de quoi l'exclusion ne désignerait plus rien.
+ */
+export const CONTENU_A_LA_DEMANDE = ['question', 'notion', 'cours', 'theme', 'guide'] as const;
+
+/**
+ * Servi, mais jamais gardé : l'image de partage n'est lue que par les robots
+ * des réseaux sociaux, qui ne passent pas par le service worker.
+ */
+const DOSSIERS_AU_RESEAU = ['partage'] as const;
+
+/**
+ * Le pointeur vers la version en ligne de la banque. Il est le seul fichier
+ * qui doive dire la vérité du jour : le mettre au cache, c'est répondre
+ * « 1.11.0 » à une application qui demande s'il y a mieux.
+ */
+const POINTEUR_FRAICHEUR = 'banque/derniere.json';
+
+/**
+ * Ce que le service worker sait servir. `json` y est pour la banque et pour
+ * l'index de la recherche ; sans lui, `/examen` ne tire rien et la loupe ne
+ * trouve rien. `txt` et `xml` n'y sont pas : `robots.txt` et les sitemaps sont
+ * pour les robots, qui sont en ligne par définition.
+ */
+const EXTENSIONS_NOYAU = ['js', 'css', 'html', 'svg', 'png', 'webp', 'woff2', 'json'] as const;
+
+/** Motifs de fichiers pris au précache, relatifs à `dist/`. */
+export const GLOB_NOYAU: readonly string[] = [`**/*.{${EXTENSIONS_NOYAU.join(',')}}`];
+
+/** Motifs écartés du précache, relatifs à `dist/`. */
+export const GLOB_HORS_NOYAU: readonly string[] = [
+  '**/node_modules/**/*',
+  POINTEUR_FRAICHEUR,
+  ...DOSSIERS_AU_RESEAU.map((d) => `${d}/**`),
+  ...CONTENU_A_LA_DEMANDE.map((d) => `${d}/**`),
+];
+
+/**
+ * Les adresses gardées à la demande, du point de vue de Workbox.
+ *
+ * Workbox applique l'expression à l'adresse entière (`RegExpRoute` fait
+ * `regExp.exec(url.href)`) et n'accepte un domaine tiers que si le match
+ * commence au premier caractère. Le motif commence par une barre : il ne peut
+ * pas matcher en position 0, donc il ne peut pas attraper un tiers. C'est la
+ * garde, et un test la tient.
+ */
+export const MOTIF_A_LA_DEMANDE = new RegExp(`/(?:${CONTENU_A_LA_DEMANDE.join('|')})/`);
+
+/**
+ * Ce que le repli de navigation ne doit pas servir.
+ *
+ * `navigateFallback` rend l'accueil pour toute navigation qu'il ne trouve pas.
+ * Sans cette liste, ouvrir `/question/balisage-0001` hors ligne afficherait
+ * l'accueil sous l'adresse de la question : une page qui ment. Mieux vaut
+ * l'échec franc du navigateur, qui dit qu'on est hors ligne.
+ */
+export const HORS_REPLI_NAVIGATION: readonly RegExp[] = CONTENU_A_LA_DEMANDE.map(
+  (d) => new RegExp(`^/${d}/`),
+);
+
+export type Politique = 'noyau' | 'a-la-demande' | 'reseau';
+
+/**
+ * Le sort d'une adresse servie par le site. Décrit la même règle que les
+ * globs ci-dessus, mais lisible et testable une adresse à la fois.
+ */
+export function politique(chemin: string): Politique {
+  const propre = chemin.replace(/^\//, '');
+  if (propre === POINTEUR_FRAICHEUR) return 'reseau';
+
+  const segments = propre === '' ? [] : propre.split('/');
+  const tete = segments[0];
+
+  // Un dossier ne se reconnaît qu'à partir de deux segments : `/cours` est le
+  // sommaire du cours, une page racine ; `/cours/balisage` est une leçon.
+  if (tete !== undefined && segments.length > 1) {
+    if ((CONTENU_A_LA_DEMANDE as readonly string[]).includes(tete)) return 'a-la-demande';
+    if ((DOSSIERS_AU_RESEAU as readonly string[]).includes(tete)) return 'reseau';
+  }
+
+  const extension = /\.([a-z0-9]+)$/.exec(propre)?.[1];
+  if (extension !== undefined && !(EXTENSIONS_NOYAU as readonly string[]).includes(extension)) {
+    return 'reseau';
+  }
+
+  return 'noyau';
+}
+
+/**
+ * Les règles de cache à la demande, au format attendu par `generateSW`.
+ *
+ * `NetworkFirst` et non `StaleWhileRevalidate` : une question corrigée doit
+ * se lire corrigée dès qu'il y a du réseau. Le délai de quatre secondes borne
+ * l'attente quand la connexion est mauvaise sans être absente, le cas d'un
+ * bateau au mouillage. Le cache porte la version de la banque, comme le
+ * précache : une publication ne laisse pas traîner l'ancienne page.
+ */
+export function reglesALaDemande(versionBanque: string) {
+  return [
+    {
+      urlPattern: MOTIF_A_LA_DEMANDE,
+      handler: 'NetworkFirst' as const,
+      options: {
+        cacheName: `permis-cotier-pages-v${versionBanque}`,
+        networkTimeoutSeconds: 4,
+        expiration: {
+          // De quoi tenir une session de révision entière sans jamais tout
+          // garder : 200 pages lues, un mois.
+          maxEntries: 200,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+        cacheableResponse: { statuses: [200] },
+      },
+    },
+  ];
+}

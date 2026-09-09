@@ -13,7 +13,7 @@ visuel:
   credit: code
 propositions:
   - id: a
-    texte: Elle double le balisage normal d'un danger récemment découvert
+    texte: Elle signale un danger récemment découvert, encore absent des cartes
   - id: b
     texte: Elle délimite une zone de mouillage ou une installation de loisirs
   - id: c
@@ -21,16 +21,18 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le feu bleu et jaune alternés n'appartient qu'à la marque de danger nouveau. Elle double
-  le balisage normal d'un danger tout juste découvert, une épave par exemple, tant qu'il
-  ne figure pas encore sur les documents nautiques : elle s'ajoute au balisage, elle ne
-  le remplace pas. Aucun autre feu du système ne mélange deux couleurs, c'est ce qui la
-  rend reconnaissable de nuit.
+  Le feu bleu et jaune alternés n'appartient qu'à la bouée d'épave en cas d'urgence. Elle
+  signale un danger tout juste découvert, une épave par exemple, tant qu'il ne figure pas
+  encore sur les documents nautiques. C'est l'un des moyens prévus pour cela, avec la marque
+  latérale, la cardinale et la marque de danger isolé ; le service responsable ne double une
+  marque que s'il juge le danger particulièrement grave, et le double est alors en tous points
+  identique à la marque qu'il accompagne.
 sources:
-  - texte: Balisage AISM région A, marque de danger nouveau
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

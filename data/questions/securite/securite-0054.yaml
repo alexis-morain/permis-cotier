@@ -1,0 +1,32 @@
+id: securite-0054
+option: cotier
+theme: securite
+notion: securite-visibilite-restreinte
+statut: publie
+difficulte: 3
+enonce: >-
+  À quels navires la règle 19 sur la conduite par visibilité réduite s'applique-t-elle
+  ?
+propositions:
+  - id: a
+    texte: À ceux qui ne sont pas en vue les uns des autres et qui naviguent à l'intérieur
+      ou à proximité d'une zone de visibilité réduite
+  - id: b
+    texte: À tous les navires dès que le brouillard tombe, y compris ceux qui se voient
+  - id: c
+    texte: Aux seuls navires à propulsion mécanique
+reponses:
+  - a
+explication: >-
+  Deux conditions, et le mot « proximité » compte. La règle vise les navires qui ne sont
+  pas en vue les uns des autres et qui naviguent à l'intérieur ou à proximité d'une zone
+  de visibilité réduite : tu peux y être soumis en naviguant en air clair, le long d'un
+  banc de brume. Deux navires qui se voient relèvent, eux, des règles de barre ordinaires.
+sources:
+  - texte: RIPAM, règle 19 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

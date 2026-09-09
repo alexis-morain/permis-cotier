@@ -102,6 +102,23 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     <script is:inline set:html={SCRIPT_APPARENCE} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    {/*
+      Le manifeste et l'enregistrement du service worker. `@vite-pwa/astro`
+      construit `sw.js`, `registerSW.js` et le manifeste, mais ne les pose sur
+      aucune page : il retire le plugin `vite-plugin-pwa:build`, celui dont le
+      `transformIndexHtml` s'en chargerait dans une application Vite ordinaire.
+      Sans ces deux lignes, le service worker était servi en production sans
+      qu'aucun navigateur ne l'installe, et le site n'était ni hors ligne ni
+      installable. En développement, `devOptions` est à false : les deux
+      fichiers n'existent pas, d'où la garde sur la production.
+    */}
+    {import.meta.env.PROD && (
+      <Fragment>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <script is:inline defer src="/registerSW.js"></script>
+      </Fragment>
+    )}
+
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
 
     <Mesure />

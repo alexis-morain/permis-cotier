@@ -15,17 +15,19 @@ propositions:
 reponses:
   - a
 explication: >-
-  La marque spéciale est jaune, avec un voyant en croix jaune, et son feu est jaune. Elle
-  ne signale aucun danger de navigation : elle délimite une zone de mouillage, un câble,
-  une conduite, une zone d'exercices ou une installation de loisirs. Le piège est la marque
-  de danger nouveau, qui porte le même voyant en croix jaune mais un corps à bandes verticales
-  bleues et jaunes et un feu bleu et jaune alternés : c'est la couleur du corps qui les
-  sépare.
+  La marque spéciale est jaune, avec un voyant en croix jaune posée en X, et son feu est
+  jaune. Elle ne signale aucun danger de navigation : elle délimite une zone de mouillage, un
+  câble, une conduite, une zone d'exercices ou une installation de loisirs. Le piège est la
+  bouée d'épave en cas d'urgence, à bandes verticales bleues et jaunes et feu bleu et jaune
+  alternés : sa croix jaune, elle, a les branches droites, verticale et horizontale.
 sources:
-  - texte: Balisage AISM, marques spéciales
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

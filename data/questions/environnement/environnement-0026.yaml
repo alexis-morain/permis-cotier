@@ -1,0 +1,32 @@
+id: environnement-0026
+option: cotier
+theme: environnement
+notion: env-antisalissures
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu carènes ton bateau au bord d'un canal dont les eaux sont salées, loin de la mer
+  ouverte. L'article L. 218-73 s'applique-t-il là ?
+propositions:
+  - id: a
+    texte: Oui, il vise la mer et la partie des cours d'eau, canaux ou plans d'eau où les
+      eaux sont salées
+  - id: b
+    texte: Non, il ne vise que la mer
+  - id: c
+    texte: Non, il ne s'applique qu'au-delà des eaux territoriales
+reponses:
+  - a
+explication: >-
+  Le texte nomme lui-même son terrain : « en mer ou dans la partie des cours d'eau, canaux
+  ou plans d'eau où les eaux sont salées ». Un estuaire, une darse, un canal salé sont
+  couverts au même titre que le large. Ce qui délimite l'application, c'est la salinité
+  de l'eau, pas la distance à la côte.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

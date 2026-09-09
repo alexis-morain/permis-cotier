@@ -23,16 +23,20 @@ reponses:
   - a
   - b
 explication: >-
-  Corps jaune et voyant en croix jaune : c'est une marque spéciale. Elle délimite une zone
-  de mouillage, un câble, une conduite, une zone d'exercices, une zone de dépôt ou une
+  Corps jaune et voyant en croix jaune en X : c'est une marque spéciale. Elle délimite une
+  zone de mouillage, un câble, une conduite, une zone d'exercices, une zone de dépôt ou une
   installation de loisirs, et elle ne dit rien d'un danger de navigation. Le piège est la
-  marque de danger nouveau, qui porte la même croix jaune mais un corps à bandes verticales
-  bleues et jaunes : la croix ne suffit pas, c'est la couleur du corps qui les sépare.
+  bouée d'épave en cas d'urgence, qui porte elle aussi une croix jaune et un corps à bandes
+  verticales bleues et jaunes, mais dont la croix a les branches droites, verticale et
+  horizontale, quand celle de la marque spéciale est posée en X.
 sources:
-  - texte: Balisage AISM, marques spéciales
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

@@ -1,0 +1,34 @@
+id: securite-0050
+option: cotier
+theme: securite
+notion: securite-plongeurs
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en Méditerranée et tu approches d'un pavillon signalant un plongeur. Que
+  t'impose l'arrêté du préfet maritime ?
+propositions:
+  - id: a
+    texte: Dans un rayon de 100 mètres, une vitesse appropriée à la sécurité du plongeur,
+      et en tout état de cause limitée à 5 nœuds
+  - id: b
+    texte: Rien de particulier tant que tu passes à plus de 20 mètres
+  - id: c
+    texte: L'arrêt complet des machines dans un rayon de 500 mètres
+reponses:
+  - a
+explication: >-
+  L'arrêté de la Méditerranée impose, dans un rayon de 100 mètres autour d'un pavillon
+  signalant un plongeur, une vitesse appropriée garantissant sa sécurité, plafonnée à
+  5 nœuds. La même règle vaut autour d'une bouée de couleur vive signalant un chasseur
+  sous-marin. Les arrêtés diffèrent d'une façade à l'autre : sur l'Atlantique, la navigation
+  est purement interdite dans ce rayon de 100 mètres.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 6
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 3-4
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: claude

@@ -23,10 +23,10 @@ explication: >-
   la marque d'eaux saines, dont le feu blanc est isophase, à occultations, à un éclat
   long ou à la lettre A du Morse, ni avec une cardinale, dont le feu blanc scintille.
 sources:
-  - texte: Balisage AISM région A, marque de danger isolé
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_le: '2026-09-09'
