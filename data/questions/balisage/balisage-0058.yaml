@@ -1,0 +1,34 @@
+id: balisage-0058
+option: cotier
+theme: balisage
+notion: balisage-lateral
+statut: publie
+difficulte: 3
+enonce: >-
+  Une marque de chenal se présente sous une forme qui ne dit pas si elle est cylindrique ou
+  conique. Que prévoit l'arrêté ?
+propositions:
+  - id: a
+    texte: Elle doit porter le voyant approprié, lorsque c'est possible
+  - id: b
+    texte: Elle doit être remplacée par une bouée réglementaire
+  - id: c
+    texte: Sa couleur suffit, aucun autre signe n'est prévu
+reponses:
+  - a
+explication: >-
+  C'est la raison d'être du voyant : « Là où les bouées de bâbord ou de tribord ne sont pas
+  identifiables d'après leur forme, cylindrique ou conique, elles doivent, lorsque cela est
+  possible, porter le voyant approprié. » Le voyant ne répète pas la forme, il la remplace
+  quand elle manque : un cylindre rouge à bâbord, un cône vert pointe en haut à tribord.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.5.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-09'
+  genere_par: claude
+  relu_par: claude
