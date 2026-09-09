@@ -30,18 +30,26 @@ etapes:
       le corps et le voyant avant la bande.
 piege: >-
   La couleur dominante dit de quel côté tu laisses la marque, et la bande dit de quel
-  côté part le chenal secondaire. Rouge à bande verte : tu la laisses à bâbord, et le
-  chenal principal est à tribord.
+  côté part le chenal préféré. Rouge à bande verte : tu la laisses à bâbord, et le chenal
+  préféré est à tribord, du côté qu’annonce la couleur de la bande.
 retenir:
   - "Rouge à bande verte : cylindre, se laisse à bâbord, le chenal principal part à tribord."
   - "Vert à bande rouge : cône, se laisse à tribord, le chenal principal part à bâbord."
   - "Dans le doute, la forme : cylindre bâbord, cône tribord."
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, marques latérales de chenal préféré
     ref: aism-mbs
     fichier: region-a
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
