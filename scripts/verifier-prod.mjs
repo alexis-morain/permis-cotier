@@ -159,6 +159,49 @@ if (!siteUmami || !scriptUmami || !domainesUmami) {
   }
 }
 
+// 10. Le hors ligne. Le service worker a longtemps été construit, déployé, et
+//     jamais enregistré : `sw.js` répondait 200 en production sans qu'aucun
+//     navigateur ne l'installe, parce qu'aucune page ne le demandait. Rien
+//     dans `dist/` ne le montrait, et aucun test non plus. Ce contrôle regarde
+//     donc ce que l'accueil demande au navigateur de faire, puis ce que le
+//     service worker emporte vraiment.
+const versionBanque = (await readFile(new URL('../data/VERSION', import.meta.url), 'utf-8')).trim();
+const corpsAccueil = accueil.corps ?? '';
+const manifesteLie = /<link[^>]+rel="manifest"/.test(corpsAccueil);
+const swDemande = corpsAccueil.includes('registerSW.js');
+
+if (!swDemande || !manifesteLie) {
+  ko(
+    'hors ligne',
+    swDemande ? 'l’accueil ne lie pas le manifeste' : 'l’accueil n’enregistre aucun service worker',
+    'sans ces deux balises, `sw.js` est servi mais jamais installé, et le site n’est ni hors ligne ni installable : vérifier le bloc PWA de `Base.astro`',
+  );
+} else {
+  const sw = await recuperer(`${SITE}/sw.js`);
+  if (sw.erreur || !sw.reponse.ok) {
+    ko(
+      'hors ligne',
+      `sw.js ne répond pas (${sw.erreur ?? `HTTP ${sw.reponse.status}`})`,
+      'l’accueil l’enregistre pourtant : le build PWA n’est pas celui qui est déployé',
+    );
+  } else if (!sw.corps.includes(`banque/v/${versionBanque}.json`)) {
+    ko(
+      'hors ligne',
+      `la banque ${versionBanque} n’est pas au précache`,
+      '/examen ne tirerait aucune question hors ligne : vérifier `GLOB_NOYAU` dans `src/lib/hors-ligne.ts`',
+    );
+  } else if (/\{url:"(?:question|notion|cours|theme|guide)\//.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'le précache reprend les pages de contenu',
+      'ce sont 16 des 19 Mo du site, téléchargés à la première visite : vérifier `GLOB_HORS_NOYAU` dans `src/lib/hors-ligne.ts`',
+    );
+  } else {
+    const entrees = (sw.corps.match(/\{url:/g) ?? []).length;
+    ok('hors ligne', `service worker enregistré, ${entrees} entrées au précache, banque ${versionBanque} comprise`);
+  }
+}
+
 console.log(`\n${SITE}\n`);
 for (const c of controles) {
   console.log(`  ${c.etat === 'ok' ? '✓' : '✗'} ${c.nom} — ${c.detail}`);

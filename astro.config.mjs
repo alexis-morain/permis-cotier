@@ -3,6 +3,12 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
+import {
+  GLOB_NOYAU,
+  GLOB_HORS_NOYAU,
+  HORS_REPLI_NAVIGATION,
+  reglesALaDemande,
+} from './src/lib/hors-ligne.ts';
 import { existsSync, readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
@@ -81,16 +87,16 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        // `json` y est pour l'index de la recherche et, depuis que la banque
-        // est sortie du HTML, pour la banque elle-même : sans elle au
-        // precache, /examen ne rendrait plus rien hors ligne. Son nom porte la
-        // version, donc une publication la remplace au lieu de l'empiler.
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
-        // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
-        // c'est le pointeur vers la version en ligne, et le hors-ligne joue de
-        // toute façon la banque déjà précachée.
-        globIgnores: ['**/node_modules/**/*', 'banque/derniere.json'],
+        // Le partage entre ce qui est précaché, ce qui se garde à mesure
+        // qu'on le lit et ce qui reste au réseau se lit dans
+        // `src/lib/hors-ligne.ts`, où des tests le tiennent.
+        globPatterns: [...GLOB_NOYAU],
+        globIgnores: [...GLOB_HORS_NOYAU],
+        runtimeCaching: reglesALaDemande(versionBanque),
         navigateFallback: '/',
+        // Sans cette liste, une navigation hors ligne vers une page jamais
+        // ouverte rendrait l'accueil sous l'adresse demandée.
+        navigateFallbackDenylist: [...HORS_REPLI_NAVIGATION],
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },

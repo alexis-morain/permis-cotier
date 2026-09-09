@@ -160,7 +160,8 @@ data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
-                                   session, progression, profil, apparence, mesure, recherche
+                                   session, progression, profil, apparence, mesure, recherche,
+                                   hors-ligne (ce qui est précaché, gardé à la demande, ou au réseau)
 src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement,
                                    profil, recherche et son index recherche.json
 src/components/                    îlot React du quiz, panneau de recherche
