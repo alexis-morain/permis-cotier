@@ -164,8 +164,8 @@ identique à la marque qu'il accompagne.
   antérieure de cette fiche disait « dans le sens de sortie », à tort)
 - vitesse limitée à 5 nœuds dans la bande littorale des 300 mètres
 
-> Cette dernière ligne n'est portée par aucun texte du dépôt. L'arrêté du
-> 27 mars 1991 ne règle que le balisage de cette bande, jamais la vitesse : la
-> limite est posée par les arrêtés de police de la navigation des préfets
-> maritimes, façade par façade, comme les règles du ski nautique. Tant que ces
-> articles ne sont pas reproduits ici, rien ne doit s'appuyer sur cette ligne.
+> Cette ligne ne vient pas de l'arrêté du 27 mars 1991, qui ne règle que le
+> balisage de cette bande et jamais la vitesse. Elle est posée par les arrêtés de
+> police de la navigation des préfets maritimes, reproduits depuis le 2026-09-09
+> sous la référence `bande-300-metres`, une par façade. C'est eux qu'il faut
+> citer, pas cette fiche.

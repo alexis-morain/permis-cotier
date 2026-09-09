@@ -51,10 +51,14 @@ etapes:
       et au-delà, la navigation lui est interdite.
   - titre: Le long du bord, 5 nœuds
     texte: >-
-      Dans la bande littorale des 300 mètres, la vitesse est limitée à 5 nœuds. La zone
-      réservée aux baigneurs est balisée de bouées sphériques jaunes, et les engins la
-      quittent par un chenal traversier, bouées cylindriques jaunes à bâbord et coniques
-      jaunes à tribord en accédant au rivage.
+      Dans la bande littorale des 300 mètres, la vitesse est limitée à 5 nœuds. Les trois
+      arrêtés de préfet maritime le disent dans les mêmes termes, et précisent que la
+      limitation est générale et permanente : elle ne dépend pas de la présence d’un
+      balisage, et la bande se compte depuis la limite des eaux du moment.
+
+      Le chenal traversier permet aux navires et engins motorisés de gagner le rivage ou
+      de le quitter : bouées cylindriques jaunes à bâbord et coniques jaunes à tribord en
+      accédant au rivage.
 piege: >-
   Compter la distance depuis le port ou depuis la côte visible. La règle parle de la
   distance d’un abri, et un abri se juge avec la météo du moment : par vent de mer établi,
@@ -67,6 +71,15 @@ retenir:
   - "Propulsion humaine jusqu’à 6 milles à deux embarcations de conserve, VHF étanche. Planche à pagaie : 2 milles."
   - Dans la bande des 300 mètres, 5 nœuds au maximum.
 sources:
+  - texte: Arrêté préfectoral n° 125/2013, préfet maritime de la Méditerranée, article 2
+    ref: bande-300-metres
+    fichier: mediterranee-125-2013
+  - texte: Arrêté n° 2018/090, préfet maritime de l'Atlantique, article 2
+    ref: bande-300-metres
+    fichier: atlantique-2018-090
+  - texte: Arrêté n° 41/2018, préfet maritime de la Manche et de la mer du Nord, article 2
+    ref: bande-300-metres
+    fichier: manche-mer-du-nord-41-2018
   - texte: Division 240, article 240-1.02, IV. 2
     ref: division-240
     fichier: article-240-1-02
@@ -91,5 +104,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-06'
+  relu_par: claude
