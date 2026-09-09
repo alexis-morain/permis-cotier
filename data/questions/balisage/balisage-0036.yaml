@@ -18,16 +18,17 @@ propositions:
 reponses:
   - a
 explication: >-
-  En région A, le feu d'une marque latérale bâbord est rouge, celui d'une latérale tribord
-  est vert, et dans les deux cas le rythme est quelconque : il ne se compte pas et ne se
-  lit pas. C'est la couleur, et elle seule, qui identifie une latérale de nuit. Comme tu
-  remontes le chenal dans le sens conventionnel, du large vers le port, le feu rouge reste
-  sur ton bâbord. Le danger isolé, lui, a un feu blanc : compter des éclats n'a de sens
-  que pour les marques à feu blanc, cardinales et danger isolé.
+  En région A, le feu d'une marque latérale bâbord est rouge, celui d'une latérale tribord est
+  vert : c'est la couleur qui donne le côté. Comme tu remontes le chenal dans le sens
+  conventionnel, du large vers le port, le feu rouge reste sur ton bâbord. Le rythme, lui, est
+  quelconque à une exception près : les éclats diversement groupés (2 + 1) sont réservés au
+  chenal préféré, là où le chenal se divise. Le danger isolé, lui, a un feu blanc.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.1.1
     ref: arrete-2017-11-30
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'

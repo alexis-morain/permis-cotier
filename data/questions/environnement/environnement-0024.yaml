@@ -17,10 +17,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article prévoit 100 000 euros d'amende, « ce montant pouvant être porté jusqu'au double
-  de l'avantage tiré de la commission de l'infraction ». Autrement dit, celui qui a gagné
-  de l'argent en polluant ne s'en tire pas avec une amende inférieure à son gain. Le
-  chiffre à retenir reste 100 000 euros.
+  L'article prévoit 100 000 euros d'amende, « ce montant pouvant être porté jusqu'au double de
+  l'avantage tiré de la commission de l'infraction ». C'est un plafond que le gain retiré peut
+  faire monter, pas un minimum garanti : le juge reste libre en dessous. Le chiffre à retenir
+  reste 100 000 euros.
 sources:
   - texte: Code de l'environnement, article L. 218-73
     ref: code-environnement

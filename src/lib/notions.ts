@@ -981,7 +981,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'meteo',
     nom: 'Facteurs météorologiques',
     resume:
-      "Dépression et anticyclone commandent le vent, la brise de mer se lève en début d'après-midi près des côtes, et le relief accélère le vent : deux à trois degrés Beaufort de plus au passage d'un cap.",
+      "Dépression et anticyclone commandent le vent. Près des côtes, la brise de mer peut ajouter deux à trois degrés Beaufort à un vent général faible, et le relief accélère le vent au débouché d'une vallée, à la pointe d'un cap ou au pied d'une falaise.",
     ordre: 4,
     cible: 2,
     ancrage: 'la météorologie',
@@ -1073,7 +1073,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'carte-marine',
     nom: 'Coefficients',
     resume:
-      "Le coefficient va de 20 à 120. En dessous de 45 c'est morte-eau, au-dessus de 95 vive-eau. Plus il est fort, plus le marnage et les courants sont grands.",
+      "Le coefficient va de 20 à 120 : 45 est une morte-eau moyenne, 95 une vive-eau moyenne, 120 la plus forte marée astronomique.",
     ordre: 7,
     cible: 2,
     ancrage: 'notions élémentaires sur la marée',
