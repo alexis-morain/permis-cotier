@@ -5,7 +5,7 @@ import {
   GLOB_NOYAU,
   GLOB_HORS_NOYAU,
   MOTIF_A_LA_DEMANDE,
-  HORS_REPLI_NAVIGATION,
+  IGNORER_PARAMETRES,
   reglesALaDemande,
   politique,
 } from './hors-ligne';
@@ -144,11 +144,36 @@ describe('reglesALaDemande', () => {
   });
 });
 
-describe('HORS_REPLI_NAVIGATION', () => {
-  it('empêche le repli d’accueil de répondre à la place d’une page de contenu', () => {
-    // Sans cette liste, une navigation hors ligne vers /question/x rendrait
-    // l'accueil avec l'adresse de la question : une page qui ment.
-    expect(HORS_REPLI_NAVIGATION.some((m) => m.test('/question/balisage-0001'))).toBe(true);
-    expect(HORS_REPLI_NAVIGATION.some((m) => m.test('/examen'))).toBe(false);
+describe('une adresse qui porte une requête reste elle-même', () => {
+  // Régression vécue : `navigateFallback` rendait l'accueil pour toute
+  // navigation que le précache ne retrouvait pas, et le précache ne retrouvait
+  // pas une page dès qu'un paramètre s'ajoutait à son adresse. Le bouton de
+  // signalement porté par chaque question, `/signaler?question=…`, ouvrait donc
+  // l'accueil sous l'adresse du formulaire. Deux gardes valent mieux qu'une :
+  // plus de repli, et les paramètres ignorés pour retrouver la page.
+
+  it('ignore tous les paramètres, pas seulement ceux de campagne', () => {
+    expect(IGNORER_PARAMETRES.some((m) => m.test('question'))).toBe(true);
+    expect(IGNORER_PARAMETRES.some((m) => m.test('q'))).toBe(true);
+    expect(IGNORER_PARAMETRES.some((m) => m.test('utm_source'))).toBe(true);
+  });
+
+  it('rend le même sort à une page avec et sans requête', () => {
+    for (const [nu, avec] of [
+      ['/signaler', '/signaler?question=balisage-0001'],
+      ['/examen', '/examen?v=3'],
+      ['/recherche', '/recherche?q=cardinale'],
+      ['/', '/?utm_source=lettre'],
+    ] as const) {
+      expect(politique(avec), avec).toBe(politique(nu));
+    }
+  });
+
+  it('vaut aussi pour le contenu servi à la demande', () => {
+    expect(politique('/question/balisage-0001?ref=partage')).toBe('a-la-demande');
+  });
+
+  it('ne se laisse pas troubler par un fragment', () => {
+    expect(politique('/parametres#mesure')).toBe('noyau');
   });
 });

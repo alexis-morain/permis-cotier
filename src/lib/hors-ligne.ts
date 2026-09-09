@@ -25,6 +25,11 @@
  *   - le reste va au **réseau**, notamment le pointeur de fraîcheur, qui ne
  *     vaut que s'il dit la vérité du jour.
  *
+ * Pas de `navigateFallback` : rendre l'accueil pour toute adresse inconnue est
+ * le geste d'une application à page unique. Ici chaque page a son adresse et
+ * son fichier ; une adresse inconnue doit recevoir la 404 du serveur, et hors
+ * ligne l'échec franc du navigateur.
+ *
  * Le partage vaut ~2 Mo au lieu de 18, et `/examen` comme `/entrainement`
  * fonctionnent au premier lancement sans réseau.
  */
@@ -82,16 +87,16 @@ export const GLOB_HORS_NOYAU: readonly string[] = [
 export const MOTIF_A_LA_DEMANDE = new RegExp(`/(?:${CONTENU_A_LA_DEMANDE.join('|')})/`);
 
 /**
- * Ce que le repli de navigation ne doit pas servir.
+ * Les paramètres d'adresse que le précache doit ignorer pour retrouver sa page.
  *
- * `navigateFallback` rend l'accueil pour toute navigation qu'il ne trouve pas.
- * Sans cette liste, ouvrir `/question/balisage-0001` hors ligne afficherait
- * l'accueil sous l'adresse de la question : une page qui ment. Mieux vaut
- * l'échec franc du navigateur, qui dit qu'on est hors ligne.
+ * Workbox n'en ignore que `utm_*` et `fbclid` par défaut. Tout autre paramètre
+ * fait manquer l'entrée précachée : `/signaler?question=balisage-0001`, le
+ * bouton d'erreur porté par chaque question, ne correspondait plus à
+ * `/signaler`. Le site est entièrement statique et aucun document ne dépend de
+ * la requête — `/recherche` et `/signaler` la lisent en JavaScript, après
+ * chargement, sur une page identique pour tous. On les ignore donc tous.
  */
-export const HORS_REPLI_NAVIGATION: readonly RegExp[] = CONTENU_A_LA_DEMANDE.map(
-  (d) => new RegExp(`^/${d}/`),
-);
+export const IGNORER_PARAMETRES: readonly RegExp[] = [/.*/];
 
 export type Politique = 'noyau' | 'a-la-demande' | 'reseau';
 
@@ -100,7 +105,9 @@ export type Politique = 'noyau' | 'a-la-demande' | 'reseau';
  * globs ci-dessus, mais lisible et testable une adresse à la fois.
  */
 export function politique(chemin: string): Politique {
-  const propre = chemin.replace(/^\//, '');
+  // La requête et le fragment ne changent aucun document de ce site : ils ne
+  // doivent pas décider du sort d'une adresse.
+  const propre = chemin.replace(/[?#].*$/, '').replace(/^\//, '');
   if (propre === POINTEUR_FRAICHEUR) return 'reseau';
 
   const segments = propre === '' ? [] : propre.split('/');
