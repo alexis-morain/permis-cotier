@@ -618,7 +618,30 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
       {/* `key` sur ces trois éléments : React les remonte à chaque question,
           ce qui rejoue leur animation d'entrée. Sans lui, le DOM est réutilisé
           et le passage d'une question à l'autre ne se voit plus. */}
-      <h2 className="jeu__enonce" key={`enonce-${question.id}`}>{affichee.enonce}</h2>
+      {/* Le focus vient se poser ici à chaque question.
+
+          L'épreuve est chronométrée à vingt secondes : qui joue au clavier ou
+          au lecteur d'écran ne peut pas se permettre de repartir du haut du
+          document à chaque fois. Or le bouton qu'on vient d'activer disparaît,
+          et le focus retombe sur `body` — c'était le cas jusqu'ici, y compris
+          au démarrage de l'examen, et rien n'annonçait le changement de
+          question.
+
+          Le titre n'est ni un bouton ni un lien : le raccourci Entrée continue
+          donc de valider, là où un élément activable se serait déclenché tout
+          seul (voir `activable` plus haut). Le `key` le remonte à chaque
+          question, ce qui suffit à rejouer le geste. */}
+      <h2
+        className="jeu__enonce"
+        key={`enonce-${question.id}`}
+        tabIndex={-1}
+        ref={(noeud) => noeud?.focus()}
+      >
+        <span className="visuellement-cache">
+          Question {session.index + 1} sur {session.questions.length}.{' '}
+        </span>
+        {affichee.enonce}
+      </h2>
 
       {affichee.visuel && (
         <img
