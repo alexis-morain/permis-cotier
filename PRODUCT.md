@@ -64,9 +64,9 @@ une fois visité (PWA).
 
 ## Evidence on Hand
 
-- 509 questions publiées, 447 relues par Alexis, 71 visuels (`public/visuels/`),
-  14 thèmes et 105 notions, aucune notion sans question ; un cours par thème,
-  105 leçons rédigées et relues.
+- 516 questions publiées, dont 509 relues par Alexis, 71 visuels (`public/visuels/`),
+  14 thèmes et 105 notions, aucune notion sans question ni sous sa cible ; un cours
+  par thème, 105 leçons rédigées, dont 100 relues.
 - Sources réglementaires extraites dans `data/sources/`.
 - Aucun témoignage, aucun chiffre de réussite : ne pas en inventer.
 

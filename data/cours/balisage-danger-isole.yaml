@@ -16,6 +16,7 @@ etapes:
       Deux sphères, deux éclats : le voyant et le feu disent le même nombre.
     liste:
       - "Corps : noir, avec une ou plusieurs larges bandes rouges horizontales"
+      - "Forme : au choix, pourvu qu’elle ne prête pas à confusion avec une latérale ; charpente ou espar de préférence"
       - "Voyant : deux sphères noires superposées"
       - "Feu : blanc, à deux éclats groupés"
   - titre: Ne pas la confondre
@@ -43,5 +44,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude

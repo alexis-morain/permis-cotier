@@ -1,0 +1,35 @@
+id: balisage-0062
+option: cotier
+theme: balisage
+notion: balisage-speciale
+statut: publie
+difficulte: 2
+enonce: >-
+  Laquelle de ces zones peut être délimitée par une marque spéciale ?
+propositions:
+  - id: a
+    texte: Une installation d'énergie marine renouvelable
+  - id: b
+    texte: Une zone de cultures marines
+  - id: c
+    texte: Un danger isolé entouré d'eaux saines
+  - id: d
+    texte: Une division de chenal
+reponses:
+  - a
+  - b
+explication: >-
+  La liste de l'arrêté est plus longue que les câbles et les mouillages : elle comprend les
+  stations d'acquisition de données océaniques, la séparation du trafic, les zones de dépôt,
+  les zones d'exercices militaires, les activités de plaisance, les zones de mouillage, les
+  installations d'énergie marine renouvelable et les zones de cultures marines. Le danger
+  isolé et la division de chenal ont chacun leur marque propre.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-09'
+  genere_par: claude
+  relu_par: claude
