@@ -26,6 +26,8 @@ explication: >-
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 6
     ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 3-4
+    ref: fiche-ski-nautique
 meta:
   cree_le: '2026-09-08'
   genere_par: claude

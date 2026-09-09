@@ -21,12 +21,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  En région B, qui couvre les Amériques, le Japon, la Corée et les Philippines, les couleurs
-  latérales sont inversées : le rouge marque tribord. La forme, elle, ne change pas d'une
-  région à l'autre, et c'est elle qui tranche : le cône et le voyant conique sont toujours
-  à tribord, le cylindre toujours à bâbord. En région A, cette même marque serait verte.
+  En région B, celle de Saint-Pierre-et-Miquelon, la Guyane, la Martinique et la Guadeloupe
+  pour cet arrêté, les couleurs latérales sont inversées : le rouge marque tribord. La forme,
+  elle, ne change pas d'une région à l'autre, et c'est elle qui tranche : le cône et le voyant
+  conique sont toujours à tribord, le cylindre toujours à bâbord. En région A, cette même
+  marque serait verte.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'

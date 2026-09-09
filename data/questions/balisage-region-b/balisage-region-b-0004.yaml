@@ -5,7 +5,7 @@ notion: region-b-lateral
 statut: publie
 difficulte: 2
 enonce: >-
-  En route vers un port japonais, en région de balisage B, tu remontes le chenal depuis
+  En route vers un port de la Martinique, en région de balisage B, tu remontes le chenal depuis
   le large et cette marque se présente. De quel côté la laisses-tu ?
 visuel:
   fichier: balisage/laterale-babord-region-b.svg
@@ -19,13 +19,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  En région B, qui couvre les Amériques, le Japon, la Corée du Sud et les Philippines, les
-  couleurs latérales sont inversées : le vert marque bâbord. La forme, elle, ne change pas
-  d'une région à l'autre, et elle confirme : le cylindre et le voyant cylindrique sont
-  toujours à bâbord, le cône toujours à tribord. Croire le vert toujours à tribord est le
-  réflexe de la région A, et attribuer le cylindre à tribord ajoute une erreur à l'autre.
+  En région B, celle de Saint-Pierre-et-Miquelon, la Guyane, la Martinique et la Guadeloupe
+  pour cet arrêté, les couleurs latérales sont inversées : le vert marque bâbord. La forme,
+  elle, ne change pas d'une région à l'autre, et elle confirme : le cylindre et le voyant
+  cylindrique sont toujours à bâbord, le cône toujours à tribord. Croire le vert toujours à
+  tribord est le réflexe de la région A.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'

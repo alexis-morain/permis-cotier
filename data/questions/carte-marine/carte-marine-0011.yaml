@@ -29,6 +29,8 @@ explication: >-
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.1
     ref: arrete-2017-11-30
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
 meta:
   cree_le: '2026-09-04'
   genere_par: claude

@@ -13,20 +13,21 @@ visuel:
   credit: code
 propositions:
   - id: a
-    texte: Rien de particulier, les deux marquent le côté tribord du chenal
+    texte: Les deux marquent le côté tribord du chenal
   - id: b
     texte: Les deux marques bordent des côtés opposés du chenal
 reponses:
   - a
 explication: >-
-  Le rythme d'une marque latérale est quelconque : deux bouées voisines du même côté du
-  chenal peuvent parfaitement battre des rythmes différents sans que cela signifie quoi
-  que ce soit. Ce qui les identifie est leur couleur, ici le vert, c'est-à-dire le côté
-  tribord du chenal en région A, dans le sens conventionnel du large vers le port. Chercher
-  un sens au rythme est le réflexe des cardinales et du danger isolé, dont le feu est blanc
-  et se compte : il n'a pas cours sur les latérales.
+  Ce qui identifie une marque latérale est sa couleur, ici le vert, c'est-à-dire le côté
+  tribord du chenal en région A, dans le sens conventionnel du large vers le port. Deux bouées
+  voisines du même côté peuvent battre des rythmes différents : le rythme d'une latérale est
+  quelconque, à une exception près, les éclats diversement groupés (2 + 1), réservés à
+  l'endroit où le chenal se divise pour désigner le chenal préféré.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'

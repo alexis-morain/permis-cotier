@@ -24,6 +24,8 @@ explication: >-
 sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
     ref: fiche-meteo
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
 meta:
   cree_le: '2026-09-08'
   genere_par: claude

@@ -126,9 +126,14 @@ MARQUES: dict[str, dict] = {
     },
     "danger-nouveau": {
         "forme": "pilier", "corps": ["bleu", "jaune", "bleu", "jaune"], "sens": "vertical",
-        "voyant": "croix",
+        # L'annexe I sépare les deux croix jaunes : la marque spéciale porte
+        # « un seul voyant en forme de " X " » (6.2), la bouée d'épave en cas
+        # d'urgence « une croix jaune dont les branches sont disposées
+        # verticalement et horizontalement » (7.3). Les dessiner pareil, c'est
+        # effacer ce qui les distingue de jour.
+        "voyant": "croix-droite",
         "voyant_couleur": "jaune",
-        "alt": "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune en forme de X.",
+        "alt": "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune droite.",
         "regle": "AISM, système de balisage maritime, marque de danger nouveau",
     },
 }
@@ -138,7 +143,7 @@ EMPRISES = {"cylindre": (68, 78), "cone": (80, 88), "pilier": (48, 108)}
 
 # Hauteur occupée par chaque voyant, pour cadrer l'image dessus.
 HAUTEURS_VOYANT = {
-    "cylindre": 30, "cone-haut": 32, "sphere": 32, "croix": 34,
+    "cylindre": 30, "cone-haut": 32, "sphere": 32, "croix": 34, "croix-droite": 34,
     "deux-cones-haut": 58, "deux-cones-bas": 58, "deux-cones-base": 58,
     "deux-cones-pointe": 58, "deux-spheres": 60,
 }
@@ -202,6 +207,14 @@ def _voyant(genre: str, base: float, teinte: str) -> list[str]:
             f'<g stroke="{teinte}" stroke-width="9" stroke-linecap="round">'
             f'<line x1="{CENTRE - bras}" y1="{base - 17 - bras}" x2="{CENTRE + bras}" y2="{base - 17 + bras}" />'
             f'<line x1="{CENTRE - bras}" y1="{base - 17 + bras}" x2="{CENTRE + bras}" y2="{base - 17 - bras}" />'
+            f"</g>"
+        ]
+    if genre == "croix-droite":
+        bras = 16
+        return [
+            f'<g stroke="{teinte}" stroke-width="9" stroke-linecap="round">'
+            f'<line x1="{CENTRE}" y1="{base - 17 - bras}" x2="{CENTRE}" y2="{base - 17 + bras}" />'
+            f'<line x1="{CENTRE - bras}" y1="{base - 17}" x2="{CENTRE + bras}" y2="{base - 17}" />'
             f"</g>"
         ]
     if genre == "deux-spheres":
