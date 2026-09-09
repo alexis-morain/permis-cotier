@@ -20,11 +20,17 @@ propositions:
 reponses:
   - a
 explication: >-
-  Chaque marque a son rythme, et c'est lui qu'on lit de nuit : la cardinale Nord scintille
-  sans s'arrêter, l'Est bat trois éclats, la Sud six suivis d'un éclat long, l'Ouest neuf. Le
-  danger isolé, lui, se reconnaît à ses éclats groupés par deux, sur un feu blanc.
+  La lettre A du code Morse, un éclat bref suivi d'un éclat long, est l'un des rythmes de la
+  marque d'eaux saines, avec l'isophase, les occultations et l'éclat long toutes les dix
+  secondes. Le danger isolé, lui, se reconnaît à ses éclats groupés par deux, et les
+  cardinales à leurs scintillements : continus au Nord, par trois à l'Est, par six suivis d'un
+  éclat long au Sud, par neuf à l'Ouest.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
