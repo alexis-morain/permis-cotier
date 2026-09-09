@@ -1,0 +1,29 @@
+id: balisage-0060
+option: cotier
+theme: balisage
+notion: balisage-danger-isole
+statut: publie
+difficulte: 3
+enonce: >-
+  Quelle forme l'arrêté impose-t-il à une marque de danger isolé ?
+propositions:
+  - id: a
+    texte: Aucune en particulier, pourvu qu'elle ne prête pas à confusion avec une latérale
+  - id: b
+    texte: La forme sphérique, comme la marque d'eaux saines
+  - id: c
+    texte: La forme conique, pointe en haut
+reponses:
+  - a
+explication: >-
+  « Forme : Au choix, mais ne pouvant pas prêter à confusion avec les marques latérales ; les
+  formes charpente ou espar sont à préférer. » Ce qui identifie la marque de danger isolé
+  n'est donc pas sa forme mais son corps noir à bandes rouges horizontales et ses deux sphères
+  noires superposées.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-09'
+  genere_par: claude
+  relu_par: claude
