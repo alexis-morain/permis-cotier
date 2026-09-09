@@ -6,7 +6,7 @@ import AstroPWA from '@vite-pwa/astro';
 import {
   GLOB_NOYAU,
   GLOB_HORS_NOYAU,
-  HORS_REPLI_NAVIGATION,
+  IGNORER_PARAMETRES,
   reglesALaDemande,
 } from './src/lib/hors-ligne.ts';
 import { existsSync, readFileSync } from 'node:fs';
@@ -93,10 +93,15 @@ export default defineConfig({
         globPatterns: [...GLOB_NOYAU],
         globIgnores: [...GLOB_HORS_NOYAU],
         runtimeCaching: reglesALaDemande(versionBanque),
-        navigateFallback: '/',
-        // Sans cette liste, une navigation hors ligne vers une page jamais
-        // ouverte rendrait l'accueil sous l'adresse demandée.
-        navigateFallbackDenylist: [...HORS_REPLI_NAVIGATION],
+        // Aucun repli de navigation : une adresse inconnue doit recevoir la
+        // 404 du serveur, pas l'accueil sous son nom.
+        //
+        // La clé doit être écrite, même vide : `@vite-pwa/astro` teste
+        // `'navigateFallback' in workbox` et, si elle manque, y met la base du
+        // site. La retirer ne la supprime donc pas, elle la remet à « / » sans
+        // la liste d'exclusion qui l'accompagnait — l'inverse du but.
+        navigateFallback: undefined,
+        ignoreURLParametersMatching: [...IGNORER_PARAMETRES],
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },
