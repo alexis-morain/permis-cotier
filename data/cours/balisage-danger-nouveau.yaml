@@ -7,26 +7,30 @@ etapes:
   - titre: Un danger que les cartes ne connaissent pas encore
     texte: >-
       Un danger récemment découvert, une épave par exemple, n’est pas encore porté sur
-      les documents nautiques. On le balise en doublant le balisage normal : deux marques
-      au lieu d’une, ce qui attire l’œil.
+      les documents nautiques. On le balise comme on baliserait n’importe quel danger, par
+      une marque latérale, cardinale ou de danger isolé, ou bien par la bouée d’épave en
+      cas d’urgence, celle à bandes bleues et jaunes.
   - titre: La marque de danger nouveau
     texte: >-
-      Si le danger est grave, on ajoute une marque de danger nouveau : corps à bandes
-      verticales bleues et jaunes, voyant en croix jaune, feu bleu et jaune alternés.
-      Elle reste en place jusqu’à ce que le danger soit connu et balisé normalement.
+      La bouée d’épave en cas d’urgence porte un corps à bandes verticales bleues et
+      jaunes, un voyant en croix jaune aux branches droites, verticale et horizontale, et
+      un feu bleu et jaune alternés. Elle reste en place jusqu’à ce que le danger soit
+      suffisamment connu. Et si le service responsable juge le danger particulièrement
+      grave, il double une des marques, le double étant alors en tous points identique à
+      celle qu’il accompagne.
     visuel: balisage/danger-nouveau.svg
-    alt: "Une bouée à bandes verticales bleues et jaunes, surmontée d’un voyant en croix jaune en forme de X."
+    alt: "Une bouée à bandes verticales bleues et jaunes, surmontée d’un voyant en croix jaune aux branches droites."
   - titre: Ce qu’elle te demande
     texte: >-
       Tu passes largement à l’écart. Comme le danger n’est pas cartographié, tu ne sais
       ni sa taille ni sa forme : la seule bonne réponse est la distance.
 piege: >-
   Bleu et jaune, ce n’est pas une marque spéciale délavée. La marque spéciale est toute
-  jaune. Dès que tu vois du bleu, c’est un danger, et un danger que personne ne connaît
-  bien.
+  jaune et sa croix est posée en X, quand celle de la bouée d’épave a les branches droites.
+  Dès que tu vois du bleu, c’est un danger, et un danger que personne ne connaît bien.
 retenir:
-  - Un danger nouveau se balise par une marque normale doublée, ou par une marque bleue et jaune.
-  - Bandes verticales bleues et jaunes, croix jaune, feu bleu et jaune alternés.
+  - Un danger nouveau se balise comme un danger ordinaire, ou par la bouée bleue et jaune.
+  - Bandes verticales bleues et jaunes, croix jaune droite, feu bleu et jaune alternés.
   - "On passe loin : le danger n’est pas sur la carte."
 sources:
   - texte: Balisage AISM, région A, marque de danger nouveau
@@ -35,5 +39,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
