@@ -98,7 +98,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'balisage',
     nom: 'Marques spéciales',
     resume:
-      "Jaunes, voyant en croix jaune. Elles ne signalent pas un danger pour la navigation mais une zone particulière : chenal traversier, zone de mouillage, câble, installation.",
+      "Jaunes, voyant en croix jaune posée en X. Elles ne signalent pas un danger pour la navigation mais une zone particulière : chenal traversier, zone de mouillage, câble, installation.",
     ordre: 6,
     cible: 1,
     ancrage: 'balisage des côtes',
@@ -108,7 +108,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'balisage',
     nom: 'Danger nouveau',
     resume:
-      "Un danger non encore porté sur les cartes se balise par une marque conventionnelle doublée, ou par une marque bleue et jaune si le danger est grave.",
+      "Un danger non encore porté sur les cartes se balise comme un danger ordinaire, par une marque latérale, cardinale ou de danger isolé, ou par la bouée d'épave bleue et jaune. Si le service responsable juge le danger particulièrement grave, une des marques est doublée à l'identique.",
     ordre: 7,
     cible: 1,
     ancrage: 'balisage des côtes',
@@ -118,7 +118,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'balisage',
     nom: 'Le balisage de nuit',
     resume:
-      "La couleur du feu reprend celle de la marque, et le rythme dit le reste : scintillant continu au Nord, trois scintillements à l'Est, six plus un éclat long au Sud, neuf à l'Ouest.",
+      "Les latérales ont un feu de la couleur de leur corps, rouge à bâbord, vert à tribord. Les cardinales, le danger isolé et les eaux saines ont un feu blanc, et c'est le rythme qui les sépare : scintillant continu au Nord, trois scintillements à l'Est, six plus un éclat long au Sud, neuf à l'Ouest.",
     ordre: 8,
     cible: 4,
     ancrage: 'balisage des côtes',
@@ -150,7 +150,7 @@ export const NOTIONS: readonly Notion[] = [
     theme: 'balisage-region-b',
     nom: 'Inversion des marques latérales',
     resume:
-      "En région B — Amériques, Japon, Corée, Philippines — la marque bâbord est verte et la marque tribord rouge. Seule la couleur change, la forme reste cylindrique à bâbord et conique à tribord.",
+      "En région B, celle de Saint-Pierre-et-Miquelon, de la Guyane, de la Martinique et de la Guadeloupe, la marque bâbord est verte et la marque tribord rouge. Seule la couleur change, la forme reste cylindrique à bâbord et conique à tribord.",
     ordre: 1,
     cible: 2,
     ancrage: 'initiation au système de balisage région B',
