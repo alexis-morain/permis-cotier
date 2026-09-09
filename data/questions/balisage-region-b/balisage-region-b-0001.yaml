@@ -5,7 +5,7 @@ notion: region-b-lateral
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu entres dans un port des États-Unis, en région de balisage B. De quelle couleur est
+  Tu entres dans un port de la Guadeloupe, en région de balisage B. De quelle couleur est
   la marque latérale que tu laisses sur bâbord ?
 propositions:
   - id: a
@@ -17,12 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  En région B, les couleurs des marques latérales sont inversées par rapport à la région
-  A : bâbord est vert et tribord rouge. La réponse « rouge » est le réflexe de la région
-  A, celle que l'on pratique en France, et c'est exactement le piège. Les Amériques, le
-  Japon, la Corée du Sud et les Philippines sont en région B.
+  En région B, les couleurs des marques latérales sont inversées par rapport à la région A :
+  bâbord est vert et tribord rouge. La réponse « rouge » est le réflexe de la région A, celle
+  que l'on pratique en métropole, et c'est exactement le piège. Sont en région B, pour cet
+  arrêté, Saint-Pierre-et-Miquelon, la Guyane, la Martinique et la Guadeloupe.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'

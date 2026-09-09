@@ -9,11 +9,11 @@ enonce: >-
   Qu'en conclus-tu ?
 visuel:
   fichier: balisage/danger-nouveau.svg
-  alt: "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune en forme de X."
+  alt: "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune droite."
   credit: code
 propositions:
   - id: a
-    texte: Elle double le balisage normal d'un danger récemment découvert
+    texte: C'est une bouée d'épave en cas d'urgence, elle signale un danger nouveau
   - id: b
     texte: Son absence des documents est normale, le danger vient d'être découvert
   - id: c
@@ -24,16 +24,19 @@ reponses:
   - a
   - b
 explication: >-
-  Les bandes verticales bleues et jaunes désignent la marque de danger nouveau. Elle
-  s'ajoute au balisage normal d'un danger tout juste découvert, une épave par exemple,
-  précisément parce qu'il n'est pas encore porté sur les documents nautiques : la trouver
-  absente de tes cartes n'est donc pas une anomalie, c'est sa raison d'être. Sa croix
-  jaune la fait ressembler à une marque spéciale, mais celle-ci a un corps entièrement
-  jaune et ne signale aucun danger.
+  Les bandes verticales bleues et jaunes désignent la bouée d'épave en cas d'urgence. Un
+  danger nouveau se signale par une marque latérale, cardinale, de danger isolé ou par cette
+  bouée-là : elle est l'un des moyens prévus, pas un ajout au balisage ordinaire. Sa raison
+  d'être est justement que le danger vient d'être découvert et n'est pas encore porté sur les
+  documents nautiques : la trouver absente de tes cartes n'est pas une anomalie. Sa croix
+  jaune a les branches droites ; celle de la marque spéciale est posée en X, sur un corps
+  entièrement jaune.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
     ref: arrete-2017-11-30
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
