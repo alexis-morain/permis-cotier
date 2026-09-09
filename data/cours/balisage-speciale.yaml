@@ -17,6 +17,7 @@ etapes:
       marque jaune et bleue est un danger nouveau.
     liste:
       - "Corps : jaune"
+      - "Forme : au choix, sans confusion possible avec une marque de navigation"
       - "Voyant : une croix jaune en forme de X"
       - "Feu : jaune, à un rythme différent de ceux des feux blancs"
   - titre: Ce qu’elle demande
@@ -25,6 +26,14 @@ etapes:
       qu’elle délimite : on ne mouille pas sur un câble, on ne traverse pas une zone
       d’exercices militaires ni un champ d’éoliennes en mer. C’est la carte ou le document
       nautique qui le dit.
+  - titre: Ce qu’elle peut délimiter
+    texte: >-
+      La liste de l’arrêté est plus longue que les câbles et les mouillages auxquels on
+      pense d’abord. Une marque spéciale peut aussi baliser une station d’acquisition de
+      données océaniques, un dispositif de séparation du trafic là où le balisage
+      classique prêterait à confusion, une zone de dépôt, une zone d’exercices
+      militaires, une installation d’énergie marine renouvelable ou une zone de cultures
+      marines.
 piege: >-
   La bouée d’épave en cas d’urgence porte elle aussi une croix jaune, mais aux branches
   droites, verticale et horizontale, quand celle de la marque spéciale est posée en X. Et
@@ -49,5 +58,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude

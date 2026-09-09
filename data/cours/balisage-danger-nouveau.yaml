@@ -32,6 +32,7 @@ piege: >-
 retenir:
   - Un danger nouveau se balise comme un danger ordinaire, ou par la bouée bleue et jaune.
   - Bandes verticales bleues et jaunes, croix jaune droite, feu bleu et jaune alternés.
+  - "Le feu bat une seconde de bleu, une seconde de jaune, séparées par une demi-seconde d’obscurité."
   - "On passe loin : le danger n’est pas sur la carte."
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
@@ -49,5 +50,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
