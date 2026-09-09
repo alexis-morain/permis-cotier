@@ -522,3 +522,8 @@
 @media (prefers-reduced-motion: reduce) {
   .silhouette { animation: none; }
 }
+
+/* Le focus de `.jeu__enonce` est posé par le code à chaque question, pour que
+   le clavier et le lecteur d'écran suivent l'épreuve sans repartir du haut. Il
+   ne vient pas d'un geste de l'utilisateur : l'anneau n'aurait rien à dire. */
+.jeu__enonce:focus { outline: none; }
