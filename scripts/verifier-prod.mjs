@@ -190,6 +190,18 @@ if (!swDemande || !manifesteLie) {
       `la banque ${versionBanque} n’est pas au précache`,
       '/examen ne tirerait aucune question hors ligne : vérifier `GLOB_NOYAU` dans `src/lib/hors-ligne.ts`',
     );
+  } else if (/NavigationRoute\(\w+\.createHandlerBoundToURL/.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'le service worker rend l’accueil pour toute adresse qu’il ne trouve pas',
+      'une page portant un paramètre, `/signaler?question=…` par exemple, s’ouvrirait sur l’accueil sous son adresse : poser `navigateFallback: undefined` dans `astro.config.mjs`, la clé doit être écrite pour que `@vite-pwa/astro` ne la remette pas',
+    );
+  } else if (!/ignoreURLParametersMatching/.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'le précache ne retrouve pas une page dès qu’un paramètre s’ajoute à son adresse',
+      'vérifier `IGNORER_PARAMETRES` dans `src/lib/hors-ligne.ts`',
+    );
   } else if (/\{url:"(?:question|notion|cours|theme|guide)\//.test(sw.corps)) {
     ko(
       'hors ligne',
