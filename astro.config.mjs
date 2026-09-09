@@ -3,6 +3,12 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
+import {
+  GLOB_NOYAU,
+  GLOB_HORS_NOYAU,
+  HORS_REPLI_NAVIGATION,
+  reglesALaDemande,
+} from './src/lib/hors-ligne.ts';
 import { existsSync, readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
@@ -81,11 +87,16 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        // `json` y est pour l'index de la recherche : sans lui, la loupe ne
-        // trouverait plus rien dès que le réseau tombe, sur un site dont tout
-        // le reste marche hors ligne.
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
+        // Le partage entre ce qui est précaché, ce qui se garde à mesure
+        // qu'on le lit et ce qui reste au réseau se lit dans
+        // `src/lib/hors-ligne.ts`, où des tests le tiennent.
+        globPatterns: [...GLOB_NOYAU],
+        globIgnores: [...GLOB_HORS_NOYAU],
+        runtimeCaching: reglesALaDemande(versionBanque),
         navigateFallback: '/',
+        // Sans cette liste, une navigation hors ligne vers une page jamais
+        // ouverte rendrait l'accueil sous l'adresse demandée.
+        navigateFallbackDenylist: [...HORS_REPLI_NAVIGATION],
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },

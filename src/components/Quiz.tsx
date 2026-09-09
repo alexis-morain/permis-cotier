@@ -33,8 +33,17 @@ import './quiz.css';
 
 interface Props {
   mode: Mode;
-  /** Toute la banque en examen, les questions du thème en entraînement. */
-  questions: QuestionAffichable[];
+  /**
+   * Toute la banque en examen, les questions du thème en entraînement. Les
+   * pages ne la passent plus : elles donnent `source`, et la banque arrive en
+   * un JSON commun. Le tableau reste pour les tests, qui n'ont pas de réseau.
+   */
+  questions?: QuestionAffichable[];
+  /**
+   * URL du JSON de banque. Un des deux, jamais les deux : quand elle est là,
+   * l'écran attend le téléchargement, puis filtre sur `theme` s'il y en a un.
+   */
+  source?: string;
   theme?: string;
   /** Série des seules questions ratées, tous thèmes mêlés. */
   revoir?: boolean;
@@ -89,7 +98,13 @@ function Signaler({ id }: { id: string }) {
   );
 }
 
-export default function Quiz({ mode, questions, theme, revoir = false }: Props) {
+/**
+ * L'écran de jeu proprement dit. Il reçoit une banque déjà là : tous ses états
+ * se calculent au montage — le tirage, la reprise, la progression lue une
+ * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
+ * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
+ */
+function Partie({ mode, questions, theme, revoir = false }: Props & { questions: QuestionAffichable[] }) {
   // La progression est lue une fois, au montage : le tirage et la reprise
   // doivent partir du même état, pas d'un état qui bouge sous eux.
   const [depart] = useState(() => charger());
@@ -715,4 +730,133 @@ export default function Quiz({ mode, questions, theme, revoir = false }: Props) 
       )}
     </div>
   );
+}
+
+/** Ce que sert `dist/banque/<version>.json`. */
+interface BanqueServie {
+  version: string;
+  questions: QuestionAffichable[];
+}
+
+/**
+ * L'attente.
+ *
+ * L'îlot est en `client:only` : rien n'est rendu au serveur, donc le
+ * téléchargement ajoute un vide visible là où la page était déjà pleine. Une
+ * silhouette de question tient la place — même gouttière, mêmes hauteurs de
+ * carte — plutôt qu'un tourniquet, qui n'annonce rien de ce qui vient.
+ *
+ * `aria-busy` et le texte hors écran disent au lecteur d'écran ce que l'œil
+ * comprend tout seul.
+ */
+function Silhouette({ propositions }: { propositions: number }) {
+  return (
+    <div className="jeu silhouette" aria-busy="true" aria-live="polite">
+      <p className="visuellement-cache">Chargement des questions.</p>
+      <div className="silhouette__enonce">
+        <span className="silhouette__ligne" />
+        <span className="silhouette__ligne silhouette__ligne--courte" />
+      </div>
+      <ul className="propositions">
+        {Array.from({ length: propositions }, (_, rang) => (
+          <li key={rang}>
+            <span className="proposition silhouette__proposition">
+              <span className="silhouette__pastille" />
+              <span className="silhouette__ligne" />
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * La banque n'est pas venue. Sur le site, c'est une coupure de réseau au
+ * premier chargement : le service worker garde le JSON, donc ça ne se produit
+ * qu'avant la première visite hors ligne. Dans la coquille iOS, le fichier est
+ * dans le bundle et ce cas n'existe pas.
+ */
+function Panne({ reessayer }: { reessayer: () => void }) {
+  return (
+    <div className="encadre">
+      <h1 className="encadre__titre">Les questions ne sont pas arrivées.</h1>
+      <p className="discret">
+        La connexion a lâché pendant le téléchargement de la banque. Rien n’est perdu : ta
+        progression est sur cet appareil.
+      </p>
+      <p>
+        <button className="bouton bouton--principal" type="button" onClick={reessayer}>
+          Réessayer
+        </button>
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Ce qu'on attend la banque avant de rendre la main. Quinze secondes : de quoi
+ * laisser passer une 3G lente sur 96 Ko compressés, pas de quoi laisser le
+ * candidat devant une silhouette qui bat pour rien.
+ */
+const ATTENTE_BANQUE = 15_000;
+
+/**
+ * L'écran de jeu, banque comprise.
+ *
+ * Deux entrées, jamais les deux à la fois : `questions`, que les tests
+ * donnent en tableau, et `source`, l'URL du JSON que les pages donnent. Le
+ * corps du jeu ne monte qu'une fois la banque là, sans quoi son tirage et sa
+ * reprise partiraient d'un tableau vide.
+ */
+export default function Quiz({ source, questions, ...reste }: Props) {
+  const [chargees, setChargees] = useState<QuestionAffichable[] | null>(questions ?? null);
+  const [echec, setEchec] = useState(false);
+  // Change à chaque « Réessayer » : c'est ce qui relance l'effet.
+  const [essai, setEssai] = useState(0);
+
+  useEffect(() => {
+    if (!source || questions) return;
+    let vivant = true;
+    setEchec(false);
+    // Une échéance, parce qu'un réseau muet ne rejette rien : un portail
+    // captif ou un mobile qui a lâché accepte la connexion et se tait. Sans
+    // elle, la silhouette bat sans fin et l'écran n'offre pas même un bouton.
+    const controleur = new AbortController();
+    const echeance = setTimeout(() => {
+      controleur.abort();
+      if (vivant) setEchec(true);
+    }, ATTENTE_BANQUE);
+    fetch(source, { signal: controleur.signal })
+      .then((reponse) => {
+        if (!reponse.ok) throw new Error(`banque : ${reponse.status}`);
+        return reponse.json() as Promise<BanqueServie>;
+      })
+      .then((banque) => {
+        clearTimeout(echeance);
+        if (vivant) setChargees(banque.questions);
+      })
+      .catch(() => {
+        clearTimeout(echeance);
+        if (vivant) setEchec(true);
+      });
+    return () => {
+      vivant = false;
+      clearTimeout(echeance);
+    };
+  }, [source, questions, essai]);
+
+  // Le JSON porte toute la banque, une seule fois pour les seize écrans de
+  // jeu. L'entraînement par thème y taille sa part ici.
+  const servies = useMemo(() => {
+    if (!chargees) return null;
+    if (questions) return chargees;
+    return reste.theme ? chargees.filter((q) => q.theme === reste.theme) : chargees;
+  }, [chargees, questions, reste.theme]);
+
+  if (echec) return <Panne reessayer={() => setEssai((n) => n + 1)} />;
+  // Quatre propositions : c'est le format visé par la banque, et une silhouette
+  // qui se trompe d'une ligne ne se remarque pas ; une qui saute, si.
+  if (!servies) return <Silhouette propositions={4} />;
+  return <Partie {...reste} questions={servies} />;
 }

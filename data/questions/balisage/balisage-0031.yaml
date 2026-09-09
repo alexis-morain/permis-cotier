@@ -23,17 +23,17 @@ reponses:
   - a
   - b
 explication: >-
-  Le corps noir à large bande rouge et les deux sphères noires superposées désignent la
-  marque de danger isolé. Elle est mouillée sur le danger même, qui est de faible étendue
-  et entouré d'eaux saines : tu la contournes donc par le bord qui t'arrange, sans t'en
-  écarter démesurément. C'est ce qui la sépare d'une cardinale, qui impose un côté, et de
-  la marque de danger nouveau, à bandes bleues et jaunes, qui signale un danger tout juste
-  découvert.
+  Le corps noir à large bande rouge et les deux sphères noires superposées désignent la marque
+  de danger isolé. Elle est mouillée sur le danger même, qui est de faible étendue et entouré
+  d'eaux saines : tu la contournes donc par le bord qui t'arrange. C'est ce qui la sépare
+  d'une cardinale, qui impose un côté, et de la bouée d'épave en cas d'urgence, à bandes
+  bleues et jaunes, qui signale un danger tout juste découvert.
 sources:
-  - texte: Balisage AISM, marque de danger isolé
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude

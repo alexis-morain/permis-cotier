@@ -20,17 +20,13 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le feu blanc de la marque d'eaux saines a quatre rythmes possibles : isophase, à
-  occultations, un éclat long toutes les 10 s, ou la lettre A du code Morse. C'est donc
-  bien une marque d'eaux saines, eau saine tout autour, en milieu de chenal ou en
-  atterrissage. Le piège est de compter deux éclats et de conclure au danger isolé : son
-  feu est bien à deux éclats groupés, mais de même durée, alors que le Morse A oppose un
-  bref et un long. Une marque spéciale, elle, aurait un feu jaune.
+  Chaque marque a son rythme, et c'est lui qu'on lit de nuit : la cardinale Nord scintille
+  sans s'arrêter, l'Est bat trois éclats, la Sud six suivis d'un éclat long, l'Ouest neuf. Le
+  danger isolé, lui, se reconnaît à ses éclats groupés par deux, sur un feu blanc.
 sources:
-  - texte: Balisage AISM région A, marque d'eaux saines
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

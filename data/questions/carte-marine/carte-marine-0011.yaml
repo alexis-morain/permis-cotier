@@ -27,10 +27,11 @@ explication: >-
   que le scintillant, qui enchaîne. Le chiffre entre parenthèses ne s'ajoute que si les
   éclats sont groupés, ce qui n'est pas le cas ici.
 sources:
-  - texte: Balisage AISM région A, marques cardinales, Nord
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.1
+    ref: arrete-2017-11-30
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude

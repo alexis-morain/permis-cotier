@@ -462,3 +462,63 @@
   }
   .jeu__barre span { transition: none; }
 }
+
+/* L'attente de la banque.
+
+   L'écran de jeu est un îlot `client:only` : rien n'est rendu au serveur, et
+   la banque arrive maintenant par un JSON commun aux seize écrans de jeu. Le
+   vide entre les deux se tient avec une silhouette aux mesures de la vraie
+   question — même gouttière, mêmes hauteurs — pour que rien ne saute quand
+   elle est remplacée.
+
+   Le battement est lent et faible exprès : c'est une attente d'une fraction de
+   seconde sur une connexion normale, un clignotement y serait plus visible que
+   le chargement. */
+.silhouette__enonce {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-width: 34ch;
+}
+
+/* Les deux barres de l'énoncé sont aux mesures de `.jeu__enonce` : même
+   hauteur de ligne, même mesure de lecture. La question qui les remplace
+   occupe la même place, donc rien ne saute. */
+.silhouette__ligne {
+  display: block;
+  height: calc(clamp(1.25rem, 4.6vw, 1.6rem) * 1.3);
+  border-radius: var(--rayon-petit);
+  background: var(--fond-2);
+}
+.silhouette__ligne--courte { width: 62%; }
+
+/* Dans une proposition, la barre est seule sur sa ligne et prend la place que
+   la pastille lui laisse. Elle y est à la hauteur d'un texte, pas d'un titre. */
+.silhouette__proposition .silhouette__ligne {
+  flex: 1;
+  height: 1.1rem;
+}
+
+.silhouette__proposition {
+  align-items: center;
+  cursor: default;
+  box-shadow: none;
+}
+
+.silhouette__pastille {
+  flex: 0 0 auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: var(--fond-2);
+}
+
+@keyframes silhouette-battement {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.silhouette { animation: silhouette-battement 1.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .silhouette { animation: none; }
+}
