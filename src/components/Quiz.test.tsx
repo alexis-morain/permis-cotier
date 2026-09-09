@@ -112,7 +112,7 @@ describe('écran de départ de l’examen', () => {
     render(<Quiz mode="examen" questions={trois} />);
     const reprendre = screen.getByRole('button', { name: /Reprendre à la question 3/ });
     fireEvent.click(reprendre);
-    expect(screen.getByText(/Question 3/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 3');
   });
 });
 
@@ -139,6 +139,46 @@ describe('correction en entraînement', () => {
   });
 });
 
+describe('le focus suit la question', () => {
+  // L'épreuve est chronométrée : qui joue au clavier ou au lecteur d'écran ne
+  // peut pas repartir du haut du document à chaque question. Le bouton qu'on
+  // vient d'activer disparaît, et sans ce geste le focus retombe sur `body`.
+
+  it('se pose sur l’énoncé dès que l’examen démarre', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(document.activeElement).toBe(document.body);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    expect(document.activeElement).toBe(screen.getByRole('heading', { level: 2 }));
+  });
+
+  it('suit le passage à la question suivante', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    const premier = screen.getByRole('heading', { level: 2 });
+    fireEvent.keyDown(document.body, { key: 'a' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    const second = screen.getByRole('heading', { level: 2 });
+    expect(second).not.toBe(premier);
+    expect(document.activeElement).toBe(second);
+  });
+
+  it('dit où l’on en est, pour qui ne voit pas le compteur', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toContain('Question 1 sur 3.');
+  });
+
+  it('laisse l’entrée valider : l’énoncé n’est ni bouton ni lien', () => {
+    // La garde `activable` du gestionnaire de touches s'efface devant un
+    // BUTTON ou un A qui a le focus. Un titre n'en est pas un, donc Entrée
+    // continue de valider au lieu de rejouer le bouton focalisé.
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'a' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    expect(screen.getByRole('status')).toBeTruthy();
+  });
+});
+
 describe('clavier', () => {
   it('coche par sa lettre et valide à l’entrée', () => {
     render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
@@ -147,7 +187,7 @@ describe('clavier', () => {
     fireEvent.keyDown(document.body, { key: 'Enter' });
     expect(screen.getByRole('status')).toBeTruthy();
     fireEvent.keyDown(document.body, { key: 'Enter' });
-    expect(screen.getByText(/Question 2/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
   });
 
   it('ignore une lettre sans proposition', () => {
@@ -176,7 +216,7 @@ describe('clavier', () => {
     const valider = screen.getByRole('button', { name: 'Valider et passer' });
     valider.focus();
     fireEvent.keyDown(valider, { key: 'Enter' });
-    expect(screen.getByText(/Question 1/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 1');
   });
 });
 
