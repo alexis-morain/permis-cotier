@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import SansScript from '../components/SansScript.astro';
 import Quiz from '../components/Quiz.tsx';
 import { cheminBanque } from '../lib/banque';
 
@@ -16,6 +17,7 @@ const banque = cheminBanque();
   prechargeBanque
 >
   <div class="page page--etroite">
+    <SansScript ecran="L’examen blanc" />
     <Quiz client:only="react" mode="examen" source={banque} />
   </div>
 </Base>

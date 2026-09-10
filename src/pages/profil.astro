@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import SansScript from '../components/SansScript.astro';
 import ProfilCandidat from '../components/ProfilCandidat.tsx';
 import { questionsPubliees } from '../lib/banque';
 import { leconsDuParcours } from '../lib/parcours';
@@ -17,6 +18,7 @@ const totalLecons = leconsDuParcours().length;
   indexable={false}
 >
   <div class="page page--etroite">
+    <SansScript ecran="Ta fiche" />
     <ProfilCandidat client:only="react" banque={banque} totalLecons={totalLecons} />
   </div>
 </Base>
