@@ -1,18 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Quiz from '../components/Quiz.tsx';
-import { versionBanque } from '../lib/banque';
+import { cheminBanque } from '../lib/banque';
 
 // Les questions ratées, tous thèmes mêlés. La série se constitue dans le
 // navigateur, depuis la progression locale : le serveur ne sait rien de ce
 // que le candidat a raté, et la page reste la même pour tout le monde.
-const banque = `/banque/v/${versionBanque()}.json`;
+const banque = cheminBanque();
 ---
 
 <Base
   titre="Revoir mes erreurs"
   description="Rejoue les seules questions que tu as ratées, tous thèmes mêlés, avec la correction et la source."
   indexable={false}
+  prechargeBanque
 >
   <div class="page page--etroite">
     <p class="chapitre" style="padding-top:1.5rem">

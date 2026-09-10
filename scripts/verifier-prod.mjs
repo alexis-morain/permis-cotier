@@ -226,6 +226,31 @@ if (!swDemande || !manifesteLie) {
   }
 }
 
+// 11. La charge utile du premier écran. La banque partait au quatrième
+//     aller-retour — HTML, puis le runtime React, puis l'exécution du
+//     composant, puis seulement le `fetch`. Le préchargement doit viser
+//     exactement l'adresse que l'écran donne au `Quiz` : un préchargement qui
+//     rate son adresse n'économise pas un aller-retour, il en ajoute un.
+const examen = await recuperer(`${SITE}/examen`);
+const corpsExamen = examen.corps ?? '';
+const prechargements = [...corpsExamen.matchAll(/<link rel="preload"[^>]*href="([^"]+)"[^>]*>/g)];
+const banquePrechargee = prechargements.find(([balise]) => balise.includes('as="fetch"'))?.[1];
+const banqueDemandee = /"source":"([^"]*banque\/v\/[^"]*)"/.exec(corpsExamen)?.[1]
+  ?? new RegExp(`/banque/v/${versionBanque}\\.json`).exec(corpsExamen)?.[0];
+
+if (!banquePrechargee) {
+  ko('charge utile', '/examen ne précharge pas la banque', 'la banque part au quatrième aller-retour : poser `prechargeBanque` sur l’écran');
+} else if (banqueDemandee && banquePrechargee !== banqueDemandee) {
+  ko('charge utile', `la banque préchargée (${banquePrechargee}) n’est pas celle que l’écran demande (${banqueDemandee})`, 'les deux doivent venir de `cheminBanque()` dans `src/lib/banque.ts`');
+} else {
+  const rb = await recuperer(`${SITE}${banquePrechargee}`, { method: 'HEAD' });
+  if (!rb.reponse?.ok) {
+    ko('charge utile', `préchargement vers le vide : banque ${banquePrechargee}`, 'un préchargement qui rate son adresse ajoute un aller-retour au lieu d’en retirer un');
+  } else {
+    ok('charge utile', `banque préchargée sur /examen, l’adresse répond`);
+  }
+}
+
 console.log(`\n${SITE}\n`);
 for (const c of controles) {
   console.log(`  ${c.etat === 'ok' ? '✓' : '✗'} ${c.nom} — ${c.detail}`);
