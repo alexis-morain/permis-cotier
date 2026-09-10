@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import SansScript from '../components/SansScript.astro';
 import Quiz from '../components/Quiz.tsx';
 import { cheminBanque } from '../lib/banque';
 
@@ -19,6 +20,7 @@ const banque = cheminBanque();
     <p class="chapitre" style="padding-top:1.5rem">
       <a href="/entrainement">Entraînement</a> · Tes erreurs
     </p>
+    <SansScript ecran="La révision des erreurs" />
     <Quiz client:only="react" mode="entrainement" source={banque} revoir />
   </div>
 </Base>

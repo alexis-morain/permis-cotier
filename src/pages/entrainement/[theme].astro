@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import SansScript from '../../components/SansScript.astro';
 import Quiz from '../../components/Quiz.tsx';
 import { cheminBanque } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
@@ -23,6 +24,7 @@ const banque = cheminBanque();
 >
   <div class="page page--etroite">
     <p class="chapitre" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
+    <SansScript ecran="L’entraînement" />
     <Quiz client:only="react" mode="entrainement" source={banque} theme={theme.code} />
   </div>
 </Base>
