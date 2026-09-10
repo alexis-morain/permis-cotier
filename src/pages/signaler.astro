@@ -52,8 +52,10 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
       </p>
       {ENVOI_EN_LIGNE ? (
         <p class="discret">
-          Le signalement part seul : ni adresse, ni adresse IP, ni cookie, rien qui dise qui
-          tu es. Il devient une fiche publique dans le dépôt. Tu veux une réponse
+          Le signalement part seul : ni adresse, ni adresse IP, ni cookie — rien de toi
+          n’entre dans la fiche publique qu’il devient. La vérification anti-robot
+          ci-dessous et la mesure d’audience voient ta connexion, comme tout site voit qui
+          l’appelle ; le signalement, lui, n’en garde rien. Tu veux une réponse
           personnelle ? Écris-moi plutôt à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> : c’est
           le seul endroit où une adresse circule, et c’est toi qui la donnes.
         </p>

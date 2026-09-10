@@ -37,8 +37,13 @@ répond à une seule adresse, `POST /api/signaler` : il vérifie un jeton
 Turnstile, puis ouvre une issue publique dans ce dépôt. Tout le reste — chaque
 page, chaque redirection, la page 404 — reste servi par les actifs, qui passent
 avant le script. Le formulaire retombe sur un courrier pré-rempli à la moindre
-panne, endpoint éteint compris. Le signalement ne porte ni adresse, ni adresse
-IP, ni identifiant : aucun compte, aucune donnée personnelle, aucun cookie.
+panne, endpoint éteint compris. Le signalement lui-même ne porte ni adresse, ni
+adresse IP, ni identifiant : ni l'issue ni le Worker n'en gardent trace, et le
+site ne pose aucun cookie. La page, elle, charge deux choses qui voient
+l'adresse du visiteur comme tout serveur voit celle de qui l'appelle : le
+widget anti-robot de Cloudflare et la mesure d'audience. « Aucune donnée
+personnelle » promettrait donc plus que ce qui est tenu ; ce qui est tenu, et
+qui est vérifié par les tests, c'est que le signalement n'en porte aucune.
 
 La fréquentation est comptée par une instance Umami auto-hébergée : pas de
 cookie, pas d'identifiant de visiteur, rien qui suive quelqu'un d'un site à
@@ -84,6 +89,34 @@ npm run dev
 | `npm run carte` | redessine les planches de carte marine |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
+
+## Le signalement en ligne
+
+Quatre secrets de Worker font vivre `POST /api/signaler`, posés un par un par
+`wrangler secret put <NOM>` : `TURNSTILE_SECRET_KEY`, `GITHUB_BOT_TOKEN` — un
+jeton à portée fine, `Issues: Read and write` sur ce seul dépôt, et rien
+d'autre —, `GITHUB_REPO`, et les trois de Resend si notification par courrier
+il y a. Tant qu'il en manque un, l'endpoint rend 503 et la page passe par le
+courrier : c'est un état de repos, pas une panne. `TURNSTILE_SITE_KEY` est
+publique et entre au build.
+
+La part d'un visiteur est bornée à cinq signalements par minute et par adresse,
+par le binding `[[ratelimits]]` de `wrangler.toml`. Sans ce binding, l'endpoint
+se ferme au lieu de servir sans borne. Si un jour `wrangler deploy` refusait ce
+binding — il est facturé au plan du compte, pas au code —, la même borne se
+pose au tableau de bord, en règle WAF sur la zone : *Security → WAF → Rate
+limiting rules → Create rule*, expression
+`(http.request.uri.path eq "/api/signaler" and http.request.method eq "POST")`,
+compteur par *IP with NAT support*, 5 requêtes par période de 60 secondes,
+action *Block* pendant 60 secondes. Elle vaut la même chose, à ceci près
+qu'elle vit hors du dépôt et que rien ne rappelle son existence.
+
+Le jeton GitHub expire. Le jour où il expirera, GitHub rendra 401, le Worker
+rendra son 503 générique et la page retombera sur le courrier : le visiteur ne
+verra rien d'anormal. `npm run verifier:prod`, lancé chaque matin par la veille,
+dit l'état de l'endpoint — fermé, ou répondant — sans jamais ouvrir d'issue. Il
+ne voit pas la différence entre un jeton mort et un secret absent : la date
+d'expiration du jeton se note ailleurs que dans ce dépôt.
 
 ## Le cours
 
