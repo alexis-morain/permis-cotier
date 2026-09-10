@@ -1,4 +1,7 @@
 import type { EtatQuestion, Progression } from './quiz';
+// Le jour se lit dans `jour.ts`. Réexporté ici parce que la moitié du site
+// l'appelle en même temps que `charger` : une seule origine, deux portes.
+export { aujourdhui } from './jour';
 import type { SessionSauvegardee } from './session';
 
 /**
@@ -262,8 +265,4 @@ export function effacer(stockage: Stockage | null = stockageParDefaut()): void {
   } catch {
     /* rien à faire */
   }
-}
-
-export function aujourdhui(): string {
-  return new Date().toISOString().slice(0, 10);
 }

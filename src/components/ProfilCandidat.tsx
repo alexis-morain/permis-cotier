@@ -16,6 +16,7 @@ import {
   serieDeJours,
 } from '../lib/profil';
 import type { QuestionConnue } from '../lib/profil';
+import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import Apparence from './Apparence';
@@ -35,12 +36,6 @@ function Coche() {
       <path d="M2.5 8.5 6 12l7.5-8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
-}
-
-function dateLisible(iso: string): string {
-  const d = new Date(`${iso}T00:00:00`);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
 }
 
 /**
@@ -175,7 +170,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             </p>
             <ol className="jours" aria-label="Les quatorze derniers jours">
               {cases.map((c, i) => {
-                const d = new Date(`${c.date}T00:00:00`);
                 const actif = c.reponses > 0;
                 const estAujourdhui = i === cases.length - 1;
                 return (
@@ -184,7 +178,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                     className={`jours__case${actif ? ' jours__case--actif' : ''}${estAujourdhui ? ' jours__case--aujourdhui' : ''}`}
                     aria-label={`${dateLisible(c.date)} : ${c.reponses} réponse${c.reponses > 1 ? 's' : ''}`}
                   >
-                    <span aria-hidden="true">{JOURS_COURTS[d.getDay()]}</span>
+                    <span aria-hidden="true">{JOURS_COURTS[jourDeLaSemaine(c.date) ?? 0]}</span>
                   </li>
                 );
               })}
