@@ -10,6 +10,7 @@ import {
   jalons,
   joursAvant,
   maitriseParTheme,
+  notionsLesPlusFaibles,
   objectifDuJour,
   profilRempli,
   quatorzeJours,
@@ -30,6 +31,21 @@ interface Props {
 }
 
 const JOURS_COURTS = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+
+/**
+ * Le jour où « retenu » a changé de sens, et la date au-delà de laquelle on
+ * n'en parle plus.
+ *
+ * Une question réussie une fois n'est plus une question retenue : il en faut
+ * deux, deux jours différents. Le changement fait tomber l'indice d'un
+ * candidat déjà avancé de 76 à 46, et une seule séance sur ce qu'il sait le
+ * remet à 76. Ça se dit, une fois, à qui révisait avant — et ça ne se dit pas
+ * à qui commence aujourd'hui, pour qui il n'y a jamais eu d'autre compte.
+ * Passé un mois, l'indice est redevenu vrai tout seul et la phrase n'a plus
+ * d'objet.
+ */
+const CHANGEMENT_COMPTAGE = '2026-09-10';
+const FIN_AVIS_COMPTAGE = '2026-10-10';
 
 function Coche() {
   return (
@@ -68,6 +84,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const serie = serieDeJours(etat, jour);
   const cases = quatorzeJours(etat, jour);
   const themes = maitriseParTheme(etat, banque);
+  const faibles = notionsLesPlusFaibles(etat, banque, 3);
   const listeJalons = jalons(etat, banque, totalLecons);
   const atteints = listeJalons.filter((j) => j.atteint).length;
   const jours = etat.dateExamen ? joursAvant(etat.dateExamen, jour) : null;
@@ -79,6 +96,9 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const recus = examens.filter((x) => x.reussi).length;
   const meilleur = examens.reduce((m, x) => Math.max(m, x.bonnes), 0);
   const rien = vues.length === 0 && examens.length === 0 && Object.keys(etat.lecons).length === 0;
+  // Le changement de comptage ne concerne que ceux qui révisaient avant lui.
+  const direLeChangement =
+    jour < FIN_AVIS_COMPTAGE && vues.some(([, e]) => e.vueLe < CHANGEMENT_COMPTAGE);
 
   // La prochaine chose à faire, une seule : les erreurs d'abord, sinon ce que
   // le point de départ conseille.
@@ -145,6 +165,13 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           <li><i className="indice__puce indice__puce--retenu" />Retenu {ind.parts.retenu} sur 35</li>
           <li><i className="indice__puce indice__puce--examens" />Examens {ind.parts.examens} sur 45</li>
         </ul>
+        {direLeChangement && (
+          <p className="indice__changement">
+            Depuis le 10 septembre, on compte autrement : une question n’est retenue qu’après deux
+            réussites, deux jours différents. Ton indice a baissé d’un coup. Une séance sur ce que
+            tu sais déjà le remet où il était.
+          </p>
+        )}
         <details className="fiche__details">
           <summary>Comment c’est compté</summary>
           <p>
@@ -231,6 +258,43 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           {suite.href !== '/cours' && <a className="bouton bouton--discret" href="/cours">Le cours</a>}
         </div>
       </section>
+
+      {!rien && faibles.length > 0 && (
+        <section className="fiche__faibles" aria-labelledby="faibles-titre">
+          <h2 id="faibles-titre">À reprendre en premier</h2>
+          <p className="discret">
+            Quatorze thèmes, cent cinq notions : « feux et marques » ne dit pas si le trou est le
+            remorquage ou la portée des feux. Ces trois-là sont ce qui tient le moins.
+          </p>
+          <ul className="faibles">
+            {faibles.map((n) => (
+              <li className="faible" key={n.code}>
+                <p className="faible__nom">
+                  <b>{n.nom}</b> <span className="discret">{nomDuTheme(n.theme)}</span>
+                </p>
+                <p className="faible__note discret">
+                  {n.vues === 0
+                    ? `Jamais ouverte, ${n.total} question${n.total > 1 ? 's' : ''} en banque.`
+                    : `${n.retenues} retenue${n.retenues > 1 ? 's' : ''} sur ${n.vues} vue${n.vues > 1 ? 's' : ''}, ${n.total} en banque.`}
+                </p>
+                <p className="faible__actions">
+                  <a className="faible__lecon" href={n.chemin} data-mesure="profil-notion-lecon" data-mesure-notion={n.code}>
+                    La leçon
+                  </a>
+                  <a
+                    className="faible__serie"
+                    href={`/entrainement/notion/${n.code}`}
+                    data-mesure="profil-notion-serie"
+                    data-mesure-notion={n.code}
+                  >
+                    Ses questions
+                  </a>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="fiche__themes" aria-labelledby="themes-titre">
         <h2 id="themes-titre">Thème par thème</h2>

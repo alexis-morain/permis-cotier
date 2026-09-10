@@ -13,9 +13,19 @@ import {
   charger,
 } from '../lib/progression';
 
+// La banque telle que la page la donne : l'identifiant, le thème, et la
+// notion — sans elle, la maîtrise par notion n'a rien à compter.
 const banque = [
-  ...Array.from({ length: 10 }, (_, i) => ({ id: `vhf-${i}`, theme: 'vhf' })),
-  ...Array.from({ length: 10 }, (_, i) => ({ id: `feux-${i}`, theme: 'feux-marques' })),
+  ...Array.from({ length: 10 }, (_, i) => ({
+    id: `vhf-${i}`,
+    theme: 'vhf',
+    notion: i < 5 ? 'vhf-canaux' : 'vhf-emport',
+  })),
+  ...Array.from({ length: 10 }, (_, i) => ({
+    id: `feux-${i}`,
+    theme: 'feux-marques',
+    notion: i < 5 ? 'feux-remorquage' : 'feux-portee',
+  })),
 ];
 
 beforeEach(() => localStorage.clear());
@@ -83,5 +93,48 @@ describe('la jauge de l’indice', () => {
       expect(part.style.width).toBe('');
       expect(part.style.getPropertyValue('--part')).not.toBe('');
     }
+  });
+});
+
+describe('les notions faibles', () => {
+  it('remonte les plus faibles en tête, avec leur leçon et leur série', () => {
+    // Deux notions travaillées : « canaux » ratée, « portée » retenue.
+    let e = enregistrerReponse(etatInitial(), 'vhf-0', false, aujourdhui());
+    e = enregistrerReponse(e, 'feux-5', true, '2026-09-01');
+    e = enregistrerReponse(e, 'feux-5', true, '2026-09-08');
+    sauvegarder(e);
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+
+    const faibles = [...document.querySelectorAll('.faible')];
+    expect(faibles.length).toBe(3);
+    expect(faibles[0]!.textContent).toContain('Canaux');
+    expect(faibles[0]!.querySelector('.faible__lecon')?.getAttribute('href')).toBe(
+      '/cours/vhf/vhf-canaux',
+    );
+    expect(faibles[0]!.querySelector('.faible__serie')?.getAttribute('href')).toBe(
+      '/entrainement/notion/vhf-canaux',
+    );
+    // La maîtrise par thème reste : on ajoute l'étage du dessous.
+    expect(screen.getByRole('heading', { name: 'Thème par thème' })).toBeTruthy();
+  });
+
+  it('ne montre rien tant que la banque n’a pas de notion', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', false, aujourdhui()));
+    render(<ProfilCandidat banque={banque.map(({ id, theme }) => ({ id, theme }))} totalLecons={105} />);
+    expect(document.querySelector('.faible')).toBeNull();
+  });
+});
+
+describe('le changement de comptage', () => {
+  it('le dit une fois à qui révisait déjà, sans en faire un événement', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, '2026-09-05'));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(screen.getByText(/on compte autrement/)).toBeTruthy();
+  });
+
+  it('ne dit rien à qui commence aujourd’hui', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(screen.queryByText(/on compte autrement/)).toBeNull();
   });
 });
