@@ -1,18 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Quiz from '../components/Quiz.tsx';
-import { versionBanque } from '../lib/banque';
+import { cheminBanque } from '../lib/banque';
 
 // La banque n'est plus sérialisée dans la page : elle arrive par un JSON dont
 // le nom porte la version, commun aux seize écrans de jeu et gardé en cache
 // immuable. La page tombe de sept cents kilo-octets à quelques-uns.
-const banque = `/banque/v/${versionBanque()}.json`;
+const banque = cheminBanque();
 ---
 
 <Base
   titre="Examen blanc, permis côtier"
   description="Quarante questions tirées au sort, vingt secondes chacune, cinq erreurs admises."
   indexable={false}
+  prechargeBanque
 >
   <div class="page page--etroite">
     <Quiz client:only="react" mode="examen" source={banque} />
