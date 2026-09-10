@@ -5,9 +5,21 @@ on:
     branches: [main]
   pull_request:
 
+# Dépôt public : le jeton par défaut sait écrire. Rien ici n'écrit, et un
+# workflow qui lit le dépôt n'a pas à pouvoir le modifier.
+permissions:
+  contents: read
+
+# Deux poussées rapprochées sur la même branche se couraient après, et la plus
+# ancienne rendait son verdict après la plus récente.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verifier:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 

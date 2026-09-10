@@ -1,0 +1,35 @@
+name: Veille de production
+
+# `verifier:prod` interroge le site en ligne : domaine, canonique, robots,
+# sitemap, redirection de `www`, préversion fermée, image de partage, mesure
+# d'audience et service worker. C'est le seul contrôle qui regarde le site
+# plutôt que le dépôt, et il ne tournait nulle part. Une panne de DNS, un
+# certificat expiré ou un service worker qui cesse d'être servi ne se voient
+# dans aucun test.
+on:
+  schedule:
+    # 7 h 15 UTC, soit 9 h 15 à Paris l'été et 8 h 15 l'hiver : le verdict
+    # arrive avant la journée, pas au milieu de la nuit.
+    - cron: '15 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # Le script n'a besoin d'aucune dépendance de rendu : `npm ci` suffit et
+      # reste plus sûr qu'un `--omit=dev` qui dériverait du jour au lendemain.
+      - run: npm ci
+
+      - name: Interroger le site en ligne
+        run: node scripts/verifier-prod.mjs
