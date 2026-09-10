@@ -202,11 +202,23 @@ if (!swDemande || !manifesteLie) {
       'le précache ne retrouve pas une page dès qu’un paramètre s’ajoute à son adresse',
       'vérifier `IGNORER_PARAMETRES` dans `src/lib/hors-ligne.ts`',
     );
-  } else if (/\{url:"(?:question|notion|cours|theme|guide)\//.test(sw.corps)) {
+  } else if (/\{url:"(?:question|notion|cours|theme|guide|entrainement)\//.test(sw.corps)) {
     ko(
       'hors ligne',
-      'le précache reprend les pages de contenu',
+      'le précache reprend les pages de contenu ou les écrans par thème',
       'ce sont 16 des 19 Mo du site, téléchargés à la première visite : vérifier `GLOB_HORS_NOYAU` dans `src/lib/hors-ligne.ts`',
+    );
+  } else if (/\{url:"recherche\.json"/.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'le précache reprend l’index de la recherche',
+      '276 Kio pour une loupe qui s’ouvre rarement à la première visite : elle a sa règle `StaleWhileRevalidate` dans `reglesALaDemande()`',
+    );
+  } else if (!/\{url:"visuels\//.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'les visuels des questions ne sont plus au précache',
+      'la banque référence les 71 SVG de `/visuels/` : sans eux, une question sur sept s’ouvre sur une image cassée au premier lancement hors ligne',
     );
   } else {
     const entrees = (sw.corps.match(/\{url:/g) ?? []).length;

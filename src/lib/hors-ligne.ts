@@ -30,8 +30,16 @@
  * son fichier ; une adresse inconnue doit recevoir la 404 du serveur, et hors
  * ligne l'échec franc du navigateur.
  *
- * Le partage vaut ~2 Mo au lieu de 18, et `/examen` comme `/entrainement`
+ * Le partage vaut ~1,5 Mo au lieu de 18, et `/examen` comme `/entrainement`
  * fonctionnent au premier lancement sans réseau.
+ *
+ * Ce qui reste au noyau alors qu'on pourrait croire le contraire : les 71 SVG
+ * de `/visuels/`. Ce ne sont pas des illustrations de page, ce sont les
+ * visuels des questions — la banque les référence tous les soixante et onze,
+ * et 72 des 516 questions en portent un. Les sortir du précache rendrait
+ * `/examen` injouable au premier lancement sans réseau, une question sur sept
+ * s'ouvrant sur une image cassée. Leurs 139 Kio bruts sont le prix de la
+ * promesse, et le seul poste du précache qu'on ne peut pas rendre.
  */
 
 /**
@@ -42,6 +50,23 @@
  * pages, faute de quoi l'exclusion ne désignerait plus rien.
  */
 export const CONTENU_A_LA_DEMANDE = ['question', 'notion', 'cours', 'theme', 'guide'] as const;
+
+/**
+ * Les écrans de jeu qui se gardent à la lecture, et non d'avance.
+ *
+ * `/entrainement/<thème>` fait quatorze pages, 214 Kio bruts, et un candidat
+ * en ouvre une ou deux : les précacher toutes, c'est faire télécharger douze
+ * écrans qu'on n'ouvrira pas pour en avoir deux tout de suite. Elles ne
+ * portent d'ailleurs aucune question — la banque est un JSON à part, déjà au
+ * précache : l'écran ouvert une fois se rejoue ensuite hors ligne.
+ *
+ * Le sommaire `/entrainement` reste au noyau : il est la porte d'entrée, et le
+ * build le pose à la racine (`entrainement.html`), donc hors de ce dossier.
+ */
+export const JEU_A_LA_DEMANDE = ['entrainement'] as const;
+
+/** Les dossiers de pages gardés à la demande, contenu et jeu confondus. */
+export const PAGES_A_LA_DEMANDE = [...CONTENU_A_LA_DEMANDE, ...JEU_A_LA_DEMANDE] as const;
 
 /**
  * Servi, mais jamais gardé : l'image de partage n'est lue que par les robots
@@ -57,10 +82,18 @@ const DOSSIERS_AU_RESEAU = ['partage'] as const;
 const POINTEUR_FRAICHEUR = 'banque/derniere.json';
 
 /**
- * Ce que le service worker sait servir. `json` y est pour la banque et pour
- * l'index de la recherche ; sans lui, `/examen` ne tire rien et la loupe ne
- * trouve rien. `txt` et `xml` n'y sont pas : `robots.txt` et les sitemaps sont
- * pour les robots, qui sont en ligne par définition.
+ * L'index de la recherche. 276 Kio bruts, 70 en brotli, 12 % du précache — et
+ * la loupe s'ouvre rarement à la première visite. Il ne vaut pas d'être
+ * attendu par tout le monde ; il vaut d'être attendu une fois, par qui s'en
+ * sert, puis d'être là instantanément ensuite.
+ */
+const INDEX_RECHERCHE = 'recherche.json';
+
+/**
+ * Ce que le service worker sait servir. `json` y est pour la banque, sans
+ * laquelle `/examen` ne tire rien ; `svg` pour les visuels des questions.
+ * `txt` et `xml` n'y sont pas : `robots.txt` et les sitemaps sont pour les
+ * robots, qui sont en ligne par définition.
  */
 const EXTENSIONS_NOYAU = ['js', 'css', 'html', 'svg', 'png', 'webp', 'woff2', 'json'] as const;
 
@@ -71,8 +104,9 @@ export const GLOB_NOYAU: readonly string[] = [`**/*.{${EXTENSIONS_NOYAU.join(','
 export const GLOB_HORS_NOYAU: readonly string[] = [
   '**/node_modules/**/*',
   POINTEUR_FRAICHEUR,
+  INDEX_RECHERCHE,
   ...DOSSIERS_AU_RESEAU.map((d) => `${d}/**`),
-  ...CONTENU_A_LA_DEMANDE.map((d) => `${d}/**`),
+  ...PAGES_A_LA_DEMANDE.map((d) => `${d}/**`),
 ];
 
 /**
@@ -84,7 +118,15 @@ export const GLOB_HORS_NOYAU: readonly string[] = [
  * pas matcher en position 0, donc il ne peut pas attraper un tiers. C'est la
  * garde, et un test la tient.
  */
-export const MOTIF_A_LA_DEMANDE = new RegExp(`/(?:${CONTENU_A_LA_DEMANDE.join('|')})/`);
+export const MOTIF_A_LA_DEMANDE = new RegExp(`/(?:${PAGES_A_LA_DEMANDE.join('|')})/`);
+
+/**
+ * L'index de la recherche, du point de vue de Workbox. Même garde que
+ * ci-dessus : le motif commence par une barre, il ne peut pas matcher en
+ * position 0, donc pas attraper un tiers. La fin est ancrée pour ne pas
+ * confondre l'index avec `/recherche`, la page qui le lit.
+ */
+export const MOTIF_RECHERCHE = /\/recherche\.json$/;
 
 /**
  * Les paramètres d'adresse que le précache doit ignorer pour retrouver sa page.
@@ -109,14 +151,16 @@ export function politique(chemin: string): Politique {
   // doivent pas décider du sort d'une adresse.
   const propre = chemin.replace(/[?#].*$/, '').replace(/^\//, '');
   if (propre === POINTEUR_FRAICHEUR) return 'reseau';
+  if (propre === INDEX_RECHERCHE) return 'a-la-demande';
 
   const segments = propre === '' ? [] : propre.split('/');
   const tete = segments[0];
 
   // Un dossier ne se reconnaît qu'à partir de deux segments : `/cours` est le
-  // sommaire du cours, une page racine ; `/cours/balisage` est une leçon.
+  // sommaire du cours, une page racine ; `/cours/balisage` est une leçon. De
+  // même `/entrainement` est le sommaire, `/entrainement/balisage` un écran.
   if (tete !== undefined && segments.length > 1) {
-    if ((CONTENU_A_LA_DEMANDE as readonly string[]).includes(tete)) return 'a-la-demande';
+    if ((PAGES_A_LA_DEMANDE as readonly string[]).includes(tete)) return 'a-la-demande';
     if ((DOSSIERS_AU_RESEAU as readonly string[]).includes(tete)) return 'reseau';
   }
 
@@ -131,11 +175,22 @@ export function politique(chemin: string): Politique {
 /**
  * Les règles de cache à la demande, au format attendu par `generateSW`.
  *
- * `NetworkFirst` et non `StaleWhileRevalidate` : une question corrigée doit
- * se lire corrigée dès qu'il y a du réseau. Le délai de quatre secondes borne
- * l'attente quand la connexion est mauvaise sans être absente, le cas d'un
- * bateau au mouillage. Le cache porte la version de la banque, comme le
- * précache : une publication ne laisse pas traîner l'ancienne page.
+ * Deux règles, deux besoins.
+ *
+ * Les **pages**, en `NetworkFirst` et non en `StaleWhileRevalidate` : une
+ * question corrigée doit se lire corrigée dès qu'il y a du réseau. Le délai de
+ * quatre secondes borne l'attente quand la connexion est mauvaise sans être
+ * absente, le cas d'un bateau au mouillage.
+ *
+ * L'**index de la recherche**, en `StaleWhileRevalidate` : la loupe doit
+ * s'ouvrir tout de suite dès la deuxième visite, et un index vieux d'une
+ * visite ne rate que les questions publiées entre-temps — la page trouvée,
+ * elle, est à jour, puisqu'elle passe par la règle ci-dessus. C'est le seul
+ * endroit du site où l'on préfère une réponse instantanée à une réponse juste
+ * à la seconde près.
+ *
+ * Les deux caches portent la version de la banque, comme le précache : une
+ * publication ne laisse pas traîner l'ancienne page ni l'ancien index.
  */
 export function reglesALaDemande(versionBanque: string) {
   return [
@@ -151,6 +206,14 @@ export function reglesALaDemande(versionBanque: string) {
           maxEntries: 200,
           maxAgeSeconds: 60 * 60 * 24 * 30,
         },
+        cacheableResponse: { statuses: [200] },
+      },
+    },
+    {
+      urlPattern: MOTIF_RECHERCHE,
+      handler: 'StaleWhileRevalidate' as const,
+      options: {
+        cacheName: `permis-cotier-recherche-v${versionBanque}`,
         cacheableResponse: { statuses: [200] },
       },
     },
