@@ -21,13 +21,24 @@ describe('politique', () => {
     }
   });
 
-  it('sert les quatorze écrans d’entraînement par thème à la demande', () => {
-    // 214 Kio bruts pour quatorze pages dont un candidat en ouvre une ou deux.
-    // Le sommaire `/entrainement` reste au noyau, lui : c'est la porte d'entrée.
+  it('sert les écrans d’entraînement par thème et par notion à la demande', () => {
+    // Quatorze pages de thème et cent cinq de notion, dont un candidat en
+    // ouvre une poignée. Le sommaire `/entrainement` reste au noyau, lui :
+    // c'est la porte d'entrée.
     for (const theme of ['balisage', 'feux-marques', 'ecluses']) {
       expect(politique(`/entrainement/${theme}`), theme).toBe('a-la-demande');
     }
+    for (const notion of ['balisage-lateral', 'feux-remorquage']) {
+      expect(politique(`/entrainement/notion/${notion}`), notion).toBe('a-la-demande');
+    }
     expect(politique('/entrainement')).toBe('noyau');
+  });
+
+  it('écarte du précache toutes les pages d’entraînement, notions comprises', () => {
+    // Le glob porte sur le dossier entier : `entrainement/**` attrape aussi
+    // `entrainement/notion/<code>.html`, les cent cinq écrans ajoutés depuis.
+    expect(GLOB_HORS_NOYAU).toContain('entrainement/**');
+    expect(MOTIF_A_LA_DEMANDE.test('/entrainement/notion/balisage-lateral')).toBe(true);
   });
 
   it('sert l’index de la recherche à la demande, pas au précache', () => {

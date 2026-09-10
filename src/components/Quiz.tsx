@@ -47,6 +47,12 @@ interface Props {
    */
   source?: string;
   theme?: string;
+  /**
+   * L'entraînement d'une seule notion. Le nom vient de la page : les cent
+   * cinq notions sont une table de mille lignes, et l'écran de jeu n'a pas à
+   * l'embarquer dans le navigateur pour afficher un titre.
+   */
+  notion?: { code: string; nom: string };
   /** Série des seules questions ratées, tous thèmes mêlés. */
   revoir?: boolean;
 }
@@ -99,7 +105,7 @@ function Signaler({ id }: { id: string }) {
  * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
  * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
  */
-function Partie({ mode, questions, theme, revoir = false }: Props & { questions: QuestionAffichable[] }) {
+function Partie({ mode, questions, theme, notion, revoir = false }: Props & { questions: QuestionAffichable[] }) {
   // La progression est lue une fois, au montage : le tirage et la reprise
   // doivent partir du même état, pas d'un état qui bouge sous eux.
   const [depart] = useState(() => charger());
@@ -144,9 +150,18 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
     ? 'Examen blanc'
     : revoir
       ? 'Ta série du jour'
-      : `Entraînement, ${nomDuTheme(theme ?? '')}`;
+      : notion
+        ? `Entraînement, ${notion.nom}`
+        : `Entraînement, ${nomDuTheme(theme ?? '')}`;
 
-  const retour = mode === 'examen' ? '/examen' : revoir ? '/revoir' : `/entrainement/${theme}`;
+  const retour =
+    mode === 'examen'
+      ? '/examen'
+      : revoir
+        ? '/revoir'
+        : notion
+          ? `/entrainement/notion/${notion.code}`
+          : `/entrainement/${theme}`;
 
   // Le nom que cette série porte dans la mesure. Les trois écrans du composant
   // sont trois parcours différents : les mêler dans un seul compteur rendrait
@@ -215,13 +230,13 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
         interrompu: session.interrompu,
       });
     } else {
-      evenement(`${nomSerie}-termine`, { theme, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
+      evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
     }
   }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
 
   useEffect(() => {
     if (session.phase !== 'en-cours') return;
-    evenement(`${nomSerie}-commence`, { theme });
+    evenement(`${nomSerie}-commence`, { theme, notion: notion?.code });
     // Une seule fois, au vrai départ de la série.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.phase === 'en-cours']);
@@ -883,8 +898,11 @@ export default function Quiz({ source, questions, ...reste }: Props) {
   const servies = useMemo(() => {
     if (!chargees) return null;
     if (questions) return chargees;
+    // La notion d'abord : elle est plus fine que le thème, et une page de
+    // notion donne les deux.
+    if (reste.notion) return chargees.filter((q) => q.notion === reste.notion!.code);
     return reste.theme ? chargees.filter((q) => q.theme === reste.theme) : chargees;
-  }, [chargees, questions, reste.theme]);
+  }, [chargees, questions, reste.theme, reste.notion]);
 
   if (echec) return <Panne reessayer={() => setEssai((n) => n + 1)} />;
   // Quatre propositions : c'est le format visé par la banque, et une silhouette

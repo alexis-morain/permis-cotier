@@ -12,10 +12,11 @@ import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
  * remonte, les touches, et l'arrêt qui ne rend pas un zéro imaginaire.
  */
 
-function question(id: string, theme = 'ecluses', reponses = ['a']): QuestionAffichable {
+function question(id: string, theme = 'ecluses', reponses = ['a'], notion?: string): QuestionAffichable {
   return {
     id,
     theme,
+    notion,
     reponses,
     enonce: `Énoncé de ${id}`,
     explication: `Explication de ${id}`,
@@ -661,5 +662,55 @@ describe('mélange des propositions', () => {
       (n) => n.children[1]?.textContent ?? '',
     );
     expect(revus).toEqual(joue);
+  });
+});
+
+describe('entraînement sur une notion', () => {
+  function servir(questions: QuestionAffichable[]) {
+    return vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ version: '1.10.2', questions }),
+    })) as unknown as typeof fetch;
+  }
+
+  const laterale = question('balisage-0001', 'balisage', ['a'], 'balisage-lateral');
+  const cardinale = question('balisage-0002', 'balisage', ['a'], 'balisage-cardinal');
+
+  it('ne joue que les questions de la notion, et se nomme par elle', async () => {
+    vi.stubGlobal('fetch', servir([laterale, cardinale]));
+    render(
+      <Quiz
+        mode="entrainement"
+        source="/banque/1.10.2.json"
+        theme="balisage"
+        notion={{ code: 'balisage-lateral', nom: 'Marques latérales' }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de balisage-0001/)).toBeTruthy());
+    expect(screen.queryByText(/Énoncé de balisage-0002/)).toBeNull();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Entraînement, Marques latérales');
+  });
+
+  it('renvoie sur la série de la notion au bout de la série', async () => {
+    vi.stubGlobal('fetch', servir([laterale]));
+    render(
+      <Quiz
+        mode="entrainement"
+        source="/banque/1.10.2.json"
+        theme="balisage"
+        notion={{ code: 'balisage-lateral', nom: 'Marques latérales' }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de balisage-0001/)).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    expect(screen.getByRole('link', { name: 'Recommencer' }).getAttribute('href')).toBe(
+      '/entrainement/notion/balisage-lateral',
+    );
   });
 });
