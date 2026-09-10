@@ -55,6 +55,9 @@ export default defineConfig({
         else if (/^\/cours\/[a-z0-9-]+$/.test(chemin)) item.priority = 0.8;
         else if (chemin.startsWith('/cours/')) item.priority = 0.7;
         else if (chemin === '/themes' || chemin.startsWith('/theme/')) item.priority = 0.8;
+        // Les fiches écrites pour ce site : du contenu original, sur des
+        // sujets où les concurrents recopient sans jamais citer.
+        else if (chemin === '/source' || chemin.startsWith('/source/')) item.priority = 0.7;
         else if (chemin.startsWith('/notion/')) item.priority = 0.7;
         else if (chemin.startsWith('/question/')) item.priority = 0.4;
         else item.priority = 0.3;

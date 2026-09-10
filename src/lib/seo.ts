@@ -356,3 +356,98 @@ export function titreQuestion(enonce: string, discriminant?: string): string {
   return `${propre} — ${couperAuMot(marque, 60)}`;
 }
 
+
+/**
+ * Le nom court d'une fiche : ce qui s'affiche dans un fil d'Ariane ou une
+ * liste.
+ *
+ * Les fiches portent des titres à deux temps : « Ski nautique et activités
+ * nautiques tractées : les arrêtés des préfets maritimes ». Au-delà de la
+ * fenêtre de Google, on garde le premier temps, qui nomme le sujet, plutôt que
+ * de trancher le second au milieu d'un mot.
+ */
+export function courtFiche(titre: string, limite: number = TITRE_MAX): string {
+  const propre = titre.replace(/\s+/g, ' ').trim();
+  if (propre.length <= limite) return propre;
+  const tete = propre.split(' : ')[0] ?? propre;
+  return tete.length <= limite && tete !== propre ? tete : couperAuMot(propre, limite);
+}
+
+/**
+ * Le titre d'une page de fiche.
+ *
+ * Il dit ce qu'est la page, comme « … : le cours » le fait pour un cours. Sans
+ * cela, la fiche sur l'autonomie en carburant et le thème du même nom portent
+ * le même titre et se font concurrence sur la même requête. Le sujet est
+ * raccourci d'autant que la mention prend, pour que l'ensemble tienne dans la
+ * fenêtre de Google sans être coupé.
+ */
+const MENTION_FICHE = ' : la fiche';
+
+export function titreFiche(titre: string): string {
+  return `${courtFiche(titre, TITRE_MAX - MENTION_FICHE.length)}${MENTION_FICHE}`;
+}
+
+/**
+ * La méta description d'une page de fiche. Le sujet la rend unique ; la suite
+ * dit ce que la page apporte que Légifrance n'a pas, puisque la fiche n'y est
+ * pas et n'y sera jamais.
+ */
+export function descriptionFiche(titre: string): string {
+  return descriptionPage(
+    `${courtFiche(titre)} : la fiche du site, ce sur quoi elle s’appuie, et les questions qui la vérifient.`,
+  );
+}
+
+export interface QuestionDecrite {
+  id: string;
+  enonce: string;
+  explication: string;
+}
+
+/**
+ * Les méta descriptions des pages question, une par question et jamais deux
+ * fois la même.
+ *
+ * L'explication seule suffit presque toujours, et c'est la meilleure
+ * description : elle répond. Mais deux questions sur le marnage ouvrent sur la
+ * même définition, et la coupure à cent cinquante-huit signes les rendait
+ * identiques — deux pages qui se font concurrence sur la même requête. On
+ * préfixe alors de l'énoncé, et seulement celles-là : l'énoncé médian fait
+ * cent trois signes, le mettre partout mangerait la réponse.
+ *
+ * Deux questions que même leur énoncé ne sépare pas sont un doublon dans la
+ * banque, pas un défaut d'affichage : le build s'arrête et les nomme.
+ */
+export function descriptionsDesQuestions(
+  questions: readonly QuestionDecrite[],
+): Map<string, string> {
+  const descriptions = new Map<string, string>();
+  const parTexte = new Map<string, string[]>();
+  for (const q of questions) {
+    const texte = descriptionPage(q.explication);
+    descriptions.set(q.id, texte);
+    parTexte.set(texte, [...(parTexte.get(texte) ?? []), q.id]);
+  }
+
+  const enTete = new Map(questions.map((q) => [q.id, q.enonce]));
+  for (const [, ids] of parTexte) {
+    if (ids.length < 2) continue;
+    for (const id of ids) {
+      const q = questions.find((x) => x.id === id)!;
+      descriptions.set(id, descriptionPage(`${enTete.get(id)} ${q.explication}`));
+    }
+  }
+
+  const vues = new Map<string, string>();
+  for (const [id, texte] of descriptions) {
+    const premier = vues.get(texte);
+    if (premier) {
+      throw new Error(
+        `questions ${premier} et ${id} : même énoncé et même explication, elles ne peuvent pas avoir deux descriptions`,
+      );
+    }
+    vues.set(texte, id);
+  }
+  return descriptions;
+}

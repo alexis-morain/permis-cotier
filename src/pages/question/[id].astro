@@ -1,20 +1,32 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { questionsPubliees, nomDuTheme } from '../../lib/banque';
-import { SITE, quiz, titreQuestion, descriptionPage } from '../../lib/seo';
+import { SITE, quiz, titreQuestion, descriptionsDesQuestions } from '../../lib/seo';
+import { resoudreSources } from '../../lib/sources';
+import MarqueSource from '../../components/MarqueSource.astro';
 import { notionParCode } from '../../lib/notions';
 
 export async function getStaticPaths() {
   const questions = await questionsPubliees();
-  return questions.map((q) => ({ params: { id: q.id }, props: { q } }));
+  // Les descriptions se calculent sur la banque entière, jamais question par
+  // question : deux d'entre elles ouvrent sur la même définition du marnage, et
+  // c'est en les voyant côte à côte qu'on sait laquelle préfixer de son énoncé.
+  const descriptions = descriptionsDesQuestions(questions);
+  return questions.map((q) => ({
+    params: { id: q.id },
+    props: { q, description: descriptions.get(q.id)! },
+  }));
 }
 
-const { q } = Astro.props;
+const { q, description } = Astro.props;
 const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 const bonnes = q.propositions.filter((p) => q.reponses.includes(p.id));
 const theme = nomDuTheme(q.theme);
 const notion = q.notion ? notionParCode(q.notion) : undefined;
 const base = Astro.site ?? new URL(SITE.domaine);
+// Une source de question ne nomme pas son article : elle cite le texte entier.
+// Ce qui compte ici est de dire si c'est de la loi ou une fiche du site.
+const sources = resoudreSources(q.sources);
 
 // Une question de la banque est un exercice, et Google sait l'afficher comme
 // tel. Le balisage `Quiz` donne l'énoncé, toutes les propositions et celles qui
@@ -28,7 +40,7 @@ const miettes = [
 
 <Base
   titre={titreQuestion(q.enonce, q.visuel?.alt ?? notion?.nom)}
-  description={descriptionPage(q.explication)}
+  description={description}
   miettes={miettes}
   jsonLd={[quiz(q, theme, base)]}
 >
@@ -62,8 +74,22 @@ const miettes = [
 
     <h2>Source</h2>
     <ul class="sourcesListe">
-      {q.sources.map((s) => (
-        <li>{s.url ? <a href={s.url} rel="noreferrer noopener">{s.texte}</a> : s.texte}</li>
+      {sources.map((s) => (
+        <li>
+          {s.url ? (
+            <a
+              href={s.url}
+              rel={s.provenance === 'officiel' ? 'noreferrer noopener' : undefined}
+              data-mesure="source-ouverte"
+              data-mesure-ref={s.ref}
+            >
+              {s.texte}
+            </a>
+          ) : (
+            s.texte
+          )}
+          <MarqueSource provenance={s.provenance} />
+        </li>
       ))}
     </ul>
 
@@ -112,6 +138,7 @@ const miettes = [
   }
   .bonne .lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
   .sourcesListe { padding-left: 1.2rem; }
+  .sourcesListe li { margin-bottom: 0.35rem; }
   .versNotion { margin-top: 2rem; max-width: 58ch; }
   .signaler {
     font-size: 0.85rem; font-weight: 600; color: var(--texte-doux);

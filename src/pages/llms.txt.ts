@@ -46,6 +46,12 @@ const ESSENTIEL: readonly Lien[] = [
       'Le déroulé de l’examen, son coût, ses conditions d’accès et le format de l’épreuve théorique depuis 2022',
   },
   {
+    titre: 'Les fiches écrites pour ce site',
+    chemin: '/source',
+    description:
+      'Les sujets qu’aucun texte réglementaire ne couvre sous une forme citable — Beaufort, le balisage, la VHF, la carte marine — écrits à la main et donnés comme tels, avec l’autorité sur laquelle ils s’appuient',
+  },
+  {
     titre: 'Les quatorze thèmes du programme',
     chemin: '/themes',
     description:
