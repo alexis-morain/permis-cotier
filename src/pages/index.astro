@@ -277,8 +277,10 @@ const liste = {
 </Base>
 
 <style>
-  /* La bande marine, soulignée de la ligne de flottaison jaune. */
+  /* La bande marine, soulignée de la ligne de flottaison jaune. Sur ce fond,
+     l'anneau de focus marine ne se verrait pas : il passe au jaune. */
   .ouverture {
+    --anneau: var(--jaune);
     background: var(--bande);
     color: var(--bande-texte);
     border-bottom: 6px solid var(--jaune);
@@ -452,8 +454,8 @@ const liste = {
 
   .guide { padding-block: 3.5rem 0; }
   .guide__liens { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 46rem; }
-  .guide__liens li { border-top: 1px solid var(--filet); padding: 0.9rem 0; max-width: none; }
-  .guide__liens li:last-child { border-bottom: 1px solid var(--filet); }
+  .guide__liens li { border-top: 2px solid var(--filet); padding: 0.9rem 0; max-width: none; }
+  .guide__liens li:last-child { border-bottom: 2px solid var(--filet); }
   .guide__liens > li > a { font-weight: 700; text-decoration: none; }
   .guide__liens > li > a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
   .guide__liens p { margin: 0.35rem 0 0; }
