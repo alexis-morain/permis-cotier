@@ -27,6 +27,24 @@ binding = "ASSETS"
 html_handling = "drop-trailing-slash"
 not_found_handling = "404-page"
 
+# La part d'un visiteur sur `POST /api/signaler`, comptée par Cloudflare.
+#
+# Cinq signalements par minute et par adresse. Un visiteur qui trouve cinq
+# questions fausses en une minute ne les a pas lues ; un script qui fabrique
+# des jetons Turnstile en série, lui, ouvrirait autant d'issues publiques, et
+# le jour où GitHub coupe sur sa limite de création de contenu, l'endpoint rend
+# 503 pour tout le monde pendant l'heure suivante. La borne protège donc moins
+# le dépôt que le signalement honnête suivant.
+#
+# `period` n'accepte que 10 ou 60. `namespace_id` est un numéro libre, propre
+# au compte : il ne nomme qu'un compteur, il ne référence rien d'existant. Le
+# comptage est fait par lieu de présence Cloudflare, pas globalement : c'est
+# une borne, pas un verrou, et elle suffit ici.
+[[ratelimits]]
+name = "LIMITEUR"
+namespace_id = "1001"
+simple = { limit = 5, period = 60 }
+
 # Les secrets ne sont pas ici. `TURNSTILE_SECRET_KEY`, `GITHUB_BOT_TOKEN`,
 # `GITHUB_REPO` et, si notification par courrier il y a, `RESEND_API_KEY`,
 # `SIGNALEMENT_MAIL_TO` et `SIGNALEMENT_MAIL_FROM` sont posés par
