@@ -379,13 +379,16 @@ img { max-width: 100%; height: auto; }
   width: 100%;
   min-height: 3rem;
   padding: 0.6rem 0.8rem;
-  border: 2px solid var(--filet);
+  /* Un champ de saisie est un contrôle : son contour tient les 3:1 de la
+     WCAG 1.4.11 au repos, pas seulement au survol. Le survol se distingue
+     alors par le marine, plus franc que le filet fort. */
+  border: 2px solid var(--filet-fort);
   border-radius: var(--rayon-petit);
   background: var(--fond-carte);
   color: inherit;
   transition: border-color var(--transition);
 }
-.champ:hover { border-color: var(--filet-fort); }
+.champ:hover { border-color: var(--texte); }
 .champ:focus-visible { border-color: var(--anneau); outline-offset: 0; }
 .champ::placeholder { color: var(--texte-doux); opacity: 1; }
 
