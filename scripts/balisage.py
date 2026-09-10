@@ -14,9 +14,9 @@ Aucun libellé dans l'image, il donnerait la réponse.
 """
 from __future__ import annotations
 
-import argparse
-import sys
 from pathlib import Path
+
+from _commun import main_dessin
 
 RACINE = Path(__file__).resolve().parents[1]
 SORTIE = RACINE / "public" / "visuels" / "balisage"
@@ -270,32 +270,15 @@ def svg_de_marque(nom: str) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parseur = argparse.ArgumentParser(description=__doc__)
-    parseur.add_argument("--verifier", action="store_true", help="échoue au lieu d'écrire")
-    args = parseur.parse_args(argv)
-
-    SORTIE.mkdir(parents=True, exist_ok=True)
-    perimes = []
-    for nom in MARQUES:
-        chemin = SORTIE / f"{nom}.svg"
-        dessin = svg_de_marque(nom)
-        if args.verifier:
-            if not chemin.is_file() or chemin.read_text(encoding="utf-8") != dessin:
-                perimes.append(chemin.relative_to(RACINE))
-            continue
-        chemin.write_text(dessin, encoding="utf-8")
-        print(f"écrit {chemin.relative_to(RACINE)}")
-
-    if args.verifier:
-        for chemin in perimes:
-            print(f"{chemin} n'est plus à jour, lance `npm run balisage`", file=sys.stderr)
-        if perimes:
-            return 1
-        print(f"{len(MARQUES)} marque(s) à jour.")
-        return 0
-
-    print(f"\n{len(MARQUES)} marque(s) dans public/visuels/balisage/")
-    return 0
+    elements = {nom: svg_de_marque(nom) for nom in MARQUES}
+    return main_dessin(
+        argv,
+        racine=RACINE,
+        sortie=SORTIE,
+        elements=elements,
+        commande_npm="balisage",
+        label="marque(s)",
+    )
 
 
 if __name__ == "__main__":
