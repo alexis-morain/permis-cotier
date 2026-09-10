@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { readdirSync } from 'node:fs';
 import {
-  CONTENU_A_LA_DEMANDE,
+  PAGES_A_LA_DEMANDE,
+  MOTIF_RECHERCHE,
   GLOB_NOYAU,
   GLOB_HORS_NOYAU,
   MOTIF_A_LA_DEMANDE,
@@ -20,8 +21,27 @@ describe('politique', () => {
     }
   });
 
-  it('garde les écrans d’entraînement par thème, qui sont du jeu et non du contenu', () => {
-    expect(politique('/entrainement/balisage')).toBe('noyau');
+  it('sert les quatorze écrans d’entraînement par thème à la demande', () => {
+    // 214 Kio bruts pour quatorze pages dont un candidat en ouvre une ou deux.
+    // Le sommaire `/entrainement` reste au noyau, lui : c'est la porte d'entrée.
+    for (const theme of ['balisage', 'feux-marques', 'ecluses']) {
+      expect(politique(`/entrainement/${theme}`), theme).toBe('a-la-demande');
+    }
+    expect(politique('/entrainement')).toBe('noyau');
+  });
+
+  it('sert l’index de la recherche à la demande, pas au précache', () => {
+    // 276 Kio bruts, 12 % du précache, pour une loupe qui s'ouvre rarement à
+    // la première visite. Elle vaut d'être attendue une fois.
+    expect(politique('/recherche.json')).toBe('a-la-demande');
+  });
+
+  it('garde les visuels au noyau : les questions de la banque les affichent', () => {
+    // Les 71 SVG de `/visuels/` sont les visuels des questions — la banque les
+    // référence tous. Les sortir du précache rendrait /examen injouable hors
+    // ligne au premier lancement, une question sur sept montrant une image
+    // cassée. Ils pèsent 139 Kio bruts : c'est le prix de la promesse.
+    expect(politique('/visuels/balisage/cardinale-nord.svg')).toBe('noyau');
   });
 
   it('sert les pages de contenu à la demande, pas au précache', () => {
@@ -82,9 +102,18 @@ describe('MOTIF_A_LA_DEMANDE', () => {
 
 describe('les globs et la politique disent la même chose', () => {
   it('exclut du précache chaque dossier servi à la demande', () => {
-    for (const dossier of CONTENU_A_LA_DEMANDE) {
+    for (const dossier of PAGES_A_LA_DEMANDE) {
       expect(GLOB_HORS_NOYAU, dossier).toContain(`${dossier}/**`);
     }
+  });
+
+  it('exclut l’index de la recherche', () => {
+    expect(GLOB_HORS_NOYAU).toContain('recherche.json');
+  });
+
+  it('laisse les visuels au précache', () => {
+    // Sans eux, une question sur sept est illisible hors ligne.
+    expect(GLOB_HORS_NOYAU.join(' ')).not.toMatch(/visuels/);
   });
 
   it('exclut le pointeur de fraîcheur', () => {
@@ -92,8 +121,7 @@ describe('les globs et la politique disent la même chose', () => {
   });
 
   it('précache les types que l’application sert', () => {
-    // La banque et l'index de recherche sont du JSON : les oublier viderait
-    // /examen et la loupe hors ligne.
+    // La banque est du JSON : l'oublier viderait /examen hors ligne.
     expect(GLOB_NOYAU.join(' ')).toMatch(/json/);
     expect(GLOB_NOYAU.join(' ')).toMatch(/woff2/);
   });
@@ -106,7 +134,7 @@ describe('les dossiers écartés existent vraiment', () => {
     .filter((e) => e.isDirectory())
     .map((e) => e.name);
 
-  it.each([...CONTENU_A_LA_DEMANDE])('%s est bien un dossier de pages', (dossier) => {
+  it.each([...PAGES_A_LA_DEMANDE])('%s est bien un dossier de pages', (dossier) => {
     expect(dossiersDePages).toContain(dossier);
   });
 });
@@ -130,17 +158,53 @@ describe('aucun écran ne sort du noyau par inadvertance', () => {
 
 describe('reglesALaDemande', () => {
   const regles = reglesALaDemande('1.11.0');
+  const pages = regles.find((r) => r.urlPattern === MOTIF_A_LA_DEMANDE);
+  const recherche = regles.find((r) => r.urlPattern === MOTIF_RECHERCHE);
 
-  it('nomme son cache avec la version, comme le précache', () => {
-    expect(regles[0]?.options?.cacheName).toContain('1.11.0');
+  it('a une règle pour les pages et une pour l’index de la recherche', () => {
+    expect(pages).toBeDefined();
+    expect(recherche).toBeDefined();
+  });
+
+  it('nomme ses caches avec la version, comme le précache', () => {
+    for (const regle of regles) {
+      expect(regle.options?.cacheName, regle.options?.cacheName).toContain('1.11.0');
+    }
   });
 
   it('tente le réseau avant le cache, pour ne pas figer une page corrigée', () => {
-    expect(regles[0]?.handler).toBe('NetworkFirst');
+    expect(pages?.handler).toBe('NetworkFirst');
+  });
+
+  it('sert l’index de la recherche depuis le cache et le rafraîchit derrière', () => {
+    // La loupe doit s'ouvrir tout de suite à la deuxième visite ; un index
+    // vieux d'une visite ne rate qu'une question publiée entre-temps.
+    expect(recherche?.handler).toBe('StaleWhileRevalidate');
   });
 
   it('ne garde en cache qu’une réponse réellement servie', () => {
-    expect(regles[0]?.options?.cacheableResponse?.statuses).toEqual([200]);
+    for (const regle of regles) {
+      expect(regle.options?.cacheableResponse?.statuses, regle.options?.cacheName).toEqual([200]);
+    }
+  });
+
+  it('n’attrape aucun domaine tiers, quelle que soit la règle', () => {
+    // Même garde que pour les pages : un motif qui commence par une barre ne
+    // peut pas matcher en position 0, donc Workbox ne l'applique pas à un tiers.
+    for (const regle of regles) {
+      expect(regle.urlPattern.exec('https://umami.morain.fr/recherche.json')?.index).not.toBe(0);
+      expect(regle.urlPattern.exec('https://umami.morain.fr/entrainement/balisage')?.index).not.toBe(0);
+    }
+  });
+});
+
+describe('MOTIF_RECHERCHE', () => {
+  it('reconnaît l’index servi par le site', () => {
+    expect(MOTIF_RECHERCHE.test('https://lepermiscotier.fr/recherche.json')).toBe(true);
+  });
+
+  it('ne prend pas la page de la loupe pour son index', () => {
+    expect(MOTIF_RECHERCHE.test('https://lepermiscotier.fr/recherche')).toBe(false);
   });
 });
 
