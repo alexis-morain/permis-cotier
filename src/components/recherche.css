@@ -178,7 +178,8 @@ kbd.touche {
 
 .recherche__fermer {
   flex: 0 0 auto;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
   padding: 0 0.7rem;
   border: 2px solid transparent;
   border-radius: var(--rayon-petit);
@@ -297,7 +298,7 @@ kbd.touche {
   background: var(--jaune-pale);
   color: inherit;
   font-weight: 800;
-  border-radius: 3px;
+  border-radius: var(--rayon-petit);
   padding: 0 0.08em;
 }
 
@@ -371,7 +372,7 @@ kbd.touche {
 .recherche__depart a {
   display: inline-flex;
   align-items: center;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: 0 0.75rem;
   border: 2px solid var(--filet);
   border-radius: var(--rayon-petit);

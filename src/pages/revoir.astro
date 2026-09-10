@@ -1,23 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
+import SansScript from '../components/SansScript.astro';
 import Quiz from '../components/Quiz.tsx';
-import { versionBanque } from '../lib/banque';
+import { cheminBanque } from '../lib/banque';
 
-// Les questions ratées, tous thèmes mêlés. La série se constitue dans le
-// navigateur, depuis la progression locale : le serveur ne sait rien de ce
-// que le candidat a raté, et la page reste la même pour tout le monde.
-const banque = `/banque/${versionBanque()}.json`;
+// La série du jour : ce qui est dû, le plus en retard d'abord, complété par
+// des questions jamais vues dans les notions les plus faibles. Elle se
+// constitue dans le navigateur, depuis la progression locale : le serveur ne
+// sait rien de ce que le candidat a raté, et la page reste la même pour tout
+// le monde.
+//
+// Ce n'est plus « rejouer mes erreurs » : une question réussie revient un jour
+// plus tard, puis trois, puis sept, puis vingt et un, qu'elle ait été ratée ou
+// non. Les pages qui y mènent le disent comme ça.
+const banque = cheminBanque();
 ---
 
 <Base
-  titre="Revoir mes erreurs"
-  description="Rejoue les seules questions que tu as ratées, tous thèmes mêlés, avec la correction et la source."
+  titre="Ta série du jour"
+  description="Les questions dues aujourd’hui, tous thèmes mêlés : ce que tu as raté et ce qu’il est temps de revoir, avec la correction et la source."
   indexable={false}
+  prechargeBanque
 >
   <div class="page page--etroite">
     <p class="chapitre" style="padding-top:1.5rem">
-      <a href="/entrainement">Entraînement</a> · Tes erreurs
+      <a href="/entrainement">Entraînement</a> · Ta série du jour
     </p>
+    <SansScript ecran="La série du jour" />
     <Quiz client:only="react" mode="entrainement" source={banque} revoir />
   </div>
 </Base>

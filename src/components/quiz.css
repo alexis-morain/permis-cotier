@@ -48,7 +48,8 @@
   gap: 5px;
 }
 
-/* Le chrono, jauge pleine et jaune ; rouge sur les cinq dernières secondes. */
+/* Le chrono, jauge pleine et jaune ; rouge sur les cinq dernières secondes.
+   Le jaune est celui des jauges, assombri pour se détacher du rail. */
 .jeu__barre {
   height: 10px;
   border-radius: 999px;
@@ -59,7 +60,7 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--jaune);
+  background: var(--jauge);
   transform-origin: left;
   transition: transform 1s linear, background var(--transition);
 }
@@ -136,7 +137,7 @@
   width: 100%;
   min-height: 3.5rem;
   padding: 0.85rem 1rem;
-  border: 2px solid var(--filet);
+  border: 2px solid var(--filet-fort);
   border-radius: var(--rayon);
   background: var(--fond-carte);
   color: inherit;
@@ -144,12 +145,12 @@
   line-height: 1.4;
   text-align: left;
   cursor: pointer;
-  box-shadow: 0 var(--bord) 0 var(--filet);
+  box-shadow: 0 var(--bord) 0 var(--filet-fort);
   transition: border-color var(--transition), background var(--transition),
     box-shadow var(--transition), transform var(--transition), opacity var(--transition);
 }
-.proposition:hover:not(:disabled) { border-color: var(--filet-fort); box-shadow: 0 var(--bord) 0 var(--filet-fort); }
-.proposition:active:not(:disabled) { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet); }
+.proposition:hover:not(:disabled) { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+.proposition:active:not(:disabled) { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet-fort); }
 .proposition:disabled { cursor: default; }
 
 .proposition__lettre {
@@ -191,9 +192,10 @@
 .proposition--fausse .proposition__lettre { background: var(--rouge); border-color: var(--rouge); color: #fff; }
 
 /* Une fois corrigé, ou quand deux cases sont déjà cochées, les autres
-   propositions s'effacent un peu. */
+   propositions s'effacent un peu — pas au point de ne plus se lire : ce sont
+   celles qu'on relit pour comprendre. */
 .proposition:disabled:not(.proposition--juste):not(.proposition--fausse):not(.proposition--cochee) {
-  opacity: 0.55;
+  opacity: 0.7;
 }
 
 .proposition__marque {
@@ -236,6 +238,15 @@
 .verdict--juste .verdict__titre { color: var(--vert-texte); }
 .verdict--fausse .verdict__titre { color: var(--rouge-texte); }
 .verdict p:last-child { margin-bottom: 0; }
+/* Le pont vers la leçon, sous un verdict raté. Cible tactile de 44 px, comme
+   les autres liens de service de l'écran de jeu. */
+.verdict__lecon { margin: 0.75rem 0 0; font-weight: 700; }
+.verdict__lecon a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+
+/* La série reprise là où on l'a laissée : une carte au-dessus du jeu, comme
+   la reprise d'examen sur l'écran de départ. */
+.jeu__reprise { margin-bottom: 1.25rem; }
+.jeu__reprise p { margin: 0 0 0.75rem; }
 
 .sources { font-size: 0.9rem; color: var(--texte-doux); margin: 0.75rem 0 0; }
 .sources ul { list-style: none; margin: 0.25rem 0 0; padding: 0; }
@@ -288,8 +299,7 @@
   min-width: 1.6em;
   padding: 0 0.35em;
   border: 2px solid var(--filet-fort);
-  border-bottom-width: 3px;
-  border-radius: 0.4rem;
+  border-radius: var(--rayon-petit);
   text-align: center;
   font-size: 0.85em;
   line-height: 1.5;
@@ -336,6 +346,10 @@
 .resultat__verdict--echoue { color: var(--rouge-texte); }
 
 .resultat__ecart { margin: -0.75rem 0 1.25rem; font-weight: 600; color: var(--texte-doux); }
+
+/* Le temps, sous le score : ce que le nombre de bonnes réponses ne dit pas. */
+.resultat__temps { margin: 0 0 1.25rem; max-width: 46ch; }
+.resultat__temps .discret { display: block; }
 
 /* Le rappel de la raison, quand l'examen est recalé : jaune pâle, comme sur
    la fiche. Le style de base est dans profil.css. */
@@ -522,3 +536,8 @@
 @media (prefers-reduced-motion: reduce) {
   .silhouette { animation: none; }
 }
+
+/* Le focus de `.jeu__enonce` est posé par le code à chaque question, pour que
+   le clavier et le lecteur d'écran suivent l'épreuve sans repartir du haut. Il
+   ne vient pas d'un geste de l'utilisateur : l'anneau n'aurait rien à dire. */
+.jeu__enonce:focus { outline: none; }

@@ -27,9 +27,10 @@ explication: >-
   Sud, 9 pour l'Ouest, comme les heures 3, 6 et 9 sur un cadran, en tournant dans le sens
   des aiguilles depuis le haut.
 sources:
-  - texte: Balisage AISM région A, marques cardinales, Ouest
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.4
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

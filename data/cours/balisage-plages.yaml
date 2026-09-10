@@ -7,8 +7,14 @@ etapes:
   - titre: La bande des 300 mètres
     texte: >-
       Une bande littorale de 300 mètres longe la côte, et la vitesse y est limitée à
-      5 nœuds pour tout le monde. Sa limite au large est marquée par des bouées jaunes
-      sphériques.
+      5 nœuds. Les trois préfets maritimes l’écrivent dans les mêmes termes : la
+      limitation est générale et permanente, elle n’est pas subordonnée à la présence
+      d’un balisage. Autrement dit, elle vaut même là où aucune bouée ne marque la
+      limite.
+
+      La bande se compte depuis la limite des eaux à l’instant considéré : elle suit la
+      marée, elle ne part pas d’un trait de côte figé. Sa limite au large, quand elle est
+      balisée, est marquée par des bouées jaunes sphériques.
   - titre: Le chenal traversier
     texte: >-
       Pour rejoindre la plage sans traverser la zone de baignade, on emprunte un chenal
@@ -19,9 +25,13 @@ etapes:
       cylindres sont à bâbord et les cônes à tribord.
   - titre: Dans le chenal, on reste lent
     texte: >-
-      Le chenal traversier est dans la bande des 300 mètres : la limite de 5 nœuds s’y
-      applique aussi. Il est réservé aux engins de plage et aux véhicules nautiques à
-      moteur.
+      Le chenal traversier est un couloir de transit qui relie la côte au large. Il
+      s’emprunte par l’une de ses extrémités, d’une manière régulière, directe et
+      continue ; le stationnement et le mouillage y sont interdits, et la vitesse y reste
+      de 5 nœuds sauf disposition particulière.
+
+      À ne pas confondre avec le chenal de vitesse, créé par arrêté, qui est justement
+      celui où la limite des 5 nœuds ne s’applique pas.
   - titre: Formes et espacements des bouées
     texte: >-
       La limite des 300 mètres est marquée par des bouées sphériques d’au moins 0,80 mètre,
@@ -42,10 +52,19 @@ piege: >-
   chenal de port. Cylindre à bâbord en allant vers la plage, donc à tribord quand tu
   ressors vers le large.
 retenir:
-  - "Bande des 300 mètres : bouées jaunes sphériques, vitesse 5 nœuds."
+  - "Bande des 300 mètres : 5 nœuds, même sans balisage, et la bande suit la marée."
   - "Chenal traversier : bouées jaunes, cylindres à bâbord et cônes à tribord en accédant au rivage."
-  - Le chenal traversier est réservé aux engins de plage et aux véhicules nautiques à moteur.
+  - "Chenal traversier : transit direct, 5 nœuds. Chenal de vitesse : la limite n’y vaut pas."
 sources:
+  - texte: Arrêté préfectoral n° 125/2013, préfet maritime de la Méditerranée, article 2
+    ref: bande-300-metres
+    fichier: mediterranee-125-2013
+  - texte: Arrêté n° 2018/090, préfet maritime de l'Atlantique, article 2
+    ref: bande-300-metres
+    fichier: atlantique-2018-090
+  - texte: Arrêté n° 41/2018, préfet maritime de la Manche et de la mer du Nord, article 2
+    ref: bande-300-metres
+    fichier: manche-mer-du-nord-41-2018
   - texte: Arrêté du 27 mars 1991, annexe I
     ref: arrete-1991-03-27
     fichier: article-annexe-i
@@ -59,4 +78,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-06'
+  relu_le: '2026-09-09'

@@ -1,0 +1,208 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import LienQuestion from '../../components/LienQuestion.astro';
+import { questionsPubliees, nomDuTheme } from '../../lib/banque';
+import { leconsEcrites } from '../../lib/lecons';
+import { leconsDuParcours } from '../../lib/parcours';
+import { SITE, articlePage, courtFiche, titreFiche, descriptionFiche } from '../../lib/seo';
+
+/**
+ * La page d'une fiche du site.
+ *
+ * Cent dix-huit questions sur cinq cent seize ne s'appuient sur aucun texte
+ * officiel citable : l'échelle de Beaufort est une convention de l'OMM, le
+ * balisage n'est publié qu'en planches d'images, le Règlement des
+ * radiocommunications de l'UIT n'est pas ouvert. Ces sujets sont écrits à la
+ * main, et jusqu'ici le lecteur n'avait aucun moyen de les lire ni de savoir
+ * ce qu'ils valaient.
+ *
+ * Cette page les publie. Les textes officiels, eux, n'ont pas la leur : ils
+ * sont sur Légifrance, le lien sortant suffit, et une copie ferait doublon.
+ */
+export async function getStaticPaths() {
+  const fiches = await getCollection('fiches');
+  return fiches.map((fiche) => ({ params: { ref: fiche.id }, props: { fiche } }));
+}
+
+const { fiche } = Astro.props;
+const { Content } = await render(fiche);
+const { titre, autorite, programme, versionLe, publication } = fiche.data;
+
+const chemin = `/source/${fiche.id}`;
+const base = Astro.site ?? new URL(SITE.domaine);
+
+// Ce qui, sur le site, s'appuie sur cette fiche. C'est la réponse à la seule
+// question que le lecteur se pose ici : où est-ce que ça sert ?
+const questions = (await questionsPubliees()).filter((q) =>
+  q.sources.some((s) => s.ref === fiche.id),
+);
+const ecrites = await leconsEcrites();
+const lecons = leconsDuParcours().filter((l) =>
+  ecrites.get(l.notion.code)?.sources.some((s) => s.ref === fiche.id),
+);
+---
+
+<Base
+  titre={titreFiche(titre)}
+  description={descriptionFiche(titre)}
+  miettes={[
+    { nom: 'Sources', chemin: '/source' },
+    { nom: courtFiche(titre), chemin },
+  ]}
+  jsonLd={[
+    articlePage(
+      {
+        titre,
+        description: descriptionFiche(titre),
+        chemin,
+        modifieLe: versionLe,
+        citations: [autorite, publication?.texte].filter((c): c is string => Boolean(c)),
+      },
+      base,
+    ),
+  ]}
+>
+  <article class="page page--etroite" style="padding-block:2.5rem 0">
+    <p class="chapitre"><a href="/source">Sources</a></p>
+    <h1>{titre}</h1>
+
+    <div class="nature">
+      <p class="nature__phrase">
+        Ce n’est pas un texte officiel. C’est une fiche écrite à la main pour ce site,
+        parce qu’aucun texte réglementaire ne dit cela sous une forme qu’on puisse citer.
+      </p>
+      <dl>
+        {autorite && (
+          <div>
+            <dt>Ce sur quoi elle s’appuie</dt>
+            <dd>{autorite}</dd>
+          </div>
+        )}
+        {programme && (
+          <div>
+            <dt>Ce qu’elle couvre du programme</dt>
+            <dd>{programme}</dd>
+          </div>
+        )}
+        {publication?.url && (
+          <div>
+            <dt>Le document qui fait foi</dt>
+            <dd>
+              <a href={publication.url} rel="noreferrer noopener" data-mesure="source-ouverte">
+                {publication.texte ?? publication.url}
+              </a>
+            </dd>
+          </div>
+        )}
+        {publication?.texte && !publication.url && (
+          <div>
+            <dt>Le document qui fait foi</dt>
+            <dd>{publication.texte}</dd>
+          </div>
+        )}
+        <div>
+          <dt>Version consultée le</dt>
+          <dd>{versionLe}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="fiche">
+      <Content />
+    </div>
+
+    {lecons.length > 0 && (
+      <section class="appuis">
+        <h2>Les leçons qui s’appuient dessus</h2>
+        <ul>
+          {lecons.map((l) => (
+            <li>
+              <a href={l.chemin}>{l.notion.nom}</a>
+              <span class="discret"> — {l.cours.titre}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {questions.length > 0 && (
+      <section class="appuis">
+        <h2>
+          Les {questions.length} question{questions.length > 1 ? 's' : ''} qui s’appuient dessus
+        </h2>
+        <ul>
+          {questions.map((q) => (
+            <li>
+              <LienQuestion id={q.id} enonce={q.enonce} />
+              <span class="discret"> — {nomDuTheme(q.theme)}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <p class="discret rappel">
+      Une erreur, une règle qui a changé ? <a href="/signaler">Signale-le</a>, la correction
+      arrive dans la semaine. <a href="/a-propos">Comment ce site est écrit</a>.
+    </p>
+  </article>
+</Base>
+
+<style>
+  h1 { margin-bottom: 1.25rem; }
+
+  /* Ce qu'il faut avoir lu avant la fiche elle-même : ce qu'elle est, et sur
+     quoi elle tient. Un encadré, pas un avertissement rouge — la fiche est
+     juste, elle n'est simplement pas de la loi. */
+  .nature {
+    background: var(--fond-2);
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    padding: 1.25rem 1.4rem;
+    margin: 0 0 2.5rem;
+  }
+  .nature__phrase { font-weight: 600; margin: 0 0 1rem; max-width: 60ch; }
+  .nature dl { margin: 0; display: grid; gap: 0.75rem; }
+  .nature dt {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+  }
+  .nature dd { margin: 0.15rem 0 0; max-width: 62ch; }
+
+  /* Le corps de la fiche est du markdown : tableaux, listes, séparateurs. Le
+     style reste ici, aucune feuille partagée n'est touchée. */
+  .fiche :global(h2) { margin-top: 2.25rem; }
+  .fiche :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    margin: 1rem 0;
+  }
+  .fiche :global(th),
+  .fiche :global(td) {
+    border: 2px solid var(--filet);
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+  }
+  .fiche :global(th) { background: var(--fond-2); font-weight: 700; }
+  .fiche :global(hr) { border: 0; border-top: 2px solid var(--filet); margin: 2.5rem 0; }
+  .fiche :global(code) { font-size: 0.92em; }
+  .fiche :global(pre) {
+    background: var(--fond-2);
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+  }
+
+  .appuis { margin-top: 3rem; }
+  .appuis h2 { font-size: 1.05rem; }
+  .appuis ul { padding-left: 1.1rem; margin: 0; }
+  .appuis li { margin-bottom: 0.5rem; max-width: 62ch; }
+
+  .rappel { margin-top: 3rem; }
+</style>

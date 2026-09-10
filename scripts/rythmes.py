@@ -43,9 +43,9 @@ dessinée à côté de son feu donnerait la réponse. Crédit `code`.
 """
 from __future__ import annotations
 
-import argparse
-import sys
 from pathlib import Path
+
+from _commun import main_dessin
 
 RACINE = Path(__file__).resolve().parents[1]
 SORTIE = RACINE / "public" / "visuels" / "rythmes"
@@ -156,11 +156,13 @@ RYTHMES: dict[str, dict] = {
         "regle": "AISM, région A, marque d'eaux saines, lettre A du code Morse",
     },
     "danger-nouveau": {
-        "motif": [(1.0, "bleu"), (0.2, None), (1.0, "jaune"), (0.2, None)],
+        # 7.3 : « Éclats bleus et jaunes, d'une seconde chacun, séparés par un
+        # intervalle de 0,5 seconde ». L'intervalle était dessiné à 0,2.
+        "motif": [(1.0, "bleu"), (0.5, None), (1.0, "jaune"), (0.5, None)],
         "fenetre": 3,
-        "alt": "Feu alternant le bleu et le jaune, sans obscurité longue entre les "
-               "deux couleurs.",
-        "regle": "AISM, région A, marque de danger nouveau, feu bleu et jaune alternés",
+        "alt": "Feu alternant le bleu et le jaune, une seconde chacun, séparés par un "
+               "court intervalle sombre.",
+        "regle": "Arrêté du 30 novembre 2017, annexe I, 7.3, bouée d'épave en cas d'urgence",
     },
     "caractere-fixe": {
         "motif": [(1.0, "blanc")],
@@ -352,32 +354,15 @@ def svg_de_rythme(nom: str) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parseur = argparse.ArgumentParser(description=__doc__)
-    parseur.add_argument("--verifier", action="store_true", help="échoue au lieu d'écrire")
-    args = parseur.parse_args(argv)
-
-    SORTIE.mkdir(parents=True, exist_ok=True)
-    perimes = []
-    for nom in RYTHMES:
-        chemin = SORTIE / f"{nom}.svg"
-        dessin = svg_de_rythme(nom)
-        if args.verifier:
-            if not chemin.is_file() or chemin.read_text(encoding="utf-8") != dessin:
-                perimes.append(chemin.relative_to(RACINE))
-            continue
-        chemin.write_text(dessin, encoding="utf-8")
-        print(f"écrit {chemin.relative_to(RACINE)}")
-
-    if args.verifier:
-        for chemin in perimes:
-            print(f"{chemin} n'est plus à jour, lance `npm run rythmes`", file=sys.stderr)
-        if perimes:
-            return 1
-        print(f"{len(RYTHMES)} rythme(s) à jour.")
-        return 0
-
-    print(f"\n{len(RYTHMES)} rythme(s) dans public/visuels/rythmes/")
-    return 0
+    elements = {nom: svg_de_rythme(nom) for nom in RYTHMES}
+    return main_dessin(
+        argv,
+        racine=RACINE,
+        sortie=SORTIE,
+        elements=elements,
+        commande_npm="rythmes",
+        label="rythme(s)",
+    )
 
 
 if __name__ == "__main__":

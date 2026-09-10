@@ -26,9 +26,12 @@ explication: >-
   latérale bâbord est rouge unie, cylindrique, et son voyant est un cylindre, pas une
   sphère. Les bandes verticales et la sphère sont les deux signes qui tranchent.
 sources:
-  - texte: Balisage AISM, marque d'eaux saines
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

@@ -14,9 +14,9 @@ Aucun libellé dans l'image, il donnerait la réponse.
 """
 from __future__ import annotations
 
-import argparse
-import sys
 from pathlib import Path
+
+from _commun import main_dessin
 
 RACINE = Path(__file__).resolve().parents[1]
 SORTIE = RACINE / "public" / "visuels" / "balisage"
@@ -126,9 +126,14 @@ MARQUES: dict[str, dict] = {
     },
     "danger-nouveau": {
         "forme": "pilier", "corps": ["bleu", "jaune", "bleu", "jaune"], "sens": "vertical",
-        "voyant": "croix",
+        # L'annexe I sépare les deux croix jaunes : la marque spéciale porte
+        # « un seul voyant en forme de " X " » (6.2), la bouée d'épave en cas
+        # d'urgence « une croix jaune dont les branches sont disposées
+        # verticalement et horizontalement » (7.3). Les dessiner pareil, c'est
+        # effacer ce qui les distingue de jour.
+        "voyant": "croix-droite",
         "voyant_couleur": "jaune",
-        "alt": "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune en forme de X.",
+        "alt": "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune droite.",
         "regle": "AISM, système de balisage maritime, marque de danger nouveau",
     },
 }
@@ -138,7 +143,7 @@ EMPRISES = {"cylindre": (68, 78), "cone": (80, 88), "pilier": (48, 108)}
 
 # Hauteur occupée par chaque voyant, pour cadrer l'image dessus.
 HAUTEURS_VOYANT = {
-    "cylindre": 30, "cone-haut": 32, "sphere": 32, "croix": 34,
+    "cylindre": 30, "cone-haut": 32, "sphere": 32, "croix": 34, "croix-droite": 34,
     "deux-cones-haut": 58, "deux-cones-bas": 58, "deux-cones-base": 58,
     "deux-cones-pointe": 58, "deux-spheres": 60,
 }
@@ -204,6 +209,14 @@ def _voyant(genre: str, base: float, teinte: str) -> list[str]:
             f'<line x1="{CENTRE - bras}" y1="{base - 17 + bras}" x2="{CENTRE + bras}" y2="{base - 17 - bras}" />'
             f"</g>"
         ]
+    if genre == "croix-droite":
+        bras = 16
+        return [
+            f'<g stroke="{teinte}" stroke-width="9" stroke-linecap="round">'
+            f'<line x1="{CENTRE}" y1="{base - 17 - bras}" x2="{CENTRE}" y2="{base - 17 + bras}" />'
+            f'<line x1="{CENTRE - bras}" y1="{base - 17}" x2="{CENTRE + bras}" y2="{base - 17}" />'
+            f"</g>"
+        ]
     if genre == "deux-spheres":
         return [
             f'<circle cx="{CENTRE}" cy="{base - 15}" r="15" fill="{teinte}" />',
@@ -257,32 +270,15 @@ def svg_de_marque(nom: str) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parseur = argparse.ArgumentParser(description=__doc__)
-    parseur.add_argument("--verifier", action="store_true", help="échoue au lieu d'écrire")
-    args = parseur.parse_args(argv)
-
-    SORTIE.mkdir(parents=True, exist_ok=True)
-    perimes = []
-    for nom in MARQUES:
-        chemin = SORTIE / f"{nom}.svg"
-        dessin = svg_de_marque(nom)
-        if args.verifier:
-            if not chemin.is_file() or chemin.read_text(encoding="utf-8") != dessin:
-                perimes.append(chemin.relative_to(RACINE))
-            continue
-        chemin.write_text(dessin, encoding="utf-8")
-        print(f"écrit {chemin.relative_to(RACINE)}")
-
-    if args.verifier:
-        for chemin in perimes:
-            print(f"{chemin} n'est plus à jour, lance `npm run balisage`", file=sys.stderr)
-        if perimes:
-            return 1
-        print(f"{len(MARQUES)} marque(s) à jour.")
-        return 0
-
-    print(f"\n{len(MARQUES)} marque(s) dans public/visuels/balisage/")
-    return 0
+    elements = {nom: svg_de_marque(nom) for nom in MARQUES}
+    return main_dessin(
+        argv,
+        racine=RACINE,
+        sortie=SORTIE,
+        elements=elements,
+        commande_npm="balisage",
+        label="marque(s)",
+    )
 
 
 if __name__ == "__main__":

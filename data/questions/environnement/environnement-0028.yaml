@@ -1,0 +1,39 @@
+id: environnement-0028
+option: cotier
+theme: environnement
+notion: env-peche-sous-marine
+statut: publie
+difficulte: 2
+enonce: >-
+  À quel régime la chasse sous-marine se rattache-t-elle ?
+propositions:
+  - id: a
+    texte: À la pêche maritime de loisir, qui s'exerce notamment en action de nage ou de
+      plongée
+  - id: b
+    texte: À un régime propre, distinct de la pêche de loisir
+  - id: c
+    texte: À la pêche professionnelle dès qu'un fusil-harpon est employé
+reponses:
+  - a
+explication: >-
+  Le code définit la pêche maritime de loisir par sa destination : une pêcherie non
+  commerciale dont le produit va à la consommation du pêcheur et de sa famille et ne peut être
+  vendu. Il énumère ses manières de faire : depuis une embarcation, en action de nage ou de
+  plongée, ou à pied. Et lorsqu'il nomme la pêche sous-marine, c'est celle « pratiquée à titre
+  non professionnel » qu'il vise. Elle relève donc de ce régime, avec ses règles propres,
+  comme le fusil-harpon réservé aux seize ans et plus.
+sources:
+  - texte: Code rural et de la pêche maritime, article R. 921-83, II
+    ref: peche-loisir
+  - texte: Code rural et de la pêche maritime, article R. 921-90
+    ref: peche-loisir
+  - texte: Code rural et de la pêche maritime, article R. 921-83, I
+    ref: peche-loisir
+  - texte: Code rural et de la pêche maritime, article L. 945-4, 17°
+    ref: peche-loisir
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

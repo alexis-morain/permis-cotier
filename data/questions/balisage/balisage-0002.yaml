@@ -24,10 +24,10 @@ explication: >-
   et Ouest, dans cet ordre, et se ressemblent assez pour se confondre si tu ne regardes
   pas où pointent les cônes.
 sources:
-  - texte: Balisage AISM, marques cardinales, voyants
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_le: '2026-09-09'

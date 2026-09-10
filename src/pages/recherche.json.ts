@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { questionsPubliees, nomDuTheme } from '../lib/banque';
+import { getCollection } from 'astro:content';
 import { GUIDE } from '../lib/guide';
 import { leconsEcrites } from '../lib/lecons';
 import { NOTIONS } from '../lib/notions';
@@ -54,7 +55,7 @@ const PAGES: readonly Entree[] = [
   {
     genre: 'page',
     titre: 'Les questions à revoir',
-    resume: 'Celles que tu as ratées, reprises tant qu’elles ne sont pas acquises.',
+    resume: 'Ce qui est dû aujourd’hui : tes erreurs, puis ce qu’il est temps de repasser.',
     url: '/revoir',
     mots: 'erreurs ratees revision progression rattrapage',
   },
@@ -94,6 +95,11 @@ const PAGES: readonly Entree[] = [
     mots: 'licences wikimedia commons attribution',
   },
 ];
+
+/** Les intertitres d'une fiche : de quoi la trouver sans indexer tout son corps. */
+function intertitres(corps: string): string {
+  return [...corps.matchAll(/^##+\s+(.+)$/gm)].map((m) => m[1]).join(' ');
+}
 
 export const GET: APIRoute = async () => {
   const ecrites = await leconsEcrites();
@@ -149,6 +155,18 @@ export const GET: APIRoute = async () => {
     mots: `${p.titre} ${p.question}`,
   }));
 
+  // Les fiches écrites pour ce site. Elles se cherchent par leur sujet et par
+  // leurs intertitres : « Beaufort », « alphabet phonétique », « chenal
+  // préféré ». Le corps entier resterait dehors, il pèserait plus que l'index.
+  const sources: Entree[] = (await getCollection('fiches')).map((f) => ({
+    genre: 'source',
+    titre: f.data.titre,
+    contexte: 'Fiche du site',
+    resume: f.data.autorite,
+    url: `/source/${f.id}`,
+    mots: intertitres(f.body ?? ''),
+  }));
+
   // Un cours par thème. Ce qu'il promet et ce qu'il fait rater se cherchent :
   // « oublier que le sens conventionnel s'inverse » est une vraie requête.
   // Le « pourquoi » et la « méthode » restent dehors, ils parlent de la façon
@@ -172,7 +190,7 @@ export const GET: APIRoute = async () => {
     url: `/question/${q.id}`,
   }));
 
-  const index: Entree[] = [...cours, ...lecons, ...notions, ...themes, ...guide, ...PAGES, ...banque];
+  const index: Entree[] = [...cours, ...lecons, ...notions, ...themes, ...sources, ...guide, ...PAGES, ...banque];
 
   return new Response(JSON.stringify(index), {
     headers: {

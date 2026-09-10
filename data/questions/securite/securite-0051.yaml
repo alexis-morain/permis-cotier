@@ -1,0 +1,32 @@
+id: securite-0051
+option: cotier
+theme: securite
+notion: securite-plongeurs
+statut: publie
+difficulte: 3
+enonce: >-
+  Un bateau de 8 mètres participe à des opérations de plongée. La règle 27 le dispense-t-elle
+  de montrer ses feux et marques, comme les autres navires de moins de 12 mètres ?
+propositions:
+  - id: a
+    texte: Non, les navires participant à des opérations de plongée sont la seule exception
+      à cette dispense
+  - id: b
+    texte: Oui, la dispense vaut pour tout navire de moins de 12 mètres
+  - id: c
+    texte: Oui, mais seulement de jour
+reponses:
+  - a
+explication: >-
+  La règle 27 g) dispense les navires de longueur inférieure à 12 mètres des feux et
+  marques de cette règle, « à l'exception des navires participant à des opérations de
+  plongée ». Eux les montrent quelle que soit leur longueur : c'est la seule exception,
+  et elle se comprend, puisque des gens sont dans l'eau autour.
+sources:
+  - texte: RIPAM, règle 27 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

@@ -3,6 +3,12 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
+import {
+  GLOB_NOYAU,
+  GLOB_HORS_NOYAU,
+  IGNORER_PARAMETRES,
+  reglesALaDemande,
+} from './src/lib/hors-ligne.ts';
 import { existsSync, readFileSync } from 'node:fs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
@@ -48,8 +54,12 @@ export default defineConfig({
     sitemap({
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
+      // La fiche du candidat et ses erreurs non plus : elles sont vides tant
+      // que le navigateur n'a pas lu sa progression, et déclarées `noindex` —
+      // les annoncer au sitemap dirait le contraire.
       filter: (page) =>
         !/\/(examen|revoir|parametres|signaler|recherche)(\.html)?$/.test(page) &&
+        !page.includes('/profil') &&
         !page.includes('/entrainement/') &&
         leconIndexable(page),
       changefreq: 'weekly',
@@ -63,6 +73,9 @@ export default defineConfig({
         else if (/^\/cours\/[a-z0-9-]+$/.test(chemin)) item.priority = 0.8;
         else if (chemin.startsWith('/cours/')) item.priority = 0.7;
         else if (chemin === '/themes' || chemin.startsWith('/theme/')) item.priority = 0.8;
+        // Les fiches écrites pour ce site : du contenu original, sur des
+        // sujets où les concurrents recopient sans jamais citer.
+        else if (chemin === '/source' || chemin.startsWith('/source/')) item.priority = 0.7;
         else if (chemin.startsWith('/notion/')) item.priority = 0.7;
         else if (chemin.startsWith('/question/')) item.priority = 0.4;
         else item.priority = 0.3;
@@ -80,10 +93,9 @@ export default defineConfig({
         lang: 'fr',
         start_url: '/',
         display: 'standalone',
-        // Les jetons de la direction artistique, `--brume` et `--marine`. Le
-        // beige et le vert sombre d'avant traînaient encore ici, et c'est la
-        // couleur de l'écran de démarrage : elle serait fausse dès le premier
-        // lancement.
+        // Le manifeste est vu avant le CSS, notamment à l'installation et au
+        // démarrage de la PWA. Il doit donc suivre les jetons actuels, pas
+        // l'ancienne direction artistique crème et vert sombre.
         background_color: '#f3f6fb',
         theme_color: '#0b1d3a',
         icons: [
@@ -96,17 +108,21 @@ export default defineConfig({
         // La version de banque entre dans le nom du cache : une publication
         // invalide le hors-ligne périmé au lieu de le laisser traîner.
         cacheId: `permis-cotier-v${versionBanque}`,
-        // `json` porte deux choses : l'index de la recherche, sans quoi la
-        // loupe ne trouverait plus rien dès que le réseau tombe, et la banque
-        // depuis qu'elle est sortie du HTML, sans quoi /examen ne rendrait plus
-        // rien hors ligne. Le nom de la banque porte sa version, donc une
-        // publication la remplace au lieu de l'empiler.
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
-        // `derniere.json` doit dire la vérité du jour, jamais celle du cache :
-        // c'est le point que l'app iOS interroge pour savoir si sa banque a
-        // vieilli, et le site n'en a aucun usage.
-        globIgnores: ['**/node_modules/**/*', 'banque/derniere.json'],
-        navigateFallback: '/',
+        // Le partage entre ce qui est précaché, ce qui se garde à mesure
+        // qu'on le lit et ce qui reste au réseau se lit dans
+        // `src/lib/hors-ligne.ts`, où des tests le tiennent.
+        globPatterns: [...GLOB_NOYAU],
+        globIgnores: [...GLOB_HORS_NOYAU],
+        runtimeCaching: reglesALaDemande(versionBanque),
+        // Aucun repli de navigation : une adresse inconnue doit recevoir la
+        // 404 du serveur, pas l'accueil sous son nom.
+        //
+        // La clé doit être écrite, même vide : `@vite-pwa/astro` teste
+        // `'navigateFallback' in workbox` et, si elle manque, y met la base du
+        // site. La retirer ne la supprime donc pas, elle la remet à « / » sans
+        // la liste d'exclusion qui l'accompagnait — l'inverse du but.
+        navigateFallback: undefined,
+        ignoreURLParametersMatching: [...IGNORER_PARAMETRES],
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },

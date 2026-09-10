@@ -3,7 +3,8 @@
 - Référence : aism-mbs
 - Version consultée le : 2026-09-04
 - Autorité : Association internationale de signalisation maritime (AISM/IALA),
-  système de balisage maritime, région A. La France est en région A.
+  système de balisage maritime, région A. La France métropolitaine est en région A ;
+  quatre littoraux français sont en région B, voir plus bas.
 - Planche officielle : « La signalisation maritime », secrétariat d'État chargé
   de la Mer, novembre 2022, planches « Balisage de jour » et « Balisage de nuit »,
   région de balisage A.
@@ -28,17 +29,32 @@ Bâbord :
 - couleur du corps : rouge
 - forme : cylindrique, dite « en boîte de conserve »
 - voyant : un cylindre rouge
-- feu : rouge, rythme quelconque
+- feu : rouge, rythme quelconque sauf les éclats groupés (2 + 1),
+  réservés au chenal préféré
 
 Tribord :
 - couleur du corps : vert
 - forme : conique
 - voyant : un cône vert, pointe en haut
-- feu : vert, rythme quelconque
+- feu : vert, rythme quelconque sauf les éclats groupés (2 + 1),
+  réservés au chenal préféré
 
-En région B (Amériques, Japon, Corée du Sud, Philippines), les couleurs des
-marques latérales sont inversées : bâbord vert, tribord rouge. Les formes, les
-voyants et tout le reste du système ne changent pas.
+En région B, les couleurs des marques latérales sont inversées : bâbord vert,
+tribord rouge. Le voyant suit la couleur du corps — un cylindre vert à bâbord,
+un cône rouge à tribord — donc lui aussi s'inverse. Seules les formes ne
+changent pas : cylindre à bâbord, cône à tribord dans les deux régions, et le
+reste du système est commun.
+
+Pour l'application de l'arrêté du 30 novembre 2017, sont en région B les
+littoraux de Saint-Pierre-et-Miquelon, de la Guyane, de la Martinique et de la
+Guadeloupe. La métropole, Mayotte, la Réunion, Wallis-et-Futuna, la
+Nouvelle-Calédonie, la Polynésie française et les TAAF sont en région A.
+
+> Corrigé le 2026-09-09 contre l'arrêté du 30 novembre 2017, annexe I, 2.2,
+> 2.4.1 et 2.4.2, qui fait foi : cette fiche situait la région B aux Amériques,
+> au Japon, en Corée du Sud et aux Philippines — en omettant les quatre
+> littoraux français que l'arrêté y range — et donnait les voyants pour
+> invariants alors qu'ils changent de couleur avec le corps.
 
 ## Marques latérales de chenal préféré, région A
 
@@ -123,12 +139,21 @@ dépôt, installation de loisirs.
 
 ## Marque de danger nouveau
 
-Elle double le balisage normal d'un danger récemment découvert et pas encore
-porté sur les documents nautiques, une épave par exemple.
+Aussi appelée bouée d'épave en cas d'urgence. Elle signale un danger récemment
+découvert et pas encore porté sur les documents nautiques, une épave par
+exemple. Elle est l'un des moyens prévus pour cela, au même titre qu'une marque
+latérale, cardinale ou de danger isolé ; le doublement d'une marque est autre
+chose, réservé au danger jugé particulièrement grave, et le double est alors
+identique à la marque qu'il accompagne.
 
 - corps : bandes verticales bleues et jaunes
-- voyant : une croix jaune en forme de X
+- voyant : une croix jaune dont les branches sont disposées verticalement et
+  horizontalement, à ne pas confondre avec le X de la marque spéciale
 - feu : bleu et jaune alternés
+
+> Corrigé le 2026-09-09 contre l'arrêté du 30 novembre 2017, annexe I, 7.2 et
+> 7.3, qui fait foi : cette fiche donnait à cette marque le voyant en X de la
+> marque spéciale, et présentait la bouée comme un doublement du balisage.
 
 ## Balisage des plages
 
@@ -138,3 +163,9 @@ porté sur les documents nautiques, une épave par exemple.
   accédant au rivage (arrêté du 27 mars 1991, annexe I, § 2 ; une version
   antérieure de cette fiche disait « dans le sens de sortie », à tort)
 - vitesse limitée à 5 nœuds dans la bande littorale des 300 mètres
+
+> Cette ligne ne vient pas de l'arrêté du 27 mars 1991, qui ne règle que le
+> balisage de cette bande et jamais la vitesse. Elle est posée par les arrêtés de
+> police de la navigation des préfets maritimes, reproduits depuis le 2026-09-09
+> sous la référence `bande-300-metres`, une par façade. C'est eux qu'il faut
+> citer, pas cette fiche.

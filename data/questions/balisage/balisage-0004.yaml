@@ -24,9 +24,12 @@ explication: >-
   rouge et des bandes verticales, ni avec la marque de danger nouveau, à bandes bleues
   et jaunes.
 sources:
-  - texte: Balisage AISM, marque de danger isolé
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

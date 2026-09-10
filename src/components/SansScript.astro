@@ -1,0 +1,60 @@
+---
+/**
+ * Ce que voit quelqu'un dont le navigateur n'exécute pas de script.
+ *
+ * Les écrans de jeu sont des îlots `client:only` : sans script, leur `<main>`
+ * est vide — pas un titre, pas une phrase. C'est un cul-de-sac pour un lecteur
+ * d'écran mal servi, pour un navigateur d'entreprise bridé, et pour le robot
+ * d'un moteur qui rendrait la page sans l'exécuter. Ces pages sont en
+ * `noindex`, donc rien n'est perdu au référencement : ce qui manquait, c'est
+ * une sortie.
+ *
+ * Le tirage, le chrono et la correction tournent dans le navigateur, et c'est
+ * ce qui permet au site de n'avoir ni compte ni serveur de jeu : le dire ici
+ * répond à la question avant qu'elle se pose.
+ */
+interface Props {
+  /** Ce que la page aurait fait, écrit comme on le dirait. */
+  ecran: string;
+}
+
+const { ecran } = Astro.props;
+---
+
+<noscript>
+  <div class="sans-script">
+    <h1>{ecran} a besoin de JavaScript</h1>
+    <p>
+      Le tirage des questions, le chrono et la correction s’exécutent dans ton navigateur.
+      C’est ce qui permet à ce site de n’avoir ni compte, ni serveur de jeu : rien de ce que
+      tu réponds ne part ailleurs. Sans script, il n’y a donc rien à afficher ici.
+    </p>
+    <p>
+      Le cours, lui, se lit entièrement sans script :
+      <a href="/cours">les quatorze cours du programme</a>,
+      <a href="/themes">les thèmes</a>, ou
+      <a href="/recherche">la liste complète des leçons</a>.
+    </p>
+  </div>
+</noscript>
+
+<style>
+  .sans-script {
+    border: 2px solid var(--filet-fort);
+    border-radius: var(--rayon);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background: var(--fond-carte);
+  }
+  .sans-script h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.8rem;
+  }
+  .sans-script p {
+    margin: 0 0 0.8rem;
+    max-width: 60ch;
+  }
+  .sans-script p:last-child {
+    margin-bottom: 0;
+  }
+</style>

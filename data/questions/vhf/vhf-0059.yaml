@@ -1,0 +1,31 @@
+id: vhf-0059
+option: cotier
+theme: vhf
+notion: vhf-relais
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu captes un MAYDAY sur le canal 16 et le CROSS répond aussitôt au navire en détresse.
+  Émets-tu un MAYDAY RELAY ?
+propositions:
+  - id: a
+    texte: Non, le relais vise un message de détresse resté sans réponse
+  - id: b
+    texte: Oui, systématiquement, pour que l'alerte soit doublée
+  - id: c
+    texte: Oui, mais sur une voie de travail pour ne pas encombrer le 16
+reponses:
+  - a
+explication: >-
+  Le relais existe pour un message resté sans réponse. Une fois le CROSS en contact avec
+  le navire en détresse, l'alerte est arrivée : ajouter un MAYDAY RELAY encombrerait la
+  voie que l'opération va utiliser. Ce que tu fais alors, c'est te taire sur le 16 et
+  rester à l'écoute, prêt à porter assistance si on te le demande.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

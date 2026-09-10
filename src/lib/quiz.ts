@@ -18,13 +18,68 @@ export interface QuestionJouable {
   readonly propositions: readonly { readonly id: string }[];
 }
 
+/**
+ * Ce que la progression retient d'une question.
+ *
+ * `derniereReussie` et `vueLe` disent la dernière rencontre. Les trois champs
+ * qui suivent disent le rappel espacé, et c'est eux qui décident quand la
+ * question revient : une bonne réponse ne l'efface plus, elle la repousse.
+ */
 export interface EtatQuestion {
   vues: number;
   ratees: number;
   derniereReussie: boolean;
   /** Date ISO courte de la dernière rencontre. */
   vueLe: string;
+  /** Réussites d'affilée, remises à zéro à la première faute. */
+  succes: number;
+  /** Jour parisien de la dernière réussite, `AAAA-MM-JJ`. */
+  dernierSuccesLe?: string;
+  /** Jour parisien à partir duquel la question est due. */
+  revoirLe?: string;
 }
+
+/**
+ * Les paliers du rappel espacé, en jours.
+ *
+ * Un jour, trois, sept, vingt et un : la courbe classique, resserrée pour un
+ * examen qu'on prépare en quelques semaines et non pour une langue qu'on
+ * garde à vie. Au-delà du dernier palier l'intervalle ne grandit plus : rien
+ * ne sert de reprogrammer une question après le jour J.
+ */
+export const INTERVALLES: readonly number[] = [1, 3, 7, 21];
+
+/** Le nombre de jours à attendre après la `n`-ième réussite d'affilée. */
+export function intervalle(succes: number): number {
+  const rang = Math.min(Math.max(Math.floor(succes), 1), INTERVALLES.length);
+  return INTERVALLES[rang - 1]!;
+}
+
+/**
+ * « Retenue » veut dire deux réussites d'affilée, donc — par la règle du jour
+ * unique de `enregistrerReponse` — deux jours différents. Une question
+ * réussie une fois est vue, pas retenue : la correction était encore à
+ * l'écran, ça ne prouve aucune mémoire.
+ */
+export function estRetenue(e: EtatQuestion | undefined): boolean {
+  return e !== undefined && e.succes >= 2;
+}
+
+/**
+ * Due : son jour de révision est arrivé. Une question jamais vue n'est pas
+ * due, elle est à découvrir — c'est un autre geste, et la série les range
+ * dans cet ordre.
+ */
+export function estDue(e: EtatQuestion | undefined, jour: string): boolean {
+  return e?.revoirLe !== undefined && e.revoirLe <= jour;
+}
+
+/**
+ * Le plafond d'une série quand le candidat n'a pas choisi de rythme. C'est le
+ * rythme « Régulier » de `profil.ts`, redit ici pour que le moteur de série ne
+ * dépende pas de la fiche du candidat ; un test tient les deux ensemble.
+ */
+export const TAILLE_SERIE_PAR_DEFAUT = 20;
 
 export type Progression = Record<string, EtatQuestion>;
 
@@ -204,19 +259,81 @@ export function ordonnerEntrainement<T extends { id: string }>(
     .map((x) => x.q);
 }
 
+/** Ce que la série du jour a besoin de savoir d'une question. */
+export interface QuestionRangeable {
+  readonly id: string;
+  /** Code de notion, quand la question en porte un. */
+  readonly notion?: string;
+}
+
 /**
- * Les seules questions ratées à la dernière rencontre, tous thèmes mêlés, la
- * plus ancienne d'abord. C'est ce que compte la pastille « à revoir » de
- * l'accueil : le même filtre des deux côtés, sinon le chiffre annoncé et la
- * série jouée divergent.
+ * Force d'une notion, entre 0 et 1 : la part de ses questions vues qui sont
+ * retenues. Une notion jamais ouverte rend 2, ce qui la range derrière tout
+ * ce qu'on travaille et qu'on rate — le trou connu se bouche ce soir, pas
+ * l'inconnu. Même convention que `maitriseParTheme`.
  */
-export function serieARevoir<T extends { id: string }>(
+function forceParNotion(
+  questions: readonly QuestionRangeable[],
+  progression: Progression,
+): Map<string, number> {
+  const comptes = new Map<string, { vues: number; retenues: number }>();
+  for (const q of questions) {
+    const code = q.notion ?? '';
+    const c = comptes.get(code) ?? { vues: 0, retenues: 0 };
+    const e = progression[q.id];
+    if (e) {
+      c.vues += 1;
+      if (estRetenue(e)) c.retenues += 1;
+    }
+    comptes.set(code, c);
+  }
+  return new Map([...comptes].map(([code, c]) => [code, c.vues === 0 ? 2 : c.retenues / c.vues]));
+}
+
+/**
+ * La série du jour : ce qui est dû, puis de quoi découvrir.
+ *
+ * Les questions dues d'abord, la plus en retard en tête, et à égalité de jour
+ * la plus fragile — celle dont la suite de réussites est la plus courte. Puis,
+ * s'il reste de la place, des questions jamais vues, prises dans les notions
+ * les plus faibles : la révision de ce qui glisse passe avant la découverte,
+ * mais une journée où tout est frais ne doit pas rendre une série vide.
+ *
+ * `taille` est le rythme choisi par le candidat. Une série sans plafond n'est
+ * pas une séance : c'est une liste, et une liste de deux cents questions ne se
+ * commence pas.
+ */
+export function serieDuJour<T extends QuestionRangeable>(
   questions: readonly T[],
   progression: Progression,
+  jour: string,
+  taille: number = TAILLE_SERIE_PAR_DEFAUT,
 ): T[] {
-  const ratees = questions.filter((q) => {
-    const e = progression[q.id];
-    return e !== undefined && !e.derniereReussie;
-  });
-  return ordonnerEntrainement(ratees, progression);
+  if (taille <= 0) return [];
+
+  const dues = questions
+    .map((q, index) => ({ q, index, e: progression[q.id] }))
+    .filter((x) => estDue(x.e, jour))
+    .sort(
+      (a, b) =>
+        (a.e!.revoirLe ?? '').localeCompare(b.e!.revoirLe ?? '') ||
+        a.e!.succes - b.e!.succes ||
+        a.e!.vueLe.localeCompare(b.e!.vueLe) ||
+        a.index - b.index,
+    )
+    .map((x) => x.q);
+
+  if (dues.length >= taille) return dues.slice(0, taille);
+
+  const force = forceParNotion(questions, progression);
+  const neuves = questions
+    .map((q, index) => ({ q, index }))
+    .filter((x) => progression[x.q.id] === undefined)
+    .sort(
+      (a, b) =>
+        (force.get(a.q.notion ?? '') ?? 2) - (force.get(b.q.notion ?? '') ?? 2) || a.index - b.index,
+    )
+    .map((x) => x.q);
+
+  return [...dues, ...neuves].slice(0, taille);
 }

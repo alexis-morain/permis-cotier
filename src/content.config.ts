@@ -2,6 +2,8 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { schemaQuestion } from './lib/schema';
 import { schemaLecon } from './lib/cours';
+import { schemaFiche } from './lib/fiches';
+import { chargeurFiches } from './lib/fiches-fichiers';
 
 /**
  * La banque vient de fichiers YAML, un par question. Les brouillons de
@@ -27,4 +29,15 @@ const lecons = defineCollection({
   schema: schemaLecon,
 });
 
-export const collections = { questions, lecons };
+/**
+ * Les fiches du site : les sujets qu'aucun texte officiel ne couvre de façon
+ * citable, écrits à la main dans `data/sources`. Le chargeur les reconnaît à
+ * la section où elles disent ce qu'elles sont, et rend leur corps sans son
+ * en-tête : la page `/source/<ref>` le remonte elle-même, en tête.
+ */
+const fiches = defineCollection({
+  loader: chargeurFiches(),
+  schema: schemaFiche,
+});
+
+export const collections = { questions, lecons, fiches };

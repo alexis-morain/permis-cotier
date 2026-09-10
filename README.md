@@ -21,19 +21,29 @@ aucune banque de questions d'État, et personne ne peut prétendre reproduire
 celle de l'examen. Le site prépare **au format de l'épreuve** : 40 questions,
 1 ou 2 bonnes réponses, 5 erreurs admises, 20 secondes par question.
 
-**Toutes les questions publiées à ce jour sont relues par une seule personne,
-Alexis Morain.** Le champ `meta.relu_par` de chaque fichier porte le nom de son
-relecteur : `alexis` une fois relue, `claude` tant qu'un lot écrit par le modèle
-depuis l'article cité attend sa relecture, et le pied de page du site compte
-les deux au moment du build. Une deuxième relecture par un tiers est prévue
-avant décembre 2026. En attendant, une erreur est possible : le bouton de
-signalement est sur chaque question, et les signalements sont traités dans la
-semaine.
+**Une seule personne relit, Alexis Morain.** Les 516 questions et les 105
+leçons sont relues à ce jour, et c'est le même œil pour toutes. Le champ
+`meta.relu_par` de chaque fichier porte le nom de son relecteur : `alexis` une
+fois relue, `claude` tant qu'elle attend. Une question y retombe quand elle
+change : celle dont on remplace la citation était relue sur un texte que le
+candidat ne verra plus. Le pied de page du site compte les deux au
+moment du build, il dit donc toujours le vrai chiffre du jour. Une deuxième
+relecture par un tiers est prévue avant décembre 2026. En attendant, une erreur
+est possible : le bouton de signalement est sur chaque question, et les
+signalements sont traités dans la semaine.
 
-Le site n'est pas entièrement statique. Deux fonctions serveur tournent sur
-Cloudflare : l'envoi d'un signalement d'erreur, et plus tard le code de
-synchronisation de progression. Tout le reste est du HTML généré au build.
-Aucun compte, aucune donnée personnelle, aucun cookie.
+Le site n'est pas entièrement statique. Un script Worker, `src/worker.ts`,
+répond à une seule adresse, `POST /api/signaler` : il vérifie un jeton
+Turnstile, puis ouvre une issue publique dans ce dépôt. Tout le reste — chaque
+page, chaque redirection, la page 404 — reste servi par les actifs, qui passent
+avant le script. Le formulaire retombe sur un courrier pré-rempli à la moindre
+panne, endpoint éteint compris. Le signalement lui-même ne porte ni adresse, ni
+adresse IP, ni identifiant : ni l'issue ni le Worker n'en gardent trace, et le
+site ne pose aucun cookie. La page, elle, charge deux choses qui voient
+l'adresse du visiteur comme tout serveur voit celle de qui l'appelle : le
+widget anti-robot de Cloudflare et la mesure d'audience. « Aucune donnée
+personnelle » promettrait donc plus que ce qui est tenu ; ce qui est tenu, et
+qui est vérifié par les tests, c'est que le signalement n'en porte aucune.
 
 La fréquentation est comptée par une instance Umami auto-hébergée : pas de
 cookie, pas d'identifiant de visiteur, rien qui suive quelqu'un d'un site à
@@ -80,6 +90,34 @@ npm run dev
 | `npm run build:app` | construit `dist-app/`, ce que la coquille iOS embarque |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
+
+## Le signalement en ligne
+
+Quatre secrets de Worker font vivre `POST /api/signaler`, posés un par un par
+`wrangler secret put <NOM>` : `TURNSTILE_SECRET_KEY`, `GITHUB_BOT_TOKEN` — un
+jeton à portée fine, `Issues: Read and write` sur ce seul dépôt, et rien
+d'autre —, `GITHUB_REPO`, et les trois de Resend si notification par courrier
+il y a. Tant qu'il en manque un, l'endpoint rend 503 et la page passe par le
+courrier : c'est un état de repos, pas une panne. `TURNSTILE_SITE_KEY` est
+publique et entre au build.
+
+La part d'un visiteur est bornée à cinq signalements par minute et par adresse,
+par le binding `[[ratelimits]]` de `wrangler.toml`. Sans ce binding, l'endpoint
+se ferme au lieu de servir sans borne. Si un jour `wrangler deploy` refusait ce
+binding — il est facturé au plan du compte, pas au code —, la même borne se
+pose au tableau de bord, en règle WAF sur la zone : *Security → WAF → Rate
+limiting rules → Create rule*, expression
+`(http.request.uri.path eq "/api/signaler" and http.request.method eq "POST")`,
+compteur par *IP with NAT support*, 5 requêtes par période de 60 secondes,
+action *Block* pendant 60 secondes. Elle vaut la même chose, à ceci près
+qu'elle vit hors du dépôt et que rien ne rappelle son existence.
+
+Le jeton GitHub expire. Le jour où il expirera, GitHub rendra 401, le Worker
+rendra son 503 générique et la page retombera sur le courrier : le visiteur ne
+verra rien d'anormal. `npm run verifier:prod`, lancé chaque matin par la veille,
+dit l'état de l'endpoint — fermé, ou répondant — sans jamais ouvrir d'issue. Il
+ne voit pas la différence entre un jeton mort et un secret absent : la date
+d'expiration du jeton se note ailleurs que dans ce dépôt.
 
 ## L'app iOS
 
@@ -145,8 +183,8 @@ L'index est un fichier construit au build, `/recherche.json`, chargé à la
 première ouverture et non au chargement des pages, puis gardé dans le cache hors
 ligne. Le classement est dans `src/lib/recherche.ts` : le titre pèse plus que le
 corps, tous les mots tapés doivent porter, et l'énoncé d'une question compte
-comme du corps : sans cela, quatre cent quatre-vingts énoncés enterreraient la
-leçon qui les explique.
+comme du corps : sans cela, cinq cents énoncés enterreraient la leçon qui les
+explique.
 
 ## Ajouter une question
 
@@ -182,11 +220,13 @@ data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
-                                   session, progression, profil, apparence, mesure, recherche
+                                   session, progression, profil, apparence, mesure, recherche,
+                                   hors-ligne (ce qui est précaché, gardé à la demande, ou au réseau)
 src/pages/                         Astro : accueil, cours, thèmes, questions, examen, entraînement,
                                    profil, recherche et son index recherche.json
 src/components/                    îlot React du quiz, panneau de recherche
-functions/api/                     signalement, puis synchronisation
+src/lib/signalement.ts             validation et mise en inertie du texte reçu
+src/worker.ts                      le Worker : POST /api/signaler, le reste aux actifs
 ```
 
 ## Visuels

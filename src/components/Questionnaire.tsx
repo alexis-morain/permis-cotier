@@ -3,6 +3,7 @@ import { aujourdhui, charger, enregistrerProfil, sauvegarder } from '../lib/prog
 import type { Profil } from '../lib/progression';
 import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, rappel } from '../lib/profil';
 import { evenement } from '../lib/mesure';
+import { douceur } from '../lib/douceur';
 import './profil.css';
 
 /**
@@ -17,10 +18,6 @@ import './profil.css';
  */
 type Ecran = 'pourquoi' | 'phrase' | 'depart' | 'rythme' | 'date' | 'prenom' | 'fin';
 const ECRANS: readonly Ecran[] = ['pourquoi', 'phrase', 'depart', 'rythme', 'date', 'prenom', 'fin'];
-
-function douceur(): ScrollBehavior {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-}
 
 interface Props {
   /** Questions publiées, pour dire ce que le rythme choisi représente. */

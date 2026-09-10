@@ -11,6 +11,7 @@ import {
 import { leconDeLaNotion } from '../../../lib/lecons';
 import { themeParCode } from '../../../lib/themes';
 import { SITE, ressource } from '../../../lib/seo';
+import MarqueSource from '../../../components/MarqueSource.astro';
 
 export async function getStaticPaths() {
   return leconsDuParcours().map((lecon) => ({
@@ -88,7 +89,6 @@ const description = affichable.accroche ?? notion.resume;
       rang={lecon.rangDansCours}
       total={duCours.length}
       suite={suite}
-      theme={{ code: notion.theme, nom: nomTheme }}
     />
   </article>
 
@@ -107,7 +107,21 @@ const description = affichable.accroche ?? notion.resume;
         <h2>D’où vient cette leçon</h2>
         <ul>
           {affichable.sources.map((s) => (
-            <li>{s.url ? <a href={s.url} rel="noreferrer noopener" data-mesure="source-ouverte">{s.texte}</a> : s.texte}</li>
+            <li>
+              {s.url ? (
+                <a
+                  href={s.url}
+                  rel={s.provenance === 'officiel' ? 'noreferrer noopener' : undefined}
+                  data-mesure="source-ouverte"
+                  data-mesure-ref={s.ref}
+                >
+                  {s.texte}
+                </a>
+              ) : (
+                s.texte
+              )}
+              <MarqueSource provenance={s.provenance} />
+            </li>
           ))}
         </ul>
         <p class="discret">

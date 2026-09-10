@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import SansScript from '../../components/SansScript.astro';
+import Erreurs from '../../components/Erreurs.tsx';
+import { cheminBanque } from '../../lib/banque';
+
+/**
+ * Mes erreurs, à plat. Page personnelle : elle ne s'indexe pas, elle ne
+ * contient rien avant que le navigateur ait lu sa progression, et la banque y
+ * arrive en JSON comme sur les écrans de jeu.
+ */
+const banque = cheminBanque();
+---
+
+<Base
+  titre="Ce que tu as raté"
+  description="Les questions dues aujourd’hui et celles que tu as ratées, avec la bonne réponse, l’explication et la leçon."
+  indexable={false}
+  prechargeBanque
+>
+  <div class="page page--etroite">
+    <p class="chapitre" style="padding-top:1.5rem"><a href="/profil">Ta fiche</a> · Tes erreurs</p>
+    <SansScript ecran="Tes erreurs" />
+    <Erreurs client:only="react" source={banque} />
+  </div>
+</Base>

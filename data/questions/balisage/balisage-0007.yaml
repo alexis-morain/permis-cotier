@@ -22,9 +22,10 @@ explication: >-
   Le piège est la cardinale Sud, qui porte exactement les mêmes couleurs mais dans l'ordre
   inverse, jaune au-dessus et noir en dessous.
 sources:
-  - texte: Balisage AISM région A, marques cardinales, Nord
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.1
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

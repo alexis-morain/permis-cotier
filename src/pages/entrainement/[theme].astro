@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
+import SansScript from '../../components/SansScript.astro';
 import Quiz from '../../components/Quiz.tsx';
-import { versionBanque } from '../../lib/banque';
+import { cheminBanque } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
 
 export async function getStaticPaths() {
@@ -12,16 +13,18 @@ const { theme } = Astro.props;
 // Le JSON porte toute la banque, et l'écran y taille la part du thème : les
 // quatorze pages d'entraînement partagent ainsi un seul fichier déjà en cache
 // depuis l'examen blanc, au lieu d'embarquer chacune sa copie.
-const banque = `/banque/${versionBanque()}.json`;
+const banque = cheminBanque();
 ---
 
 <Base
   titre={`Entraînement : ${theme.nom}`}
   description={`Questions du thème ${theme.nom}, avec correction immédiate et source.`}
   indexable={false}
+  prechargeBanque
 >
   <div class="page page--etroite">
     <p class="chapitre" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
+    <SansScript ecran="L’entraînement" />
     <Quiz client:only="react" mode="entrainement" source={banque} theme={theme.code} />
   </div>
 </Base>

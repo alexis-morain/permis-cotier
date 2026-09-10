@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 import { existsSync } from 'node:fs';
 import { questionsPubliees } from './banque';
-import { urlSource } from './guide';
+import { resoudreSources } from './sources';
 import { NOTIONS, type Notion } from './notions';
 import { choisirVerification, leconCourte, leconEcrite, type LeconAffichable, type LeconSource } from './cours';
 
@@ -50,10 +50,7 @@ export async function leconDeLaNotion(notion: Notion): Promise<LeconAffichable> 
     }
   }
 
-  const sources = source.sources.map((s) => {
-    const url = urlSource({ texte: s.texte, ref: s.ref, fichier: s.fichier });
-    return url ? { texte: s.texte, url } : { texte: s.texte };
-  });
+  const sources = resoudreSources(source.sources);
 
   return { ...leconEcrite(notion, source, sources), questions };
 }
