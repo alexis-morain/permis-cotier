@@ -1,6 +1,6 @@
 /*
  * L'écran de leçon. Même grammaire que l'écran de jeu : la barre en jaune,
- * les cartes à bord plein, le mémo dans la bande marine. Une idée par écran
+ * les cartes à bord plein, le mémo sur une carte marine. Une idée par écran
  * quand le script est là ; tout à la suite quand il n'y est pas.
  */
 
@@ -20,7 +20,7 @@
 .lecon__barre span {
   display: block;
   height: 100%;
-  background: var(--jaune);
+  background: var(--jauge);
   transform-origin: left;
   transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
@@ -100,13 +100,17 @@ html:not(.js) .lecon__mode { display: none; }
 }
 .piege p:last-child { margin: 0; }
 
-/* Le mémo : la bande marine, comme l'accueil. C'est ce qu'on relit la veille. */
+/* Le mémo : une carte marine cernée de jaune. C'est ce qu'on relit la veille.
+   La bande pleine largeur et sa ligne de flottaison restent à l'accueil ; ici
+   le jaune fait le tour, il ne souligne pas. Sur le marine, l'anneau de focus
+   marine ne se verrait pas : il passe au jaune, dans les deux thèmes. */
 .retenir {
+  --anneau: var(--jaune);
   background: var(--bande);
   color: var(--bande-texte);
+  border: 2px solid var(--jaune);
   border-radius: var(--rayon);
   padding: 1.25rem 1.4rem;
-  border-bottom: 6px solid var(--jaune);
 }
 .retenir__titre {
   font-stretch: var(--large);

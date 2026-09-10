@@ -39,11 +39,9 @@
   --jaune-sombre: #c99a00;
   --jaune-pale: #fff1c2;
   --vert: #0f8544;
-  --vert-sombre: #0a6033;
   --vert-texte: #0b6b37;
   --vert-pale: #d8f3e2;
   --rouge: #d92b22;
-  --rouge-sombre: #a01f18;
   --rouge-texte: #a8231c;
   --rouge-pale: #fde0dd;
 
@@ -54,9 +52,12 @@
   --texte: var(--marine);
   --texte-doux: #4c5c78;
   --filet: #cfd8e6;
-  --filet-fort: #a9b7cc;
+  --filet-fort: #6e85a8;
   --accent: var(--jaune);
-  --accent-contraste: var(--marine);
+  /* Le jaune des jauges. Sur le rail clair, le jaune cardinal ne vaut que
+     1,31:1 : il est assombri jusqu'à 3,19:1 pour rester lisible d'un coup
+     d'œil. Sur le rail marine du thème sombre, le jaune plein passe seul. */
+  --jauge: #a87c00;
   --bande: var(--marine);
   --bande-texte: var(--blanc);
   --bande-doux: #bcc9df;
@@ -99,7 +100,8 @@
     --texte: #eef2f9;
     --texte-doux: #b3c0d6;
     --filet: #2a3f66;
-    --filet-fort: #3d5684;
+    --filet-fort: #5175a6;
+    --jauge: var(--jaune);
     --jaune-pale: #3a3212;
     --vert-texte: #5fd58f;
     --vert-pale: #10331f;
@@ -124,7 +126,8 @@
     --texte: #eef2f9;
     --texte-doux: #b3c0d6;
     --filet: #2a3f66;
-    --filet-fort: #3d5684;
+    --filet-fort: #5175a6;
+    --jauge: var(--jaune);
     --jaune-pale: #3a3212;
     --vert-texte: #5fd58f;
     --vert-pale: #10331f;
@@ -281,8 +284,7 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 var(--bord) 0 var(--jaune-sombre);
 }
 .bouton--principal:hover { background: var(--jaune-vif); border-color: var(--jaune-vif); }
-.bouton--principal:active,
-.bouton--principal[disabled] { box-shadow: 0 0 0 var(--jaune-sombre); }
+.bouton--principal:active { box-shadow: 0 0 0 var(--jaune-sombre); }
 .bouton--principal[disabled] { box-shadow: 0 var(--bord) 0 var(--jaune-sombre); }
 
 .bouton--discret {
@@ -367,7 +369,7 @@ img { max-width: 100%; height: auto; }
 }
 .segmente__option + .segmente__option { border-left: 2px solid var(--filet-fort); }
 .segmente__option:hover { background: var(--fond-2); }
-.segmente__option[aria-pressed='true'] { background: var(--texte); color: var(--fond-carte); }
+.segmente__option[aria-pressed='true'] { background: var(--texte); color: var(--fond-carte); --anneau: var(--jaune); }
 .segmente__option[aria-pressed='true'] .discret { color: inherit; opacity: 0.8; }
 .segmente__option:focus-visible { outline-offset: -3px; }
 
