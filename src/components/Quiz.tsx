@@ -3,6 +3,7 @@ import type React from 'react';
 import {
   creerSession,
   extraireSauvegarde,
+  lenteurs,
   questionCourante,
   reduire,
   restaurerSession,
@@ -532,6 +533,11 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
     // L'examen d'avant, lu au montage : celui-ci n'y est pas encore.
     const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
     const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
+    // Le temps, que le score ne dit pas. Vingt secondes par question, et
+    // l'échec par lenteur est le mode d'échec propre à cette épreuve : une
+    // question passée au buzzer compte comme une erreur, une réponse arrachée
+    // à la dernière seconde ne tiendra pas dans une salle.
+    const lent = lenteurs(session);
     return (
       <div className="jeu">
         <h1 className="visuellement-cache">{titre}, résultat</h1>
@@ -577,6 +583,27 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
             </>
           )}
         </div>
+
+        {(lent.auBuzzer.length > 0 || lent.aLaLimite.length > 0) && (
+          <p className="resultat__temps">
+            {lent.auBuzzer.length > 0 && (
+              <>
+                <b>
+                  {lent.auBuzzer.length} question{lent.auBuzzer.length > 1 ? 's' : ''} passée
+                  {lent.auBuzzer.length > 1 ? 's' : ''} au buzzer
+                </b>
+                , sans réponse dans les vingt secondes.{' '}
+              </>
+            )}
+            {lent.aLaLimite.length > 0 && (
+              <>
+                {lent.aLaLimite.length} répondue{lent.aLaLimite.length > 1 ? 's' : ''} dans la
+                dernière seconde.{' '}
+              </>
+            )}
+            <span className="discret">Le chrono compte autant que la réponse.</span>
+          </p>
+        )}
 
         {raison && (
           <p className="rappel resultat__rappel">
