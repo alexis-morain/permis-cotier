@@ -1,5 +1,6 @@
 import { SECONDES_PAR_QUESTION, calculerResultat, corriger } from './quiz';
 import type { QuestionJouable, Resultat } from './quiz';
+import { graineDeSession } from './melange';
 
 /**
  * Déroulé d'une série de questions, en examen blanc ou en entraînement.
@@ -35,6 +36,13 @@ export const SAUVEGARDE_PERIMEE_MS = 24 * 60 * 60 * 1000;
 export interface Session {
   mode: Mode;
   questions: readonly QuestionJouable[];
+  /**
+   * Graine du mélange des propositions, tirée une fois pour toute la série.
+   * Elle est dans la session, et non dans le composant, parce qu'elle doit
+   * partir dans la sauvegarde : un examen repris sur une autre graine
+   * redistribuerait les propositions sous le candidat.
+   */
+  graine: number;
   index: number;
   selections: string[][];
   /** Secondes restantes sur la question courante, `null` hors examen. */
@@ -64,11 +72,16 @@ export type Action =
   | { type: 'tic'; maintenant?: number }
   | { type: 'terminer' };
 
-export function creerSession(mode: Mode, questions: readonly QuestionJouable[]): Session {
+export function creerSession(
+  mode: Mode,
+  questions: readonly QuestionJouable[],
+  graine: number = graineDeSession(),
+): Session {
   const vide = questions.length === 0;
   return {
     mode,
     questions,
+    graine,
     index: 0,
     selections: questions.map(() => []),
     // Le chrono ne s'arme qu'au « commencer » : aucune seconde ne se perd
@@ -212,6 +225,8 @@ export interface SessionSauvegardee {
   mode: Mode;
   theme: string | null;
   ids: string[];
+  /** Graine du mélange des propositions. Absente des sauvegardes d'avant. */
+  graine?: number;
   index: number;
   selections: string[][];
   /** Instant limite de la question courante, absolu : un rafraîchissement ne
@@ -233,6 +248,7 @@ export function extraireSauvegarde(
     mode: s.mode,
     theme: theme ?? null,
     ids: s.questions.map((q) => q.id),
+    graine: s.graine,
     index: s.index,
     selections: s.selections.map((choix) => [...choix]),
     echeance: s.echeance,
@@ -281,6 +297,9 @@ export function restaurerSession(
   return {
     mode,
     questions,
+    // Une sauvegarde écrite avant le mélange n'en porte pas : on en tire une,
+    // plutôt que de refuser la reprise pour si peu.
+    graine: typeof sauvegarde.graine === 'number' ? sauvegarde.graine : graineDeSession(),
     index,
     selections: questions.map((_, i) => [...(sauvegarde.selections[i] ?? [])]),
     restant: echeance === null ? null : secondesRestantes(echeance, maintenant),

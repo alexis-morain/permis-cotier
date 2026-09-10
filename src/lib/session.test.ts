@@ -355,3 +355,45 @@ describe('reprise d’une session interrompue', () => {
     expect(extraireSauvegarde(creerSession('examen', trois), undefined, maintenant)).toBeNull();
   });
 });
+
+describe('graine de mélange', () => {
+  const maintenant = 1_700_000_000_000;
+
+  it('accompagne la session d’un bout à l’autre', () => {
+    const s = creerSession('examen', trois, 4242);
+    expect(s.graine).toBe(4242);
+    // Le réducteur ne la touche jamais : l'ordre des propositions ne bouge pas
+    // pendant qu'on coche, qu'on valide ou qu'on avance.
+    const apres = reduire(reduire(s, { type: 'commencer', maintenant }), {
+      type: 'basculer',
+      proposition: 'a',
+    });
+    expect(apres.graine).toBe(4242);
+  });
+
+  it('survit à la sauvegarde et à la reprise', () => {
+    const s = reduire(creerSession('examen', trois, 4242), { type: 'commencer', maintenant });
+    const sauvegarde = extraireSauvegarde(s, undefined, maintenant);
+    // Le voyage complet, tel que `localStorage` le fait : une session reprise
+    // sur un autre ordre déplacerait les propositions sous le candidat.
+    const relue = JSON.parse(JSON.stringify(sauvegarde));
+    expect(relue.graine).toBe(4242);
+    expect(restaurerSession(relue, trois, 'examen', undefined, maintenant)?.graine).toBe(4242);
+  });
+
+  it('en invente une quand la sauvegarde est d’avant le mélange', () => {
+    const sauvegarde = extraireSauvegarde(
+      reduire(creerSession('examen', trois, 4242), { type: 'commencer', maintenant }),
+      undefined,
+      maintenant,
+    )!;
+    delete (sauvegarde as { graine?: number }).graine;
+    const reprise = restaurerSession(sauvegarde, trois, 'examen', undefined, maintenant);
+    expect(typeof reprise?.graine).toBe('number');
+  });
+
+  it('tire une graine différente à chaque session neuve', () => {
+    const graines = new Set(Array.from({ length: 50 }, () => creerSession('examen', trois).graine));
+    expect(graines.size).toBe(50);
+  });
+});

@@ -176,3 +176,39 @@ describe('la lecture continue', () => {
     expect(charger().lecons['signaux-portuaires']).toBeTruthy();
   });
 });
+
+describe('mélange des propositions de la vérification', () => {
+  const verification = () => {
+    render(<Lecon lecon={ecrite} {...cadre} />);
+    for (let i = 0; i < 4; i += 1) fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Vérifier ce que j’ai retenu' }));
+  };
+  const lignes = () => [...document.querySelectorAll<HTMLElement>('.propositions .proposition')];
+  const textes = () => lignes().map((n) => n.children[1]?.textContent ?? '');
+
+  it('nomme les lignes dans l’ordre de l’écran', () => {
+    verification();
+    expect(lignes().map((n) => n.querySelector('.proposition__lettre')?.textContent)).toEqual([
+      'A', 'B', 'C',
+    ]);
+  });
+
+  it('ne déplace pas les propositions quand on coche et qu’on corrige', () => {
+    verification();
+    const depart = textes();
+    fireEvent.click(lignes()[0]!);
+    expect(textes()).toEqual(depart);
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(textes()).toEqual(depart);
+  });
+
+  it('change d’ordre d’une leçon à l’autre', () => {
+    const ordres = new Set<string>();
+    for (let i = 0; i < 12; i += 1) {
+      verification();
+      ordres.add(textes().join('|'));
+      cleanup();
+    }
+    expect(ordres.size).toBeGreaterThan(1);
+  });
+});
