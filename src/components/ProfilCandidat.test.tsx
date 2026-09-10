@@ -67,3 +67,21 @@ describe('la fiche', () => {
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Voilà où tu en es.');
   });
 });
+
+describe('la jauge de l’indice', () => {
+  it('donne ses parts en propriété personnalisée, pas en largeur', () => {
+    let e = enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui());
+    e = enregistrerReponse(e, 'vhf-1', true, aujourdhui());
+    sauvegarder(e);
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+
+    const parts = [...document.querySelectorAll('.indice__part')] as HTMLElement[];
+    expect(parts.length).toBe(3);
+    for (const part of parts) {
+      // `width` est interdite d'animation par DESIGN.md : la part passe par
+      // une propriété personnalisée, que la feuille de style met en `scaleX`.
+      expect(part.style.width).toBe('');
+      expect(part.style.getPropertyValue('--part')).not.toBe('');
+    }
+  });
+});

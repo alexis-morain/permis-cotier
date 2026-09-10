@@ -3,6 +3,7 @@ import type { EtapeAffichable, LeconAffichable } from '../lib/cours';
 import type { QuestionAffichable } from '../lib/banque';
 import { aujourdhui, charger, enregistrerReponse, sauvegarder, terminerLecon } from '../lib/progression';
 import { evenement } from '../lib/mesure';
+import { douceur } from '../lib/douceur';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import './quiz.css';
 import './lecon.css';
@@ -59,10 +60,6 @@ export function ecransDe(lecon: LeconAffichable): Ecran[] {
 
 function memeEnsemble(a: readonly string[], b: readonly string[]): boolean {
   return a.length === b.length && a.every((x) => b.includes(x));
-}
-
-function douceur(): ScrollBehavior {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 }
 
 interface Score {
