@@ -11,6 +11,11 @@
 .lecon__chapitre a { text-decoration: none; }
 .lecon__chapitre a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
 
+/* Le retour vers la série d'où l'on vient, quand la leçon a été ouverte
+   depuis une question ratée. Cible tactile de 44 px. */
+.lecon__retour { margin: 0 0 0.6rem; font-weight: 700; }
+.lecon__retour a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+
 .lecon__barre {
   height: 0.6rem;
   border-radius: 999px;

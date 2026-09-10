@@ -41,6 +41,17 @@ export interface Etat {
    */
   enCours: SessionSauvegardee | null;
   /**
+   * La série d'entraînement en cours, dans sa propre fente.
+   *
+   * Elle ne partage pas celle de l'examen : partir lire une leçon au milieu
+   * d'un entraînement ne doit pas jeter l'examen laissé en plan la veille.
+   * Son `theme` porte l'adresse de la série — `/entrainement/<thème>`,
+   * `/entrainement/notion/<code>` ou `/revoir` —, ce qui suffit à ne pas
+   * reprendre une série sur l'écran d'une autre. Même statut que `enCours` :
+   * champ facultatif, ajouté sans changer la version.
+   */
+  enCoursSerie: SessionSauvegardee | null;
+  /**
    * Les leçons du cours qu'on a suivies jusqu'au bout, avec le score de leur
    * vérification. Même statut que `enCours` : champ facultatif, ajouté sans
    * changer la version, un état écrit avant lui se relit sans rien perdre.
@@ -142,6 +153,7 @@ export function etatInitial(): Etat {
     examens: [],
     dateExamen: null,
     enCours: null,
+    enCoursSerie: null,
     lecons: {},
     profil: profilVide(),
     activite: {},
@@ -172,6 +184,14 @@ export function enregistrerEnCours(etat: Etat, session: SessionSauvegardee): Eta
 
 export function effacerEnCours(etat: Etat): Etat {
   return { ...etat, enCours: null };
+}
+
+export function enregistrerEnCoursSerie(etat: Etat, session: SessionSauvegardee): Etat {
+  return { ...etat, enCoursSerie: session };
+}
+
+export function effacerEnCoursSerie(etat: Etat): Etat {
+  return { ...etat, enCoursSerie: null };
 }
 
 /**
@@ -331,6 +351,7 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
       examens: Array.isArray(lu.examens) ? lu.examens : [],
       dateExamen: lu.dateExamen ?? null,
       enCours: lu.enCours ?? null,
+      enCoursSerie: lu.enCoursSerie ?? null,
       lecons: lu.lecons && typeof lu.lecons === 'object' ? lu.lecons : {},
       profil: lireProfil(lu.profil),
       activite: lireActivite(lu.activite),
