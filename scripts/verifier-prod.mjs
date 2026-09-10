@@ -202,15 +202,64 @@ if (!swDemande || !manifesteLie) {
       'le précache ne retrouve pas une page dès qu’un paramètre s’ajoute à son adresse',
       'vérifier `IGNORER_PARAMETRES` dans `src/lib/hors-ligne.ts`',
     );
-  } else if (/\{url:"(?:question|notion|cours|theme|guide)\//.test(sw.corps)) {
+  } else if (/\{url:"(?:question|notion|cours|theme|guide|entrainement)\//.test(sw.corps)) {
     ko(
       'hors ligne',
-      'le précache reprend les pages de contenu',
+      'le précache reprend les pages de contenu ou les écrans par thème',
       'ce sont 16 des 19 Mo du site, téléchargés à la première visite : vérifier `GLOB_HORS_NOYAU` dans `src/lib/hors-ligne.ts`',
+    );
+  } else if (/\{url:"recherche\.json"/.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'le précache reprend l’index de la recherche',
+      '276 Kio pour une loupe qui s’ouvre rarement à la première visite : elle a sa règle `StaleWhileRevalidate` dans `reglesALaDemande()`',
+    );
+  } else if (!/\{url:"visuels\//.test(sw.corps)) {
+    ko(
+      'hors ligne',
+      'les visuels des questions ne sont plus au précache',
+      'la banque référence les 71 SVG de `/visuels/` : sans eux, une question sur sept s’ouvre sur une image cassée au premier lancement hors ligne',
     );
   } else {
     const entrees = (sw.corps.match(/\{url:/g) ?? []).length;
     ok('hors ligne', `service worker enregistré, ${entrees} entrées au précache, banque ${versionBanque} comprise`);
+  }
+}
+
+// 11. La charge utile du premier écran. Deux découvertes tardives coûtaient
+//     un aller-retour chacune : la police, trouvée deux sauts après le HTML,
+//     et la banque, partie au quatrième — HTML, puis le runtime React, puis
+//     l'exécution du composant, puis seulement le `fetch`. Les deux
+//     préchargements doivent viser une adresse qui existe, et pour la banque,
+//     exactement celle que l'écran donne au `Quiz` : un préchargement qui rate
+//     son adresse n'économise pas un aller-retour, il en ajoute un.
+const examen = await recuperer(`${SITE}/examen`);
+const corpsExamen = examen.corps ?? '';
+const prechargements = [...corpsExamen.matchAll(/<link rel="preload"[^>]*href="([^"]+)"[^>]*>/g)];
+const police = prechargements.find(([balise]) => balise.includes('as="font"'))?.[1];
+const banquePrechargee = prechargements.find(([balise]) => balise.includes('as="fetch"'))?.[1];
+const banqueDemandee = /"source":"([^"]*banque\/v\/[^"]*)"/.exec(corpsExamen)?.[1]
+  ?? new RegExp(`/banque/v/${versionBanque}\\.json`).exec(corpsExamen)?.[0];
+
+if (!police) {
+  ko('charge utile', 'la police n’est pas préchargée', '90 Ko découverts deux sauts après le HTML : vérifier le bloc de préchargement de `Base.astro`');
+} else if (!banquePrechargee) {
+  ko('charge utile', '/examen ne précharge pas la banque', 'la banque part au quatrième aller-retour : poser `prechargeBanque` sur l’écran');
+} else if (banqueDemandee && banquePrechargee !== banqueDemandee) {
+  ko('charge utile', `la banque préchargée (${banquePrechargee}) n’est pas celle que l’écran demande (${banqueDemandee})`, 'les deux doivent venir de `cheminBanque()` dans `src/lib/banque.ts`');
+} else {
+  const [rp, rb] = await Promise.all([
+    recuperer(`${SITE}${police}`, { method: 'HEAD' }),
+    recuperer(`${SITE}${banquePrechargee}`, { method: 'HEAD' }),
+  ]);
+  const perdu = [
+    !rp.reponse?.ok ? `police ${police}` : null,
+    !rb.reponse?.ok ? `banque ${banquePrechargee}` : null,
+  ].filter(Boolean);
+  if (perdu.length > 0) {
+    ko('charge utile', `préchargement vers le vide : ${perdu.join(', ')}`, 'un préchargement qui rate son adresse ajoute un aller-retour au lieu d’en retirer un');
+  } else {
+    ok('charge utile', `police et banque préchargées sur /examen, les deux adresses répondent`);
   }
 }
 
