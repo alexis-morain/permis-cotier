@@ -4,6 +4,10 @@ import Mesure from '../components/Mesure.astro';
 import Recherche from '../components/Recherche.astro';
 import { SCRIPT_APPARENCE } from '../lib/apparence';
 import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
+// L'adresse du fichier bâti, et non son nom écrit à la main : le build pose
+// l'empreinte du contenu dans le nom, et un préchargement qui vise l'ancien
+// nom télécharge une police que personne n'affiche.
+import policeArchivo from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
 import {
   SITE,
   titrePage,
@@ -86,10 +90,15 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     {/*
       Ce dont le premier écran a besoin, demandé tout de suite.
 
-      La banque partait au quatrième aller-retour : HTML, puis `client.js` et
-      `Quiz.js`, puis l'exécution du composant, puis seulement le `fetch`. Un
-      aller-retour de moins sur la première question.
+      La police n'était découverte que deux sauts après le HTML — le navigateur
+      lit la feuille de style, puis la règle `@font-face`, puis va chercher les
+      90 Ko d'Archivo. Le titre s'affichait donc en Helvetica avant de sauter.
+
+      La banque, elle, partait au quatrième aller-retour : HTML, puis
+      `client.js` et `Quiz.js`, puis l'exécution du composant, puis seulement
+      le `fetch`. Un aller-retour de moins sur la première question.
     */}
+    <link rel="preload" as="font" type="font/woff2" href={policeArchivo} crossorigin />
     {prechargeBanque && (
       <link rel="preload" as="fetch" type="application/json" href={cheminBanque()} crossorigin />
     )}
