@@ -12,11 +12,13 @@ interface Appel {
 
 let appels: Appel[];
 let actifs: ReturnType<typeof vi.fn>;
+let limite: ReturnType<typeof vi.fn>;
 
 /** Un environnement complet ; chaque test en retire ce qu'il veut voir manquer. */
 function env(surcharge: Partial<Env> = {}): Env {
   return {
     ASSETS: { fetch: actifs as unknown as (r: Request) => Promise<Response> },
+    LIMITEUR: { limit: limite as unknown as (o: { key: string }) => Promise<{ success: boolean }> },
     TURNSTILE_SECRET_KEY: 'secret-turnstile',
     GITHUB_BOT_TOKEN: 'jeton-github',
     GITHUB_REPO: 'alexis-morain/permis-cotier',
@@ -46,7 +48,14 @@ function reseau(reponses: { turnstile?: unknown; github?: Response; resend?: Res
     const url = typeof entree === 'string' ? entree : entree.toString();
     appels.push({ url, options });
     if (url.includes('challenges.cloudflare.com')) {
-      return new Response(JSON.stringify(reponses.turnstile ?? { success: true }), {
+      // La forme réelle d'une réponse de siteverify : le succès, mais aussi
+      // l'hôte où le jeton a été frappé et l'action du widget qui l'a posé.
+      const verdict = reponses.turnstile ?? {
+        success: true,
+        hostname: 'lepermiscotier.fr',
+        action: 'signalement',
+      };
+      return new Response(JSON.stringify(verdict), {
         status: 200,
         headers: { 'content-type': 'application/json' },
       });
@@ -70,6 +79,7 @@ function reseau(reponses: { turnstile?: unknown; github?: Response; resend?: Res
 beforeEach(() => {
   appels = [];
   actifs = vi.fn(async () => ACTIF.clone());
+  limite = vi.fn(async () => ({ success: true }));
   vi.stubGlobal('fetch', reseau());
 });
 
@@ -205,6 +215,69 @@ describe('Turnstile', () => {
     expect(appels).toHaveLength(1);
   });
 
+  // La clé de site est publique, et la liste de domaines d'une clé Turnstile
+  // peut en couvrir plusieurs. Un jeton frappé sur une autre page, ou par un
+  // autre widget du même compte, arrive donc ici avec `success: true`. Le
+  // succès seul ne dit pas d'où vient le jeton : l'hôte et l'action le disent.
+  it('refuse un jeton frappé sur un autre hôte', async () => {
+    vi.stubGlobal(
+      'fetch',
+      reseau({ turnstile: { success: true, hostname: 'ailleurs.example', action: 'signalement' } }),
+    );
+    const reponse = await worker.fetch(poste(CORPS), env());
+    expect(reponse.status).toBe(403);
+    expect(appels).toHaveLength(1);
+  });
+
+  it('refuse un jeton frappé par un autre widget du même compte', async () => {
+    vi.stubGlobal(
+      'fetch',
+      reseau({ turnstile: { success: true, hostname: 'lepermiscotier.fr', action: 'contact' } }),
+    );
+    const reponse = await worker.fetch(poste(CORPS), env());
+    expect(reponse.status).toBe(403);
+    expect(appels).toHaveLength(1);
+  });
+
+  it('refuse une réponse qui ne dit ni l’hôte ni l’action', async () => {
+    for (const turnstile of [
+      { success: true },
+      { success: true, hostname: 'lepermiscotier.fr' },
+      { success: true, action: 'signalement' },
+      { success: true, hostname: 42, action: 'signalement' },
+    ]) {
+      vi.stubGlobal('fetch', reseau({ turnstile }));
+      const reponse = await worker.fetch(poste(CORPS), env());
+      expect(reponse.status, JSON.stringify(turnstile)).toBe(403);
+    }
+  });
+
+  // `wrangler dev` sert depuis localhost, et la clé de test couvre ce nom-là :
+  // un durcissement qui rendrait le formulaire intestable en local serait un
+  // mauvais durcissement.
+  it('accepte un jeton localhost quand le Worker est lui-même servi en local', async () => {
+    vi.stubGlobal(
+      'fetch',
+      reseau({ turnstile: { success: true, hostname: 'localhost', action: 'signalement' } }),
+    );
+    const requete = new Request('http://localhost:8787/api/signaler', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(CORPS),
+    });
+    expect((await worker.fetch(requete, env())).status).toBe(200);
+  });
+
+  it('n’accepte pas ce jeton localhost sur le domaine du site', async () => {
+    // L'exception locale suit l'hôte de la requête, elle n'élargit jamais la
+    // production : en ligne, le Worker ne répond que sous le nom du site.
+    vi.stubGlobal(
+      'fetch',
+      reseau({ turnstile: { success: true, hostname: 'localhost', action: 'signalement' } }),
+    );
+    expect((await worker.fetch(poste(CORPS), env())).status).toBe(403);
+  });
+
   it('rend 503 si Turnstile est injoignable, jamais un envoi non vérifié', async () => {
     vi.stubGlobal(
       'fetch',
@@ -288,6 +361,64 @@ describe('remise', () => {
     const charge = JSON.parse(String(issue?.options.body)) as { body: string };
     expect(charge.body.match(/````/g)?.length).toBe(2);
     expect(charge.body).not.toContain('<script>');
+  });
+});
+
+describe('limitation de débit', () => {
+  // Rien ne bornait cette adresse. Un script qui fabrique des jetons en série
+  // ouvre autant d'issues publiques, et le jour où GitHub coupe sur sa limite
+  // de création de contenu, `ouvrirIssue` rend `null` : tout le monde reçoit
+  // 503 pendant l'heure suivante. Le premier signalement honnête de la journée
+  // paie la note d'un autre.
+  it('rend 429 quand le visiteur a dépassé sa part, sans rien appeler dehors', async () => {
+    limite = vi.fn(async () => ({ success: false }));
+    const reponse = await worker.fetch(poste(CORPS), env());
+    expect(reponse.status).toBe(429);
+    expect(reponse.headers.get('retry-after')).toBe('60');
+    expect(appels).toHaveLength(0);
+  });
+
+  it('compte avant de vérifier le jeton, donc avant tout appel sortant', async () => {
+    await worker.fetch(poste(CORPS), env());
+    expect(limite).toHaveBeenCalledTimes(1);
+    expect(limite.mock.invocationCallOrder[0]).toBeLessThan(
+      (vi.mocked(globalThis.fetch) as ReturnType<typeof vi.fn>).mock.invocationCallOrder[0] ?? Infinity,
+    );
+  });
+
+  it('compte par visiteur, sur l’adresse que Cloudflare pose devant le Worker', async () => {
+    const requete = new Request('https://lepermiscotier.fr/api/signaler', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'cf-connecting-ip': '203.0.113.7' },
+      body: JSON.stringify(CORPS),
+    });
+    const reponse = await worker.fetch(requete, env());
+    expect(limite).toHaveBeenCalledWith({ key: '203.0.113.7' });
+    // L'adresse sert de clé de comptage et ne va nulle part ailleurs : ni dans
+    // un appel sortant, ni dans la réponse rendue au visiteur.
+    expect(JSON.stringify(appels)).not.toContain('203.0.113.7');
+    expect(await reponse.text()).not.toContain('203.0.113.7');
+  });
+
+  it('rend 503 si le limiteur manque ou tombe, plutôt que de servir sans borne', async () => {
+    // Le binding est déclaré dans `wrangler.toml` ; s'il n'est pas là, le
+    // déploiement n'est pas celui qu'on croit. La page retombe sur le courrier,
+    // aucun signalement n'est perdu — c'est la même conduite que partout
+    // ailleurs dans ce fichier : à la moindre panne, un code hors 2xx.
+    const sansLimiteur = await worker.fetch(poste(CORPS), env({ LIMITEUR: undefined }));
+    expect(sansLimiteur.status).toBe(503);
+
+    limite = vi.fn(async () => {
+      throw new Error('limiteur injoignable');
+    });
+    const enPanne = await worker.fetch(poste(CORPS), env());
+    expect(enPanne.status).toBe(503);
+    expect(appels).toHaveLength(0);
+  });
+
+  it('ne compte pas ce qui ne vise pas l’endpoint', async () => {
+    await worker.fetch(new Request('https://lepermiscotier.fr/examen'), env());
+    expect(limite).not.toHaveBeenCalled();
   });
 });
 
