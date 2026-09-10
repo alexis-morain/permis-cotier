@@ -714,3 +714,84 @@ describe('entraînement sur une notion', () => {
     );
   });
 });
+
+describe('de la question ratée à la leçon', () => {
+  const laterale = question('balisage-0001', 'balisage', ['a'], 'balisage-lateral');
+  const sansNotion = question('balisage-0002', 'balisage', ['a']);
+
+  function rater() {
+    fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+  }
+
+  it('mène à la leçon sous un verdict raté, et garde le chemin du retour', () => {
+    render(<Quiz mode="entrainement" questions={[laterale]} theme="balisage" />);
+    rater();
+    const lien = screen.getByRole('link', { name: /La leçon/ });
+    expect(lien.getAttribute('href')).toBe(
+      '/cours/balisage/balisage-lateral?retour=%2Fentrainement%2Fbalisage',
+    );
+  });
+
+  it('ne dit rien sous une bonne réponse, ni sans notion', () => {
+    render(<Quiz mode="entrainement" questions={[laterale]} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(screen.queryByRole('link', { name: /La leçon/ })).toBeNull();
+
+    cleanup();
+    render(<Quiz mode="entrainement" questions={[sansNotion]} theme="balisage" />);
+    rater();
+    expect(screen.queryByRole('link', { name: /La leçon/ })).toBeNull();
+  });
+
+  it('mène aussi à la leçon depuis la revue d’un examen, et ramène aux erreurs', () => {
+    render(<Quiz mode="examen" questions={[laterale]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+
+    expect(screen.getByRole('link', { name: /La leçon/ }).getAttribute('href')).toBe(
+      '/cours/balisage/balisage-lateral?retour=%2Fprofil%2Ferreurs',
+    );
+  });
+});
+
+describe('la série reprise là où on l’a laissée', () => {
+  const deux = [question('balisage-0001', 'balisage', ['a'], 'balisage-lateral'), question('balisage-0002', 'balisage')];
+
+  it('propose de reprendre l’entraînement quitté pour une leçon', () => {
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+
+    // On part lire la leçon : la page est quittée, l'écran remonte au retour.
+    cleanup();
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+    // La réponse déjà donnée ne se recompte pas dans la progression.
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
+    expect(etat.questions['balisage-0001'].vues).toBe(1);
+  });
+
+  it('ne mélange pas la série d’un thème avec celle d’un autre, ni avec l’examen', () => {
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    cleanup();
+    render(<Quiz mode="entrainement" questions={deux} theme="feux-marques" />);
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+
+    cleanup();
+    render(<Quiz mode="examen" questions={deux} />);
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+  });
+});

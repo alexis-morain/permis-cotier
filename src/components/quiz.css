@@ -238,6 +238,15 @@
 .verdict--juste .verdict__titre { color: var(--vert-texte); }
 .verdict--fausse .verdict__titre { color: var(--rouge-texte); }
 .verdict p:last-child { margin-bottom: 0; }
+/* Le pont vers la leçon, sous un verdict raté. Cible tactile de 44 px, comme
+   les autres liens de service de l'écran de jeu. */
+.verdict__lecon { margin: 0.75rem 0 0; font-weight: 700; }
+.verdict__lecon a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+
+/* La série reprise là où on l'a laissée : une carte au-dessus du jeu, comme
+   la reprise d'examen sur l'écran de départ. */
+.jeu__reprise { margin-bottom: 1.25rem; }
+.jeu__reprise p { margin: 0 0 0.75rem; }
 
 .sources { font-size: 0.9rem; color: var(--texte-doux); margin: 0.75rem 0 0; }
 .sources ul { list-style: none; margin: 0.25rem 0 0; padding: 0; }

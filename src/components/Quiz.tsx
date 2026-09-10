@@ -24,12 +24,15 @@ import {
   enregistrerExamen,
   enregistrerEnCours,
   effacerEnCours,
+  enregistrerEnCoursSerie,
+  effacerEnCoursSerie,
   aujourdhui,
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
+import { lienLecon } from '../lib/retour';
 import { rappel } from '../lib/profil';
 import './quiz.css';
 
@@ -100,6 +103,31 @@ function Signaler({ id }: { id: string }) {
 }
 
 /**
+ * Sous un verdict raté : la leçon de la notion, et le chemin du retour.
+ *
+ * C'était le manque le plus cher de l'écran de jeu. L'explication et la
+ * source disent pourquoi la réponse est fausse ; elles ne disent pas où
+ * apprendre la règle. Les 516 questions publiées portent une notion, donc une
+ * leçon : elle est à un clic, et le retour ramène à la série.
+ *
+ * Une question sans notion n'affiche rien plutôt qu'un lien mort.
+ */
+function LienLecon({ question, retour }: { question: QuestionAffichable; retour: string }) {
+  if (!question.notion) return null;
+  return (
+    <p className="verdict__lecon">
+      <a
+        href={lienLecon(question.theme, question.notion, retour)}
+        data-mesure="verdict-lecon"
+        data-mesure-notion={question.notion}
+      >
+        La leçon qui l’explique
+      </a>
+    </p>
+  );
+}
+
+/**
  * L'écran de jeu proprement dit. Il reçoit une banque déjà là : tous ses états
  * se calculent au montage — le tirage, la reprise, la progression lue une
  * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
@@ -146,14 +174,8 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
     [affichee, session.graine],
   );
 
-  const titre = mode === 'examen'
-    ? 'Examen blanc'
-    : revoir
-      ? 'Ta série du jour'
-      : notion
-        ? `Entraînement, ${notion.nom}`
-        : `Entraînement, ${nomDuTheme(theme ?? '')}`;
-
+  // L'adresse de cet écran : ce que « recommencer » vise, et sous quel nom la
+  // série se range dans le navigateur.
   const retour =
     mode === 'examen'
       ? '/examen'
@@ -162,6 +184,35 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
         : notion
           ? `/entrainement/notion/${notion.code}`
           : `/entrainement/${theme}`;
+  const retourSerie = mode === 'examen' ? undefined : retour;
+
+  /**
+   * Où ramène la leçon ouverte depuis un verdict.
+   *
+   * En entraînement, à la série elle-même : elle est écrite dans le navigateur
+   * à chaque réponse, et l'écran la propose à la reprise, question comprise.
+   * Après un examen, la revue n'est pas une série en cours — elle n'existe
+   * qu'entre le résultat et le premier clic ailleurs. Ce qui lui survit, ce
+   * sont les erreurs, et elles ont leur page.
+   */
+  const retourLecon = mode === 'examen' ? '/profil/erreurs' : retour;
+
+  // La série d'entraînement quittée en route — pour aller lire une leçon, le
+  // plus souvent. Elle est rangée sous l'adresse de sa page : une série de
+  // balisage ne se reprend pas sur l'écran des feux.
+  const repriseSerie = useMemo(
+    () => (mode === 'entrainement' ? restaurerSession(depart.enCoursSerie, questions, mode, retourSerie) : null),
+    [mode, questions, retourSerie, depart],
+  );
+  const [repriseEcartee, setRepriseEcartee] = useState(false);
+
+  const titre = mode === 'examen'
+    ? 'Examen blanc'
+    : revoir
+      ? 'Ta série du jour'
+      : notion
+        ? `Entraînement, ${notion.nom}`
+        : `Entraînement, ${nomDuTheme(theme ?? '')}`;
 
   // Le nom que cette série porte dans la mesure. Les trois écrans du composant
   // sont trois parcours différents : les mêler dans un seul compteur rendrait
@@ -208,6 +259,24 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
     sauvegarder(sauvegarde ? enregistrerEnCours(etat, sauvegarde) : effacerEnCours(etat));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, theme, session.phase, session.index, session.selections]);
+
+  /**
+   * La série d'entraînement survit à la page, elle aussi.
+   *
+   * Elle ne s'écrit qu'une fois commencée : tant qu'on est à la première
+   * question sans avoir répondu, la série d'avant reste offerte à la reprise
+   * plutôt que d'être écrasée par celle qu'on vient d'ouvrir. Finie, la fente
+   * se vide : rien à reprendre d'une série qu'on a menée au bout.
+   */
+  useEffect(() => {
+    if (mode !== 'entrainement') return;
+    const commencee = session.index > 0 || session.journal.length > 0;
+    if (!commencee && session.phase !== 'resultat') return;
+    const sauvegarde = session.phase === 'resultat' ? null : extraireSauvegarde(session, retourSerie);
+    const etat = charger();
+    sauvegarder(sauvegarde ? enregistrerEnCoursSerie(etat, sauvegarde) : effacerEnCoursSerie(etat));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, retourSerie, session.phase, session.index, session.selections, session.journal]);
 
   useEffect(() => {
     if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
@@ -346,13 +415,16 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
     return () => document.removeEventListener('keydown', surTouche);
   }, []);
 
-  const reprendre = useCallback(() => {
-    if (!reprise) return;
+  const reprendreDepuis = useCallback((reprise: Session) => {
     // Les réponses du journal repris ont déjà été comptées dans la progression
     // avant l'interruption : sans ce décalage, elles y entreraient deux fois.
     journalEcrit.current = reprise.journal.length;
     envoyer({ type: 'restaurer', session: reprise });
-  }, [reprise]);
+  }, []);
+
+  const reprendre = useCallback(() => {
+    if (reprise) reprendreDepuis(reprise);
+  }, [reprise, reprendreDepuis]);
 
   if (serie.length === 0) {
     return revoir ? (
@@ -584,6 +656,7 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
                   <div className={`verdict verdict--${rate ? 'fausse' : 'juste'}`} style={{ marginTop: '0.9rem' }}>
                     <p>{d.explication}</p>
                     <Sources sources={d.sources} />
+                    {rate && <LienLecon question={d} retour={retourLecon} />}
                   </div>
                   <p style={{ marginTop: '0.6rem' }}><Signaler id={q.id} /></p>
                 </article>
@@ -601,9 +674,44 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
   const plein = session.selections[session.index]?.length === 2;
   const restantes = session.questions.length - session.index;
 
+  // Reprendre n'a de sens qu'avant d'avoir joué : une série entamée ici a
+  // déjà remplacé celle d'avant.
+  const offreReprise =
+    repriseSerie !== null &&
+    repriseSerie.index > 0 &&
+    !repriseEcartee &&
+    session.index === 0 &&
+    session.journal.length === 0 &&
+    !session.corrigee;
+
   return (
     <div className="jeu">
       <h1 className="visuellement-cache">{titre}</h1>
+
+      {offreReprise && (
+        <div className="encadre jeu__reprise">
+          <p>
+            <strong>Tu avais une série en cours</strong>, arrêtée à la question{' '}
+            {repriseSerie.index + 1} sur {repriseSerie.questions.length}.
+          </p>
+          <div className="jeu__actions">
+            <button
+              className="bouton bouton--principal"
+              type="button"
+              onClick={() => reprendreDepuis(repriseSerie)}
+            >
+              Reprendre à la question {repriseSerie.index + 1}
+            </button>
+            <button
+              className="bouton bouton--discret"
+              type="button"
+              onClick={() => setRepriseEcartee(true)}
+            >
+              Repartir du début
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="jeu__entete">
         <span className="jeu__compteur">
@@ -713,6 +821,7 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
           <p className="verdict__titre">{session.juste ? 'Bonne réponse' : 'Raté'}</p>
           <p>{affichee.explication}</p>
           <Sources sources={affichee.sources} />
+          {!session.juste && <LienLecon question={affichee} retour={retourLecon} />}
         </div>
       )}
 
