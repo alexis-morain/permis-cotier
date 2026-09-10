@@ -1,12 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
 
-// Repli du chantier 1 de l'audit UX : tant que le Worker de signalement n'est
-// pas posé (jetons GitHub, Resend et Turnstile encore vides), le formulaire
-// ouvre un courrier pré-rempli au lieu de poster sur un `/api/signaler` qui
-// n'existe pas et rendait 405. Une adresse en clair vaut mieux qu'une page
-// blanche : la promesse faite en pied de page redevient vraie.
+// Deux chemins, dans cet ordre. Si Turnstile est configuré au build, le
+// formulaire poste sur `/api/signaler` : le Worker vérifie le jeton, ouvre une
+// issue publique dans le dépôt, et rien d'autre ne circule. À la moindre
+// réponse hors 2xx, à la moindre panne réseau, et quand la clé publique manque,
+// il retombe sur le courrier pré-rempli — le repli d'origine, qui n'a jamais
+// quitté la page. La promesse du pied de page ne casse donc jamais, endpoint
+// éteint compris.
 const ADRESSE = 'alexis@morain.fr';
+
+// Clé publique, visible dans le source de la page : c'est sa nature. Elle
+// entre au build, jamais par un secret de Worker. Le secret qui va avec,
+// `TURNSTILE_SECRET_KEY`, ne sort pas du Worker.
+const CLE_TURNSTILE =
+  import.meta.env.TURNSTILE_SITE_KEY ?? process.env.TURNSTILE_SITE_KEY ?? '';
+const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
 ---
 
 <Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
@@ -19,7 +28,7 @@ const ADRESSE = 'alexis@morain.fr';
     </p>
 
     <form class="signalement" id="signalement" method="post" enctype="text/plain"
-      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE}>
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE}>
       <p>
         <label for="question">Identifiant de la question</label>
         <input id="question" name="question" class="champ" required readonly />
@@ -41,12 +50,27 @@ const ADRESSE = 'alexis@morain.fr';
         <textarea id="details" name="details" class="champ" rows="5" maxlength="1200"
           placeholder="La règle 26 parle du chalutier, pas du navire à la traîne."></textarea>
       </p>
-      <p class="discret">
-        Le message part de ta boîte, ton adresse m’est donc visible et ne sert qu’à te répondre.
-        Rien n’est enregistré ailleurs, aucun compte, aucune adresse IP conservée.
-      </p>
+      {ENVOI_EN_LIGNE ? (
+        <p class="discret">
+          Le signalement part seul : ni adresse, ni adresse IP, ni cookie, rien qui dise qui
+          tu es. Il devient une fiche publique dans le dépôt. Tu veux une réponse
+          personnelle ? Écris-moi plutôt à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> : c’est
+          le seul endroit où une adresse circule, et c’est toi qui la donnes.
+        </p>
+      ) : (
+        <p class="discret">
+          Le message part de ta boîte, ton adresse m’est donc visible et ne sert qu’à te répondre.
+          Rien n’est enregistré ailleurs, aucun compte, aucune adresse IP conservée.
+        </p>
+      )}
+      {ENVOI_EN_LIGNE && (
+        <div class="cf-turnstile" data-sitekey={CLE_TURNSTILE} data-language="fr"
+          data-action="signalement" data-appearance="interaction-only"></div>
+      )}
       <p>
-        <button class="bouton bouton--principal" type="submit">Préparer le signalement</button>
+        <button class="bouton bouton--principal" id="envoyer" type="submit">
+          {ENVOI_EN_LIGNE ? 'Envoyer le signalement' : 'Préparer le signalement'}
+        </button>
       </p>
       <noscript>
         <p class="discret">
@@ -55,6 +79,21 @@ const ADRESSE = 'alexis@morain.fr';
         </p>
       </noscript>
     </form>
+
+    <div class="confirmation" id="confirmation-envoi" role="status" tabindex="-1" hidden>
+      <p class="confirmation__titre">C’est parti. Merci.</p>
+      <p>
+        Le signalement est relu contre le texte cité, et la question est corrigée ou retirée.
+        Rien de personnel n’a été enregistré.
+      </p>
+      <p class="discret" id="lien-issue-ligne" hidden>
+        La correction est publique : <a id="lien-issue" href="#" rel="noopener noreferrer"
+          target="_blank">suivre le signalement dans le dépôt</a>.
+      </p>
+      <p>
+        <a class="bouton bouton--discret" href="/entrainement">Revenir à l’entraînement</a>
+      </p>
+    </div>
 
     <div class="confirmation" id="confirmation" role="status" tabindex="-1" hidden>
       <p class="confirmation__titre">Ton logiciel de courrier s’ouvre avec le message pré-rempli.</p>
@@ -71,6 +110,10 @@ const ADRESSE = 'alexis@morain.fr';
     </div>
   </div>
 
+  {ENVOI_EN_LIGNE && (
+    <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+  )}
+
   <script is:inline>
     const champ = document.getElementById('question');
     const id = new URLSearchParams(location.search).get('question');
@@ -81,7 +124,10 @@ const ADRESSE = 'alexis@morain.fr';
 
     const formulaire = document.getElementById('signalement');
     const adresse = formulaire?.dataset.adresse ?? '';
+    const cleTurnstile = formulaire?.dataset.turnstile ?? '';
     const confirmation = document.getElementById('confirmation');
+    const confirmationEnvoi = document.getElementById('confirmation-envoi');
+    const bouton = document.getElementById('envoyer');
 
     const MOTIFS = {
       reponse: 'la bonne réponse indiquée est fausse',
@@ -92,12 +138,8 @@ const ADRESSE = 'alexis@morain.fr';
       autre: 'autre',
     };
 
-    formulaire?.addEventListener('submit', (evenement) => {
-      evenement.preventDefault();
-      const question = (document.getElementById('question')?.value ?? '').trim();
-      const motif = document.getElementById('motif')?.value ?? 'autre';
-      const details = (document.getElementById('details')?.value ?? '').trim();
-
+    /** Le repli, inchangé : un courrier pré-rempli que le visiteur relit et envoie. */
+    function replierSurCourrier(question, motif, details) {
       const corps = [
         `Question : ${question}`,
         `Motif : ${MOTIFS[motif] ?? motif}`,
@@ -114,13 +156,67 @@ const ADRESSE = 'alexis@morain.fr';
 
       const marque = document.getElementById('confirmation-id');
       if (marque && question) marque.textContent = question;
-      formulaire.hidden = true;
+      if (formulaire) formulaire.hidden = true;
       if (confirmation) {
         confirmation.hidden = false;
         confirmation.focus();
       }
       window.umami?.track('signalement-prepare', { motif });
       location.href = lien;
+    }
+
+    function annoncerEnvoi(url) {
+      if (formulaire) formulaire.hidden = true;
+      const ligne = document.getElementById('lien-issue-ligne');
+      const lien = document.getElementById('lien-issue');
+      if (url && ligne && lien) {
+        lien.href = url;
+        ligne.hidden = false;
+      }
+      if (confirmationEnvoi) {
+        confirmationEnvoi.hidden = false;
+        confirmationEnvoi.focus();
+      }
+    }
+
+    formulaire?.addEventListener('submit', async (evenement) => {
+      evenement.preventDefault();
+      const question = (document.getElementById('question')?.value ?? '').trim();
+      const motif = document.getElementById('motif')?.value ?? 'autre';
+      const details = (document.getElementById('details')?.value ?? '').trim();
+
+      // Pas de clé publique au build, pas de widget chargé, pas de jeton :
+      // l'endpoint refuserait de toute façon. Droit au courrier.
+      const jeton = cleTurnstile ? (window.turnstile?.getResponse() ?? '') : '';
+      if (!cleTurnstile || !jeton) {
+        replierSurCourrier(question, motif, details);
+        return;
+      }
+
+      if (bouton) {
+        bouton.disabled = true;
+        bouton.textContent = 'Envoi…';
+      }
+
+      try {
+        const reponse = await fetch('/api/signaler', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ question, motif, details, turnstile: jeton }),
+        });
+        if (!reponse.ok) throw new Error(`HTTP ${reponse.status}`);
+        const rendu = await reponse.json().catch(() => ({}));
+        // Le motif seul part à la mesure : jamais le texte du signalement.
+        window.umami?.track('signalement-envoye', { motif });
+        annoncerEnvoi(typeof rendu.url === 'string' ? rendu.url : '');
+      } catch {
+        window.turnstile?.reset();
+        if (bouton) {
+          bouton.disabled = false;
+          bouton.textContent = 'Envoyer le signalement';
+        }
+        replierSurCourrier(question, motif, details);
+      }
     });
   </script>
 </Base>
@@ -130,6 +226,7 @@ const ADRESSE = 'alexis@morain.fr';
   .signalement label { display: block; font-weight: 700; margin-bottom: 0.35rem; }
   .signalement textarea { min-height: 7rem; resize: vertical; }
   .signalement .discret { display: block; margin-top: 0.3rem; }
+  .signalement :global(.cf-turnstile) { margin: 1rem 0; }
 
   .confirmation {
     margin-top: 2rem;
