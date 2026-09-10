@@ -204,6 +204,25 @@
 .jours__case--actif { background: var(--texte); color: var(--fond-carte); }
 .jours__case--aujourdhui { outline: 2px solid var(--jaune); outline-offset: 1px; }
 
+/* Le changement de comptage, dit une fois. Ni encadré ni couleur : une
+   phrase sous la jauge, qui s'en va toute seule au bout d'un mois. */
+.indice__changement {
+  margin: 0.9rem 0 0;
+  max-width: var(--mesure);
+  color: var(--texte-doux);
+}
+
+/* À reprendre en premier : trois notions, chacune avec sa leçon et sa série.
+   Mêmes filets horizontaux que la liste des thèmes, un cran plus fin. */
+.faibles { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 40rem; }
+.faible { border-top: 2px solid var(--filet); padding: 0.9rem 0; max-width: none; }
+.faible:last-child { border-bottom: 2px solid var(--filet); }
+.faible__nom { margin: 0; font-size: 1.1rem; }
+.faible__nom .discret { font-size: 0.9rem; font-weight: 600; }
+.faible__note { margin: 0.2rem 0 0; font-size: 0.9rem; }
+.faible__actions { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 0; font-weight: 700; }
+.faible__actions a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+
 /* Thème par thème : deux jauges superposées, le vu en filet, le retenu en marine. */
 .maitrise { list-style: none; margin: 0; padding: 0; max-width: 40rem; }
 .maitrise li { max-width: none; border-top: 2px solid var(--filet); }
