@@ -103,7 +103,15 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   // La prochaine chose à faire, une seule : ce qui est dû aujourd'hui d'abord,
   // sinon ce que le point de départ conseille.
   const suite = aRevoir > 0
-    ? { href: '/revoir', texte: `Revoir mes ${aRevoir} question${aRevoir > 1 ? 's' : ''} du jour` }
+    // « Revoir mes 1 question » ne se dit pas : au singulier, c'est le
+    // déterminant qui porte le compte, pas un chiffre devant un pluriel absent.
+    ? {
+        href: '/revoir',
+        texte:
+          aRevoir > 1
+            ? `Revoir mes ${aRevoir} questions du jour`
+            : 'Revoir ma question du jour',
+      }
     : p.depart === 'zero' && Object.keys(etat.lecons).length < totalLecons
       ? { href: '/cours', texte: 'Continuer le cours' }
       : { href: '/examen', texte: 'Faire un examen blanc' };
