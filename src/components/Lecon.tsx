@@ -3,6 +3,8 @@ import type { EtapeAffichable, LeconAffichable } from '../lib/cours';
 import type { QuestionAffichable } from '../lib/banque';
 import { aujourdhui, charger, enregistrerReponse, sauvegarder, terminerLecon } from '../lib/progression';
 import { evenement } from '../lib/mesure';
+import { douceur } from '../lib/douceur';
+import { cheminRetour, libelleRetour } from '../lib/retour';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import './quiz.css';
 import './lecon.css';
@@ -35,7 +37,6 @@ interface Props {
   /** Nombre de leçons du cours. */
   total: number;
   suite?: Suite;
-  theme: { code: string; nom: string };
 }
 
 type Ecran =
@@ -59,10 +60,6 @@ export function ecransDe(lecon: LeconAffichable): Ecran[] {
 
 function memeEnsemble(a: readonly string[], b: readonly string[]): boolean {
   return a.length === b.length && a.every((x) => b.includes(x));
-}
-
-function douceur(): ScrollBehavior {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 }
 
 interface Score {
@@ -193,19 +190,28 @@ function Verification({
   );
 }
 
-export default function Lecon({ lecon, cours, rang, total, suite, theme }: Props) {
+export default function Lecon({ lecon, cours, rang, total, suite }: Props) {
   const ecrans = useMemo(() => ecransDe(lecon), [lecon]);
   const [index, setIndex] = useState(0);
   const [pasAPas, setPasAPas] = useState(true);
   const [score, setScore] = useState<Score | null>(null);
   const [monte, setMonte] = useState(false);
   const [tentative, setTentative] = useState(0);
+  /**
+   * D'où l'on vient, quand on vient d'une question ratée.
+   *
+   * L'adresse est lue dans le navigateur et non rendue au serveur : la page
+   * est la même pour tout le monde, seul le retour change. `cheminRetour` ne
+   * garde qu'une des adresses de jeu du site.
+   */
+  const [retour, setRetour] = useState<string | null>(null);
   const racine = useRef<HTMLDivElement>(null);
   const courant = useRef<HTMLDivElement>(null);
   const terminee = useRef(false);
 
   useEffect(() => {
     setMonte(true);
+    setRetour(cheminRetour(window.location.search));
     evenement('lecon-commencee', { notion: lecon.code, cours: cours.code });
   }, [lecon.code, cours.code]);
 
@@ -255,6 +261,11 @@ export default function Lecon({ lecon, cours, rang, total, suite, theme }: Props
           <a href={cours.chemin}>{cours.titre}</a>
           <span className="discret"> · leçon {rang} sur {total} · {lecon.duree} min</span>
         </p>
+        {retour && (
+          <p className="lecon__retour">
+            <a href={retour} data-mesure="lecon-retour-serie">{libelleRetour(retour)}</a>
+          </p>
+        )}
         <div className="lecon__barre" aria-hidden="true">
           <span style={{ transform: `scaleX(${avancement})` }} />
         </div>
@@ -351,21 +362,34 @@ export default function Lecon({ lecon, cours, rang, total, suite, theme }: Props
                   </p>
                 )}
                 <div className="fin__actions">
+                  {retour && (
+                    <a className="bouton bouton--principal" href={retour} data-mesure="lecon-retour-serie">
+                      {libelleRetour(retour)}
+                    </a>
+                  )}
                   {suite?.type === 'lecon' ? (
-                    <a className="bouton bouton--principal" href={suite.chemin} data-mesure="lecon-suivante" data-mesure-notion={suite.chemin}>
+                    <a className={`bouton${retour ? '' : ' bouton--principal'}`} href={suite.chemin} data-mesure="lecon-suivante" data-mesure-notion={suite.chemin}>
                       Leçon suivante : {suite.nom}
                     </a>
                   ) : suite?.type === 'cours' ? (
-                    <a className="bouton bouton--principal" href={suite.chemin} data-mesure="lecon-cours-suivant" data-mesure-cours={suite.chemin}>
+                    <a className={`bouton${retour ? '' : ' bouton--principal'}`} href={suite.chemin} data-mesure="lecon-cours-suivant" data-mesure-cours={suite.chemin}>
                       Cours suivant : {suite.titre}
                     </a>
                   ) : (
-                    <a className="bouton bouton--principal" href="/cours" data-mesure="lecon-retour-cours">
+                    <a className={`bouton${retour ? '' : ' bouton--principal'}`} href="/cours" data-mesure="lecon-retour-cours">
                       Retour au cours
                     </a>
                   )}
-                  <a className="bouton" href={`/entrainement/${theme.code}`} data-mesure="lecon-entrainement" data-mesure-theme={theme.code}>
-                    S’entraîner sur {theme.nom.toLowerCase()}
+                  {/* Les questions de cette notion, pas les soixante et une du
+                      thème : ce qu'on vient d'apprendre se vérifie sur ce
+                      qu'on vient d'apprendre. */}
+                  <a
+                    className="bouton"
+                    href={`/entrainement/notion/${lecon.code}`}
+                    data-mesure="lecon-entrainement"
+                    data-mesure-notion={lecon.code}
+                  >
+                    S’entraîner sur cette notion
                   </a>
                   <button className="bouton bouton--discret" type="button" onClick={recommencer}>
                     Revoir la leçon

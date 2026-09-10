@@ -6,9 +6,11 @@ import { questionsPubliees } from '../lib/banque';
 import { leconsDuParcours } from '../lib/parcours';
 
 // La fiche se construit dans le navigateur, depuis la progression locale.
-// Le serveur ne donne que la banque, réduite à l'identifiant et au thème,
-// pour borner les comptes à ce qui est encore publié.
-const banque = (await questionsPubliees()).map((q) => ({ id: q.id, theme: q.theme }));
+// Le serveur ne donne que la banque, réduite à l'identifiant, au thème et à
+// la notion, pour borner les comptes à ce qui est encore publié. La notion
+// n'est pas un ornement : sans elle, la maîtrise par notion n'a rien à
+// compter et la fiche rendait une liste vide.
+const banque = (await questionsPubliees()).map((q) => ({ id: q.id, theme: q.theme, notion: q.notion }));
 const totalLecons = leconsDuParcours().length;
 ---
 
