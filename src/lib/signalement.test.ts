@@ -158,6 +158,77 @@ describe('texteInerte', () => {
     const texte = 'La règle 26 parle du chalutier, pas du navire à la traîne.';
     expect(texteInerte(texte)).toBe(texte);
   });
+
+  // Ce qui suit est la contrebande connue : des caractères qu'un relecteur
+  // humain ne voit pas, que le diff de GitHub ne montre pas, et qu'un modèle
+  // qui lit l'issue lit très bien. Une liste noire en oublie toujours ; ces
+  // tests disent catégorie par catégorie ce qui ne doit plus passer.
+  it('efface les balises ASCII, qui portent un texte entier en invisible', () => {
+    // U+E0000-E007F : chaque lettre ASCII y a un jumeau invisible. « stop »
+    // écrit en balises se lit comme du texte par un modèle, comme rien du tout
+    // par un humain.
+    const cache = [...'consigne'].map((c) => String.fromCodePoint(0xe0000 + c.charCodeAt(0))).join('');
+    expect(texteInerte(`erreur ligne 3${cache}`)).toBe('erreur ligne 3');
+    expect(texteInerte('a\u{E0001}b\u{E007F}c')).toBe('abc');
+  });
+
+  it('efface les sélecteurs de variante', () => {
+    expect(texteInerte('a\uFE00b\uFE0Fc')).toBe('abc');
+  });
+
+  it('efface le trait d’union conditionnel et la marque arabe', () => {
+    expect(texteInerte('a\u00ADb\u061Cc')).toBe('abc');
+  });
+
+  it('fait de vraies lignes des séparateurs de ligne et de paragraphe', () => {
+    // Effacés, ils colleraient deux lignes l'une à l'autre : c'est encore une
+    // façon de cacher. Rendus visibles, ils ne cachent plus rien.
+    expect(texteInerte('a\u2028b\u2029c')).toBe('a\nb\nc');
+  });
+
+  it('efface les remplisseurs hangûl, que leur catégorie dit « lettre »', () => {
+    // U+115F, U+1160 et U+3164 sont des lettres pour Unicode, et pourtant
+    // larges de rien : une liste blanche par catégorie seule les laisserait
+    // entrer.
+    expect(texteInerte('a\u115Fb\u1160c\u3164d')).toBe('abcd');
+  });
+
+  it('efface aussi les invisibles qu’aucune liste n’avait nommés', () => {
+    // Le principe, plutôt que l'énumération : ce qui n'est ni lettre, ni
+    // chiffre, ni ponctuation, ni symbole, ni espace ordinaire, ni `\n`, ni
+    // `\t` ne sert à rien dans un signalement.
+    for (const invisible of ['\u034F', '\u180E', '\u17B4', '\u{1D173}', '\u{E0100}', '\uFFF9']) {
+      expect(texteInerte(`a${invisible}b`), invisible).toBe('ab');
+    }
+  });
+
+  it('ne touche pas à un signalement écrit normalement', () => {
+    // La contrainte qui compte : un filtre qui abîme un texte honnête coûte
+    // plus qu'il ne protège.
+    const texte = [
+      'La règle 26 parle du chalutier — pas du navire à la traîne.',
+      'Le RIPAM dit « feu de tête de mât », l’explication dit autre chose.',
+      'Voir aussi l’article 1er § 1.1 (arrêté du 22 avril 2022) : 40 questions, 5 erreurs.',
+      'Coût : 30 € ; 100 % des cas ≈ pareil. Espace fine avant le point-virgule\u202F; testée.',
+    ].join('\n');
+    expect(texteInerte(texte)).toBe(texte);
+  });
+
+  it('garde les espaces insécables de la typographie française', () => {
+    expect(texteInerte('non\u00A0: c’est faux\u202F!')).toBe('non\u00A0: c’est faux\u202F!');
+  });
+
+  it('garde les accents décomposés', () => {
+    // « é » écrit `e` + accent combinant : deux caractères, une lettre à
+    // l'écran. Le second est une marque, pas un invisible.
+    expect(texteInerte('re\u0301ponse')).toBe('re\u0301ponse');
+  });
+
+  it('reste idempotent', () => {
+    for (const texte of ['`code` <b>', 'a\u200Bb\u{E0041}c', 'a\u2028b', 'L’élève « a » — b']) {
+      expect(texteInerte(texteInerte(texte))).toBe(texteInerte(texte));
+    }
+  });
 });
 
 describe('titreIssue', () => {
