@@ -18,8 +18,15 @@
  *    chose que le formulaire.
  */
 
-/** Le domaine du site, pour l'adresse citée dans l'issue. */
-export const SITE = 'https://lepermiscotier.fr';
+import { SITE as IDENTITE } from './seo';
+
+/**
+ * Le domaine du site, pour l'adresse citée dans l'issue et pour l'hôte que le
+ * Worker exige de Turnstile. Il n'est écrit qu'une fois dans le dépôt, dans
+ * `src/lib/seo.ts` : deux copies finiraient par diverger, et la seconde
+ * refuserait alors les jetons de la première.
+ */
+export const SITE: string = IDENTITE.domaine;
 
 /** Les six motifs du `<select>` de `src/pages/signaler.astro`, et leur libellé. */
 export const MOTIFS = {
@@ -61,27 +68,65 @@ export type Validation =
   | { ok: false };
 
 /**
+ * Ce qui reste : lettres, chiffres, marques (les accents décomposés), ponctuation,
+ * symboles, espaces ordinaires, saut de ligne et tabulation. Tout le reste part.
+ *
+ * Une liste blanche, et non une liste de refus : Unicode compte plus de
+ * 150 000 caractères et en ajoute à chaque version, tandis qu'un signalement
+ * n'a jamais besoin que de ces sept catégories-là. Énumérer ce qu'on refuse,
+ * c'est promettre de tenir la liste à jour ; énumérer ce qu'on garde, c'est
+ * n'avoir plus rien à tenir.
+ */
+const HORS_CATEGORIES_UTILES = /[^\p{L}\p{N}\p{M}\p{P}\p{S}\p{Zs}\n\t]/gu;
+
+/**
+ * Le complément indispensable de la liste blanche.
+ *
+ * Deux familles d'invisibles portent des catégories tout à fait respectables
+ * et traverseraient la liste blanche intactes : les sélecteurs de variante
+ * (U+FE00‑FE0F) sont des marques, et les remplisseurs hangûl (U+115F, U+1160,
+ * U+3164) sont des lettres — des lettres larges de rien. Unicode tient
+ * lui-même la liste de ce qui ne doit rien afficher : `Default_Ignorable_Code_Point`.
+ * On s'appuie sur elle plutôt que sur la nôtre, elle grandit avec la norme.
+ */
+const INVISIBLES = /\p{Default_Ignorable_Code_Point}/gu;
+
+/**
  * Le texte du visiteur, rendu inerte.
  *
  * L'accent grave devient une apostrophe : c'est le seul caractère qui
  * refermerait le bloc de code dans lequel l'issue enferme ce texte. Les
  * chevrons deviennent leurs jumeaux typographiques `‹` et `›` : on lit encore
  * ce qui a été écrit, mais plus rien n'est une balise, nulle part, quel que
- * soit le rendu qui reprendra la chaîne un jour. Les caractères de contrôle et
- * les invisibles — espaces de largeur nulle, marques de direction, BOM —
- * disparaissent : ils ne servent qu'à cacher du texte à un relecteur humain.
+ * soit le rendu qui reprendra la chaîne un jour.
+ *
+ * Tout ce qui n'est ni lettre, ni chiffre, ni ponctuation, ni symbole, ni
+ * espace disparaît : contrôles, largeurs nulles, marques de direction, BOM,
+ * balises ASCII (U+E0000‑E007F), sélecteurs de variante, remplisseurs. Ces
+ * caractères-là n'ont qu'un emploi dans un texte que personne n'a demandé :
+ * cacher une phrase au relecteur humain et au diff, en la laissant lisible au
+ * modèle qui reprendra l'issue — et l'en-tête de ce fichier dit que ce lecteur
+ * existe. Un signalement honnête, lui, n'en perd rien : les accents, les
+ * guillemets français, les tirets cadratins, les apostrophes typographiques,
+ * les espaces insécables et les retours à la ligne sont tous dans la liste
+ * blanche, et en sortent tels quels.
+ *
+ * L'ordre compte : les invisibles partent avant que l'accent grave et les
+ * chevrons ne soient neutralisés, sans quoi un `‹script›` coupé d'une largeur
+ * nulle se recollerait après coup.
  *
  * La fonction est idempotente : l'appliquer deux fois donne le même résultat.
  */
 export function texteInerte(texte: string): string {
   return (
     texte
-      // Fins de ligne d'abord, pour que le resserrage voie de vrais `\n`.
-      .replace(/\r\n?/g, '\n')
-      // Contrôles C0 et C1, sauf tabulation et saut de ligne.
-      .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, '')
-      // Largeurs nulles, marques et isolats de direction, BOM.
-      .replace(/[\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF]/g, '')
+      // Fins de ligne d'abord, pour que le resserrage voie de vrais `\n`. Les
+      // séparateurs de ligne et de paragraphe deviennent eux aussi de vraies
+      // lignes : les effacer collerait deux phrases l'une à l'autre, ce qui est
+      // encore une façon de cacher.
+      .replace(/\r\n?|[\u2028\u2029]/g, '\n')
+      .replace(INVISIBLES, '')
+      .replace(HORS_CATEGORIES_UTILES, '')
       // L'accent grave : le seul caractère qui refermerait le bloc de code.
       .replace(/`/g, "'")
       // Les chevrons : plus rien n'est une balise, dans aucun rendu.
