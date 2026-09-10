@@ -16,6 +16,7 @@ import {
   serieARevoir,
   tirerExamen,
 } from '../lib/quiz';
+import { LETTRES_AFFICHEES, lettreAffichee, melangerPropositions, rangDeLaTouche } from '../lib/melange';
 import {
   charger,
   sauvegarder,
@@ -48,8 +49,6 @@ interface Props {
   /** Série des seules questions ratées, tous thèmes mêlés. */
   revoir?: boolean;
 }
-
-const LETTRES: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 
 /** Action propre à l'écran, que le modèle de session n'a pas à connaître. */
 type ActionEcran = Action | { type: 'restaurer'; session: Session };
@@ -135,6 +134,13 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   const question = questionCourante(session);
   const affichee = question ? parId.get(question.id) : undefined;
   const selection = session.selections[session.index] ?? [];
+
+  // L'ordre d'affichage des propositions, tiré de la graine de la session : il
+  // ne bouge ni entre deux rendus, ni au retour sur un examen repris.
+  const ordre = useMemo(
+    () => (affichee ? melangerPropositions(affichee.propositions, session.graine, affichee.id) : []),
+    [affichee, session.graine],
+  );
 
   const titre = mode === 'examen'
     ? 'Examen blanc'
@@ -271,8 +277,8 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
 
   // Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
   // le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
-  const contexte = useRef({ session, affichee, mode, arretDemande });
-  contexte.current = { session, affichee, mode, arretDemande };
+  const contexte = useRef({ session, ordre, mode, arretDemande });
+  contexte.current = { session, ordre, mode, arretDemande };
 
   useEffect(() => {
     function surTouche(evenementClavier: KeyboardEvent) {
@@ -289,7 +295,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
         (cible?.tagName === 'BUTTON' || cible?.tagName === 'A') &&
         !cible.classList.contains('proposition');
 
-      const { session: s, affichee: a, mode: m, arretDemande: arret } = contexte.current;
+      const { session: s, ordre: o, mode: m, arretDemande: arret } = contexte.current;
 
       if (s.phase === 'depart') {
         if (evenementClavier.key === 'Enter' && !activable) {
@@ -300,11 +306,14 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
       }
       if (s.phase !== 'en-cours' || arret) return;
 
-      const lettre = evenementClavier.key.toLowerCase();
-      if (LETTRES[lettre] && !s.corrigee) {
-        if (!a?.propositions.some((p) => p.id === lettre)) return;
+      // La touche vise une ligne de l'écran, pas un identifiant de fichier :
+      // « B » coche ce que l'écran appelle B, quel que soit l'id derrière.
+      const rang = rangDeLaTouche(evenementClavier.key);
+      if (rang !== undefined && !s.corrigee) {
+        const visee = o[rang];
+        if (!visee) return;
         evenementClavier.preventDefault();
-        envoyer({ type: 'basculer', proposition: lettre });
+        envoyer({ type: 'basculer', proposition: visee.id });
         return;
       }
 
@@ -538,14 +547,16 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
                     <img className="jeu__visuel" src={`/visuels/${d.visuel.fichier}`} alt={d.visuel.alt} loading="lazy" />
                   )}
                   <ul className="propositions">
-                    {d.propositions.map((p) => {
+                    {/* Le même ordre qu'en jeu : la revue doit montrer l'écran
+                        que le candidat a eu sous les yeux. */}
+                    {melangerPropositions(d.propositions, session.graine, d.id).map((p, rang) => {
                       const bonne = q.reponses.includes(p.id);
                       const cochee = donnee.includes(p.id);
                       const classe = bonne ? ' proposition--juste' : cochee ? ' proposition--fausse' : '';
                       return (
                         <li key={p.id}>
                           <div className={`proposition${classe}`}>
-                            <span className="proposition__lettre">{LETTRES[p.id] ?? p.id}</span>
+                            <span className="proposition__lettre">{lettreAffichee(rang)}</span>
                             <span>{p.texte}</span>
                             {(bonne || cochee) && (
                               <span className="proposition__marque">
@@ -653,7 +664,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
       )}
 
       <ul className="propositions" key={`propositions-${question.id}`}>
-        {affichee.propositions.map((p) => {
+        {ordre.map((p, rang) => {
           const cochee = selection.includes(p.id);
           const bonne = question.reponses.includes(p.id);
           let classe = cochee ? ' proposition--cochee' : '';
@@ -664,11 +675,11 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
                 type="button"
                 className={`proposition${classe}`}
                 aria-pressed={cochee}
-                aria-keyshortcuts={LETTRES[p.id] ?? undefined}
+                aria-keyshortcuts={LETTRES_AFFICHEES[rang]}
                 disabled={session.corrigee || (plein && !cochee)}
                 onClick={() => envoyer({ type: 'basculer', proposition: p.id })}
               >
-                <span className="proposition__lettre" aria-hidden="true">{LETTRES[p.id] ?? p.id}</span>
+                <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
                 <span>{p.texte}</span>
               </button>
             </li>

@@ -3,6 +3,7 @@ import type { EtapeAffichable, LeconAffichable } from '../lib/cours';
 import type { QuestionAffichable } from '../lib/banque';
 import { aujourdhui, charger, enregistrerReponse, sauvegarder, terminerLecon } from '../lib/progression';
 import { evenement } from '../lib/mesure';
+import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import './quiz.css';
 import './lecon.css';
 
@@ -56,8 +57,6 @@ export function ecransDe(lecon: LeconAffichable): Ecran[] {
   return ecrans;
 }
 
-const LETTRES: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D' };
-
 function memeEnsemble(a: readonly string[], b: readonly string[]): boolean {
   return a.length === b.length && a.every((x) => b.includes(x));
 }
@@ -83,6 +82,10 @@ function Verification({
   const [selection, setSelection] = useState<string[]>([]);
   const [corrigee, setCorrigee] = useState(false);
   const [bonnes, setBonnes] = useState(0);
+  // Une graine pour toute la vérification, tirée au montage : les propositions
+  // ne se redistribuent pas entre deux rendus. Revoir la leçon remonte le
+  // composant, donc redonne un ordre neuf.
+  const [graine] = useState(() => graineDeSession());
   const verdict = useRef<HTMLDivElement>(null);
 
   const question = questions[index];
@@ -127,7 +130,7 @@ function Verification({
         <img className="jeu__visuel" src={`/visuels/${question.visuel.fichier}`} alt={question.visuel.alt} />
       )}
       <ul className="propositions">
-        {question.propositions.map((p) => {
+        {melangerPropositions(question.propositions, graine, question.id).map((p, rang) => {
           const cochee = selection.includes(p.id);
           const bonne = question.reponses.includes(p.id);
           let classe = cochee ? ' proposition--cochee' : '';
@@ -141,7 +144,7 @@ function Verification({
                 disabled={corrigee || (plein && !cochee)}
                 onClick={() => basculer(p.id)}
               >
-                <span className="proposition__lettre" aria-hidden="true">{LETTRES[p.id] ?? p.id}</span>
+                <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
                 <span>{p.texte}</span>
               </button>
             </li>

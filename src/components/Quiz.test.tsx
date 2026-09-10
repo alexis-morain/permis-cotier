@@ -183,7 +183,10 @@ describe('clavier', () => {
   it('coche par sa lettre et valide à l’entrée', () => {
     render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
     fireEvent.keyDown(document.body, { key: 'b' });
-    expect(screen.getByRole('button', { name: /Deuxième proposition/ }).getAttribute('aria-pressed')).toBe('true');
+    // « B » désigne la deuxième ligne de l'écran, pas la proposition d'identifiant
+    // « b » : les propositions sont mélangées à l'affichage.
+    const deuxieme = document.querySelectorAll('.propositions .proposition')[1]!;
+    expect(deuxieme.getAttribute('aria-pressed')).toBe('true');
     fireEvent.keyDown(document.body, { key: 'Enter' });
     expect(screen.getByRole('status')).toBeTruthy();
     fireEvent.keyDown(document.body, { key: 'Enter' });
@@ -520,5 +523,108 @@ describe('la banque téléchargée', () => {
     );
     // Surtout pas « Aucune question publiée », qui serait un mensonge.
     expect(screen.queryByText(/Aucune question publiée/)).toBeNull();
+  });
+});
+
+/**
+ * Le mélange des propositions.
+ *
+ * La banque range presque toujours la bonne réponse en premier : l'ordre du
+ * fichier ne peut plus être celui de l'écran. Ce qui est vérifié ici est ce que
+ * le mélange doit garantir au candidat — un ordre qui ne bouge pas sous ses
+ * doigts, des lettres qui suivent l'écran, et une correction qui reste juste.
+ */
+const lignes = () => [...document.querySelectorAll<HTMLElement>('.propositions .proposition')];
+const textes = () => lignes().map((n) => n.children[1]?.textContent ?? '');
+const lettres = () => lignes().map((n) => n.querySelector('.proposition__lettre')?.textContent ?? '');
+
+describe('mélange des propositions', () => {
+  it('nomme les lignes dans l’ordre de l’écran, pas dans celui du fichier', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    expect(lettres()).toEqual(['A', 'B', 'C', 'D']);
+    expect(lignes().map((n) => n.getAttribute('aria-keyshortcuts'))).toEqual(['A', 'B', 'C', 'D']);
+  });
+
+  it('ne déplace pas les propositions quand on coche et qu’on corrige', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    const depart = textes();
+    fireEvent.click(lignes()[0]!);
+    expect(textes()).toEqual(depart);
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(textes()).toEqual(depart);
+  });
+
+  it('change d’ordre d’une session à l’autre', () => {
+    const ordres = new Set<string>();
+    for (let i = 0; i < 12; i += 1) {
+      render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+      ordres.add(textes().join('|'));
+      cleanup();
+    }
+    expect(ordres.size).toBeGreaterThan(1);
+  });
+
+  it('fait suivre le clavier la lettre affichée', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'b' });
+    expect(lignes().map((n) => n.getAttribute('aria-pressed'))).toEqual([
+      'false', 'true', 'false', 'false',
+    ]);
+  });
+
+  it('corrige juste la bonne réponse, où qu’elle soit affichée', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(screen.getByText('Bonne réponse')).toBeTruthy();
+  });
+
+  it('garde le même ordre à la reprise d’un examen interrompu', () => {
+    const enCours = {
+      mode: 'examen',
+      theme: null,
+      ids: trois.map((q) => q.id),
+      index: 0,
+      selections: [[], [], []],
+      echeance: Date.now() + 12_000,
+      journal: [],
+      graine: 4242,
+      majLe: Date.now(),
+    };
+    const sauvegarde = JSON.stringify({
+      version: VERSION_STOCKAGE,
+      questions: {},
+      examens: [],
+      dateExamen: null,
+      enCours,
+    });
+
+    const reprendre = () => {
+      localStorage.setItem(CLE_STOCKAGE, sauvegarde);
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 1/ }));
+      const ordre = textes();
+      cleanup();
+      return ordre;
+    };
+
+    // Deux retours sur le même examen sauvegardé : les propositions ne bougent
+    // pas. Sans la graine dans la sauvegarde, elles seraient redistribuées.
+    expect(reprendre()).toEqual(reprendre());
+  });
+
+  it('revoit les questions dans l’ordre où elles ont été jouées', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    const joue = textes();
+    for (let i = 0; i < 3; i += 1) {
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+    const premiere = document.querySelector('.revue__item');
+    const revus = [...premiere!.querySelectorAll('.proposition')].map(
+      (n) => n.children[1]?.textContent ?? '',
+    );
+    expect(revus).toEqual(joue);
   });
 });
