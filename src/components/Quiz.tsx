@@ -29,6 +29,7 @@ import {
 import type { QuestionAffichable } from '../lib/banque';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
+import { douceur } from '../lib/douceur';
 import { rappel } from '../lib/profil';
 import './quiz.css';
 
@@ -55,11 +56,6 @@ type ActionEcran = Action | { type: 'restaurer'; session: Session };
 
 function reduireEcran(s: Session, action: ActionEcran): Session {
   return action.type === 'restaurer' ? action.session : reduire(s, action);
-}
-
-/** Le défilement doux, sauf pour qui a demandé qu'on arrête de bouger. */
-function douceur(): ScrollBehavior {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 }
 
 function Sources({ sources }: { sources: QuestionAffichable['sources'] }) {

@@ -123,10 +123,22 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             <p>{rien ? 'Rien d’enregistré dans ce navigateur pour l’instant.' : palier.phrase}</p>
           </div>
         </div>
+        {/* Trois calques pleins, du plus long au plus court, chacun mis à
+            l'échelle : la part se lit à la couleur qui s'arrête, et le
+            mouvement passe par `transform`, jamais par `width`. */}
         <div className="indice__jauge" role="img" aria-label={`${ind.parts.vu} points pour ce qui est vu, ${ind.parts.retenu} pour ce qui est retenu, ${ind.parts.examens} pour les examens blancs`}>
-          <span className="indice__part indice__part--vu" style={{ width: `${ind.parts.vu}%` }} />
-          <span className="indice__part indice__part--retenu" style={{ width: `${ind.parts.retenu}%` }} />
-          <span className="indice__part indice__part--examens" style={{ width: `${ind.parts.examens}%` }} />
+          <span
+            className="indice__part indice__part--examens"
+            style={{ '--part': (ind.parts.vu + ind.parts.retenu + ind.parts.examens) / 100 } as React.CSSProperties}
+          />
+          <span
+            className="indice__part indice__part--retenu"
+            style={{ '--part': (ind.parts.vu + ind.parts.retenu) / 100 } as React.CSSProperties}
+          />
+          <span
+            className="indice__part indice__part--vu"
+            style={{ '--part': ind.parts.vu / 100 } as React.CSSProperties}
+          />
         </div>
         <ul className="indice__legende" aria-hidden="true">
           <li><i className="indice__puce indice__puce--vu" />Vu {ind.parts.vu} sur 20</li>

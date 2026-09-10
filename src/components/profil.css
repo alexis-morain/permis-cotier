@@ -130,7 +130,7 @@
 .indice__texte p { margin: 0; max-width: 40ch; }
 .indice__palier { font-stretch: var(--large); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
 .indice__jauge {
-  display: flex;
+  position: relative;
   height: 14px;
   margin-top: 1.25rem;
   border-radius: 999px;
@@ -138,7 +138,15 @@
   overflow: hidden;
   max-width: 40rem;
 }
-.indice__part { display: block; height: 100%; }
+/* Les trois parts sont des calques superposés, du plus long au plus court.
+   Chacun est mis à l'échelle : `width` ne s'anime pas, `transform` si. */
+.indice__part {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transform: scaleX(var(--part, 0));
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+}
 .indice__part--vu, .indice__puce--vu { background: var(--jauge); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
 .indice__part--examens, .indice__puce--examens { background: var(--filet-fort); }
@@ -301,5 +309,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .questionnaire__barre span, .jour__barre span { transition: none; }
+  .questionnaire__barre span, .jour__barre span, .indice__part { transition: none; }
 }
