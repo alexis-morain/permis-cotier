@@ -1,3 +1,4 @@
+import { enDate, jourPlus } from './jour';
 import type { Etat, Profil } from './progression';
 import { THEMES } from './themes';
 
@@ -130,12 +131,6 @@ export function indice(etat: Etat, banque: readonly QuestionConnue[]): Indice {
 /* ------------------------------------------------------------------------ */
 /* Les jours                                                                 */
 
-function jourPlus(date: string, n: number): string {
-  const d = new Date(`${date}T00:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + n);
-  return d.toISOString().slice(0, 10);
-}
-
 /**
  * Jours consécutifs avec au moins une réponse, en remontant depuis
  * aujourd'hui. Un jour sans rien, hier, ne rompt pas encore : la série tient
@@ -188,12 +183,16 @@ export function quatorzeJours(etat: Etat, aujourdhui: string): { date: string; r
   });
 }
 
-/** Jours entre aujourd'hui et une date, négatif si elle est passée, `null` si elle est illisible. */
+/**
+ * Jours entre aujourd'hui et une date, négatif si elle est passée, `null` si
+ * elle est illisible. Les deux bouts sont des jours parisiens comparés comme
+ * des cases de calendrier : jamais un jour d'un côté et un instant de l'autre.
+ */
 export function joursAvant(date: string, aujourdhui: string): number | null {
-  const cible = new Date(`${date}T00:00:00Z`).getTime();
-  const ici = new Date(`${aujourdhui}T00:00:00Z`).getTime();
-  if (Number.isNaN(cible) || Number.isNaN(ici)) return null;
-  return Math.round((cible - ici) / 86_400_000);
+  const cible = enDate(date);
+  const ici = enDate(aujourdhui);
+  if (!cible || !ici) return null;
+  return Math.round((cible.getTime() - ici.getTime()) / 86_400_000);
 }
 
 /* ------------------------------------------------------------------------ */
