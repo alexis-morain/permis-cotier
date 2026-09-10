@@ -54,9 +54,10 @@ export const CONTENU_A_LA_DEMANDE = ['question', 'notion', 'cours', 'theme', 'gu
 /**
  * Les écrans de jeu qui se gardent à la lecture, et non d'avance.
  *
- * `/entrainement/<thème>` fait quatorze pages, 214 Kio bruts, et un candidat
- * en ouvre une ou deux : les précacher toutes, c'est faire télécharger douze
- * écrans qu'on n'ouvrira pas pour en avoir deux tout de suite. Elles ne
+ * `/entrainement/<thème>` fait quatorze pages, et `/entrainement/notion/<code>`
+ * cent cinq de plus, une par unité d'apprentissage. Un candidat en ouvre une
+ * poignée : les précacher toutes, c'est faire télécharger cent quinze écrans
+ * qu'on n'ouvrira pas pour en avoir trois tout de suite. Elles ne
  * portent d'ailleurs aucune question — la banque est un JSON à part, déjà au
  * précache : l'écran ouvert une fois se rejoue ensuite hors ligne.
  *
