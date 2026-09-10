@@ -15,6 +15,7 @@ import {
   CLE_STOCKAGE,
   profilVide,
   enregistrerProfil,
+  migrerQuestions,
 } from './progression';
 import type { Stockage } from './progression';
 
@@ -43,20 +44,33 @@ describe('statistiques bornées à la banque publiée', () => {
   const etat = {
     ...etatInitial(),
     questions: {
-      'vhf-0001': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-01' },
-      'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02' },
-      'vhf-0009': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03' },
+      'vhf-0001': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-01', succes: 0, revoirLe: '2026-09-01' },
+      'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02', succes: 0, revoirLe: '2026-09-02' },
+      'vhf-0009': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03', succes: 0, revoirLe: '2026-09-03' },
     },
   };
 
   it('compte tout quand on ne lui donne pas la banque', () => {
-    expect(statistiques(etat).aRevoir).toBe(3);
+    expect(statistiques(etat, undefined, '2026-09-03').aRevoir).toBe(3);
   });
 
   it('ignore une question retirée de la banque, comme le fait la série', () => {
-    const s = statistiques(etat, ['vhf-0001', 'vhf-0002']);
+    const s = statistiques(etat, ['vhf-0001', 'vhf-0002'], '2026-09-03');
     expect(s.aRevoir).toBe(2);
     expect(s.vues).toBe(2);
+  });
+
+  it('ne compte à revoir que ce qui est dû ce jour-là', () => {
+    const plusTard = {
+      ...etatInitial(),
+      questions: {
+        'vhf-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 1, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-02' },
+        'vhf-0002': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 4, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-22' },
+      },
+    };
+    expect(statistiques(plusTard, undefined, '2026-09-03').aRevoir).toBe(1);
+    expect(statistiques(plusTard, undefined, '2026-09-30').aRevoir).toBe(2);
+    expect(statistiques(plusTard, undefined, '2026-09-01').aRevoir).toBe(0);
   });
 });
 
@@ -68,7 +82,7 @@ describe('session en cours', () => {
     index: 1,
     selections: [['a'], []],
     echeance: 1_800_000_014_000,
-    journal: [{ id: 'vhf-0001', juste: true }],
+    journal: [{ id: 'vhf-0001', juste: true, ms: 4200 }],
     majLe: 1_800_000_000_000,
   };
 
@@ -95,27 +109,155 @@ describe('session en cours', () => {
 });
 
 describe('enregistrement d’une réponse', () => {
-  it('compte une première réussite', () => {
+  it('compte une première réussite et la reprogramme à demain', () => {
     const e = enregistrerReponse(etatInitial(), 'vhf-0001', true, '2026-09-10');
-    expect(e.questions['vhf-0001']).toEqual({ vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-10' });
+    expect(e.questions['vhf-0001']).toEqual({
+      vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-10',
+      succes: 1, dernierSuccesLe: '2026-09-10', revoirLe: '2026-09-11',
+    });
   });
 
-  it('compte un échec et le retient', () => {
+  it('compte un échec et rend la question due tout de suite', () => {
     const e = enregistrerReponse(etatInitial(), 'vhf-0001', false, '2026-09-10');
     expect(e.questions['vhf-0001']!.ratees).toBe(1);
     expect(e.questions['vhf-0001']!.derniereReussie).toBe(false);
+    expect(e.questions['vhf-0001']!.succes).toBe(0);
+    expect(e.questions['vhf-0001']!.revoirLe).toBe('2026-09-10');
+  });
+
+  it('n’avance pas d’un cran sur une réussite du même jour', () => {
+    let e = enregistrerReponse(etatInitial(), 'vhf-0001', true, '2026-09-10');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-10');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-10');
+    const q = e.questions['vhf-0001']!;
+    // Trois passages comptés, un seul succès : moudre une question ne l'efface pas.
+    expect(q.vues).toBe(3);
+    expect(q.succes).toBe(1);
+    expect(q.revoirLe).toBe('2026-09-11');
+  });
+
+  it('espace de un, trois, sept puis vingt et un jours', () => {
+    let e = enregistrerReponse(etatInitial(), 'vhf-0001', true, '2026-09-10');
+    expect(e.questions['vhf-0001']!.revoirLe).toBe('2026-09-11');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-11');
+    expect(e.questions['vhf-0001']!.revoirLe).toBe('2026-09-14');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-14');
+    expect(e.questions['vhf-0001']!.revoirLe).toBe('2026-09-21');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-21');
+    expect(e.questions['vhf-0001']!.revoirLe).toBe('2026-10-12');
+    expect(e.questions['vhf-0001']!.succes).toBe(4);
+  });
+
+  it('remet le compteur à zéro à la première faute', () => {
+    let e = enregistrerReponse(etatInitial(), 'vhf-0001', true, '2026-09-10');
+    e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-11');
+    expect(e.questions['vhf-0001']!.succes).toBe(2);
+    e = enregistrerReponse(e, 'vhf-0001', false, '2026-09-14');
+    expect(e.questions['vhf-0001']!.succes).toBe(0);
+    expect(e.questions['vhf-0001']!.revoirLe).toBe('2026-09-14');
+    // La dernière réussite reste au calendrier : elle date, elle ne s'invente pas.
+    expect(e.questions['vhf-0001']!.dernierSuccesLe).toBe('2026-09-11');
   });
 
   it('cumule les passages sans effacer le compte de ratées', () => {
     let e = enregistrerReponse(etatInitial(), 'vhf-0001', false, '2026-09-10');
     e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-11');
-    expect(e.questions['vhf-0001']).toEqual({ vues: 2, ratees: 1, derniereReussie: true, vueLe: '2026-09-11' });
+    expect(e.questions['vhf-0001']).toEqual({
+      vues: 2, ratees: 1, derniereReussie: true, vueLe: '2026-09-11',
+      succes: 1, dernierSuccesLe: '2026-09-11', revoirLe: '2026-09-12',
+    });
   });
 
   it('ne modifie pas l’état reçu', () => {
     const avant = etatInitial();
     enregistrerReponse(avant, 'vhf-0001', true, '2026-09-10');
     expect(avant.questions).toEqual({});
+  });
+});
+
+describe('migration silencieuse des progressions déjà écrites', () => {
+  /** Un état réaliste de l'ancienne forme : trois réussies, deux ratées. */
+  const ancien = {
+    version: VERSION_STOCKAGE,
+    questions: {
+      'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
+      'vhf-0002': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-05' },
+      'feux-0001': { vues: 2, ratees: 1, derniereReussie: true, vueLe: '2026-09-07' },
+      'feux-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-08' },
+      'balisage-0001': { vues: 4, ratees: 3, derniereReussie: false, vueLe: '2026-09-09' },
+    },
+    examens: [
+      { date: '2026-09-08', bonnes: 33, total: 40, reussi: false },
+      { date: '2026-09-05', bonnes: 36, total: 40, reussi: true },
+    ],
+    dateExamen: '2026-10-01',
+    activite: { '2026-09-08': 12, '2026-09-09': 7 },
+  };
+
+  it('traduit une réussie en un succès dû le lendemain', () => {
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify(ancien));
+    const q = charger(memoire).questions['vhf-0001']!;
+    expect(q).toEqual({
+      vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01',
+      succes: 1, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-02',
+    });
+  });
+
+  it('traduit une ratée en une question due le jour même', () => {
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify(ancien));
+    const q = charger(memoire).questions['balisage-0001']!;
+    expect(q.succes).toBe(0);
+    expect(q.dernierSuccesLe).toBeUndefined();
+    expect(q.revoirLe).toBe('2026-09-09');
+  });
+
+  it('ne perd rien de ce qui était déjà là', () => {
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify(ancien));
+    const lu = charger(memoire);
+    expect(Object.keys(lu.questions)).toHaveLength(5);
+    expect(lu.questions['feux-0001']!.vues).toBe(2);
+    expect(lu.questions['feux-0001']!.ratees).toBe(1);
+    // L'historique d'examens blancs ne bouge pas d'une virgule.
+    expect(lu.examens).toEqual(ancien.examens);
+    expect(lu.dateExamen).toBe('2026-10-01');
+    expect(lu.activite).toEqual(ancien.activite);
+  });
+
+  it('ne remigre pas un état déjà migré', () => {
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify(ancien));
+    const premier = charger(memoire);
+    // Le candidat a révisé depuis : trois succès, une échéance lointaine.
+    const avance = {
+      ...premier,
+      questions: {
+        ...premier.questions,
+        'vhf-0001': {
+          vues: 6, ratees: 0, derniereReussie: true, vueLe: '2026-09-20',
+          succes: 3, dernierSuccesLe: '2026-09-20', revoirLe: '2026-09-27',
+        },
+      },
+    };
+    sauvegarder(avance, memoire);
+    const relu = charger(memoire);
+    expect(relu.questions['vhf-0001']!.succes).toBe(3);
+    expect(relu.questions['vhf-0001']!.revoirLe).toBe('2026-09-27');
+    expect(relu.questions).toEqual(avance.questions);
+  });
+
+  it('est stable : relire deux fois donne le même état', () => {
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify(ancien));
+    const un = charger(memoire);
+    sauvegarder(un, memoire);
+    expect(charger(memoire)).toEqual(un);
+  });
+
+  it('jette une entrée illisible plutôt que d’écrire un état bancal', () => {
+    const propre = migrerQuestions({
+      'vhf-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
+      'vhf-0002': 'nawak',
+      'vhf-0003': { vues: 'trois' },
+    });
+    expect(Object.keys(propre)).toEqual(['vhf-0001']);
   });
 });
 

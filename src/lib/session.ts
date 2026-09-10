@@ -33,6 +33,17 @@ export const MAX_SELECTION = 2;
 /** Au-delà d'un jour, une session abandonnée ne se reprend plus, elle se refait. */
 export const SAUVEGARDE_PERIMEE_MS = 24 * 60 * 60 * 1000;
 
+/** Le temps d'une question à l'épreuve, en millisecondes. */
+export const MS_PAR_QUESTION = SECONDES_PAR_QUESTION * 1000;
+
+/** Une réponse jouée : ce qu'elle valait, et ce qu'elle a coûté en temps. */
+export interface LigneJournal {
+  id: string;
+  juste: boolean;
+  /** Temps mis à répondre, depuis l'affichage de la question. */
+  ms: number;
+}
+
 export interface Session {
   mode: Mode;
   questions: readonly QuestionJouable[];
@@ -57,7 +68,13 @@ export interface Session {
   /** Vrai quand le résultat ne porte que sur une partie de la série. */
   interrompu: boolean;
   /** Une ligne par question jouée, pour alimenter la progression locale. */
-  journal: { id: string; juste: boolean }[];
+  journal: LigneJournal[];
+  /**
+   * Instant où la question courante est apparue. C'est le point de départ du
+   * temps de réponse, et il ne peut pas se déduire du chrono : l'entraînement
+   * n'en a pas, et l'échéance d'examen bouge à la reprise d'une sauvegarde.
+   */
+  montreeLe: number | null;
 }
 
 /**
@@ -76,6 +93,7 @@ export function creerSession(
   mode: Mode,
   questions: readonly QuestionJouable[],
   graine: number = graineDeSession(),
+  maintenant: number = Date.now(),
 ): Session {
   const vide = questions.length === 0;
   return {
@@ -94,6 +112,9 @@ export function creerSession(
     resultat: vide ? calculerResultat([], []) : null,
     interrompu: false,
     journal: [],
+    // L'examen s'ouvre sur un écran de départ : sa première question n'est
+    // pas encore montrée, et son temps ne court pas.
+    montreeLe: vide || mode === 'examen' ? null : maintenant,
   };
 }
 
@@ -106,13 +127,17 @@ function secondesRestantes(echeance: number, maintenant: number): number {
   return Math.max(0, Math.ceil((echeance - maintenant) / 1000));
 }
 
-/** Arme le chrono de la question courante, en examen seulement. */
+/**
+ * Arme la question courante : son chrono en examen, et dans les deux modes
+ * l'instant où elle apparaît, qui sert à mesurer le temps de réponse.
+ */
 function armer(s: Session, maintenant: number): Session {
-  if (s.mode !== 'examen') return { ...s, restant: null, echeance: null };
+  if (s.mode !== 'examen') return { ...s, restant: null, echeance: null, montreeLe: maintenant };
   return {
     ...s,
     restant: SECONDES_PAR_QUESTION,
-    echeance: maintenant + SECONDES_PAR_QUESTION * 1000,
+    echeance: maintenant + MS_PAR_QUESTION,
+    montreeLe: maintenant,
   };
 }
 
@@ -130,12 +155,26 @@ function terminer(s: Session, jouees: number = s.questions.length): Session {
     echeance: null,
     corrigee: false,
     interrompu: n < s.questions.length,
+    montreeLe: null,
     resultat: calculerResultat(s.questions.slice(0, n), s.selections.slice(0, n)),
   };
 }
 
-function inscrire(journal: Session['journal'], id: string, juste: boolean): Session['journal'] {
-  return journal.some((l) => l.id === id) ? journal : [...journal, { id, juste }];
+/**
+ * Inscrit une réponse, une seule fois par question. `ms` ne descend jamais
+ * sous zéro : une horloge qui recule — changement d'heure, machine remise à
+ * l'heure — donnerait un temps négatif, qui ne veut rien dire.
+ */
+function inscrire(
+  journal: Session['journal'],
+  id: string,
+  juste: boolean,
+  montreeLe: number | null,
+  maintenant: number,
+): Session['journal'] {
+  if (journal.some((l) => l.id === id)) return journal;
+  const ms = montreeLe === null ? 0 : Math.max(0, maintenant - montreeLe);
+  return [...journal, { id, juste, ms }];
 }
 
 /** Passe à la question suivante, ou au résultat s'il n'y en a plus. */
@@ -178,16 +217,23 @@ export function reduire(s: Session, action: Action): Session {
       const selection = s.selections[s.index] ?? [];
       const juste = corriger(question, selection);
 
+      const maintenant = action.maintenant ?? Date.now();
+
       if (s.mode === 'entrainement') {
         // Rien à corriger tant que rien n'est coché, et une seule correction.
         if (selection.length === 0 || s.corrigee) return s;
-        return { ...s, corrigee: true, juste, journal: inscrire(s.journal, question.id, juste) };
+        return {
+          ...s,
+          corrigee: true,
+          juste,
+          journal: inscrire(s.journal, question.id, juste, s.montreeLe, maintenant),
+        };
       }
 
       // En examen, valider veut dire « je passe ». Aucun retour avant la fin.
       return avancer(
-        { ...s, journal: inscrire(s.journal, question.id, juste) },
-        action.maintenant ?? Date.now(),
+        { ...s, journal: inscrire(s.journal, question.id, juste, s.montreeLe, maintenant) },
+        maintenant,
       );
     }
 
@@ -206,7 +252,12 @@ export function reduire(s: Session, action: Action): Session {
       // consomme qu'une par retour : une absence de dix minutes ne brûle pas
       // trente questions d'un coup.
       const juste = corriger(question, s.selections[s.index] ?? []);
-      return avancer({ ...s, journal: inscrire(s.journal, question.id, juste) }, maintenant);
+      // Au buzzer, la question a coûté ses vingt secondes pleines, quel que
+      // soit le retard du tic : c'est ce que l'épreuve lui accordait.
+      return avancer(
+        { ...s, journal: inscrire(s.journal, question.id, juste, s.montreeLe, (s.echeance ?? maintenant)) },
+        maintenant,
+      );
     }
 
     case 'terminer':
@@ -232,7 +283,8 @@ export interface SessionSauvegardee {
   /** Instant limite de la question courante, absolu : un rafraîchissement ne
    *  redonne pas les secondes déjà écoulées. */
   echeance: number | null;
-  journal: { id: string; juste: boolean }[];
+  /** `ms` est absent des sauvegardes d'avant le temps par réponse. */
+  journal: { id: string; juste: boolean; ms?: number }[];
   /** Date d'écriture, en millisecondes. */
   majLe: number;
 }
@@ -309,6 +361,40 @@ export function restaurerSession(
     phase: 'en-cours',
     resultat: null,
     interrompu: false,
-    journal: (sauvegarde.journal ?? []).map((ligne) => ({ ...ligne })),
+    // Une sauvegarde écrite avant le temps par réponse n'en porte pas : zéro
+    // plutôt qu'un refus de reprise, et la mesure repart aux questions suivantes.
+    journal: (sauvegarde.journal ?? []).map((ligne) => ({
+      id: ligne.id,
+      juste: ligne.juste,
+      ms: typeof ligne.ms === 'number' ? ligne.ms : 0,
+    })),
+    // La question reprise réapparaît maintenant : son temps repart de là.
+    montreeLe: maintenant,
+  };
+}
+
+export interface Lenteur {
+  /** Questions non répondues dans les vingt secondes : passées au buzzer. */
+  auBuzzer: string[];
+  /** Questions répondues dans la dernière seconde, arrachées de justesse. */
+  aLaLimite: string[];
+}
+
+/**
+ * Ce que le score ne dit pas : le mode d'échec propre à cette épreuve est la
+ * lenteur. Quarante questions à vingt secondes, et un candidat qui répond
+ * juste en dix-neuf secondes n'est pas prêt — il l'est de justesse, sur un
+ * banc, sans le stress de la salle.
+ *
+ * Ne parle que d'un examen blanc terminé : en entraînement il n'y a pas de
+ * chrono, et une durée n'y mesure que le temps qu'on a pris à lire.
+ */
+export function lenteurs(s: Session): Lenteur {
+  if (s.mode !== 'examen' || s.phase !== 'resultat') return { auBuzzer: [], aLaLimite: [] };
+  return {
+    auBuzzer: s.journal.filter((l) => l.ms >= MS_PAR_QUESTION).map((l) => l.id),
+    aLaLimite: s.journal
+      .filter((l) => l.ms >= MS_PAR_QUESTION - 1000 && l.ms < MS_PAR_QUESTION)
+      .map((l) => l.id),
   };
 }
