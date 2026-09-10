@@ -7,6 +7,7 @@ import {
   profilVide,
   terminerLecon,
 } from './progression';
+import type { Etat } from './progression';
 import {
   MOTIVATIONS,
   RYTHMES,
@@ -14,6 +15,8 @@ import {
   serieDeJours,
   objectifDuJour,
   maitriseParTheme,
+  maitriseParNotion,
+  notionsLesPlusFaibles,
   jalons,
   rappel,
   quatorzeJours,
@@ -34,6 +37,14 @@ function examen(etat = etatInitial(), bonnes: number, date = '2026-09-05') {
   return enregistrerExamen(etat, { date, bonnes, total: 40, reussi: 40 - bonnes <= 5 });
 }
 
+/**
+ * Réussir une question deux jours différents : c'est ce qui la rend
+ * « retenue » depuis le rappel espacé. Une seule réussite ne suffit plus.
+ */
+function retenir(etat: Etat, id: string): Etat {
+  return enregistrerReponse(enregistrerReponse(etat, id, true, '2026-09-01'), id, true, '2026-09-02');
+}
+
 describe('indice de préparation', () => {
   it('est nul quand rien n’a été joué', () => {
     const i = indice(etatInitial(), banque);
@@ -44,8 +55,9 @@ describe('indice de préparation', () => {
 
   it('pèse ce qu’on a vu, ce qu’on retient et les examens', () => {
     let e = etatInitial();
-    // Dix questions vues sur vingt, huit réussies à la dernière rencontre.
+    // Dix questions vues sur vingt, huit retenues : réussies deux jours de suite.
     for (let k = 0; k < 10; k++) e = enregistrerReponse(e, `vhf-${k}`, k < 8, '2026-09-01');
+    for (let k = 0; k < 8; k++) e = enregistrerReponse(e, `vhf-${k}`, true, '2026-09-02');
     const i = indice(e, banque);
     expect(i.parts.vu).toBe(10); // 20 × 10/20
     expect(i.parts.retenu).toBe(28); // 35 × 8/10
@@ -63,6 +75,24 @@ describe('indice de préparation', () => {
     expect(indice(e, banque).parts.examens).toBe(39);
   });
 
+  it('ne tient pour retenue qu’une question réussie deux jours différents', () => {
+    let un = etatInitial();
+    for (const q of banque) un = enregistrerReponse(un, q.id, true, '2026-09-01');
+    // Vingt questions vues, aucune retenue : vingt points, pas cinquante-cinq.
+    expect(indice(un, banque).parts.vu).toBe(20);
+    expect(indice(un, banque).parts.retenu).toBe(0);
+
+    let deux = etatInitial();
+    for (const q of banque) deux = retenir(deux, q.id);
+    expect(indice(deux, banque).parts.retenu).toBe(35);
+  });
+
+  it('ne compte pas dix réussites du même jour comme une mémoire', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 10; k++) e = enregistrerReponse(e, 'vhf-0', true, '2026-09-01');
+    expect(indice(e, banque).parts.retenu).toBe(0);
+  });
+
   it('borne « vu » aux questions encore publiées', () => {
     let e = enregistrerReponse(etatInitial(), 'retiree-1', true, '2026-09-01');
     e = enregistrerReponse(e, 'vhf-0', true, '2026-09-01');
@@ -71,7 +101,7 @@ describe('indice de préparation', () => {
 
   it('n’annonce « prêt » qu’avec deux examens reçus sur les trois derniers', () => {
     let e = etatInitial();
-    for (const q of banque) e = enregistrerReponse(e, q.id, true, '2026-09-01');
+    for (const q of banque) e = retenir(e, q.id);
     e = examen(e, 33, '2026-09-01');
     e = examen(e, 34, '2026-09-02');
     e = examen(e, 40, '2026-09-03');
@@ -85,7 +115,7 @@ describe('indice de préparation', () => {
 
   it('nomme les paliers intermédiaires', () => {
     let e = etatInitial();
-    for (const q of banque) e = enregistrerReponse(e, q.id, true, '2026-09-01');
+    for (const q of banque) e = retenir(e, q.id);
     expect(indice(e, banque).score).toBe(55);
     expect(indice(e, banque).palier).toBe('en-route');
     e = examen(e, 30);
@@ -153,7 +183,8 @@ describe('maîtrise par thème', () => {
   it('donne, par thème du programme, le vu et le retenu, les faibles d’abord', () => {
     let e = etatInitial();
     for (let k = 0; k < 10; k++) e = enregistrerReponse(e, `vhf-${k}`, k < 4, '2026-09-01');
-    for (let k = 0; k < 5; k++) e = enregistrerReponse(e, `feux-${k}`, true, '2026-09-01');
+    for (let k = 0; k < 4; k++) e = enregistrerReponse(e, `vhf-${k}`, true, '2026-09-02');
+    for (let k = 0; k < 5; k++) e = retenir(e, `feux-${k}`);
     const m = maitriseParTheme(e, banque);
     expect(m.map((t) => t.code)).toEqual(['vhf', 'feux-marques']);
     expect(m[0]).toEqual({ code: 'vhf', total: 10, vues: 10, retenues: 4 });
@@ -167,8 +198,61 @@ describe('maîtrise par thème', () => {
   it('range un thème jamais ouvert derrière ceux qu’on travaille mal', () => {
     let e = etatInitial();
     for (let k = 0; k < 10; k++) e = enregistrerReponse(e, `vhf-${k}`, k < 2, '2026-09-01');
+    for (let k = 0; k < 2; k++) e = enregistrerReponse(e, `vhf-${k}`, true, '2026-09-02');
     // vhf : 20 % retenu, feux : jamais ouvert. Le trou connu passe devant l'inconnu.
     expect(maitriseParTheme(e, banque)[0]!.code).toBe('vhf');
+  });
+});
+
+describe('maîtrise par notion', () => {
+  /** Une banque à deux notions : « feux-marques » ne dit pas où est le trou, la notion si. */
+  const parNotion = [
+    ...Array.from({ length: 4 }, (_, i) => ({ id: `feux-r${i}`, theme: 'feux-marques', notion: 'feux-remorquage' })),
+    ...Array.from({ length: 4 }, (_, i) => ({ id: `feux-m${i}`, theme: 'feux-marques', notion: 'feux-moteur-route' })),
+    ...Array.from({ length: 2 }, (_, i) => ({ id: `vhf-c${i}`, theme: 'vhf', notion: 'vhf-canaux' })),
+  ];
+
+  it('donne le compte, le nom et le chemin de la leçon, les faibles d’abord', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 4; k++) e = enregistrerReponse(e, `feux-r${k}`, k < 1, '2026-09-01');
+    e = enregistrerReponse(e, 'feux-r0', true, '2026-09-02');
+    for (let k = 0; k < 4; k++) e = retenir(e, `feux-m${k}`);
+    const m = maitriseParNotion(e, parNotion);
+    expect(m[0]).toEqual({
+      code: 'feux-remorquage',
+      nom: 'Remorquage et poussage',
+      theme: 'feux-marques',
+      total: 4,
+      vues: 4,
+      retenues: 1,
+      chemin: '/cours/feux-marques/feux-remorquage',
+    });
+    expect(m.map((n) => n.code)).toEqual(['feux-remorquage', 'feux-moteur-route', 'vhf-canaux']);
+  });
+
+  it('range une notion jamais ouverte derrière celles qu’on travaille mal', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 4; k++) e = enregistrerReponse(e, `feux-m${k}`, false, '2026-09-01');
+    expect(maitriseParNotion(e, parNotion)[0]!.code).toBe('feux-moteur-route');
+  });
+
+  it('ne liste pas une notion sans question publiée', () => {
+    expect(maitriseParNotion(etatInitial(), parNotion)).toHaveLength(3);
+  });
+
+  it('ignore une question sans notion plutôt que d’inventer une ligne', () => {
+    const melange = [...parNotion, { id: 'orphe-1', theme: 'vhf' }];
+    expect(maitriseParNotion(etatInitial(), melange).map((n) => n.code)).not.toContain('');
+  });
+
+  it('rend les trois notions les plus faibles, prêtes à afficher', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 4; k++) e = enregistrerReponse(e, `feux-r${k}`, false, '2026-09-01');
+    const trois = notionsLesPlusFaibles(e, parNotion);
+    expect(trois).toHaveLength(3);
+    expect(trois[0]!.code).toBe('feux-remorquage');
+    expect(trois[0]!.chemin).toBe('/cours/feux-marques/feux-remorquage');
+    expect(notionsLesPlusFaibles(e, parNotion, 1)).toHaveLength(1);
   });
 });
 

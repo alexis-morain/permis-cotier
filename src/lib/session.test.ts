@@ -7,6 +7,7 @@ import {
   extraireSauvegarde,
   restaurerSession,
   SAUVEGARDE_PERIMEE_MS,
+  lenteurs,
 } from './session';
 import type { Session } from './session';
 import type { QuestionJouable } from './quiz';
@@ -22,10 +23,10 @@ const T0 = 1_800_000_000_000;
 
 /** Examen déjà commencé : l'écran de départ est franchi. */
 function examen(): Session {
-  return reduire(creerSession('examen', trois), { type: 'commencer', maintenant: T0 });
+  return reduire(creerSession('examen', trois, 1, T0), { type: 'commencer', maintenant: T0 });
 }
 function entrainement(): Session {
-  return creerSession('entrainement', trois);
+  return creerSession('entrainement', trois, 1, T0);
 }
 
 describe('création de session', () => {
@@ -200,8 +201,8 @@ describe('journal des réponses', () => {
   it('note chaque question jouée, pour la progression locale', () => {
     let s = examen();
     s = reduire(s, { type: 'basculer', proposition: 'a' });
-    s = reduire(s, { type: 'valider' });
-    expect(s.journal).toEqual([{ id: 'vhf-0001', juste: true }]);
+    s = reduire(s, { type: 'valider', maintenant: T0 + 4_200 });
+    expect(s.journal).toEqual([{ id: 'vhf-0001', juste: true, ms: 4_200 }]);
   });
 
   it('n’inscrit une question qu’une fois', () => {
@@ -210,6 +211,74 @@ describe('journal des réponses', () => {
     s = reduire(s, { type: 'valider' });
     s = reduire(s, { type: 'valider' });
     expect(s.journal).toHaveLength(1);
+  });
+
+  it('compte le temps de chaque réponse depuis l’affichage de sa question', () => {
+    let s = examen();
+    s = reduire(s, { type: 'basculer', proposition: 'a' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 3_000 });
+    s = reduire(s, { type: 'basculer', proposition: 'b' });
+    s = reduire(s, { type: 'basculer', proposition: 'c' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 3_000 + 18_500 });
+    expect(s.journal.map((l) => l.ms)).toEqual([3_000, 18_500]);
+  });
+
+  it('compte le temps depuis la reprise de la question, pas depuis le départ', () => {
+    let s = entrainement();
+    s = reduire(s, { type: 'basculer', proposition: 'a' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 1_000 });
+    s = reduire(s, { type: 'suivante', maintenant: T0 + 9_000 });
+    s = reduire(s, { type: 'basculer', proposition: 'b' });
+    s = reduire(s, { type: 'basculer', proposition: 'c' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 11_000 });
+    expect(s.journal[1]!.ms).toBe(2_000);
+  });
+
+  it('inscrit les vingt secondes pleines à la question passée au buzzer', () => {
+    let s = examen();
+    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    expect(s.journal[0]).toEqual({ id: 'vhf-0001', juste: false, ms: 20_000 });
+  });
+});
+
+describe('lenteur, le mode d’échec de cette épreuve', () => {
+  /** Un examen mené jusqu’au bout, chaque réponse à la durée voulue. */
+  function jusquAuBout(durees: readonly number[]): Session {
+    let s = examen();
+    let t = T0;
+    for (const ms of durees) {
+      t += ms;
+      s = reduire(s, { type: 'basculer', proposition: 'a' });
+      s = reduire(s, { type: 'valider', maintenant: t });
+    }
+    return s;
+  }
+
+  it('nomme les questions passées au buzzer et celles arrachées à la dernière seconde', () => {
+    const s = jusquAuBout([2_000, 19_400, 20_000]);
+    expect(s.phase).toBe('resultat');
+    const l = lenteurs(s);
+    expect(l.auBuzzer).toEqual(['vhf-0003']);
+    expect(l.aLaLimite).toEqual(['vhf-0002']);
+  });
+
+  it('ne compte ni l’une ni l’autre quand tout est répondu large', () => {
+    const l = lenteurs(jusquAuBout([2_000, 3_000, 4_000]));
+    expect(l.auBuzzer).toEqual([]);
+    expect(l.aLaLimite).toEqual([]);
+  });
+
+  it('ne dit rien d’un examen pas fini, ni d’un entraînement', () => {
+    let s = examen();
+    s = reduire(s, { type: 'basculer', proposition: 'a' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 20_000 });
+    expect(lenteurs(s)).toEqual({ auBuzzer: [], aLaLimite: [] });
+
+    let t = entrainement();
+    t = reduire(t, { type: 'basculer', proposition: 'a' });
+    t = reduire(t, { type: 'valider', maintenant: T0 + 40_000 });
+    t = reduire(t, { type: 'terminer' });
+    expect(lenteurs(t)).toEqual({ auBuzzer: [], aLaLimite: [] });
   });
 });
 
@@ -302,6 +371,28 @@ describe('reprise d’une session interrompue', () => {
     s = reduire(s, { type: 'basculer', proposition: 'b' });
     return s;
   }
+
+  it('garde le temps déjà passé dans le journal sauvegardé', () => {
+    const sauvegarde = extraireSauvegarde(enCours(), undefined, maintenant);
+    expect(sauvegarde!.journal[0]!.ms).toBeGreaterThanOrEqual(0);
+    const apres = restaurerSession(sauvegarde, trois, 'examen', undefined, maintenant + 1000);
+    expect(apres!.journal[0]!.ms).toBe(sauvegarde!.journal[0]!.ms);
+  });
+
+  it('relit une sauvegarde écrite avant le temps par réponse', () => {
+    const ancienne = {
+      mode: 'examen' as const,
+      theme: null,
+      ids: ['vhf-0001', 'vhf-0002', 'vhf-0003'],
+      index: 1,
+      selections: [['a'], [], []],
+      echeance: maintenant + 20_000,
+      journal: [{ id: 'vhf-0001', juste: true }],
+      majLe: maintenant,
+    };
+    const apres = restaurerSession(ancienne, trois, 'examen', undefined, maintenant);
+    expect(apres!.journal).toEqual([{ id: 'vhf-0001', juste: true, ms: 0 }]);
+  });
 
   it('rend une sauvegarde qui redonne la même session', () => {
     const avant = enCours();

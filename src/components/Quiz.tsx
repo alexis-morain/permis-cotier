@@ -13,7 +13,7 @@ import {
   ERREURS_ADMISES,
   aleaSeme,
   ordonnerEntrainement,
-  serieARevoir,
+  serieDuJour,
   tirerExamen,
 } from '../lib/quiz';
 import { LETTRES_AFFICHEES, lettreAffichee, melangerPropositions, rangDeLaTouche } from '../lib/melange';
@@ -113,7 +113,9 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   const serie = useMemo(() => {
     if (questions.length === 0) return [];
     if (mode === 'examen') return tirerExamen(questions, aleaSeme(Date.now() >>> 0));
-    if (revoir) return serieARevoir(questions, depart.questions);
+    // La série du jour, bornée par le rythme choisi : ce qui est dû, puis de
+    // quoi découvrir. Un seul chemin, celui que la pastille de l'accueil compte.
+    if (revoir) return serieDuJour(questions, depart.questions, aujourdhui(), depart.profil.rythme ?? undefined);
     return ordonnerEntrainement(questions, depart.questions);
   }, [mode, questions, revoir, depart]);
 
@@ -145,7 +147,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   const titre = mode === 'examen'
     ? 'Examen blanc'
     : revoir
-      ? 'Révision de tes erreurs'
+      ? 'Ta série du jour'
       : `Entraînement, ${nomDuTheme(theme ?? '')}`;
 
   const retour = mode === 'examen' ? '/examen' : revoir ? '/revoir' : `/entrainement/${theme}`;
@@ -344,10 +346,10 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   if (serie.length === 0) {
     return revoir ? (
       <div className="encadre">
-        <h1 className="encadre__titre">Rien à revoir pour l’instant.</h1>
+        <h1 className="encadre__titre">Rien à revoir aujourd’hui.</h1>
         <p className="discret">
-          Les questions ratées atterrissent ici dès que tu en rates une, et en sortent quand tu
-          les retrouves. <a href="/entrainement">S’entraîner par thème</a>.
+          Chaque question réussie revient un jour plus tard, puis trois, puis sept, puis vingt et un.
+          Rien n’est dû aujourd’hui. <a href="/entrainement">S’entraîner par thème</a>.
         </p>
       </div>
     ) : (
