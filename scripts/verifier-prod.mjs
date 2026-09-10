@@ -263,6 +263,55 @@ if (!police) {
   }
 }
 
+// 12. Le signalement en ligne. Le Worker rend le même 503 générique à toutes
+//     ses pannes — c'est voulu, le détail ne sert qu'à qui cherche la faille —
+//     et la page retombe alors sur le courrier pré-rempli sans que le visiteur
+//     s'aperçoive de rien. Personne ne regardait donc cette adresse : elle
+//     pouvait rester fermée des semaines. Ce contrôle la regarde chaque matin.
+//
+//     Les deux requêtes ne peuvent rien ouvrir. Le GET n'est pas accepté par
+//     l'endpoint, et le POST porte un corps vide : `valider` le refuse bien
+//     avant Turnstile, et donc bien avant GitHub. Aucune issue n'est créée.
+const signalementGet = await recuperer(`${SITE}/api/signaler`);
+const signalementPost = await recuperer(`${SITE}/api/signaler`, {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
+  body: '{}',
+});
+
+if (signalementGet.erreur || signalementPost.erreur) {
+  ko(
+    'signalement en ligne',
+    signalementGet.erreur ?? signalementPost.erreur,
+    'l’adresse ne répond pas du tout : le Worker est-il déployé, la route est-elle posée ?',
+  );
+} else if (signalementGet.reponse.status !== 405) {
+  ko(
+    'signalement en ligne',
+    `GET /api/signaler répond ${signalementGet.reponse.status} au lieu de 405`,
+    signalementGet.reponse.status === 404
+      ? 'l’adresse tombe sur la page 404 des actifs : le Worker n’est plus devant ce chemin, `wrangler deploy` avec `main` dans `wrangler.toml`'
+      : 'quelque chose d’autre répond sur ce chemin',
+  );
+} else if (signalementPost.reponse.status === 503) {
+  // L'état du jour, et il est normal : les secrets ne sont pas encore posés.
+  ok('signalement en ligne', 'endpoint en attente de ses secrets, la page passe par le courrier');
+} else if (signalementPost.reponse.status === 400) {
+  ok('signalement en ligne', 'le formulaire répond, un corps vide est refusé comme prévu');
+} else if (signalementPost.reponse.status === 429) {
+  ko(
+    'signalement en ligne',
+    'la borne de débit a répondu avant l’endpoint',
+    'une seule requête par jour part d’ici : si elle est déjà bornée, `[[ratelimits]]` de `wrangler.toml` compte autre chose que le visiteur',
+  );
+} else {
+  ko(
+    'signalement en ligne',
+    `POST d’un corps vide répond ${signalementPost.reponse.status}`,
+    'un corps vide doit être refusé sans rien ouvrir : vérifier `valider` dans `src/lib/signalement.ts`',
+  );
+}
+
 console.log(`\n${SITE}\n`);
 for (const c of controles) {
   console.log(`  ${c.etat === 'ok' ? '✓' : '✗'} ${c.nom} — ${c.detail}`);
