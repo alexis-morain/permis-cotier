@@ -202,6 +202,11 @@ describe('mélange des propositions de la vérification', () => {
     expect(textes()).toEqual(depart);
   });
 
+  // Douze montages successifs de la leçon entière : sous `--coverage`, chacun
+  // coûte près d'une seconde et le délai par défaut de cinq secondes tombe.
+  // La boucle reste longue à dessein — avec trois propositions, deux tirages
+  // se ressemblent une fois sur six, et il faut plusieurs tours pour que
+  // l'échec soit une vraie information et non un coup de dé.
   it('change d’ordre d’une leçon à l’autre', () => {
     const ordres = new Set<string>();
     for (let i = 0; i < 12; i += 1) {
@@ -210,5 +215,5 @@ describe('mélange des propositions de la vérification', () => {
       cleanup();
     }
     expect(ordres.size).toBeGreaterThan(1);
-  });
+  }, 30_000);
 });
