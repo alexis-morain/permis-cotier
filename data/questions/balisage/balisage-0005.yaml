@@ -24,10 +24,10 @@ explication: >-
   de danger nouveau, de la marque de danger isolé et de la marque spéciale : le rouge
   apparaît dans deux d'entre eux, c'est le sens des bandes, verticales ici, qui tranche.
 sources:
-  - texte: Balisage AISM, marque d'eaux saines
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_le: '2026-09-09'

@@ -4,8 +4,12 @@ import '../styles/app.css';
 import Mesure from '../components/Mesure.astro';
 import Recherche from '../components/Recherche.astro';
 import { SCRIPT_APPARENCE } from '../lib/apparence';
-import { comptesDeRelecture, versionBanque } from '../lib/banque';
+import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
+// L'adresse du fichier bâti, et non son nom écrit à la main : le build pose
+// l'empreinte du contenu dans le nom, et un préchargement qui vise l'ancien
+// nom télécharge une police que personne n'affiche.
+import policeArchivo from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
 import {
   SITE,
   titrePage,
@@ -28,6 +32,12 @@ interface Props {
   miettes?: readonly Miette[];
   /** Nœuds JSON-LD propres à la page, ajoutés au graphe du site. */
   jsonLd?: readonly JsonLd[];
+  /**
+   * Précharger la banque de questions. À poser sur les écrans qui montent un
+   * `Quiz` au premier écran : sans elle, la banque part au quatrième
+   * aller-retour, après le HTML, le runtime React et l'exécution du composant.
+   */
+  prechargeBanque?: boolean;
   /** Image de partage, relative à la racine. */
   image?: string;
   imageAlt?: string;
@@ -40,6 +50,7 @@ const {
   canonique,
   miettes = [],
   jsonLd = [],
+  prechargeBanque = false,
   image = '/partage/le-permis-cotier.png',
   imageAlt = 'Le Permis Côtier — examens blancs au format de l’épreuve',
 } = Astro.props;
@@ -87,6 +98,23 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
           : 'width=device-width, initial-scale=1'
       }
     />
+
+    {/*
+      Ce dont le premier écran a besoin, demandé tout de suite.
+
+      La police n'était découverte que deux sauts après le HTML — le navigateur
+      lit la feuille de style, puis la règle `@font-face`, puis va chercher les
+      90 Ko d'Archivo. Le titre s'affichait donc en Helvetica avant de sauter.
+
+      La banque, elle, partait au quatrième aller-retour : HTML, puis
+      `client.js` et `Quiz.js`, puis l'exécution du composant, puis seulement
+      le `fetch`. Un aller-retour de moins sur la première question.
+    */}
+    <link rel="preload" as="font" type="font/woff2" href={policeArchivo} crossorigin />
+    {prechargeBanque && (
+      <link rel="preload" as="fetch" type="application/json" href={cheminBanque()} crossorigin />
+    )}
+
     <title>{titreComplet}</title>
     <meta name="description" content={descriptionCourte} />
     <link rel="canonical" href={url} />
@@ -113,6 +141,28 @@ const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`$
     <!-- L'apparence choisie sur la fiche, posée avant le premier rendu. -->
     <script is:inline set:html={SCRIPT_APPARENCE} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {/*
+      Le manifeste et l'enregistrement du service worker. `@vite-pwa/astro`
+      construit `sw.js`, `registerSW.js` et le manifeste, mais ne les pose sur
+      aucune page : il retire le plugin `vite-plugin-pwa:build`, celui dont le
+      `transformIndexHtml` s'en chargerait dans une application Vite ordinaire.
+      Sans ces deux lignes, le service worker était servi en production sans
+      qu'aucun navigateur ne l'installe, et le site n'était ni hors ligne ni
+      installable. En développement, `devOptions` est à false : les deux
+      fichiers n'existent pas, d'où la garde sur la production.
+
+      Rien de tout ceci dans la coquille : `CIBLE=app` coupe la PWA, donc ni
+      `sw.js` ni le manifeste ne sont bâtis, et les deux balises pointeraient
+      sur des 404. Un service worker par-dessus des fichiers déjà locaux, ce
+      serait de toute façon deux caches qui se marchent dessus, dont un périmé.
+    */}
+    {!POUR_APP && import.meta.env.PROD && (
+      <Fragment>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <script is:inline defer src="/registerSW.js"></script>
+      </Fragment>
+    )}
 
     {noeuds.length > 0 && <script type="application/ld+json" set:html={graphe(noeuds)} is:inline />}
 

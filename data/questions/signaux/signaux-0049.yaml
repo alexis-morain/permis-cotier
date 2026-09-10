@@ -1,0 +1,31 @@
+id: signaux-0049
+option: cotier
+theme: signaux
+notion: signaux-meteo
+statut: publie
+difficulte: 2
+enonce: >-
+  Le tableau de la capitainerie annonce « avis de coup de vent » sur ta zone. Quelle force
+  de vent est annoncée ?
+propositions:
+  - id: a
+    texte: Force 8 au moins, soit 34 à 40 nœuds
+  - id: b
+    texte: Force 7 au moins, soit 28 à 33 nœuds
+  - id: c
+    texte: Force 6 au moins, soit 22 à 27 nœuds
+reponses:
+  - a
+explication: >-
+  L'avis porte le nom de la force annoncée sur l'échelle de Beaufort, et le coup de vent
+  est la force 8, 34 à 40 nœuds. C'est le grand frais qui commence à la force 7 : un degré
+  Beaufort sépare les deux, et c'est celui-là qu'on confond. Sous la force 7, il n'y a
+  pas d'avis du tout.
+sources:
+  - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
+    ref: fiche-meteo
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

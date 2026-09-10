@@ -17,15 +17,21 @@ propositions:
 reponses:
   - a
 explication: >-
-  Les bandes verticales bleues et jaunes désignent la marque de danger nouveau, qui double
-  le balisage normal d'un danger tout juste découvert, une épave par exemple, tant qu'il
-  ne figure pas sur les documents nautiques. Elle porte une croix jaune en X et un feu
-  bleu et jaune alternés. Le piège vient de cette croix jaune, qu'elle partage avec la
-  marque spéciale, laquelle a un corps entièrement jaune et ne signale aucun danger.
+  Les bandes verticales bleues et jaunes désignent la bouée d'épave en cas d'urgence. Elle est
+  l'un des moyens de signaler un danger nouveau, au même titre qu'une marque latérale,
+  cardinale ou de danger isolé, tant que ce danger ne figure pas sur les documents nautiques.
+  Elle porte une croix jaune aux branches droites, verticale et horizontale, et un feu bleu et
+  jaune alternés. Le piège vient de cette croix, que la marque spéciale porte aussi mais posée
+  en X, sur un corps entièrement jaune qui ne signale aucun danger.
 sources:
-  - texte: Balisage AISM région A, marque de danger nouveau
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

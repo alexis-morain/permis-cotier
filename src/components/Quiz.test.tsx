@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Quiz from './Quiz';
 import type { QuestionAffichable } from '../lib/banque';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
@@ -12,10 +12,11 @@ import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
  * remonte, les touches, et l'arrêt qui ne rend pas un zéro imaginaire.
  */
 
-function question(id: string, theme = 'ecluses', reponses = ['a']): QuestionAffichable {
+function question(id: string, theme = 'ecluses', reponses = ['a'], notion?: string): QuestionAffichable {
   return {
     id,
     theme,
+    notion,
     reponses,
     enonce: `Énoncé de ${id}`,
     explication: `Explication de ${id}`,
@@ -75,7 +76,7 @@ describe('écran de départ de l’examen', () => {
           index: 1,
           selections: [['a'], [], []],
           echeance: Date.now() + 12_000,
-          journal: [{ id: 'ecluses-0001', juste: true }],
+          journal: [{ id: 'ecluses-0001', juste: true, ms: 3_000 }],
           majLe: Date.now(),
         },
       }),
@@ -104,7 +105,7 @@ describe('écran de départ de l’examen', () => {
           index: 2,
           selections: [['a'], ['b'], []],
           echeance: Date.now() + 12_000,
-          journal: [{ id: 'ecluses-0001', juste: true }],
+          journal: [{ id: 'ecluses-0001', juste: true, ms: 3_000 }],
           majLe: Date.now(),
         },
       }),
@@ -112,7 +113,7 @@ describe('écran de départ de l’examen', () => {
     render(<Quiz mode="examen" questions={trois} />);
     const reprendre = screen.getByRole('button', { name: /Reprendre à la question 3/ });
     fireEvent.click(reprendre);
-    expect(screen.getByText(/Question 3/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 3');
   });
 });
 
@@ -139,15 +140,58 @@ describe('correction en entraînement', () => {
   });
 });
 
+describe('le focus suit la question', () => {
+  // L'épreuve est chronométrée : qui joue au clavier ou au lecteur d'écran ne
+  // peut pas repartir du haut du document à chaque question. Le bouton qu'on
+  // vient d'activer disparaît, et sans ce geste le focus retombe sur `body`.
+
+  it('se pose sur l’énoncé dès que l’examen démarre', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(document.activeElement).toBe(document.body);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    expect(document.activeElement).toBe(screen.getByRole('heading', { level: 2 }));
+  });
+
+  it('suit le passage à la question suivante', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    const premier = screen.getByRole('heading', { level: 2 });
+    fireEvent.keyDown(document.body, { key: 'a' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    const second = screen.getByRole('heading', { level: 2 });
+    expect(second).not.toBe(premier);
+    expect(document.activeElement).toBe(second);
+  });
+
+  it('dit où l’on en est, pour qui ne voit pas le compteur', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toContain('Question 1 sur 3.');
+  });
+
+  it('laisse l’entrée valider : l’énoncé n’est ni bouton ni lien', () => {
+    // La garde `activable` du gestionnaire de touches s'efface devant un
+    // BUTTON ou un A qui a le focus. Un titre n'en est pas un, donc Entrée
+    // continue de valider au lieu de rejouer le bouton focalisé.
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'a' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    expect(screen.getByRole('status')).toBeTruthy();
+  });
+});
+
 describe('clavier', () => {
   it('coche par sa lettre et valide à l’entrée', () => {
     render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
     fireEvent.keyDown(document.body, { key: 'b' });
-    expect(screen.getByRole('button', { name: /Deuxième proposition/ }).getAttribute('aria-pressed')).toBe('true');
+    // « B » désigne la deuxième ligne de l'écran, pas la proposition d'identifiant
+    // « b » : les propositions sont mélangées à l'affichage.
+    const deuxieme = document.querySelectorAll('.propositions .proposition')[1]!;
+    expect(deuxieme.getAttribute('aria-pressed')).toBe('true');
     fireEvent.keyDown(document.body, { key: 'Enter' });
     expect(screen.getByRole('status')).toBeTruthy();
     fireEvent.keyDown(document.body, { key: 'Enter' });
-    expect(screen.getByText(/Question 2/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
   });
 
   it('ignore une lettre sans proposition', () => {
@@ -176,7 +220,7 @@ describe('clavier', () => {
     const valider = screen.getByRole('button', { name: 'Valider et passer' });
     valider.focus();
     fireEvent.keyDown(valider, { key: 'Enter' });
-    expect(screen.getByText(/Question 1/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 1');
   });
 });
 
@@ -241,29 +285,64 @@ describe('arrêt d’un examen en cours', () => {
   });
 });
 
-describe('révision des erreurs', () => {
-  it('ne garde que les ratées de la progression locale', () => {
+describe('la série du jour', () => {
+  /** Une progression écrite dans le stockage, telle que le navigateur la garde. */
+  function progression(questions: Record<string, unknown>, rythme: number | null = null) {
     localStorage.setItem(
       CLE_STOCKAGE,
       JSON.stringify({
         version: VERSION_STOCKAGE,
-        questions: {
-          'ecluses-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
-          'ecluses-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02' },
-        },
+        questions,
         examens: [],
         dateExamen: null,
         enCours: null,
+        profil: { prenom: '', motivations: [], phrase: '', depart: null, rythme, rempliLe: null },
       }),
     );
+  }
+
+  /** Une question réussie et reprogrammée loin devant : elle n'est pas due. */
+  const rangee = {
+    vues: 2, ratees: 0, derniereReussie: true, vueLe: '2026-09-01',
+    succes: 4, dernierSuccesLe: '2026-09-01', revoirLe: '2099-01-01',
+  };
+  /** Une question ratée : due tout de suite. */
+  const ratee = {
+    vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02',
+    succes: 0, revoirLe: '2026-09-02',
+  };
+
+  it('joue ce qui est dû, et laisse dehors ce qui est reprogrammé plus tard', () => {
+    progression({
+      'ecluses-0001': rangee,
+      'ecluses-0002': ratee,
+      'ecluses-0003': rangee,
+    });
     render(<Quiz mode="entrainement" questions={trois} revoir />);
     expect(screen.getByText('Énoncé de ecluses-0002')).toBeTruthy();
     expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 1');
   });
 
-  it('le dit franchement quand il n’y a rien à revoir', () => {
+  it('complète avec des questions jamais vues quand la place reste', () => {
+    progression({ 'ecluses-0002': ratee });
     render(<Quiz mode="entrainement" questions={trois} revoir />);
-    expect(screen.getByText(/Rien à revoir pour l’instant/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 3');
+  });
+
+  it('borne la série au rythme choisi par le candidat', () => {
+    progression({}, 2);
+    render(<Quiz mode="entrainement" questions={trois} revoir />);
+    expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 2');
+  });
+
+  it('le dit franchement quand rien n’est dû aujourd’hui', () => {
+    progression({
+      'ecluses-0001': rangee,
+      'ecluses-0002': rangee,
+      'ecluses-0003': rangee,
+    });
+    render(<Quiz mode="entrainement" questions={trois} revoir />);
+    expect(screen.getByText(/Rien à revoir aujourd’hui/)).toBeTruthy();
   });
 });
 
@@ -323,6 +402,49 @@ describe('ce que la série raconte à la mesure', () => {
   });
 });
 
+describe('le rappel de la raison sur le résultat', () => {
+  it('revient quand l’examen est recalé, avec l’écart au précédent', () => {
+    const quatre = [question('a-1'), question('a-2'), question('a-3'), question('a-4'), question('a-5'), question('a-6')];
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [{ date: '2026-09-01', bonnes: 2, total: 6, reussi: false }],
+        profil: { prenom: '', motivations: ['bateau'], phrase: '', depart: null, rythme: null, rempliLe: '2026-09-01' },
+      }),
+    );
+    render(<Quiz mode="examen" questions={quatre} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    // Six questions sans réponse : six erreurs, recalé.
+    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.getByText(/Recalé/)).toBeTruthy();
+    expect(screen.getByText(/Tu passes ce permis pour/)).toBeTruthy();
+    expect(screen.getByText('Ton bateau à toi, et la mer devant.')).toBeTruthy();
+    expect(screen.getByText(/Ton examen d’avant : 2 sur 6/).textContent).toContain('2 de moins');
+  });
+
+  it('se tait quand l’examen est reçu', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [],
+        profil: { prenom: '', motivations: ['bateau'], phrase: '', depart: null, rythme: null, rempliLe: '2026-09-01' },
+      }),
+    );
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    expect(screen.getByText(/Reçu/)).toBeTruthy();
+    expect(screen.queryByText(/Tu passes ce permis pour/)).toBeNull();
+  });
+});
+
 /**
  * La banque arrive maintenant par un JSON commun aux seize écrans de jeu, au
  * lieu d'être sérialisée dans chaque page. Le corps du jeu ne doit monter
@@ -375,7 +497,8 @@ describe('la banque téléchargée', () => {
       expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy(),
     );
     expect(appel).toHaveBeenCalledTimes(1);
-    expect(appel).toHaveBeenCalledWith('/banque/1.10.2.json');
+    // Le second argument porte le signal d'abandon de l'échéance.
+    expect(appel).toHaveBeenCalledWith('/banque/1.10.2.json', expect.anything());
   });
 
   it('ne va rien chercher quand les questions sont déjà là', () => {
@@ -405,6 +528,26 @@ describe('la banque téléchargée', () => {
     );
   });
 
+  it('renonce au bout de quinze secondes plutôt que de tourner sans fin', async () => {
+    // Un réseau qui accepte la connexion et ne répond jamais — portail captif,
+    // tunnel, mobile mort — ne rejette pas la promesse : sans échéance, la
+    // silhouette bat indéfiniment et le candidat n'a même pas de bouton.
+    vi.useFakeTimers();
+    try {
+      vi.stubGlobal('fetch', vi.fn(() => new Promise(() => {})) as unknown as typeof fetch);
+      render(<Quiz mode="examen" source="/banque/v/1.10.2.json" />);
+      expect(document.querySelector('.silhouette')).toBeTruthy();
+
+      await act(async () => {
+        vi.advanceTimersByTime(15_000);
+      });
+      expect(screen.getByText(/Les questions ne sont pas arrivées/)).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Réessayer' })).toBeTruthy();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('traite un 404 comme une coupure, pas comme une banque vide', async () => {
     vi.stubGlobal(
       'fetch',
@@ -419,45 +562,271 @@ describe('la banque téléchargée', () => {
   });
 });
 
-describe('le rappel de la raison sur le résultat', () => {
-  it('revient quand l’examen est recalé, avec l’écart au précédent', () => {
-    const quatre = [question('a-1'), question('a-2'), question('a-3'), question('a-4'), question('a-5'), question('a-6')];
-    localStorage.setItem(
-      CLE_STOCKAGE,
-      JSON.stringify({
-        version: VERSION_STOCKAGE,
-        questions: {},
-        examens: [{ date: '2026-09-01', bonnes: 2, total: 6, reussi: false }],
-        profil: { prenom: '', motivations: ['bateau'], phrase: '', depart: null, rythme: null, rempliLe: '2026-09-01' },
-      }),
-    );
-    render(<Quiz mode="examen" questions={quatre} />);
-    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
-    // Six questions sans réponse : six erreurs, recalé.
-    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
-    expect(screen.getByText(/Recalé/)).toBeTruthy();
-    expect(screen.getByText(/Tu passes ce permis pour/)).toBeTruthy();
-    expect(screen.getByText('Ton bateau à toi, et la mer devant.')).toBeTruthy();
-    expect(screen.getByText(/Ton examen d’avant : 2 sur 6/).textContent).toContain('2 de moins');
+/**
+ * Le mélange des propositions.
+ *
+ * La banque range presque toujours la bonne réponse en premier : l'ordre du
+ * fichier ne peut plus être celui de l'écran. Ce qui est vérifié ici est ce que
+ * le mélange doit garantir au candidat — un ordre qui ne bouge pas sous ses
+ * doigts, des lettres qui suivent l'écran, et une correction qui reste juste.
+ */
+const lignes = () => [...document.querySelectorAll<HTMLElement>('.propositions .proposition')];
+const textes = () => lignes().map((n) => n.children[1]?.textContent ?? '');
+const lettres = () => lignes().map((n) => n.querySelector('.proposition__lettre')?.textContent ?? '');
+
+describe('mélange des propositions', () => {
+  it('nomme les lignes dans l’ordre de l’écran, pas dans celui du fichier', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    expect(lettres()).toEqual(['A', 'B', 'C', 'D']);
+    expect(lignes().map((n) => n.getAttribute('aria-keyshortcuts'))).toEqual(['A', 'B', 'C', 'D']);
   });
 
-  it('se tait quand l’examen est reçu', () => {
-    localStorage.setItem(
-      CLE_STOCKAGE,
-      JSON.stringify({
-        version: VERSION_STOCKAGE,
-        questions: {},
-        examens: [],
-        profil: { prenom: '', motivations: ['bateau'], phrase: '', depart: null, rythme: null, rempliLe: '2026-09-01' },
-      }),
-    );
+  it('ne déplace pas les propositions quand on coche et qu’on corrige', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    const depart = textes();
+    fireEvent.click(lignes()[0]!);
+    expect(textes()).toEqual(depart);
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(textes()).toEqual(depart);
+  });
+
+  it('change d’ordre d’une session à l’autre', () => {
+    const ordres = new Set<string>();
+    for (let i = 0; i < 12; i += 1) {
+      render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+      ordres.add(textes().join('|'));
+      cleanup();
+    }
+    expect(ordres.size).toBeGreaterThan(1);
+  });
+
+  it('fait suivre le clavier la lettre affichée', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'b' });
+    expect(lignes().map((n) => n.getAttribute('aria-pressed'))).toEqual([
+      'false', 'true', 'false', 'false',
+    ]);
+  });
+
+  it('corrige juste la bonne réponse, où qu’elle soit affichée', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(screen.getByText('Bonne réponse')).toBeTruthy();
+  });
+
+  it('garde le même ordre à la reprise d’un examen interrompu', () => {
+    const enCours = {
+      mode: 'examen',
+      theme: null,
+      ids: trois.map((q) => q.id),
+      index: 0,
+      selections: [[], [], []],
+      echeance: Date.now() + 12_000,
+      journal: [],
+      graine: 4242,
+      majLe: Date.now(),
+    };
+    const sauvegarde = JSON.stringify({
+      version: VERSION_STOCKAGE,
+      questions: {},
+      examens: [],
+      dateExamen: null,
+      enCours,
+    });
+
+    const reprendre = () => {
+      localStorage.setItem(CLE_STOCKAGE, sauvegarde);
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 1/ }));
+      const ordre = textes();
+      cleanup();
+      return ordre;
+    };
+
+    // Deux retours sur le même examen sauvegardé : les propositions ne bougent
+    // pas. Sans la graine dans la sauvegarde, elles seraient redistribuées.
+    expect(reprendre()).toEqual(reprendre());
+  });
+
+  it('revoit les questions dans l’ordre où elles ont été jouées', () => {
     render(<Quiz mode="examen" questions={trois} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
-    for (let i = 0; i < 3; i++) {
-      fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    const joue = textes();
+    for (let i = 0; i < 3; i += 1) {
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    expect(screen.getByText(/Reçu/)).toBeTruthy();
-    expect(screen.queryByText(/Tu passes ce permis pour/)).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+    const premiere = document.querySelector('.revue__item');
+    const revus = [...premiere!.querySelectorAll('.proposition')].map(
+      (n) => n.children[1]?.textContent ?? '',
+    );
+    expect(revus).toEqual(joue);
+  });
+});
+
+describe('entraînement sur une notion', () => {
+  function servir(questions: QuestionAffichable[]) {
+    return vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ version: '1.10.2', questions }),
+    })) as unknown as typeof fetch;
+  }
+
+  const laterale = question('balisage-0001', 'balisage', ['a'], 'balisage-lateral');
+  const cardinale = question('balisage-0002', 'balisage', ['a'], 'balisage-cardinal');
+
+  it('ne joue que les questions de la notion, et se nomme par elle', async () => {
+    vi.stubGlobal('fetch', servir([laterale, cardinale]));
+    render(
+      <Quiz
+        mode="entrainement"
+        source="/banque/1.10.2.json"
+        theme="balisage"
+        notion={{ code: 'balisage-lateral', nom: 'Marques latérales' }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de balisage-0001/)).toBeTruthy());
+    expect(screen.queryByText(/Énoncé de balisage-0002/)).toBeNull();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Entraînement, Marques latérales');
+  });
+
+  it('renvoie sur la série de la notion au bout de la série', async () => {
+    vi.stubGlobal('fetch', servir([laterale]));
+    render(
+      <Quiz
+        mode="entrainement"
+        source="/banque/1.10.2.json"
+        theme="balisage"
+        notion={{ code: 'balisage-lateral', nom: 'Marques latérales' }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de balisage-0001/)).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    expect(screen.getByRole('link', { name: 'Recommencer' }).getAttribute('href')).toBe(
+      '/entrainement/notion/balisage-lateral',
+    );
+  });
+});
+
+describe('de la question ratée à la leçon', () => {
+  const laterale = question('balisage-0001', 'balisage', ['a'], 'balisage-lateral');
+  const sansNotion = question('balisage-0002', 'balisage', ['a']);
+
+  function rater() {
+    fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+  }
+
+  it('mène à la leçon sous un verdict raté, et garde le chemin du retour', () => {
+    render(<Quiz mode="entrainement" questions={[laterale]} theme="balisage" />);
+    rater();
+    const lien = screen.getByRole('link', { name: /La leçon/ });
+    expect(lien.getAttribute('href')).toBe(
+      '/cours/balisage/balisage-lateral?retour=%2Fentrainement%2Fbalisage',
+    );
+  });
+
+  it('ne dit rien sous une bonne réponse, ni sans notion', () => {
+    render(<Quiz mode="entrainement" questions={[laterale]} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(screen.queryByRole('link', { name: /La leçon/ })).toBeNull();
+
+    cleanup();
+    render(<Quiz mode="entrainement" questions={[sansNotion]} theme="balisage" />);
+    rater();
+    expect(screen.queryByRole('link', { name: /La leçon/ })).toBeNull();
+  });
+
+  it('mène aussi à la leçon depuis la revue d’un examen, et ramène aux erreurs', () => {
+    render(<Quiz mode="examen" questions={[laterale]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+
+    expect(screen.getByRole('link', { name: /La leçon/ }).getAttribute('href')).toBe(
+      '/cours/balisage/balisage-lateral?retour=%2Fprofil%2Ferreurs',
+    );
+  });
+});
+
+describe('la série reprise là où on l’a laissée', () => {
+  const deux = [question('balisage-0001', 'balisage', ['a'], 'balisage-lateral'), question('balisage-0002', 'balisage')];
+
+  it('propose de reprendre l’entraînement quitté pour une leçon', () => {
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+
+    // On part lire la leçon : la page est quittée, l'écran remonte au retour.
+    cleanup();
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+    // La réponse déjà donnée ne se recompte pas dans la progression.
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
+    expect(etat.questions['balisage-0001'].vues).toBe(1);
+  });
+
+  it('ne mélange pas la série d’un thème avec celle d’un autre, ni avec l’examen', () => {
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    cleanup();
+    render(<Quiz mode="entrainement" questions={deux} theme="feux-marques" />);
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+
+    cleanup();
+    render(<Quiz mode="examen" questions={deux} />);
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+  });
+});
+
+describe('le temps, au résultat de l’examen', () => {
+  it('dit les questions passées au buzzer', async () => {
+    vi.useFakeTimers();
+    try {
+      render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      await act(async () => {
+        vi.advanceTimersByTime(21_000);
+      });
+      expect(document.querySelector('.resultat__temps')?.textContent).toContain(
+        '1 question passée au buzzer, sans réponse dans les vingt secondes.',
+      );
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('ne parle pas de temps quand tout a été répondu à l’aise', () => {
+    render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.queryByText(/au buzzer/)).toBeNull();
+    expect(screen.queryByText(/dernière seconde/)).toBeNull();
+  });
+
+  it('ne parle pas de temps en entraînement, où il n’y a pas de chrono', () => {
+    render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(screen.queryByText(/au buzzer/)).toBeNull();
   });
 });

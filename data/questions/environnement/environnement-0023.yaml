@@ -1,0 +1,34 @@
+id: environnement-0023
+option: cotier
+theme: environnement
+notion: env-antisalissures
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu ponces l'antisalissure de ta coque sur le terre-plein du port, puis tu rinces à l'eau
+  claire. L'eau de rinçage part au caniveau et rejoint la mer. Le code de l'environnement
+  s'en soucie-t-il ?
+propositions:
+  - id: a
+    texte: Oui, il punit le fait de laisser écouler indirectement en mer des substances
+      nuisibles aux animaux et végétaux marins
+  - id: b
+    texte: Non, seul un rejet versé directement par-dessus bord est visé
+  - id: c
+    texte: Non, tant qu'aucun produit pur n'a été déversé
+reponses:
+  - a
+explication: >-
+  L'article L. 218-73 punit le fait de jeter, déverser ou laisser écouler, directement
+  ou indirectement, des substances nuisibles pour la conservation ou la reproduction des
+  animaux et végétaux marins. Le mot qui compte est « indirectement » : les particules
+  de peinture emportées par l'eau de rinçage arrivent en mer par le caniveau, et cela
+  suffit. On n'a rien versé par-dessus bord, on a quand même laissé écouler.
+sources:
+  - texte: Code de l'environnement, article L. 218-73
+    ref: code-environnement
+meta:
+  cree_le: '2026-09-08'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

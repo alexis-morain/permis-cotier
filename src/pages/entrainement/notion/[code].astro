@@ -1,0 +1,67 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SansScript from '../../../components/SansScript.astro';
+import Quiz from '../../../components/Quiz.tsx';
+import { cheminBanque, questionsPubliees } from '../../../lib/banque';
+import { NOTIONS } from '../../../lib/notions';
+import { cheminLecon } from '../../../lib/parcours';
+import { themeParCode } from '../../../lib/themes';
+
+/**
+ * L'entraînement d'une notion : cent cinq écrans, un par unité d'apprentissage.
+ *
+ * Quatorze thèmes, c'est la maille de l'épreuve, pas celle de la révision :
+ * « feux et marques » fait soixante et une questions, et personne ne rejoue
+ * soixante et une questions pour vérifier une règle de remorquage. Cette page
+ * est ce que visent la fin d'une leçon, la fiche du candidat et le lien sous
+ * une question ratée.
+ *
+ * Hors sitemap et en `noindex` comme les autres écrans de jeu, et gardée à la
+ * demande par le service worker : cent cinq pages n'entrent pas au précache,
+ * voir `src/lib/hors-ligne.ts`.
+ */
+export async function getStaticPaths() {
+  const questions = await questionsPubliees();
+  return NOTIONS.map((notion) => ({
+    params: { code: notion.code },
+    props: { notion, publiees: questions.filter((q) => q.notion === notion.code).length },
+  }));
+}
+
+const { notion, publiees } = Astro.props;
+const theme = themeParCode(notion.theme);
+const nomTheme = theme?.nom ?? notion.theme;
+const banque = cheminBanque();
+---
+
+<Base
+  titre={`Entraînement : ${notion.nom}`}
+  description={`Les questions de la notion ${notion.nom}, avec correction immédiate et source.`}
+  indexable={false}
+  prechargeBanque
+>
+  <div class="page page--etroite">
+    <p class="chapitre" style="padding-top:1.5rem">
+      <a href="/entrainement">Entraînement</a> · <a href={`/entrainement/${notion.theme}`}>{nomTheme}</a> · {notion.nom}
+    </p>
+    <SansScript ecran="L’entraînement" />
+    <Quiz
+      client:only="react"
+      mode="entrainement"
+      source={banque}
+      theme={notion.theme}
+      notion={{ code: notion.code, nom: notion.nom }}
+    />
+    <p class="discret notion__liens">
+      {publiees === 0
+        ? 'Cette notion n’a pas encore de question.'
+        : `${publiees} question${publiees > 1 ? 's' : ''} sur cette notion.`}
+      {' '}<a href={cheminLecon(notion)}>Sa leçon</a>, ou tout le thème
+      {' '}<a href={`/entrainement/${notion.theme}`}>{nomTheme.toLowerCase()}</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .notion__liens { margin-top: 2rem; }
+</style>

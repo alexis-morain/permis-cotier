@@ -17,15 +17,23 @@ propositions:
 reponses:
   - a
 explication: >-
-  En région A, dont la France fait partie, la marque latérale bâbord est rouge et cylindrique,
-  dite « en boîte de conserve », avec un voyant cylindrique rouge. Le sens conventionnel
-  de balisage est celui du large vers le port, donc en rentrant tu la laisses bien à bâbord.
-  Le piège est la région B (Amériques, Japon, Corée du Sud, Philippines) où les couleurs
-  latérales sont inversées, et l'échange des formes avec la marque tribord, qui est conique.
+  En région A, dont la France métropolitaine fait partie, la marque latérale bâbord est rouge
+  et cylindrique, dite « en boîte de conserve », avec un voyant cylindrique rouge. Le sens
+  conventionnel de balisage est celui du large vers le port, donc en rentrant tu la laisses
+  bien à bâbord. Le piège est la région B, celle de Saint-Pierre-et-Miquelon, la Guyane, la
+  Martinique et la Guadeloupe, où les couleurs latérales sont inversées, et l'échange des
+  formes avec la marque tribord, qui est conique.
 sources:
-  - texte: Balisage AISM, région A, marques latérales
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.1.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.1
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

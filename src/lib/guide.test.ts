@@ -44,9 +44,22 @@ describe('sources citées', () => {
       const resolues = sourcesResolues(p);
       expect(resolues, `sources de ${p.slug}`).toHaveLength(p.sources.length);
       for (const s of resolues) {
+        expect(s.provenance).toBe('officiel');
         expect(s.url).toMatch(/^https:\/\/www\.legifrance\.gouv\.fr\//);
       }
     }
+  });
+
+  it('garde une source sans URL au lieu de la faire disparaître de la page', () => {
+    // La version précédente filtrait sur l'URL : une fiche du site, qui n'en a
+    // pas dans son en-tête, tombait de la page sans que rien ne le signale.
+    const page = {
+      ...GUIDE[0]!,
+      sources: [{ texte: 'Fiche météorologie', ref: 'fiche-meteo' }],
+    };
+    const resolues = sourcesResolues(page);
+    expect(resolues).toHaveLength(1);
+    expect(resolues[0]?.url).toBe('/source/fiche-meteo');
   });
 });
 

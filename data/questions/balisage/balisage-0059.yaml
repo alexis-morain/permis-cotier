@@ -1,0 +1,33 @@
+id: balisage-0059
+option: cotier
+theme: balisage
+notion: balisage-eaux-saines
+statut: publie
+difficulte: 2
+enonce: >-
+  Quelles formes l'arrêté retient-il pour une marque d'eaux saines ?
+propositions:
+  - id: a
+    texte: Sphérique
+  - id: b
+    texte: Charpente ou espar, avec un voyant sphérique
+  - id: c
+    texte: Cylindrique
+  - id: d
+    texte: Conique
+reponses:
+  - a
+  - b
+explication: >-
+  L'arrêté écrit « Forme : Sphérique ; charpente ou espar avec un voyant sphérique ». La
+  sphère est donc dans la marque elle-même quand c'est une bouée, et dans son voyant quand
+  c'en est une autre. Le cylindre et le cône appartiennent aux marques latérales : les retenir
+  ici, ce serait annoncer un côté à respecter là où il n'y en a pas.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-09'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

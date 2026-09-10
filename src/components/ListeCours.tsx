@@ -11,7 +11,7 @@ import './parcours.css';
  * est, et tend la leçon à faire maintenant.
  */
 
-export interface CoursListe {
+interface CoursListe {
   code: string;
   titre: string;
   promesse: string;

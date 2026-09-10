@@ -36,7 +36,9 @@ const ecrite: LeconAffichable = {
   ],
   piege: 'En sortant, la rouge est à droite.',
   retenir: ['Rouge à bâbord.', 'Vert à tribord.'],
-  sources: [{ texte: 'Balisage AISM, région A', url: 'https://example.org/planche.pdf' }],
+  sources: [
+    { texte: 'Balisage AISM, région A', ref: 'aism-mbs', provenance: 'fiche', url: '/source/aism-mbs' },
+  ],
   questions: [question('balisage-0001'), question('balisage-0002', ['b'])],
 };
 
@@ -56,7 +58,6 @@ const cadre = {
   rang: 1,
   total: 12,
   suite: { type: 'lecon' as const, chemin: '/cours/balisage/balisage-chenal-prefere', nom: 'Chenal préféré' },
-  theme: { code: 'balisage', nom: 'Balisage' },
 };
 
 beforeEach(() => {
@@ -174,5 +175,85 @@ describe('la lecture continue', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
     expect(screen.getByText('Leçon faite')).toBeTruthy();
     expect(charger().lecons['signaux-portuaires']).toBeTruthy();
+  });
+});
+
+describe('mélange des propositions de la vérification', () => {
+  const verification = () => {
+    render(<Lecon lecon={ecrite} {...cadre} />);
+    for (let i = 0; i < 4; i += 1) fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Vérifier ce que j’ai retenu' }));
+  };
+  const lignes = () => [...document.querySelectorAll<HTMLElement>('.propositions .proposition')];
+  const textes = () => lignes().map((n) => n.children[1]?.textContent ?? '');
+
+  it('nomme les lignes dans l’ordre de l’écran', () => {
+    verification();
+    expect(lignes().map((n) => n.querySelector('.proposition__lettre')?.textContent)).toEqual([
+      'A', 'B', 'C',
+    ]);
+  });
+
+  it('ne déplace pas les propositions quand on coche et qu’on corrige', () => {
+    verification();
+    const depart = textes();
+    fireEvent.click(lignes()[0]!);
+    expect(textes()).toEqual(depart);
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(textes()).toEqual(depart);
+  });
+
+  // Douze montages successifs de la leçon entière : sous `--coverage`, chacun
+  // coûte près d'une seconde et le délai par défaut de cinq secondes tombe.
+  // La boucle reste longue à dessein — avec trois propositions, deux tirages
+  // se ressemblent une fois sur six, et il faut plusieurs tours pour que
+  // l'échec soit une vraie information et non un coup de dé.
+  it('change d’ordre d’une leçon à l’autre', () => {
+    const ordres = new Set<string>();
+    for (let i = 0; i < 12; i += 1) {
+      verification();
+      ordres.add(textes().join('|'));
+      cleanup();
+    }
+    expect(ordres.size).toBeGreaterThan(1);
+  }, 30_000);
+});
+
+describe('le retour vers la série', () => {
+  afterEach(() => window.history.replaceState({}, '', '/'));
+
+  it('ramène là d’où l’on vient, en tête et à la fin', () => {
+    window.history.replaceState({}, '', '/cours/balisage/balisage-lateral?retour=%2Frevoir');
+    render(<Lecon lecon={courte} {...cadre} />);
+
+    const enTete = screen.getByRole('link', { name: 'Revenir à ta série du jour' });
+    expect(enTete.getAttribute('href')).toBe('/revoir');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+    expect(screen.getAllByRole('link', { name: 'Revenir à ta série du jour' }).length).toBe(2);
+  });
+
+  it('ne propose rien quand l’adresse ne dit pas d’où l’on vient', () => {
+    render(<Lecon lecon={courte} {...cadre} />);
+    expect(screen.queryByRole('link', { name: /Revenir/ })).toBeNull();
+  });
+
+  it('ne suit pas une adresse qui n’est pas du site', () => {
+    window.history.replaceState({}, '', '/cours/balisage/balisage-lateral?retour=https%3A%2F%2Fexemple.fr');
+    render(<Lecon lecon={courte} {...cadre} />);
+    expect(screen.queryByRole('link', { name: /Revenir/ })).toBeNull();
+  });
+
+  it('renvoie sur les questions de la notion, pas sur tout le thème', () => {
+    render(<Lecon lecon={ecrite} {...cadre} />);
+    for (let i = 0; i < 4; i += 1) fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Vérifier ce que j’ai retenu' }));
+    for (let i = 0; i < 2; i += 1) {
+      fireEvent.click(screen.getByRole('button', { name: /Première/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+      fireEvent.click(screen.getByRole('button', { name: /Question suivante|Terminer la leçon/ }));
+    }
+    const lien = screen.getByRole('link', { name: /S’entraîner sur cette notion/ });
+    expect(lien.getAttribute('href')).toBe('/entrainement/notion/balisage-lateral');
   });
 });

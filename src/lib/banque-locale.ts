@@ -1,5 +1,6 @@
 import { POUR_APP } from './cible';
-import type { QuestionAffichable } from './affichable';
+import { cheminDeVersion } from './banque-distante';
+import type { BanqueServie } from './banque-distante';
 
 /**
  * La banque qui se met à jour sans passer par Apple.
@@ -21,17 +22,15 @@ import type { QuestionAffichable } from './affichable';
  *   sauter le quota et de perdre la progression avec.
  * - **Par version, jamais « la dernière ».** Il est déjà arrivé que deux
  *   branches prennent le même numéro dans `data/VERSION`. On télécharge
- *   `banque/<version>.json`, on vérifie que le fichier reçu annonce bien ce
- *   numéro-là, et on refuse s'il dit autre chose.
+ *   l'adresse que `cheminDeVersion` donne — la même que celle des écrans de
+ *   jeu, jamais une seconde écrite à la main — on vérifie que le fichier reçu
+ *   annonce bien ce numéro-là, et on refuse s'il dit autre chose.
  *
  * Sur le site, rien de tout ceci ne tourne : l'adresse porte déjà la version et
  * le service worker fait le reste.
  */
 
-export interface BanqueServie {
-  version: string;
-  questions: QuestionAffichable[];
-}
+export type { BanqueServie } from './banque-distante';
 
 /** L'origine interrogée. En dur : le build de la coquille n'a pas le `.env`. */
 const SITE = 'https://lepermiscotier.fr';
@@ -114,7 +113,7 @@ export async function chercherMiseAJour(deja: string): Promise<string | null> {
     const { version } = (await annonce.json()) as { version?: string };
     if (typeof version !== 'string' || !plusRecente(version, deja)) return null;
 
-    const reponse = await fetch(`${SITE}/banque/${version}.json`);
+    const reponse = await fetch(`${SITE}${cheminDeVersion(version)}`);
     if (!reponse.ok) return null;
     const banque = (await reponse.json()) as BanqueServie;
 

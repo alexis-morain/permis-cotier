@@ -7,8 +7,10 @@ etapes:
   - titre: La couleur suit la marque
     texte: >-
       Une marque latérale bâbord porte un feu rouge, une marque tribord un feu vert, une
-      marque spéciale un feu jaune. Le rythme de ces trois-là est quelconque : c’est la
-      couleur qui les identifie.
+      marque spéciale un feu jaune : c’est la couleur qui les identifie. Leur rythme est
+      quelconque, mais pas libre pour autant : les éclats groupés (2 + 1) appartiennent au
+      chenal préféré, et le feu jaune d’une marque spéciale ne reprend aucun des rythmes
+      réservés aux marques à feu blanc.
 
       Les cardinales, le danger isolé et les eaux saines portent un feu blanc. Pour
       elles, c’est le rythme qui parle.
@@ -55,10 +57,19 @@ piege: >-
   danger isolé ou des eaux saines : il faut compter. Et un feu rouge n’est pas toujours
   une bouée : le feu rouge d’un navire est son feu de côté bâbord.
 retenir:
-  - "Rouge, vert, jaune : la couleur de la marque, rythme quelconque."
+  - "Rouge, vert, jaune : la couleur de la marque. Rythme quelconque, sauf le (2 + 1) du chenal préféré."
   - "Blanc : compter. 3 Est, 6 plus un éclat long Sud, 9 Ouest, continu Nord."
   - "Deux éclats groupés : danger isolé. Feu lent, isophase, occultations, éclat long ou morse A : eaux saines."
 sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.2
+    ref: arrete-2017-11-30
+    fichier: article-annexe-i
   - texte: Balisage AISM, région A, balisage de nuit
     ref: aism-mbs
     fichier: region-a
@@ -66,4 +77,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_le: '2026-09-09'

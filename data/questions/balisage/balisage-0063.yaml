@@ -1,0 +1,36 @@
+id: balisage-0063
+option: cotier
+theme: balisage
+notion: balisage-cardinal
+statut: publie
+difficulte: 2
+enonce: >-
+  Quelle forme l'arrêté donne-t-il aux marques cardinales ?
+propositions:
+  - id: a
+    texte: Charpente ou espar
+  - id: b
+    texte: Cylindrique au nord et à l'est, conique au sud et à l'ouest
+  - id: c
+    texte: Sphérique dans les quatre quadrants
+reponses:
+  - a
+explication: >-
+  Les quatre cardinales portent la même mention : « Forme : Charpente ou espar. » Ce qui les
+  distingue n'est donc pas leur silhouette mais leurs deux cônes noirs, leur partage de noir
+  et de jaune, et le nombre de scintillements de leur feu. Le cylindre et le cône sont
+  réservés aux marques latérales.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.3
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.4
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-09'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

@@ -19,15 +19,20 @@ propositions:
 reponses:
   - a
 explication: >-
-  Corps cylindrique rouge et voyant cylindrique rouge : c'est la marque latérale bâbord
-  de la région A, celle qui s'applique en France. Le sens conventionnel de balisage se
-  lit du large vers le port, et tu le remontes justement dans ce sens : la marque reste
-  donc sur ton bâbord. La proposition qui fait dépendre le côté du sens de ta route
-  confond ta route et le sens conventionnel, qui lui ne bouge pas.
+  Corps cylindrique rouge et voyant cylindrique rouge : c'est la marque latérale bâbord de la
+  région A, celle qui s'applique en France métropolitaine. Le sens conventionnel de balisage
+  se lit du large vers le port, et tu le remontes justement dans ce sens : la marque reste
+  donc sur ton bâbord. L'erreur courante est de faire dépendre le côté du sens de sa propre
+  route ; le sens conventionnel, lui, ne bouge pas.
 sources:
-  - texte: AISM, système de balisage maritime, région A, marque latérale bâbord
-    ref: aism-mbs
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.1.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'

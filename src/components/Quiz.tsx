@@ -3,6 +3,7 @@ import type React from 'react';
 import {
   creerSession,
   extraireSauvegarde,
+  lenteurs,
   questionCourante,
   reduire,
   restaurerSession,
@@ -13,9 +14,10 @@ import {
   ERREURS_ADMISES,
   aleaSeme,
   ordonnerEntrainement,
-  serieARevoir,
+  serieDuJour,
   tirerExamen,
 } from '../lib/quiz';
+import { LETTRES_AFFICHEES, lettreAffichee, melangerPropositions, rangDeLaTouche } from '../lib/melange';
 import {
   charger,
   sauvegarder,
@@ -23,16 +25,20 @@ import {
   enregistrerExamen,
   enregistrerEnCours,
   effacerEnCours,
+  enregistrerEnCoursSerie,
+  effacerEnCoursSerie,
   aujourdhui,
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
+import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
+import { douceur } from '../lib/douceur';
+import { lienLecon } from '../lib/retour';
 import { rappel } from '../lib/profil';
 import { POUR_APP } from '../lib/cible';
 import { partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
 import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
-import type { BanqueServie } from '../lib/banque-locale';
 import './quiz.css';
 
 interface Props {
@@ -49,22 +55,21 @@ interface Props {
    */
   source?: string;
   theme?: string;
+  /**
+   * L'entraînement d'une seule notion. Le nom vient de la page : les cent
+   * cinq notions sont une table de mille lignes, et l'écran de jeu n'a pas à
+   * l'embarquer dans le navigateur pour afficher un titre.
+   */
+  notion?: { code: string; nom: string };
   /** Série des seules questions ratées, tous thèmes mêlés. */
   revoir?: boolean;
 }
-
-const LETTRES: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 
 /** Action propre à l'écran, que le modèle de session n'a pas à connaître. */
 type ActionEcran = Action | { type: 'restaurer'; session: Session };
 
 function reduireEcran(s: Session, action: ActionEcran): Session {
   return action.type === 'restaurer' ? action.session : reduire(s, action);
-}
-
-/** Le défilement doux, sauf pour qui a demandé qu'on arrête de bouger. */
-function douceur(): ScrollBehavior {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 }
 
 function Sources({ sources }: { sources: QuestionAffichable['sources'] }) {
@@ -103,12 +108,37 @@ function Signaler({ id }: { id: string }) {
 }
 
 /**
+ * Sous un verdict raté : la leçon de la notion, et le chemin du retour.
+ *
+ * C'était le manque le plus cher de l'écran de jeu. L'explication et la
+ * source disent pourquoi la réponse est fausse ; elles ne disent pas où
+ * apprendre la règle. Les 516 questions publiées portent une notion, donc une
+ * leçon : elle est à un clic, et le retour ramène à la série.
+ *
+ * Une question sans notion n'affiche rien plutôt qu'un lien mort.
+ */
+function LienLecon({ question, retour }: { question: QuestionAffichable; retour: string }) {
+  if (!question.notion) return null;
+  return (
+    <p className="verdict__lecon">
+      <a
+        href={lienLecon(question.theme, question.notion, retour)}
+        data-mesure="verdict-lecon"
+        data-mesure-notion={question.notion}
+      >
+        La leçon qui l’explique
+      </a>
+    </p>
+  );
+}
+
+/**
  * L'écran de jeu proprement dit. Il reçoit une banque déjà là : tous ses états
  * se calculent au montage — le tirage, la reprise, la progression lue une
  * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
  * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
  */
-function Partie({ mode, questions, theme, revoir = false }: Props & { questions: QuestionAffichable[] }) {
+function Partie({ mode, questions, theme, notion, revoir = false }: Props & { questions: QuestionAffichable[] }) {
   // La progression est lue une fois, au montage : le tirage et la reprise
   // doivent partir du même état, pas d'un état qui bouge sous eux.
   const [depart] = useState(() => charger());
@@ -118,7 +148,9 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   const serie = useMemo(() => {
     if (questions.length === 0) return [];
     if (mode === 'examen') return tirerExamen(questions, aleaSeme(Date.now() >>> 0));
-    if (revoir) return serieARevoir(questions, depart.questions);
+    // La série du jour, bornée par le rythme choisi : ce qui est dû, puis de
+    // quoi découvrir. Un seul chemin, celui que la pastille de l'accueil compte.
+    if (revoir) return serieDuJour(questions, depart.questions, aujourdhui(), depart.profil.rythme ?? undefined);
     return ordonnerEntrainement(questions, depart.questions);
   }, [mode, questions, revoir, depart]);
 
@@ -140,13 +172,52 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   const affichee = question ? parId.get(question.id) : undefined;
   const selection = session.selections[session.index] ?? [];
 
+  // L'ordre d'affichage des propositions, tiré de la graine de la session : il
+  // ne bouge ni entre deux rendus, ni au retour sur un examen repris.
+  const ordre = useMemo(
+    () => (affichee ? melangerPropositions(affichee.propositions, session.graine, affichee.id) : []),
+    [affichee, session.graine],
+  );
+
+  // L'adresse de cet écran : ce que « recommencer » vise, et sous quel nom la
+  // série se range dans le navigateur.
+  const retour =
+    mode === 'examen'
+      ? '/examen'
+      : revoir
+        ? '/revoir'
+        : notion
+          ? `/entrainement/notion/${notion.code}`
+          : `/entrainement/${theme}`;
+  const retourSerie = mode === 'examen' ? undefined : retour;
+
+  /**
+   * Où ramène la leçon ouverte depuis un verdict.
+   *
+   * En entraînement, à la série elle-même : elle est écrite dans le navigateur
+   * à chaque réponse, et l'écran la propose à la reprise, question comprise.
+   * Après un examen, la revue n'est pas une série en cours — elle n'existe
+   * qu'entre le résultat et le premier clic ailleurs. Ce qui lui survit, ce
+   * sont les erreurs, et elles ont leur page.
+   */
+  const retourLecon = mode === 'examen' ? '/profil/erreurs' : retour;
+
+  // La série d'entraînement quittée en route — pour aller lire une leçon, le
+  // plus souvent. Elle est rangée sous l'adresse de sa page : une série de
+  // balisage ne se reprend pas sur l'écran des feux.
+  const repriseSerie = useMemo(
+    () => (mode === 'entrainement' ? restaurerSession(depart.enCoursSerie, questions, mode, retourSerie) : null),
+    [mode, questions, retourSerie, depart],
+  );
+  const [repriseEcartee, setRepriseEcartee] = useState(false);
+
   const titre = mode === 'examen'
     ? 'Examen blanc'
     : revoir
-      ? 'Révision de tes erreurs'
-      : `Entraînement, ${nomDuTheme(theme ?? '')}`;
-
-  const retour = mode === 'examen' ? '/examen' : revoir ? '/revoir' : `/entrainement/${theme}`;
+      ? 'Ta série du jour'
+      : notion
+        ? `Entraînement, ${notion.nom}`
+        : `Entraînement, ${nomDuTheme(theme ?? '')}`;
 
   // Le nom que cette série porte dans la mesure. Les trois écrans du composant
   // sont trois parcours différents : les mêler dans un seul compteur rendrait
@@ -205,6 +276,24 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, theme, session.phase, session.index, session.selections]);
 
+  /**
+   * La série d'entraînement survit à la page, elle aussi.
+   *
+   * Elle ne s'écrit qu'une fois commencée : tant qu'on est à la première
+   * question sans avoir répondu, la série d'avant reste offerte à la reprise
+   * plutôt que d'être écrasée par celle qu'on vient d'ouvrir. Finie, la fente
+   * se vide : rien à reprendre d'une série qu'on a menée au bout.
+   */
+  useEffect(() => {
+    if (mode !== 'entrainement') return;
+    const commencee = session.index > 0 || session.journal.length > 0;
+    if (!commencee && session.phase !== 'resultat') return;
+    const sauvegarde = session.phase === 'resultat' ? null : extraireSauvegarde(session, retourSerie);
+    const etat = charger();
+    sauvegarder(sauvegarde ? enregistrerEnCoursSerie(etat, sauvegarde) : effacerEnCoursSerie(etat));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, retourSerie, session.phase, session.index, session.selections, session.journal]);
+
   useEffect(() => {
     if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
     const r = session.resultat;
@@ -226,13 +315,13 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
         interrompu: session.interrompu,
       });
     } else {
-      evenement(`${nomSerie}-termine`, { theme, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
+      evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
     }
   }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
 
   useEffect(() => {
     if (session.phase !== 'en-cours') return;
-    evenement(`${nomSerie}-commence`, { theme });
+    evenement(`${nomSerie}-commence`, { theme, notion: notion?.code });
     // Une seule fois, au vrai départ de la série.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.phase === 'en-cours']);
@@ -290,8 +379,8 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
 
   // Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
   // le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
-  const contexte = useRef({ session, affichee, mode, arretDemande });
-  contexte.current = { session, affichee, mode, arretDemande };
+  const contexte = useRef({ session, ordre, mode, arretDemande });
+  contexte.current = { session, ordre, mode, arretDemande };
 
   useEffect(() => {
     function surTouche(evenementClavier: KeyboardEvent) {
@@ -308,7 +397,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
         (cible?.tagName === 'BUTTON' || cible?.tagName === 'A') &&
         !cible.classList.contains('proposition');
 
-      const { session: s, affichee: a, mode: m, arretDemande: arret } = contexte.current;
+      const { session: s, ordre: o, mode: m, arretDemande: arret } = contexte.current;
 
       if (s.phase === 'depart') {
         if (evenementClavier.key === 'Enter' && !activable) {
@@ -319,11 +408,14 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
       }
       if (s.phase !== 'en-cours' || arret) return;
 
-      const lettre = evenementClavier.key.toLowerCase();
-      if (LETTRES[lettre] && !s.corrigee) {
-        if (!a?.propositions.some((p) => p.id === lettre)) return;
+      // La touche vise une ligne de l'écran, pas un identifiant de fichier :
+      // « B » coche ce que l'écran appelle B, quel que soit l'id derrière.
+      const rang = rangDeLaTouche(evenementClavier.key);
+      if (rang !== undefined && !s.corrigee) {
+        const visee = o[rang];
+        if (!visee) return;
         evenementClavier.preventDefault();
-        envoyer({ type: 'basculer', proposition: lettre });
+        envoyer({ type: 'basculer', proposition: visee.id });
         return;
       }
 
@@ -343,21 +435,24 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
     return () => document.removeEventListener('keydown', surTouche);
   }, []);
 
-  const reprendre = useCallback(() => {
-    if (!reprise) return;
+  const reprendreDepuis = useCallback((reprise: Session) => {
     // Les réponses du journal repris ont déjà été comptées dans la progression
     // avant l'interruption : sans ce décalage, elles y entreraient deux fois.
     journalEcrit.current = reprise.journal.length;
     envoyer({ type: 'restaurer', session: reprise });
-  }, [reprise]);
+  }, []);
+
+  const reprendre = useCallback(() => {
+    if (reprise) reprendreDepuis(reprise);
+  }, [reprise, reprendreDepuis]);
 
   if (serie.length === 0) {
     return revoir ? (
       <div className="encadre">
-        <h1 className="encadre__titre">Rien à revoir pour l’instant.</h1>
+        <h1 className="encadre__titre">Rien à revoir aujourd’hui.</h1>
         <p className="discret">
-          Les questions ratées atterrissent ici dès que tu en rates une, et en sortent quand tu
-          les retrouves. <a href="/entrainement">S’entraîner par thème</a>.
+          Chaque question réussie revient un jour plus tard, puis trois, puis sept, puis vingt et un.
+          Rien n’est dû aujourd’hui. <a href="/entrainement">S’entraîner par thème</a>.
         </p>
       </div>
     ) : (
@@ -456,6 +551,11 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
     // L'examen d'avant, lu au montage : celui-ci n'y est pas encore.
     const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
     const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
+    // Le temps, que le score ne dit pas. Vingt secondes par question, et
+    // l'échec par lenteur est le mode d'échec propre à cette épreuve : une
+    // question passée au buzzer compte comme une erreur, une réponse arrachée
+    // à la dernière seconde ne tiendra pas dans une salle.
+    const lent = lenteurs(session);
     return (
       <div className="jeu">
         <h1 className="visuellement-cache">{titre}, résultat</h1>
@@ -501,6 +601,27 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
             </>
           )}
         </div>
+
+        {(lent.auBuzzer.length > 0 || lent.aLaLimite.length > 0) && (
+          <p className="resultat__temps">
+            {lent.auBuzzer.length > 0 && (
+              <>
+                <b>
+                  {lent.auBuzzer.length} question{lent.auBuzzer.length > 1 ? 's' : ''} passée
+                  {lent.auBuzzer.length > 1 ? 's' : ''} au buzzer
+                </b>
+                , sans réponse dans les vingt secondes.{' '}
+              </>
+            )}
+            {lent.aLaLimite.length > 0 && (
+              <>
+                {lent.aLaLimite.length} répondue{lent.aLaLimite.length > 1 ? 's' : ''} dans la
+                dernière seconde.{' '}
+              </>
+            )}
+            <span className="discret">Le chrono compte autant que la réponse.</span>
+          </p>
+        )}
 
         {raison && (
           <p className="rappel resultat__rappel">
@@ -578,14 +699,16 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
                     <img className="jeu__visuel" src={`/visuels/${d.visuel.fichier}`} alt={d.visuel.alt} loading="lazy" />
                   )}
                   <ul className="propositions">
-                    {d.propositions.map((p) => {
+                    {/* Le même ordre qu'en jeu : la revue doit montrer l'écran
+                        que le candidat a eu sous les yeux. */}
+                    {melangerPropositions(d.propositions, session.graine, d.id).map((p, rang) => {
                       const bonne = q.reponses.includes(p.id);
                       const cochee = donnee.includes(p.id);
                       const classe = bonne ? ' proposition--juste' : cochee ? ' proposition--fausse' : '';
                       return (
                         <li key={p.id}>
                           <div className={`proposition${classe}`}>
-                            <span className="proposition__lettre">{LETTRES[p.id] ?? p.id}</span>
+                            <span className="proposition__lettre">{lettreAffichee(rang)}</span>
                             <span>{p.texte}</span>
                             {(bonne || cochee) && (
                               <span className="proposition__marque">
@@ -600,6 +723,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
                   <div className={`verdict verdict--${rate ? 'fausse' : 'juste'}`} style={{ marginTop: '0.9rem' }}>
                     <p>{d.explication}</p>
                     <Sources sources={d.sources} />
+                    {rate && <LienLecon question={d} retour={retourLecon} />}
                   </div>
                   <p style={{ marginTop: '0.6rem' }}><Signaler id={q.id} /></p>
                 </article>
@@ -617,9 +741,44 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
   const plein = session.selections[session.index]?.length === 2;
   const restantes = session.questions.length - session.index;
 
+  // Reprendre n'a de sens qu'avant d'avoir joué : une série entamée ici a
+  // déjà remplacé celle d'avant.
+  const offreReprise =
+    repriseSerie !== null &&
+    repriseSerie.index > 0 &&
+    !repriseEcartee &&
+    session.index === 0 &&
+    session.journal.length === 0 &&
+    !session.corrigee;
+
   return (
     <div className="jeu">
       <h1 className="visuellement-cache">{titre}</h1>
+
+      {offreReprise && (
+        <div className="encadre jeu__reprise">
+          <p>
+            <strong>Tu avais une série en cours</strong>, arrêtée à la question{' '}
+            {repriseSerie.index + 1} sur {repriseSerie.questions.length}.
+          </p>
+          <div className="jeu__actions">
+            <button
+              className="bouton bouton--principal"
+              type="button"
+              onClick={() => reprendreDepuis(repriseSerie)}
+            >
+              Reprendre à la question {repriseSerie.index + 1}
+            </button>
+            <button
+              className="bouton bouton--discret"
+              type="button"
+              onClick={() => setRepriseEcartee(true)}
+            >
+              Repartir du début
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="jeu__entete">
         <span className="jeu__compteur">
@@ -658,7 +817,30 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
       {/* `key` sur ces trois éléments : React les remonte à chaque question,
           ce qui rejoue leur animation d'entrée. Sans lui, le DOM est réutilisé
           et le passage d'une question à l'autre ne se voit plus. */}
-      <h2 className="jeu__enonce" key={`enonce-${question.id}`}>{affichee.enonce}</h2>
+      {/* Le focus vient se poser ici à chaque question.
+
+          L'épreuve est chronométrée à vingt secondes : qui joue au clavier ou
+          au lecteur d'écran ne peut pas se permettre de repartir du haut du
+          document à chaque fois. Or le bouton qu'on vient d'activer disparaît,
+          et le focus retombe sur `body` — c'était le cas jusqu'ici, y compris
+          au démarrage de l'examen, et rien n'annonçait le changement de
+          question.
+
+          Le titre n'est ni un bouton ni un lien : le raccourci Entrée continue
+          donc de valider, là où un élément activable se serait déclenché tout
+          seul (voir `activable` plus haut). Le `key` le remonte à chaque
+          question, ce qui suffit à rejouer le geste. */}
+      <h2
+        className="jeu__enonce"
+        key={`enonce-${question.id}`}
+        tabIndex={-1}
+        ref={(noeud) => noeud?.focus()}
+      >
+        <span className="visuellement-cache">
+          Question {session.index + 1} sur {session.questions.length}.{' '}
+        </span>
+        {affichee.enonce}
+      </h2>
 
       {affichee.visuel && (
         <img
@@ -670,7 +852,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
       )}
 
       <ul className="propositions" key={`propositions-${question.id}`}>
-        {affichee.propositions.map((p) => {
+        {ordre.map((p, rang) => {
           const cochee = selection.includes(p.id);
           const bonne = question.reponses.includes(p.id);
           let classe = cochee ? ' proposition--cochee' : '';
@@ -681,14 +863,14 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
                 type="button"
                 className={`proposition${classe}`}
                 aria-pressed={cochee}
-                aria-keyshortcuts={LETTRES[p.id] ?? undefined}
+                aria-keyshortcuts={LETTRES_AFFICHEES[rang]}
                 disabled={session.corrigee || (plein && !cochee)}
                 onClick={() => {
                   void vibrer('choix');
                   envoyer({ type: 'basculer', proposition: p.id });
                 }}
               >
-                <span className="proposition__lettre" aria-hidden="true">{LETTRES[p.id] ?? p.id}</span>
+                <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
                 <span>{p.texte}</span>
               </button>
             </li>
@@ -709,6 +891,7 @@ function Partie({ mode, questions, theme, revoir = false }: Props & { questions:
           <p className="verdict__titre">{session.juste ? 'Bonne réponse' : 'Raté'}</p>
           <p>{affichee.explication}</p>
           <Sources sources={affichee.sources} />
+          {!session.juste && <LienLecon question={affichee} retour={retourLecon} />}
         </div>
       )}
 
@@ -849,14 +1032,24 @@ export default function Quiz({ source, questions, ...reste }: Props) {
     if (!source || questions) return;
     let vivant = true;
     setEchec(false);
+    // Une échéance, parce qu'un réseau muet ne rejette rien : un portail
+    // captif ou un mobile qui a lâché accepte la connexion et se tait. Sans
+    // elle, la silhouette bat sans fin et l'écran n'offre pas même un bouton.
+    const controleur = new AbortController();
+    const echeance = setTimeout(() => {
+      controleur.abort();
+      if (vivant) setEchec(true);
+    }, ATTENTE_BANQUE);
 
     void (async () => {
       try {
-        // La banque du bundle, toujours : elle est locale, donc instantanée,
-        // et c'est elle qui fait tenir le mode avion.
-        const reponse = await fetch(source);
-        if (!reponse.ok) throw new Error(`banque : ${reponse.status}`);
-        const embarquee = (await reponse.json()) as BanqueServie;
+        // La banque que la page désigne. Sur le site elle vient du réseau ou
+        // du service worker ; dans la coquille elle est dans le bundle, donc
+        // locale et instantanée, et c'est elle qui fait tenir le mode avion.
+        const embarquee = await chargerBanqueServie(source, controleur.signal);
+        // L'échéance ne couvre que le réseau : ce qui suit est local, et un
+        // IndexedDB lent ne doit pas faire afficher une panne de connexion.
+        clearTimeout(echeance);
 
         // Une banque téléchargée depuis, si elle est plus récente. Sur le
         // site, `banqueGardee` rend toujours null.
@@ -868,15 +1061,18 @@ export default function Quiz({ source, questions, ...reste }: Props) {
 
         // Puis on demande au site s'il y a mieux, sans rien attendre : la
         // série qui commence joue ce qu'elle a en main, la suivante aura le
-        // reste. Aucun message, aucune erreur affichée.
+        // reste. Aucun message, aucune erreur affichée. Sur le site,
+        // `chercherMiseAJour` ne fait rien.
         void chercherMiseAJour(retenue.version);
       } catch {
+        clearTimeout(echeance);
         if (vivant) setEchec(true);
       }
     })();
 
     return () => {
       vivant = false;
+      clearTimeout(echeance);
     };
   }, [source, questions, essai]);
 
@@ -885,8 +1081,11 @@ export default function Quiz({ source, questions, ...reste }: Props) {
   const servies = useMemo(() => {
     if (!chargees) return null;
     if (questions) return chargees;
+    // La notion d'abord : elle est plus fine que le thème, et une page de
+    // notion donne les deux.
+    if (reste.notion) return chargees.filter((q) => q.notion === reste.notion!.code);
     return reste.theme ? chargees.filter((q) => q.theme === reste.theme) : chargees;
-  }, [chargees, questions, reste.theme]);
+  }, [chargees, questions, reste.theme, reste.notion]);
 
   if (echec) return <Panne reessayer={() => setEssai((n) => n + 1)} />;
   // Quatre propositions : c'est le format visé par la banque, et une silhouette

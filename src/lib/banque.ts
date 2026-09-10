@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
 import { versAffichable } from './affichable';
+import { cheminDeVersion } from './banque-distante';
 import type { QuestionAffichable } from './affichable';
 import { THEMES, themeParCode } from './themes';
 
@@ -15,6 +16,18 @@ export function versionBanque(): string {
   } catch {
     return '0.0.0';
   }
+}
+
+/**
+ * L'adresse du JSON de la banque pour la version courante.
+ *
+ * Les écrans de jeu la donnent au `Quiz`, et `Base.astro` la précharge : une
+ * seule fonction pour que le préchargement et le `fetch` ne puissent pas
+ * viser deux adresses différentes — un préchargement qui rate son adresse ne
+ * fait pas gagner un aller-retour, il en ajoute un.
+ */
+export function cheminBanque(): string {
+  return cheminDeVersion(versionBanque());
 }
 
 /** Seules les questions publiées entrent dans le site. */

@@ -6,6 +6,8 @@ import { leconDeLaNotion, leconsEcrites } from '../../lib/lecons';
 import { questionsDuTheme } from '../../lib/banque';
 import { themeParCode, cibleTotaleJ1 } from '../../lib/themes';
 import { SITE, cours as coursJsonLd } from '../../lib/seo';
+import MarqueSource from '../../components/MarqueSource.astro';
+import type { SourceAffichee } from '../../lib/sources';
 
 export async function getStaticPaths() {
   return COURS.map((cours) => ({ params: { cours: cours.code }, props: { cours } }));
@@ -39,8 +41,8 @@ const questions = await questionsDuTheme(cours.code);
 
 // Les textes derrière le cours : l'union des sources des leçons, dans l'ordre
 // de première apparition. Un texte cité par trois leçons n'est listé qu'une fois.
-const textes = new Map<string, string | undefined>();
-for (const l of lecons) for (const s of l.affichable.sources) if (!textes.has(s.texte)) textes.set(s.texte, s.url);
+const textes = new Map<string, SourceAffichee>();
+for (const l of lecons) for (const s of l.affichable.sources) if (!textes.has(s.texte)) textes.set(s.texte, s);
 
 // La part du thème dans le tirage de l'examen blanc : une hypothèse de
 // travail, `cibleJ1`, ramenée à quarante questions. La page le dit.
@@ -150,8 +152,22 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     <h2>Les textes derrière ce cours</h2>
     {textes.size > 0 ? (
       <ul>
-        {[...textes.entries()].map(([texte, url]) => (
-          <li>{url ? <a href={url} rel="noreferrer noopener" data-mesure="source-ouverte">{texte}</a> : texte}</li>
+        {[...textes.values()].map((s) => (
+          <li>
+            {s.url ? (
+              <a
+                href={s.url}
+                rel={s.provenance === 'officiel' ? 'noreferrer noopener' : undefined}
+                data-mesure="source-ouverte"
+                data-mesure-ref={s.ref}
+              >
+                {s.texte}
+              </a>
+            ) : (
+              s.texte
+            )}
+            <MarqueSource provenance={s.provenance} />
+          </li>
         ))}
       </ul>
     ) : (

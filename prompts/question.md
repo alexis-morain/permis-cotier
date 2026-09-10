@@ -53,6 +53,12 @@ Tu écris des questions d'examen blanc pour le permis plaisance option côtière
 - Une bonne réponse, ou deux quand la règle en appelle deux. Jamais trois.
 - Les identifiants suivent l'ordre des lettres, sans trou : `a`, `b`, puis `c`,
   puis `d`.
+- **La bonne réponse ne se range pas en `a` par réflexe.** L'écran mélange
+  désormais les propositions à chaque session, la position n'est donc plus une
+  information pour le candidat — mais un fichier où la réponse est toujours la
+  première se relit mal, et se cite mal. Répartis-la sur les lettres
+  disponibles : sur dix questions écrites d'affilée, la bonne réponse doit
+  changer de lettre au moins quatre fois.
 - La question se lit en moins de vingt secondes, énoncé compris.
 - Énoncé au présent, deuxième personne du singulier quand on s'adresse au
   candidat : « Tu navigues de nuit… », « Que fais-tu ? ».

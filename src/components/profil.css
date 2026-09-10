@@ -25,7 +25,7 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--jaune);
+  background: var(--jauge);
   transform-origin: left;
   transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
@@ -57,7 +57,7 @@
   width: 100%;
   min-height: 3.5rem;
   padding: 0.8rem 1rem;
-  border: 2px solid var(--filet);
+  border: 2px solid var(--filet-fort);
   border-radius: var(--rayon);
   background: var(--fond-carte);
   color: inherit;
@@ -66,11 +66,11 @@
   line-height: 1.35;
   text-align: left;
   cursor: pointer;
-  box-shadow: 0 var(--bord) 0 var(--filet);
+  box-shadow: 0 var(--bord) 0 var(--filet-fort);
   transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
 }
-.choix__option:hover { border-color: var(--filet-fort); box-shadow: 0 var(--bord) 0 var(--filet-fort); }
-.choix__option:active { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet); }
+.choix__option:hover { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+.choix__option:active { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet-fort); }
 .choix__option--coche {
   border-color: var(--texte);
   background: var(--jaune-pale);
@@ -80,7 +80,7 @@
   flex: 0 0 1.35rem;
   height: 1.35rem;
   border: 2px solid var(--filet-fort);
-  border-radius: 0.35rem;
+  border-radius: var(--rayon-petit);
   position: relative;
   transition: background var(--transition), border-color var(--transition);
 }
@@ -130,7 +130,7 @@
 .indice__texte p { margin: 0; max-width: 40ch; }
 .indice__palier { font-stretch: var(--large); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
 .indice__jauge {
-  display: flex;
+  position: relative;
   height: 14px;
   margin-top: 1.25rem;
   border-radius: 999px;
@@ -138,8 +138,16 @@
   overflow: hidden;
   max-width: 40rem;
 }
-.indice__part { display: block; height: 100%; transition: width 300ms cubic-bezier(0.2, 0, 0, 1); }
-.indice__part--vu, .indice__puce--vu { background: var(--jaune); }
+/* Les trois parts sont des calques superposés, du plus long au plus court.
+   Chacun est mis à l'échelle : `width` ne s'anime pas, `transform` si. */
+.indice__part {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transform: scaleX(var(--part, 0));
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+.indice__part--vu, .indice__puce--vu { background: var(--jauge); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
 .indice__part--examens, .indice__puce--examens { background: var(--filet-fort); }
 .indice__legende {
@@ -165,7 +173,7 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--jaune);
+  background: var(--jauge);
   transform-origin: left;
   transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
 }
@@ -186,15 +194,34 @@
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  border-radius: 0.3rem;
+  border-radius: var(--rayon-petit);
   background: var(--fond-2);
   color: var(--texte-doux);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
   max-width: none;
 }
 .jours__case--actif { background: var(--texte); color: var(--fond-carte); }
 .jours__case--aujourdhui { outline: 2px solid var(--jaune); outline-offset: 1px; }
+
+/* Le changement de comptage, dit une fois. Ni encadré ni couleur : une
+   phrase sous la jauge, qui s'en va toute seule au bout d'un mois. */
+.indice__changement {
+  margin: 0.9rem 0 0;
+  max-width: var(--mesure);
+  color: var(--texte-doux);
+}
+
+/* À reprendre en premier : trois notions, chacune avec sa leçon et sa série.
+   Mêmes filets horizontaux que la liste des thèmes, un cran plus fin. */
+.faibles { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 40rem; }
+.faible { border-top: 2px solid var(--filet); padding: 0.9rem 0; max-width: none; }
+.faible:last-child { border-bottom: 2px solid var(--filet); }
+.faible__nom { margin: 0; font-size: 1.1rem; }
+.faible__nom .discret { font-size: 0.9rem; font-weight: 600; }
+.faible__note { margin: 0.2rem 0 0; font-size: 0.9rem; }
+.faible__actions { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 0; font-weight: 700; }
+.faible__actions a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 
 /* Thème par thème : deux jauges superposées, le vu en filet, le retenu en marine. */
 .maitrise { list-style: none; margin: 0; padding: 0; max-width: 40rem; }
@@ -303,3 +330,35 @@
 @media (prefers-reduced-motion: reduce) {
   .questionnaire__barre span, .jour__barre span, .indice__part { transition: none; }
 }
+
+/* --------------------------------------------------------------------- */
+/* Mes erreurs : une liste qui se lit, pas un jeu. Pas de proposition à
+   cocher, pas de bouton par ligne — l'énoncé, la bonne réponse, la raison,
+   la leçon. Filets horizontaux comme la liste des thèmes, aucun cadre. */
+
+.erreurs h1 { margin-bottom: 0.75rem; }
+.erreurs > p { max-width: var(--mesure); }
+.erreurs section { margin-top: 2.5rem; }
+.erreurs h2 { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+
+.erreurs__liste { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 44rem; }
+.erreur {
+  border-top: 2px solid var(--filet);
+  padding: 1.1rem 0;
+  max-width: none;
+}
+.erreurs__liste .erreur:last-child { border-bottom: 2px solid var(--filet); }
+.erreur__rang { margin: 0 0 0.35rem; font-size: 0.85rem; font-weight: 600; }
+.erreur__enonce { font-size: 1.1rem; margin: 0 0 0.5rem; }
+.erreur__visuel {
+  display: block;
+  border-radius: var(--rayon);
+  border: 2px solid var(--filet);
+  background: var(--fond-carte);
+  max-width: 14rem;
+  margin: 0 0 0.6rem;
+}
+.erreur__bonne { margin: 0 0 0.4rem; }
+.erreur__explication { margin: 0; color: var(--texte-doux); }
+.erreur__lecon { margin: 0.4rem 0 0; font-weight: 700; }
+.erreur__lecon a { display: inline-flex; align-items: center; min-height: 2.75rem; }

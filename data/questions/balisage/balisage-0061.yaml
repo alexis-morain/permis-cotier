@@ -1,0 +1,30 @@
+id: balisage-0061
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 3
+enonce: >-
+  Le feu de la bouée d'épave en cas d'urgence alterne le bleu et le jaune. À quel rythme ?
+propositions:
+  - id: a
+    texte: Des éclats d'une seconde chacun, séparés par un intervalle d'une demi-seconde
+  - id: b
+    texte: Des éclats d'une demi-seconde, séparés par une seconde d'obscurité
+  - id: c
+    texte: Deux éclats groupés toutes les dix secondes
+reponses:
+  - a
+explication: >-
+  L'arrêté est précis : « Éclats bleus et jaunes, d'une seconde chacun, séparés par un
+  intervalle de 0,5 seconde. » La lumière domine donc largement l'obscurité, ce qui donne un
+  feu presque continu qui change de couleur. Les deux éclats groupés appartiennent à la marque
+  de danger isolé, dont le feu est blanc.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.3
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-09'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-09'
