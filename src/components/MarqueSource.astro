@@ -1,0 +1,40 @@
+---
+import { NOM_PROVENANCE, type Provenance } from '../lib/sources';
+
+/**
+ * Ce qu'est une source citée, dit à côté d'elle.
+ *
+ * Un texte officiel se lit ailleurs, sur Légifrance ou sur le site d'un préfet
+ * maritime ; une fiche du site se lit ici, parce qu'elle n'existe nulle part
+ * ailleurs. Les deux liens se ressemblent, la pastille les sépare.
+ */
+interface Props {
+  provenance: Provenance;
+}
+
+const { provenance } = Astro.props;
+---
+
+<span class={`marque marque--${provenance}`}>{NOM_PROVENANCE[provenance]}</span>
+
+<style>
+  /* Pas de couleur : le jaune est la seule couleur d'action du site, et une
+     pastille n'est pas une action. C'est la bordure qui appuie la fiche. */
+  .marque {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.05rem 0.45rem;
+    border: 2px solid var(--filet);
+    border-radius: 0.625rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--texte-doux);
+    white-space: nowrap;
+    vertical-align: 0.1em;
+  }
+  .marque--fiche {
+    border-color: var(--filet-fort);
+    color: var(--texte);
+  }
+</style>

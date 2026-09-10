@@ -36,7 +36,9 @@ const ecrite: LeconAffichable = {
   ],
   piege: 'En sortant, la rouge est à droite.',
   retenir: ['Rouge à bâbord.', 'Vert à tribord.'],
-  sources: [{ texte: 'Balisage AISM, région A', url: 'https://example.org/planche.pdf' }],
+  sources: [
+    { texte: 'Balisage AISM, région A', ref: 'aism-mbs', provenance: 'fiche', url: '/source/aism-mbs' },
+  ],
   questions: [question('balisage-0001'), question('balisage-0002', ['b'])],
 };
 

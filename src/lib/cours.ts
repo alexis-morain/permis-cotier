@@ -15,6 +15,7 @@
 import { z } from 'astro/zod';
 import { NOTIONS, type Notion } from './notions';
 import type { QuestionAffichable } from './banque';
+import type { SourceAffichee } from './sources';
 
 const texteNonVide = (min = 1) =>
   z
@@ -127,7 +128,7 @@ export interface LeconAffichable {
   etapes: EtapeAffichable[];
   piege?: string;
   retenir: string[];
-  sources: { texte: string; url?: string }[];
+  sources: SourceAffichee[];
   /** Vide quand la notion n'a pas encore de question. */
   questions: QuestionAffichable[];
   /** Qui a relu, pour que la page le dise. Absent : la leçon n'est pas relue. */
@@ -154,7 +155,7 @@ export function leconCourte(notion: Notion): Omit<LeconAffichable, 'questions'> 
 export function leconEcrite(
   notion: Notion,
   source: LeconSource,
-  sources: { texte: string; url?: string }[],
+  sources: SourceAffichee[],
 ): Omit<LeconAffichable, 'questions'> {
   return {
     code: notion.code,
