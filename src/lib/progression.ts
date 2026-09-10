@@ -1,4 +1,6 @@
 import type { EtatQuestion, Progression } from './quiz';
+import { estDue, intervalle } from './quiz';
+import { aujourdhui as jourCourant, jourPlus } from './jour';
 // Le jour se lit dans `jour.ts`. Réexporté ici parce que la moitié du site
 // l'appelle en même temps que `charger` : une seule origine, deux portes.
 export { aujourdhui } from './jour';
@@ -9,9 +11,11 @@ import type { SessionSauvegardee } from './session';
  * personnelle, rien qui parte sur un serveur. Le code de synchronisation
  * anonyme arrive à J2 et réutilisera ce même objet.
  *
- * `VERSION_STOCKAGE` : à incrémenter quand la forme de l'état change. Un état
- * d'une autre version est jeté plutôt que migré, la progression n'a pas assez
- * de valeur pour justifier du code de migration.
+ * `VERSION_STOCKAGE` : à incrémenter quand la forme de l'état devient
+ * illisible pour de bon. Un état d'une autre version est jeté. Tant qu'un
+ * ancien état se traduit sans rien perdre, on le traduit plutôt que de le
+ * jeter — voir `migrerQuestions` : la progression d'un candidat qui révise
+ * depuis trois semaines a bien plus de valeur que la ligne de code économisée.
  */
 export const VERSION_STOCKAGE = 1;
 export const CLE_STOCKAGE = 'permis-cotier:progression';
@@ -170,8 +174,36 @@ export function effacerEnCours(etat: Etat): Etat {
   return { ...etat, enCours: null };
 }
 
+/**
+ * Une réponse de plus sur une question, et la reprogrammation qui va avec.
+ *
+ * Trois règles, et une seule qui compte vraiment :
+ *
+ * - une réussite un jour où la question a déjà été réussie ne fait rien
+ *   avancer. C'est ce qui interdit de moudre une question dix fois d'affilée
+ *   pour la faire disparaître : rater, relancer `/revoir` dix secondes plus
+ *   tard avec la correction encore à l'écran et cocher la bonne case n'est pas
+ *   une mémoire, c'est une recopie ;
+ * - une réussite un jour neuf avance d'un cran et repousse d'autant ;
+ * - un échec remet le compteur à zéro et rend la question due tout de suite.
+ *
+ * `dernierSuccesLe` n'est jamais effacé par un échec : c'est une date, elle
+ * s'est produite. Seul `succes` retombe.
+ */
 export function enregistrerReponse(etat: Etat, id: string, reussie: boolean, date: string): Etat {
-  const avant: EtatQuestion = etat.questions[id] ?? { vues: 0, ratees: 0, derniereReussie: false, vueLe: date };
+  const avant: EtatQuestion = etat.questions[id] ?? {
+    vues: 0, ratees: 0, derniereReussie: false, vueLe: date, succes: 0,
+  };
+
+  const dejaReussieAujourdhui = reussie && avant.dernierSuccesLe === date;
+  const succes = reussie ? (dejaReussieAujourdhui ? avant.succes : avant.succes + 1) : 0;
+  const dernierSuccesLe = reussie ? date : avant.dernierSuccesLe;
+  const revoirLe = !reussie
+    ? date
+    : dejaReussieAujourdhui
+      ? avant.revoirLe
+      : jourPlus(date, intervalle(succes));
+
   return {
     ...etat,
     questions: {
@@ -181,6 +213,9 @@ export function enregistrerReponse(etat: Etat, id: string, reussie: boolean, dat
         ratees: avant.ratees + (reussie ? 0 : 1),
         derniereReussie: reussie,
         vueLe: date,
+        succes,
+        ...(dernierSuccesLe !== undefined ? { dernierSuccesLe } : {}),
+        ...(revoirLe !== undefined ? { revoirLe } : {}),
       },
     },
     activite: compterActivite(etat.activite, date),
@@ -193,6 +228,7 @@ export function enregistrerExamen(etat: Etat, examen: ExamenPasse): Etat {
 
 export interface Statistiques {
   vues: number;
+  /** Questions dues ce jour-là : c'est ce que `/revoir` joue en premier. */
   aRevoir: number;
   examensTermines: number;
   dernierScore: { bonnes: number; total: number; reussi: boolean } | null;
@@ -204,7 +240,11 @@ export interface Statistiques {
  * l'accueil alors que `/revoir` ne peut plus la jouer, et les deux chiffres
  * divergeraient.
  */
-export function statistiques(etat: Etat, connues?: readonly string[]): Statistiques {
+export function statistiques(
+  etat: Etat,
+  connues?: readonly string[],
+  jour: string = jourCourant(),
+): Statistiques {
   const banque = connues ? new Set(connues) : null;
   const etats = Object.entries(etat.questions)
     .filter(([id]) => banque === null || banque.has(id))
@@ -212,10 +252,61 @@ export function statistiques(etat: Etat, connues?: readonly string[]): Statistiq
   const dernier = etat.examens[0];
   return {
     vues: etats.length,
-    aRevoir: etats.filter((e) => !e.derniereReussie).length,
+    aRevoir: etats.filter((e) => estDue(e, jour)).length,
     examensTermines: etat.examens.length,
     dernierScore: dernier ? { bonnes: dernier.bonnes, total: dernier.total, reussi: dernier.reussi } : null,
   };
+}
+
+/**
+ * Traduit une progression relue du navigateur vers la forme du rappel espacé.
+ *
+ * L'ancien état ne connaissait que `derniereReussie` et `vueLe`. On en tire le
+ * moins mensonger : une question réussie vaut une réussite, datée du jour où
+ * on l'a vue, donc due le lendemain ; une question ratée est due tout de
+ * suite. Personne ne perd sa progression, et personne ne se retrouve « retenu »
+ * sur une réussite dont on ne sait pas si elle tenait à autre chose qu'à la
+ * correction restée à l'écran.
+ *
+ * Un état déjà traduit porte `succes` : il repasse tel quel. La migration est
+ * donc idempotente, et relire deux fois donne le même état.
+ *
+ * Une entrée illisible est jetée plutôt que réparée au jugé : mieux vaut une
+ * question à redécouvrir qu'un compteur inventé.
+ */
+export function migrerQuestions(brut: unknown): Progression {
+  if (!brut || typeof brut !== 'object') return {};
+  const propre: Progression = {};
+
+  for (const [id, valeur] of Object.entries(brut as Record<string, unknown>)) {
+    if (!valeur || typeof valeur !== 'object') continue;
+    const e = valeur as Record<string, unknown>;
+    if (typeof e.vues !== 'number' || typeof e.ratees !== 'number') continue;
+    if (typeof e.derniereReussie !== 'boolean' || typeof e.vueLe !== 'string') continue;
+
+    const base = {
+      vues: e.vues,
+      ratees: e.ratees,
+      derniereReussie: e.derniereReussie,
+      vueLe: e.vueLe,
+    };
+
+    if (typeof e.succes === 'number') {
+      propre[id] = {
+        ...base,
+        succes: e.succes,
+        ...(typeof e.dernierSuccesLe === 'string' ? { dernierSuccesLe: e.dernierSuccesLe } : {}),
+        ...(typeof e.revoirLe === 'string' ? { revoirLe: e.revoirLe } : {}),
+      };
+      continue;
+    }
+
+    propre[id] = e.derniereReussie
+      ? { ...base, succes: 1, dernierSuccesLe: e.vueLe, revoirLe: jourPlus(e.vueLe, intervalle(1)) }
+      : { ...base, succes: 0, revoirLe: e.vueLe };
+  }
+
+  return propre;
 }
 
 function stockageParDefaut(): Stockage | null {
@@ -236,7 +327,7 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
     if (lu?.version !== VERSION_STOCKAGE) return etatInitial();
     return {
       version: VERSION_STOCKAGE,
-      questions: lu.questions ?? {},
+      questions: migrerQuestions(lu.questions),
       examens: Array.isArray(lu.examens) ? lu.examens : [],
       dateExamen: lu.dateExamen ?? null,
       enCours: lu.enCours ?? null,

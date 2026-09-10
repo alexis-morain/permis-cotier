@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { aujourdhui, charger } from '../lib/progression';
+import { estDue } from '../lib/quiz';
 import type { Etat } from '../lib/progression';
 import { PALIERS, indice, objectifDuJour, profilRempli, rappel, serieDeJours } from '../lib/profil';
 import type { QuestionConnue } from '../lib/profil';
@@ -28,9 +29,12 @@ export default function Reprise({ banque }: Props) {
 
   if (!etat) return null;
 
+  const jour = aujourdhui();
   const publiees = new Set(banque.map((q) => q.id));
   const vues = Object.entries(etat.questions).filter(([id]) => publiees.has(id));
-  const aRevoir = vues.filter(([, e]) => !e.derniereReussie).length;
+  // Le même filtre que la série de `/revoir` : le chiffre annoncé et la série
+  // jouée ne doivent pas diverger.
+  const aRevoir = vues.filter(([, e]) => estDue(e, jour)).length;
   const rien = vues.length === 0 && etat.examens.length === 0;
   const raison = rappel(etat.profil);
 
@@ -47,7 +51,6 @@ export default function Reprise({ banque }: Props) {
     );
   }
 
-  const jour = aujourdhui();
   const ind = indice(etat, banque);
   const objectif = objectifDuJour(etat, jour);
   const serie = serieDeJours(etat, jour);

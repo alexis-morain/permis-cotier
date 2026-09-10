@@ -1,5 +1,8 @@
 import { enDate, jourPlus } from './jour';
 import type { Etat, Profil } from './progression';
+import { estRetenue } from './quiz';
+import { NOTIONS, notionParCode } from './notions';
+import { cheminLecon } from './parcours';
 import { THEMES } from './themes';
 
 /**
@@ -17,6 +20,8 @@ import { THEMES } from './themes';
 export interface QuestionConnue {
   readonly id: string;
   readonly theme: string;
+  /** Code de notion, quand la question en porte un. */
+  readonly notion?: string;
 }
 
 export interface Motivation {
@@ -95,14 +100,16 @@ export const PALIERS: Record<Palier, { titre: string; phrase: string }> = {
 
 /**
  * Trois parts : ce qu'on a vu de la banque, ce qu'on en retient, et les trois
- * derniers examens blancs complets. « Prêt » exige en plus deux examens reçus
+ * derniers examens blancs complets. « Retenu » veut dire réussi deux jours
+ * différents, pas réussi à la dernière rencontre : la seconde définition
+ * comptait comme mémoire une correction relue dix secondes plus tôt. « Prêt » exige en plus deux examens reçus
  * sur les trois derniers : un nombre seul ne dit pas qu'on tient quarante
  * questions en vingt secondes chacune.
  */
 export function indice(etat: Etat, banque: readonly QuestionConnue[]): Indice {
   const publiees = new Set(banque.map((q) => q.id));
   const vues = Object.entries(etat.questions).filter(([id]) => publiees.has(id));
-  const retenues = vues.filter(([, e]) => e.derniereReussie).length;
+  const retenues = vues.filter(([, e]) => estRetenue(e)).length;
 
   const partVu = banque.length > 0 ? (POIDS.vu * vues.length) / banque.length : 0;
   const partRetenu = vues.length > 0 ? (POIDS.retenu * retenues) / vues.length : 0;
@@ -203,7 +210,7 @@ export interface MaitriseTheme {
   /** Questions publiées dans le thème. */
   total: number;
   vues: number;
-  /** Vues et réussies à la dernière rencontre. */
+  /** Vues et réussies deux jours différents. */
   retenues: number;
 }
 
@@ -221,7 +228,7 @@ export function maitriseParTheme(etat: Etat, banque: readonly QuestionConnue[]):
     const e = etat.questions[q.id];
     if (e) {
       t.vues += 1;
-      if (e.derniereReussie) t.retenues += 1;
+      if (estRetenue(e)) t.retenues += 1;
     }
     parTheme.set(q.theme, t);
   }
@@ -230,6 +237,79 @@ export function maitriseParTheme(etat: Etat, banque: readonly QuestionConnue[]):
   return [...parTheme.values()].sort(
     (a, b) => cle(a) - cle(b) || (rangProgramme.get(a.code) ?? 99) - (rangProgramme.get(b.code) ?? 99),
   );
+}
+
+/* ------------------------------------------------------------------------ */
+/* Par notion                                                                */
+
+export interface MaitriseNotion {
+  code: string;
+  /** Le libellé de la notion, celui qu'on affiche. */
+  nom: string;
+  /** Code du thème de rattachement. */
+  theme: string;
+  /** Questions publiées dans la notion. */
+  total: number;
+  vues: number;
+  /** Vues et réussies deux jours différents. */
+  retenues: number;
+  /** L'adresse de la leçon, pour aller boucher le trou tout de suite. */
+  chemin: string;
+}
+
+/**
+ * La même mesure que `maitriseParTheme`, un cran plus bas.
+ *
+ * Quatorze thèmes pour cent cinq notions : « feux-marques, 40 retenues sur
+ * 61 » ne dit pas si le trou est le remorquage ou les marques de jour, et
+ * c'est pourtant la seule chose que le candidat peut aller réviser ce soir.
+ * D'où le chemin de la leçon dans le résultat : la mesure et le geste au même
+ * endroit.
+ *
+ * Ordre identique à celui des thèmes : les notions travaillées et ratées
+ * d'abord, les jamais ouvertes ensuite, dans l'ordre du programme. Une
+ * question sans notion n'entre nulle part plutôt que d'ouvrir une ligne sans
+ * nom ni leçon.
+ */
+export function maitriseParNotion(etat: Etat, banque: readonly QuestionConnue[]): MaitriseNotion[] {
+  const parNotion = new Map<string, MaitriseNotion>();
+
+  for (const q of banque) {
+    if (!q.notion) continue;
+    const notion = notionParCode(q.notion);
+    if (!notion) continue;
+    const n = parNotion.get(notion.code) ?? {
+      code: notion.code,
+      nom: notion.nom,
+      theme: notion.theme,
+      total: 0,
+      vues: 0,
+      retenues: 0,
+      chemin: cheminLecon(notion),
+    };
+    n.total += 1;
+    const e = etat.questions[q.id];
+    if (e) {
+      n.vues += 1;
+      if (estRetenue(e)) n.retenues += 1;
+    }
+    parNotion.set(notion.code, n);
+  }
+
+  const rangProgramme = new Map(NOTIONS.map((n, i) => [n.code, i]));
+  const cle = (n: MaitriseNotion) => (n.vues === 0 ? 2 : n.retenues / n.vues);
+  return [...parNotion.values()].sort(
+    (a, b) => cle(a) - cle(b) || (rangProgramme.get(a.code) ?? 999) - (rangProgramme.get(b.code) ?? 999),
+  );
+}
+
+/** Les notions les plus faibles, prêtes à être affichées telles quelles. */
+export function notionsLesPlusFaibles(
+  etat: Etat,
+  banque: readonly QuestionConnue[],
+  combien = 3,
+): MaitriseNotion[] {
+  return maitriseParNotion(etat, banque).slice(0, Math.max(0, combien));
 }
 
 /* ------------------------------------------------------------------------ */
