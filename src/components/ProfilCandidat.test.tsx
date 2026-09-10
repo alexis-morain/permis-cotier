@@ -41,7 +41,7 @@ describe('la fiche', () => {
     expect(screen.getByRole('link', { name: 'Faire un examen blanc' })).toBeTruthy();
   });
 
-  it('parle au candidat, rappelle sa raison, et pousse ses erreurs en premier', () => {
+  it('parle au candidat, rappelle sa raison, et pousse sa série du jour en premier', () => {
     let e = enregistrerProfil(etatInitial(), { ...profilVide(), prenom: 'Léa', phrase: 'Emmener mon père pêcher.', rempliLe: '2026-09-01' });
     e = enregistrerReponse(e, 'vhf-0', false, aujourdhui());
     e = enregistrerReponse(e, 'vhf-1', true, aujourdhui());
@@ -51,12 +51,20 @@ describe('la fiche', () => {
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Léa, voilà où tu en es.');
     expect(screen.getAllByText('Emmener mon père pêcher.').length).toBeGreaterThan(0);
-    expect(screen.getByRole('link', { name: 'Revoir mes 1 erreur' }).getAttribute('href')).toBe('/revoir');
+    expect(screen.getByRole('link', { name: 'Revoir mes 1 question du jour' }).getAttribute('href')).toBe('/revoir');
     // Le thème raté passe devant, avec le lien vers son entraînement.
     const themes = screen.getAllByRole('link', { name: /retenues sur|jamais ouvert/ });
     expect(themes[0]!.getAttribute('href')).toBe('/entrainement/vhf');
     expect(screen.getByText('36 / 40')).toBeTruthy();
     expect(document.querySelector('.jour__serie .jour__chiffre')?.textContent).toBe('1 jour de suite');
+  });
+
+  it('mène à la relecture des erreurs, sans les rejouer', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', false, aujourdhui()));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(screen.getByRole('link', { name: /Relire ce que j’ai raté/ }).getAttribute('href')).toBe(
+      '/profil/erreurs',
+    );
   });
 
   it('change le rythme et la date depuis les réglages', () => {

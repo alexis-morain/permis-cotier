@@ -100,10 +100,10 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const direLeChangement =
     jour < FIN_AVIS_COMPTAGE && vues.some(([, e]) => e.vueLe < CHANGEMENT_COMPTAGE);
 
-  // La prochaine chose à faire, une seule : les erreurs d'abord, sinon ce que
-  // le point de départ conseille.
+  // La prochaine chose à faire, une seule : ce qui est dû aujourd'hui d'abord,
+  // sinon ce que le point de départ conseille.
   const suite = aRevoir > 0
-    ? { href: '/revoir', texte: `Revoir mes ${aRevoir} erreur${aRevoir > 1 ? 's' : ''}` }
+    ? { href: '/revoir', texte: `Revoir mes ${aRevoir} question${aRevoir > 1 ? 's' : ''} du jour` }
     : p.depart === 'zero' && Object.keys(etat.lecons).length < totalLecons
       ? { href: '/cours', texte: 'Continuer le cours' }
       : { href: '/examen', texte: 'Faire un examen blanc' };
@@ -257,6 +257,11 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           {suite.href !== '/examen' && <a className="bouton" href="/examen">Examen blanc</a>}
           {suite.href !== '/cours' && <a className="bouton bouton--discret" href="/cours">Le cours</a>}
         </div>
+        {/* Relire n'est pas rejouer, et les deux gestes ne se remplacent pas. */}
+        <p className="discret jour__note">
+          <a href="/profil/erreurs" data-mesure="profil-erreurs">Relire ce que j’ai raté</a>, la
+          bonne réponse et l’explication en face, sans rejouer.
+        </p>
       </section>
 
       {!rien && faibles.length > 0 && (
