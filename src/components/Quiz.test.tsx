@@ -75,7 +75,7 @@ describe('écran de départ de l’examen', () => {
           index: 1,
           selections: [['a'], [], []],
           echeance: Date.now() + 12_000,
-          journal: [{ id: 'ecluses-0001', juste: true }],
+          journal: [{ id: 'ecluses-0001', juste: true, ms: 3_000 }],
           majLe: Date.now(),
         },
       }),
@@ -104,7 +104,7 @@ describe('écran de départ de l’examen', () => {
           index: 2,
           selections: [['a'], ['b'], []],
           echeance: Date.now() + 12_000,
-          journal: [{ id: 'ecluses-0001', juste: true }],
+          journal: [{ id: 'ecluses-0001', juste: true, ms: 3_000 }],
           majLe: Date.now(),
         },
       }),
@@ -284,29 +284,64 @@ describe('arrêt d’un examen en cours', () => {
   });
 });
 
-describe('révision des erreurs', () => {
-  it('ne garde que les ratées de la progression locale', () => {
+describe('la série du jour', () => {
+  /** Une progression écrite dans le stockage, telle que le navigateur la garde. */
+  function progression(questions: Record<string, unknown>, rythme: number | null = null) {
     localStorage.setItem(
       CLE_STOCKAGE,
       JSON.stringify({
         version: VERSION_STOCKAGE,
-        questions: {
-          'ecluses-0001': { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
-          'ecluses-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02' },
-        },
+        questions,
         examens: [],
         dateExamen: null,
         enCours: null,
+        profil: { prenom: '', motivations: [], phrase: '', depart: null, rythme, rempliLe: null },
       }),
     );
+  }
+
+  /** Une question réussie et reprogrammée loin devant : elle n'est pas due. */
+  const rangee = {
+    vues: 2, ratees: 0, derniereReussie: true, vueLe: '2026-09-01',
+    succes: 4, dernierSuccesLe: '2026-09-01', revoirLe: '2099-01-01',
+  };
+  /** Une question ratée : due tout de suite. */
+  const ratee = {
+    vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-02',
+    succes: 0, revoirLe: '2026-09-02',
+  };
+
+  it('joue ce qui est dû, et laisse dehors ce qui est reprogrammé plus tard', () => {
+    progression({
+      'ecluses-0001': rangee,
+      'ecluses-0002': ratee,
+      'ecluses-0003': rangee,
+    });
     render(<Quiz mode="entrainement" questions={trois} revoir />);
     expect(screen.getByText('Énoncé de ecluses-0002')).toBeTruthy();
     expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 1');
   });
 
-  it('le dit franchement quand il n’y a rien à revoir', () => {
+  it('complète avec des questions jamais vues quand la place reste', () => {
+    progression({ 'ecluses-0002': ratee });
     render(<Quiz mode="entrainement" questions={trois} revoir />);
-    expect(screen.getByText(/Rien à revoir pour l’instant/)).toBeTruthy();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 3');
+  });
+
+  it('borne la série au rythme choisi par le candidat', () => {
+    progression({}, 2);
+    render(<Quiz mode="entrainement" questions={trois} revoir />);
+    expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 2');
+  });
+
+  it('le dit franchement quand rien n’est dû aujourd’hui', () => {
+    progression({
+      'ecluses-0001': rangee,
+      'ecluses-0002': rangee,
+      'ecluses-0003': rangee,
+    });
+    render(<Quiz mode="entrainement" questions={trois} revoir />);
+    expect(screen.getByText(/Rien à revoir aujourd’hui/)).toBeTruthy();
   });
 });
 

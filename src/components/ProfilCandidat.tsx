@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
 import { aujourdhui, charger, effacer, enregistrerProfil, sauvegarder } from '../lib/progression';
+import { estDue } from '../lib/quiz';
 import type { Etat } from '../lib/progression';
 import {
   PALIERS,
@@ -72,7 +73,8 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const jours = etat.dateExamen ? joursAvant(etat.dateExamen, jour) : null;
   const publiees = new Set(banque.map((q) => q.id));
   const vues = Object.entries(etat.questions).filter(([id]) => publiees.has(id));
-  const aRevoir = vues.filter(([, e]) => !e.derniereReussie).length;
+  // Ce que compte la pastille est ce que `/revoir` joue : les questions dues.
+  const aRevoir = vues.filter(([, e]) => estDue(e, jour)).length;
   const examens = etat.examens.filter((x) => x.total > 0);
   const recus = examens.filter((x) => x.reussi).length;
   const meilleur = examens.reduce((m, x) => Math.max(m, x.bonnes), 0);
@@ -135,7 +137,8 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           <summary>Comment c’est compté</summary>
           <p>
             Vingt points pour la part de la banque que tu as rencontrée, {vues.length} question{vues.length > 1 ? 's' : ''} sur{' '}
-            {banque.length}. Trente-cinq pour la part de ces questions réussies à la dernière rencontre. Quarante-cinq pour
+            {banque.length}. Trente-cinq pour la part de ces questions réussies deux jours différents : une seule bonne
+            réponse ne compte pas comme une mémoire, la correction était encore à l’écran. Quarante-cinq pour
             la moyenne de tes trois derniers examens blancs terminés
             {ind.examensComptes > 0 ? `, ${ind.examensComptes} pour l’instant` : ', aucun pour l’instant'}.
             « Prêt » demande en plus deux examens reçus sur les trois derniers : un nombre ne dit pas qu’on tient
@@ -220,8 +223,8 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
       <section className="fiche__themes" aria-labelledby="themes-titre">
         <h2 id="themes-titre">Thème par thème</h2>
         <p className="discret">
-          Les plus faibles d’abord. Retenu, c’est réussi à la dernière rencontre : rater une question la sort du compte,
-          la retrouver l’y remet.
+          Les plus faibles d’abord. Retenu, c’est réussi deux jours différents : une question revient un jour plus tard,
+          puis trois, puis sept, puis vingt et un. Une faute la ramène tout de suite et remet le compteur à zéro.
         </p>
         <ul className="maitrise">
           {themes.map((t) => (

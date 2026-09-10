@@ -9,7 +9,12 @@ import {
   corriger,
   calculerResultat,
   ordonnerEntrainement,
-  serieARevoir,
+  serieDuJour,
+  INTERVALLES,
+  intervalle,
+  estRetenue,
+  estDue,
+  TAILLE_SERIE_PAR_DEFAUT,
 } from './quiz';
 import { THEMES, cibleTotaleJ1 } from './themes';
 import type { QuestionJouable, Progression } from './quiz';
@@ -226,9 +231,9 @@ describe('ordonnancement de l’entraînement', () => {
   ];
 
   const progression: Progression = {
-    'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
-    'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03' },
-    'vhf-0004': { vues: 2, ratees: 2, derniereReussie: false, vueLe: '2026-09-02' },
+    'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 3, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-08' },
+    'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03', succes: 0, revoirLe: '2026-09-03' },
+    'vhf-0004': { vues: 2, ratees: 2, derniereReussie: false, vueLe: '2026-09-02', succes: 0, revoirLe: '2026-09-02' },
   };
 
   it('met les ratées en premier, puis les jamais vues, puis le reste', () => {
@@ -255,39 +260,100 @@ describe('ordonnancement de l’entraînement', () => {
   });
 });
 
-describe('série « à revoir »', () => {
+describe('règles du rappel espacé', () => {
+  it('espace les révisions de un, trois, sept puis vingt et un jours', () => {
+    expect(INTERVALLES).toEqual([1, 3, 7, 21]);
+    expect(intervalle(1)).toBe(1);
+    expect(intervalle(2)).toBe(3);
+    expect(intervalle(3)).toBe(7);
+    expect(intervalle(4)).toBe(21);
+    // Au-delà du dernier palier, l'intervalle ne grandit plus.
+    expect(intervalle(9)).toBe(21);
+  });
+
+  it('ne tient pour retenue qu’une question réussie deux jours différents', () => {
+    const un = { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 1, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-02' };
+    expect(estRetenue(un)).toBe(false);
+    expect(estRetenue({ ...un, succes: 2 })).toBe(true);
+    expect(estRetenue({ ...un, succes: 0, derniereReussie: false })).toBe(false);
+  });
+
+  it('dit due une question dont le jour de révision est arrivé, jamais une jamais vue', () => {
+    const e = { vues: 1, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 1, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-04' };
+    expect(estDue(e, '2026-09-03')).toBe(false);
+    expect(estDue(e, '2026-09-04')).toBe(true);
+    expect(estDue(e, '2026-09-30')).toBe(true);
+    expect(estDue(undefined, '2026-09-30')).toBe(false);
+    expect(estDue({ ...e, revoirLe: undefined }, '2026-09-30')).toBe(false);
+  });
+});
+
+describe('série du jour', () => {
   const questions = [
-    q('vhf-0001', 'vhf'),
-    q('vhf-0002', 'vhf'),
-    q('vhf-0003', 'vhf'),
-    q('vhf-0004', 'vhf'),
+    { ...q('vhf-0001', 'vhf'), notion: 'vhf-canaux' },
+    { ...q('vhf-0002', 'vhf'), notion: 'vhf-canaux' },
+    { ...q('vhf-0003', 'vhf'), notion: 'vhf-detresse' },
+    { ...q('vhf-0004', 'vhf'), notion: 'vhf-detresse' },
   ];
   const progression: Progression = {
-    'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01' },
-    'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03' },
-    'vhf-0004': { vues: 2, ratees: 2, derniereReussie: false, vueLe: '2026-09-02' },
+    'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 3, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-08' },
+    'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03', succes: 0, revoirLe: '2026-09-03' },
+    'vhf-0004': { vues: 2, ratees: 2, derniereReussie: false, vueLe: '2026-09-02', succes: 0, revoirLe: '2026-09-02' },
   };
 
-  it('ne garde que les questions ratées à la dernière rencontre', () => {
-    expect(serieARevoir(questions, progression).map((x) => x.id).sort()).toEqual([
-      'vhf-0002', 'vhf-0004',
-    ]);
+  it('rend ce qui est dû aujourd’hui, la plus en retard d’abord', () => {
+    const serie = serieDuJour(questions, progression, '2026-09-03', 10).map((x) => x.id);
+    expect(serie.slice(0, 2)).toEqual(['vhf-0004', 'vhf-0002']);
   });
 
-  it('laisse dehors ce qui n’a jamais été vu', () => {
-    expect(serieARevoir(questions, progression).map((x) => x.id)).not.toContain('vhf-0003');
+  it('laisse dehors ce qui n’est pas encore dû', () => {
+    const serie = serieDuJour(questions, progression, '2026-09-03', 10).map((x) => x.id);
+    expect(serie).not.toContain('vhf-0001');
   });
 
-  it('sort la plus ancienne ratée en premier', () => {
-    expect(serieARevoir(questions, progression)[0]?.id).toBe('vhf-0004');
+  it('reprend une question réussie une fois quand son jour arrive', () => {
+    const serie = serieDuJour(questions, progression, '2026-09-08', 10).map((x) => x.id);
+    expect(serie).toContain('vhf-0001');
   });
 
-  it('rend une série vide quand rien n’a été raté', () => {
-    expect(serieARevoir(questions, {})).toEqual([]);
+  it('complète avec les jamais vues quand la place reste', () => {
+    const serie = serieDuJour(questions, progression, '2026-09-03', 10).map((x) => x.id);
+    expect(serie).toContain('vhf-0003');
+    // Les dues passent devant : elles sont le geste du jour.
+    expect(serie.indexOf('vhf-0003')).toBeGreaterThan(serie.indexOf('vhf-0002'));
   });
 
-  it('compte comme la pastille de l’accueil', () => {
-    const aRevoir = Object.values(progression).filter((e) => !e.derniereReussie).length;
-    expect(serieARevoir(questions, progression)).toHaveLength(aRevoir);
+  it('prend les jamais vues des notions les plus faibles d’abord', () => {
+    const banqueLarge = [
+      ...questions,
+      { ...q('vhf-0005', 'vhf'), notion: 'vhf-canaux' },
+      { ...q('vhf-0006', 'vhf'), notion: 'vhf-detresse' },
+    ];
+    // « vhf-canaux » : une retenue sur deux vues. « vhf-detresse » : zéro sur une.
+    const p: Progression = {
+      'vhf-0001': { vues: 3, ratees: 0, derniereReussie: true, vueLe: '2026-09-01', succes: 3, dernierSuccesLe: '2026-09-01', revoirLe: '2026-09-30' },
+      'vhf-0002': { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-09-03', succes: 0, revoirLe: '2026-09-30' },
+      'vhf-0004': { vues: 2, ratees: 2, derniereReussie: false, vueLe: '2026-09-02', succes: 0, revoirLe: '2026-09-30' },
+    };
+    const serie = serieDuJour(banqueLarge, p, '2026-09-03', 10).map((x) => x.id);
+    expect(serie.slice(0, 2)).toEqual(['vhf-0003', 'vhf-0006']);
+    // « vhf-canaux » tient mieux : sa question neuve passe en dernier.
+    expect(serie[2]).toBe('vhf-0005');
+  });
+
+  it('ne dépasse jamais le rythme du candidat', () => {
+    expect(serieDuJour(questions, progression, '2026-09-03', 1).map((x) => x.id)).toEqual(['vhf-0004']);
+    expect(serieDuJour(questions, progression, '2026-09-03', 3)).toHaveLength(3);
+  });
+
+  it('borne à vingt questions quand aucun rythme n’est donné', () => {
+    expect(TAILLE_SERIE_PAR_DEFAUT).toBe(20);
+    const large = Array.from({ length: 40 }, (_, i) => q(`vhf-${String(i).padStart(4, '0')}`, 'vhf'));
+    expect(serieDuJour(large, {}, '2026-09-03')).toHaveLength(20);
+  });
+
+  it('ne perd ni ne duplique aucune question', () => {
+    const serie = serieDuJour(questions, progression, '2026-09-03', 10);
+    expect(new Set(serie.map((x) => x.id)).size).toBe(serie.length);
   });
 });
