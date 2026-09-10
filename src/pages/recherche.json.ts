@@ -55,7 +55,7 @@ const PAGES: readonly Entree[] = [
   {
     genre: 'page',
     titre: 'Les questions à revoir',
-    resume: 'Celles que tu as ratées, reprises tant qu’elles ne sont pas acquises.',
+    resume: 'Ce qui est dû aujourd’hui : tes erreurs, puis ce qu’il est temps de repasser.',
     url: '/revoir',
     mots: 'erreurs ratees revision progression rattrapage',
   },
