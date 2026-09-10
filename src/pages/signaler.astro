@@ -148,7 +148,10 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
         '',
         details || '(rien de plus)',
         '',
-        `Page : ${location.origin}/question/${question}`,
+        // Le domaine du site, jamais `location.origin` : dans la coquille il
+        // vaut « capacitor://localhost », et le lien serait inouvrable pour qui
+        // reçoit le signalement.
+        `Page : https://lepermiscotier.fr/question/${question}`,
       ].join('\n');
 
       const lien =

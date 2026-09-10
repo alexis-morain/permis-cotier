@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import LienQuestion from '../../components/LienQuestion.astro';
 import { questionsDuTheme } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
 import { notionsDuTheme } from '../../lib/notions';
@@ -87,7 +88,7 @@ const cours = coursParCode(theme.code);
             <ul class="questions">
               {qs.map((q) => (
                 <li>
-                  <a href={`/question/${q.id}`}>{q.enonce}</a>
+                  <LienQuestion id={q.id} enonce={q.enonce} />
                   <span class="discret">
                     {' '}— {q.sources.map((s) => s.texte).join(', ')}
                   </span>
@@ -106,7 +107,7 @@ const cours = coursParCode(theme.code);
         <h3>Questions pas encore rattachées à une notion</h3>
         <ul class="questions">
           {orphelines.map((q) => (
-            <li><a href={`/question/${q.id}`}>{q.enonce}</a></li>
+            <li><LienQuestion id={q.id} enonce={q.enonce} /></li>
           ))}
         </ul>
       </div>

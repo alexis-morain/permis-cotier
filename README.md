@@ -87,6 +87,7 @@ npm run dev
 | `npm run credits` | régénère `data/CREDITS.md` depuis les fiches de visuels |
 | `npm run ecluses` | redessine les signaux d'écluse |
 | `npm run carte` | redessine les planches de carte marine |
+| `npm run build:app` | construit `dist-app/`, ce que la coquille iOS embarque |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
 
@@ -117,6 +118,31 @@ verra rien d'anormal. `npm run verifier:prod`, lancé chaque matin par la veille
 dit l'état de l'endpoint — fermé, ou répondant — sans jamais ouvrir d'issue. Il
 ne voit pas la différence entre un jeton mort et un secret absent : la date
 d'expiration du jeton se note ailleurs que dans ce dépôt.
+
+## L'app iOS
+
+Le site est aussi une app iPhone, par une coquille Capacitor qui embarque le
+build : rien n'est chargé depuis le réseau, tout fonctionne en mode avion. La
+navigation est une barre d'onglets iOS native, pas un menu HTML.
+
+```bash
+npm run build:app          # dist-app/ : le site sans ce qui ne sert qu'à Google
+npx cap copy ios           # recopie dans ios/App/App/public
+npx cap open ios           # puis Cmd-R dans Xcode
+```
+
+`CIBLE=app` change le build : format dossier, PWA et sitemap coupés, mesure
+coupée, navigation web masquée, pages `question/` non construites. Ce que la
+coquille ajoute est dans `src/lib/natif.ts` — rappels avant l'épreuve, retour
+haptique, partage — chaque fonction derrière un `import()` dynamique pour que le
+site n'en emporte pas une ligne, ce que `npm run build` vérifie.
+
+La banque se met à jour sans passer par l'App Store : l'app interroge
+`banque/derniere.json` et télécharge la version plus récente. Seul un changement
+d'écran repasse par la revue d'Apple.
+
+Le chantier est parqué faute de compte développeur Apple. Ce qui reste à faire
+est dans [`docs/app-ios.md`](docs/app-ios.md).
 
 ## Le cours
 

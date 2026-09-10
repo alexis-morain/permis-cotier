@@ -1,0 +1,22 @@
+---
+import { POUR_APP } from '../lib/cible';
+
+/**
+ * L'énoncé d'une question, lié à sa page — sauf dans la coquille.
+ *
+ * Les 483 pages `question/` sont du pur référencement : elles ne sont pas
+ * construites pour l'app, et le lien y ouvrirait l'accueil sans rien dire.
+ * L'énoncé reste affiché, avec sa source à côté : c'est ce qui a de la valeur
+ * dans ces listes, la page n'ajoutait qu'une mise en forme.
+ *
+ * `scripts/elaguer-app.mjs` refuse le bundle si un lien de ce genre subsiste.
+ */
+interface Props {
+  id: string;
+  enonce: string;
+}
+
+const { id, enonce } = Astro.props;
+---
+
+{POUR_APP ? <span>{enonce}</span> : <a href={`/question/${id}`}>{enonce}</a>}

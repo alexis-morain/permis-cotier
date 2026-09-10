@@ -30,12 +30,15 @@ import {
   aujourdhui,
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
-import { ATTENTE_BANQUE, chargerBanque } from '../lib/banque-distante';
+import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
 import { lienLecon } from '../lib/retour';
 import { rappel } from '../lib/profil';
+import { POUR_APP } from '../lib/cible';
+import { partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
+import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
 import './quiz.css';
 
 interface Props {
@@ -232,13 +235,24 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
   // Un onglet caché voit son intervalle étranglé par le navigateur. Le chrono
   // est une horloge murale, il ne se fige donc pas, mais l'affichage peut
   // retarder : au retour, on recale sans attendre le prochain battement.
+  //
+  // Une app suspendue fait pire qu'un onglet caché : elle gèle l'intervalle
+  // tout net. `appStateChange` est le seul signal qui arrive à coup sûr au
+  // retour — `visibilitychange` ne part pas toujours dans une WKWebView
+  // rendue au premier plan. Les deux sont branchés, un `tic` de trop ne
+  // coûte rien puisqu'il ne fait que relire l'heure.
   useEffect(() => {
     if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
+    const recaler = () => envoyer({ type: 'tic', maintenant: Date.now() });
     const surRetour = () => {
-      if (!document.hidden) envoyer({ type: 'tic', maintenant: Date.now() });
+      if (!document.hidden) recaler();
     };
     document.addEventListener('visibilitychange', surRetour);
-    return () => document.removeEventListener('visibilitychange', surRetour);
+    const debrancher = surRetourAuPremierPlan(recaler);
+    return () => {
+      document.removeEventListener('visibilitychange', surRetour);
+      debrancher();
+    };
   }, [session.mode, session.phase]);
 
   // Écriture de la progression locale, au fil des réponses.
@@ -335,10 +349,14 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
   }, [session.phase === 'en-cours', nomSerie, theme]);
 
   // La correction tombait sous la ligne de flottaison sur mobile : valider
-  // n'avait l'air de rien faire. On la remonte dans le champ de vision.
+  // n'avait l'air de rien faire. On la remonte dans le champ de vision, et
+  // dans l'app le verdict se sent avant de se lire : le pouce est encore sur
+  // le bouton quand la réponse tombe. Sur le site, `vibrer` ne fait rien.
   useEffect(() => {
     if (!session.corrigee) return;
     verdict.current?.scrollIntoView({ block: 'nearest', behavior: douceur() });
+    void vibrer(session.juste ? 'juste' : 'faux');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.corrigee, session.index]);
 
   // Même chose au passage au résultat : le score est en haut de l'écran.
@@ -639,6 +657,27 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
             </button>
           )}
           <a className="bouton bouton--principal" href={retour}>Recommencer</a>
+          {/* Le partage natif, dans l'app seulement : sur le site, le bouton
+              de partage du navigateur est déjà là et un doublon dessiné en
+              HTML n'ajoute rien. Un examen interrompu ne se partage pas — le
+              score ne veut rien dire, et personne n'a envie de l'annoncer. */}
+          {POUR_APP && mode === 'examen' && !session.interrompu && r.total > 0 && (
+            <button
+              className="bouton"
+              type="button"
+              onClick={() =>
+                void partager(
+                  'Mon examen blanc du permis côtier',
+                  r.reussi
+                    ? `Reçu à l’examen blanc : ${r.bonnes} sur ${r.total}, ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
+                    : `${r.bonnes} sur ${r.total} à l’examen blanc, ${r.erreurs} erreurs. L’épreuve en admet ${ERREURS_ADMISES}. On y retourne.`,
+                  'https://lepermiscotier.fr',
+                )
+              }
+            >
+              Partager
+            </button>
+          )}
           <a className="bouton bouton--discret" href="/">Accueil</a>
         </div>
 
@@ -826,7 +865,10 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
                 aria-pressed={cochee}
                 aria-keyshortcuts={LETTRES_AFFICHEES[rang]}
                 disabled={session.corrigee || (plein && !cochee)}
-                onClick={() => envoyer({ type: 'basculer', proposition: p.id })}
+                onClick={() => {
+                  void vibrer('choix');
+                  envoyer({ type: 'basculer', proposition: p.id });
+                }}
               >
                 <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
                 <span>{p.texte}</span>
@@ -998,15 +1040,36 @@ export default function Quiz({ source, questions, ...reste }: Props) {
       controleur.abort();
       if (vivant) setEchec(true);
     }, ATTENTE_BANQUE);
-    chargerBanque(source, controleur.signal)
-      .then((questionsServies) => {
+
+    void (async () => {
+      try {
+        // La banque que la page désigne. Sur le site elle vient du réseau ou
+        // du service worker ; dans la coquille elle est dans le bundle, donc
+        // locale et instantanée, et c'est elle qui fait tenir le mode avion.
+        const embarquee = await chargerBanqueServie(source, controleur.signal);
+        // L'échéance ne couvre que le réseau : ce qui suit est local, et un
+        // IndexedDB lent ne doit pas faire afficher une panne de connexion.
         clearTimeout(echeance);
-        if (vivant) setChargees(questionsServies);
-      })
-      .catch(() => {
+
+        // Une banque téléchargée depuis, si elle est plus récente. Sur le
+        // site, `banqueGardee` rend toujours null.
+        const gardee = await banqueGardee();
+        const retenue =
+          gardee && plusRecente(gardee.version, embarquee.version) ? gardee : embarquee;
+        if (!vivant) return;
+        setChargees(retenue.questions);
+
+        // Puis on demande au site s'il y a mieux, sans rien attendre : la
+        // série qui commence joue ce qu'elle a en main, la suivante aura le
+        // reste. Aucun message, aucune erreur affichée. Sur le site,
+        // `chercherMiseAJour` ne fait rien.
+        void chercherMiseAJour(retenue.version);
+      } catch {
         clearTimeout(echeance);
         if (vivant) setEchec(true);
-      });
+      }
+    })();
+
     return () => {
       vivant = false;
       clearTimeout(echeance);

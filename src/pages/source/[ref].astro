@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import LienQuestion from '../../components/LienQuestion.astro';
 import { questionsPubliees, nomDuTheme } from '../../lib/banque';
 import { leconsEcrites } from '../../lib/lecons';
 import { leconsDuParcours } from '../../lib/parcours';
@@ -133,7 +134,7 @@ const lecons = leconsDuParcours().filter((l) =>
         <ul>
           {questions.map((q) => (
             <li>
-              <a href={`/question/${q.id}`}>{q.enonce}</a>
+              <LienQuestion id={q.id} enonce={q.enonce} />
               <span class="discret"> — {nomDuTheme(q.theme)}</span>
             </li>
           ))}

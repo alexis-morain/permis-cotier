@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Manifeste de confidentialité, obligatoire depuis le printemps 2024.
+	  Il dit deux choses.
+
+	  Un : l'app ne collecte rien. Pas de compte, pas de cookie, pas de
+	  traceur — le traceur d'audience du site est coupé dans le build « app »
+	  (voir src/lib/cible.ts), la progression reste dans le stockage local du
+	  téléphone et ne part nulle part. C'est ce qui permet d'écrire « aucune
+	  donnée collectée » sur la fiche App Store sans mentir.
+
+	  Deux : les « required reason API » employées, et leur motif. Capacitor
+	  écrit dans UserDefaults ; sans cette déclaration, l'envoi est refusé
+	  automatiquement.
+	-->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<dict>
+			<!--
+			  UserDefaults. CA92.1 : « accéder aux données de l'app
+			  elle-même, sans les partager ni les envoyer ailleurs ».
+			  C'est le cas : Capacitor y range ses réglages internes.
+			-->
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

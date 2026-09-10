@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
 import { versAffichable } from './affichable';
+import { cheminDeVersion } from './banque-distante';
 import type { QuestionAffichable } from './affichable';
 import { THEMES, themeParCode } from './themes';
 
@@ -26,7 +27,7 @@ export function versionBanque(): string {
  * fait pas gagner un aller-retour, il en ajoute un.
  */
 export function cheminBanque(): string {
-  return `/banque/v/${versionBanque()}.json`;
+  return cheminDeVersion(versionBanque());
 }
 
 /** Seules les questions publiées entrent dans le site. */
