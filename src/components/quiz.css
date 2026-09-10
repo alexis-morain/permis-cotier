@@ -347,6 +347,10 @@
 
 .resultat__ecart { margin: -0.75rem 0 1.25rem; font-weight: 600; color: var(--texte-doux); }
 
+/* Le temps, sous le score : ce que le nombre de bonnes réponses ne dit pas. */
+.resultat__temps { margin: 0 0 1.25rem; max-width: 46ch; }
+.resultat__temps .discret { display: block; }
+
 /* Le rappel de la raison, quand l'examen est recalé : jaune pâle, comme sur
    la fiche. Le style de base est dans profil.css. */
 .resultat__rappel { margin-bottom: 0.5rem; }

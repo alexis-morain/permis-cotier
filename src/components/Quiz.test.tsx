@@ -795,3 +795,36 @@ describe('la série reprise là où on l’a laissée', () => {
     expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
   });
 });
+
+describe('le temps, au résultat de l’examen', () => {
+  it('dit les questions passées au buzzer', async () => {
+    vi.useFakeTimers();
+    try {
+      render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      await act(async () => {
+        vi.advanceTimersByTime(21_000);
+      });
+      expect(screen.getByText(/au buzzer/)).toBeTruthy();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('ne parle pas de temps quand tout a été répondu à l’aise', () => {
+    render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.queryByText(/au buzzer/)).toBeNull();
+    expect(screen.queryByText(/dernière seconde/)).toBeNull();
+  });
+
+  it('ne parle pas de temps en entraînement, où il n’y a pas de chrono', () => {
+    render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(screen.queryByText(/au buzzer/)).toBeNull();
+  });
+});
