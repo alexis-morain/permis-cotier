@@ -14,6 +14,10 @@ import {
   titreQuestion,
   couperAuMot,
   cours,
+  courtFiche,
+  titreFiche,
+  descriptionFiche,
+  descriptionsDesQuestions,
 } from './seo';
 
 const BASE = new URL('https://lepermiscotier.fr');
@@ -288,5 +292,100 @@ describe('cours', () => {
   it('cite l’auteur comme fournisseur et rattache le cours au site', () => {
     expect(noeud.provider).toMatchObject({ '@id': 'https://lepermiscotier.fr/a-propos#auteur' });
     expect(noeud.isPartOf).toEqual({ '@id': 'https://lepermiscotier.fr/#site' });
+  });
+});
+
+describe('courtFiche', () => {
+  it('laisse le titre entier quand il tient dans la fenêtre de Google', () => {
+    expect(courtFiche('VHF : voies, procédures d’appel et SMDSM')).toBe(
+      'VHF : voies, procédures d’appel et SMDSM',
+    );
+  });
+
+  it('garde le premier temps du titre plutôt que de trancher le second', () => {
+    const long = 'Ski nautique et activités nautiques tractées : les arrêtés des préfets maritimes';
+    expect(long.length).toBeGreaterThan(TITRE_MAX);
+    expect(courtFiche(long)).toBe('Ski nautique et activités nautiques tractées');
+  });
+
+  it('coupe au mot quand le titre n’a pas de premier temps utilisable', () => {
+    const long = `Autonomie ${'en carburant '.repeat(8)}`.trim();
+    expect(courtFiche(long).length).toBeLessThanOrEqual(TITRE_MAX);
+    expect(courtFiche(long).endsWith('…')).toBe(true);
+  });
+});
+
+describe('titreFiche', () => {
+  it('dit ce qu’est la page, pour ne pas doubler le thème du même nom', () => {
+    expect(titreFiche('Autonomie en carburant')).toBe('Autonomie en carburant : la fiche');
+    expect(titrePage(titreFiche('Autonomie en carburant')).length).toBeLessThanOrEqual(TITRE_MAX);
+  });
+
+  it('tient dans la fenêtre de Google, mention comprise', () => {
+    const long = 'Lecture d’une carte marine : symboles élémentaires et marée';
+    expect(titreFiche(long)).toBe('Lecture d’une carte marine : la fiche');
+    expect(titreFiche(long).length).toBeLessThanOrEqual(TITRE_MAX);
+  });
+});
+
+describe('descriptionFiche', () => {
+  it('tient dans la fenêtre utile, et dit ce qu’est la page', () => {
+    const d = descriptionFiche('Échelle de Beaufort, état de la mer et bulletins');
+    expect(d.length).toBeLessThanOrEqual(DESCRIPTION_MAX);
+    expect(d.length).toBeGreaterThanOrEqual(70);
+    expect(d).toContain('Échelle de Beaufort');
+    expect(d).toContain('fiche');
+  });
+
+  it('raccourcit le titre avant de bâtir la phrase, pour ne jamais couper la fin', () => {
+    const d = descriptionFiche(
+      'Ski nautique et activités nautiques tractées : les arrêtés des préfets maritimes',
+    );
+    expect(d.length).toBeLessThanOrEqual(DESCRIPTION_MAX);
+    expect(d.endsWith('…')).toBe(false);
+  });
+});
+
+describe('descriptionsDesQuestions', () => {
+  const marnage = [
+    {
+      id: 'carte-marine-0007',
+      enonce: 'Quand le marnage est-il le plus fort ?',
+      explication: `Le marnage est la différence de hauteur entre une pleine mer et la basse mer qui la suit. Il est maximal en vive-eau, autour de la pleine et de la nouvelle lune, quand le Soleil et la Lune tirent dans le même sens.`,
+    },
+    {
+      id: 'carte-marine-0029',
+      enonce: 'Qu’appelle-t-on le marnage ?',
+      explication: `Le marnage est la différence de hauteur entre une pleine mer et la basse mer qui la suit. Il est maximal en vive-eau, autour de la pleine et de la nouvelle lune, et minimal en morte-eau.`,
+    },
+  ];
+
+  it('laisse l’explication seule quand elle suffit à distinguer la page', () => {
+    const seule = [{ id: 'meteo-0001', enonce: 'Force 8 ?', explication: 'a'.repeat(200) }];
+    expect(descriptionsDesQuestions(seule).get('meteo-0001')).toBe(
+      descriptionPage(seule[0]!.explication),
+    );
+  });
+
+  it('préfixe de l’énoncé les seules qui entrent en collision', () => {
+    const descriptions = descriptionsDesQuestions(marnage);
+    const valeurs = [...descriptions.values()];
+    expect(new Set(valeurs).size).toBe(2);
+    expect(descriptions.get('carte-marine-0007')?.startsWith('Quand le marnage')).toBe(true);
+    expect(descriptions.get('carte-marine-0029')?.startsWith('Qu’appelle-t-on')).toBe(true);
+  });
+
+  it('tient la fenêtre utile sur toutes les descriptions', () => {
+    for (const d of descriptionsDesQuestions(marnage).values()) {
+      expect(d.length).toBeLessThanOrEqual(DESCRIPTION_MAX);
+    }
+  });
+
+  it('refuse de publier deux questions que même leur énoncé ne sépare pas', () => {
+    const jumelles = [
+      { id: 'meteo-0001', enonce: 'Force 8 ?', explication: 'Coup de vent.' },
+      { id: 'meteo-0002', enonce: 'Force 8 ?', explication: 'Coup de vent.' },
+    ];
+    expect(() => descriptionsDesQuestions(jumelles)).toThrow(/meteo-0001/);
   });
 });

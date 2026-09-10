@@ -1,4 +1,7 @@
 ---
+import MarqueSource from './MarqueSource.astro';
+import { citeLegifrance, citeUneFiche, type SourceAffichee } from '../lib/sources';
+
 /**
  * D'où la page tient ce qu'elle affirme.
  *
@@ -6,14 +9,36 @@
  * sans dire d'où elle sort sa réponse vaut ce que vaut son auteur ; celle qui
  * cite l'article se vérifie en un clic. C'est la seule chose que ce site fait
  * mieux que les autres, elle doit se voir.
+ *
+ * Et elle doit être vraie. Le pied de ce bloc a longtemps annoncé « Textes
+ * publiés sur Légifrance sous Licence Ouverte 2.0 » sous toutes les sources,
+ * y compris sous une fiche écrite à la main : la seule phrase qui fondait le
+ * site était fausse une fois sur quatre. Elle n'apparaît plus que si une
+ * source vient vraiment de Légifrance, et chaque source dit ce qu'elle est.
  */
 interface Props {
-  sources: readonly { texte: string; url: string }[];
+  sources: readonly SourceAffichee[];
   /** Date de la dernière vérification des textes cités. */
   verifieLe?: string;
 }
 
 const { sources, verifieLe } = Astro.props;
+
+// Ce que le bloc a le droit d'affirmer, et rien de plus. Chaque phrase dépend
+// de ce que les sources sont vraiment : les arrêtés des préfets maritimes ne
+// sont pas sur Légifrance, et une fiche du site n'y sera jamais.
+const consultee = verifieLe ? `, version consultée le ${verifieLe}` : '';
+const phrases: string[] = [];
+if (citeLegifrance(sources)) {
+  phrases.push(`Textes publiés sur Légifrance sous Licence Ouverte 2.0${consultee}.`);
+} else if (verifieLe) {
+  phrases.push(`Sources consultées le ${verifieLe}.`);
+}
+if (citeUneFiche(sources)) {
+  phrases.push(
+    'Une fiche du site est écrite à la main : ce n’est pas un texte officiel, et elle dit sur quelle autorité elle s’appuie.',
+  );
+}
 ---
 
 <aside class="sources">
@@ -21,12 +46,24 @@ const { sources, verifieLe } = Astro.props;
   <ul>
     {sources.map((s) => (
       <li>
-        <a href={s.url} rel="noreferrer noopener" data-mesure="source-ouverte">{s.texte}</a>
+        {s.url ? (
+          <a
+            href={s.url}
+            rel={s.provenance === 'officiel' ? 'noreferrer noopener' : undefined}
+            data-mesure="source-ouverte"
+            data-mesure-ref={s.ref}
+          >
+            {s.texte}
+          </a>
+        ) : (
+          s.texte
+        )}
+        <MarqueSource provenance={s.provenance} />
       </li>
     ))}
   </ul>
   <p class="discret">
-    Textes publiés sur Légifrance sous Licence Ouverte 2.0{verifieLe ? `, version consultée le ${verifieLe}` : ''}.
+    {phrases.join(' ')}
     Une erreur, un texte modifié ? <a href="/signaler">Signale-le</a>, la correction arrive dans la semaine.
   </p>
 </aside>
@@ -42,6 +79,6 @@ const { sources, verifieLe } = Astro.props;
   }
   .sources__titre { font-size: 1rem; margin: 0 0 0.6rem; }
   .sources ul { margin: 0 0 0.8rem; padding-left: 1.1rem; }
-  .sources li { margin-bottom: 0.3rem; }
+  .sources li { margin-bottom: 0.4rem; }
   .sources p { margin: 0; max-width: 60ch; }
 </style>

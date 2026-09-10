@@ -22,7 +22,7 @@
  */
 
 /** Ce qu'une entrée désigne. L'ordre des mots ne compte pas, celui des poids si. */
-export type Genre = 'cours' | 'lecon' | 'notion' | 'theme' | 'guide' | 'page' | 'question';
+export type Genre = 'cours' | 'lecon' | 'notion' | 'theme' | 'source' | 'guide' | 'page' | 'question';
 
 export interface Entree {
   readonly genre: Genre;
@@ -83,6 +83,9 @@ const FACTEUR_GENRE: Readonly<Record<Genre, number>> = {
   lecon: 2.2,
   notion: 2,
   theme: 1.8,
+  // La fiche du site est du contenu, pas un écran : elle passe devant les
+  // pages de service, mais derrière la leçon qui enseigne le même sujet.
+  source: 1.7,
   page: 1.6,
   guide: 1.5,
   question: 1,
