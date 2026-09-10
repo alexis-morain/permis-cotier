@@ -805,7 +805,9 @@ describe('le temps, au résultat de l’examen', () => {
       await act(async () => {
         vi.advanceTimersByTime(21_000);
       });
-      expect(screen.getByText(/au buzzer/)).toBeTruthy();
+      expect(document.querySelector('.resultat__temps')?.textContent).toContain(
+        '1 question passée au buzzer, sans réponse dans les vingt secondes.',
+      );
     } finally {
       vi.useRealTimers();
     }
