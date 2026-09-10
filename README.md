@@ -141,6 +141,9 @@ La banque se met à jour sans passer par l'App Store : l'app interroge
 `banque/derniere.json` et télécharge la version plus récente. Seul un changement
 d'écran repasse par la revue d'Apple.
 
+Le chantier est parqué faute de compte développeur Apple. Ce qui reste à faire
+est dans [`docs/app-ios.md`](docs/app-ios.md).
+
 ## Le cours
 
 `/cours` prend les 105 notions du programme dans un ordre d'apprentissage.
