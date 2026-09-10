@@ -13,6 +13,10 @@ dist/
 .env
 .env.*
 !.env.example
+# Les secrets du Worker en local. En ligne ils sont posés par
+# `wrangler secret put`, jamais dans un fichier du dépôt.
+.dev.vars
+.dev.vars.*
 *.bak
 *.bak.*
 
