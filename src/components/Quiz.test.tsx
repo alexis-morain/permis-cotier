@@ -12,10 +12,11 @@ import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
  * remonte, les touches, et l'arrêt qui ne rend pas un zéro imaginaire.
  */
 
-function question(id: string, theme = 'ecluses', reponses = ['a']): QuestionAffichable {
+function question(id: string, theme = 'ecluses', reponses = ['a'], notion?: string): QuestionAffichable {
   return {
     id,
     theme,
+    notion,
     reponses,
     enonce: `Énoncé de ${id}`,
     explication: `Explication de ${id}`,
@@ -661,5 +662,171 @@ describe('mélange des propositions', () => {
       (n) => n.children[1]?.textContent ?? '',
     );
     expect(revus).toEqual(joue);
+  });
+});
+
+describe('entraînement sur une notion', () => {
+  function servir(questions: QuestionAffichable[]) {
+    return vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ version: '1.10.2', questions }),
+    })) as unknown as typeof fetch;
+  }
+
+  const laterale = question('balisage-0001', 'balisage', ['a'], 'balisage-lateral');
+  const cardinale = question('balisage-0002', 'balisage', ['a'], 'balisage-cardinal');
+
+  it('ne joue que les questions de la notion, et se nomme par elle', async () => {
+    vi.stubGlobal('fetch', servir([laterale, cardinale]));
+    render(
+      <Quiz
+        mode="entrainement"
+        source="/banque/1.10.2.json"
+        theme="balisage"
+        notion={{ code: 'balisage-lateral', nom: 'Marques latérales' }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de balisage-0001/)).toBeTruthy());
+    expect(screen.queryByText(/Énoncé de balisage-0002/)).toBeNull();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Entraînement, Marques latérales');
+  });
+
+  it('renvoie sur la série de la notion au bout de la série', async () => {
+    vi.stubGlobal('fetch', servir([laterale]));
+    render(
+      <Quiz
+        mode="entrainement"
+        source="/banque/1.10.2.json"
+        theme="balisage"
+        notion={{ code: 'balisage-lateral', nom: 'Marques latérales' }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText(/Énoncé de balisage-0001/)).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    expect(screen.getByRole('link', { name: 'Recommencer' }).getAttribute('href')).toBe(
+      '/entrainement/notion/balisage-lateral',
+    );
+  });
+});
+
+describe('de la question ratée à la leçon', () => {
+  const laterale = question('balisage-0001', 'balisage', ['a'], 'balisage-lateral');
+  const sansNotion = question('balisage-0002', 'balisage', ['a']);
+
+  function rater() {
+    fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+  }
+
+  it('mène à la leçon sous un verdict raté, et garde le chemin du retour', () => {
+    render(<Quiz mode="entrainement" questions={[laterale]} theme="balisage" />);
+    rater();
+    const lien = screen.getByRole('link', { name: /La leçon/ });
+    expect(lien.getAttribute('href')).toBe(
+      '/cours/balisage/balisage-lateral?retour=%2Fentrainement%2Fbalisage',
+    );
+  });
+
+  it('ne dit rien sous une bonne réponse, ni sans notion', () => {
+    render(<Quiz mode="entrainement" questions={[laterale]} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(screen.queryByRole('link', { name: /La leçon/ })).toBeNull();
+
+    cleanup();
+    render(<Quiz mode="entrainement" questions={[sansNotion]} theme="balisage" />);
+    rater();
+    expect(screen.queryByRole('link', { name: /La leçon/ })).toBeNull();
+  });
+
+  it('mène aussi à la leçon depuis la revue d’un examen, et ramène aux erreurs', () => {
+    render(<Quiz mode="examen" questions={[laterale]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+
+    expect(screen.getByRole('link', { name: /La leçon/ }).getAttribute('href')).toBe(
+      '/cours/balisage/balisage-lateral?retour=%2Fprofil%2Ferreurs',
+    );
+  });
+});
+
+describe('la série reprise là où on l’a laissée', () => {
+  const deux = [question('balisage-0001', 'balisage', ['a'], 'balisage-lateral'), question('balisage-0002', 'balisage')];
+
+  it('propose de reprendre l’entraînement quitté pour une leçon', () => {
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+
+    // On part lire la leçon : la page est quittée, l'écran remonte au retour.
+    cleanup();
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+    // La réponse déjà donnée ne se recompte pas dans la progression.
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    const etat = JSON.parse(localStorage.getItem(CLE_STOCKAGE) ?? '{}');
+    expect(etat.questions['balisage-0001'].vues).toBe(1);
+  });
+
+  it('ne mélange pas la série d’un thème avec celle d’un autre, ni avec l’examen', () => {
+    render(<Quiz mode="entrainement" questions={deux} theme="balisage" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    cleanup();
+    render(<Quiz mode="entrainement" questions={deux} theme="feux-marques" />);
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+
+    cleanup();
+    render(<Quiz mode="examen" questions={deux} />);
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+  });
+});
+
+describe('le temps, au résultat de l’examen', () => {
+  it('dit les questions passées au buzzer', async () => {
+    vi.useFakeTimers();
+    try {
+      render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      await act(async () => {
+        vi.advanceTimersByTime(21_000);
+      });
+      expect(document.querySelector('.resultat__temps')?.textContent).toContain(
+        '1 question passée au buzzer, sans réponse dans les vingt secondes.',
+      );
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('ne parle pas de temps quand tout a été répondu à l’aise', () => {
+    render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.queryByText(/au buzzer/)).toBeNull();
+    expect(screen.queryByText(/dernière seconde/)).toBeNull();
+  });
+
+  it('ne parle pas de temps en entraînement, où il n’y a pas de chrono', () => {
+    render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(screen.queryByText(/au buzzer/)).toBeNull();
   });
 });

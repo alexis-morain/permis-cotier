@@ -4,6 +4,8 @@ import {
   etatInitial,
   enregistrerEnCours,
   effacerEnCours,
+  enregistrerEnCoursSerie,
+  effacerEnCoursSerie,
   enregistrerReponse,
   enregistrerExamen,
   statistiques,
@@ -97,6 +99,19 @@ describe('session en cours', () => {
     expect(e.enCours).toBeNull();
   });
 
+  it('range la série d’entraînement à part de l’examen', () => {
+    // Un entraînement quitté pour aller lire une leçon ne doit pas effacer
+    // l'examen laissé en plan : deux fentes, deux reprises indépendantes.
+    const serie = { ...sauvegarde, mode: 'entrainement' as const, theme: '/entrainement/balisage', echeance: null };
+    const e = enregistrerEnCoursSerie(enregistrerEnCours(etatInitial(), sauvegarde), serie);
+    sauvegarder(e, memoire);
+    const lu = charger(memoire);
+    expect(lu.enCours).toEqual(sauvegarde);
+    expect(lu.enCoursSerie).toEqual(serie);
+    expect(effacerEnCoursSerie(lu).enCoursSerie).toBeNull();
+    expect(effacerEnCoursSerie(lu).enCours).toEqual(sauvegarde);
+  });
+
   it('ne perd pas la progression d’un état écrit avant ce champ', () => {
     memoire.setItem(
       'permis-cotier:progression',
@@ -105,6 +120,7 @@ describe('session en cours', () => {
     const lu = charger(memoire);
     expect(lu.questions['vhf-0001']?.vues).toBe(1);
     expect(lu.enCours).toBeNull();
+    expect(lu.enCoursSerie).toBeNull();
   });
 });
 

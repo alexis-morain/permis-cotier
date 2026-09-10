@@ -58,7 +58,6 @@ const cadre = {
   rang: 1,
   total: 12,
   suite: { type: 'lecon' as const, chemin: '/cours/balisage/balisage-chenal-prefere', nom: 'Chenal préféré' },
-  theme: { code: 'balisage', nom: 'Balisage' },
 };
 
 beforeEach(() => {
@@ -218,4 +217,43 @@ describe('mélange des propositions de la vérification', () => {
     }
     expect(ordres.size).toBeGreaterThan(1);
   }, 30_000);
+});
+
+describe('le retour vers la série', () => {
+  afterEach(() => window.history.replaceState({}, '', '/'));
+
+  it('ramène là d’où l’on vient, en tête et à la fin', () => {
+    window.history.replaceState({}, '', '/cours/balisage/balisage-lateral?retour=%2Frevoir');
+    render(<Lecon lecon={courte} {...cadre} />);
+
+    const enTete = screen.getByRole('link', { name: 'Revenir à ta série du jour' });
+    expect(enTete.getAttribute('href')).toBe('/revoir');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+    expect(screen.getAllByRole('link', { name: 'Revenir à ta série du jour' }).length).toBe(2);
+  });
+
+  it('ne propose rien quand l’adresse ne dit pas d’où l’on vient', () => {
+    render(<Lecon lecon={courte} {...cadre} />);
+    expect(screen.queryByRole('link', { name: /Revenir/ })).toBeNull();
+  });
+
+  it('ne suit pas une adresse qui n’est pas du site', () => {
+    window.history.replaceState({}, '', '/cours/balisage/balisage-lateral?retour=https%3A%2F%2Fexemple.fr');
+    render(<Lecon lecon={courte} {...cadre} />);
+    expect(screen.queryByRole('link', { name: /Revenir/ })).toBeNull();
+  });
+
+  it('renvoie sur les questions de la notion, pas sur tout le thème', () => {
+    render(<Lecon lecon={ecrite} {...cadre} />);
+    for (let i = 0; i < 4; i += 1) fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Vérifier ce que j’ai retenu' }));
+    for (let i = 0; i < 2; i += 1) {
+      fireEvent.click(screen.getByRole('button', { name: /Première/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+      fireEvent.click(screen.getByRole('button', { name: /Question suivante|Terminer la leçon/ }));
+    }
+    const lien = screen.getByRole('link', { name: /S’entraîner sur cette notion/ });
+    expect(lien.getAttribute('href')).toBe('/entrainement/notion/balisage-lateral');
+  });
 });
