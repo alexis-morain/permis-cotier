@@ -133,6 +133,32 @@ banque sur la notion ; la progression reste dans le navigateur. Les leçons
 humaine est attendue. Les anciennes adresses `/cours/<notion>` redirigent en 301
 depuis `public/_redirects`.
 
+## Comment on révise
+
+Les propositions sont **mélangées à l'affichage**, par une graine tirée à chaque
+session. Elles ne l'étaient pas : la bonne réponse était rangée en `a` dans 79 %
+des fichiers, et cocher la première case rapportait 70 % d'items justes. La
+correction, elle, porte toujours sur les identifiants du fichier — la lettre
+affichée n'est pas l'identifiant, et le clavier suit la lettre affichée.
+
+Une question ne sort de la file **qu'après deux réussites, à deux jours
+différents**, puis revient à 1, 3, 7 et 21 jours. Une réussite le même jour
+n'avance rien : sans ce verrou, il suffisait de rejouer une question dix
+secondes après l'avoir ratée pour qu'elle disparaisse à jamais, et l'indice de
+préparation appelait cela « retenu ». `/revoir` joue ce qui est dû aujourd'hui,
+borné par le rythme choisi.
+
+Sous chaque réponse ratée, un lien mène à la leçon qui l'explique, et ramène à la
+série en cours. `/profil/erreurs` relit ce qui a été raté — énoncé, bonne
+réponse, explication, leçon — sans avoir à rejouer. `/entrainement/notion/<code>`
+donne l'étage qui manquait entre les quatorze thèmes et les cent cinq notions.
+Le résultat d'un examen blanc dit combien de questions sont passées au buzzer :
+l'échec par lenteur est le mode d'échec propre à cette épreuve.
+
+Toute la progression reste dans le navigateur. Les dates sont lues en heure de
+Paris (`src/lib/jour.ts`), jamais en UTC : entre minuit et 2 h, une série de
+jours se rompait toute seule.
+
 ## La fiche du candidat
 
 `/profil` dit où on en est, depuis la progression du navigateur : un indice de
@@ -162,6 +188,22 @@ ligne. Le classement est dans `src/lib/recherche.ts` : le titre pèse plus que l
 corps, tous les mots tapés doivent porter, et l'énoncé d'une question compte
 comme du corps : sans cela, cinq cents énoncés enterreraient la leçon qui les
 explique.
+
+## D'où viennent les réponses
+
+Chaque question cite ses textes sous l'explication, et chaque ligne dit ce
+qu'elle est : **« Texte officiel »** avec son lien Légifrance, ou **« Fiche du
+site »** avec son lien vers `/source/<ref>`.
+
+Cent dix-huit questions sur cinq cent seize ne tiennent pas sur un article de
+loi, et c'est irréductible : l'échelle de Beaufort est une convention de l'OMM,
+le Règlement des radiocommunications de l'UIT n'est pas ouvert, le fond de la
+carte marine est le SHOM et l'OHI. Ces sujets sont écrits à la main, dans les
+dossiers `fiche-…` de `data/sources`, et **les sept fiches sont publiées** : la
+page dit qu'elle n'est pas un texte officiel, nomme l'autorité sur laquelle elle
+s'appuie, le point du programme qu'elle couvre, et les questions qui en
+dépendent. La mention de la Licence Ouverte n'apparaît que sous les sources qui
+viennent vraiment de Légifrance.
 
 ## Ajouter une question
 
