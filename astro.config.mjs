@@ -40,8 +40,12 @@ export default defineConfig({
     sitemap({
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
+      // La fiche du candidat et ses erreurs non plus : elles sont vides tant
+      // que le navigateur n'a pas lu sa progression, et déclarées `noindex` —
+      // les annoncer au sitemap dirait le contraire.
       filter: (page) =>
         !/\/(examen|revoir|parametres|signaler|recherche)(\.html)?$/.test(page) &&
+        !page.includes('/profil') &&
         !page.includes('/entrainement/') &&
         leconIndexable(page),
       changefreq: 'weekly',

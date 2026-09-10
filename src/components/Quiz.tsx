@@ -29,6 +29,7 @@ import {
   aujourdhui,
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
+import { ATTENTE_BANQUE, chargerBanque } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
@@ -888,12 +889,6 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
   );
 }
 
-/** Ce que sert `dist/banque/<version>.json`. */
-interface BanqueServie {
-  version: string;
-  questions: QuestionAffichable[];
-}
-
 /**
  * L'attente.
  *
@@ -951,13 +946,6 @@ function Panne({ reessayer }: { reessayer: () => void }) {
 }
 
 /**
- * Ce qu'on attend la banque avant de rendre la main. Quinze secondes : de quoi
- * laisser passer une 3G lente sur 96 Ko compressés, pas de quoi laisser le
- * candidat devant une silhouette qui bat pour rien.
- */
-const ATTENTE_BANQUE = 15_000;
-
-/**
  * L'écran de jeu, banque comprise.
  *
  * Deux entrées, jamais les deux à la fois : `questions`, que les tests
@@ -983,14 +971,10 @@ export default function Quiz({ source, questions, ...reste }: Props) {
       controleur.abort();
       if (vivant) setEchec(true);
     }, ATTENTE_BANQUE);
-    fetch(source, { signal: controleur.signal })
-      .then((reponse) => {
-        if (!reponse.ok) throw new Error(`banque : ${reponse.status}`);
-        return reponse.json() as Promise<BanqueServie>;
-      })
-      .then((banque) => {
+    chargerBanque(source, controleur.signal)
+      .then((questionsServies) => {
         clearTimeout(echeance);
-        if (vivant) setChargees(banque.questions);
+        if (vivant) setChargees(questionsServies);
       })
       .catch(() => {
         clearTimeout(echeance);
