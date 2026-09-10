@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { resoudreSources, type SourceAffichee, type SourceCitee } from './sources';
 
 /**
  * Les pages du guide : celles qui répondent à une question qu'on se pose avant
@@ -29,15 +29,6 @@ export interface PageGuide {
    *  dans `data/sources/<ref>/<fichier>.md` : trois des sept identifiants
    *  recopiés à la main dans la première version étaient faux. */
   readonly sources: readonly SourceCitee[];
-}
-
-export interface SourceCitee {
-  /** Ce qui s'affiche : « Décret n° 2007-1167 du 2 août 2007, article 2 ». */
-  readonly texte: string;
-  /** Dossier de `data/sources/`. */
-  readonly ref: string;
-  /** Nom du fichier, sans l'extension. */
-  readonly fichier: string;
 }
 
 export const GUIDE: readonly PageGuide[] = [
@@ -113,30 +104,14 @@ export function autresPages(slug: string): readonly PageGuide[] {
 }
 
 /**
- * L'URL Légifrance d'un article, lue dans l'en-tête du fichier extrait. Le
- * script `sources.py` l'y écrit au moment de l'extraction : c'est le seul
- * endroit où elle est juste par construction.
+ * Les sources d'une page, chacune avec sa provenance et son adresse.
+ *
+ * Aucune n'est écartée. La version précédente jetait celle dont l'URL
+ * manquait : la page citait alors moins de sources qu'elle n'en avait, et
+ * personne ne pouvait le voir.
  */
-export function urlSource(source: SourceCitee): string | undefined {
-  try {
-    const chemin = new URL(
-      `../../data/sources/${source.ref}/${source.fichier}.md`,
-      import.meta.url,
-    );
-    const entete = readFileSync(chemin, 'utf-8').slice(0, 800);
-    return /^- Source : (\S+)$/m.exec(entete)?.[1];
-  } catch {
-    return undefined;
-  }
-}
-
-/** Les sources d'une page, chacune avec son URL résolue. */
-export function sourcesResolues(
-  page: PageGuide,
-): readonly { texte: string; url: string }[] {
-  return page.sources
-    .map((s) => ({ texte: s.texte, url: urlSource(s) }))
-    .filter((s): s is { texte: string; url: string } => s.url !== undefined);
+export function sourcesResolues(page: PageGuide): readonly SourceAffichee[] {
+  return resoudreSources(page.sources);
 }
 
 /**

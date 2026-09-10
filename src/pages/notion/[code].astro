@@ -6,6 +6,7 @@ import { themeParCode } from '../../lib/themes';
 import { NOTIONS, notionsDuTheme, notionsVoisines } from '../../lib/notions';
 import { SITE, ressource } from '../../lib/seo';
 import { cheminLecon } from '../../lib/parcours';
+import { resoudreSources } from '../../lib/sources';
 
 export async function getStaticPaths() {
   return NOTIONS.map((notion) => ({ params: { code: notion.code }, props: { notion } }));
@@ -27,6 +28,18 @@ const questions = (await questionsDuTheme(notion.theme)).filter(
 // Un seul visuel, le premier rencontré : la page illustre la notion, elle ne
 // recopie pas la banque.
 const illustration = questions.find((q) => q.visuel);
+
+// Les fiches du site derrière ces questions. Quand une notion n'a pas de texte
+// officiel citable, c'est ce qui tient lieu de source, et la page le dit au
+// lieu de laisser la citation en texte mort.
+const appuis = [
+  ...new Map(
+    questions
+      .flatMap((q) => resoudreSources(q.sources))
+      .filter((s) => s.provenance === 'fiche')
+      .map((s) => [s.ref, s]),
+  ).values(),
+];
 
 const { precedente, suivante } = notionsVoisines(notion.code);
 const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code);
@@ -97,6 +110,24 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
           quand le texte réglementaire qui les fonde aura été dépouillé.
         </p>
       </div>
+    )}
+
+    {appuis.length > 0 && (
+      <section class="bloc">
+        <h2>Ce sur quoi ces questions s’appuient</h2>
+        <p class="discret">
+          Sur cette notion, aucun texte réglementaire ne dit la règle sous une forme qu’on
+          puisse citer. Les questions partent alors d’une fiche écrite pour ce site, que tu
+          peux lire en entier.
+        </p>
+        <ul class="questions">
+          {appuis.map((s) => (
+            <li>
+              <a href={s.url} data-mesure="source-ouverte" data-mesure-ref={s.ref}>{s.texte}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
     )}
 
     {guides.length > 0 && (

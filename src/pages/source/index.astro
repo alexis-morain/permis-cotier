@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { questionsPubliees } from '../../lib/banque';
+import { courtFiche } from '../../lib/seo';
+
+/**
+ * Les fiches du site, toutes ensemble.
+ *
+ * Elle existe pour deux raisons : donner un fil d'Ariane à chaque fiche, et
+ * dire d'un coup ce que le site couvre sans texte officiel. C'est un aveu
+ * autant qu'un sommaire, et il vaut mieux l'écrire que le laisser deviner.
+ */
+const fiches = (await getCollection('fiches')).sort((a, b) =>
+  a.data.titre.localeCompare(b.data.titre, 'fr'),
+);
+const questions = await questionsPubliees();
+const compte = (ref: string) => questions.filter((q) => q.sources.some((s) => s.ref === ref)).length;
+---
+
+<Base
+  titre="Les fiches écrites pour ce site"
+  description="Les sujets qu’aucun texte réglementaire ne couvre sous une forme citable : le balisage, la VHF, Beaufort, la carte marine. Écrits à la main, et le site le dit."
+  miettes={[{ nom: 'Sources', chemin: '/source' }]}
+>
+  <div class="page page--etroite" style="padding-block:3rem 0">
+    <h1>Les fiches écrites pour ce site</h1>
+    <p>
+      Presque tout ce que tu lis ici part d’un texte officiel, cité avec son article.
+      Sept sujets font exception, et ce n’est pas par facilité : l’échelle de Beaufort
+      est une convention de l’Organisation météorologique mondiale, le balisage n’est
+      publié qu’en planches d’images, le Règlement des radiocommunications de l’UIT
+      n’est pas ouvert. Il n’y a rien à citer.
+    </p>
+    <p>
+      Ces sujets sont donc écrits à la main. Chaque fiche dit sur quelle autorité elle
+      s’appuie, ce qu’elle couvre du programme, et quelles questions du site en sortent.
+      Tu peux la lire en entier et la vérifier.
+    </p>
+
+    <ul class="liste">
+      {fiches.map((f) => (
+        <li>
+          <a href={`/source/${f.id}`}>{courtFiche(f.data.titre)}</a>
+          {f.data.autorite && <span class="discret liste__autorite">{f.data.autorite}</span>}
+          <span class="discret">
+            {compte(f.id)} question{compte(f.id) > 1 ? 's' : ''} s’appuient dessus
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  h1 { margin-bottom: 1.25rem; }
+  .liste { list-style: none; margin: 2.5rem 0 0; padding: 0; }
+  .liste li {
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon);
+    background: var(--fond-carte);
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    max-width: none;
+  }
+  .liste a { font-weight: 700; }
+  .liste span { display: block; margin-top: 0.3rem; }
+  .liste__autorite { max-width: 62ch; }
+</style>
