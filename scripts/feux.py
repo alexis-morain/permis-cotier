@@ -13,9 +13,9 @@ Aucun libellé dans l'image, elle donnerait la réponse.
 """
 from __future__ import annotations
 
-import argparse
-import sys
 from pathlib import Path
+
+from _commun import main_dessin
 
 RACINE = Path(__file__).resolve().parents[1]
 SORTIE = RACINE / "public" / "visuels" / "feux"
@@ -136,32 +136,17 @@ def svg_de_feux(feux: list[str]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parseur = argparse.ArgumentParser(description=__doc__)
-    parseur.add_argument("--verifier", action="store_true", help="échoue au lieu d'écrire")
-    args = parseur.parse_args(argv)
-
-    SORTIE.mkdir(parents=True, exist_ok=True)
-    perimes = []
-    for nom, scene in SCENES.items():
-        chemin = SORTIE / f"{nom}.svg"
-        dessin = svg_de_feux(scene["feux"])
-        if args.verifier:
-            if not chemin.is_file() or chemin.read_text(encoding="utf-8") != dessin:
-                perimes.append(chemin.relative_to(RACINE))
-            continue
-        chemin.write_text(dessin, encoding="utf-8")
-        print(f"écrit {chemin.relative_to(RACINE)} ({scene['regle']})")
-
-    if args.verifier:
-        for chemin in perimes:
-            print(f"{chemin} n'est plus à jour, lance `npm run feux`", file=sys.stderr)
-        if perimes:
-            return 1
-        print(f"{len(SCENES)} visuel(s) de feux à jour.")
-        return 0
-
-    print(f"\n{len(SCENES)} visuel(s) dans public/visuels/feux/")
-    return 0
+    elements = {nom: svg_de_feux(scene["feux"]) for nom, scene in SCENES.items()}
+    suffixes = {nom: f" ({scene['regle']})" for nom, scene in SCENES.items()}
+    return main_dessin(
+        argv,
+        racine=RACINE,
+        sortie=SORTIE,
+        elements=elements,
+        commande_npm="feux",
+        label="visuel(s) de feux",
+        suffixes=suffixes,
+    )
 
 
 if __name__ == "__main__":
