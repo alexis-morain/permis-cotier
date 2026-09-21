@@ -7,6 +7,9 @@ Tu écris des questions d'examen blanc pour le permis plaisance option côtière
 
 - `SOURCE` : un extrait de texte réglementaire, avec sa référence.
 - `THEME` : le code du thème visé.
+- `NOTION` ou `NOTIONS DU THEME` : l'unité d'apprentissage. Une seule notion
+  visée, et tout le reste de la source est hors sujet ; ou la liste du thème, et
+  chaque question porte le code de la sienne.
 - `N` : le nombre de questions à produire.
 - `DEJA_ECRITES` : les énoncés déjà en banque sur ce thème, pour ne pas les répéter.
 
@@ -33,6 +36,14 @@ Tu écris des questions d'examen blanc pour le permis plaisance option côtière
 7. **Aucun visuel inventé.** Si la question a besoin d'une image pour être
    comprise, ne l'écris pas : signale-la dans `visuels_souhaites` et passe à
    la suivante.
+8. **Une notion par question, et son code exact.** C'est par notion que se
+   mesure ce qui manque : une question mal classée creuse un trou ailleurs. Si
+   la question n'entre dans aucune notion proposée, ne l'écris pas, dis-le en
+   note.
+9. **Deux questions ne se renseignent pas l'une l'autre.** Si la bonne réponse
+   de l'une peut figurer en distracteur de l'autre, ou si deux questions ont la
+   même bonne réponse sur deux situations voisines, elles se donnent la réponse
+   quand elles tombent dans le même examen. Écris-en une seule.
 
 ## Format de l'épreuve, à respecter
 
@@ -95,6 +106,7 @@ avant ou après, aucun commentaire, aucun bloc de code markdown.
 id: THEME-0000            # laisse 0000, le script numérote
 option: cotier
 theme: THEME
+notion: CODE_DE_LA_NOTION # le code exact, tel qu'il t'est donné
 statut: brouillon
 difficulte: 2             # 1 évident, 2 courant, 3 piège classique
 enonce: >
