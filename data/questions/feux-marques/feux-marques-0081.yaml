@@ -1,0 +1,34 @@
+id: feux-marques-0081
+option: cotier
+theme: feux-marques
+notion: feux-definitions
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton feu de côté vert couvre un arc de 112,5 degrés. Jusqu'où porte-t-il vers l'arrière
+  ?
+propositions:
+  - id: a
+    texte: Jusqu'au travers exactement
+  - id: b
+    texte: Jusqu'à 45 degrés sur l'arrière du travers
+  - id: c
+    texte: Jusqu'à 22,5 degrés sur l'arrière du travers
+  - id: d
+    texte: Jusqu'à 67,5 degrés sur l'arrière du travers
+reponses:
+  - c
+explication: >-
+  La règle 21 b) ne donne pas seulement l'arc des feux de côté, elle dit aussi où il commence
+  et où il finit : depuis l'avant jusqu'à 22,5 degrés sur l'arrière du travers de leur
+  côté respectif. Un navire qui te rattrape par l'arrière sort donc de ton secteur vert
+  ou rouge bien avant d'être dans ton sillage. Les distracteurs sont les valeurs voisines
+  de la même règle, dont 67,5 degrés, qui appartient au feu de poupe.
+sources:
+  - texte: RIPAM, règle 21 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

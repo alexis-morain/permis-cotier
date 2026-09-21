@@ -1,0 +1,33 @@
+id: feux-marques-0085
+option: cotier
+theme: feux-marques
+notion: feux-voile-aviron
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton voilier de 12 mètres fait route et tu allumes en tête de mât le feu rouge au-dessus
+  du feu vert. Peux-tu éteindre tes feux de côté et ton feu de poupe ?
+propositions:
+  - id: a
+    texte: Oui, ces deux feux les remplacent au-delà de 7 mètres de longueur
+  - id: b
+    texte: Non, ils viennent en plus des feux de côté et du feu de poupe
+  - id: c
+    texte: Oui, ces deux feux les remplacent, comme le fait le fanal unique en tête de
+      mât
+reponses:
+  - b
+explication: >-
+  La règle 25 c) ouvre sur « en plus des feux prescrits au paragraphe a) » : le feu rouge
+  au-dessus du feu vert est un ajout facultatif, jamais un remplacement. Le fanal unique
+  de la règle 25 b), lui, réunit vraiment les feux de côté et le feu de poupe, et c'est
+  de cette confusion que vient le piège. La même règle 25 c) interdit d'ailleurs de montrer
+  le rouge et le vert en même temps que ce fanal.
+sources:
+  - texte: RIPAM, règle 25 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

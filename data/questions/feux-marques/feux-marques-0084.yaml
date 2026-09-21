@@ -1,0 +1,32 @@
+id: feux-marques-0084
+option: cotier
+theme: feux-marques
+notion: feux-remorquage
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu pousses en avant une barge qui ne forme pas avec toi une unité composite. De nuit,
+  quels feux cette barge montre-t-elle ?
+propositions:
+  - id: a
+    texte: Un feu de poupe, et des feux de côté à son extrémité avant
+  - id: b
+    texte: Un feu blanc visible sur tout l'horizon à chacune de ses extrémités
+  - id: c
+    texte: Des feux de côté à son extrémité avant
+reponses:
+  - c
+explication: >-
+  La règle 24 f) i) ne demande au navire poussé en avant, hors unité composite, que des
+  feux de côté à son extrémité avant : son arrière est masqué par le pousseur, qui porte
+  déjà le feu de poupe de l'ensemble. Le piège est la règle voisine du même paragraphe
+  : c'est le navire remorqué à couple qui montre en plus un feu de poupe. Les feux blancs
+  d'extrémité, eux, sont réservés aux objets remorqués partiellement submergés.
+sources:
+  - texte: RIPAM, règle 24 f) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

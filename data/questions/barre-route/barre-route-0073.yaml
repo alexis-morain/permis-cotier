@@ -1,0 +1,29 @@
+id: barre-route-0073
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu as à bord un équipement radar en état de marche. La règle 7 b) t'impose-t-elle de
+  l'utiliser ?
+propositions:
+  - id: a
+    texte: Non, son emploi reste au choix du chef de bord tant que la visibilité est bonne.
+  - id: b
+    texte: Oui, dès lors qu'il est en état de marche, il doit être utilisé de façon appropriée.
+reponses:
+  - b
+explication: >-
+  La règle 7 b) ne laisse pas le choix : s'il y a à bord un équipement radar en état de
+  marche, on doit l'utiliser de façon appropriée. Le piège est de confondre l'obligation
+  d'emporter un radar, qui n'existe pas en plaisance, avec l'obligation de s'en servir
+  quand on en a un. La bonne visibilité ne lève pas cette obligation.
+sources:
+  - texte: RIPAM, règle 7 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'
