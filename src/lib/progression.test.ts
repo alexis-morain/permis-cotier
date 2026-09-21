@@ -299,7 +299,10 @@ describe('statistiques', () => {
     e = enregistrerReponse(e, 'vhf-0001', true, '2026-09-10');
     e = enregistrerReponse(e, 'vhf-0002', false, '2026-09-10');
     e = enregistrerExamen(e, { date: '2026-09-10', bonnes: 36, total: 40, reussi: true });
-    const s = statistiques(e);
+    // Le jour est passé explicitement : sans lui, `aRevoir` se lit à la date
+    // du jour où le test tourne, et la question réussie le 10 devient due le
+    // 11. Le test passait la semaine de son écriture, puis plus jamais.
+    const s = statistiques(e, undefined, '2026-09-10');
     expect(s.vues).toBe(2);
     expect(s.aRevoir).toBe(1);
     expect(s.dernierScore).toEqual({ bonnes: 36, total: 40, reussi: true });
