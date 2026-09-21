@@ -1,0 +1,36 @@
+id: feux-marques-0083
+option: cotier
+theme: feux-marques
+notion: feux-remorquage
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, un objet remorqué partiellement submergé et difficile à apercevoir porte un
+  feu blanc à son extrémité avant et un autre à son extrémité arrière. Sa largeur atteint
+  30 mètres : qu'ajoute la règle ?
+propositions:
+  - id: a
+    texte: Deux feux blancs visibles sur tout l'horizon aux extrémités de sa largeur
+  - id: b
+    texte: Rien de plus, la largeur ne change pas les feux à montrer
+  - id: c
+    texte: Un feu jaune de remorquage à son extrémité arrière
+  - id: d
+    texte: Des feux blancs supplémentaires espacés d'au plus 100 mètres
+reponses:
+  - a
+explication: >-
+  La règle 24 g) échelonne les feux d'un objet remorqué difficile à apercevoir : un feu
+  blanc à chaque extrémité quand la largeur reste sous 25 mètres, et deux feux blancs
+  supplémentaires aux extrémités de la largeur dès qu'elle atteint ou dépasse 25 mètres.
+  Avec 30 mètres, tu es au-dessus du seuil. Les feux espacés d'au plus 100 mètres relèvent
+  d'un autre palier de la même règle, celui de la longueur, et le feu de remorquage appartient
+  au navire remorquant.
+sources:
+  - texte: RIPAM, règle 24 g)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

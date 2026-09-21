@@ -1,0 +1,31 @@
+id: barre-route-0071
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 1
+enonce: >-
+  Un navire s'approche. Avec quoi la règle 7 a) te demande-t-elle de déterminer s'il
+  existe un risque d'abordage ?
+propositions:
+  - id: a
+    texte: Avec le radar seul, dès que tu en as un à bord.
+  - id: b
+    texte: Avec ta seule vue, les autres moyens n'ayant pas de valeur réglementaire.
+  - id: c
+    texte: Avec tous les moyens disponibles adaptés aux circonstances et conditions existantes.
+reponses:
+  - c
+explication: >-
+  La règle 7 a) demande d'utiliser tous les moyens disponibles qui sont adaptés aux
+  circonstances et conditions existantes. Aucun moyen n'est désigné comme suffisant à
+  lui seul : ni l'œil, ni le radar. Le mot « adaptés » compte aussi, car un moyen qui
+  ne convient pas à la situation ne dispense pas d'en employer un autre.
+sources:
+  - texte: RIPAM, règle 7 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

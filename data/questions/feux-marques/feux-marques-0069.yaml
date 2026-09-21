@@ -1,0 +1,32 @@
+id: feux-marques-0069
+option: cotier
+theme: feux-marques
+notion: marques-jour
+statut: publie
+difficulte: 1
+enonce: >-
+  De jour, quelle marque montre un navire en train de pêcher ?
+propositions:
+  - id: a
+    texte: Une boule, à l'avant.
+  - id: b
+    texte: Deux cônes superposés réunis par la pointe.
+  - id: c
+    texte: Une marque biconique.
+reponses:
+  - b
+explication: >-
+  Les règles 26 b) i) et 26 c) i) donnent la même marque au chalutier et à tout autre navire
+  en train de pêcher : deux cônes superposés réunis par la pointe. De jour, la marque ne
+  distingue donc pas le chalut du reste, ce sont les feux qui le font, vert sur blanc pour
+  le chalutier, rouge sur blanc pour les autres.
+sources:
+  - texte: RIPAM, règle 26 b) i)
+    ref: decret-77-733
+  - texte: RIPAM, règle 26 c) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

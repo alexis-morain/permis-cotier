@@ -27,7 +27,11 @@ questions font famille quand, tirées ensemble, **l'une renseigne l'autre** :
     saines : reconnaître l'un donne l'autre) ;
   - la bonne réponse de l'une figure en distracteur de l'autre (les trois
     signaux de brume d'un navire de 25 mètres, où la réponse de `signaux-0005`
-    est le distracteur *a* de `signaux-0006`).
+    est le distracteur *a* de `signaux-0006`) ;
+  - même tableau, donc **même espace de réponse** : les quatre lignes de la
+    règle 22 se répondent toutes par une valeur en milles prise dans la même
+    colonne, et deux d'entre elles dans un examen se lisent comme un exercice
+    de table. C'est le cas général dont les trois précédents sont des espèces.
 
 Ce qui ne suffit pas : la tournure. « Tu relèves ce feu de nuit, que peux-tu en
 dire ? » monte à 0,92 entre une marque spéciale et un navire qui pêche — deux

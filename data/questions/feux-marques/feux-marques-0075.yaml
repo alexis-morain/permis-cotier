@@ -1,0 +1,32 @@
+id: feux-marques-0075
+option: cotier
+theme: feux-marques
+notion: feux-tirant-eau
+statut: publie
+difficulte: 3
+enonce: >-
+  Un navire handicapé par son tirant d'eau montre trois feux rouges superposés. Que dit
+  la règle 28 de cette signalisation ?
+propositions:
+  - id: a
+    texte: Il doit la montrer dès qu'il navigue dans un chenal dragué
+  - id: b
+    texte: Il peut la montrer, la règle ne l'y oblige pas
+  - id: c
+    texte: Il doit la montrer dès que sa quille approche du fond
+reponses:
+  - b
+explication: >-
+  La règle 28 écrit qu'un navire handicapé par son tirant d'eau « peut » montrer trois
+  feux rouges superposés ou une marque cylindrique. C'est une faculté, pas une obligation :
+  un navire réellement gêné par son tirant d'eau peut très bien ne rien montrer de plus
+  que ses feux de navire à propulsion mécanique. Ne conclus donc jamais de l'absence
+  de ces feux que le chenal est libre.
+sources:
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

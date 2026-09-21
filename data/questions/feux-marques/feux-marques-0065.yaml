@@ -1,0 +1,32 @@
+id: feux-marques-0065
+option: cotier
+theme: feux-marques
+notion: marques-jour
+statut: publie
+difficulte: 1
+enonce: >-
+  Un navire n'est plus maître de sa manœuvre. Quelle marque de jour montre-t-il à l'endroit
+  le plus visible ?
+propositions:
+  - id: a
+    texte: Une marque biconique.
+  - id: b
+    texte: Une boule, à l'avant.
+  - id: c
+    texte: Deux boules superposées.
+reponses:
+  - c
+explication: >-
+  La règle 27 a) ii) prescrit deux boules ou marques analogues superposées, à l'endroit le
+  plus visible, au navire qui n'est pas maître de sa manœuvre. Une avarie de barre ou de
+  machine, et il subit sa route : la marque prévient les autres qu'il ne peut pas manœuvrer
+  pour eux. La boule seule à l'avant appartient au mouillage, et la marque biconique au
+  remorquage.
+sources:
+  - texte: RIPAM, règle 27 a) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

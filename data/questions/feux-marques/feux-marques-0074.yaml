@@ -1,0 +1,29 @@
+id: feux-marques-0074
+option: cotier
+theme: feux-marques
+notion: feux-portee
+statut: publie
+difficulte: 1
+enonce: >-
+  Les distances que la règle 22 attache à chaque feu, ce sont des distances de quelle
+  nature ?
+propositions:
+  - id: a
+    texte: Des distances minimales de visibilité
+  - id: b
+    texte: Des distances maximales de visibilité
+reponses:
+  - a
+explication: >-
+  La règle 22 demande que les feux aient l'intensité prévue à l'annexe I « de manière
+  à être visibles aux distances minimales suivantes ». C'est un plancher, pas un plafond :
+  rien n'interdit qu'un feu se voie de plus loin par bonne visibilité, et rien ne garantit
+  qu'il se voie de si loin par temps de brume.
+sources:
+  - texte: RIPAM, règle 22
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

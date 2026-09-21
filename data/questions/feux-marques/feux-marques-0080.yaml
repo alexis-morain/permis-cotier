@@ -1,0 +1,32 @@
+id: feux-marques-0080
+option: cotier
+theme: feux-marques
+notion: feux-pilote
+statut: publie
+difficulte: 1
+enonce: >-
+  Où un bateau-pilote en service de pilotage porte-t-il ses deux feux superposés ?
+propositions:
+  - id: a
+    texte: Sur le côté tribord de la passerelle
+  - id: b
+    texte: À l'arrière, au-dessus du feu de poupe
+  - id: c
+    texte: À la tête du mât ou à proximité de celle-ci
+  - id: d
+    texte: À l'avant, au ras du pont
+reponses:
+  - c
+explication: >-
+  La règle 29 a) i) place les deux feux superposés du bateau-pilote à la tête du mât
+  ou à proximité de celle-ci, et les veut visibles sur tout l'horizon. C'est le point
+  haut du navire qui rend cette visibilité possible, de quelque direction qu'on
+  l'aperçoive.
+sources:
+  - texte: RIPAM, règle 29 a) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'
