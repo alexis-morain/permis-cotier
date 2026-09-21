@@ -1,0 +1,32 @@
+id: barre-route-0069
+option: cotier
+theme: barre-route
+notion: barre-veille-vitesse
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu longes une côte sur de petits fonds, avec très peu d'eau sous la quille. Quel facteur
+  de la règle 6 entre ici en jeu ?
+propositions:
+  - id: a
+    texte: Les qualités de giration de ton navire.
+  - id: b
+    texte: L'état du vent, de la mer et des courants.
+  - id: c
+    texte: Le tirant d'eau en fonction de la profondeur d'eau disponible.
+reponses:
+  - c
+explication: >-
+  La règle 6 a) vi) range parmi les facteurs de la vitesse de sécurité le tirant d'eau
+  en fonction de la profondeur d'eau disponible. Peu d'eau sous la quille, c'est moins
+  de marge pour talonner et une manœuvre plus lourde : la vitesse doit en tenir compte.
+  La giration et l'état de la mer sont bien des facteurs de la règle 6, mais ce n'est
+  pas ce que décrit la situation.
+sources:
+  - texte: RIPAM, règle 6 a) vi)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

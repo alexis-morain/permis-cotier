@@ -1,0 +1,34 @@
+id: barre-route-0070
+option: cotier
+theme: barre-route
+notion: barre-veille-vitesse
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau porte un radar et tu t'en sers. Quel facteur la règle 6 ajoute-t-elle pour
+  les seuls navires qui utilisent un radar ?
+propositions:
+  - id: a
+    texte: L'état du vent, de la mer et des courants.
+  - id: b
+    texte: Les limitations qui résultent de l'échelle de portée utilisée sur le radar.
+  - id: c
+    texte: La capacité de manœuvre du navire et sa distance d'arrêt.
+  - id: d
+    texte: La proximité de risques pour la navigation.
+reponses:
+  - b
+explication: >-
+  La règle 6 sépare deux listes : celle du a), qui vaut pour tous les navires, et celle
+  du b), qui ne s'ajoute que pour ceux qui utilisent un radar. L'échelle de portée
+  choisie figure dans la seconde, avec les limites de l'équipement et le brouillage dû
+  à l'état de la mer. Le piège est que les trois autres propositions sont de vrais
+  facteurs, mais du a) : elles valent avec ou sans radar.
+sources:
+  - texte: RIPAM, règle 6 b) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

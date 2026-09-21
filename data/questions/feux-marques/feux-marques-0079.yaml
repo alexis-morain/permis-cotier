@@ -1,0 +1,30 @@
+id: feux-marques-0079
+option: cotier
+theme: feux-marques
+notion: feux-pilote
+statut: publie
+difficulte: 3
+enonce: >-
+  Un bateau-pilote en service de pilotage mouille en attendant son tour. Que montre-t-il ?
+propositions:
+  - id: a
+    texte: Ses deux feux superposés seulement
+  - id: b
+    texte: Ses deux feux superposés, plus les feux ou la marque du mouillage
+  - id: c
+    texte: Les feux ou la marque du mouillage seulement
+reponses:
+  - b
+explication: >-
+  La règle 29 a) iii) demande au bateau-pilote au mouillage de montrer, outre ses deux
+  feux superposés, le feu, les feux ou la marque que la règle 30 prescrit aux navires
+  au mouillage. Le piège est de croire que le mouillage annule la signalisation du service :
+  les deux se cumulent, et c'est bien ce cumul qui te dit qu'un pilote t'attend là.
+sources:
+  - texte: RIPAM, règle 29 a) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

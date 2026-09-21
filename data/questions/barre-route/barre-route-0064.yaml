@@ -1,0 +1,32 @@
+id: barre-route-0064
+option: cotier
+theme: barre-route
+notion: barre-routes-opposees
+statut: publie
+difficulte: 3
+enonce: >-
+  Vous faites route au moteur tous les deux, vos routes ne sont pas exactement opposées
+  mais presque, et le risque d'abordage existe. Que dit la règle 14 a) ?
+propositions:
+  - id: a
+    texte: Elle s'applique, des routes à peu près opposées lui suffisent.
+  - id: b
+    texte: Elle ne s'applique qu'à des routes exactement opposées.
+  - id: c
+    texte: Elle ne s'applique que de nuit, quand les feux sont visibles.
+reponses:
+  - a
+explication: >-
+  La règle 14 a) vise les navires à propulsion mécanique qui font des routes
+  « directement opposées ou à peu près opposées » : le texte prévoit lui-même la
+  rencontre qui n'est pas parfaitement de face. Exiger un alignement exact reviendrait
+  à écarter la règle dans presque tous les cas réels. Et la règle 14 b) décrit ce qu'on
+  voit de jour comme de nuit, elle n'est pas réservée à l'obscurité.
+sources:
+  - texte: RIPAM, règle 14 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

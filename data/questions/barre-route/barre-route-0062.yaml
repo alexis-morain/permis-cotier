@@ -1,0 +1,30 @@
+id: barre-route-0062
+option: cotier
+theme: barre-route
+notion: barre-routes-opposees
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu fais route au moteur et un voilier qui marche à la voile vient droit sur toi, le
+  risque d'abordage est réel. La règle 14 te dit-elle quoi faire ?
+propositions:
+  - id: a
+    texte: Oui, elle vaut pour toute rencontre étrave contre étrave.
+  - id: b
+    texte: Non, elle ne vise que deux navires à propulsion mécanique.
+reponses:
+  - b
+explication: >-
+  La règle 14 a) commence par « lorsque deux navires à propulsion mécanique font des
+  routes directement opposées » : les deux navires doivent marcher au moteur pour
+  qu'elle joue. Face à un voilier qui marche à la voile, cette règle ne dit rien et
+  la conduite à tenir se cherche ailleurs dans le RIPAM. Le piège est de retenir le
+  geste, venir sur tribord, en oubliant à qui il s'adresse.
+sources:
+  - texte: RIPAM, règle 14 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

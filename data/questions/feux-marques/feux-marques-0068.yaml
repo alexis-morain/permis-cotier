@@ -1,0 +1,33 @@
+id: feux-marques-0068
+option: cotier
+theme: feux-marques
+notion: marques-jour
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu croises un remorqueur qui montre une marque biconique. Quelle longueur son train de
+  remorque dépasse-t-il ?
+propositions:
+  - id: a
+    texte: 50 mètres.
+  - id: b
+    texte: 100 mètres.
+  - id: c
+    texte: 200 mètres.
+  - id: d
+    texte: 300 mètres.
+reponses:
+  - c
+explication: >-
+  La règle 24 a) v) impose au remorqueur une marque biconique à l'endroit le plus visible
+  lorsque la longueur du train de remorque, mesurée de l'arrière du remorqueur à l'extrémité
+  arrière du train, dépasse 200 mètres. En dessous, aucune marque n'est exigée : le bicône
+  te dit qu'il y a beaucoup d'eau occupée derrière lui, et qu'on ne passe pas entre les deux.
+sources:
+  - texte: RIPAM, règle 24 a) v)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

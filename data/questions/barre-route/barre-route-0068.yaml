@@ -1,0 +1,30 @@
+id: barre-route-0068
+option: cotier
+theme: barre-route
+notion: barre-veille-vitesse
+statut: publie
+difficulte: 1
+enonce: >-
+  La règle 5 t'impose une veille permanente. Dans quel but, selon son texte ?
+propositions:
+  - id: a
+    texte: Pour tenir ton cap et relever ta route au compas.
+  - id: b
+    texte: Pour permettre une pleine appréciation de la situation et du risque d'abordage.
+  - id: c
+    texte: Pour pouvoir répondre aux appels de la VHF dans les parages.
+reponses:
+  - b
+explication: >-
+  La règle 5 dit le but de la veille autant que son obligation : elle doit permettre une
+  pleine appréciation de la situation et du risque d'abordage. Tenir son cap ou écouter
+  la VHF sont d'autres tâches, qui ne remplacent pas ce regard porté sur l'ensemble de
+  la situation.
+sources:
+  - texte: RIPAM, règle 5
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'
