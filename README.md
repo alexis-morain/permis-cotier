@@ -141,6 +141,14 @@ des fichiers, et cocher la première case rapportait 70 % d'items justes. La
 correction, elle, porte toujours sur les identifiants du fichier — la lettre
 affichée n'est pas l'identifiant, et le clavier suit la lettre affichée.
 
+Un examen blanc ne tire **qu'une question par famille**. Quatre cardinales
+partagent leur énoncé mot pour mot, seul le visuel change ; deux signaux de
+brume partagent leur tournure sans citer le même paragraphe. Ce ne sont pas des
+doublons — chacune teste autre chose — mais deux d'entre elles sur quarante
+questions donnent l'impression d'une banque qui bégaie. Le champ `famille` les
+relie, `npm run doublons` cherche celles qu'on aurait manquées, et la CI refuse
+deux énoncés identiques au mot près sans famille commune.
+
 Une question ne sort de la file **qu'après deux réussites, à deux jours
 différents**, puis revient à 1, 3, 7 et 21 jours. Une réussite le même jour
 n'avance rien : sans ce verrou, il suffisait de rejouer une question dix
@@ -237,7 +245,7 @@ data/sources/<ref>/                extraits d'articles cités (Licence Ouverte 2
 data/VERSION                       version de la banque, dans le cache hors ligne
 data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
-scripts/                           sources.py, generer.py, valider.py, credits.py
+scripts/                           sources.py, generer.py, valider.py, credits.py, doublons.py
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
                                    session, progression, profil, apparence, mesure, recherche,
                                    hors-ligne (ce qui est précaché, gardé à la demande, ou au réseau)
