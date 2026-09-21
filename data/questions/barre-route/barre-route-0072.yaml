@@ -1,0 +1,31 @@
+id: barre-route-0072
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 2
+enonce: >-
+  La règle 7 b) demande de recourir au balayage à longue portée du radar. À quoi sert-il ?
+propositions:
+  - id: a
+    texte: À déceler à l'avance un risque d'abordage.
+  - id: b
+    texte: À mesurer la vitesse exacte des navires détectés.
+  - id: c
+    texte: À repérer les amers de la côte pour faire le point.
+reponses:
+  - a
+explication: >-
+  La règle 7 b) donne au balayage à longue portée sa raison d'être : déceler à l'avance
+  un risque d'abordage, c'est-à-dire voir venir la situation pendant qu'il reste du
+  temps pour l'éviter. Le texte y joint le « plotting » radar ou une observation
+  systématique équivalente. Faire le point ou chiffrer une vitesse sont d'autres usages
+  du radar, que la règle 7 n'évoque pas ici.
+sources:
+  - texte: RIPAM, règle 7 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

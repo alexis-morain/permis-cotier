@@ -29,6 +29,12 @@ from valider import CODES_THEMES, fichiers_questions, valider_question  # noqa: 
 RACINE = Path(__file__).resolve().parents[1]
 INBOX = RACINE / "data" / "questions" / "_inbox"
 GABARIT = RACINE / "prompts" / "question.md"
+NOTIONS_TS = RACINE / "src" / "lib" / "notions.ts"
+
+# `notions.ts` écrit ses libellés tantôt en apostrophes, tantôt en guillemets
+# — un nom qui contient une apostrophe passe en guillemets. On lit donc ligne
+# à ligne au lieu d'un motif multi-lignes qui trébucherait sur ce détail.
+_RE_CHAMP = re.compile(r"^\s+(code|theme|nom): ('[^']*'|\"[^\"]*\"),\s*$")
 
 # Au-dessus de ce seuil, deux énoncés disent la même chose.
 SEUIL_DOUBLON = 0.82
@@ -36,6 +42,33 @@ SEUIL_DOUBLON = 0.82
 
 def normaliser(texte: str) -> str:
     return re.sub(r"[^a-z0-9 ]", "", texte.lower()).strip()
+
+
+def notions_du_theme(theme: str, source: Path = NOTIONS_TS) -> list[dict[str, str]]:
+    """Les notions d'un thème, dans l'ordre du référentiel.
+
+    Le TypeScript reste la source de vérité, comme pour `valider.py` : un
+    référentiel de cent notions recopié dans un script finit toujours par
+    diverger de celui que le site sert.
+    """
+    if not source.exists():
+        return []
+    trouvees: list[dict[str, str]] = []
+    courante: dict[str, str] = {}
+    for ligne in source.read_text(encoding="utf-8").splitlines():
+        m = _RE_CHAMP.match(ligne)
+        if not m:
+            continue
+        champ, valeur = m.group(1), m.group(2)[1:-1]
+        if champ == "code":
+            courante = {"code": valeur}
+        elif courante:
+            courante[champ] = valeur
+            if champ == "nom":
+                if courante.get("theme") == theme:
+                    trouvees.append({"code": courante["code"], "nom": valeur})
+                courante = {}
+    return trouvees
 
 
 def enonces_existants(theme: str) -> list[str]:
@@ -71,7 +104,43 @@ def prochain_identifiant(theme: str, pris: set[str]) -> str:
     return ident
 
 
-def construire_invite(gabarit: str, source: str, reference: str, theme: str, n: int, deja: list[str]) -> str:
+def bloc_notions(theme: str, visee: str | None) -> str:
+    """Ce que le modèle reçoit pour classer ses questions.
+
+    La couverture se mesure par notion, pas par thème : une question sans
+    notion ne compte nulle part, et c'est par notion qu'on sait où la banque
+    est maigre. Quand on vise une notion, on la nomme seule — sinon le modèle
+    dérive vers ce que la source contient de plus facile.
+    """
+    notions = notions_du_theme(theme)
+    if visee:
+        nom = next((n["nom"] for n in notions if n["code"] == visee), None)
+        if nom is None:
+            raise ValueError(f"notion {visee!r} inconnue dans le thème {theme!r}")
+        return (
+            f"NOTION : {visee} — {nom}\n"
+            f"Chaque question porte « notion: {visee} ». Tout ce que la source dit "
+            f"hors de cette notion est hors sujet ici : n'écris pas la question, "
+            f"dis-le en note.\n"
+        )
+    liste = "\n".join(f"- {n['code']} — {n['nom']}" for n in notions) or "- (aucune)"
+    return (
+        "NOTIONS DU THEME, une par question, code exact :\n"
+        f"{liste}\n"
+        "Chaque question porte « notion: <code> ». Une question qui n'entre dans "
+        "aucune de ces notions n'a pas sa place dans ce thème : dis-le en note.\n"
+    )
+
+
+def construire_invite(
+    gabarit: str,
+    source: str,
+    reference: str,
+    theme: str,
+    n: int,
+    deja: list[str],
+    notion: str | None = None,
+) -> str:
     liste = "\n".join(f"- {e}" for e in deja) or "- (aucune)"
     return (
         f"{gabarit}\n\n"
@@ -80,6 +149,7 @@ def construire_invite(gabarit: str, source: str, reference: str, theme: str, n: 
         f"N : {n}\n"
         f"REF : {reference}\n"
         f"DATE : {date.today().isoformat()}\n\n"
+        f"{bloc_notions(theme, notion)}\n"
         f"DEJA_ECRITES :\n{liste}\n\n"
         f"SOURCE :\n\n{source}\n"
     )
@@ -130,8 +200,9 @@ CHAMPS_LONGS = ("enonce", "explication")
 def rendre(doc: dict) -> str:
     """Sérialise une question : champs dans l'ordre du gabarit, textes en bloc."""
     propre: dict = {}
-    for cle in ("id", "option", "theme", "statut", "difficulte", "enonce", "visuel",
-                "propositions", "reponses", "explication", "sources", "meta"):
+    for cle in ("id", "option", "theme", "notion", "famille", "statut", "difficulte",
+                "enonce", "visuel", "propositions", "reponses", "explication",
+                "sources", "meta"):
         if cle not in doc:
             continue
         valeur = doc[cle]
@@ -164,6 +235,11 @@ def main(argv: list[str] | None = None) -> int:
     parseur.add_argument("--source", type=Path, required=True, help="extrait dans data/sources/<ref>/")
     parseur.add_argument("--theme", required=True, choices=CODES_THEMES)
     parseur.add_argument("--n", type=int, default=5)
+    parseur.add_argument(
+        "--notion",
+        default=None,
+        help="code de la notion visée ; sans elle, le modèle classe lui-même",
+    )
     parseur.add_argument("--modele", default=None, help="passé à claude --model")
     parseur.add_argument("--sec", action="store_true", help="montre l'invite sans appeler claude")
     args = parseur.parse_args(argv)
@@ -173,14 +249,19 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     reference = args.source.parent.name
-    invite = construire_invite(
-        GABARIT.read_text(encoding="utf-8"),
-        args.source.read_text(encoding="utf-8"),
-        reference,
-        args.theme,
-        args.n,
-        enonces_existants(args.theme),
-    )
+    try:
+        invite = construire_invite(
+            GABARIT.read_text(encoding="utf-8"),
+            args.source.read_text(encoding="utf-8"),
+            reference,
+            args.theme,
+            args.n,
+            enonces_existants(args.theme),
+            args.notion,
+        )
+    except ValueError as erreur:
+        print(str(erreur), file=sys.stderr)
+        return 1
 
     if args.sec:
         print(invite)
@@ -213,6 +294,8 @@ def main(argv: list[str] | None = None) -> int:
         doc["id"] = prochain_identifiant(args.theme, pris)
         doc["theme"] = args.theme
         doc["option"] = "cotier"
+        if args.notion:
+            doc["notion"] = args.notion
         doc["statut"] = "brouillon"
         doc.setdefault("meta", {})
         doc["meta"]["cree_le"] = date.today().isoformat()

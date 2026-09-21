@@ -9,6 +9,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from couverture import (  # noqa: E402
     CIBLE_PROPOSITIONS,
+    mediane,
+    profondeur,
     a_convertir,
     cibles_propositions,
     ecarts_propositions,
@@ -88,3 +90,30 @@ def test_seules_les_questions_publiees_hors_inbox_sont_lues(tmp_path):
     (dossier / "_inbox" / "c.yaml").write_text(yaml.safe_dump(question("vhf", 3)), encoding="utf-8")
 
     assert len(lire_questions_publiees(tmp_path)) == 1
+
+
+def test_la_profondeur_divise_les_questions_par_la_part_dans_l_epreuve():
+    """Deux thèmes à cinquante questions, l'un tiré deux fois plus que l'autre :
+    celui-là s'épuise deux fois plus vite, et c'est tout ce qui compte."""
+    lignes = profondeur(Counter({"lourd": 50, "leger": 50}), {"lourd": 20, "leger": 10})
+    par_theme = {l["theme"]: l for l in lignes}
+    assert par_theme["lourd"]["part"] == pytest.approx(40 * 20 / 30)
+    assert par_theme["lourd"]["profondeur"] == pytest.approx(50 / (40 * 20 / 30))
+    assert par_theme["lourd"]["profondeur"] < par_theme["leger"]["profondeur"]
+
+
+def test_le_plus_maigre_vient_en_tete():
+    lignes = profondeur(Counter({"a": 90, "b": 10}), {"a": 1, "b": 1})
+    assert [l["theme"] for l in lignes] == ["b", "a"]
+
+
+def test_un_theme_sans_question_a_une_profondeur_nulle():
+    lignes = profondeur(Counter(), {"a": 1})
+    assert lignes[0]["publiees"] == 0
+    assert lignes[0]["profondeur"] == 0
+
+
+def test_la_mediane_prend_le_milieu_puis_la_moyenne_des_deux():
+    assert mediane([1, 5, 3]) == 3
+    assert mediane([1, 3, 5, 7]) == 4
+    assert mediane([]) == 0

@@ -1,0 +1,30 @@
+id: feux-marques-0072
+option: cotier
+theme: feux-marques
+notion: feux-portee
+famille: feux-portee-valeur
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu navigues de nuit sur un bateau de 30 mètres. Quelle portée minimale la règle 22
+  impose-t-elle à ses feux de côté ?
+propositions:
+  - id: a
+    texte: 1 mille
+  - id: b
+    texte: 2 milles
+reponses:
+  - b
+explication: >-
+  La règle 22 b) vise les navires de 12 mètres et plus mais de moins de 50 mètres, et
+  donne 2 milles aux feux de côté. Le mille unique du feu de côté est réservé aux navires
+  de moins de 12 mètres, à l'alinéa c). Dès qu'on passe la barre des 12 mètres, le feu
+  de côté porte autant que le feu de poupe.
+sources:
+  - texte: RIPAM, règle 22 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

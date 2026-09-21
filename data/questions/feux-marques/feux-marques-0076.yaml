@@ -1,0 +1,31 @@
+id: feux-marques-0076
+option: cotier
+theme: feux-marques
+notion: feux-tirant-eau
+statut: publie
+difficulte: 2
+enonce: >-
+  Où un navire handicapé par son tirant d'eau place-t-il ses trois feux rouges ou sa
+  marque cylindrique ?
+propositions:
+  - id: a
+    texte: À la tête du mât, et nulle part ailleurs
+  - id: b
+    texte: À l'avant, au-dessus des feux de côté
+  - id: c
+    texte: À l'endroit le plus visible
+reponses:
+  - c
+explication: >-
+  La règle 28 demande que ces trois feux rouges superposés, ou la marque cylindrique,
+  soient montrés à l'endroit le plus visible. Elle ne désigne pas un point précis du
+  navire : c'est la visibilité sur tout l'horizon qui commande le choix, et elle varie
+  avec la forme du navire.
+sources:
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

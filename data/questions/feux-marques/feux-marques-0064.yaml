@@ -1,0 +1,32 @@
+id: feux-marques-0064
+option: cotier
+theme: feux-marques
+notion: marques-jour
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu mouilles ton bateau de 6 mètres dans une anse, loin de tout chenal, de toute voie
+  d'accès, de tout ancrage et des routes fréquentées. Dois-tu montrer la marque de
+  mouillage ?
+propositions:
+  - id: a
+    texte: Oui, tout navire au mouillage doit la montrer, quelle que soit sa longueur.
+  - id: b
+    texte: Non, en dessous de 7 mètres et à l'écart de ces lieux, tu n'y es pas tenu.
+reponses:
+  - b
+explication: >-
+  La règle 30 e) dispense les navires de moins de 7 mètres de la marque et des feux de
+  mouillage, mais elle reprend aussitôt cette dispense dès que le mouillage se fait dans
+  un chenal étroit, une voie d'accès, un ancrage, à proximité de ces lieux ou sur une route
+  habituellement fréquentée. La longueur seule ne suffit donc pas à te dispenser : c'est
+  la longueur et l'endroit. Mouille au même endroit un bateau de 8 mètres, et la marque
+  redevient obligatoire.
+sources:
+  - texte: RIPAM, règle 30 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

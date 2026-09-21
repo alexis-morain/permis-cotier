@@ -1,0 +1,30 @@
+id: barre-route-0075
+option: cotier
+theme: barre-route
+notion: barre-visibilite-reduite
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en air clair, mais un banc de brume s'étend droit devant toi. La règle 19
+  s'applique-t-elle déjà ?
+propositions:
+  - id: a
+    texte: Oui, elle vise aussi les navires qui naviguent à proximité de zones de visibilité
+      réduite.
+  - id: b
+    texte: Non, elle ne s'applique qu'une fois que tu es entré dans la brume.
+reponses:
+  - a
+explication: >-
+  La règle 19 a) vise les navires qui ne sont pas en vue les uns des autres et qui
+  naviguent à l'intérieur ou à proximité de zones de visibilité réduite. Le « à
+  proximité » est le mot qui compte : on ralentit avant d'entrer dans le banc, pas
+  quand on y est déjà et qu'un autre navire en sort.
+sources:
+  - texte: RIPAM, règle 19 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'
