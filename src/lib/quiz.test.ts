@@ -179,6 +179,23 @@ describe('familles de questions, au tirage de l’examen', () => {
     }
   });
 
+  it('ne sacrifie pas toujours le même côté d’une famille entre deux thèmes', () => {
+    // À l'ordre de la banque, le thème le plus proche de « a » gardait sa
+    // question à chaque tirage et l'autre perdait ses sorties, sans que rien
+    // ne le montre. L'ordre des thèmes est donc tiré au sort.
+    const melangee = banque(3).map((x) =>
+      x.id === 'balisage-0001' || x.id === 'vhf-0001' ? { ...x, famille: 'entre-themes' } : x,
+    );
+    let balisage = 0;
+    let vhf = 0;
+    for (let graine = 0; graine < 600; graine++) {
+      const ids = new Set(tirerExamen(melangee, aleaSeme(graine)).map((x) => x.id));
+      if (ids.has('balisage-0001')) balisage += 1;
+      if (ids.has('vhf-0001')) vhf += 1;
+    }
+    expect(Math.min(balisage, vhf) / Math.max(balisage, vhf)).toBeGreaterThan(0.85);
+  });
+
   it('rend quand même quarante questions quand un thème n’a qu’une famille', () => {
     // Tout `ecluses` dans une seule famille : plutôt une redite qu’un examen
     // court, c’est le nombre de questions qui fait l’épreuve.

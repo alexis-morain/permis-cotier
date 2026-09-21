@@ -17,6 +17,24 @@ Ce que `--verifier` refuse est strictement mécanique : deux énoncés identique
 au mot près qui ne partagent pas de famille. Tout le reste est affiché et
 laissé au jugement — un seuil ne sait pas distinguer une redite d'une tournure
 maison partagée par tout un thème.
+
+Le critère du jugement, pour que la colonne « à juger » se relise. Deux
+questions font famille quand, tirées ensemble, **l'une renseigne l'autre** :
+
+  - énoncé identique au mot près, seul le visuel change (les quatre cardinales
+    de jour) ;
+  - même bonne réponse sur deux visuels différents (les deux rythmes d'eaux
+    saines : reconnaître l'un donne l'autre) ;
+  - la bonne réponse de l'une figure en distracteur de l'autre (les trois
+    signaux de brume d'un navire de 25 mètres, où la réponse de `signaux-0005`
+    est le distracteur *a* de `signaux-0006`).
+
+Ce qui ne suffit pas : la tournure. « Tu relèves ce feu de nuit, que peux-tu en
+dire ? » monte à 0,92 entre une marque spéciale et un navire qui pêche — deux
+sujets sans rapport, aucune information ne passe de l'une à l'autre, et les
+mettre en famille appauvrirait le tirage sans rien corriger. C'est pourquoi
+`balisage-0021` (cardinale Est) et `balisage-0035` (eaux saines) restent dans
+deux familles distinctes malgré 0,81 : leurs espaces de réponse sont disjoints.
 """
 from __future__ import annotations
 

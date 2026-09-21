@@ -186,6 +186,12 @@ export function repartirParTheme(
  * thème ne peut pas remplir sa part sans revenir sur une famille, il y revient.
  * Quarante questions font l'épreuve ; trente-neuf ne la font pas.
  *
+ * Les thèmes sont parcourus dans un ordre tiré au sort, et c'est ce qui rend la
+ * contrainte symétrique : à l'ordre de la banque, le membre du thème le plus
+ * proche de « a » aurait gardé sa place à chaque tirage, et celui d'en face
+ * aurait perdu 8 % de ses sorties. Rien ne le montrerait — aucune famille ne
+ * traverse deux thèmes aujourd'hui.
+ *
  * Le rappel espacé et l'entraînement par thème ne l'appliquent pas : y revoir
  * les quatre cardinales à la suite, c'est justement apprendre à les distinguer.
  */
@@ -206,7 +212,8 @@ export function tirerExamen(
 
   const prises = new Set<string>();
   const tirage: QuestionJouable[] = [];
-  for (const [code, liste] of parTheme) {
+  for (const code of melanger([...parTheme.keys()], alea)) {
+    const liste = parTheme.get(code)!;
     const n = part[code] ?? 0;
     if (n <= 0) continue;
 
