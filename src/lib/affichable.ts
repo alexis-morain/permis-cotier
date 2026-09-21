@@ -50,6 +50,7 @@ export function versAffichable(donnees: Question): QuestionAffichable {
     id: donnees.id,
     theme: donnees.theme,
     notion: donnees.notion,
+    famille: donnees.famille,
     enonce: donnees.enonce,
     explication: donnees.explication,
     difficulte: donnees.difficulte,

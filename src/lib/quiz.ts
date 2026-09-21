@@ -16,6 +16,14 @@ export interface QuestionJouable {
   readonly theme: string;
   readonly reponses: readonly string[];
   readonly propositions: readonly { readonly id: string }[];
+  /**
+   * Questions qui ne doivent pas tomber ensemble dans un même examen blanc.
+   * Les quatre cardinales de `balisage` partagent leur énoncé mot pour mot,
+   * seul le visuel change ; deux signaux de brume se lisent comme une redite
+   * alors qu'ils citent deux paragraphes différents. Elles restent des
+   * questions distinctes — c'est le tirage qui n'en prend qu'une.
+   */
+  readonly famille?: string;
 }
 
 /**
@@ -169,7 +177,18 @@ export function repartirParTheme(
   return part;
 }
 
-/** Tire un examen blanc : la répartition du programme, puis un mélange général. */
+/**
+ * Tire un examen blanc : la répartition du programme, puis un mélange général.
+ *
+ * Une famille ne donne qu'une question par examen — voir `QuestionJouable`. La
+ * contrainte traverse les thèmes, parce que deux quasi-doublons ne se rangent
+ * pas toujours du même côté du programme. Elle cède devant le nombre : si un
+ * thème ne peut pas remplir sa part sans revenir sur une famille, il y revient.
+ * Quarante questions font l'épreuve ; trente-neuf ne la font pas.
+ *
+ * Le rappel espacé et l'entraînement par thème ne l'appliquent pas : y revoir
+ * les quatre cardinales à la suite, c'est justement apprendre à les distinguer.
+ */
 export function tirerExamen(
   banque: readonly QuestionJouable[],
   alea: Alea = Math.random,
@@ -185,10 +204,28 @@ export function tirerExamen(
   const disponibles = Object.fromEntries([...parTheme].map(([code, l]) => [code, l.length]));
   const part = repartirParTheme(taille, disponibles, alea);
 
+  const prises = new Set<string>();
   const tirage: QuestionJouable[] = [];
   for (const [code, liste] of parTheme) {
     const n = part[code] ?? 0;
-    if (n > 0) tirage.push(...melanger(liste, alea).slice(0, n));
+    if (n <= 0) continue;
+
+    const retenues: QuestionJouable[] = [];
+    const ecartees: QuestionJouable[] = [];
+    for (const q of melanger(liste, alea)) {
+      if (retenues.length >= n) break;
+      if (q.famille !== undefined && prises.has(q.famille)) {
+        ecartees.push(q);
+        continue;
+      }
+      retenues.push(q);
+      if (q.famille !== undefined) prises.add(q.famille);
+    }
+    for (const q of ecartees) {
+      if (retenues.length >= n) break;
+      retenues.push(q);
+    }
+    tirage.push(...retenues);
   }
 
   return melanger(tirage, alea);
