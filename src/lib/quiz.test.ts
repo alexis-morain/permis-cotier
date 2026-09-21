@@ -146,6 +146,51 @@ describe('tirage de l’examen blanc', () => {
   });
 });
 
+describe('familles de questions, au tirage de l’examen', () => {
+  /** Une banque complète où `combien` questions d’un thème partagent une famille. */
+  function avecFamille(theme: string, combien: number, famille = 'meme-famille'): QuestionJouable[] {
+    return banque(3).map((x) =>
+      x.theme === theme && Number(x.id.slice(-4)) <= combien ? { ...x, famille } : x,
+    );
+  }
+
+  it('n’en prend qu’une par famille, sans les écarter toutes', () => {
+    let vues = 0;
+    for (let graine = 0; graine < 40; graine++) {
+      const tirage = tirerExamen(avecFamille('balisage', 4), aleaSeme(graine));
+      const n = tirage.filter((x) => x.famille === 'meme-famille').length;
+      expect(n).toBeLessThanOrEqual(1);
+      vues += n;
+    }
+    // La règle plafonne, elle n'exclut pas : les quatre cardinales restent
+    // tirables, une à la fois.
+    expect(vues).toBeGreaterThan(10);
+  });
+
+  it('écarte aussi la famille d’un autre thème', () => {
+    const melangee = banque(3).map((x) =>
+      x.id === 'balisage-0001' || x.id === 'feux-marques-0001'
+        ? { ...x, famille: 'entre-themes' }
+        : x,
+    );
+    for (let graine = 0; graine < 40; graine++) {
+      const tirage = tirerExamen(melangee, aleaSeme(graine));
+      expect(tirage.filter((x) => x.famille === 'entre-themes').length).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it('rend quand même quarante questions quand un thème n’a qu’une famille', () => {
+    // Tout `ecluses` dans une seule famille : plutôt une redite qu’un examen
+    // court, c’est le nombre de questions qui fait l’épreuve.
+    const banqueUnie = banque().map((x) =>
+      x.theme === 'ecluses' ? { ...x, famille: 'ecluses-tout' } : x,
+    );
+    for (let graine = 0; graine < 20; graine++) {
+      expect(tirerExamen(banqueUnie, aleaSeme(graine))).toHaveLength(40);
+    }
+  });
+});
+
 describe('correction, réponse exacte exigée', () => {
   const simple = q('vhf-0001', 'vhf', ['b']);
   const double = q('vhf-0002', 'vhf', ['b', 'd']);
