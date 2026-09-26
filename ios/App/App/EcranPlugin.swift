@@ -23,19 +23,26 @@ public class EcranPlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func pleinEcran(_ call: CAPPluginCall) {
         let actif = call.getBool("actif") ?? false
         DispatchQueue.main.async { [weak self] in
-            guard let ecran = self?.bridge?.viewController,
-                  let barre = ecran.tabBarController else {
-                // Pas de barre d'onglets : rien à cacher, et rien d'anormal.
-                call.resolve()
-                return
+            if let ecran = self?.bridge?.viewController {
+                Self.basculer(dans: ecran, cachee: actif)
             }
-            if #available(iOS 18.0, *) {
-                // UIKit anime la barre et recalcule lui-même la zone sûre.
-                barre.setTabBarHidden(actif, animated: true)
-            } else {
-                Self.basculerAvantIOS18(barre: barre, ecran: ecran, cachee: actif)
-            }
+            // Pas de barre d'onglets : rien à cacher, et rien d'anormal.
             call.resolve()
+        }
+    }
+
+    /// Cache ou rend la barre d'onglets de l'écran donné. Sur le fil principal.
+    /// Appelée par le greffon, et par `EcranWeb` à chaque changement d'adresse :
+    /// une page quittée en pleine série ne doit jamais laisser la barre cachée.
+    static func basculer(dans ecran: UIViewController, cachee: Bool) {
+        guard let barre = ecran.tabBarController else { return }
+        if #available(iOS 18.0, *) {
+            guard barre.isTabBarHidden != cachee else { return }
+            // UIKit anime la barre et recalcule lui-même la zone sûre.
+            barre.setTabBarHidden(cachee, animated: true)
+        } else {
+            guard barre.tabBar.isHidden != cachee else { return }
+            basculerAvantIOS18(barre: barre, ecran: ecran, cachee: cachee)
         }
     }
 

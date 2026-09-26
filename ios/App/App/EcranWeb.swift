@@ -33,11 +33,22 @@ class EcranWeb: CAPBridgeViewController {
     private var finDuRetour: NSKeyValueObservation?
     private var hauteurRendue: NSKeyValueObservation?
 
+    /// Guette l'adresse de la webview : toute nouvelle page rend la barre.
+    private var changementDAdresse: NSKeyValueObservation?
+
     override func capacitorDidLoad() {
         super.capacitorDidLoad()
         webView?.allowsBackForwardNavigationGestures = true
         // Le greffon maison, qui cache la barre d'onglets pendant l'examen.
         bridge?.registerPluginInstance(EcranPlugin())
+        // Le web rend la barre à la fin de la série ; mais un lien suivi en
+        // pleine série, ou un glissement de retour, quitte la page sans
+        // repasser par lui. La coquille tient donc le dernier mot : une
+        // adresse qui change, c'est une page où la barre a sa place.
+        changementDAdresse = webView?.observe(\.url, options: [.new]) { [weak self] _, _ in
+            guard let self = self else { return }
+            DispatchQueue.main.async { EcranPlugin.basculer(dans: self, cachee: false) }
+        }
     }
 
     /// Ramène l'onglet à son adresse de départ, puis en haut de la page.
