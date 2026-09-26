@@ -85,8 +85,20 @@ jobs:
       - name: Build
         run: npx astro build
 
+      # Le site ne doit rien payer pour l'app : `verifier-cible.mjs` refuse un
+      # `dist/` où un greffon Capacitor aurait fui.
+      - name: Vérifier que rien de l'app n'est dans le site
+        run: node scripts/verifier-cible.mjs
+
       # Ce que le build montre aux moteurs : titres coupés ou en double,
       # descriptions manquantes, canoniques qui désignent une autre adresse.
       # Rien de tout cela ne se voit à l'écran ni dans les tests.
       - name: Audit SEO du build
         run: node scripts/audit-seo.mjs
+
+      # La coquille iOS sert `dist-app/`. Sans ce build, une page élaguée ou un
+      # lien mort dans l'app ne cassait personne, et se voyait au simulateur
+      # seulement. `elaguer-app.mjs` refuse le bundle si un lien pointe hors de
+      # lui ou compte sur une redirection.
+      - name: Build de la cible app
+        run: npm run build:app
