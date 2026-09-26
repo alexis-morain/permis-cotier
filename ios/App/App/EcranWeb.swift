@@ -49,6 +49,8 @@ class EcranWeb: CAPBridgeViewController {
         view.backgroundColor = fond
         // Le greffon maison, qui cache la barre d'onglets pendant l'examen.
         bridge?.registerPluginInstance(EcranPlugin())
+        // Les bruitages, en session audio ambiante : voir `SonPlugin`.
+        bridge?.registerPluginInstance(SonPlugin())
         // Le web rend la barre à la fin de la série ; mais un lien suivi en
         // pleine série, ou un glissement de retour, quitte la page sans
         // repasser par lui. La coquille tient donc le dernier mot : une

@@ -73,6 +73,11 @@ jobs:
       - name: Vérifier les signaux sonores
         run: python scripts/sons.py --verifier
 
+      # Les bruitages de l'app sont calculés, pas enregistrés : un WAV retouché
+      # à la main sortirait du contrôle du script qui le synthétise.
+      - name: Vérifier les sons de l'app
+        run: python scripts/sons_app.py --verifier
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 
