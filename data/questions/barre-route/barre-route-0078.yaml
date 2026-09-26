@@ -1,0 +1,38 @@
+id: barre-route-0078
+option: cotier
+theme: barre-route
+notion: barre-manoeuvre-evitement
+famille: barre-8f-ne-pas-gener
+statut: publie
+difficulte: 2
+enonce: >-
+  Une règle t'impose de ne pas gêner le passage d'un navire qui approche. Ta position va
+  lui retirer de la place, mais aucun risque d'abordage n'existe encore. Que te demande la
+  règle 8 f) i) ?
+propositions:
+  - id: a
+    texte: Attendre qu'un risque d'abordage existe pour manœuvrer.
+  - id: b
+    texte: Garder ta route, c'est à lui de te contourner s'il manque de place.
+  - id: c
+    texte: Maintenir ton cap et ta vitesse pour qu'il puisse prévoir ta route.
+  - id: d
+    texte: Manœuvrer sans tarder pour lui laisser suffisamment de place.
+reponses:
+  - d
+explication: >-
+  La règle 8 f) i) demande au navire tenu de ne pas gêner le passage d'un autre de
+  manœuvrer sans tarder, lorsque les circonstances l'exigent, afin de laisser suffisamment
+  de place à l'autre pour son libre passage. Cette obligation n'attend pas qu'un risque
+  d'abordage apparaisse : elle joue dès que la place vient à manquer. Maintenir cap et
+  vitesse est le devoir du navire privilégié, ce que tu n'es pas ici.
+sources:
+  - texte: RIPAM, règle 8 f) i)
+    ref: decret-77-733
+  - texte: RIPAM, règle 17 a) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

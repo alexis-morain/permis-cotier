@@ -1,0 +1,36 @@
+id: feux-marques-0089
+option: cotier
+theme: feux-marques
+notion: feux-remorquage
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, tu prends en remorque un voilier en panne qui demande assistance. Ton bateau
+  ne remorque jamais d'ordinaire et ne peut pas montrer les feux de remorquage. Que dit
+  la règle 24 ?
+propositions:
+  - id: a
+    texte: Tu dois lâcher la remorque tant que tu ne peux pas montrer ces feux
+  - id: b
+    texte: Tu en es dispensé, mais tu signales la remorque, par exemple en éclairant le
+      câble
+  - id: c
+    texte: Tu en es dispensé seulement si le voilier remorqué montre ses feux
+  - id: d
+    texte: Tu en es dispensé, et tes feux de route habituels suffisent
+reponses:
+  - b
+explication: >-
+  La règle 24 i) dispense des feux de remorquage le navire qui n'effectue pas ordinairement
+  de remorquage et ne peut pas les montrer, lorsqu'il remorque un navire en détresse ou
+  ayant besoin d'une assistance. La dispense a une contrepartie : toutes les mesures possibles
+  doivent être prises pour indiquer le lien entre remorqueur et remorqué, notamment en
+  éclairant le câble de remorquage. Le piège est de s'arrêter à la dispense.
+sources:
+  - texte: RIPAM, règle 24 i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

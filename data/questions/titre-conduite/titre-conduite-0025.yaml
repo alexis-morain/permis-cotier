@@ -1,0 +1,36 @@
+id: titre-conduite-0025
+option: cotier
+theme: titre-conduite
+notion: titre-sanctions
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en mer, sur un bateau à moteur, au départ d'un port français avec un permis étranger, sans permis
+  français. Un contrôle te trouve en état d'ébriété. Quelle mesure peut-on prendre ?
+propositions:
+  - id: a
+    texte: Le retrait temporaire ou définitif de ton permis étranger
+  - id: b
+    texte: Une interdiction de naviguer à partir des ports français ou dans les eaux territoriales
+      françaises
+  - id: c
+    texte: Aucune, faute de permis français aucun titre ne peut t'être retiré
+  - id: d
+    texte: La saisie de ton titre étranger, remis ensuite aux autorités de ton pays
+reponses:
+  - b
+explication: >-
+  L'article 7 vise les conducteurs de navires de plaisance à moteur qui ne détiennent pas
+  de permis français. Pour les mêmes manquements que ceux qui font retirer un permis,
+  dont la conduite en état d'ébriété, ils peuvent se voir interdire temporairement ou
+  définitivement de naviguer à partir des ports français ou dans les eaux territoriales
+  françaises. Le piège est de croire que l'administration retire ou saisit un titre
+  étranger : le texte ne prévoit que l'interdiction de naviguer.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 7
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

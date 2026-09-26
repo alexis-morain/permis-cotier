@@ -1,0 +1,35 @@
+id: balisage-region-b-0007
+option: cotier
+theme: balisage-region-b
+notion: region-b-lateral
+famille: balisage-chenal-prefere-bande
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en Guyane, en région de balisage B. Là où le chenal se divise, tu relèves
+  une bouée conique rouge portant une large bande horizontale verte. Que t'indique-t-elle ?
+propositions:
+  - id: a
+    texte: Le chenal à emprunter de préférence est à tribord
+  - id: b
+    texte: Une simple limite de bâbord du chenal, sans préférence
+  - id: c
+    texte: Le chenal à emprunter de préférence est à bâbord
+  - id: d
+    texte: Une simple limite de tribord du chenal, sans préférence
+reponses:
+  - c
+explication: >-
+  En région B, la marque de chenal préféré à bâbord est rouge avec une large bande horizontale
+  verte, de forme conique, avec un voyant conique rouge. La large bande signale une bifurcation,
+  pas une simple limite de chenal. Le piège est le réflexe de la région A, où le rouge à bande
+  verte désigne le chenal préféré à tribord : en région B, les couleurs sont inversées, et
+  c'est la forme conique qui confirme la lecture.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.3.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

@@ -1,0 +1,36 @@
+id: balisage-0066
+option: cotier
+theme: balisage
+notion: balisage-eaux-saines
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, tu approches d'un pont. Sa travée porte un feu blanc qui bat le rythme d'une
+  marque d'eaux saines. Que t'indique-t-il ?
+propositions:
+  - id: a
+    texte: Une travée interdite à la navigation
+  - id: b
+    texte: Une pile du pont, à laisser d'un bord ou de l'autre
+  - id: c
+    texte: Le meilleur point de passage sous le pont
+  - id: d
+    texte: Une travée réservée aux très petits bateaux
+reponses:
+  - c
+explication: >-
+  Le rythme d'une marque d'eaux saines peut indiquer le meilleur point de passage sous un
+  pont (paragraphe 5.1). L'annexe III le précise : ce point est montré par un ou plusieurs
+  feux blancs rythmés, portés par la travée, au rythme caractéristique d'une marque d'eaux
+  saines. Les travées pour très petits bateaux, elles, peuvent porter des feux jaunes de marque
+  spéciale.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe III, 3
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

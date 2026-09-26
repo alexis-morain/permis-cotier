@@ -1,0 +1,37 @@
+id: vhf-0060
+option: cotier
+theme: vhf
+notion: vhf-asn
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu déclenches l'alerte de détresse par l'appel sélectif numérique de ta VHF. Pour le
+  RIPAM, qu'est-ce que cette alerte ?
+propositions:
+  - id: a
+    texte: Un simple appel vers la station côtière, sans valeur de détresse
+  - id: b
+    texte: Un signal d'urgence, du même rang que PAN PAN
+  - id: c
+    texte: Un signal de détresse à part entière
+  - id: d
+    texte: Un signal de détresse, mais seulement une fois suivi du message parlé
+reponses:
+  - c
+explication: >-
+  L'annexe IV du RIPAM, au paragraphe 1 l) i), range parmi les signaux de détresse
+  l'alerte émise par appel sélectif numérique sur la voie 70 en ondes métriques. Ces
+  signaux, utilisés ensemble ou séparément, indiquent la détresse et le besoin
+  d'assistance : l'alerte numérique vaut donc détresse à elle seule. Le piège est le
+  message parlé que l'on enchaîne ensuite sur le canal 16 : il complète l'alerte, il ne
+  lui donne pas sa valeur.
+sources:
+  - texte: RIPAM, annexe IV, 1 l) i)
+    ref: decret-77-733
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

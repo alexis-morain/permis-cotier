@@ -1,0 +1,37 @@
+id: feux-marques-0090
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+famille: feux-capacite-restreinte-rythme
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, un remorqueur effectue une opération qui l'empêche, lui et sa remorque, de
+  modifier facilement leur route. Que montre-t-il en plus des feux d'un navire qui remorque
+  ?
+propositions:
+  - id: a
+    texte: Trois feux superposés, rouge, blanc, rouge, visibles sur tout l'horizon
+  - id: b
+    texte: Trois feux superposés, blanc, rouge, blanc, visibles sur tout l'horizon
+  - id: c
+    texte: Trois feux rouges superposés visibles sur tout l'horizon
+  - id: d
+    texte: Trois feux verts superposés visibles sur tout l'horizon
+reponses:
+  - a
+explication: >-
+  La règle 27 c) vise le navire à propulsion mécanique dont l'opération de remorquage
+  permet difficilement au remorqueur et à sa remorque de modifier leur route. En plus
+  des feux et marques de la règle 24 a), il montre ceux du navire à capacité de manœuvre
+  restreinte prévus en 27 b) i) et ii) : de nuit, trois feux superposés visibles sur
+  tout l'horizon, rouge, blanc, rouge. Le piège est l'inversion : ce sont les deux feux rouges qui
+  encadrent le blanc.
+sources:
+  - texte: RIPAM, règle 27 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

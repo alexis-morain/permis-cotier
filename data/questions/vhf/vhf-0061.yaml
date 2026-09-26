@@ -1,0 +1,32 @@
+id: vhf-0061
+option: cotier
+theme: vhf
+notion: vhf-alphabet
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton indicatif contient les lettres C, G et H. Comment les épelles-tu à la radio ?
+propositions:
+  - id: a
+    texte: Charles, Golf, Hôtel
+  - id: b
+    texte: Charlie, Golf, Hotel
+  - id: c
+    texte: Charlie, Gamma, Hotel
+  - id: d
+    texte: Charlie, Golf, Henri
+reponses:
+  - b
+explication: >-
+  L'alphabet phonétique international épelle C par Charlie, G par Golf et H par Hotel.
+  Les mots sont fixés pour que chacun les comprenne sur une liaison brouillée : on ne
+  les remplace ni par un prénom français comme Charles ou Henri, ni par une lettre
+  grecque comme Gamma.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

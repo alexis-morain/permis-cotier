@@ -1,0 +1,37 @@
+id: balisage-region-b-0008
+option: cotier
+theme: balisage-region-b
+notion: region-b-invariants
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en Guadeloupe, en région de balisage B. Qu'en est-il du sens conventionnel
+  de balisage, celui qui fixe où sont bâbord et tribord d'un chenal ?
+propositions:
+  - id: a
+    texte: Il s'inverse, et c'est ce qui inverse les couleurs latérales
+  - id: b
+    texte: Il ne change pas, il reste celui de la région A
+  - id: c
+    texte: Il suit les côtes dans le sens inverse des aiguilles d'une montre
+  - id: d
+    texte: Il suit la route de ton bateau, quel que soit ton cap
+reponses:
+  - b
+explication: >-
+  L'arrêté définit le sens conventionnel de balisage une seule fois, pour les deux régions :
+  soit le sens général que suit le navire venant de la haute mer lorsqu'il s'approche d'un
+  port, d'une rivière ou d'un estuaire, soit celui que fixent les autorités, en principe
+  dans le sens des aiguilles d'une montre le long des continents. Ce qui distingue les régions A et B, ce sont les
+  marques latérales elles-mêmes, pas le sens dans lequel on les lit. Le piège est d'expliquer
+  l'inversion des couleurs par une inversion du sens.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.1.1 et 2.1.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

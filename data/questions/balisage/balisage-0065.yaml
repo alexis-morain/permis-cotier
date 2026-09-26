@@ -1,0 +1,33 @@
+id: balisage-0065
+option: cotier
+theme: balisage
+notion: balisage-danger-isole
+statut: publie
+difficulte: 2
+enonce: >-
+  Le corps d'une marque de danger isolé est noir, barré de rouge. Combien de larges
+  bandes horizontales rouges peut-il porter ?
+propositions:
+  - id: a
+    texte: Une seule
+  - id: b
+    texte: Deux exactement
+  - id: c
+    texte: Trois au plus
+  - id: d
+    texte: Une ou plusieurs
+reponses:
+  - d
+explication: >-
+  Le paragraphe 4.2 décrit la couleur de la marque de danger isolé : « noire avec une ou
+  plusieurs larges bandes horizontales rouges ». Le nombre de bandes n'est donc pas fixé,
+  ce qui compte est le noir barré de rouge et le voyant à deux sphères noires. Le piège est
+  de compter les bandes sur les deux sphères du voyant, qui n'ont rien à voir avec elles.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

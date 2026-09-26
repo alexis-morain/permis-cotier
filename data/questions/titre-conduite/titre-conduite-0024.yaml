@@ -1,0 +1,35 @@
+id: titre-conduite-0024
+option: cotier
+theme: titre-conduite
+notion: titre-examen
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu exerces une fonction qui garantit un niveau suffisant de connaissances théoriques et
+  pratiques en navigation. Que prévoit le décret pour l'obtention de ton permis ?
+propositions:
+  - id: a
+    texte: Aucune mesure, l'examen reste le même pour tous les candidats
+  - id: b
+    texte: Un examen réduit à une épreuve pratique devant un examinateur
+  - id: c
+    texte: Une priorité d'inscription aux sessions d'examen de l'administration
+  - id: d
+    texte: Une exemption partielle ou totale de l'examen, dans des conditions fixées par
+      arrêté
+reponses:
+  - d
+explication: >-
+  L'article 5 prévoit que le permis peut être délivré avec exemption partielle ou totale
+  de l'examen préalable aux personnes dont la fonction ou la qualification garantit un
+  niveau suffisant de connaissances théoriques et pratiques en navigation. Les conditions
+  en sont fixées par arrêté des ministres chargés de la mer et des transports. Le texte
+  ne parle ni d'une épreuve pratique de remplacement ni d'une priorité d'inscription.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 5
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

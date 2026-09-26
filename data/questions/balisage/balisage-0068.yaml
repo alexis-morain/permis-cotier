@@ -1,0 +1,34 @@
+id: balisage-0068
+option: cotier
+theme: balisage
+notion: balisage-pictogrammes
+famille: balisage-pictogramme-nature
+statut: publie
+difficulte: 1
+enonce: >-
+  Une bouée qui borde une zone réglementée de la bande des 300 mètres porte un
+  pictogramme. Que t'apprend-il ?
+propositions:
+  - id: a
+    texte: La distance qui te sépare du rivage
+  - id: b
+    texte: Le côté par lequel tu dois laisser la bouée
+  - id: c
+    texte: La profondeur d'eau au pied de la bouée
+  - id: d
+    texte: La nature de la réglementation applicable dans la zone
+reponses:
+  - d
+explication: >-
+  L'article 3 permet aux bouées de la bande des 300 mètres de porter un pictogramme
+  « faisant ressortir la nature de la réglementation applicable ». Il dit donc ce qui est
+  autorisé ou interdit dans la zone, pas une distance, une profondeur ou un côté de passage.
+  Le texte le permet sans l'imposer : une bouée peut n'en porter aucun.
+sources:
+  - texte: Arrêté du 27 mars 1991, article 3
+    ref: arrete-1991-03-27
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

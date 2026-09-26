@@ -1,0 +1,32 @@
+id: feux-marques-0088
+option: cotier
+theme: feux-marques
+notion: marques-jour
+statut: publie
+difficulte: 1
+enonce: >-
+  Quand dois-tu observer les règles concernant les marques ?
+propositions:
+  - id: a
+    texte: Du coucher au lever du soleil
+  - id: b
+    texte: De jour comme de nuit, sans distinction
+  - id: c
+    texte: Seulement par visibilité réduite
+  - id: d
+    texte: De jour
+reponses:
+  - d
+explication: >-
+  La règle 20 d) le dit en une ligne : les règles concernant les marques doivent être
+  observées de jour. C'est le pendant de la règle 20 b), qui fait observer les règles
+  des feux du coucher au lever du soleil. La visibilité réduite concerne les feux, que
+  la règle 20 c) fait aussi montrer de jour, pas les marques.
+sources:
+  - texte: RIPAM, règle 20 d)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'

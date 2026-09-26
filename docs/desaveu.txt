@@ -1,0 +1,28 @@
+# Désaveu de liens, lepermiscotier.fr
+# Mesure DataForSEO du 26 septembre 2026 : 25 liens, 21 domaines référents,
+# score de spam moyen 54. Aucun n'est une vraie citation : ce sont des listes
+# automatiques de domaines (« Where to buy aged domains and backlinks »,
+# « Domain list part L », annuaires de liens payants), au texte identique d'un
+# site à l'autre. Tout est désavoué au niveau du domaine.
+# Régénérer : backlinks_backlinks sur lepermiscotier.fr, mode one_per_domain.
+domain:covereddigitalagency.shop
+domain:fiverr-tips.shop
+domain:ycm.info
+domain:tunca.org
+domain:runningwebsites.net
+domain:2x9.co
+domain:alljobs.info
+domain:read.org.in
+domain:australianwebdirectory.pro
+domain:booksreadr.org
+domain:simplewebdirectory.com
+domain:websiterace.com
+domain:musweb.org
+domain:getwebsiteworth.com
+domain:australianwebdirectory.shop
+domain:sarys.co.uk
+domain:wonvision.com
+domain:globalecommerce.org
+domain:sergechel.info
+domain:gunghapcafe.com
+domain:wheretobuybest.link

@@ -1,0 +1,33 @@
+id: vhf-0063
+option: cotier
+theme: vhf
+notion: vhf-urgence-securite
+statut: publie
+difficulte: 2
+enonce: >-
+  Lequel de ces messages s'annonce par PAN PAN ?
+propositions:
+  - id: a
+    texte: Un équipier tombé à la mer vient d'être récupéré à bord
+  - id: b
+    texte: Ton bateau fait eau et coule, l'équipage doit l'abandonner
+  - id: c
+    texte: Tu appelles la capitainerie pour réserver une place au port
+  - id: d
+    texte: Un avis sur la sécurité de la navigation dans la zone
+reponses:
+  - a
+explication: >-
+  PAN PAN annonce un message urgent qui concerne la sécurité du navire ou d'une
+  personne, sans danger imminent : un homme à la mer récupéré en est l'exemple type. Un
+  bateau qui coule relève du danger grave et imminent, donc de MAYDAY. Un avis sur la
+  sécurité de la navigation s'annonce par SÉCURITÉ, et l'appel à la capitainerie n'est
+  qu'un trafic ordinaire, sur une voie portuaire.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-09-26'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-09-26'
