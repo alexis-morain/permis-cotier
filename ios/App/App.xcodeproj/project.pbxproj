@@ -14,6 +14,7 @@
 		A1B2C3D40000000000000R32 /* BarreOnglets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000R31 /* BarreOnglets.swift */; };
 		A1B2C3D40000000000000R22 /* EcranWeb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000R21 /* EcranWeb.swift */; };
 		A1B2C3D40000000000000R12 /* RouteurDuSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000R11 /* RouteurDuSite.swift */; };
+		A1B2C3D40000000000000E42 /* EcranPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000E41 /* EcranPlugin.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		A1B2C3D400000000000000P2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D400000000000000P1 /* PrivacyInfo.xcprivacy */; };
@@ -30,6 +31,7 @@
 		A1B2C3D40000000000000R31 /* BarreOnglets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarreOnglets.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000R21 /* EcranWeb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcranWeb.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000R11 /* RouteurDuSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteurDuSite.swift; sourceTree = "<group>"; };
+		A1B2C3D40000000000000E41 /* EcranPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcranPlugin.swift; sourceTree = "<group>"; };
 		504EC30C1FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				A1B2C3D40000000000000R31 /* BarreOnglets.swift */,
 				A1B2C3D40000000000000R21 /* EcranWeb.swift */,
 				A1B2C3D40000000000000R11 /* RouteurDuSite.swift */,
+				A1B2C3D40000000000000E41 /* EcranPlugin.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -130,9 +133,10 @@
 			};
 			buildConfigurationList = 504EC2FF1FED79650016851F /* Build configuration list for PBXProject "App" */;
 			compatibilityVersion = "Xcode 8.0";
-			developmentRegion = en;
+			developmentRegion = fr;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				fr,
 				en,
 				Base,
 			);
@@ -175,6 +179,7 @@
 				A1B2C3D40000000000000R32 /* BarreOnglets.swift in Sources */,
 				A1B2C3D40000000000000R22 /* EcranWeb.swift in Sources */,
 				A1B2C3D40000000000000R12 /* RouteurDuSite.swift in Sources */,
+				A1B2C3D40000000000000E42 /* EcranPlugin.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

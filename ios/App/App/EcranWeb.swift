@@ -19,7 +19,7 @@ class EcranWeb: CAPBridgeViewController {
     override func instanceDescriptor() -> InstanceDescriptor {
         let descripteur = super.instanceDescriptor()
         // Capacitor accepte un chemin de départ par instance : c'est ce qui
-        // permet à quatre onglets de partager une seule configuration.
+        // permet à cinq onglets de partager une seule configuration.
         descripteur.appStartPath = cheminDeDepart
         return descripteur
     }
@@ -28,17 +28,46 @@ class EcranWeb: CAPBridgeViewController {
         return RouteurDuSite()
     }
 
+    /// Guettent le retour à la racine : la fin du chargement, puis la hauteur
+    /// que WebKit rend à la page.
+    private var finDuRetour: NSKeyValueObservation?
+    private var hauteurRendue: NSKeyValueObservation?
+
     override func capacitorDidLoad() {
         super.capacitorDidLoad()
         webView?.allowsBackForwardNavigationGestures = true
+        // Le greffon maison, qui cache la barre d'onglets pendant l'examen.
+        bridge?.registerPluginInstance(EcranPlugin())
     }
 
-    /// Ramène l'onglet à son adresse de départ. Appelé quand on retouche
-    /// l'onglet déjà ouvert : c'est le geste qui sort d'une leçon.
+    /// Ramène l'onglet à son adresse de départ, puis en haut de la page.
+    /// Appelé quand on retouche l'onglet déjà ouvert : c'est le geste qui
+    /// sort d'une leçon, comme dans toute app iOS.
     func revenirAuDepart() {
         guard let webView = webView else { return }
-        if webView.canGoBack, let racine = webView.backForwardList.backList.first {
-            webView.go(to: racine)
+        finDuRetour = nil
+        hauteurRendue = nil
+        guard webView.canGoBack, let racine = webView.backForwardList.backList.first else {
+            webView.scrollView.setContentOffset(.zero, animated: true)
+            return
         }
+        // WebKit rend la racine à la hauteur où on l'avait laissée, et il le
+        // fait après la fin du chargement. On attend donc ce chargement, puis
+        // le premier déplacement qui suit : c'est la hauteur rendue, et on
+        // remonte de là. Une seconde plus tard on ne guette plus rien, pour
+        // ne jamais reprendre la main sur un défilement du doigt.
+        finDuRetour = webView.observe(\.isLoading, options: [.new]) { [weak self] vue, _ in
+            guard !vue.isLoading, let self = self else { return }
+            self.finDuRetour = nil
+            self.hauteurRendue = vue.scrollView.observe(\.contentOffset, options: [.new]) { [weak self] defilement, _ in
+                guard defilement.contentOffset.y > 0 else { return }
+                self?.hauteurRendue = nil
+                defilement.setContentOffset(.zero, animated: true)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.hauteurRendue = nil
+            }
+        }
+        webView.go(to: racine)
     }
 }
