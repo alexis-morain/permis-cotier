@@ -218,6 +218,27 @@ def test_banque_signale_un_yaml_illisible(tmp_path):
     assert any(p.code == "yaml" for p in valider_banque(tmp_path))
 
 
+def test_famille_facultative():
+    assert "famille" not in codes(VALIDE)
+
+
+def test_famille_en_minuscules():
+    assert "famille" in codes(avec(famille="Balisage Cardinales"))
+
+
+def test_banque_accepte_une_famille_a_deux_membres(tmp_path):
+    _ecrire(tmp_path, avec(famille="cardinales"))
+    _ecrire(tmp_path, avec(id="feux-marques-0013", famille="cardinales"))
+    assert valider_banque(tmp_path) == []
+
+
+def test_banque_refuse_une_famille_solitaire(tmp_path):
+    """Une famille dit « pas ces deux-là ensemble ». Seule, elle ne dit rien :
+    c'est un nom mal recopié, et le tirage ne s'en apercevrait jamais."""
+    _ecrire(tmp_path, avec(famille="cardinales"))
+    assert any(p.code == "famille-solitaire" for p in valider_banque(tmp_path))
+
+
 def test_probleme_s_affiche_avec_son_fichier():
     p = Probleme(fichier=Path("data/questions/vhf/vhf-0001.yaml"), code="id", message="mal formé")
     assert "vhf-0001.yaml" in str(p)

@@ -1,0 +1,31 @@
+id: feux-marques-0082
+option: cotier
+theme: feux-marques
+notion: feux-definitions
+statut: publie
+difficulte: 3
+enonce: >-
+  Un navire montre un feu de tête de mât et un feu de poupe. Tu le suis de nuit, exactement
+  dans son sillage : lequel de ces deux feux vois-tu ?
+propositions:
+  - id: a
+    texte: Le feu de tête de mât
+  - id: b
+    texte: Le feu de poupe
+reponses:
+  - b
+explication: >-
+  Le feu de tête de mât éclaire depuis l'avant jusqu'à l'arrière du travers de chaque
+  bord seulement : droit derrière le navire, il est éteint pour toi. Le feu de poupe,
+  lui, est défini par la règle 21 c) comme projetant sa lumière vers l'arrière, de part
+  et d'autre de l'axe. Le piège est de croire qu'un feu placé en hauteur se voit de partout
+  : c'est le feu visible sur tout l'horizon qui couvre les 360 degrés, pas le feu de tête
+  de mât.
+sources:
+  - texte: RIPAM, règle 21 a) et c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

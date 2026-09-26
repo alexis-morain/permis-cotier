@@ -11,9 +11,17 @@ par thème, avec l'écart à la cible. Une banque uniformément à quatre
 propositions n'entraîne pas sur le format que le candidat rencontrera, et
 l'écart ne se devine pas, il se mesure.
 
+Troisième volet, `--profondeur` : combien d'examens blancs un thème tient avant
+d'avoir servi toutes ses questions. C'est la mesure qui dit où écrire, et elle
+ne se déduit pas du compte : un thème lourd à soixante questions s'épuise plus
+vite qu'un thème léger à vingt. La référence est la médiane de la banque, pas
+un nombre choisi — il s'agit de remonter les traînards au milieu, pas de viser
+un chiffre rond.
+
     python scripts/couverture.py                  # tableau lisible
     python scripts/couverture.py --trous          # seulement les notions à zéro
     python scripts/couverture.py --propositions   # répartition et écart à la cible
+    python scripts/couverture.py --profondeur     # où la banque se répète
     python scripts/couverture.py --json           # pour un autre outil
 """
 
@@ -39,6 +47,9 @@ THEMES_TS = RACINE / "src" / "lib" / "themes.ts"
 # du format donnent trois pour mode, 21 % de questions à deux propositions, et
 # jamais cinq. `src/lib/schema.ts` borne en conséquence de 2 à 4.
 CIBLE_PROPOSITIONS: dict[int, float] = {2: 0.20, 3: 0.55, 4: 0.25}
+
+# Arrêté du 28 septembre 2007, art. 1er § 1.1 : quarante questions.
+TAILLE_EXAMEN = 40
 
 
 def lire_notions() -> list[dict]:
@@ -150,6 +161,57 @@ def a_convertir(compte: Counter) -> int:
     return sum(e for _, _, e in ecarts_propositions(compte).values() if e > 0)
 
 
+def profondeur(par_theme: Counter, cibles_themes: dict[str, int]) -> list[dict]:
+    """Combien d'examens blancs chaque thème tient avant de tout resservir.
+
+    La part d'un thème dans l'épreuve vient de sa pondération, et c'est elle
+    qui use la banque : `feux-marques` sort six ou sept questions sur quarante,
+    `ecluses` moins d'une. À nombre de questions égal, le premier se répète dix
+    fois plus vite. Le compte par thème ne montre rien de cela.
+    """
+    total = sum(cibles_themes.values()) or 1
+    lignes = []
+    for code, cible in cibles_themes.items():
+        part = TAILLE_EXAMEN * cible / total
+        publiees = par_theme.get(code, 0)
+        lignes.append(
+            {
+                "theme": code,
+                "publiees": publiees,
+                "part": part,
+                "profondeur": publiees / part if part else 0.0,
+            }
+        )
+    lignes.sort(key=lambda l: l["profondeur"])
+    return lignes
+
+
+def mediane(valeurs: list[float]) -> float:
+    ordonnees = sorted(valeurs)
+    if not ordonnees:
+        return 0.0
+    milieu = len(ordonnees) // 2
+    if len(ordonnees) % 2:
+        return ordonnees[milieu]
+    return (ordonnees[milieu - 1] + ordonnees[milieu]) / 2
+
+
+def afficher_profondeur(lignes: list[dict]) -> None:
+    repere = mediane([l["profondeur"] for l in lignes])
+    print(f"\n\033[1mProfondeur\033[0m — examens blancs avant de tout resservir")
+    print(f"Médiane de la banque : {repere:.1f} examens.\n")
+    print(f"  {'thème':22} {'publiées':>8} {'part/40':>8} {'profondeur':>11} {'à écrire':>9}")
+    for l in lignes:
+        manque = max(0, round(repere * l["part"] - l["publiees"]))
+        marque = " ←" if manque else ""
+        print(
+            f"  {l['theme']:22} {l['publiees']:8} {l['part']:8.1f} "
+            f"{l['profondeur']:10.1f}  {manque or '·':>9}{marque}"
+        )
+    total = sum(max(0, round(repere * l["part"] - l["publiees"])) for l in lignes)
+    print(f"\n{total} question(s) à écrire pour que plus aucun thème ne soit sous la médiane.")
+
+
 def afficher_propositions(par_theme: dict[str, Counter]) -> None:
     total = sum(par_theme.values(), Counter())
     formats = sorted(set(CIBLE_PROPOSITIONS) | set(total))
@@ -181,6 +243,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="répartition du nombre de propositions et écart à la cible",
     )
+    parseur.add_argument(
+        "--profondeur",
+        action="store_true",
+        help="examens blancs tenus par chaque thème, et où la banque se répète",
+    )
     parseur.add_argument("--json", action="store_true", help="sortie machine")
     args = parseur.parse_args(argv)
 
@@ -208,6 +275,10 @@ def main(argv: list[str] | None = None) -> int:
             ensure_ascii=False,
             indent=2,
         ))
+        return 0
+
+    if args.profondeur:
+        afficher_profondeur(profondeur(par_theme, cibles_themes))
         return 0
 
     if args.propositions:

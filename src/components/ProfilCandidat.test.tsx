@@ -51,7 +51,7 @@ describe('la fiche', () => {
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Léa, voilà où tu en es.');
     expect(screen.getAllByText('Emmener mon père pêcher.').length).toBeGreaterThan(0);
-    expect(screen.getByRole('link', { name: 'Revoir mes 1 question du jour' }).getAttribute('href')).toBe('/revoir');
+    expect(screen.getByRole('link', { name: 'Revoir ma question du jour' }).getAttribute('href')).toBe('/revoir');
     // Le thème raté passe devant, avec le lien vers son entraînement.
     const themes = screen.getAllByRole('link', { name: /retenues sur|jamais ouvert/ });
     expect(themes[0]!.getAttribute('href')).toBe('/entrainement/vhf');

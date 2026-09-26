@@ -89,6 +89,13 @@ export const objetQuestion = z
     /** Notion du programme couverte. Facultative tant que la banque n'est pas
      *  entièrement reclassée ; le rapport de couverture compte les manquantes. */
     notion: z.string().optional(),
+    /** Questions qui se lisent comme une redite quand elles tombent ensemble :
+     *  les quatre cardinales partagent leur énoncé mot pour mot, deux signaux
+     *  de brume partagent leur tournure. Le tirage de l'examen n'en prend
+     *  qu'une — `tirerExamen` dans `quiz.ts`. Deux membres au moins, sinon
+     *  c'est une faute de frappe : `valider.py` le vérifie sur la banque
+     *  entière, ce qu'un schéma fichier par fichier ne peut pas voir. */
+    famille: z.string().regex(/^[a-z][a-z0-9-]*$/, 'famille en minuscules, chiffres et tirets').optional(),
     statut: z.enum(STATUTS),
     difficulte: z.number().int().min(1).max(3),
     enonce: texteNonVide(10),

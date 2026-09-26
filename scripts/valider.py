@@ -78,12 +78,13 @@ RE_COMPTE_REPONSES = re.compile(
     r"\b(deux|trois)\s+(?:\w+\s+)?(r[ée]ponses?|affirmations?|propositions?|cases?)\b",
     re.I,
 )
+RE_FAMILLE = re.compile(r"^[a-z][a-z0-9-]*$")
 RE_CREDIT = re.compile(r"^(genere|code|auteur|commons:.+)$")
 RE_FICHIER_VISUEL = re.compile(r"^[a-z0-9][a-z0-9/_-]*\.(svg|png|webp|jpg)$")
 
 CHAMPS = {
     "id", "option", "theme", "statut", "difficulte", "enonce", "visuel", "notion",
-    "propositions", "reponses", "explication", "sources", "meta",
+    "famille", "propositions", "reponses", "explication", "sources", "meta",
 }
 CHAMPS_META = {"cree_le", "genere_par", "relu_par", "relu_le", "relu_par_2"}
 CHAMPS_SOURCE = {"texte", "ref", "url", "version"}
@@ -139,6 +140,10 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
                 "notion",
                 f"la notion {notion!r} relève du thème {NOTIONS[notion]!r}, pas de {theme!r}",
             )
+
+    famille = q.get("famille")
+    if famille is not None and (not isinstance(famille, str) or not RE_FAMILLE.match(famille)):
+        ko("famille", f"famille en minuscules, chiffres et tirets, reçu {famille!r}")
 
     if q.get("option") != "cotier":
         ko("option", "seule l'option « cotier » existe en V1")
@@ -263,6 +268,7 @@ def fichiers_questions(racine: Path, avec_inbox: bool = False) -> list[Path]:
 def valider_banque(racine: Path, avec_inbox: bool = False) -> list[Probleme]:
     problemes: list[Probleme] = []
     vus: dict[str, Path] = {}
+    familles: dict[str, list[Path]] = {}
 
     for fichier in fichiers_questions(racine, avec_inbox):
         relatif = fichier.relative_to(racine)
@@ -286,6 +292,17 @@ def valider_banque(racine: Path, avec_inbox: bool = False) -> list[Probleme]:
                 problemes.append(Probleme(relatif, "nom-de-fichier", f"le fichier doit s'appeler {ident}.yaml"))
         if isinstance(theme, str) and "_inbox" not in fichier.parts and fichier.parent.name != theme:
             problemes.append(Probleme(relatif, "dossier", f"attendu dans data/questions/{theme}/"))
+        famille = q.get("famille")
+        if isinstance(famille, str):
+            familles.setdefault(famille, []).append(relatif)
+
+    # Une famille dit « ne tirez pas ces questions ensemble ». Seule, elle ne
+    # dit rien et ne change aucun tirage : c'est une faute de frappe sur le nom.
+    for nom, fichiers in sorted(familles.items()):
+        if len(fichiers) < 2:
+            problemes.append(
+                Probleme(fichiers[0], "famille-solitaire", f"la famille {nom!r} n'a que ce membre")
+            )
 
     return problemes
 
