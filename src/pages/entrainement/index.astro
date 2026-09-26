@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { themesAvecComptes } from '../../lib/banque';
+import { POUR_APP } from '../../lib/cible';
 
 const themes = await themesAvecComptes();
 const disponibles = themes.filter((t) => t.publiees > 0);
@@ -12,8 +13,8 @@ const aVenir = themes.filter((t) => t.publiees === 0);
   description="Révise un thème à la fois, sans chrono, avec la correction et la source après chaque réponse."
 >
   <div class="page page--etroite" style="padding-block:3rem 0">
-    <h1>Un thème à la fois, sans chrono</h1>
-    <p>
+    <h1>{POUR_APP ? 'Entraînement' : 'Un thème à la fois, sans chrono'}</h1>
+    <p class="web-seulement">
       La correction tombe après chaque réponse, avec l’explication et le texte dont elle vient.
       Les questions ratées repassent en premier la fois suivante, et ta
       <a href="/revoir">série du jour</a> pose ce qui est dû aujourd’hui, tous thèmes mêlés.
@@ -55,4 +56,12 @@ const aVenir = themes.filter((t) => t.publiees === 0);
   }
   .choix a:hover .choix__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
   .choix__nom { font-size: 1.2rem; font-weight: 700; }
+
+  /* Dans l'app : une liste de réglages iOS, cellules pleine largeur de 56 pt,
+     un filet entre deux, un chevron qui dit que la cellule mène ailleurs. */
+  :global(html[data-app]) .choix { margin: 1.25rem calc(50% - 50vw) 0; }
+  :global(html[data-app]) .choix a { min-height: 3.5rem; padding: 0.75rem 1rem; }
+  :global(html[data-app]) .choix a::after { content: '›'; font-size: 1.5rem; line-height: 1; color: var(--texte-doux); }
+  :global(html[data-app]) .choix__nom { flex: 1; font-size: 1.05rem; }
+  :global(html[data-app]) .choix .pastille { padding: 0; background: none; border: 0; color: var(--texte-doux); font-weight: 600; }
 </style>

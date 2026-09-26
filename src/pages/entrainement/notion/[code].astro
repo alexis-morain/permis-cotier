@@ -41,7 +41,7 @@ const banque = cheminBanque();
   prechargeBanque
 >
   <div class="page page--etroite">
-    <p class="chapitre" style="padding-top:1.5rem">
+    <p class="chapitre web-seulement" style="padding-top:1.5rem">
       <a href="/entrainement">Entraînement</a> · <a href={`/entrainement/${notion.theme}`}>{nomTheme}</a> · {notion.nom}
     </p>
     <SansScript ecran="L’entraînement" />
@@ -52,7 +52,7 @@ const banque = cheminBanque();
       theme={notion.theme}
       notion={{ code: notion.code, nom: notion.nom }}
     />
-    <p class="discret notion__liens">
+    <p class="discret notion__liens web-seulement">
       {publiees === 0
         ? 'Cette notion n’a pas encore de question.'
         : `${publiees} question${publiees > 1 ? 's' : ''} sur cette notion.`}

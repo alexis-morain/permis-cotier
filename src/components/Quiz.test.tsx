@@ -4,6 +4,25 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import Quiz from './Quiz';
 import type { QuestionAffichable } from '../lib/banque';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
+import { modeConcentration, partager, vibrer } from '../lib/natif';
+
+// Les greffons de la coquille, attrapés pour qu'on voie ce que l'écran leur
+// demande. Sur le site ils ne font rien : les attraper ne change aucun test.
+vi.mock('../lib/natif', () => ({
+  vibrer: vi.fn(async () => {}),
+  partager: vi.fn(async () => false),
+  modeConcentration: vi.fn(async () => {}),
+  surRetourAuPremierPlan: vi.fn(() => () => {}),
+}));
+
+// La cible du build, basculable test par test. Elle vaut « site » partout,
+// sauf dans le bloc qui décrit l'app et qui la remet en place en sortant.
+const cible = vi.hoisted(() => ({ app: false }));
+vi.mock('../lib/cible', () => ({
+  get POUR_APP() {
+    return cible.app;
+  },
+}));
 
 /**
  * L'écran de jeu, vu du clavier et de l'œil. Le modèle de session est testé à
@@ -828,5 +847,190 @@ describe('le temps, au résultat de l’examen', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
     fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
     expect(screen.queryByText(/au buzzer/)).toBeNull();
+  });
+});
+
+/** Un examen de trois questions, lancé depuis l'écran de départ. */
+function lancerExamen() {
+  render(<Quiz mode="examen" questions={trois} />);
+  fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+}
+
+describe('le plein écran de la série, dans l’app', () => {
+  beforeEach(() => vi.mocked(modeConcentration).mockClear());
+
+  it('ne cache rien avant le départ de l’examen', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(modeConcentration).not.toHaveBeenCalled();
+  });
+
+  it('cache la barre au départ et la rend au résultat', () => {
+    lancerExamen();
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    expect(screen.getByText(/Examen blanc terminé/)).toBeTruthy();
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('rend la barre à l’arrêt', () => {
+    lancerExamen();
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
+    // La confirmation ne sort pas du plein écran : on est encore dans l'épreuve.
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('rend la barre quand l’écran s’en va en pleine série', () => {
+    const { unmount } = render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    // L'entraînement n'a pas d'écran de départ : la série court dès l'ouverture.
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    unmount();
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('rend la barre quand on suit un lien en pleine série', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    act(() => {
+      window.dispatchEvent(new Event('pagehide'));
+    });
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('cache la barre à la reprise d’un examen laissé en plan', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [],
+        dateExamen: null,
+        enCours: {
+          mode: 'examen',
+          theme: null,
+          ids: trois.map((q) => q.id),
+          index: 1,
+          selections: [['a'], [], []],
+          echeance: Date.now() + 12_000,
+          journal: [{ id: 'ecluses-0001', juste: true, ms: 3_000 }],
+          majLe: Date.now(),
+        },
+      }),
+    );
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(modeConcentration).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+  });
+});
+
+describe('l’écran de jeu dans l’app', () => {
+  beforeEach(() => {
+    cible.app = true;
+    vi.mocked(vibrer).mockClear();
+    vi.mocked(partager).mockClear();
+  });
+  afterEach(() => {
+    cible.app = false;
+  });
+
+  it('ouvre l’examen sur un titre court, sans aide clavier', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Examen blanc');
+    expect(screen.queryByText(/Au clavier/)).toBeNull();
+    expect(screen.queryByText(/Retour à l’accueil/)).toBeNull();
+    // Les règles de l'épreuve restent : elles servent.
+    expect(screen.getByText(/erreurs admises\./)).toBeTruthy();
+  });
+
+  it('montre « 1 / 3 » sans le dire deux fois au lecteur d’écran', () => {
+    lancerExamen();
+    const compteur = document.querySelector('.jeu__compteur');
+    expect(compteur?.textContent).toBe('1 / 3');
+    expect(compteur?.getAttribute('aria-hidden')).toBe('true');
+    // Le numéro reste dit une fois, en tête de l'énoncé.
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toContain('Question 1 sur 3.');
+  });
+
+  it('monte un verdict juste en panneau, « Continuer » dans le même bloc', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+
+    const pied = document.querySelector('.jeu__pied');
+    const verdict = screen.getByRole('status');
+    expect(pied?.contains(verdict)).toBe(true);
+    // Le mot est écrit : la couleur seule ne dit jamais le verdict.
+    expect(verdict.querySelector('.verdict__titre')?.textContent).toBe('Juste');
+    expect(pied?.contains(screen.getByRole('button', { name: 'Continuer' }))).toBe(true);
+    // Le panneau est déjà dans le champ : rien ne défile sous le pouce.
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+  });
+
+  it('écrit « Faux » sur un verdict raté', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: /Deuxième proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(screen.getByRole('status').querySelector('.verdict__titre')?.textContent).toBe('Faux');
+  });
+
+  it('donne au résultat le geste suivant : les erreurs, puis refaire, puis partager', () => {
+    lancerExamen();
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    const revoir = screen.getByRole('button', { name: 'Revoir mes erreurs' });
+    expect(revoir.className).toContain('bouton--principal');
+    expect(screen.getByRole('link', { name: 'Refaire un examen' }).getAttribute('href')).toBe('/examen');
+    expect(screen.queryByRole('link', { name: 'Accueil' })).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Partager' }));
+    expect(partager).toHaveBeenCalledTimes(1);
+
+    // Trois questions sans réponse : trois erreurs, et la revue ne montre qu'elles.
+    fireEvent.click(revoir);
+    expect(document.querySelectorAll('.revue__item')).toHaveLength(3);
+  });
+
+  it('fait sentir un examen reçu', () => {
+    lancerExamen();
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    // Trois erreurs, sous les cinq admises : reçu.
+    expect(vibrer).toHaveBeenCalledWith('juste');
+  });
+
+  it('fait sentir un examen recalé', () => {
+    const six = Array.from({ length: 6 }, (_, i) => question(`ecluses-000${i + 1}`));
+    render(<Quiz mode="examen" questions={six} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    for (let i = 0; i < 6; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    // Six sans réponse : une de trop.
+    expect(screen.getByText(/Recalé/)).toBeTruthy();
+    expect(vibrer).toHaveBeenCalledWith('faux');
+  });
+
+  it('ne fait rien sentir d’un examen interrompu', () => {
+    lancerExamen();
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
+    expect(vibrer).not.toHaveBeenCalledWith('faux');
+    expect(vibrer).not.toHaveBeenCalledWith('juste');
+  });
+
+  it('ne propose pas de revoir des erreurs qui n’existent pas', () => {
+    render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    expect(screen.queryByRole('button', { name: 'Revoir mes erreurs' })).toBeNull();
+    const refaire = screen.getByRole('link', { name: 'Refaire la série' });
+    expect(refaire.className).toContain('bouton--principal');
+    expect(screen.queryByRole('button', { name: 'Partager' })).toBeNull();
   });
 });
