@@ -41,11 +41,18 @@
 # jamais sous ce nom-là, il se garde donc pour de bon.
 /banque/v/*
   Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
 
 # Le pointeur de fraîcheur, hors de `/banque/v/` pour qu'aucun immuable ne
 # l'attrape : il est le seul point qui doive dire la vérité du jour.
+#
+# `Access-Control-Allow-Origin` sur la banque et son pointeur : l'app iPhone
+# les lit depuis `capacitor://localhost`, donc en origine croisée. Sans lui,
+# `chercherMiseAJour()` échouait en silence et l'app restait sur sa banque
+# embarquée. C'est du contenu public, sans cookie : l'étoile suffit.
 /banque/derniere.json
   Cache-Control: public, max-age=300, must-revalidate
+  Access-Control-Allow-Origin: *
 
 # Les fichiers que les robots relisent souvent, sans les figer.
 /robots.txt
