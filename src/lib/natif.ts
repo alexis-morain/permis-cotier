@@ -167,3 +167,24 @@ export async function modeConcentration(actif: boolean): Promise<void> {
     // Greffon absent, ou coquille d'une autre version : la barre reste.
   }
 }
+
+/**
+ * Un lien vers un autre site : Légifrance, GitHub, Wikimedia, une licence.
+ *
+ * Dans l'app, il s'ouvre dans Safari intégré, par-dessus l'écran, et un geste
+ * le referme. Ouvert dans la webview de l'onglet, il remplacerait l'app par
+ * le site d'un autre, sans barre d'adresse ni moyen propre d'en revenir.
+ *
+ * Rend `false` quand rien ne s'est ouvert, pour que l'appelant se rabatte sur
+ * le navigateur.
+ */
+export async function ouvrirDehors(url: string): Promise<boolean> {
+  if (!POUR_APP) return false;
+  try {
+    const { Browser } = await import('@capacitor/browser');
+    await Browser.open({ url, presentationStyle: 'popover' });
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -1,0 +1,31 @@
+---
+/**
+ * Le point d'entrée de la recherche, à poser en haut d'un écran.
+ *
+ * Il a l'air d'un champ, et c'est un lien vers `/recherche` : sans script, il
+ * y mène. Avec, le script de `RecherchePanneau.astro` l'attrape comme la loupe
+ * de l'en-tête (`data-recherche-ouvrir`) et ouvre la fenêtre de recherche,
+ * plein écran sur un téléphone, curseur dans le vrai champ.
+ *
+ * Fait pour la coquille, où l'en-tête n'existe plus : les écrans Cours et
+ * Entraînement le posent sous leur titre.
+ */
+import './recherche.css';
+---
+
+<a class="champ-recherche" href="/recherche" data-recherche-ouvrir>
+  <svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="10.5" cy="10.5" r="6.5"></circle>
+    <path d="M15.5 15.5 L21 21"></path>
+  </svg>
+  <span>Rechercher</span>
+</a>

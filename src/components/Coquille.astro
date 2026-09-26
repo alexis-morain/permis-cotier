@@ -1,0 +1,53 @@
+---
+/**
+ * Ce que la tête de page ne porte que dans la coquille iOS.
+ *
+ * `Base.astro` ne rend ce composant que sous `POUR_APP`. C'est ce qui garde
+ * le site intact : un script d'Astro ne part que sur les pages où son
+ * composant est rendu, donc ni le routeur ni l'écouteur ci-dessous
+ * n'atteignent le bundle web.
+ *
+ * - `<ClientRouter />` : une navigation remplace le corps de la page sans la
+ *   recharger. Plus de flash blanc entre deux écrans, et `<main>` glisse.
+ *   Astro coupe lui-même l'animation sous `prefers-reduced-motion`.
+ * - Les liens vers un autre site s'ouvrent dans Safari intégré.
+ * - La barre d'état suit le fond de la page.
+ */
+import { ClientRouter } from 'astro:transitions';
+---
+
+<ClientRouter />
+
+<script>
+  import { ouvrirDehors } from '../lib/natif';
+  import { accorderBarreEtatALaPage } from '../lib/apparence';
+
+  // Un script de module ne s'exécute qu'une fois par document, et le routeur
+  // garde le document d'un écran à l'autre : les deux écouteurs ci-dessous
+  // sont posés une seule fois, pour toute la vie de l'onglet.
+
+  document.addEventListener('click', (clic) => {
+    if (clic.defaultPrevented || clic.button !== 0) return;
+    if (clic.metaKey || clic.ctrlKey || clic.shiftKey || clic.altKey) return;
+    const cible = clic.target;
+    if (!(cible instanceof Element)) return;
+    const lien = cible.closest('a[href]');
+    if (!(lien instanceof HTMLAnchorElement)) return;
+
+    // `mailto:` et `tel:` ont une origine « null » : ils restent au système,
+    // qui sait les ouvrir. Seul le web d'un autre part dans Safari intégré.
+    const url = new URL(lien.href, location.href);
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') return;
+    if (url.origin === location.origin) return;
+
+    clic.preventDefault();
+    void ouvrirDehors(url.href).then((ouvert) => {
+      if (!ouvert) window.open(url.href, '_blank', 'noopener');
+    });
+  });
+
+  void accorderBarreEtatALaPage();
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', () => void accorderBarreEtatALaPage());
+</script>

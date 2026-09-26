@@ -116,7 +116,12 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
     <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
   )}
 
+  {/* Un script en ligne : le routeur de la coquille le rejoue à chaque arrivée
+      sur la page, sans `quandLaPageEstPrete()`. D'où la fonction qui
+      l'enveloppe : rejoué à nu, ses `const` seraient déclarées deux fois dans
+      la même portée globale, et le second passage jetterait. */}
   <script is:inline>
+  (() => {
     const champ = document.getElementById('question');
     const id = new URLSearchParams(location.search).get('question');
     if (champ) {
@@ -223,6 +228,7 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
         replierSurCourrier(question, motif, details);
       }
     });
+  })();
   </script>
 </Base>
 

@@ -1,37 +1,70 @@
-/* Ce que la coquille iOS change à l'affichage, et rien d'autre.
+/* La base de la coquille iOS : ce qui vaut pour tous les écrans de l'app.
 
    Toutes les règles sont sous `html[data-app]`, que seul le build « app »
-   pose. Sur le site elles ne s'appliquent jamais ; elles pèsent moins d'un
-   kilo-octet dans la même feuille, ce qui vaut mieux qu'une seconde requête
-   ou qu'un fichier qu'on oublierait de tenir à jour.
+   pose. Sur le site elles ne s'appliquent jamais. Les écrans ont leurs
+   feuilles à côté (`app-jeu.css`, `app-ecrans.css`) ; celle-ci ne tient que
+   le cadre : fond, zones sûres, marges, bouton Retour, cibles tactiles, et les
+   réflexes de navigateur qui n'ont rien à faire dans une app.
 
-   Deux sujets : les zones sûres, et les réflexes de navigateur qui n'ont rien
-   à faire dans une app. */
+   Dans l'app, `Base.astro` ne rend ni en-tête ni pied : le premier et le
+   dernier bloc de chaque écran sont ceux de `<main>`. */
 
-/* --------------------------------------------------------- Zones sûres
+/* --------------------------------------------------------------- Le fond
+
+   Le fond du thème sur `<html>` comme sur `<body>`. Entre deux écrans, le
+   temps que le routeur échange le corps, c'est `<html>` qu'on voit : sans
+   cette ligne, il reste blanc, et le sombre clignote. */
+html[data-app],
+html[data-app] body {
+  background: var(--fond);
+}
+
+/* Ce qui ne sert que le site : les chapôs écrits pour les moteurs, l'aide
+   clavier. Les pages posent la classe, l'app les tait. */
+html[data-app] .web-seulement {
+  display: none;
+}
+
+/* ------------------------------------------------------------ Zones sûres
 
    `viewport-fit=cover` étend la page sous l'encoche et sous la barre
-   d'accueil ; sans les marges qui suivent, l'en-tête passerait sous l'heure
-   et le pied sous la barre d'onglets. La barre d'onglets étant native, sa
-   hauteur arrive dans `safe-area-inset-bottom` : UIKit la déclare à la
-   webview, on n'a pas à la coder en dur. */
+   d'onglets. La hauteur de celle-ci arrive dans `safe-area-inset-bottom` :
+   UIKit la déclare à la webview, on n'a pas à la coder en dur.
 
-html[data-app] .entete {
+   Le haut : `<main>` dégage l'heure et l'îlot, plus une respiration. Quand
+   l'écran ouvre sur le bouton Retour, c'est lui qui fait la respiration : ses
+   44 pt centrent déjà le mot sous la zone sûre.
+
+   Le bas : plus de pied de page pour dégager la barre d'onglets, `<main>` le
+   fait. */
+html[data-app] main {
+  padding-top: calc(env(safe-area-inset-top) + 1rem);
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+}
+
+html[data-app] main[data-retour] {
   padding-top: env(safe-area-inset-top);
 }
 
-/* Les côtés se traitent sur le corps, pas sur `.page` : celle-ci calcule sa
-   largeur en `min(100% - 2.5rem, …)`, une marge ajoutée dedans la doublerait.
-   En portrait ces valeurs sont nulles et rien ne bouge ; en paysage, elles
-   écartent le contenu du logement des capteurs. */
+/* Les côtés se traitent sur le corps : en portrait ces valeurs sont nulles,
+   en paysage elles écartent le contenu du logement des capteurs. */
 html[data-app] body {
   padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 
-/* La recherche s'ouvre en plein écran sur téléphone, `<dialog>` par-dessus
-   tout : ni l'en-tête ni le pied ne la rembourrent. Sans ces deux lignes, le
-   mot cherché s'écrit sous l'heure, et la liste des résultats finit sous la
-   barre d'onglets. */
+/* Seize points de marge de chaque côté, la marge d'une app iOS, au lieu des
+   vingt du site. */
+html[data-app] .page {
+  width: min(100% - 2rem, 72rem);
+}
+
+html[data-app] .page--etroite {
+  width: min(100% - 2rem, 44rem);
+}
+
+/* La recherche s'ouvre en plein écran, `<dialog>` par-dessus tout : `<main>`
+   ne la rembourre pas. Sans ces deux règles, le mot cherché s'écrit sous
+   l'heure, et la fin des résultats sous la barre d'onglets. */
 html[data-app] .recherche__barre {
   padding-top: env(safe-area-inset-top);
 }
@@ -40,32 +73,75 @@ html[data-app] .recherche__corps {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Le pied de page est le dernier bloc : c'est lui qui dégage la barre
-   d'onglets. `2rem` de respiration au-dessus de la zone sûre, pour que la
-   dernière ligne ne colle pas au verre. */
-html[data-app] .pied__interieur {
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+/* --------------------------------------------------------- Bouton Retour
+
+   Le fil d'Ariane du site, réduit à l'échelon du dessus. Un chevron et un
+   mot, comme le bouton de retour d'iOS, sans cadre : c'est de la navigation,
+   pas une action. Le chevron déborde à gauche pour que le mot s'aligne sur le
+   titre. */
+html[data-app] .retour {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
 }
 
-/* La barre d'action de l'examen n'a rien à recevoir ici : `quiz.css` la
-   rembourre déjà en `max(0.75rem, env(safe-area-inset-bottom))`, et cette
-   valeur porte la hauteur de la barre d'onglets native puisque UIKit la
-   déclare à la webview. Une seconde marge ferait flotter les boutons. */
+html[data-app] .retour__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  margin-inline-start: -0.4rem;
+  padding-inline: 0.4rem 0.6rem;
+  border-radius: var(--rayon-petit);
+  font-weight: 700;
+  text-decoration: none;
+}
 
-/* ------------------------------------------- Réflexes de navigateur
+html[data-app] .retour__lien:active {
+  background: var(--fond-2);
+}
+
+/* Le glyphe `‹` est petit dans Archivo : à deux fois la taille du mot, il
+   a le poids du chevron d'iOS, et `line-height: 1` le centre sur le mot. */
+html[data-app] .retour__chevron {
+  font-size: 2.1rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* ------------------------------------------------------ Cibles tactiles
+
+   Quarante-quatre points au moins pour tout ce qui se touche, la mesure des
+   règles d'Apple. Un lien seul dans son élément de liste devient une cellule
+   pleine largeur ; un lien pris dans une phrase garde sa ligne. */
+html[data-app] a.bouton,
+html[data-app] button {
+  min-height: 2.75rem;
+}
+
+html[data-app] button {
+  min-width: 2.75rem;
+}
+
+html[data-app] main li > a:only-child {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+/* ------------------------------------------------- Réflexes de navigateur
 
    Un appui long sur une proposition ouvre le menu « Copier / Rechercher » de
    Safari. Au milieu d'un examen à vingt secondes par question, c'est une
-   question perdue. Les propositions, les boutons et la barre d'onglets web ne
-   se sélectionnent donc pas ; le texte des leçons, des explications et des
+   question perdue. Les propositions, les boutons et les barres du jeu ne se
+   sélectionnent donc pas ; le texte des leçons, des explications et des
    sources reste sélectionnable, parce qu'on peut vouloir en copier un
    extrait. */
 html[data-app] .proposition,
 html[data-app] .bouton,
+html[data-app] .retour__lien,
 html[data-app] .jeu__entete,
-html[data-app] .jeu__actions,
-html[data-app] .entete,
-html[data-app] .tabbar {
+html[data-app] .jeu__actions {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;

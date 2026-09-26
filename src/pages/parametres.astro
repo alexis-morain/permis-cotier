@@ -4,12 +4,13 @@ import Parametres from '../components/Parametres.tsx';
 import MesureReglage from '../components/MesureReglage.tsx';
 import Apparence from '../components/Apparence.tsx';
 import { versionBanque, questionsPubliees } from '../lib/banque';
+import { POUR_APP } from '../lib/cible';
 
 const version = versionBanque();
 const total = (await questionsPubliees()).length;
 ---
 
-<Base titre="Réglages du site" description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false}>
+<Base titre="Réglages du site" description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
   <div class="page page--etroite" style="padding-block:3rem 0">
     <h1>Réglages du site</h1>
 
@@ -18,14 +19,29 @@ const total = (await questionsPubliees()).length;
 
     <h2 id="apparence">Apparence</h2>
     <Apparence client:only="react" idTitre="apparence" />
-    <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
+    <p class="discret" style="margin-top:0.5rem">
+      {POUR_APP ? 'Par défaut, l’app suit le réglage du système.' : 'Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.'}
+    </p>
 
     <h2>Cette version</h2>
     <p>
       Banque <b>{version}</b>, {total} question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}.
-      Le site fonctionne hors ligne une fois visité, et se met à jour tout seul à la publication suivante.
+      {!POUR_APP && 'Le site fonctionne hors ligne une fois visité, et se met à jour tout seul à la publication suivante.'}
     </p>
 
+    {/* L'app ne mesure rien : `Mesure.astro` n'y est pas rendu. Dire le
+        contraire serait faux, et c'est ce que la revue Apple lit en premier. */}
+    {POUR_APP ? (
+    <Fragment>
+    <h2>Ce que l’app sait de toi</h2>
+    <p>
+      Rien. Aucun compte, aucun traceur, aucune mesure d’audience. Ta progression et ta date
+      d’examen restent sur ton téléphone. Un signalement d’erreur part par courrier, et
+      seulement si tu l’envoies.
+    </p>
+    </Fragment>
+    ) : (
+    <Fragment>
     <h2>Ce que le site sait de toi</h2>
     <p>
       Aucun compte, aucun mot de passe, aucune adresse. La progression et la date d’examen restent
@@ -46,6 +62,8 @@ const total = (await questionsPubliees()).length;
       Deux autres choses partent vers un serveur, et seulement si tu les déclenches : un
       signalement d’erreur, et plus tard le code de synchronisation. Le reste est statique.
     </p>
+    </Fragment>
+    )}
 
     <h2>Licences</h2>
     <p>

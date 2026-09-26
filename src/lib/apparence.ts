@@ -1,3 +1,4 @@
+import { POUR_APP } from './cible';
 import type { Stockage } from './progression';
 
 /**
@@ -57,6 +58,43 @@ export function appliquerApparence(
   if (!racine) return;
   if (apparence === 'auto') racine.removeAttribute(ATTRIBUT);
   else racine.setAttribute(ATTRIBUT, apparence);
+}
+
+/** L'apparence qui s'affiche vraiment : le choix, ou le système en `auto`. */
+export function estSombre(apparence: Apparence, systemeSombre: boolean): boolean {
+  return apparence === 'auto' ? systemeSombre : apparence === 'sombre';
+}
+
+function systemeSombre(): boolean {
+  try {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * La barre d'état de la coquille, accordée au fond de la page : l'heure et la
+ * batterie en sombre sur fond clair, en clair sur fond sombre. Sans cela, une
+ * apparence forcée à l'inverse du système laisse des icônes illisibles.
+ *
+ * Le nom des styles de Capacitor dit le fond, pas les icônes : `Style.Dark`
+ * pose des icônes claires. Sur le site, rien ; un greffon absent, rien non
+ * plus.
+ */
+export async function accorderBarreEtat(sombre: boolean): Promise<void> {
+  if (!POUR_APP) return;
+  try {
+    const { StatusBar, Style } = await import('@capacitor/status-bar');
+    await StatusBar.setStyle({ style: sombre ? Style.Dark : Style.Light });
+  } catch {
+    // Greffon absent, ou coquille d'une autre version : la barre reste.
+  }
+}
+
+/** La même chose, d'après ce que la page affiche en ce moment. */
+export function accorderBarreEtatALaPage(): Promise<void> {
+  return accorderBarreEtat(estSombre(lireApparence(), systemeSombre()));
 }
 
 /**
