@@ -22,11 +22,19 @@ const lignes = corps
 >
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>D’où viennent les images</h1>
+    {POUR_APP ? (
+    <p>
+      Aucun visuel dont dépend une réponse n’est produit par un générateur d’images. Les balises,
+      marques et pictogrammes viennent de Wikimedia Commons, avec leur licence d’origine. Les feux
+      de navires sont dessinés par un composant de l’app, à partir des règles du RIPAM.
+    </p>
+    ) : (
     <p>
       Aucun visuel dont dépend une réponse n’est produit par un générateur d’images. Les balises,
       marques et pictogrammes viennent de Wikimedia Commons, avec leur licence d’origine. Les feux
       de navires sont dessinés par un composant du site, à partir des règles du RIPAM.
     </p>
+    )}
 
     {lignes.length > 0 ? (
       <ul>{lignes.map((l) => <li set:html={l} />)}</ul>

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import LienQuestion from '../../components/LienQuestion.astro';
+import { POUR_APP } from '../../lib/cible';
 import { questionsPubliees, nomDuTheme } from '../../lib/banque';
 import { leconsEcrites } from '../../lib/lecons';
 import { leconsDuParcours } from '../../lib/parcours';
@@ -68,10 +69,17 @@ const lecons = leconsDuParcours().filter((l) =>
     <h1>{titre}</h1>
 
     <div class="nature">
+      {POUR_APP ? (
+      <p class="nature__phrase">
+        Ce n’est pas un texte officiel. C’est une fiche écrite à la main pour cette app,
+        parce qu’aucun texte réglementaire ne dit cela sous une forme qu’on puisse citer.
+      </p>
+      ) : (
       <p class="nature__phrase">
         Ce n’est pas un texte officiel. C’est une fiche écrite à la main pour ce site,
         parce qu’aucun texte réglementaire ne dit cela sous une forme qu’on puisse citer.
       </p>
+      )}
       <dl>
         {autorite && (
           <div>
@@ -134,7 +142,7 @@ const lecons = leconsDuParcours().filter((l) =>
         <ul>
           {questions.map((q) => (
             <li>
-              <LienQuestion id={q.id} enonce={q.enonce} />
+              {POUR_APP ? <LienQuestion id={q.id} enonce={q.enonce} /> : <a href={`/question/${q.id}`}>{q.enonce}</a>}
               <span class="discret"> — {nomDuTheme(q.theme)}</span>
             </li>
           ))}
@@ -142,10 +150,17 @@ const lecons = leconsDuParcours().filter((l) =>
       </section>
     )}
 
+    {POUR_APP ? (
+    <p class="discret rappel">
+      Une erreur, une règle qui a changé ? <a href="/signaler">Signale-le</a>, la correction
+      arrive dans la semaine. <a href="/a-propos">Comment cette app est écrite</a>.
+    </p>
+    ) : (
     <p class="discret rappel">
       Une erreur, une règle qui a changé ? <a href="/signaler">Signale-le</a>, la correction
       arrive dans la semaine. <a href="/a-propos">Comment ce site est écrit</a>.
     </p>
+    )}
   </article>
 </Base>
 

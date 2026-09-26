@@ -1,4 +1,5 @@
 ---
+import { POUR_APP } from '../../lib/cible';
 import Guide from '../../layouts/Guide.astro';
 ---
 
@@ -36,6 +37,16 @@ import Guide from '../../layouts/Guide.astro';
     dossier. Ce prix-là est libre, et c’est lui qui fait tout l’écart entre deux devis.
   </p>
 
+  {POUR_APP ? (
+  <h2>Pourquoi cette app ne vous donne pas de montant</h2>
+  <p>
+    Parce qu’elle ne l’a pas vérifié à la source. Le montant du timbre ne figure ni dans
+    le décret ni dans l’arrêté : ceux-ci renvoient au code des impositions sur les biens
+    et services, dont l’article n’a pas pu être extrait au moment de la rédaction de
+    cette page. Recopier un chiffre trouvé ailleurs reviendrait à faire ce que cette app
+    reproche aux autres.
+  </p>
+  ) : (
   <h2>Pourquoi ce site ne vous donne pas de montant</h2>
   <p>
     Parce qu’il ne l’a pas vérifié à la source. Le montant du timbre ne figure ni dans
@@ -44,6 +55,7 @@ import Guide from '../../layouts/Guide.astro';
     cette page. Recopier un chiffre trouvé sur un autre site reviendrait à faire ce que
     ce site reproche aux autres.
   </p>
+  )}
   <p>
     Un seul montant est écrit noir sur blanc dans les textes cités, et il ne concerne
     pas le cas courant : l’article 18.3 de l’arrêté fixe à 30 € la redevance des
@@ -66,12 +78,21 @@ import Guide from '../../layouts/Guide.astro';
   </p>
 
   <h2>Réviser ne coûte rien</h2>
+  {POUR_APP ? (
+  <p>
+    La formation est payante, la révision n’a pas à l’être. Cette app est gratuite, sans
+    compte et sans publicité, et sa banque de questions est sous licence libre. Elle ne
+    remplace ni les cinq heures en salle ni la sortie en mer, qui sont obligatoires :
+    elle remplace le fascicule d’entraînement.
+  </p>
+  ) : (
   <p>
     La formation est payante, la révision n’a pas à l’être. Ce site est gratuit, sans
     compte et sans publicité, et sa banque de questions est sous licence libre. Il ne
     remplace ni les cinq heures en salle ni la sortie en mer, qui sont obligatoires :
     il remplace le fascicule d’entraînement.
   </p>
+  )}
 
   <div class="encadre" style="margin-top:2.5rem">
     <p style="margin:0"><strong>Un devis se compare mieux quand on connaît le programme.</strong></p>

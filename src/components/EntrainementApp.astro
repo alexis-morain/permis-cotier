@@ -1,0 +1,80 @@
+---
+/**
+ * La liste de l'écran Entraînement, dans l'app seulement.
+ *
+ * Des cellules de réglages iOS, pleine largeur, un chevron à droite, et en
+ * tête « Tes erreurs » quand il y en a : le script la montre, la page la rend
+ * cachée, puisque la progression ne se lit que dans le téléphone.
+ *
+ * Un composant à part, et non une variante dans la page : Astro empaquette le
+ * script et le style de toute page, que la branche soit rendue ou non. Hors
+ * de la cible « app », `astro.config.mjs` remplace ce fichier par un
+ * composant vide, et le site garde sa liste au caractère près.
+ */
+import { questionsPubliees } from '../lib/banque';
+
+interface Props {
+  themes: readonly { code: string; nom: string; publiees: number }[];
+}
+
+const { themes } = Astro.props;
+// « Tes erreurs » compte sur les seules questions publiées, comme la page
+// qu'elle ouvre.
+const ids = (await questionsPubliees()).map((q) => q.id).join(' ');
+---
+
+<ul class="choix">
+  <li class="choix__erreurs" hidden data-ids={ids}>
+    <a href="/profil/erreurs">
+      <span class="choix__nom">Tes erreurs</span>
+      <span class="pastille"></span>
+    </a>
+  </li>
+  {themes.map((t) => (
+    <li>
+      <a href={`/entrainement/${t.code}`}>
+        <span class="choix__nom">{t.nom}</span>
+        <span class="pastille">{t.publiees} question{t.publiees > 1 ? 's' : ''}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<script>
+  import { quandLaPageEstPrete } from '../lib/page';
+  import { aujourdhui, charger } from '../lib/progression';
+  import { nombreDErreurs } from '../lib/accueil';
+
+  quandLaPageEstPrete(() => {
+    const ligne = document.querySelector<HTMLLIElement>('.choix__erreurs');
+    if (!ligne) return;
+    const n = nombreDErreurs(charger(), (ligne.dataset.ids ?? '').split(' '), aujourdhui());
+    if (n === 0) return;
+    ligne.querySelector('.pastille')!.textContent = `${n} question${n > 1 ? 's' : ''}`;
+    ligne.hidden = false;
+  });
+</script>
+
+<style>
+  /* Une liste de réglages iOS : cellules pleine largeur de 56 pt, un filet
+     entre deux, un chevron qui dit que la cellule mène ailleurs. */
+  .choix { list-style: none; margin: 1.25rem calc(50% - 50vw) 0; padding: 0; }
+  .choix li { border-top: 2px solid var(--filet); max-width: none; }
+  .choix li:last-child { border-bottom: 2px solid var(--filet); }
+  /* Le compte passe sous le nom quand les deux ne tiennent plus sur une
+     ligne, aux grandes tailles de texte ; le chevron reste à droite, hors du
+     flux, pour ne jamais sortir de l'écran. */
+  .choix a {
+    position: relative;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 0.25rem 1rem; min-height: 3.5rem; padding: 0.75rem 2.5rem 0.75rem 16px; text-decoration: none;
+  }
+  .choix a:active { background: var(--fond-2); }
+  .choix a::after {
+    content: '›';
+    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    font-size: 1.5rem; line-height: 1; color: var(--texte-doux);
+  }
+  .choix__nom { flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; font-size: 1.05rem; font-weight: 700; }
+  .choix .pastille { padding: 0; background: none; border: 0; color: var(--texte-doux); font-weight: 600; }
+</style>

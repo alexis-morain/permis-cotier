@@ -2,16 +2,20 @@
 /**
  * Ce que la tête de page ne porte que dans la coquille iOS.
  *
- * `Base.astro` ne rend ce composant que sous `POUR_APP`. C'est ce qui garde
- * le site intact : un script d'Astro ne part que sur les pages où son
- * composant est rendu, donc ni le routeur ni l'écouteur ci-dessous
- * n'atteignent le bundle web.
+ * `Base.astro` ne rend ce composant que sous `POUR_APP`. Ça ne suffit pas à
+ * garder le site intact : Astro empaquette les scripts de tout composant
+ * importé, rendu ou non.
  *
  * - `<ClientRouter />` : une navigation remplace le corps de la page sans la
  *   recharger. Plus de flash blanc entre deux écrans, et `<main>` glisse.
  *   Astro coupe lui-même l'animation sous `prefers-reduced-motion`.
  * - Les liens vers un autre site s'ouvrent dans Safari intégré.
  * - La barre d'état suit le fond de la page.
+ * - Une racine d'onglet se recharge quand la progression a changé ailleurs.
+ *
+ * D'où le greffon de `astro.config.mjs` : hors de la cible « app », il
+ * remplace ce fichier par un composant vide, et ni le routeur ni les
+ * écouteurs ci-dessous n'entrent dans le site.
  */
 import { ClientRouter } from 'astro:transitions';
 ---
@@ -21,6 +25,7 @@ import { ClientRouter } from 'astro:transitions';
 <script>
   import { ouvrirDehors } from '../lib/natif';
   import { accorderBarreEtatALaPage } from '../lib/apparence';
+  import { rafraichirSiLaProgressionAChange } from '../lib/page';
 
   // Un script de module ne s'exécute qu'une fois par document, et le routeur
   // garde le document d'un écran à l'autre : les deux écouteurs ci-dessous
@@ -60,6 +65,17 @@ import { ClientRouter } from 'astro:transitions';
   // `touchstart`. Sans cet écouteur vide, ni les boutons ni les cellules ne
   // s'enfoncent sous le doigt.
   document.addEventListener('touchstart', () => {}, { passive: true });
+
+  // Une leçon pose la classe `js` sur <html> avant son îlot, pour autoriser
+  // le pas à pas. Le routeur remplace les attributs de <html> à chaque
+  // navigation : la classe tombe en quittant une leçon, et doit revenir à
+  // chaque leçon, quel que soit le chemin pris pour y arriver.
+  document.addEventListener('astro:page-load', () => {
+    if (document.querySelector('.lecon')) document.documentElement.classList.add('js');
+  });
+
+  // Un onglet qui revient à l'écran relit la progression écrite ailleurs.
+  rafraichirSiLaProgressionAChange();
 
   void accorderBarreEtatALaPage();
   window

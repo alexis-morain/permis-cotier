@@ -1,0 +1,14 @@
+---
+/**
+ * La section « Sons » des réglages, dans l'app seulement.
+ *
+ * Un composant à part plutôt qu'un `{POUR_APP && …}` dans la page : Astro
+ * empaquette l'îlot de tout composant que la page nomme, rendu ou non. Hors de
+ * la cible « app », `astro.config.mjs` remplace ce fichier par un composant
+ * vide, et l'interrupteur n'entre pas dans le site.
+ */
+import ReglageSon from './ReglageSon.tsx';
+---
+
+<h2>Sons</h2>
+<ReglageSon client:only="react" />

@@ -1,4 +1,5 @@
 ---
+import { POUR_APP } from '../../lib/cible';
 import Guide from '../../layouts/Guide.astro';
 ---
 
@@ -58,7 +59,11 @@ import Guide from '../../layouts/Guide.astro';
     bateau-école dès le premier rendez-vous.
   </p>
 
+  {POUR_APP ? (
+  <h2>Cette app ne tient pas d’annuaire</h2>
+  ) : (
   <h2>Ce site ne tient pas d’annuaire</h2>
+  )}
   <p>
     Il n’y a pas de liste de centres ici, et il n’y en aura pas tant qu’elle ne pourra
     pas être tenue à jour. Une liste d’adresses périmée envoie des candidats devant des

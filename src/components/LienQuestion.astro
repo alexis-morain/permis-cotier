@@ -4,12 +4,17 @@ import { POUR_APP } from '../lib/cible';
 /**
  * L'énoncé d'une question, lié à sa page — sauf dans la coquille.
  *
- * Les 483 pages `question/` sont du pur référencement : elles ne sont pas
+ * Les 548 pages `question/` sont du pur référencement : elles ne sont pas
  * construites pour l'app, et le lien y ouvrirait l'accueil sans rien dire.
  * L'énoncé reste affiché, avec sa source à côté : c'est ce qui a de la valeur
  * dans ces listes, la page n'ajoutait qu'une mise en forme.
  *
  * `scripts/elaguer-app.mjs` refuse le bundle si un lien de ce genre subsiste.
+ *
+ * Les pages ne l'appellent que sous `POUR_APP`, et rendent elles-mêmes le
+ * `<a>` du site : un lien rendu ici perdrait l'attribut de portée de la page
+ * (`data-astro-cid-…`), et avec lui la règle `.questions a` qui ôte le
+ * soulignement. Le site garderait des énoncés soulignés que `main` n'a pas.
  */
 interface Props {
   id: string;

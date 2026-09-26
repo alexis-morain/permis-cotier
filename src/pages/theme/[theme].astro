@@ -89,7 +89,7 @@ const cours = coursParCode(theme.code);
             <ul class="questions">
               {qs.map((q) => (
                 <li>
-                  <LienQuestion id={q.id} enonce={q.enonce} />
+                  {POUR_APP ? <LienQuestion id={q.id} enonce={q.enonce} /> : <a href={`/question/${q.id}`}>{q.enonce}</a>}
                   <span class="discret">
                     {' '}— {q.sources.map((s) => s.texte).join(', ')}
                   </span>
@@ -108,7 +108,7 @@ const cours = coursParCode(theme.code);
         <h3>Questions pas encore rattachées à une notion</h3>
         <ul class="questions">
           {orphelines.map((q) => (
-            <li><LienQuestion id={q.id} enonce={q.enonce} /></li>
+            <li>{POUR_APP ? <LienQuestion id={q.id} enonce={q.enonce} /> : <a href={`/question/${q.id}`}>{q.enonce}</a>}</li>
           ))}
         </ul>
       </div>

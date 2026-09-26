@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Parametres from '../components/Parametres.tsx';
 import MesureReglage from '../components/MesureReglage.tsx';
 import Apparence from '../components/Apparence.tsx';
-import ReglageSon from '../components/ReglageSon.tsx';
+import SonsApp from '../components/SonsApp.astro';
 import { versionBanque, questionsPubliees } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 
@@ -11,31 +11,37 @@ const version = versionBanque();
 const total = (await questionsPubliees()).length;
 ---
 
-<Base titre="Réglages du site" description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
+<Base titre={POUR_APP ? 'Réglages' : 'Réglages du site'} description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
-    <h1>Réglages du site</h1>
+    {/* Des éléments entiers dans chaque branche, jamais une expression au
+        milieu d'une phrase : la compression HTML d'Astro y déplace les
+        espaces, et le site doit rester au caractère près. */}
+    <h1>{POUR_APP ? 'Réglages' : 'Réglages du site'}</h1>
 
     <h2>Ta progression</h2>
     <Parametres client:only="react" />
 
     <h2 id="apparence">Apparence</h2>
     <Apparence client:only="react" idTitre="apparence" />
-    <p class="discret" style="margin-top:0.5rem">
-      {POUR_APP ? 'Par défaut, l’app suit le réglage du système.' : 'Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.'}
-    </p>
-
-    {POUR_APP && (
-    <Fragment>
-    <h2>Sons</h2>
-    <ReglageSon client:only="react" />
-    </Fragment>
+    {POUR_APP ? (
+      <p class="discret" style="margin-top:0.5rem">Par défaut, l’app suit le réglage du système.</p>
+    ) : (
+      <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
     )}
 
+    {POUR_APP && <SonsApp />}
+
     <h2>Cette version</h2>
+    {POUR_APP ? (
     <p>
       Banque <b>{version}</b>, {total} question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}.
-      {!POUR_APP && 'Le site fonctionne hors ligne une fois visité, et se met à jour tout seul à la publication suivante.'}
     </p>
+    ) : (
+    <p>
+      Banque <b>{version}</b>, {total} question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}.
+      Le site fonctionne hors ligne une fois visité, et se met à jour tout seul à la publication suivante.
+    </p>
+    )}
 
     {/* L'app ne mesure rien : `Mesure.astro` n'y est pas rendu. Dire le
         contraire serait faux, et c'est ce que la revue Apple lit en premier. */}

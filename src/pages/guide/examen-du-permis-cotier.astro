@@ -1,4 +1,5 @@
 ---
+import { POUR_APP } from '../../lib/cible';
 import Guide from '../../layouts/Guide.astro';
 import { themesAvecComptes, questionsPubliees } from '../../lib/banque';
 
@@ -40,11 +41,19 @@ const total = (await questionsPubliees()).length;
     pas. L’épreuve se passe sur tablette, dans un centre, et dure une trentaine de
     minutes.
   </p>
+  {POUR_APP ? (
+  <p>
+    Une question peut appeler une ou deux bonnes réponses, et l’écran ne dit pas
+    lesquelles. Savoir s’arrêter fait partie de l’exercice : c’est pour cela que les
+    examens blancs de cette app n’annoncent jamais le nombre de cases à cocher.
+  </p>
+  ) : (
   <p>
     Une question peut appeler une ou deux bonnes réponses, et l’écran ne dit pas
     lesquelles. Savoir s’arrêter fait partie de l’exercice : c’est pour cela que les
     examens blancs de ce site n’annoncent jamais le nombre de cases à cocher.
   </p>
+  )}
 
   <h2>Dix-huit mois pour valider la pratique</h2>
   <p>
@@ -89,12 +98,21 @@ const total = (await questionsPubliees()).length;
   </ul>
 
   <h2>Le taux de réussite n’est pas publié</h2>
+  {POUR_APP ? (
+  <p>
+    C’est une des questions les plus posées, et elle n’a pas de réponse sourcée.
+    L’administration ne publie pas de statistique de réussite à l’épreuve théorique du
+    permis plaisance. Les pourcentages qui circulent viennent des écoles, chacune
+    comptant ses propres candidats. Cette app n’en avancera pas.
+  </p>
+  ) : (
   <p>
     C’est une des questions les plus posées, et elle n’a pas de réponse sourcée.
     L’administration ne publie pas de statistique de réussite à l’épreuve théorique du
     permis plaisance. Les pourcentages qui circulent viennent des écoles, chacune
     comptant ses propres candidats. Ce site n’en avancera pas.
   </p>
+  )}
 
   <div class="encadre" style="margin-top:2.5rem">
     <p style="margin:0"><strong>Le format se travaille en le passant.</strong></p>

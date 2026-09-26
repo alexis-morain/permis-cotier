@@ -165,12 +165,18 @@ html[data-app] .jeu > .propositions .proposition--cochee .proposition__lettre {
    Le verdict monte en panneau au-dessus de la barre d'action, sur le même
    fond : un seul bloc, le bouton « Continuer » à portée de pouce. La barre
    passe devant le panneau, qui glisse donc de derrière elle. */
+/* Le bloc ne dépasse jamais la hauteur sous la zone sûre. Aux tailles de
+   texte d'accessibilité, panneau et barre ensemble la dépasseraient : collé
+   au bas, le haut du panneau (le mot « Juste » ou « Faux ») sortait de
+   l'écran sans moyen d'y revenir. Plafonné, c'est le panneau qui rétrécit et
+   défile dedans ; la barre et son bouton gardent leur taille. */
 html[data-app] .jeu__pied {
   position: sticky;
   bottom: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
+  max-height: calc(100svh - env(safe-area-inset-top));
   margin-inline: calc(50% - 50vw);
 }
 
@@ -216,6 +222,8 @@ html[data-app] .jeu__pied .verdict__titre {
 
 /* La confirmation d'arrêt prend la même place que le verdict. */
 html[data-app] .jeu__pied .arret {
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border-radius: var(--rayon) var(--rayon) 0 0;
   padding: 1.25rem 1rem max(1.1rem, env(safe-area-inset-bottom));
   animation: panneau-monte 220ms var(--courbe) both;

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { POUR_APP } from '../lib/cible';
+import { SITE } from '../lib/seo';
 
 // Deux chemins, dans cet ordre. Si Turnstile est configuré au build, le
 // formulaire poste sur `/api/signaler` : le Worker vérifie le jeton, ouvre une
@@ -17,6 +18,12 @@ const ADRESSE = 'alexis@morain.fr';
 const CLE_TURNSTILE =
   import.meta.env.TURNSTILE_SITE_KEY ?? process.env.TURNSTILE_SITE_KEY ?? '';
 const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
+
+// L'adresse de la question dans le courrier. Sur le site, celle de la page
+// (`location.origin`, qui suit aussi une préversion). Dans la coquille, elle
+// vaudrait « capacitor://localhost », inouvrable pour qui reçoit le
+// signalement : le formulaire porte alors le domaine du site.
+const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
 ---
 
 <Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
@@ -29,7 +36,7 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
     </p>
 
     <form class="signalement" id="signalement" method="post" enctype="text/plain"
-      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE}>
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-origine={ORIGINE_APP}>
       <p>
         <label for="question">Identifiant de la question</label>
         <input id="question" name="question" class="champ" required readonly />
@@ -154,10 +161,7 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
         '',
         details || '(rien de plus)',
         '',
-        // Le domaine du site, jamais `location.origin` : dans la coquille il
-        // vaut « capacitor://localhost », et le lien serait inouvrable pour qui
-        // reçoit le signalement.
-        `Page : https://lepermiscotier.fr/question/${question}`,
+        `Page : ${formulaire?.dataset.origine ?? location.origin}/question/${question}`,
       ].join('\n');
 
       const lien =

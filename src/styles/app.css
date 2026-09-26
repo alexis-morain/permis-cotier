@@ -44,6 +44,52 @@ html[data-app] body {
   background: var(--fond);
 }
 
+/* La bande sous l'heure et l'îlot, peinte au fond du thème sur tous les
+   écrans : sans elle, le contenu défile sous l'heure sans rien derrière.
+   Fixe, au-dessus de tout ce qui défile ou colle (les lignes collées du jeu
+   et de la leçon montent à 5) ; un `<dialog>` ouvert passe devant, il est
+   dans la couche supérieure. */
+html[data-app] body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: env(safe-area-inset-top);
+  background: var(--fond);
+  z-index: 20;
+}
+
+/* ------------------------------------------------------------ Dynamic Type
+
+   WebKit sur iOS ne fait pas suivre `rem` à la taille de texte choisie dans
+   Réglages. `-apple-system-body` le fait : la taille de base de la page
+   devient celle du corps de texte d'iOS (17 pt au réglage par défaut), et
+   tout ce qui est en `rem` suit. La famille et l'interligne reviennent aux
+   nôtres, que le raccourci `font` vient d'écraser. Le corps passe à `1rem`
+   pour valoir exactement le corps d'iOS, comme ses 1,0625 rem valent 17 px
+   sur le site. Hors de WebKit iOS, `@supports` écarte le bloc. */
+@supports (font: -apple-system-body) {
+  html[data-app] {
+    font: -apple-system-body;
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+
+  html[data-app] body {
+    font-size: 1rem;
+  }
+}
+
+/* Aux tailles d'accessibilité, un titre d'un seul mot (« Entraînement »)
+   dépasse la largeur de l'écran. Il se coupe, avec un tiret là où la langue
+   le permet, plutôt que de sortir de l'écran. Aux tailles ordinaires, rien
+   ne change : un mot qui tient ne se coupe pas. */
+html[data-app] h1,
+html[data-app] h2,
+html[data-app] h3 {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 /* Ce qui ne sert que le site : les chapôs écrits pour les moteurs, l'aide
    clavier. Les pages posent la classe, l'app les tait. */
 html[data-app] .web-seulement {
@@ -78,13 +124,15 @@ html[data-app] body {
 }
 
 /* Seize points de marge de chaque côté, la marge d'une app iOS, au lieu des
-   vingt du site. */
+   vingt du site. En points et non en `rem` : les marges d'iOS ne grandissent
+   pas avec la taille du texte, et à la taille d'accessibilité la plus grande
+   des marges en `rem` mangeraient un tiers de la largeur. */
 html[data-app] .page {
-  width: min(100% - 2rem, 72rem);
+  width: min(100% - 32px, 72rem);
 }
 
 html[data-app] .page--etroite {
-  width: min(100% - 2rem, 44rem);
+  width: min(100% - 32px, 44rem);
 }
 
 /* La recherche s'ouvre en plein écran, `<dialog>` par-dessus tout : `<main>`
