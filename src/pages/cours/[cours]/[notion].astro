@@ -12,6 +12,7 @@ import { leconDeLaNotion } from '../../../lib/lecons';
 import { themeParCode } from '../../../lib/themes';
 import { SITE, ressource } from '../../../lib/seo';
 import MarqueSource from '../../../components/MarqueSource.astro';
+import { POUR_APP } from '../../../lib/cible';
 
 export async function getStaticPaths() {
   return leconsDuParcours().map((lecon) => ({
@@ -77,9 +78,28 @@ const description = affichable.accroche ?? notion.resume;
   {/* Avant l'îlot : la classe qui autorise le pas à pas. Posée ici et non
       dans le layout, elle ne dit rien aux autres pages. */}
   <script is:inline>document.documentElement.classList.add('js');</script>
+  {/* Dans l'app, le routeur remplace les attributs de <html> à chaque
+      navigation : la classe tombe en quittant la leçon, et doit revenir à
+      chaque leçon. La ligne ci-dessus la pose sans attendre ; celle-ci la
+      repose quand la page est prête, quel que soit le chemin pris. */}
+  {POUR_APP && (
+    <script>
+      import { quandLaPageEstPrete } from '../../../lib/page';
 
-  <article class="page page--etroite" style="padding-block:2.5rem 0">
-    <p class="chapitre"><a href={cheminCours(cours.code)}>{cours.titre}</a></p>
+      // Le module ne tourne qu'une fois par session, mais un second
+      // branchement doublerait l'écouteur : on le marque sur `window`.
+      const marque = window as Window & { __leconBranchee?: boolean };
+      if (!marque.__leconBranchee) {
+        marque.__leconBranchee = true;
+        quandLaPageEstPrete(() => {
+          if (document.querySelector('.lecon')) document.documentElement.classList.add('js');
+        });
+      }
+    </script>
+  )}
+
+  <article class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:2.5rem 0'}>
+    {!POUR_APP && <p class="chapitre"><a href={cheminCours(cours.code)}>{cours.titre}</a></p>}
     <h1>{notion.nom}</h1>
 
     <Lecon

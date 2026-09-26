@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Questionnaire from '../../components/Questionnaire.tsx';
 import { questionsPubliees } from '../../lib/banque';
+import { POUR_APP } from '../../lib/cible';
 
 const total = (await questionsPubliees()).length;
 ---
@@ -10,6 +11,7 @@ const total = (await questionsPubliees()).length;
   titre="Pourquoi tu passes le permis"
   description="Six questions pour régler le site à ta main : ta raison, ton point de départ, ton rythme, ta date d’examen."
   indexable={false}
+  miettes={POUR_APP ? [{ nom: 'Ta fiche', chemin: '/profil' }, { nom: 'Ton départ', chemin: '/profil/depart' }] : []}
 >
   <div class="page page--etroite">
     <Questionnaire client:only="react" totalQuestions={total} />

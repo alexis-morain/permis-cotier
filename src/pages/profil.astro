@@ -2,8 +2,9 @@
 import Base from '../layouts/Base.astro';
 import SansScript from '../components/SansScript.astro';
 import ProfilCandidat from '../components/ProfilCandidat.tsx';
-import { questionsPubliees } from '../lib/banque';
+import { questionsPubliees, versionBanque } from '../lib/banque';
 import { leconsDuParcours } from '../lib/parcours';
+import { POUR_APP } from '../lib/cible';
 
 // La fiche se construit dans le navigateur, depuis la progression locale.
 // Le serveur ne donne que la banque, réduite à l'identifiant, au thème et à
@@ -12,6 +13,15 @@ import { leconsDuParcours } from '../lib/parcours';
 // compter et la fiche rendait une liste vide.
 const banque = (await questionsPubliees()).map((q) => ({ id: q.id, theme: q.theme, notion: q.notion }));
 const totalLecons = leconsDuParcours().length;
+
+// Dans l'app, c'est le seul écran qui porte ce que le pied de page du site
+// dit partout : la version de la banque, les licences, les réglages.
+const liensApp = [
+  { nom: 'À propos et confidentialité', chemin: '/a-propos' },
+  { nom: 'Crédits et licences', chemin: '/credits' },
+  { nom: 'Réglages', chemin: '/parametres' },
+  { nom: 'Signaler une erreur', chemin: '/signaler' },
+];
 ---
 
 <Base
@@ -23,4 +33,24 @@ const totalLecons = leconsDuParcours().length;
     <SansScript ecran="Ta fiche" />
     <ProfilCandidat client:only="react" banque={banque} totalLecons={totalLecons} />
   </div>
+
+  {POUR_APP && (
+    <section class="page page--etroite lapp" aria-labelledby="lapp-titre">
+      <h2 id="lapp-titre">L’app</h2>
+      <ul class="cellules">
+        <li class="cellules__ligne">
+          <span>Banque de questions</span>
+          <span class="discret">version {versionBanque()}</span>
+        </li>
+        {liensApp.map((l) => (
+          <li>
+            <a class="cellules__ligne" href={l.chemin}>
+              <span>{l.nom}</span>
+              <span class="cellules__chevron" aria-hidden="true">›</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 </Base>
