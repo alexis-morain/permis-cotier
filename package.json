@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "R\u00e9vision au permis plaisance option c\u00f4ti\u00e8re : examens blancs au format 2022 et entra\u00eenement par th\u00e8me.",
+  "description": "Révision au permis plaisance option côtière : examens blancs au format 2022 et entraînement par thème.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
@@ -39,6 +39,7 @@
     "@astrojs/react": "^6.0.5",
     "@astrojs/sitemap": "^3.7.4",
     "@capacitor/app": "^8.1.1",
+    "@capacitor/browser": "^8.0.4",
     "@capacitor/core": "^8.5.1",
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/ios": "^8.5.1",
