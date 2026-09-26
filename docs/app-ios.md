@@ -47,6 +47,10 @@ La direction artistique et les règles écran par écran sont dans `docs/app-da.
   greffon ne fuit dans le site. **`_headers` pose `Access-Control-Allow-Origin`**
   sur la banque et son pointeur : la mise à jour hors revue peut fonctionner,
   reste à le voir depuis un appareil une fois déployé.
+- **Des sons d'interface**, coupables dans Fiche → Réglages : le greffon maison
+  `Son` (`ios/App/App/SonPlugin.swift`) joue en session `.ambient` sept WAV du
+  dossier `Sons/`, synthétisés par `scripts/sons_app.py` (`--verifier` en CI).
+  `vibrer()` de `natif.ts` joue le son du même nom. Détail dans `docs/app-da.md`.
 
 ### Ce qui reste
 
