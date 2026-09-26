@@ -1,4 +1,6 @@
 import { POUR_APP } from './cible';
+import { jouer } from './son';
+import type { Son } from './son';
 
 /**
  * Ce que l'app sait faire et que le site ne sait pas.
@@ -15,9 +17,14 @@ import { POUR_APP } from './cible';
  * qu'une vibration a échoué.
  */
 
-/** Le retour haptique de la correction. */
-export async function vibrer(genre: 'juste' | 'faux' | 'choix'): Promise<void> {
+/**
+ * Le retour d'un geste : la vibration, et le son du même nom (`son.ts`), que
+ * le réglage peut couper. Cocher, corriger, finir une leçon, une série, un
+ * examen blanc : chaque écran n'a qu'un appel à faire.
+ */
+export async function vibrer(genre: Son): Promise<void> {
   if (!POUR_APP) return;
+  void jouer(genre);
   try {
     const { Haptics, ImpactStyle, NotificationType } = await import('@capacitor/haptics');
     if (genre === 'choix') {
@@ -25,8 +32,9 @@ export async function vibrer(genre: 'juste' | 'faux' | 'choix'): Promise<void> {
       await Haptics.impact({ style: ImpactStyle.Light });
       return;
     }
+    const echec = genre === 'faux' || genre === 'echoue';
     await Haptics.notification({
-      type: genre === 'juste' ? NotificationType.Success : NotificationType.Error,
+      type: echec ? NotificationType.Error : NotificationType.Success,
     });
   } catch {
     // Pas de moteur haptique, ou l'utilisateur l'a coupé. Sans conséquence.
