@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SansScript from '../../components/SansScript.astro';
 import Erreurs from '../../components/Erreurs.tsx';
 import { cheminBanque } from '../../lib/banque';
+import { POUR_APP } from '../../lib/cible';
 
 /**
  * Mes erreurs, à plat. Page personnelle : elle ne s'indexe pas, elle ne
@@ -10,6 +11,9 @@ import { cheminBanque } from '../../lib/banque';
  * arrive en JSON comme sur les écrans de jeu.
  */
 const banque = cheminBanque();
+// Dans l'app, la ligne « Ta fiche · Tes erreurs » devient le bouton Retour
+// de la coquille, qui se construit depuis les miettes. Le site n'en a pas :
+// la page ne s'indexe pas, et ce fil n'y a jamais été.
 ---
 
 <Base
@@ -17,9 +21,12 @@ const banque = cheminBanque();
   description="Les questions dues aujourd’hui et celles que tu as ratées, avec la bonne réponse, l’explication et la leçon."
   indexable={false}
   prechargeBanque
+  miettes={POUR_APP ? [{ nom: 'Ta fiche', chemin: '/profil' }, { nom: 'Tes erreurs', chemin: '/profil/erreurs' }] : []}
 >
   <div class="page page--etroite">
-    <p class="chapitre" style="padding-top:1.5rem"><a href="/profil">Ta fiche</a> · Tes erreurs</p>
+    {!POUR_APP && (
+      <p class="chapitre" style="padding-top:1.5rem"><a href="/profil">Ta fiche</a> · Tes erreurs</p>
+    )}
     <SansScript ecran="Tes erreurs" />
     <Erreurs client:only="react" source={banque} />
   </div>

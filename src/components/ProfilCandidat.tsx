@@ -21,6 +21,7 @@ import type { QuestionConnue } from '../lib/profil';
 import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
+import { POUR_APP } from '../lib/cible';
 import Apparence from './Apparence';
 import './profil.css';
 
@@ -116,83 +117,104 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
       ? { href: '/cours', texte: 'Continuer le cours' }
       : { href: '/examen', texte: 'Faire un examen blanc' };
 
+  const blocRappel = raison ? (
+    <p className="rappel">
+      <span className="rappel__amorce">Tu passes ce permis pour</span>
+      <q>{raison}</q>
+      <a className="rappel__modifier" href="/profil/depart">modifier</a>
+    </p>
+  ) : (
+    <div className="encadre fiche__invitation">
+      <p>
+        <b>Trente secondes pour dire pourquoi tu passes le permis.</b> On te le rappellera le jour
+        où un examen blanc est recalé, et la fiche se règle à ta main.
+      </p>
+      <a className="bouton bouton--principal" href="/profil/depart" data-mesure="profil-invitation">
+        Répondre
+      </a>
+    </div>
+  );
+
+  const blocIndice = (
+    <section className="fiche__indice" aria-labelledby="indice-titre">
+      <h2 id="indice-titre" className={POUR_APP ? 'indice__mot' : 'visuellement-cache'}>
+        Indice de préparation
+      </h2>
+      <div className="indice">
+        <p className="indice__nombre">
+          <span className="display">{ind.score}</span>
+          <small> / 100</small>
+        </p>
+        <div className="indice__texte">
+          <p className="indice__palier">{palier.titre}</p>
+          <p>{rien ? 'Rien d’enregistré dans ce navigateur pour l’instant.' : palier.phrase}</p>
+        </div>
+      </div>
+      {/* Trois calques pleins, du plus long au plus court, chacun mis à
+          l'échelle : la part se lit à la couleur qui s'arrête, et le
+          mouvement passe par `transform`, jamais par `width`. */}
+      <div className="indice__jauge" role="img" aria-label={`${ind.parts.vu} points pour ce qui est vu, ${ind.parts.retenu} pour ce qui est retenu, ${ind.parts.examens} pour les examens blancs`}>
+        <span
+          className="indice__part indice__part--examens"
+          style={{ '--part': (ind.parts.vu + ind.parts.retenu + ind.parts.examens) / 100 } as React.CSSProperties}
+        />
+        <span
+          className="indice__part indice__part--retenu"
+          style={{ '--part': (ind.parts.vu + ind.parts.retenu) / 100 } as React.CSSProperties}
+        />
+        <span
+          className="indice__part indice__part--vu"
+          style={{ '--part': ind.parts.vu / 100 } as React.CSSProperties}
+        />
+      </div>
+      <ul className="indice__legende" aria-hidden="true">
+        <li><i className="indice__puce indice__puce--vu" />Vu {ind.parts.vu} sur 20</li>
+        <li><i className="indice__puce indice__puce--retenu" />Retenu {ind.parts.retenu} sur 35</li>
+        <li><i className="indice__puce indice__puce--examens" />Examens {ind.parts.examens} sur 45</li>
+      </ul>
+      {direLeChangement && (
+        <p className="indice__changement">
+          Depuis le 10 septembre, on compte autrement : une question n’est retenue qu’après deux
+          réussites, deux jours différents. Ton indice a baissé d’un coup. Une séance sur ce que
+          tu sais déjà le remet où il était.
+        </p>
+      )}
+      <details className="fiche__details">
+        <summary>Comment c’est compté</summary>
+        <p>
+          Vingt points pour la part de la banque que tu as rencontrée, {vues.length} question{vues.length > 1 ? 's' : ''} sur{' '}
+          {banque.length}. Trente-cinq pour la part de ces questions réussies deux jours différents : une seule bonne
+          réponse ne compte pas comme une mémoire, la correction était encore à l’écran. Quarante-cinq pour
+          la moyenne de tes trois derniers examens blancs terminés
+          {ind.examensComptes > 0 ? `, ${ind.examensComptes} pour l’instant` : ', aucun pour l’instant'}.
+          « Prêt » demande en plus deux examens reçus sur les trois derniers : un nombre ne dit pas qu’on tient
+          quarante questions en vingt secondes chacune.
+        </p>
+      </details>
+    </section>
+  );
+
   return (
     <div className="fiche">
-      <header className="fiche__tete">
-        <h1>{prenom ? `${prenom}, voilà où tu en es.` : 'Voilà où tu en es.'}</h1>
-        {raison ? (
-          <p className="rappel">
-            <span className="rappel__amorce">Tu passes ce permis pour</span>
-            <q>{raison}</q>
-            <a className="rappel__modifier" href="/profil/depart">modifier</a>
-          </p>
-        ) : (
-          <div className="encadre fiche__invitation">
-            <p>
-              <b>Trente secondes pour dire pourquoi tu passes le permis.</b> On te le rappellera le jour
-              où un examen blanc est recalé, et la fiche se règle à ta main.
-            </p>
-            <a className="bouton bouton--principal" href="/profil/depart" data-mesure="profil-invitation">
-              Répondre
-            </a>
-          </div>
-        )}
-      </header>
-
-      <section className="fiche__indice" aria-labelledby="indice-titre">
-        <h2 id="indice-titre" className="visuellement-cache">Indice de préparation</h2>
-        <div className="indice">
-          <p className="indice__nombre">
-            <span className="display">{ind.score}</span>
-            <small> / 100</small>
-          </p>
-          <div className="indice__texte">
-            <p className="indice__palier">{palier.titre}</p>
-            <p>{rien ? 'Rien d’enregistré dans ce navigateur pour l’instant.' : palier.phrase}</p>
-          </div>
-        </div>
-        {/* Trois calques pleins, du plus long au plus court, chacun mis à
-            l'échelle : la part se lit à la couleur qui s'arrête, et le
-            mouvement passe par `transform`, jamais par `width`. */}
-        <div className="indice__jauge" role="img" aria-label={`${ind.parts.vu} points pour ce qui est vu, ${ind.parts.retenu} pour ce qui est retenu, ${ind.parts.examens} pour les examens blancs`}>
-          <span
-            className="indice__part indice__part--examens"
-            style={{ '--part': (ind.parts.vu + ind.parts.retenu + ind.parts.examens) / 100 } as React.CSSProperties}
-          />
-          <span
-            className="indice__part indice__part--retenu"
-            style={{ '--part': (ind.parts.vu + ind.parts.retenu) / 100 } as React.CSSProperties}
-          />
-          <span
-            className="indice__part indice__part--vu"
-            style={{ '--part': ind.parts.vu / 100 } as React.CSSProperties}
-          />
-        </div>
-        <ul className="indice__legende" aria-hidden="true">
-          <li><i className="indice__puce indice__puce--vu" />Vu {ind.parts.vu} sur 20</li>
-          <li><i className="indice__puce indice__puce--retenu" />Retenu {ind.parts.retenu} sur 35</li>
-          <li><i className="indice__puce indice__puce--examens" />Examens {ind.parts.examens} sur 45</li>
-        </ul>
-        {direLeChangement && (
-          <p className="indice__changement">
-            Depuis le 10 septembre, on compte autrement : une question n’est retenue qu’après deux
-            réussites, deux jours différents. Ton indice a baissé d’un coup. Une séance sur ce que
-            tu sais déjà le remet où il était.
-          </p>
-        )}
-        <details className="fiche__details">
-          <summary>Comment c’est compté</summary>
-          <p>
-            Vingt points pour la part de la banque que tu as rencontrée, {vues.length} question{vues.length > 1 ? 's' : ''} sur{' '}
-            {banque.length}. Trente-cinq pour la part de ces questions réussies deux jours différents : une seule bonne
-            réponse ne compte pas comme une mémoire, la correction était encore à l’écran. Quarante-cinq pour
-            la moyenne de tes trois derniers examens blancs terminés
-            {ind.examensComptes > 0 ? `, ${ind.examensComptes} pour l’instant` : ', aucun pour l’instant'}.
-            « Prêt » demande en plus deux examens reçus sur les trois derniers : un nombre ne dit pas qu’on tient
-            quarante questions en vingt secondes chacune.
-          </p>
-        </details>
-      </section>
+      {POUR_APP ? (
+        // Dans l'app, l'écran s'appelle comme son onglet, et l'indice passe
+        // en tête : c'est le chiffre qu'on vient voir.
+        <>
+          <header className="fiche__tete">
+            <h1>Ta fiche</h1>
+          </header>
+          {blocIndice}
+          <div className="fiche__tete">{blocRappel}</div>
+        </>
+      ) : (
+        <>
+          <header className="fiche__tete">
+            <h1>{prenom ? `${prenom}, voilà où tu en es.` : 'Voilà où tu en es.'}</h1>
+            {blocRappel}
+          </header>
+          {blocIndice}
+        </>
+      )}
 
       <section className="fiche__jour" aria-labelledby="jour-titre">
         <h2 id="jour-titre">Aujourd’hui</h2>
@@ -467,13 +489,16 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           <Apparence idTitre="reglage-apparence" />
         </div>
 
-        <div className="reglage">
-          <p className="reglage__titre">Vie privée et licences</p>
-          <p className="reglage__valeur">
-            La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
-            <a href="/parametres">réglages du site</a>.
-          </p>
-        </div>
+        {/* Dans l'app, la section « L'app » de la page porte tout cela. */}
+        {!POUR_APP && (
+          <div className="reglage">
+            <p className="reglage__titre">Vie privée et licences</p>
+            <p className="reglage__valeur">
+              La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
+              <a href="/parametres">réglages du site</a>.
+            </p>
+          </div>
+        )}
 
         <div className="reglage reglage--danger">
           <p className="reglage__titre">Effacer</p>

@@ -4,6 +4,7 @@ import ListeCours from '../../components/ListeCours.tsx';
 import { COURS, leconsDuCours, cheminCours } from '../../lib/parcours';
 import { leconsEcrites, compteLeconsEcrites } from '../../lib/lecons';
 import { SITE, faq, absolue } from '../../lib/seo';
+import { POUR_APP } from '../../lib/cible';
 
 const ecrites = await leconsEcrites();
 const compte = await compteLeconsEcrites();
@@ -70,20 +71,20 @@ const liste = {
   miettes={[{ nom: 'Cours', chemin: '/cours' }]}
   jsonLd={[liste, faq(questions)]}
 >
-  <div class="page page--etroite" style="padding-block:3rem 0">
-    <h1>Le cours, thème par thème</h1>
-    <p class="chapo">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
+    <h1>{POUR_APP ? 'Le cours' : 'Le cours, thème par thème'}</h1>
+    <p class="chapo web-seulement">
       Tu pars de zéro ? Chaque thème du programme a son cours, et les quatorze cours se
       suivent dans l’ordre où on apprend, pas dans celui de l’arrêté : d’abord ce qu’on voit
       sur l’eau, puis les règles de rencontre, puis ce qui se prépare à terre.
     </p>
-    <p>
+    <p class="web-seulement">
       {compte.total} leçons de deux à six minutes, une par notion du programme, {heures} heures
       en tout. Chacune se termine par des questions de la banque, corrigées une par une avec le
       texte dont la réponse est tirée. Ta progression reste dans ton navigateur, sans compte.
     </p>
     {compte.ecrites < compte.total && (
-      <p class="discret">
+      <p class="discret web-seulement">
         {compte.ecrites} leçons sont rédigées à ce jour. Les autres tiennent en un résumé, le
         temps de les écrire depuis les textes : elles sont marquées « résumé seulement ».
       </p>
@@ -92,7 +93,7 @@ const liste = {
     <ListeCours client:load cours={cours} />
   </div>
 
-  <section class="page page--etroite bloc">
+  <section class="page page--etroite bloc web-seulement">
     <h2>Comment se passe une leçon</h2>
     <p>
       Une leçon commence par une situation, vue du bateau : une bouée devant toi, un feu dans
@@ -108,7 +109,7 @@ const liste = {
     </p>
   </section>
 
-  <section class="page page--etroite bloc">
+  <section class="page page--etroite bloc web-seulement">
     <h2>Pourquoi cet ordre</h2>
     <p>
       L’arrêté du 28 septembre 2007 liste les thèmes dans l’ordre d’un programme d’examen. Ce
@@ -124,7 +125,7 @@ const liste = {
     </p>
   </section>
 
-  <section class="page page--etroite bloc">
+  <section class="page page--etroite bloc web-seulement">
     <h2>Questions sur le cours</h2>
     <dl class="questions">
       {questions.map((q) => (

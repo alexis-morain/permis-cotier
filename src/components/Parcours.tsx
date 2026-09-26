@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { charger } from '../lib/progression';
 import type { LeconSuivie } from '../lib/progression';
+import { POUR_APP } from '../lib/cible';
 import './parcours.css';
 
 /**
@@ -98,13 +99,30 @@ export default function Parcours({ cours, suivant }: Props) {
                 </span>
                 <span className="etape__corps">
                   <span className="etape__nom">{l.nom}</span>
-                  <span className="etape__meta discret">
-                    {l.duree} min
-                    {!l.ecrite && ' · résumé seulement'}
-                    {suivie && suivie.total > 0 && ` · ${suivie.bonnes} sur ${suivie.total}`}
-                    {estProchaine && ' · à faire maintenant'}
-                  </span>
+                  {POUR_APP ? (
+                    // Dans l'app, la durée passe à droite de la cellule ; ce
+                    // qui reste dessous ne s'écrit que s'il y a quelque chose.
+                    (!l.ecrite || estProchaine || (suivie && suivie.total > 0)) && (
+                      <span className="etape__meta discret">
+                        {[
+                          !l.ecrite && 'résumé seulement',
+                          suivie && suivie.total > 0 && `${suivie.bonnes} sur ${suivie.total}`,
+                          estProchaine && 'à faire maintenant',
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </span>
+                    )
+                  ) : (
+                    <span className="etape__meta discret">
+                      {l.duree} min
+                      {!l.ecrite && ' · résumé seulement'}
+                      {suivie && suivie.total > 0 && ` · ${suivie.bonnes} sur ${suivie.total}`}
+                      {estProchaine && ' · à faire maintenant'}
+                    </span>
+                  )}
                 </span>
+                {POUR_APP && <span className="etape__duree discret">{l.duree} min</span>}
                 <span className="visuellement-cache">
                   {suivie ? ', leçon faite' : estProchaine ? ', prochaine leçon' : ''}
                 </span>

@@ -6,6 +6,7 @@ import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
 import { cheminRetour, libelleRetour } from '../lib/retour';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
+import { POUR_APP } from '../lib/cible';
 import './quiz.css';
 import './lecon.css';
 
@@ -251,16 +252,49 @@ export default function Lecon({ lecon, cours, rang, total, suite }: Props) {
     aller(ecrans.length - 1);
   };
 
+  // La fin de leçon : revenir à la série d'où l'on vient, s'il y en a une,
+  // puis la suite du parcours. Le premier des deux est le geste principal.
+  const lienRetour = retour && (
+    <a className="bouton bouton--principal" href={retour} data-mesure="lecon-retour-serie">
+      {libelleRetour(retour)}
+    </a>
+  );
+  const classeSuite = `bouton${retour ? '' : ' bouton--principal'}`;
+  const lienSuite =
+    suite?.type === 'lecon' ? (
+      <a className={classeSuite} href={suite.chemin} data-mesure="lecon-suivante" data-mesure-notion={suite.chemin}>
+        Leçon suivante : {suite.nom}
+      </a>
+    ) : suite?.type === 'cours' ? (
+      <a className={classeSuite} href={suite.chemin} data-mesure="lecon-cours-suivant" data-mesure-cours={suite.chemin}>
+        Cours suivant : {suite.titre}
+      </a>
+    ) : (
+      <a className={classeSuite} href="/cours" data-mesure="lecon-retour-cours">
+        Retour au cours
+      </a>
+    );
+
   const classeRacine = `lecon${pasAPas ? ' lecon--pas-a-pas' : ''}`;
   const avancement = ecrans.length > 1 ? index / (ecrans.length - 1) : 1;
 
   return (
     <div className={classeRacine} ref={racine}>
       <div className="lecon__entete">
-        <p className="lecon__chapitre">
-          <a href={cours.chemin}>{cours.titre}</a>
-          <span className="discret"> · leçon {rang} sur {total} · {lecon.duree} min</span>
-        </p>
+        {POUR_APP ? (
+          // Dans l'app, cette ligne colle sous la zone sûre : où on est dans
+          // le chapitre d'abord, le chapitre ensuite, qui ramène à sa liste.
+          <p className="lecon__chapitre">
+            <span>Leçon {rang} / {total}</span>
+            <span className="discret" aria-hidden="true"> · </span>
+            <a href={cours.chemin}>{cours.titre}</a>
+          </p>
+        ) : (
+          <p className="lecon__chapitre">
+            <a href={cours.chemin}>{cours.titre}</a>
+            <span className="discret"> · leçon {rang} sur {total} · {lecon.duree} min</span>
+          </p>
+        )}
         {retour && (
           <p className="lecon__retour">
             <a href={retour} data-mesure="lecon-retour-serie">{libelleRetour(retour)}</a>
@@ -361,25 +395,12 @@ export default function Lecon({ lecon, cours, rang, total, suite }: Props) {
                     Cette notion n’a pas encore de question dans la banque. Elle est marquée faite.
                   </p>
                 )}
+                {/* Dans l'app, le geste suivant sort de la liste et colle en
+                    bas de l'écran, au-dessus de la barre d'onglets. */}
+                {POUR_APP && <div className="lecon__suite">{retour ? lienRetour : lienSuite}</div>}
                 <div className="fin__actions">
-                  {retour && (
-                    <a className="bouton bouton--principal" href={retour} data-mesure="lecon-retour-serie">
-                      {libelleRetour(retour)}
-                    </a>
-                  )}
-                  {suite?.type === 'lecon' ? (
-                    <a className={`bouton${retour ? '' : ' bouton--principal'}`} href={suite.chemin} data-mesure="lecon-suivante" data-mesure-notion={suite.chemin}>
-                      Leçon suivante : {suite.nom}
-                    </a>
-                  ) : suite?.type === 'cours' ? (
-                    <a className={`bouton${retour ? '' : ' bouton--principal'}`} href={suite.chemin} data-mesure="lecon-cours-suivant" data-mesure-cours={suite.chemin}>
-                      Cours suivant : {suite.titre}
-                    </a>
-                  ) : (
-                    <a className={`bouton${retour ? '' : ' bouton--principal'}`} href="/cours" data-mesure="lecon-retour-cours">
-                      Retour au cours
-                    </a>
-                  )}
+                  {!POUR_APP && lienRetour}
+                  {(!POUR_APP || retour) && lienSuite}
                   {/* Les questions de cette notion, pas les soixante et une du
                       thème : ce qu'on vient d'apprendre se vérifie sur ce
                       qu'on vient d'apprendre. */}

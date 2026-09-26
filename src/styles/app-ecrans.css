@@ -1,2 +1,310 @@
 /* Ce que la coquille iOS change aux écrans de cours, de leçon et de fiche.
-   Tout est sous `html[data-app]`, comme dans app.css. */
+   Tout est sous `html[data-app]`, comme dans app.css : le site ne voit
+   aucune de ces règles.
+
+   Une grammaire pour les trois écrans : des cellules pleine largeur séparées
+   d'un filet, 44 pt au moins sous le doigt, jamais de carte posée dans une
+   carte. L'état d'une ligne (fait, en cours) est toujours écrit ou porté par
+   une coche, la couleur ne fait que le souligner. */
+
+/* Le disque des chapitres change de teinte avec le thème : marine plein sur
+   clair, jaune plein sur sombre, où le marine ne se verrait plus. Le même
+   bloc deux fois, comme dans global.css : le système, puis le choix fait sur
+   la fiche. */
+html[data-app] {
+  --disque-fait: var(--marine);
+  --disque-fait-texte: var(--blanc);
+  --disque-encours: var(--jaune);
+  --disque-encours-bord: var(--marine);
+  --disque-encours-texte: var(--marine);
+}
+@media (prefers-color-scheme: dark) {
+  html[data-app]:not([data-apparence="clair"]) {
+    --disque-fait: var(--accent);
+    --disque-fait-texte: var(--marine);
+    --disque-encours: var(--jaune-pale);
+    --disque-encours-bord: var(--jaune);
+    --disque-encours-texte: var(--texte);
+  }
+}
+html[data-app][data-apparence="sombre"] {
+  --disque-fait: var(--accent);
+  --disque-fait-texte: var(--marine);
+  --disque-encours: var(--jaune-pale);
+  --disque-encours-bord: var(--jaune);
+  --disque-encours-texte: var(--texte);
+}
+
+/* ------------------------------------------------------------ Le cours
+
+   Les quatorze chapitres en parcours vertical. Le bloc Reprendre reste en
+   tête, sous le titre. */
+
+html[data-app] .coursListe .parcours__reprise { margin-top: 1rem; }
+html[data-app] .parcours__reprise .bouton--principal,
+html[data-app] .reprendreCours .bouton--principal {
+  flex: 1 1 100%;
+  min-height: 3.25rem;
+  text-align: center;
+}
+
+html[data-app] .chapitres {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+}
+html[data-app] .chapitres li { max-width: none; }
+html[data-app] .chapitres li + li { border-top: 2px solid var(--filet); }
+
+html[data-app] .chapitres__cellule {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  min-height: 4rem;
+  padding-block: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+html[data-app] .chapitres__disque {
+  flex: 0 0 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 2px solid var(--filet-fort);
+  color: var(--texte);
+  font-weight: 800;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+html[data-app] .chapitres__cellule--encours .chapitres__disque {
+  background: var(--disque-encours);
+  border-color: var(--disque-encours-bord);
+  color: var(--disque-encours-texte);
+}
+html[data-app] .chapitres__cellule--fait .chapitres__disque {
+  background: var(--disque-fait);
+  border-color: var(--disque-fait);
+  color: var(--disque-fait-texte);
+}
+
+html[data-app] .chapitres__corps {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+html[data-app] .chapitres__titre {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+html[data-app] .chapitres__compte {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texte-doux);
+  font-variant-numeric: tabular-nums;
+}
+html[data-app] .chapitres__jauge {
+  height: 6px;
+  margin-top: 0.3rem;
+  border-radius: 999px;
+  background: var(--fond-2);
+  overflow: hidden;
+}
+html[data-app] .chapitres__jauge span {
+  display: block;
+  height: 100%;
+  background: var(--jauge);
+  transform-origin: left;
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+html[data-app] .chapitres__cellule:active { background: var(--fond-2); }
+
+/* --------------------------------------------------------- Le chapitre
+
+   Les leçons en cellules de 56 pt : la coche pour une leçon faite, un point
+   jaune pour celle à faire maintenant, la durée à droite. Le trait qui
+   reliait les cercles sur le site laisse la place aux filets. */
+
+/* `.chapitre` porte 3 rem de marge haute dans parcours.css : sous le bouton
+   Retour, c'était un trou. */
+html[data-app] article > .chapitre:first-child { margin-top: 0.5rem; }
+html[data-app] .lecons-app { margin-top: 1.5rem; }
+html[data-app] .lecons-app h2 { margin-top: 0; }
+html[data-app] .lecons-app .parcours__reprise { margin-top: 0.75rem; }
+html[data-app] .lecons-app .chapitre__compte { margin: 1rem 0 0.25rem; }
+
+html[data-app] .etapes::before { display: none; }
+html[data-app] .etapes li + li { border-top: 2px solid var(--filet); }
+html[data-app] .etape {
+  min-height: 3.5rem;
+  gap: 0.875rem;
+  padding: 0.5rem 0;
+  border-radius: 0;
+}
+html[data-app] .etape:active { background: var(--fond-2); }
+html[data-app] .etape__rang {
+  flex-basis: 1.75rem;
+  height: 1.75rem;
+  background: transparent;
+  font-size: 0.8rem;
+}
+html[data-app] .etape--faite .etape__rang {
+  background: var(--disque-fait);
+  border-color: var(--disque-fait);
+  color: var(--disque-fait-texte);
+}
+/* Le rang s'efface derrière le point : il est déjà dit par l'ordre, et
+   « à faire maintenant » est écrit sous le nom. */
+html[data-app] .etape--prochaine .etape__rang {
+  background: transparent;
+  border-color: var(--disque-encours-bord);
+  font-size: 0;
+}
+html[data-app] .etape--prochaine .etape__rang::after {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: var(--jaune);
+}
+html[data-app] .etape__corps { flex: 1 1 auto; }
+html[data-app] .etape__nom { font-size: 1rem; }
+html[data-app] .etape__duree {
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------ La leçon
+
+   En haut, « Leçon n / m · chapitre » et la barre d'avancement collent sous
+   l'heure. En bas, le geste suivant colle au-dessus de la barre d'onglets. */
+
+html[data-app] .lecon__entete {
+  position: sticky;
+  top: env(safe-area-inset-top);
+  z-index: 2;
+  background: var(--fond);
+  padding-block: 0.25rem 0.75rem;
+  margin-bottom: 1rem;
+}
+/* La bande sous l'heure et l'îlot, peinte au fond de la page tant qu'on est
+   dans une leçon : sans elle, le texte défilerait sous l'heure au-dessus de
+   la ligne collée. */
+html[data-app] .lecon__entete::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top);
+  background: var(--fond);
+}
+html[data-app] .lecon__chapitre {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+html[data-app] .lecon__chapitre a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html[data-app] .lecon__chapitre .discret { white-space: pre; }
+
+html[data-app] .lecon__suite {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  flex-wrap: nowrap;
+  margin-top: 1.25rem;
+  padding: 0.75rem 0 max(0.75rem, env(safe-area-inset-bottom));
+  background: var(--fond);
+}
+html[data-app] .lecon__suite .bouton { min-height: 3.25rem; }
+html[data-app] .lecon__suite .bouton--principal { flex: 1 1 auto; }
+
+/* Les visuels prennent toute la largeur de la colonne : sur un téléphone, un
+   dessin de feux à 16 rem de haut est illisible. */
+html[data-app] .ecran__visuel { padding: 0.5rem; }
+html[data-app] .ecran__visuel img {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+/* ------------------------------------------------------------- La fiche */
+
+html[data-app] .fiche { gap: 2rem; padding-block: 0 1rem; }
+html[data-app] .fiche h1 { margin: 0; }
+html[data-app] .indice__mot {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+}
+html[data-app] .indice__nombre .display { font-size: clamp(5rem, 28vw, 7.5rem); }
+html[data-app] .rappel__modifier {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+html[data-app] .faibles,
+html[data-app] .maitrise,
+html[data-app] .reglage { max-width: none; }
+/* Sur 375 pt, trois options d'un contrôle segmenté passaient sur deux
+   lignes, la troisième seule dessous. Elles se partagent la largeur. */
+html[data-app] .fiche .reglage .segmente {
+  display: flex;
+  flex-wrap: nowrap;
+}
+html[data-app] .fiche .reglage .segmente__option {
+  flex: 1 1 0;
+  padding-inline: 0.4rem;
+}
+
+/* La section « L'app » : ce que le pied de page du site disait partout. */
+html[data-app] .lapp { margin-top: 1rem; }
+html[data-app] .lapp h2 { font-size: 1.25rem; margin: 0 0 0.5rem; }
+html[data-app] .cellules {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-block: 2px solid var(--filet);
+}
+html[data-app] .cellules li { max-width: none; }
+html[data-app] .cellules li + li { border-top: 2px solid var(--filet); }
+html[data-app] .cellules__ligne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3rem;
+  padding-block: 0.5rem;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+html[data-app] a.cellules__ligne:active { background: var(--fond-2); }
+html[data-app] .cellules__chevron {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--texte-doux);
+}
+
+/* Les erreurs : la liste prend toute la largeur. */
+html[data-app] .erreurs__liste { max-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-app] .chapitres__jauge span { transition: none; }
+}

@@ -8,6 +8,7 @@ import type { EtatQuestion } from '../lib/quiz';
 import { lienLecon } from '../lib/retour';
 import { nomDuTheme } from '../lib/themes-client';
 import { dateLisible } from '../lib/jour';
+import { POUR_APP } from '../lib/cible';
 import './profil.css';
 
 /**
@@ -137,8 +138,8 @@ function Liste({ questions, jour }: { questions: QuestionAffichable[]; jour: str
 
   return (
     <div className="erreurs">
-      <h1>Ce que tu as raté</h1>
-      <p>
+      <h1>{POUR_APP ? 'Tes erreurs' : 'Ce que tu as raté'}</h1>
+      <p className="web-seulement">
         Ce qui est dû aujourd’hui, puis ce que tu as raté au moins une fois. Tout est là pour être
         relu : la bonne réponse, l’explication, et la leçon derrière.
       </p>

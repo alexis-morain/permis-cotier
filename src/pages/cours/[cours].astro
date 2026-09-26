@@ -8,6 +8,7 @@ import { themeParCode, cibleTotaleJ1 } from '../../lib/themes';
 import { SITE, cours as coursJsonLd } from '../../lib/seo';
 import MarqueSource from '../../components/MarqueSource.astro';
 import type { SourceAffichee } from '../../lib/sources';
+import { POUR_APP } from '../../lib/cible';
 
 export async function getStaticPaths() {
   return COURS.map((cours) => ({ params: { cours: cours.code }, props: { cours } }));
@@ -48,6 +49,10 @@ for (const l of lecons) for (const s of l.affichable.sources) if (!textes.has(s.
 // travail, `cibleJ1`, ramenée à quarante questions. La page le dit.
 const part = Math.round((theme.cibleJ1 / cibleTotaleJ1()) * 40);
 
+// Ce que l'îlot du parcours reçoit, dans l'app comme sur le site.
+const parcours = { code: cours.code, titre: cours.titre, lecons: lecons.map(({ affichable: _, ...l }) => l) };
+const versSuivant = suivant ? { chemin: cheminCours(suivant.code), titre: suivant.titre } : undefined;
+
 const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minutes, chacune vérifiée sur les questions de la banque.`;
 ---
 
@@ -72,10 +77,23 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     ),
   ]}
 >
-  <article class="page page--etroite" style="padding-block:2.5rem 0">
-    <p class="chapitre"><a href="/cours">Cours</a> · {rang} sur {COURS.length}</p>
+  <article class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:2.5rem 0'}>
+    {POUR_APP ? (
+      <p class="chapitre">Chapitre {rang} sur {COURS.length}</p>
+    ) : (
+      <p class="chapitre"><a href="/cours">Cours</a> · {rang} sur {COURS.length}</p>
+    )}
     <h1>{cours.titre}</h1>
-    <p class="chapo">{cours.promesse}</p>
+    <p class="chapo web-seulement">{cours.promesse}</p>
+
+    {/* Dans l'app, on vient ici pour ouvrir une leçon : la liste passe
+        devant les chiffres et les explications du cours. */}
+    {POUR_APP && (
+      <section class="lecons-app" id="lecons">
+        <h2>Les leçons</h2>
+        <Parcours client:load cours={parcours} suivant={versSuivant} />
+      </section>
+    )}
 
     <dl class="chiffres">
       <div><dt>Leçons</dt><dd><b class="display">{lecons.length}</b></dd></div>
@@ -103,6 +121,7 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     <p>{cours.methode}</p>
   </article>
 
+  {!POUR_APP && (
   <section class="page page--etroite lecons" id="lecons">
     <h2>Les leçons, dans l’ordre</h2>
     <p class="discret">
@@ -115,12 +134,9 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
         </Fragment>
       )}
     </p>
-    <Parcours
-      client:load
-      cours={{ code: cours.code, titre: cours.titre, lecons: lecons.map(({ affichable: _, ...l }) => l) }}
-      suivant={suivant ? { chemin: cheminCours(suivant.code), titre: suivant.titre } : undefined}
-    />
+    <Parcours client:load cours={parcours} suivant={versSuivant} />
   </section>
+  )}
 
   <section class="page page--etroite bloc">
     <h2>Les pièges du thème</h2>
