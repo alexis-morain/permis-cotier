@@ -52,11 +52,26 @@ La direction artistique et les règles écran par écran sont dans `docs/app-da.
   dossier `Sons/`, synthétisés par `scripts/sons_app.py` (`--verifier` en CI).
   `vibrer()` de `natif.ts` joue le son du même nom. Détail dans `docs/app-da.md`.
 
+- **Le mouvement** : questions et propositions qui arrivent en fondu et montée,
+  jauges qui se remplissent, retour qui glisse dans le bon sens, tout coupé
+  sous `prefers-reduced-motion`. Deux bugs corrigés au passage : la confirmation
+  d'arrêt qui se fermait au buzzer, et le focus repris chaque seconde par le
+  chrono.
+- **Une vérification adverse** au simulateur, app réinstallée à vide, a rendu
+  quatre réfutations, toutes corrigées : accueil figé entre deux onglets,
+  vocabulaire de site dans l'app, Dynamic Type sans effet, et le site qui
+  avait changé (liens de question soulignés, CSS doublé, dix chunks morts dans
+  le précache). Le site est de nouveau identique à `main` sur ses 935 pages,
+  à la classe `web-seulement` près et au script de `/signaler`, de même
+  comportement.
+
 ### Ce qui reste
 
-- Passe de mouvement et finitions (voir `docs/app-da.md`) : en cours.
-- Une vérification adverse de tout le parcours au simulateur, puis les captures
-  App Store sur iPhone 17 Pro Max.
+- Les captures App Store sur iPhone 17 Pro Max, avec une progression posée.
+- À l'oreille sur un vrai iPhone : le bouton silencieux et la musique qui
+  continue (session `.ambient`), VoiceOver sur l'annonce du verdict.
+- Cosmétique : l'écran de démarrage de Capacitor reste clair en sombre ; en
+  taille de texte XXXL le texte des propositions se cale à droite du disque.
 - Aucun runtime iOS 15 à 17 n'est installé : le chemin d'avant iOS 18 du greffon
   `Ecran` n'a tourné que forcé sur iOS 26.
 - **Le compte développeur Apple** reste le seul verrou pour TestFlight et la

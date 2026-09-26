@@ -79,8 +79,21 @@ Tout ce qui suit vit sous `html[data-app]` (CSS) ou derrière `POUR_APP`
   ouvre sur l'action.
 - **Pas d'aide clavier**, pas de `<kbd>`, pas de raccourci `/` : le composant
   qui les rend les tait sous `POUR_APP`.
-- **La recherche** reste : un champ en haut de l'écran Cours et de l'écran
-  Entraînement, pas dans un en-tête.
+- **La recherche** reste : `OuvrirRecherche.astro`, un champ en haut de
+  l'écran Cours et de l'écran Entraînement, pas dans un en-tête.
+- **Chaque onglet est sa propre webview, chargée une fois.** Une leçon faite
+  dans Cours ne se verrait pas dans Accueil : la coquille envoie `app:onglet`
+  quand l'onglet revient, et `rafraichirSiLaProgressionAChange()` recharge la
+  page si une clé `permis-cotier:` de `localStorage` a changé, sur les racines
+  d'onglet seulement (`/examen` exclu, pour ne pas effacer un résultat).
+- **La bande de la zone sûre haute** est un `body::before` fixe au fond du
+  thème : le contenu ne défile jamais sous l'heure.
+- **Ce qui ne vaut que pour l'app ne sort pas du site** : le greffon Vite
+  `siteSansApp()` d'`astro.config.mjs` vide les feuilles `app*.css` et les
+  composants d'app hors `CIBLE=app`, sinon Astro empaquette le CSS et les
+  îlots de tout composant importé, rendu ou non. `LienQuestion.astro` n'est
+  rendu que dans l'app : sur le site, le `<a>` garde l'attribut de portée de
+  sa page.
 - **Navigation sans rechargement** : `<ClientRouter />` d'Astro dans la coquille
   seulement, animation `slide` sur `<main>`, `prefers-reduced-motion` respecté.
   Les cinq scripts inline se rattachent via `astro:page-load` quand le routeur
@@ -179,7 +192,7 @@ et licences », « Réglages » (apparence), « Signaler une erreur ». C'est le
 | Ligne directrice | Ce qui la satisfait |
 |---|---|
 | 4.2 Fonctionnalités minimales | Barre d'onglets native, plein écran d'examen natif, rappels locaux, haptique, feuille de partage, Safari intégré, hors ligne complet |
-| 4.0 Design (HIG) | Zones sûres, 44 pt, Dynamic Type respecté (`rem` partout, pas de `px` sur le texte), sombre suivant le système, portrait |
+| 4.0 Design (HIG) | Zones sûres, 44 pt, Dynamic Type suivi par `font: -apple-system-body` sur `html[data-app]` (les `rem` suivent ; `rem` seul ne suit pas dans WKWebView), sombre suivant le système, portrait |
 | 5.1.1 Confidentialité | Aucune donnée collectée, `PrivacyInfo.xcprivacy`, URL de politique `/a-propos`, aucun compte |
 | 5.1.2 Suivi | Aucun traceur dans le bundle, `verifier-cible.mjs` le refuse |
 | 2.1 Complétude | Aucun lien mort (`elaguer-app.mjs`), aucun « bêta », pas de placeholder |
