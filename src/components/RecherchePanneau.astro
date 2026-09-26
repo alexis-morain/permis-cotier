@@ -11,6 +11,7 @@
  * programme à la main : la recherche est un raccourci, jamais le seul chemin.
  */
 import './recherche.css';
+import { POUR_APP } from '../lib/cible';
 
 interface Props {
   /** `dialogue` : la fenêtre de l'en-tête. `page` : le panneau de /recherche. */
@@ -115,14 +116,18 @@ const DEPART = [
     </div>
   </div>
 
-  <p class="recherche__aide">
-    <kbd class="touche">↑</kbd> <kbd class="touche">↓</kbd> parcourir · <kbd class="touche">Entrée</kbd> ouvrir ·
-    <kbd class="touche">Échap</kbd> fermer
-  </p>
+  {/* Des touches qu'un téléphone n'a pas : l'aide se tait dans l'app. */}
+  {!POUR_APP && (
+    <p class="recherche__aide">
+      <kbd class="touche">↑</kbd> <kbd class="touche">↓</kbd> parcourir · <kbd class="touche">Entrée</kbd> ouvrir ·
+      <kbd class="touche">Échap</kbd> fermer
+    </p>
+  )}
 </div>
 
 <script>
   import { evenement } from '../lib/mesure';
+  import { quandLaPageEstPrete } from '../lib/page';
   import {
     chercher,
     motsDeLaRequete,
@@ -205,8 +210,14 @@ const DEPART = [
     depart: HTMLElement;
   }
 
-  /** Un panneau incomplet n'est pas branché : mieux vaut le lien vers /recherche. */
+  /**
+   * Un panneau incomplet n'est pas branché : mieux vaut le lien vers /recherche.
+   * Un panneau déjà branché non plus : `data-branche` le marque, pour qu'aucun
+   * écouteur ne soit posé deux fois sur le même élément.
+   */
   function brancher(panneau: HTMLElement): void {
+    if (panneau.dataset.branche !== undefined) return;
+    panneau.dataset.branche = '';
     const champ = panneau.querySelector<HTMLInputElement>('[data-recherche-champ]');
     const liste = panneau.querySelector<HTMLUListElement>('[data-recherche-liste]');
     const etat = panneau.querySelector<HTMLElement>('[data-recherche-etat]');
@@ -380,6 +391,17 @@ const DEPART = [
     liste.addEventListener('click', compter, true);
     panneau.closest('dialog')?.addEventListener('close', compter);
     window.addEventListener('pagehide', compter);
+    // Dans la coquille, changer d'écran ne déclenche pas `pagehide` : le
+    // panneau part avec le corps de la page. On compte à ce moment-là, et on
+    // décroche l'écoute de `window`, qui survivrait sinon au panneau.
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        compter();
+        window.removeEventListener('pagehide', compter);
+      },
+      { once: true },
+    );
 
     champ.addEventListener('input', () => {
       compterQuandLaFrappeSArrete();
@@ -437,13 +459,18 @@ const DEPART = [
     }
   }
 
-  for (const panneau of document.querySelectorAll<HTMLElement>('[data-recherche]')) brancher(panneau);
-
   // ------------------------------------------------------------ la fenêtre
 
-  const fenetre = document.querySelector<HTMLDialogElement>('#recherche-fenetre');
+  /**
+   * La fenêtre se cherche à chaque usage, jamais une fois pour toutes : dans
+   * la coquille, le routeur remplace le corps de la page, et la fenêtre avec.
+   */
+  function laFenetre(): HTMLDialogElement | null {
+    return document.querySelector<HTMLDialogElement>('#recherche-fenetre');
+  }
 
   function ouvrir(par: 'loupe' | 'clavier'): void {
+    const fenetre = laFenetre();
     if (!fenetre) return;
     if (!fenetre.open) {
       fenetre.showModal();
@@ -456,27 +483,49 @@ const DEPART = [
     champ?.select();
   }
 
-  for (const ouvreur of document.querySelectorAll<HTMLElement>('[data-recherche-ouvrir]')) {
-    ouvreur.addEventListener('click', (clic) => {
-      // Sans fenêtre — script en panne, navigateur sans `<dialog>` — le lien
-      // vers /recherche fait le travail. Un clic milieu ou avec modificateur
-      // aussi : il ouvre l'onglet que la personne a demandé.
-      if (!fenetre || typeof fenetre.showModal !== 'function') return;
-      if (clic.metaKey || clic.ctrlKey || clic.shiftKey || clic.altKey || clic.button !== 0) return;
-      clic.preventDefault();
-      ouvrir('loupe');
+  /**
+   * Ce qui vit dans la page : les panneaux, les ouvreurs, la fenêtre. Sur le
+   * site, une fois. Dans la coquille, à chaque écran, puisque le corps de la
+   * page est neuf ; `data-branche` empêche de brancher deux fois le même
+   * élément.
+   */
+  function brancherLaPage(): void {
+    for (const panneau of document.querySelectorAll<HTMLElement>('[data-recherche]')) brancher(panneau);
+
+    for (const ouvreur of document.querySelectorAll<HTMLElement>('[data-recherche-ouvrir]')) {
+      if (ouvreur.dataset.branche !== undefined) continue;
+      ouvreur.dataset.branche = '';
+      ouvreur.addEventListener('click', (clic) => {
+        // Sans fenêtre — script en panne, navigateur sans `<dialog>` — le lien
+        // vers /recherche fait le travail. Un clic milieu ou avec modificateur
+        // aussi : il ouvre l'onglet que la personne a demandé.
+        const fenetre = laFenetre();
+        if (!fenetre || typeof fenetre.showModal !== 'function') return;
+        if (clic.metaKey || clic.ctrlKey || clic.shiftKey || clic.altKey || clic.button !== 0) return;
+        clic.preventDefault();
+        ouvrir('loupe');
+      });
+      ouvreur.addEventListener('pointerenter', () => void index().catch(() => {}));
+    }
+
+    const fenetre = laFenetre();
+    if (!fenetre || fenetre.dataset.branche !== undefined) return;
+    fenetre.dataset.branche = '';
+
+    fenetre.addEventListener('click', (clic) => {
+      // Le fond de la fenêtre, c'est l'élément lui-même : le panneau est dedans.
+      if (clic.target === fenetre) fenetre.close();
     });
-    ouvreur.addEventListener('pointerenter', () => void index().catch(() => {}));
+
+    fenetre.querySelector('[data-recherche-fermer]')?.addEventListener('click', () => fenetre.close());
   }
 
-  fenetre?.addEventListener('click', (clic) => {
-    // Le fond de la fenêtre, c'est l'élément lui-même : le panneau est dedans.
-    if (clic.target === fenetre) fenetre.close();
-  });
+  quandLaPageEstPrete(brancherLaPage);
 
-  fenetre?.querySelector('[data-recherche-fermer]')?.addEventListener('click', () => fenetre.close());
-
+  // Le raccourci écoute le document, qui ne change pas d'un écran à l'autre :
+  // posé une fois, hors de `brancherLaPage`.
   document.addEventListener('keydown', (touche) => {
+    const fenetre = laFenetre();
     if (!fenetre || fenetre.open || ECRANS_DE_JEU.test(location.pathname)) return;
     const cible = touche.target;
     if (cible instanceof HTMLElement && cible.closest('input, textarea, select, [contenteditable="true"]')) return;

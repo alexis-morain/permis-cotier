@@ -37,10 +37,10 @@ const cours = coursParCode(theme.code);
   ]}
 >
   <div class="page page--etroite" style="padding-block:3rem 0">
-    <p class="chapitre"><a href="/themes">Programme</a></p>
+    <p class="chapitre web-seulement"><a href="/themes">Programme</a></p>
     <h1>{theme.nom}</h1>
     <p class="intitule">{theme.intitule}</p>
-    <p class="chapo">{theme.description}</p>
+    <p class="chapo web-seulement">{theme.description}</p>
 
     {questions.length > 0 ? (
       <p style="margin-top:2rem">
@@ -66,7 +66,7 @@ const cours = coursParCode(theme.code);
 
   <div class="page page--etroite" style="margin-top:3.5rem">
     <h2>Ce qu’il faut savoir</h2>
-    <p class="discret">
+    <p class="discret web-seulement">
       {notions.length} notion{notions.length > 1 ? 's' : ''} à réviser, dans l’ordre.
       {questions.length > 0 && ' Les questions de la banque sont rangées dessous.'}
     </p>

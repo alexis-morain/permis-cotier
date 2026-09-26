@@ -68,12 +68,12 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
   ]}
 >
   <article class="page page--etroite" style="padding-block:2.5rem 0">
-    <p class="chapitre"><a href={`/theme/${notion.theme}`}>{nomTheme}</a></p>
+    <p class="chapitre web-seulement"><a href={`/theme/${notion.theme}`}>{nomTheme}</a></p>
     <h1>{notion.nom}</h1>
 
     <p class="chapo">{notion.resume}</p>
 
-    <p class="discret ancrage">
+    <p class="discret ancrage web-seulement">
       Programme de l’épreuve, arrêté du 28 septembre 2007, art. 1er § 1.2 :
       « {notion.ancrage} ». Thème <a href={`/theme/${notion.theme}`}>{nomTheme.toLowerCase()}</a>.
     </p>

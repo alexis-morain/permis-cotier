@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { APPARENCES, appliquerApparence, choisirApparence, lireApparence } from '../lib/apparence';
+import {
+  APPARENCES,
+  accorderBarreEtatALaPage,
+  appliquerApparence,
+  choisirApparence,
+  lireApparence,
+} from '../lib/apparence';
 import type { Apparence as Choix } from '../lib/apparence';
 import { evenement } from '../lib/mesure';
 
@@ -26,6 +32,7 @@ export default function Apparence({ idTitre }: Props) {
   function changer(valeur: Choix) {
     choisirApparence(valeur);
     appliquerApparence(valeur);
+    void accorderBarreEtatALaPage();
     setChoix(valeur);
     evenement('apparence-changee', { apparence: valeur });
   }

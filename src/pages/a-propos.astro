@@ -1,10 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import { comptesDeRelecture, versionBanque } from '../lib/banque';
+import { POUR_APP } from '../lib/cible';
+
+// Dans l'app, cette page est la politique de confidentialité que la fiche de
+// l'App Store désigne, et elle reprend ce que le pied de page du site dit
+// ailleurs : la version de la banque et l'état des relectures.
+const version = versionBanque();
+const relecture = await comptesDeRelecture();
 ---
 
 <Base
   titre="Qui écrit ces questions"
   description="Qui tient ce site, pourquoi il existe, et comment une question est écrite, sourcée et relue avant d’être publiée."
+  retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}
 >
   <div class="page page--etroite" style="padding-block:3rem 0">
     <h1>Qui écrit ces questions</h1>
@@ -16,10 +25,20 @@ import Base from '../layouts/Base.astro';
     </p>
     <p>
       Ce qu’il fait, c’est te préparer au format de l’épreuve : quarante questions, une ou
-      deux bonnes réponses, cinq erreurs admises, vingt secondes par question. Il est
-      gratuit, il ne demande aucun compte, il ne pose aucun cookie et ne garde aucune donnée
-      personnelle : la fréquentation est comptée sans identifiant, sur un serveur qui
-      m’appartient, et <a href="/parametres">tu peux t’en retirer</a>. Et chaque question cite le texte réglementaire dont elle est tirée, avec
+      deux bonnes réponses, cinq erreurs admises, vingt secondes par question.{POUR_APP ? (
+        <Fragment>
+          {' '}L’app est gratuite. Elle ne collecte aucune donnée : ni compte, ni cookie, ni
+          mesure d’audience, ni traceur. Ta progression reste sur ton téléphone, et
+          disparaît avec l’app.
+        </Fragment>
+      ) : (
+        <Fragment>
+          {' '}Il est
+          gratuit, il ne demande aucun compte, il ne pose aucun cookie et ne garde aucune donnée
+          personnelle : la fréquentation est comptée sans identifiant, sur un serveur qui
+          m’appartient, et <a href="/parametres">tu peux t’en retirer</a>.
+        </Fragment>
+      )} Et chaque question cite le texte réglementaire dont elle est tirée, avec
       son numéro d’article, sous l’explication.
     </p>
     <p>
@@ -39,10 +58,23 @@ import Base from '../layouts/Base.astro';
     </p>
     <p>
       Rien n’est publié avant relecture. Chaque fichier de question porte le nom de son
-      relecteur, et une question ne peut pas passer en publié sans lui. Le pied de page compte
-      ces relectures au moment où le site est construit : la phrase que tu y lis n’est pas une
-      promesse écrite à la main, elle change toute seule dès qu’un lot non relu entre dans la
-      banque. Quand ce relecteur est une personne, c’est toujours la même. Le palier suivant est une
+      relecteur, et une question ne peut pas passer en publié sans lui. {POUR_APP ? (
+        <Fragment>
+          Ces relectures sont comptées au moment où l’app est construite, et la phrase qui
+          suit change toute seule dès qu’un lot non relu entre dans la banque : {
+            relecture.parUnePersonne === relecture.total
+              ? `les ${relecture.total} questions de la banque ${version} sont relues par une personne.`
+              : `${relecture.parUnePersonne} des ${relecture.total} questions de la banque ${version} sont relues par une personne, les autres par le seul modèle qui les a écrites.`
+          }
+        </Fragment>
+      ) : (
+        <Fragment>
+          Le pied de page compte
+          ces relectures au moment où le site est construit : la phrase que tu y lis n’est pas une
+          promesse écrite à la main, elle change toute seule dès qu’un lot non relu entre dans la
+          banque.
+        </Fragment>
+      )} Quand ce relecteur est une personne, c’est toujours la même. Le palier suivant est une
       deuxième relecture par un tiers, prévue avant décembre 2026.
     </p>
 
@@ -63,5 +95,11 @@ import Base from '../layouts/Base.astro';
       <a href="https://github.com/alexis-morain/permis-cotier">github.com/alexis-morain/permis-cotier</a>.
       Tu peux y lire les questions, les sources et le code qui les assemble.
     </p>
+    {POUR_APP && (
+      <p>
+        Les visuels repris de Wikimedia Commons ont leurs auteurs et leurs licences sur la page
+        des <a href="/credits">crédits</a>.
+      </p>
+    )}
   </div>
 </Base>

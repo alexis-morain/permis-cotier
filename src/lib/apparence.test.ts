@@ -1,5 +1,13 @@
-import { describe, it, expect } from 'vitest';
-import { CLE_APPARENCE, lireApparence, choisirApparence, appliquerApparence, SCRIPT_APPARENCE } from './apparence';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import {
+  CLE_APPARENCE,
+  lireApparence,
+  choisirApparence,
+  appliquerApparence,
+  accorderBarreEtat,
+  estSombre,
+  SCRIPT_APPARENCE,
+} from './apparence';
 import type { Stockage } from './progression';
 
 class MemoireLocale implements Stockage {
@@ -44,5 +52,53 @@ describe('apparence', () => {
   it('le script de tête relit la même clé et pose le même attribut', () => {
     expect(SCRIPT_APPARENCE).toContain(CLE_APPARENCE);
     expect(SCRIPT_APPARENCE).toContain('data-apparence');
+  });
+});
+
+describe('l’apparence effective', () => {
+  it('suit le système en auto, et le choix sinon', () => {
+    expect(estSombre('auto', true)).toBe(true);
+    expect(estSombre('auto', false)).toBe(false);
+    expect(estSombre('sombre', false)).toBe(true);
+    expect(estSombre('clair', true)).toBe(false);
+  });
+});
+
+describe('la barre d’état', () => {
+  afterEach(() => {
+    vi.doUnmock('./cible');
+    vi.doUnmock('@capacitor/status-bar');
+  });
+
+  it('ne touche à rien sur le site', async () => {
+    await expect(accorderBarreEtat(true)).resolves.toBeUndefined();
+  });
+
+  /** `apparence.ts` rechargé dans la coquille, le greffon remplacé par un double. */
+  async function dansLaCoquille(setStyle: (options: unknown) => Promise<void>) {
+    vi.resetModules();
+    vi.doMock('./cible', () => ({ POUR_APP: true }));
+    vi.doMock('@capacitor/status-bar', () => ({
+      StatusBar: { setStyle },
+      Style: { Dark: 'DARK', Light: 'LIGHT' },
+    }));
+    return import('./apparence');
+  }
+
+  it('fond sombre, icônes claires ; fond clair, icônes sombres', async () => {
+    const setStyle = vi.fn(async () => {});
+    const { accorderBarreEtat: accorder } = await dansLaCoquille(setStyle);
+    await accorder(true);
+    await accorder(false);
+    // Le nom des styles de Capacitor dit le fond, pas les icônes : `Dark`
+    // pose du texte clair.
+    expect(setStyle.mock.calls).toEqual([[{ style: 'DARK' }], [{ style: 'LIGHT' }]]);
+  });
+
+  it('se tait quand le greffon échoue', async () => {
+    const { accorderBarreEtat: accorder } = await dansLaCoquille(async () => {
+      throw new Error('greffon absent');
+    });
+    await expect(accorder(true)).resolves.toBeUndefined();
   });
 });
