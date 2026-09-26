@@ -5,6 +5,7 @@ import { COURS, leconsDuCours, cheminCours } from '../../lib/parcours';
 import { leconsEcrites, compteLeconsEcrites } from '../../lib/lecons';
 import { SITE, faq, absolue } from '../../lib/seo';
 import { POUR_APP } from '../../lib/cible';
+import OuvrirRecherche from '../../components/OuvrirRecherche.astro';
 
 const ecrites = await leconsEcrites();
 const compte = await compteLeconsEcrites();
@@ -73,6 +74,7 @@ const liste = {
 >
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>{POUR_APP ? 'Le cours' : 'Le cours, thème par thème'}</h1>
+    {POUR_APP && <OuvrirRecherche />}
     <p class="chapo web-seulement">
       Tu pars de zéro ? Chaque thème du programme a son cours, et les quatorze cours se
       suivent dans l’ordre où on apprend, pas dans celui de l’arrêté : d’abord ce qu’on voit
