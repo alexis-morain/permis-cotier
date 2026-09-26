@@ -49,7 +49,7 @@ export default function ReglageSon() {
         Les sons suivent le bouton silencieux de ton iPhone.
       </p>
       <style>{`
-        .reglageSon p { margin: 0.25rem 0 0; }
+        .reglageSon p { margin-top: 0.25rem; }
         .interrupteur {
           position: relative;
           display: flex;
