@@ -330,7 +330,7 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
         );
         // Le verdict d'examen se sent, comme celui de chaque question en
         // entraînement. Un examen interrompu n'a pas de verdict à faire sentir.
-        void vibrer(r.reussi ? 'juste' : 'faux');
+        void vibrer(r.reussi ? 'reussi' : 'echoue');
       }
       evenement('examen-termine', {
         bonnes: r.bonnes,
@@ -341,6 +341,7 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
       });
     } else {
       evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
+      if (!session.interrompu) void vibrer('fin-serie');
     }
   }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
 

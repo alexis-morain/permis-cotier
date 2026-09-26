@@ -7,6 +7,7 @@ import { douceur } from '../lib/douceur';
 import { cheminRetour, libelleRetour } from '../lib/retour';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import { POUR_APP } from '../lib/cible';
+import { vibrer } from '../lib/natif';
 import './quiz.css';
 import './lecon.css';
 
@@ -98,6 +99,7 @@ function Verification({
   const valider = () => {
     setCorrigee(true);
     if (juste) setBonnes((b) => b + 1);
+    void vibrer(juste ? 'juste' : 'faux');
     sauvegarder(enregistrerReponse(charger(), question.id, juste, aujourdhui()));
     window.setTimeout(() => verdict.current?.scrollIntoView({ block: 'nearest', behavior: douceur() }), 0);
   };
@@ -140,7 +142,7 @@ function Verification({
                 className={`proposition${classe}`}
                 aria-pressed={cochee}
                 disabled={corrigee || (plein && !cochee)}
-                onClick={() => basculer(p.id)}
+                onClick={() => { void vibrer('choix'); basculer(p.id); }}
               >
                 <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
                 <span>{p.texte}</span>
@@ -227,6 +229,7 @@ export default function Lecon({ lecon, cours, rang, total, suite }: Props) {
     const resultat = score ?? { bonnes: 0, total: 0 };
     sauvegarder(terminerLecon(charger(), lecon.code, resultat, aujourdhui()));
     evenement('lecon-terminee', { notion: lecon.code, cours: cours.code, ...resultat });
+    void vibrer('lecon');
   }, [ecran.type, score, lecon.code, cours.code]);
 
   const aller = (i: number) => {
