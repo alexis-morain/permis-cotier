@@ -46,6 +46,21 @@ import { ClientRouter } from 'astro:transitions';
     });
   });
 
+  // Le bouton Retour remonte d'un échelon : l'écran doit glisser vers la
+  // droite, comme le retour d'iOS. Pour le routeur c'est un lien suivi, donc
+  // une navigation en avant ; on lui dit le sens, qui ne touche que
+  // l'animation, pas l'historique.
+  document.addEventListener('astro:before-preparation', (evenement) => {
+    if (evenement.sourceElement?.closest('.retour__lien, .lecon__chapitre a')) {
+      evenement.direction = 'back';
+    }
+  });
+
+  // WebKit n'applique `:active` au toucher que si la page écoute
+  // `touchstart`. Sans cet écouteur vide, ni les boutons ni les cellules ne
+  // s'enfoncent sous le doigt.
+  document.addEventListener('touchstart', () => {}, { passive: true });
+
   void accorderBarreEtatALaPage();
   window
     .matchMedia('(prefers-color-scheme: dark)')

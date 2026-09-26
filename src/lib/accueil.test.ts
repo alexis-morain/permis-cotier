@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { aRevoir, depuisLe, dernierExamen, echeance, joursDeSuite, reprise, type LeconAccueil } from './accueil';
+import { aRevoir, depuisLe, nombreDErreurs, dernierExamen, echeance, joursDeSuite, reprise, type LeconAccueil } from './accueil';
 import { enregistrerExamen, enregistrerReponse, etatInitial, terminerLecon } from './progression';
 
 const JOUR = '2026-09-25';
@@ -100,5 +100,26 @@ describe('ton examen', () => {
     const e = { ...etatInitial(), activite: { '2026-09-22': 4, '2026-09-23': 2, '2026-09-24': 9 } };
     expect(joursDeSuite(e, JOUR)).toBe(3);
     expect(joursDeSuite(etatInitial(), JOUR)).toBe(0);
+  });
+});
+
+describe('le nombre d’erreurs de /profil/erreurs', () => {
+  const ids = ['q1', 'q2', 'q3'];
+
+  it('zéro sans rien de joué, zéro sans rien de raté ni de dû', () => {
+    expect(nombreDErreurs(etatInitial(), ids, JOUR)).toBe(0);
+    const e = enregistrerReponse(etatInitial(), 'q1', true, JOUR);
+    expect(nombreDErreurs(e, ids, JOUR)).toBe(0);
+  });
+
+  it('compte ce qui a été raté et ce qui est dû, comme la page', () => {
+    let e = enregistrerReponse(etatInitial(), 'q1', false, JOUR);
+    e = enregistrerReponse(e, 'q2', false, '2026-09-20');
+    expect(nombreDErreurs(e, ids, JOUR)).toBe(2);
+  });
+
+  it('ignore une question qui n’est plus publiée', () => {
+    const e = enregistrerReponse(etatInitial(), 'retiree', false, JOUR);
+    expect(nombreDErreurs(e, ids, JOUR)).toBe(0);
   });
 });

@@ -11,7 +11,7 @@ const total = (await questionsPubliees()).length;
 ---
 
 <Base titre="Réglages du site" description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
-  <div class="page page--etroite" style="padding-block:3rem 0">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>Réglages du site</h1>
 
     <h2>Ta progression</h2>

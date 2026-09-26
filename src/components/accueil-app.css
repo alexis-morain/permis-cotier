@@ -7,11 +7,21 @@
  * des rangées séparées d'un filet, comme les listes du site. Un seul bouton
  * jaune sur l'écran, celui de la leçon.
  */
+/* Pas de rembourrage en haut : `<main>` pose déjà la zone sûre plus 1 rem,
+   la marge de tous les écrans de l'app. */
 .accueilApp {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
 }
+
+/* Les quatre blocs arrivent l'un après l'autre, une fois, au montage. */
+.accueilApp > section {
+  animation: app-entree var(--duree) var(--courbe) both;
+}
+.accueilApp > section:nth-of-type(2) { animation-delay: 60ms; }
+.accueilApp > section:nth-of-type(3) { animation-delay: 120ms; }
+.accueilApp > section:nth-of-type(4) { animation-delay: 180ms; }
 
 .accueilApp__bloc {
   padding: 1.25rem 0;
@@ -58,6 +68,14 @@
   height: 100%;
   background: var(--jaune);
   transform-origin: left;
+  animation: app-jauge 400ms var(--courbe) 160ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accueilApp > section,
+  .accueilApp__jauge span {
+    animation: none;
+  }
 }
 
 .accueilApp__compte {

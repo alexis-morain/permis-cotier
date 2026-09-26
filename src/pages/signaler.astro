@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { POUR_APP } from '../lib/cible';
 
 // Deux chemins, dans cet ordre. Si Turnstile est configuré au build, le
 // formulaire poste sur `/api/signaler` : le Worker vérifie le jeton, ouvre une
@@ -19,7 +20,7 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
 ---
 
 <Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
-  <div class="page page--etroite" style="padding-block:3rem 0">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>Une question te paraît fausse ?</h1>
     <p>
       Dis-moi laquelle et pourquoi. Chaque signalement est relu contre le texte cité, et la

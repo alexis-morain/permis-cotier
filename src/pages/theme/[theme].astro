@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { POUR_APP } from '../../lib/cible';
 import LienQuestion from '../../components/LienQuestion.astro';
 import { questionsDuTheme } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
@@ -36,7 +37,7 @@ const cours = coursParCode(theme.code);
     { nom: theme.nom, chemin: `/theme/${theme.code}` },
   ]}
 >
-  <div class="page page--etroite" style="padding-block:3rem 0">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <p class="chapitre web-seulement"><a href="/themes">Programme</a></p>
     <h1>{theme.nom}</h1>
     <p class="intitule">{theme.intitule}</p>

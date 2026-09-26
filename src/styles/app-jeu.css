@@ -36,6 +36,20 @@ html[data-app] .jeu > .jeu__actions--collant {
   padding-inline: 1rem;
 }
 
+/* L'écran de départ garde la barre d'onglets, qui flotte au-dessus du bas :
+   la zone sûre s'arrête pile à son bord, et le bord plein du bouton passait
+   dessous. Une respiration en plus, et les deux boutons d'une reprise
+   empilés pleine largeur plutôt que repliés au hasard de la largeur. */
+html[data-app] .depart > .jeu__actions--collant {
+  flex-direction: column;
+  align-items: stretch;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+html[data-app] .depart > .jeu__actions--collant .bouton {
+  flex: 0 0 auto;
+  min-height: 3.25rem;
+}
+
 /* ------------------------------------------------ La ligne d'avancement
 
    Une jauge fine pleine largeur, le chrono en grand chiffre, le compteur en
@@ -101,6 +115,49 @@ html[data-app] .proposition--cochee:hover:not(:disabled) {
 html[data-app] .proposition:active:not(:disabled) {
   transform: translateY(var(--bord));
   box-shadow: 0 0 0 transparent;
+  transition-duration: 80ms;
+}
+
+/* ------------------------------------------------ Le mouvement du jeu
+
+   Question à question : l'énoncé, le visuel, puis chaque proposition, en
+   fondu et montée de huit points, quarante millisecondes l'une après
+   l'autre. Le `key` de Quiz.tsx remonte ces éléments à chaque question, au
+   clic comme au buzzer, ce qui rejoue l'entrée. La liste elle-même ne bouge
+   plus : ce sont ses lignes qui arrivent. */
+html[data-app] .jeu > .jeu__enonce,
+html[data-app] .jeu > .jeu__visuel,
+html[data-app] .jeu > .propositions > li {
+  animation: app-entree 200ms var(--courbe) backwards;
+}
+/* Le bord plein de la proposition déborde de 3 pt sous sa ligne. Pendant
+   l'entrée, la ligne a son propre calque : au simulateur, ce débord restait
+   parfois peint après le changement de question. On le loge dans la ligne,
+   l'écart entre deux propositions reste le même. */
+html[data-app] .jeu > .propositions { gap: calc(0.7rem - var(--bord)); }
+html[data-app] .jeu > .propositions > li { padding-bottom: var(--bord); }
+html[data-app] .jeu > .jeu__visuel { animation-delay: 40ms; }
+html[data-app] .jeu > .propositions { animation: none; }
+html[data-app] .jeu > .propositions > li:nth-child(1) { animation-delay: 60ms; }
+html[data-app] .jeu > .propositions > li:nth-child(2) { animation-delay: 100ms; }
+html[data-app] .jeu > .propositions > li:nth-child(3) { animation-delay: 140ms; }
+html[data-app] .jeu > .propositions > li:nth-child(4) { animation-delay: 180ms; }
+html[data-app] .jeu > .propositions > li:nth-child(n + 5) { animation-delay: 220ms; }
+
+/* La proposition s'enfonce en 80 ms et remonte en 160. Cochée, la lettre
+   se remplit et son disque se pose d'un léger resserrement. */
+html[data-app] .proposition {
+  transition: border-color var(--duree-courte) var(--courbe), background-color var(--duree-courte) var(--courbe),
+    box-shadow var(--duree-courte) var(--courbe), transform var(--duree-courte) var(--courbe),
+    opacity var(--duree-courte) var(--courbe);
+}
+
+@keyframes app-lettre-cochee {
+  from { transform: scale(0.9); }
+  to { transform: none; }
+}
+html[data-app] .jeu > .propositions .proposition--cochee .proposition__lettre {
+  animation: app-lettre-cochee var(--duree-courte) var(--courbe);
 }
 
 /* ------------------------------------------------ Le bloc du bas
@@ -138,7 +195,7 @@ html[data-app] .jeu__pied .verdict {
   padding: 1.25rem 1rem 0.25rem;
   border: 0;
   border-radius: var(--rayon) var(--rayon) 0 0;
-  animation: panneau-monte 220ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation: panneau-monte 220ms var(--courbe) both;
 }
 html[data-app] .jeu__pied .verdict--juste { color: var(--vert-texte); }
 html[data-app] .jeu__pied .verdict--fausse { color: var(--rouge-texte); }
@@ -148,13 +205,20 @@ html[data-app] .jeu__pied .verdict__titre {
   font-size: 1.6rem;
   line-height: 1.1;
   margin-bottom: 0.5rem;
+  animation: app-titre-monte 200ms var(--courbe) 60ms both;
+}
+
+/* Le mot du verdict arrive juste après le panneau : c'est lui qu'on lit. */
+@keyframes app-titre-monte {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
 
 /* La confirmation d'arrêt prend la même place que le verdict. */
 html[data-app] .jeu__pied .arret {
   border-radius: var(--rayon) var(--rayon) 0 0;
   padding: 1.25rem 1rem max(1.1rem, env(safe-area-inset-bottom));
-  animation: panneau-monte 220ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation: panneau-monte 220ms var(--courbe) both;
 }
 
 @keyframes panneau-monte {
@@ -162,12 +226,6 @@ html[data-app] .jeu__pied .arret {
   to { opacity: 1; transform: none; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html[data-app] .jeu__pied .verdict,
-  html[data-app] .jeu__pied .arret {
-    animation: none;
-  }
-}
 
 /* ------------------------------------------------ Résultat
 
@@ -175,6 +233,31 @@ html[data-app] .jeu__pied .arret {
    geste suivant en boutons pleine largeur, le partage discret dessous. */
 html[data-app] .resultat__score {
   font-size: clamp(5rem, 30vw, 8rem);
+  transform-origin: left bottom;
+  animation: app-score var(--duree) var(--courbe) both;
+}
+@keyframes app-score {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Les jauges par thème : un élément à part dans l'app, pour se remplir en
+   `scaleX` au lieu du dégradé de fond du site, une ligne après l'autre. */
+html[data-app] .parTheme li::after { display: none; }
+html[data-app] .parTheme__jauge {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--fond-2);
+  overflow: hidden;
+}
+html[data-app] .parTheme__jauge span {
+  display: block;
+  height: 100%;
+  background: var(--vert);
+  transform: scaleX(var(--part, 0));
+  transform-origin: left;
+  animation: app-jauge 400ms var(--courbe) calc(var(--rang, 0) * 50ms + 120ms) both;
 }
 
 html[data-app] .resultat__actions {
@@ -191,3 +274,30 @@ html[data-app] .resultat__partage {
   text-align: center;
 }
 html[data-app] .resultat__partage .bouton { min-height: 2.75rem; }
+
+/* ------------------------------------------------ Sans mouvement */
+@media (prefers-reduced-motion: reduce) {
+  html[data-app] .jeu > .jeu__enonce,
+  html[data-app] .jeu > .jeu__visuel,
+  html[data-app] .jeu > .propositions > li,
+  html[data-app] .jeu > .propositions .proposition--cochee .proposition__lettre,
+  html[data-app] .jeu__pied .verdict,
+  html[data-app] .jeu__pied .verdict__titre,
+  html[data-app] .jeu__pied .arret,
+  html[data-app] .resultat__score,
+  html[data-app] .parTheme__jauge span {
+    animation: none;
+  }
+  html[data-app] .proposition { transition: none; }
+}
+
+/* La confirmation d'arrêt : ses deux boutons empilés, pleine largeur, comme
+   la barre du bas qu'elle remplace. */
+html[data-app] .arret .jeu__actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+html[data-app] .arret .jeu__actions .bouton {
+  flex: 0 0 auto;
+  min-height: 3.25rem;
+}
