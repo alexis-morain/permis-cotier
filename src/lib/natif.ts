@@ -147,3 +147,23 @@ export function surRetourAuPremierPlan(faire: () => void): () => void {
     debrancher?.();
   };
 }
+
+/**
+ * Le plein écran de l'épreuve.
+ *
+ * Une série qui commence cache la barre d'onglets native ; le résultat ou
+ * l'arrêt la ramène. C'est le geste d'une app d'apprentissage : pendant les
+ * vingt secondes d'une question, rien d'autre à l'écran. Le greffon `Ecran`
+ * est écrit dans la coquille (`ios/App/App/EcranPlugin.swift`), une méthode,
+ * `pleinEcran({ actif })`. Absent, rien ne se passe.
+ */
+export async function modeConcentration(actif: boolean): Promise<void> {
+  if (!POUR_APP) return;
+  try {
+    const { registerPlugin } = await import('@capacitor/core');
+    const Ecran = registerPlugin<{ pleinEcran(options: { actif: boolean }): Promise<void> }>('Ecran');
+    await Ecran.pleinEcran({ actif });
+  } catch {
+    // Greffon absent, ou coquille d'une autre version : la barre reste.
+  }
+}
