@@ -28,6 +28,7 @@ vi.mock('../lib/natif', () => ({
   vibrer: vi.fn(async () => {}),
   partager: vi.fn(async () => false),
   programmerRappels: vi.fn(async () => {}),
+  modeConcentration: vi.fn(async () => {}),
   surRetourAuPremierPlan: (faire: () => void) => {
     retours.push(faire);
     return () => {

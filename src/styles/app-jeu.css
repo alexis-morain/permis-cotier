@@ -1,2 +1,193 @@
 /* Ce que la coquille iOS change aux écrans de jeu : examen, entraînement,
-   révision, résultat. Tout est sous `html[data-app]`, comme dans app.css. */
+   révision, résultat. Tout est sous `html[data-app]`, comme dans app.css.
+
+   Le parti vient de docs/app-da.md : pendant la série, la barre d'onglets est
+   cachée (`modeConcentration`), l'écran est à la question et rien d'autre ;
+   la barre d'action et le verdict forment un bloc collé au bord bas. */
+
+/* ------------------------------------------------ L'écran tient la hauteur
+
+   Le bloc du bas colle au bord de l'écran même quand la question est courte :
+   l'écran de jeu fait la hauteur visible moins le haut de `<main>` (zone sûre
+   plus 1 rem, voir app.css), et le bloc prend la marge qui reste. Sans ça, le
+   bouton flotte sous la dernière proposition.
+
+   Le bas de `<main>`, lui, saute : app.css y met la zone sûre plus 2 rem pour
+   dégager la barre d'onglets, et la barre d'action porte déjà la zone sûre.
+   Les deux ensemble, c'était le vide de 140 pt vu au simulateur. */
+html[data-app] .jeu:has(> .jeu__pied, > .jeu__actions--collant) {
+  min-height: calc(100svh - 1rem - env(safe-area-inset-top));
+  padding-block: 0.75rem 0;
+}
+
+html[data-app] main:has(.jeu__pied, .jeu__actions--collant) {
+  padding-bottom: 0;
+}
+
+html[data-app] .jeu > .jeu__actions--collant,
+html[data-app] .jeu__pied {
+  margin-top: auto;
+}
+
+/* La barre de l'écran de départ déborde jusqu'aux bords, comme sur le site,
+   mais la gouttière de l'app est de 16 pt et non de 20. */
+html[data-app] .jeu > .jeu__actions--collant {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: 1rem;
+}
+
+/* ------------------------------------------------ La ligne d'avancement
+
+   Une jauge fine pleine largeur, le chrono en grand chiffre, le compteur en
+   petit à droite, la jauge du chrono dessous. */
+html[data-app] .jeu__entete {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+
+html[data-app] .jeu__entete .jeu__avancement {
+  grid-column: 1 / -1;
+  margin-inline: calc(50% - 50vw);
+  height: 4px;
+  border-radius: 0;
+}
+html[data-app] .jeu__entete .jeu__avancement span { border-radius: 0; }
+
+html[data-app] .jeu__chrono {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+html[data-app] .jeu__compteur {
+  justify-self: end;
+  font-stretch: 100%;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+}
+
+html[data-app] .jeu__entete .jeu__barre {
+  grid-column: 1 / -1;
+  height: 6px;
+}
+
+/* ------------------------------------------------ Propositions
+
+   56 pt au moins, la lettre dans un disque. Le survol n'existe pas au doigt :
+   iOS le laisse collé sur la dernière carte touchée, qui prendrait l'air
+   d'une case cochée. On le neutralise, et l'appui (bord plein qui s'efface)
+   passe après pour garder la main. */
+html[data-app] .proposition {
+  min-height: 3.5rem;
+  align-items: center;
+}
+
+html[data-app] .proposition__lettre {
+  flex-basis: 2rem;
+  height: 2rem;
+  margin-top: 0;
+}
+
+html[data-app] .proposition:hover:not(:disabled) {
+  border-color: var(--filet-fort);
+  box-shadow: 0 var(--bord) 0 var(--filet-fort);
+}
+html[data-app] .proposition--cochee:hover:not(:disabled) {
+  border-color: var(--texte);
+  box-shadow: 0 var(--bord) 0 var(--texte);
+}
+html[data-app] .proposition:active:not(:disabled) {
+  transform: translateY(var(--bord));
+  box-shadow: 0 0 0 transparent;
+}
+
+/* ------------------------------------------------ Le bloc du bas
+
+   Le verdict monte en panneau au-dessus de la barre d'action, sur le même
+   fond : un seul bloc, le bouton « Continuer » à portée de pouce. La barre
+   passe devant le panneau, qui glisse donc de derrière elle. */
+html[data-app] .jeu__pied {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  margin-inline: calc(50% - 50vw);
+}
+
+html[data-app] .jeu__pied .jeu__actions--collant {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+  border-top: 2px solid var(--filet);
+  background: var(--fond);
+}
+html[data-app] .jeu__pied .jeu__actions--juste { background: var(--vert-pale); border-top-color: var(--vert-pale); }
+html[data-app] .jeu__pied .jeu__actions--fausse { background: var(--rouge-pale); border-top-color: var(--rouge-pale); }
+
+/* Le panneau : plafonné à 60 % de l'écran, il défile dedans quand
+   l'explication est longue, sans faire défiler la question derrière. */
+html[data-app] .jeu__pied .verdict {
+  max-height: 60svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: 1.25rem 1rem 0.25rem;
+  border: 0;
+  border-radius: var(--rayon) var(--rayon) 0 0;
+  animation: panneau-monte 220ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+html[data-app] .jeu__pied .verdict--juste { color: var(--vert-texte); }
+html[data-app] .jeu__pied .verdict--fausse { color: var(--rouge-texte); }
+html[data-app] .jeu__pied .verdict .sources { color: inherit; }
+
+html[data-app] .jeu__pied .verdict__titre {
+  font-size: 1.6rem;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+/* La confirmation d'arrêt prend la même place que le verdict. */
+html[data-app] .jeu__pied .arret {
+  border-radius: var(--rayon) var(--rayon) 0 0;
+  padding: 1.25rem 1rem max(1.1rem, env(safe-area-inset-bottom));
+  animation: panneau-monte 220ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes panneau-monte {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-app] .jeu__pied .verdict,
+  html[data-app] .jeu__pied .arret {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------ Résultat
+
+   Le score en très grand, le verdict écrit, les jauges par thème, puis le
+   geste suivant en boutons pleine largeur, le partage discret dessous. */
+html[data-app] .resultat__score {
+  font-size: clamp(5rem, 30vw, 8rem);
+}
+
+html[data-app] .resultat__actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+html[data-app] .resultat__actions .bouton {
+  flex: 0 0 auto;
+  min-height: 3.25rem;
+}
+
+html[data-app] .resultat__partage {
+  margin: 0;
+  text-align: center;
+}
+html[data-app] .resultat__partage .bouton { min-height: 2.75rem; }

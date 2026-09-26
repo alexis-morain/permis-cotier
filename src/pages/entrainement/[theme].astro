@@ -23,7 +23,7 @@ const banque = cheminBanque();
   prechargeBanque
 >
   <div class="page page--etroite">
-    <p class="chapitre" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
+    <p class="chapitre web-seulement" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
     <SansScript ecran="L’entraînement" />
     <Quiz client:only="react" mode="entrainement" source={banque} theme={theme.code} />
   </div>
