@@ -59,6 +59,16 @@ class EcranWeb: CAPBridgeViewController {
         }
     }
 
+    /// L'onglet revient à l'écran. Chaque onglet a sa propre webview, chargée
+    /// une fois : une leçon faite dans Cours ne se voit pas dans Accueil tant
+    /// qu'on ne le dit pas à la page. On lui envoie donc un événement, et c'est
+    /// elle qui décide de se rafraîchir si sa progression a changé
+    /// (`Coquille.astro`, `app:onglet`).
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        webView?.evaluateJavaScript("window.dispatchEvent(new Event('app:onglet'))", completionHandler: nil)
+    }
+
     /// Ramène l'onglet à son adresse de départ, puis en haut de la page.
     /// Appelé quand on retouche l'onglet déjà ouvert : c'est le geste qui
     /// sort d'une leçon, comme dans toute app iOS.

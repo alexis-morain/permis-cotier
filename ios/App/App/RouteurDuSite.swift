@@ -30,7 +30,11 @@ public struct RouteurDuSite: Router {
     public init() {}
 
     public func route(for path: String) -> String {
-        let accueil = basePath + "/index.html"
+        // La page de repli est l'écran d'accueil de l'app quand le build l'a
+        // construit : `index.html` est la page d'accueil du site, avec son
+        // texte de présentation, qui n'a rien à faire dans la coquille.
+        let ecran = basePath + "/accueil/index.html"
+        let accueil = FileManager.default.fileExists(atPath: ecran) ? ecran : basePath + "/index.html"
         let chemin = path.isEmpty ? "/" : path
 
         // Une extension : le fichier est demandé tel quel. C'est le cas des
@@ -44,10 +48,7 @@ public struct RouteurDuSite: Router {
             : chemin
         // La racine est l'écran d'accueil de l'app quand le build l'a construit :
         // `index.html` est la page d'accueil du site, qui n'a rien à faire ici.
-        if sansBarreFinale == "/" {
-            let ecran = basePath + "/accueil/index.html"
-            return FileManager.default.fileExists(atPath: ecran) ? ecran : accueil
-        }
+        if sansBarreFinale == "/" { return accueil }
 
         let fichiers = FileManager.default
         for candidat in ["\(sansBarreFinale)/index.html", "\(sansBarreFinale).html"] {
