@@ -1,4 +1,5 @@
 ---
+import { POUR_APP } from '../../lib/cible';
 import Guide from '../../layouts/Guide.astro';
 ---
 
@@ -72,7 +73,11 @@ import Guide from '../../layouts/Guide.astro';
   </p>
 
   <div class="encadre" style="margin-top:2.5rem">
+    {POUR_APP ? (
+    <p style="margin:0"><strong>Cette app ne couvre que l’option côtière.</strong></p>
+    ) : (
     <p style="margin:0"><strong>Ce site ne couvre que l’option côtière.</strong></p>
+    )}
     <p class="discret" style="margin:0.4rem 0 0.8rem">
       Les quatorze thèmes du programme côtier, et rien d’autre : mieux vaut une
       option traitée à fond que deux survolées.

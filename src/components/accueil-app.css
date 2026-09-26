@@ -8,11 +8,12 @@
  * jaune sur l'écran, celui de la leçon.
  */
 /* Pas de rembourrage en haut : `<main>` pose déjà la zone sûre plus 1 rem,
-   la marge de tous les écrans de l'app. */
+   la marge de tous les écrans de l'app. Les côtés en points, comme `.page` :
+   une marge d'iOS ne suit pas la taille du texte. */
 .accueilApp {
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 1rem;
+  padding: 0 16px 1rem;
 }
 
 /* Les quatre blocs arrivent l'un après l'autre, une fois, au montage. */
@@ -31,7 +32,7 @@
 .accueilApp__reprendre {
   --anneau: var(--jaune);
   margin-bottom: 0.5rem;
-  padding: 1.25rem;
+  padding: 20px;
   border: 2px solid var(--panneau-filet);
   border-radius: var(--rayon);
   background: var(--bande);

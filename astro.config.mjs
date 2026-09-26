@@ -29,6 +29,61 @@ const pourApp = process.env.CIBLE === 'app';
 // `noindex`, et un sitemap qui l'annoncerait dirait le contraire. Une leçon
 // est à `/cours/<thème>/<notion>` ; la page d'un cours, `/cours/<thème>`,
 // entre toujours.
+/**
+ * Ce que le site ne doit pas payer pour l'app.
+ *
+ * Astro empaquette le CSS et les scripts de tout composant importé, qu'il soit
+ * rendu ou non : un `{POUR_APP && <Coquille />}` ne rend rien sur le site, mais
+ * la feuille de la coquille entrait dans le CSS global et son routeur dans
+ * `dist/_astro/`, donc dans le précache du service worker. Hors de la cible
+ * « app », ce greffon remplace donc à la source ce qui ne sert qu'à l'app :
+ *
+ * - les trois feuilles `app*.css`, et celle des transitions d'Astro que
+ *   `transition:animate` fait entrer, par une feuille vide ;
+ * - les composants propres à l'app, par un composant vide ;
+ * - l'écran `/accueil`, par une page qui ne se construit nulle part ;
+ * - `import { POUR_APP } from '…/cible'`, par la constante `false` écrite en
+ *   place. Importée, la constante restait une liaison entre deux morceaux :
+ *   Rollup sait qu'elle est fausse, mais garde le module `cible` et ce qui ne
+ *   tient qu'à lui (`natif`, les sons) en morceaux à part. Écrite en place, le
+ *   minificateur retire la branche morte et l'import avec.
+ *
+ * Les tests ne passent pas par ici (`vitest.config.ts`) : ils moquent `cible`
+ * pour voir l'app.
+ */
+const SEULEMENT_APP_CSS = [
+  'src/styles/app.css',
+  'src/styles/app-jeu.css',
+  'src/styles/app-ecrans.css',
+  'node_modules/astro/components/viewtransitions.css',
+];
+const SEULEMENT_APP_ASTRO = ['src/components/Coquille.astro', 'src/components/EntrainementApp.astro', 'src/components/SonsApp.astro'];
+const ECRAN_ACCUEIL_APP = 'src/pages/[accueil].astro';
+const IMPORT_CIBLE = /import\s*\{\s*POUR_APP\s*\}\s*from\s*['"][^'"]*\/cible(?:\.ts)?['"];?/g;
+
+function siteSansApp() {
+  const racine = new URL('.', import.meta.url).pathname;
+  const chemin = (id) => id.split('?')[0].replace(racine, '');
+  return {
+    name: 'permis-cotier:site-sans-app',
+    enforce: 'pre',
+    load(id) {
+      if (id.includes('?')) return null;
+      const fichier = chemin(id);
+      if (SEULEMENT_APP_CSS.includes(fichier)) return '';
+      if (SEULEMENT_APP_ASTRO.includes(fichier)) return '';
+      if (fichier === ECRAN_ACCUEIL_APP) return '---\nexport function getStaticPaths() { return []; }\n---\n';
+      return null;
+    },
+    transform(code, id) {
+      const fichier = chemin(id);
+      if (!fichier.startsWith('src/') || !/\.tsx?$/.test(fichier)) return null;
+      const sansCible = code.replace(IMPORT_CIBLE, 'const POUR_APP = false;');
+      return sansCible === code ? null : { code: sansCible, map: null };
+    },
+  };
+}
+
 const leconIndexable = (page) => {
   const code = /\/cours\/[a-z0-9-]+\/([a-z0-9-]+)(?:\.html)?$/.exec(new URL(page).pathname)?.[1];
   return !code || existsSync(new URL(`./data/cours/${code}.yaml`, import.meta.url));
@@ -130,6 +185,7 @@ export default defineConfig({
     ]),
   ],
   vite: {
+    plugins: pourApp ? [] : [siteSansApp()],
     define: {
       __VERSION_BANQUE__: JSON.stringify(versionBanque),
       __POUR_APP__: JSON.stringify(pourApp),

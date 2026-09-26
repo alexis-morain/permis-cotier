@@ -147,7 +147,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
         </p>
         <div className="indice__texte">
           <p className="indice__palier">{palier.titre}</p>
-          <p>{rien ? 'Rien d’enregistré dans ce navigateur pour l’instant.' : palier.phrase}</p>
+          <p>{rien ? (POUR_APP ? 'Rien d’enregistré sur ce téléphone pour l’instant.' : 'Rien d’enregistré dans ce navigateur pour l’instant.') : palier.phrase}</p>
         </div>
       </div>
       {/* Trois calques pleins, du plus long au plus court, chacun mis à
@@ -423,7 +423,11 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
 
       <section className="fiche__reglages" aria-labelledby="reglages-titre">
         <h2 id="reglages-titre">Tes réglages</h2>
-        <p className="discret">Tout reste dans ce navigateur. Changer d’appareil ou vider le cache efface la fiche.</p>
+        <p className="discret">
+          {POUR_APP
+            ? 'Tout reste sur ton téléphone. Supprimer l’app efface la fiche.'
+            : 'Tout reste dans ce navigateur. Changer d’appareil ou vider le cache efface la fiche.'}
+        </p>
 
         <div className="reglage">
           <label htmlFor="reglage-prenom">Prénom</label>

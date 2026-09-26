@@ -25,7 +25,11 @@ const compte = (ref: string) => questions.filter((q) => q.sources.some((s) => s.
   miettes={[{ nom: 'Sources', chemin: '/source' }]}
 >
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
+    {POUR_APP ? (
+    <h1>Les fiches écrites à la main</h1>
+    ) : (
     <h1>Les fiches écrites pour ce site</h1>
+    )}
     <p class="web-seulement">
       Presque tout ce que tu lis ici part d’un texte officiel, cité avec son article.
       Sept sujets font exception, et ce n’est pas par facilité : l’échelle de Beaufort

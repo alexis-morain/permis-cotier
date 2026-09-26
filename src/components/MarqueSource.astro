@@ -1,5 +1,6 @@
 ---
 import { NOM_PROVENANCE, type Provenance } from '../lib/sources';
+import { POUR_APP } from '../lib/cible';
 
 /**
  * Ce qu'est une source citée, dit à côté d'elle.
@@ -13,9 +14,11 @@ interface Props {
 }
 
 const { provenance } = Astro.props;
+// Dans l'app, la fiche n'est pas « du site » : c'est une fiche maison.
+const nom = POUR_APP && provenance === 'fiche' ? 'Fiche maison' : NOM_PROVENANCE[provenance];
 ---
 
-<span class={`marque marque--${provenance}`}>{NOM_PROVENANCE[provenance]}</span>
+<span class={`marque marque--${provenance}`}>{nom}</span>
 
 <style>
   /* Pas de couleur : le jaune est la seule couleur d'action du site, et une

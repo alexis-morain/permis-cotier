@@ -5,6 +5,11 @@ import Lecon, { ecransDe } from './Lecon';
 import type { LeconAffichable } from '../lib/cours';
 import type { QuestionAffichable } from '../lib/banque';
 import { charger } from '../lib/progression';
+import { vibrer } from '../lib/natif';
+
+// Le retour d'un geste, vibration et son (`natif.ts`) : on regarde ce que la
+// leçon demande, pas ce que le greffon en fait.
+vi.mock('../lib/natif', () => ({ vibrer: vi.fn() }));
 
 function question(id: string, reponses = ['a']): QuestionAffichable {
   return {
@@ -61,6 +66,7 @@ const cadre = {
 };
 
 beforeEach(() => {
+  vi.mocked(vibrer).mockClear();
   localStorage.clear();
   Element.prototype.scrollIntoView = vi.fn();
   window.scrollTo = vi.fn();
@@ -157,6 +163,33 @@ describe('l’écran de leçon', () => {
     expect(racine.classList.contains('lecon--pas-a-pas')).toBe(false);
     fireEvent.click(screen.getByRole('button', { name: 'Reprendre pas à pas' }));
     expect(racine.classList.contains('lecon--pas-a-pas')).toBe(true);
+  });
+});
+
+describe('le retour de chaque geste', () => {
+  it('fait vibrer et sonner cocher, juste, faux, puis la leçon finie, dans cet ordre', () => {
+    render(<Lecon lecon={ecrite} {...cadre} />);
+    for (let i = 0; i < 4; i += 1) fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Vérifier ce que j’ai retenu' }));
+    expect(vibrer).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole('button', { name: /Première/ }));
+    expect(vi.mocked(vibrer).mock.calls).toEqual([['choix']]);
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(vi.mocked(vibrer).mock.calls.at(-1)).toEqual(['juste']);
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+
+    fireEvent.click(screen.getByRole('button', { name: /Première/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+
+    expect(vi.mocked(vibrer).mock.calls).toEqual([['choix'], ['juste'], ['choix'], ['faux'], ['lecon']]);
+  });
+
+  it('ne sonne qu’une fois la fin d’une leçon courte', () => {
+    render(<Lecon lecon={courte} {...cadre} suite={undefined} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+    expect(vi.mocked(vibrer).mock.calls).toEqual([['lecon']]);
   });
 });
 

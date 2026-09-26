@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { POUR_APP } from './cible';
-import { ouvrirDehors, partager, programmerRappels, surRetourAuPremierPlan, vibrer } from './natif';
+import { modeConcentration, ouvrirDehors, partager, programmerRappels, surRetourAuPremierPlan, vibrer } from './natif';
 
 /**
  * La couche native, vue du site.
@@ -22,19 +22,26 @@ describe('la couche native, hors de la coquille', () => {
     expect(POUR_APP).toBe(false);
   });
 
-  it('ne vibre pas et ne jette pas', async () => {
-    await expect(vibrer('juste')).resolves.toBeUndefined();
-    await expect(vibrer('faux')).resolves.toBeUndefined();
-    await expect(vibrer('choix')).resolves.toBeUndefined();
+  // Rien, et pas même une promesse : c'est ce qui laisse Rollup ôter
+  // l'appel, puis le module, du bundle du site.
+  it('ne vibre pas et ne jette pas', () => {
+    expect(vibrer('juste')).toBeUndefined();
+    expect(vibrer('faux')).toBeUndefined();
+    expect(vibrer('choix')).toBeUndefined();
   });
 
   it('ne partage pas, et le dit', async () => {
     await expect(partager('titre', 'texte')).resolves.toBe(false);
   });
 
-  it('ne programme aucun rappel, date ou pas', async () => {
-    await expect(programmerRappels('2026-10-15')).resolves.toBeUndefined();
-    await expect(programmerRappels(null)).resolves.toBeUndefined();
+  it('ne programme aucun rappel, date ou pas', () => {
+    expect(programmerRappels('2026-10-15')).toBeUndefined();
+    expect(programmerRappels(null)).toBeUndefined();
+  });
+
+  it('ne cache pas la barre d’onglets', () => {
+    expect(modeConcentration(true)).toBeUndefined();
+    expect(modeConcentration(false)).toBeUndefined();
   });
 
   it('n’écoute pas le retour au premier plan, et rend de quoi débrancher', () => {

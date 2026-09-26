@@ -1,6 +1,7 @@
 ---
 import MarqueSource from './MarqueSource.astro';
 import { citeLegifrance, citeUneFiche, type SourceAffichee } from '../lib/sources';
+import { POUR_APP } from '../lib/cible';
 
 /**
  * D'où la page tient ce qu'elle affirme.
@@ -36,7 +37,9 @@ if (citeLegifrance(sources)) {
 }
 if (citeUneFiche(sources)) {
   phrases.push(
-    'Une fiche du site est écrite à la main : ce n’est pas un texte officiel, et elle dit sur quelle autorité elle s’appuie.',
+    POUR_APP
+      ? 'Une fiche maison est écrite à la main : ce n’est pas un texte officiel, et elle dit sur quelle autorité elle s’appuie.'
+      : 'Une fiche du site est écrite à la main : ce n’est pas un texte officiel, et elle dit sur quelle autorité elle s’appuie.',
   );
 }
 ---

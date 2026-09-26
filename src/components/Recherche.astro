@@ -6,8 +6,9 @@
  * `/recherche`.
  */
 import RecherchePanneau from './RecherchePanneau.astro';
+import { POUR_APP } from '../lib/cible';
 ---
 
-<dialog class="recherche-fenetre" id="recherche-fenetre" aria-label="Rechercher sur le site">
+<dialog class="recherche-fenetre" id="recherche-fenetre" aria-label={POUR_APP ? 'Rechercher' : 'Rechercher sur le site'}>
   <RecherchePanneau mode="dialogue" />
 </dialog>

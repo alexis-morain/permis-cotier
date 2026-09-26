@@ -2,6 +2,7 @@
 import { guidesDeLaNotion } from '../../lib/guide';
 import Base from '../../layouts/Base.astro';
 import LienQuestion from '../../components/LienQuestion.astro';
+import { POUR_APP } from '../../lib/cible';
 import { questionsDuTheme } from '../../lib/banque';
 import { themeParCode } from '../../lib/themes';
 import { NOTIONS, notionsDuTheme, notionsVoisines } from '../../lib/notions';
@@ -97,7 +98,7 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
         <ul class="questions">
           {questions.map((q) => (
             <li>
-              <LienQuestion id={q.id} enonce={q.enonce} />
+              {POUR_APP ? <LienQuestion id={q.id} enonce={q.enonce} /> : <a href={`/question/${q.id}`}>{q.enonce}</a>}
               <span class="discret"> — {q.sources.map((s) => s.texte).join(', ')}</span>
             </li>
           ))}
@@ -116,11 +117,19 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
     {appuis.length > 0 && (
       <section class="bloc">
         <h2>Ce sur quoi ces questions s’appuient</h2>
+        {POUR_APP ? (
+        <p class="discret">
+          Sur cette notion, aucun texte réglementaire ne dit la règle sous une forme qu’on
+          puisse citer. Les questions partent alors d’une fiche écrite à la main, que tu
+          peux lire en entier.
+        </p>
+        ) : (
         <p class="discret">
           Sur cette notion, aucun texte réglementaire ne dit la règle sous une forme qu’on
           puisse citer. Les questions partent alors d’une fiche écrite pour ce site, que tu
           peux lire en entier.
         </p>
+        )}
         <ul class="questions">
           {appuis.map((s) => (
             <li>

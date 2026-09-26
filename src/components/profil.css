@@ -320,6 +320,30 @@
 .reglage .champ { max-width: 20rem; }
 .reglage__valeur { margin: 0; }
 .reglage__ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+
+/* « effacer la date » : le même lien d'action discret que « Signaler » sous
+   une question. Sa règle vit dans `quiz.css`, que la fiche ne charge pas :
+   sans celle-ci, le bouton tombait au gris du système, sur le site comme
+   dans l'app. */
+.reglage__ligne .signaler {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  background: none;
+  border: 0;
+  padding-block: 0.6rem;
+  padding-inline: 0;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texte-doux);
+  text-decoration: underline;
+  text-decoration-color: var(--filet-fort);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+  cursor: pointer;
+}
+.reglage__ligne .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
 .reglage--danger .bouton { border-color: var(--rouge); box-shadow: 0 var(--bord) 0 var(--rouge); color: var(--rouge-texte); }
 
 @media (min-width: 40rem) {

@@ -195,16 +195,6 @@ html[data-app] .lecon__entete {
   padding-block: 0.25rem 0.75rem;
   margin-bottom: 1rem;
 }
-/* La bande sous l'heure et l'îlot, peinte au fond de la page tant qu'on est
-   dans une leçon : sans elle, le texte défilerait sous l'heure au-dessus de
-   la ligne collée. */
-html[data-app] .lecon__entete::before {
-  content: "";
-  position: fixed;
-  inset: 0 0 auto;
-  height: env(safe-area-inset-top);
-  background: var(--fond);
-}
 html[data-app] .lecon__chapitre {
   display: flex;
   align-items: center;

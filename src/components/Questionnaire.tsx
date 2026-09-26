@@ -4,6 +4,7 @@ import type { Profil } from '../lib/progression';
 import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, rappel } from '../lib/profil';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
+import { POUR_APP } from '../lib/cible';
 import './profil.css';
 
 /**
@@ -233,7 +234,9 @@ export default function Questionnaire({ totalQuestions }: Props) {
       {ecran === 'prenom' && (
         <section className="questionnaire__ecran">
           <h1 ref={titre} tabIndex={-1}>Un prénom, pour la fiche ?</h1>
-          <p className="discret">Il reste dans ce navigateur. Il ne sert qu’à te parler à toi.</p>
+          <p className="discret">
+            {POUR_APP ? 'Il reste sur ton téléphone.' : 'Il reste dans ce navigateur.'} Il ne sert qu’à te parler à toi.
+          </p>
           <label className="visuellement-cache" htmlFor="prenom">Prénom</label>
           <input
             id="prenom"

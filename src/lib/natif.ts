@@ -11,6 +11,13 @@ import type { Son } from './son';
  * qu'elle référence : rien n'entre dans le bundle web. Dans la coquille, le
  * greffon n'est chargé qu'au premier usage.
  *
+ * Les gestes qu'on lance sans attendre de réponse (`vibrer`,
+ * `programmerRappels`, `modeConcentration`) ne sont pas `async` : ils rendent
+ * `undefined` sur le site, et la promesse de leur version app sinon. Rollup ne
+ * retire pas l'appel d'une fonction `async`, même vide ; il retire celui d'une
+ * fonction qui ne fait que `return`. C'est ce qui garde ce module entier hors
+ * du site, et aucun état au niveau du module ne doit l'y ramener.
+ *
  * Rien de ce qui suit n'est indispensable au jeu. Une permission refusée, un
  * greffon absent, un simulateur sans moteur haptique : on ne montre jamais
  * d'erreur, on ne fait simplement rien. Un examen ne s'interrompt pas parce
@@ -22,8 +29,12 @@ import type { Son } from './son';
  * le réglage peut couper. Cocher, corriger, finir une leçon, une série, un
  * examen blanc : chaque écran n'a qu'un appel à faire.
  */
-export async function vibrer(genre: Son): Promise<void> {
+export function vibrer(genre: Son): Promise<void> | undefined {
   if (!POUR_APP) return;
+  return vibrerDansLApp(genre);
+}
+
+async function vibrerDansLApp(genre: Son): Promise<void> {
   void jouer(genre);
   try {
     const { Haptics, ImpactStyle, NotificationType } = await import('@capacitor/haptics');
@@ -73,16 +84,19 @@ const RAPPELS = [
   { jours: 0, id: 1700, titre: 'C’est aujourd’hui', corps: 'Bonne épreuve. Tu as révisé pour ça.' },
 ];
 
-const IDS_RAPPELS = RAPPELS.map((r) => r.id);
-
-export async function programmerRappels(dateExamen: string | null): Promise<void> {
+export function programmerRappels(dateExamen: string | null): Promise<void> | undefined {
   if (!POUR_APP) return;
+  return programmerDansLApp(dateExamen);
+}
+
+async function programmerDansLApp(dateExamen: string | null): Promise<void> {
+  const idsRappels = RAPPELS.map((r) => r.id);
   try {
     const { LocalNotifications } = await import('@capacitor/local-notifications');
 
     // On efface d'abord, toujours : une date retirée doit taire les rappels.
     const enAttente = await LocalNotifications.getPending();
-    const aAnnuler = enAttente.notifications.filter((n) => IDS_RAPPELS.includes(n.id));
+    const aAnnuler = enAttente.notifications.filter((n) => idsRappels.includes(n.id));
     if (aAnnuler.length > 0) await LocalNotifications.cancel({ notifications: aAnnuler });
 
     if (!dateExamen) return;
@@ -165,8 +179,12 @@ export function surRetourAuPremierPlan(faire: () => void): () => void {
  * est écrit dans la coquille (`ios/App/App/EcranPlugin.swift`), une méthode,
  * `pleinEcran({ actif })`. Absent, rien ne se passe.
  */
-export async function modeConcentration(actif: boolean): Promise<void> {
+export function modeConcentration(actif: boolean): Promise<void> | undefined {
   if (!POUR_APP) return;
+  return concentrerDansLApp(actif);
+}
+
+async function concentrerDansLApp(actif: boolean): Promise<void> {
   try {
     const { registerPlugin } = await import('@capacitor/core');
     const Ecran = registerPlugin<{ pleinEcran(options: { actif: boolean }): Promise<void> }>('Ecran');
