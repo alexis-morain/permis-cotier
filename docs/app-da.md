@@ -194,4 +194,57 @@ et licences », « Réglages » (apparence), « Signaler une erreur ». C'est le
 - Pas de gamification qui ment : pas de streak inventé, pas de badges. Un
   compte de jours de suite existe déjà (`jour.ts`) ; on le montre s'il est
   supérieur à un, on n'insiste pas.
-- Pas de son.
+
+## Le son
+
+Décidé le 25 septembre 2026, contre la première version de ce brief : l'app a
+des bruitages, comme les apps d'apprentissage dont elle prend la grammaire. Un
+son court dit le résultat d'un geste. Il ne décore rien.
+
+### La palette
+
+Sept sons, tous en la majeur pour que deux sons qui se suivent ne jurent pas.
+Synthétisés par `scripts/sons_app.py`, écrits en WAV 44,1 kHz mono 16 bits
+dans `ios/App/App/Sons/`, vérifiés octet à octet en CI. Aucun fichier ni motif
+repris d'une autre app.
+
+| Son | Quand | Ce qu'on entend | Durée | Crête |
+|---|---|---|---|---|
+| `choix` | cocher une proposition | un mi aigu (1 319 Hz) qui s'éteint | 45 ms | -20 dBFS |
+| `juste` | correction juste : entraînement, révision, question de leçon | la 880 Hz puis mi 1 319 Hz, une quinte qui monte | 260 ms | -12 dBFS |
+| `faux` | correction fausse | ré 294 Hz et son octave, qui s'affaisse d'un demi-ton | 200 ms | -14 dBFS |
+| `lecon` | leçon terminée | la, do dièse, mi, en montant | 500 ms | -12 dBFS |
+| `fin-serie` | série d'entraînement menée au bout | arpège serré mi, la, do dièse, mi | 500 ms | -12 dBFS |
+| `reussi` | examen blanc reçu | cloche de bord (la 440 Hz, partiels à 2, 2,76 et 5,4) puis l'accord qui monte | 1,15 s | -9 dBFS |
+| `echoue` | examen blanc recalé | mi puis do dièse, une tierce qui descend, sinus pur | 500 ms | -14 dBFS |
+
+La cloche est la signature : elle ne sonne qu'au moment fort, l'examen reçu.
+Le reste est en sinus ou en triangle adouci. Pas de sirène, pas de corne de
+brume, pas de buzzer : `faux` et `echoue` sont graves et doux, jamais punitifs.
+
+### Les règles
+
+- **Session audio `.ambient`** (greffon `Son`, `ios/App/App/SonPlugin.swift`) :
+  le bouton silencieux tait les sons, la musique ou le podcast continuent
+  dessous. C'est la règle de l'HIG pour des sons d'interface. Pas de
+  `UIBackgroundModes audio`, rien ne joue en arrière-plan.
+- **Aucun son sans geste.** Chaque son répond à un toucher. Rien au
+  lancement, rien au chrono.
+- **En examen, pas de verdict question par question** : l'épreuve ne dit pas
+  si on a juste avant la fin, le son non plus. Seuls `choix`, puis `reussi` ou
+  `echoue` au résultat. Un examen arrêté en route ne sonne pas.
+- **Volume bas**, fixé dans le fichier : crête entre -20 et -9 dBFS, jamais
+  plus fort qu'une notification. Attaque de 5 ms, fin à zéro : pas de clic.
+- **Un seul appel par écran** : `vibrer(nom)` de `natif.ts` donne la vibration
+  et le son du même nom. Les écrans n'appellent jamais le greffon eux-mêmes.
+- Les fichiers sont dans le bundle, rien ne se télécharge.
+
+### Le réglage
+
+Écran Réglages (Fiche → L'app → Réglages), section « Sons » : un interrupteur
+« Jouer les sons », activé par défaut, avec la ligne « Les sons suivent le
+bouton silencieux de ton iPhone. » Le rallumer joue `juste` une fois, pour
+qu'on entende ce qu'on vient d'activer. Le choix se garde sous la clé
+`permis-cotier:son` (`src/lib/son.ts`) ; couper tait aussi un son qui résonne
+encore. Les vibrations ne dépendent pas de ce réglage : elles suivent celui du
+système.

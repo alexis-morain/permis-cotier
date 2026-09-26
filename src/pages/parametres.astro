@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Parametres from '../components/Parametres.tsx';
 import MesureReglage from '../components/MesureReglage.tsx';
 import Apparence from '../components/Apparence.tsx';
+import ReglageSon from '../components/ReglageSon.tsx';
 import { versionBanque, questionsPubliees } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 
@@ -22,6 +23,13 @@ const total = (await questionsPubliees()).length;
     <p class="discret" style="margin-top:0.5rem">
       {POUR_APP ? 'Par défaut, l’app suit le réglage du système.' : 'Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.'}
     </p>
+
+    {POUR_APP && (
+    <Fragment>
+    <h2>Sons</h2>
+    <ReglageSon client:only="react" />
+    </Fragment>
+    )}
 
     <h2>Cette version</h2>
     <p>

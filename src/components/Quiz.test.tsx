@@ -1000,7 +1000,10 @@ describe('l’écran de jeu dans l’app', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
     // Trois erreurs, sous les cinq admises : reçu.
-    expect(vibrer).toHaveBeenCalledWith('juste');
+    expect(vibrer).toHaveBeenCalledWith('reussi');
+    // Pendant l'épreuve, aucun verdict question par question, pas même au son.
+    expect(vibrer).not.toHaveBeenCalledWith('juste');
+    expect(vibrer).not.toHaveBeenCalledWith('faux');
   });
 
   it('fait sentir un examen recalé', () => {
@@ -1012,15 +1015,25 @@ describe('l’écran de jeu dans l’app', () => {
     }
     // Six sans réponse : une de trop.
     expect(screen.getByText(/Recalé/)).toBeTruthy();
-    expect(vibrer).toHaveBeenCalledWith('faux');
+    expect(vibrer).toHaveBeenCalledWith('echoue');
   });
 
   it('ne fait rien sentir d’un examen interrompu', () => {
     lancerExamen();
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
-    expect(vibrer).not.toHaveBeenCalledWith('faux');
-    expect(vibrer).not.toHaveBeenCalledWith('juste');
+    expect(vibrer).not.toHaveBeenCalledWith('echoue');
+    expect(vibrer).not.toHaveBeenCalledWith('reussi');
+  });
+
+  it('fait entendre la fin d’une série menée au bout', () => {
+    render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    expect(vibrer).toHaveBeenCalledWith('juste');
+    expect(vibrer).not.toHaveBeenCalledWith('fin-serie');
+    fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
+    expect(vibrer).toHaveBeenCalledWith('fin-serie');
   });
 
   it('ne propose pas de revoir des erreurs qui n’existent pas', () => {
