@@ -39,6 +39,14 @@ class EcranWeb: CAPBridgeViewController {
     override func capacitorDidLoad() {
         super.capacitorDidLoad()
         webView?.allowsBackForwardNavigationGestures = true
+        // Le fond de la webview est celui de la page, clair ou sombre : sans
+        // lui, chaque chargement montre un blanc le temps que le CSS arrive.
+        // La brume `#f3f6fb` et le marine `#0a1730` de `global.css`.
+        let fond = UIColor(named: "Fond")
+        webView?.isOpaque = false
+        webView?.backgroundColor = fond
+        webView?.scrollView.backgroundColor = fond
+        view.backgroundColor = fond
         // Le greffon maison, qui cache la barre d'onglets pendant l'examen.
         bridge?.registerPluginInstance(EcranPlugin())
         // Le web rend la barre à la fin de la série ; mais un lien suivi en
