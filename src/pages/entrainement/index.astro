@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import EntrainementApp from '../../components/EntrainementApp.astro';
 import { themesAvecComptes } from '../../lib/banque';
 import { POUR_APP } from '../../lib/cible';
+import OuvrirRecherche from '../../components/OuvrirRecherche.astro';
 
 const themes = await themesAvecComptes();
 const disponibles = themes.filter((t) => t.publiees > 0);
@@ -15,6 +16,7 @@ const aVenir = themes.filter((t) => t.publiees === 0);
 >
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>{POUR_APP ? 'Entraînement' : 'Un thème à la fois, sans chrono'}</h1>
+    {POUR_APP && <OuvrirRecherche />}
     <p class="web-seulement">
       La correction tombe après chaque réponse, avec l’explication et le texte dont elle vient.
       Les questions ratées repassent en premier la fois suivante, et ta

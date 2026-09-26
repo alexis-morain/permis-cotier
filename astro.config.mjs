@@ -57,7 +57,12 @@ const SEULEMENT_APP_CSS = [
   'src/styles/app-ecrans.css',
   'node_modules/astro/components/viewtransitions.css',
 ];
-const SEULEMENT_APP_ASTRO = ['src/components/Coquille.astro', 'src/components/EntrainementApp.astro', 'src/components/SonsApp.astro'];
+const SEULEMENT_APP_ASTRO = [
+  'src/components/Coquille.astro',
+  'src/components/EntrainementApp.astro',
+  'src/components/SonsApp.astro',
+  'src/components/OuvrirRecherche.astro',
+];
 const ECRAN_ACCUEIL_APP = 'src/pages/[accueil].astro';
 const IMPORT_CIBLE = /import\s*\{\s*POUR_APP\s*\}\s*from\s*['"][^'"]*\/cible(?:\.ts)?['"];?/g;
 
