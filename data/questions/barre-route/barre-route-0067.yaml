@@ -1,0 +1,35 @@
+id: barre-route-0067
+option: cotier
+theme: barre-route
+notion: barre-routes-croisees
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu manœuvres seul pour éviter l'abordage avec un navire à propulsion mécanique dont
+  la route croise la tienne et qui est bâbord à toi. Que t'interdit la règle 17 c),
+  si les circonstances le permettent ?
+propositions:
+  - id: a
+    texte: Abattre sur tribord.
+  - id: b
+    texte: Abattre sur bâbord.
+  - id: c
+    texte: Réduire ta vitesse.
+  - id: d
+    texte: Stopper ta machine et attendre qu'il soit passé.
+reponses:
+  - b
+explication: >-
+  La règle 17 c) vise le navire à propulsion mécanique qui manœuvre pour éviter
+  l'abordage avec un autre navire à propulsion mécanique dont la route croise la sienne :
+  il ne doit pas, si les circonstances le permettent, abattre sur bâbord lorsque l'autre
+  navire est bâbord à lui. Abattre de son côté reviendrait à aller vers lui. Le texte
+  n'interdit ni de venir sur tribord, ni de jouer sur la vitesse.
+sources:
+  - texte: RIPAM, règle 17 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

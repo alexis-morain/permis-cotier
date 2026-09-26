@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "valider": "python3 scripts/valider.py",
+    "doublons": "python3 scripts/doublons.py",
     "audit:seo": "node scripts/audit-seo.mjs",
     "verifier:prod": "node scripts/verifier-prod.mjs",
     "credits": "python3 scripts/credits.py",

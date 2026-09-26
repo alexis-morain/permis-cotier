@@ -1,0 +1,32 @@
+id: feux-marques-0073
+option: cotier
+theme: feux-marques
+notion: feux-portee
+famille: feux-portee-valeur
+statut: publie
+difficulte: 3
+enonce: >-
+  Ton bateau à moteur mesure 18 mètres. Quelle portée minimale la règle 22 impose-t-elle
+  à son feu de tête de mât ?
+propositions:
+  - id: a
+    texte: 5 milles
+  - id: b
+    texte: 6 milles
+  - id: c
+    texte: 3 milles
+reponses:
+  - c
+explication: >-
+  La règle 22 b) donne 5 milles au feu de tête de mât des navires de 12 à 50 mètres,
+  mais elle ajoute aussitôt une réserve : si le navire mesure moins de 20 mètres, ce
+  feu n'a plus à porter que 3 milles. À 18 mètres, tu es sous cette réserve. Les 6 milles
+  sont ceux des navires de 50 mètres et plus, alinéa a).
+sources:
+  - texte: RIPAM, règle 22 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

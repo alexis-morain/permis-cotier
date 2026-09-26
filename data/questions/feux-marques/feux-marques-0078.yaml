@@ -1,0 +1,30 @@
+id: feux-marques-0078
+option: cotier
+theme: feux-marques
+notion: feux-pilote
+statut: publie
+difficulte: 2
+enonce: >-
+  Un bateau-pilote en service de pilotage fait route. Que montre-t-il en plus de ses
+  deux feux superposés ?
+propositions:
+  - id: a
+    texte: Des feux de côté et un feu de poupe
+  - id: b
+    texte: Un feu de remorquage
+  - id: c
+    texte: Rien de plus, ses deux feux suffisent
+reponses:
+  - a
+explication: >-
+  La règle 29 a) ii) ajoute, lorsque le bateau-pilote fait route, des feux de côté et
+  un feu de poupe. Ses deux feux superposés disent ce qu'il fait, ses feux de côté et
+  son feu de poupe disent où il va : sans eux, tu ne saurais pas de quel bord tu le vois.
+sources:
+  - texte: RIPAM, règle 29 a) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-09-21'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-09-21'

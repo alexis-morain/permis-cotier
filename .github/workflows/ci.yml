@@ -39,6 +39,12 @@ jobs:
       - name: Valider la banque
         run: python scripts/valider.py
 
+      # Deux énoncés identiques au mot près peuvent tomber dans le même examen
+      # blanc : la banque se met alors à bégayer sans qu'aucune question soit
+      # fausse. Le champ `famille` l'empêche, encore faut-il l'avoir posé.
+      - name: Vérifier les redites de la banque
+        run: python scripts/doublons.py --verifier
+
       - name: Vérifier les crédits des visuels
         run: python scripts/credits.py --verifier
 
