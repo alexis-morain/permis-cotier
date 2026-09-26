@@ -70,10 +70,18 @@ describe('jouer, dans la coquille', () => {
     vi.resetModules();
   });
 
+  /**
+   * Le double se comporte comme le mandataire de Capacitor : il répond à
+   * toute propriété, `then` comprise. Rendu par une fonction `async`, il
+   * serait pris pour une promesse et `jouer` attendrait pour toujours.
+   */
   async function chargerAvec(greffon: { jouer: (o: unknown) => Promise<void>; activer: (o: unknown) => Promise<void> }) {
     vi.resetModules();
     vi.doMock('./cible', () => ({ POUR_APP: true }));
-    vi.doMock('@capacitor/core', () => ({ registerPlugin: () => greffon }));
+    const mandataire = new Proxy(greffon, {
+      get: (cible, nom) => (nom in cible ? cible[nom as keyof typeof cible] : () => new Promise(() => {})),
+    });
+    vi.doMock('@capacitor/core', () => ({ registerPlugin: () => mandataire }));
     return import('./son');
   }
 

@@ -39,9 +39,14 @@ interface GreffonSon {
   activer(options: { actif: boolean }): Promise<void>;
 }
 
-async function greffon(): Promise<GreffonSon> {
+/**
+ * Le greffon ne sort jamais d'une fonction `async` : le mandataire de Capacitor
+ * répond à toute propriété, `then` comprise, et une promesse qui le rendrait
+ * le prendrait pour une promesse et attendrait une réponse qui ne vient pas.
+ */
+async function appeler(faire: (g: GreffonSon) => Promise<void>): Promise<void> {
   const { registerPlugin } = await import('@capacitor/core');
-  return registerPlugin<GreffonSon>('Son');
+  await faire(registerPlugin<GreffonSon>('Son'));
 }
 
 export function reglerSon(actif: boolean, stockage: Stockage | null = stockageParDefaut()): void {
@@ -53,16 +58,14 @@ export function reglerSon(actif: boolean, stockage: Stockage | null = stockagePa
   }
   if (!POUR_APP) return;
   // Le greffon se tait aussi de son côté, et coupe un son qui résonne encore.
-  void greffon()
-    .then((g) => g.activer({ actif }))
-    .catch(() => {});
+  appeler((g) => g.activer({ actif })).catch(() => {});
 }
 
 export async function jouer(nom: Son, stockage: Stockage | null = stockageParDefaut()): Promise<void> {
   if (!POUR_APP) return;
   if (!sonActif(stockage)) return;
   try {
-    await (await greffon()).jouer({ nom });
+    await appeler((g) => g.jouer({ nom }));
   } catch {
     // Greffon absent, ou coquille d'une autre version : on joue sans le son.
   }
