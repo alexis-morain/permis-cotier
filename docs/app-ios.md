@@ -3,6 +3,60 @@
 Ce fichier vit sur la branche `app-ios` seulement. Il dit où en est la coquille
 iPhone, ce qui la bloque, et ce qu'il resterait à faire pour la livrer. Il
 existe pour qu'on puisse reprendre le chantier sans relire les commits.
+La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
+
+## 25 septembre 2026 — la coquille tourne, et n'est plus une copie du site
+
+### Ce qui a changé
+
+- **La coquille a tourné pour la première fois**, au simulateur iPhone 17 Pro
+  sous Xcode 26.6 et iOS 26. Pas besoin du compte Apple pour ça :
+  `xcodebuild … -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO`, puis
+  `xcrun simctl install booted` et `launch`. Tout ce que le 10 septembre
+  décrivait « sur le papier » est maintenant vu à l'écran.
+- **Cinq onglets** au lieu de quatre : Accueil `/accueil`, Cours, Examen,
+  Entraînement, Fiche `/profil`. Teinte de marque (`Accent.colorset`, marine en
+  clair, jaune en sombre). Retoucher l'onglet courant ramène à sa racine puis
+  en haut. Portrait seul, `arm64`, région `fr`.
+- **`/accueil`** est un écran construit pour l'app seule (`src/pages/[accueil].astro`,
+  route dynamique dont `getStaticPaths` ne rend rien sur le site) : reprendre la
+  leçon, questions à revoir, dernier examen, compte à rebours. `RouteurDuSite`
+  y ramène aussi `/`. `index.astro`, la page d'accueil du site, n'a pas bougé.
+- **Plus d'en-tête, plus de pied, plus de fil d'Ariane** dans l'app : un bouton
+  « ‹ Retour » vers l'échelon du dessus, rien sur les racines d'onglet
+  (`lienRetour()` dans `src/lib/page.ts`). Les chapôs SEO portent la classe
+  `web-seulement`. Ce que le pied disait vit dans la section « L'app » de la
+  fiche.
+- **Navigation sans rechargement** : `<ClientRouter />` d'Astro, dans la
+  coquille seulement (`src/components/Coquille.astro`), glissement sur `<main>`.
+  Les scripts de page se rattachent par `quandLaPageEstPrete()`.
+- **Plein écran pendant une série** : le greffon maison `Ecran`
+  (`ios/App/App/EcranPlugin.swift`, `pleinEcran({ actif })`, appelé par
+  `modeConcentration()` de `natif.ts`) cache la barre d'onglets ; l'inset bas
+  passe de 83 à 34 pt. La coquille la rend d'elle-même à tout changement
+  d'adresse de la webview, pour qu'une page quittée en pleine série ne la
+  laisse jamais cachée.
+- **Les écrans de jeu** : jauge d'avancement fine, chrono en grand, panneau de
+  correction qui monte du bas avec le mot « Juste » ou « Faux », résultat au
+  score géant, partage natif. **Le cours** est un parcours de chapitres avec
+  disques d'état et jauges. **La fiche** ouvre sur l'indice en grand.
+- **Liens externes** dans `SFSafariViewController` (`@capacitor/browser`,
+  `ouvrirDehors()`), barre d'état accordée au thème (`@capacitor/status-bar`),
+  fond de webview au thème (`Fond.colorset`), plus de blanc entre deux pages.
+- **La CI construit la cible app** (`npm run build:app`) et vérifie qu'aucun
+  greffon ne fuit dans le site. **`_headers` pose `Access-Control-Allow-Origin`**
+  sur la banque et son pointeur : la mise à jour hors revue peut fonctionner,
+  reste à le voir depuis un appareil une fois déployé.
+
+### Ce qui reste
+
+- Passe de mouvement et finitions (voir `docs/app-da.md`) : en cours.
+- Une vérification adverse de tout le parcours au simulateur, puis les captures
+  App Store sur iPhone 17 Pro Max.
+- Aucun runtime iOS 15 à 17 n'est installé : le chemin d'avant iOS 18 du greffon
+  `Ecran` n'a tourné que forcé sur iOS 26.
+- **Le compte développeur Apple** reste le seul verrou pour TestFlight et la
+  soumission.
 
 ## 10 septembre 2026 — la coquille est parquée, et remise à niveau
 
