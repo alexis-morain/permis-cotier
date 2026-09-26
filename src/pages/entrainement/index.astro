@@ -1,18 +1,21 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { themesAvecComptes } from '../../lib/banque';
+import { questionsPubliees, themesAvecComptes } from '../../lib/banque';
 import { POUR_APP } from '../../lib/cible';
 
 const themes = await themesAvecComptes();
 const disponibles = themes.filter((t) => t.publiees > 0);
 const aVenir = themes.filter((t) => t.publiees === 0);
+// Dans l'app, l'entrée « Tes erreurs » compte sur les seules questions
+// publiées, comme la page qu'elle ouvre.
+const ids = POUR_APP ? (await questionsPubliees()).map((q) => q.id).join(' ') : '';
 ---
 
 <Base
   titre="Entraînement par thème, permis côtier"
   description="Révise un thème à la fois, sans chrono, avec la correction et la source après chaque réponse."
 >
-  <div class="page page--etroite" style="padding-block:3rem 0">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>{POUR_APP ? 'Entraînement' : 'Un thème à la fois, sans chrono'}</h1>
     <p class="web-seulement">
       La correction tombe après chaque réponse, avec l’explication et le texte dont elle vient.
@@ -27,6 +30,16 @@ const aVenir = themes.filter((t) => t.publiees === 0);
       </div>
     ) : (
       <ul class="choix">
+        {/* Dans l'app, ce qu'on a raté passe devant les thèmes, s'il y en a :
+            le script le montre, la page le rend caché. */}
+        {POUR_APP && (
+          <li class="choix__erreurs" hidden data-ids={ids}>
+            <a href="/profil/erreurs">
+              <span class="choix__nom">Tes erreurs</span>
+              <span class="pastille"></span>
+            </a>
+          </li>
+        )}
         {disponibles.map((t) => (
           <li>
             <a href={`/entrainement/${t.code}`}>
@@ -44,6 +57,22 @@ const aVenir = themes.filter((t) => t.publiees === 0);
       </p>
     )}
   </div>
+  {POUR_APP && (
+    <script>
+      import { quandLaPageEstPrete } from '../../lib/page';
+      import { aujourdhui, charger } from '../../lib/progression';
+      import { nombreDErreurs } from '../../lib/accueil';
+
+      quandLaPageEstPrete(() => {
+        const ligne = document.querySelector<HTMLLIElement>('.choix__erreurs');
+        if (!ligne) return;
+        const n = nombreDErreurs(charger(), (ligne.dataset.ids ?? '').split(' '), aujourdhui());
+        if (n === 0) return;
+        ligne.querySelector('.pastille')!.textContent = `${n} question${n > 1 ? 's' : ''}`;
+        ligne.hidden = false;
+      });
+    </script>
+  )}
 </Base>
 
 <style>
@@ -61,6 +90,8 @@ const aVenir = themes.filter((t) => t.publiees === 0);
      un filet entre deux, un chevron qui dit que la cellule mène ailleurs. */
   :global(html[data-app]) .choix { margin: 1.25rem calc(50% - 50vw) 0; }
   :global(html[data-app]) .choix a { min-height: 3.5rem; padding: 0.75rem 1rem; }
+  :global(html[data-app]) .choix a:active { background: var(--fond-2); }
+  :global(html[data-app]) .choix a:hover .choix__nom { text-decoration: none; }
   :global(html[data-app]) .choix a::after { content: '›'; font-size: 1.5rem; line-height: 1; color: var(--texte-doux); }
   :global(html[data-app]) .choix__nom { flex: 1; font-size: 1.05rem; }
   :global(html[data-app]) .choix .pastille { padding: 0; background: none; border: 0; color: var(--texte-doux); font-weight: 600; }

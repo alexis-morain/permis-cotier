@@ -135,3 +135,43 @@ describe('le retour au premier plan', () => {
     expect(retours).toHaveLength(0);
   });
 });
+
+/**
+ * La confirmation d'arrêt et le chrono.
+ *
+ * Au simulateur, la boîte « Arrêter l'examen maintenant ? » se refermait
+ * toute seule quand le temps faisait passer la question : le candidat qui
+ * hésitait voyait son geste annulé sous son pouce. Le chrono ne s'arrête pas
+ * pendant la confirmation, mais elle, elle reste.
+ */
+describe('la confirmation d’arrêt', () => {
+  it('survit au passage de la question par le chrono', () => {
+    commencer();
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
+    expect(screen.getByText('Arrêter l’examen maintenant ?')).toBeTruthy();
+
+    // Vingt et une secondes : la première question part au buzzer.
+    act(() => {
+      vi.advanceTimersByTime(21_000);
+    });
+
+    expect(screen.getByText(/Énoncé de ecluses-0002/)).toBeTruthy();
+    expect(screen.getByText('Arrêter l’examen maintenant ?')).toBeTruthy();
+    // Et elle décrit l'état présent : une question jouée, deux restantes.
+    expect(screen.getByText(/Il te reste 2 questions/)).toBeTruthy();
+    // Le focus reste dans la confirmation, pas sur l'énoncé qui vient d'arriver.
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Continuer l’examen' }));
+  });
+
+  it('ne pose le focus sur l’énoncé qu’au changement de question, pas à chaque seconde', () => {
+    commencer();
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
+    const continuer = screen.getByRole('button', { name: 'Continuer l’examen' });
+    expect(document.activeElement).toBe(continuer);
+
+    act(() => {
+      vi.advanceTimersByTime(3_000);
+    });
+    expect(document.activeElement).toBe(continuer);
+  });
+});

@@ -397,12 +397,17 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
   }, [arretDemande]);
 
   // Le chrono ne s'arrête pas pendant qu'on hésite, sinon la confirmation
-  // deviendrait un bouton pause. Mais si le temps fait passer la question
-  // derrière la boîte, celle-ci décrirait un état qui n'existe plus : elle se
-  // referme, et l'écran de jeu reprend la main sur la question suivante.
-  useEffect(() => {
-    setArretDemande(false);
-  }, [session.index]);
+  // deviendrait un bouton pause. Mais elle survit au passage de la question :
+  // la refermer sous le pouce du candidat annulait son geste, et elle se
+  // relit à chaque rendu, donc le nombre de questions restantes suit.
+
+  // Le focus sur l'énoncé, au montage de chaque question et à ce moment-là
+  // seulement. Une fonction de référence recréée à chaque rendu était
+  // rappelée à chaque seconde du chrono, et reprenait le focus au bouton de
+  // la confirmation d'arrêt. Tant que celle-ci est ouverte, il y reste.
+  const focaliser = useCallback((noeud: HTMLElement | null) => {
+    if (!contexte.current.arretDemande) noeud?.focus();
+  }, []);
 
   // Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
   // le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
@@ -679,12 +684,17 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
           <ul className="parTheme">
             {Object.entries(r.parTheme)
               .sort(([, a], [, b]) => a.bonnes / a.total - b.bonnes / b.total)
-              .map(([code, note]) => (
-                <li key={code} style={{ '--part': note.bonnes / note.total } as React.CSSProperties}>
+              .map(([code, note], rang) => (
+                <li key={code} style={{ '--part': note.bonnes / note.total, '--rang': rang } as React.CSSProperties}>
                   <b>{nomDuTheme(code)}</b>
                   <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
                     {note.bonnes} / {note.total}
                   </span>
+                  {/* Dans l'app, la jauge est un élément : elle se remplit en
+                      `scaleX`, là où le site peint un dégradé de fond. */}
+                  {POUR_APP && (
+                    <span className="parTheme__jauge" aria-hidden="true"><span /></span>
+                  )}
                 </li>
               ))}
           </ul>
@@ -1015,7 +1025,7 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
         className="jeu__enonce"
         key={`enonce-${question.id}`}
         tabIndex={-1}
-        ref={(noeud) => noeud?.focus()}
+        ref={focaliser}
       >
         <span className="visuellement-cache">
           Question {session.index + 1} sur {session.questions.length}.{' '}

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { POUR_APP } from '../../lib/cible';
 import Base from '../../layouts/Base.astro';
 import { questionsPubliees } from '../../lib/banque';
 import { courtFiche } from '../../lib/seo';
@@ -23,7 +24,7 @@ const compte = (ref: string) => questions.filter((q) => q.sources.some((s) => s.
   description="Les sujets qu’aucun texte réglementaire ne couvre sous une forme citable : le balisage, la VHF, Beaufort, la carte marine. Écrits à la main, et le site le dit."
   miettes={[{ nom: 'Sources', chemin: '/source' }]}
 >
-  <div class="page page--etroite" style="padding-block:3rem 0">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>Les fiches écrites pour ce site</h1>
     <p class="web-seulement">
       Presque tout ce que tu lis ici part d’un texte officiel, cité avec son article.

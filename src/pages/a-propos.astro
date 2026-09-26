@@ -15,7 +15,7 @@ const relecture = await comptesDeRelecture();
   description="Qui tient ce site, pourquoi il existe, et comment une question est écrite, sourcée et relue avant d’être publiée."
   retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}
 >
-  <div class="page page--etroite" style="padding-block:3rem 0">
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <h1>Qui écrit ces questions</h1>
     <p>
       Ce site est écrit et tenu par une seule personne, Alexis Morain. C’est un site

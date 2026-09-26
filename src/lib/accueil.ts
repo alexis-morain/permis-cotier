@@ -10,6 +10,7 @@
  */
 import { statistiques, type Etat } from './progression';
 import { joursAvant, serieDeJours } from './profil';
+import { estDue } from './quiz';
 
 /** Une leçon telle que la page la passe : dans l'ordre du parcours. */
 export interface LeconAccueil {
@@ -106,4 +107,16 @@ export function echeance(etat: Etat, jour: string): Echeance {
 /** Les jours de suite avec au moins une réponse, pour la ligne sous le compte à rebours. */
 export function joursDeSuite(etat: Etat, jour: string): number {
   return serieDeJours(etat, jour).jours;
+}
+
+/**
+ * Combien de questions `/profil/erreurs` range : celles qui sont dues, et
+ * celles ratées au moins une fois. Le même tri que `rangerErreurs`, borné aux
+ * questions publiées. Zéro, l'entrée « Tes erreurs » de l'entraînement se tait.
+ */
+export function nombreDErreurs(etat: Etat, ids: readonly string[], jour: string): number {
+  return ids.filter((id) => {
+    const e = etat.questions[id];
+    return e !== undefined && (estDue(e, jour) || e.ratees > 0);
+  }).length;
 }

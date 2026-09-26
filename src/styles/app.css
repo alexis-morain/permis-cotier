@@ -9,6 +9,31 @@
    Dans l'app, `Base.astro` ne rend ni en-tête ni pied : le premier et le
    dernier bloc de chaque écran sont ceux de `<main>`. */
 
+/* ------------------------------------------------------------ Le mouvement
+
+   Trois jetons pour toute l'app. Deux durées : la courte pour ce qui répond
+   au doigt, la normale pour ce qui entre à l'écran. Une courbe qui démarre
+   vite et se pose, sans rebond. On n'anime que `transform` et `opacity`,
+   plus le bord plein des boutons, qui est la marque de l'appui. Tout se
+   coupe sous `prefers-reduced-motion`, en bas de chaque feuille. */
+html[data-app] {
+  --duree-courte: 160ms;
+  --duree: 240ms;
+  --courbe: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* L'entrée commune : un fondu et une montée de huit points. */
+@keyframes app-entree {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Une jauge se remplit depuis la gauche jusqu'à la part que l'écran lui
+   donne en `transform` : la fin de l'animation est son propre style. */
+@keyframes app-jauge {
+  from { transform: scaleX(0); }
+}
+
 /* --------------------------------------------------------------- Le fond
 
    Le fond du thème sur `<html>` comme sur `<body>`. Entre deux écrans, le
@@ -158,4 +183,36 @@ html[data-app] body {
 html[data-app] a,
 html[data-app] button {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ------------------------------------------------------------- L'appui
+
+   Le bouton s'enfonce vite, en 80 ms, et remonte en 160 : la transition qui
+   joue est celle de l'état d'arrivée. Pas de survol dans l'app, il reste
+   collé sur la dernière cible touchée. */
+html[data-app] .bouton {
+  transition: transform var(--duree-courte) var(--courbe), box-shadow var(--duree-courte) var(--courbe);
+}
+html[data-app] .bouton:active {
+  transition-duration: 80ms;
+}
+
+/* Les cellules de liste : le fond se pose au toucher, rien au survol. */
+html[data-app] .choix a,
+html[data-app] .chapitres__cellule,
+html[data-app] .etape,
+html[data-app] a.cellules__ligne,
+html[data-app] .retour__lien {
+  transition: background-color 80ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-app] .bouton,
+  html[data-app] .choix a,
+  html[data-app] .chapitres__cellule,
+  html[data-app] .etape,
+  html[data-app] a.cellules__ligne,
+  html[data-app] .retour__lien {
+    transition: none;
+  }
 }
