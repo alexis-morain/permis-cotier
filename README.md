@@ -85,6 +85,7 @@ npm run dev
 | `npm test` | tests du moteur (tirage, correction, chrono, progression) |
 | `npm run valider` | valide les fichiers YAML de la banque |
 | `npm run credits` | régénère `data/CREDITS.md` depuis les fiches de visuels |
+| `npm run longueur` | signale les questions dont la bonne réponse est longue face aux distracteurs |
 | `npm run ecluses` | redessine les signaux d'écluse |
 | `npm run carte` | redessine les planches de carte marine |
 | `npm run build:app` | construit `dist-app/`, ce que la coquille iOS embarque |

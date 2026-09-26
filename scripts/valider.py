@@ -86,7 +86,7 @@ CHAMPS = {
     "id", "option", "theme", "statut", "difficulte", "enonce", "visuel", "notion",
     "famille", "propositions", "reponses", "explication", "sources", "meta",
 }
-CHAMPS_META = {"cree_le", "genere_par", "relu_par", "relu_le", "relu_par_2"}
+CHAMPS_META = {"cree_le", "genere_par", "relu_par", "relu_le"}
 CHAMPS_SOURCE = {"texte", "ref", "url", "version"}
 CHAMPS_VISUEL = {"fichier", "alt", "credit"}
 
@@ -165,7 +165,11 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
     propositions = q.get("propositions")
     ids_propositions: list[str] = []
     if not isinstance(propositions, list) or not 2 <= len(propositions) <= 4:
-        ko("propositions", "il faut de 2 à 4 propositions")
+        ko(
+            "propositions-nombre",
+            "l'arrêté ne fixe pas le nombre de propositions ; l'enquête auprès "
+            "des opérateurs agréés donne 2, 3 ou 4 propositions, jamais cinq",
+        )
     else:
         for prop in propositions:
             if not isinstance(prop, dict) or set(prop) - {"id", "texte"}:

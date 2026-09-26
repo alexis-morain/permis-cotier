@@ -74,7 +74,7 @@ def test_option_fluviale_refusee_en_v1():
 @pytest.mark.parametrize("n", [1, 5])
 def test_nombre_de_propositions(n):
     props = [{"id": c, "texte": "texte"} for c in "abcde"[:n]]
-    assert "propositions" in codes(avec(propositions=props, reponses=["a"]))
+    assert "propositions-nombre" in codes(avec(propositions=props, reponses=["a"]))
 
 
 def test_deux_propositions_acceptees():

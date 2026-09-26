@@ -70,8 +70,6 @@ export const schemaMeta = z.object({
   genere_par: z.enum(['claude', 'humain']),
   relu_par: z.string().min(1).optional(),
   relu_le: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  /** Deuxième relecture, exigée à partir de J3. */
-  relu_par_2: z.string().min(1).optional(),
 });
 
 /**

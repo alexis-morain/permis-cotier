@@ -21,6 +21,7 @@
     "audit:seo": "node scripts/audit-seo.mjs",
     "verifier:prod": "node scripts/verifier-prod.mjs",
     "credits": "python3 scripts/credits.py",
+    "longueur": "python3 scripts/longueur.py",
     "feux": "python3 scripts/feux.py",
     "balisage": "python3 scripts/balisage.py",
     "ecluses": "python3 scripts/ecluses.py",

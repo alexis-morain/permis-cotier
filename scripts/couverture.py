@@ -296,16 +296,11 @@ def main(argv: list[str] | None = None) -> int:
         du_theme = sorted((n for n in notions if n["theme"] == theme), key=lambda n: n["ordre"])
         pub_theme = sum(par_notion.get(n["code"], 0) for n in du_theme)
         cible_notions = sum(n["cible"] for n in du_theme)
-        cible_j1 = cibles_themes.get(theme, 0)
         total_pub += pub_theme
         total_cible += cible_notions
 
-        ecart = ""
-        if cible_notions != cible_j1:
-            signe = "+" if cible_notions > cible_j1 else ""
-            ecart = f"   ⚠ cible du thème {cible_j1}, somme des notions {cible_notions} ({signe}{cible_notions - cible_j1})"
         if not args.trous:
-            print(f"\n\033[1m{theme}\033[0m  {pub_theme}/{cible_notions}{ecart}")
+            print(f"\n\033[1m{theme}\033[0m  {pub_theme}/{cible_notions}")
 
         for n in du_theme:
             p = par_notion.get(n["code"], 0)
