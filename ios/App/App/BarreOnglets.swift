@@ -26,7 +26,7 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
     /// puis le cours, l'épreuve, la révision par thème, et la fiche de
     /// l'élève, où il en est.
     private static let onglets = [
-        Onglet(titre: "Accueil", chemin: "/", symbole: "house"),
+        Onglet(titre: "Accueil", chemin: "/accueil", symbole: "house"),
         Onglet(titre: "Cours", chemin: "/cours", symbole: "text.book.closed"),
         Onglet(titre: "Examen", chemin: "/examen", symbole: "timer"),
         Onglet(titre: "Entraînement", chemin: "/entrainement", symbole: "target"),

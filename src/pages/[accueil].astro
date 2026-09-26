@@ -1,0 +1,35 @@
+---
+/**
+ * L'écran d'accueil de l'app, à `/accueil`.
+ *
+ * Il n'existe que dans le build « app » : hors de la coquille, `getStaticPaths`
+ * ne rend rien et la page n'est pas construite. C'est ce qui laisse
+ * `index.astro`, la page d'accueil du site, intacte au dernier octet : la
+ * coquille ouvre sur `/accueil`, et son routeur y ramène aussi `/`.
+ *
+ * Une route dynamique pour une seule adresse, c'est le seul moyen qu'Astro
+ * donne de construire une page sous condition.
+ */
+import Base from '../layouts/Base.astro';
+import AccueilApp from '../components/AccueilApp.tsx';
+import { POUR_APP } from '../lib/cible';
+import { questionsPubliees } from '../lib/banque';
+import { leconsDuParcours } from '../lib/parcours';
+
+export function getStaticPaths() {
+  return POUR_APP ? [{ params: { accueil: 'accueil' } }] : [];
+}
+
+const questions = await questionsPubliees();
+// Les mêmes leçons que le plan du cours, avec le titre de leur chapitre.
+const lecons = leconsDuParcours().map((l) => ({
+  code: l.notion.code,
+  nom: l.notion.nom,
+  chemin: l.chemin,
+  chapitre: l.cours.titre,
+}));
+---
+
+<Base titre="Accueil" description="Où tu en es, et quoi faire maintenant." indexable={false}>
+  <AccueilApp client:only="react" lecons={lecons} ids={questions.map((q) => q.id)} />
+</Base>

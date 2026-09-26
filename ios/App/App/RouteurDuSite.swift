@@ -42,7 +42,12 @@ public struct RouteurDuSite: Router {
         let sansBarreFinale = chemin.count > 1 && chemin.hasSuffix("/")
             ? String(chemin.dropLast())
             : chemin
-        if sansBarreFinale == "/" { return accueil }
+        // La racine est l'écran d'accueil de l'app quand le build l'a construit :
+        // `index.html` est la page d'accueil du site, qui n'a rien à faire ici.
+        if sansBarreFinale == "/" {
+            let ecran = basePath + "/accueil/index.html"
+            return FileManager.default.fileExists(atPath: ecran) ? ecran : accueil
+        }
 
         let fichiers = FileManager.default
         for candidat in ["\(sansBarreFinale)/index.html", "\(sansBarreFinale).html"] {

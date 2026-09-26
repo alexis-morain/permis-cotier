@@ -1,0 +1,103 @@
+/*
+ * L'accueil de l'app. Ces règles ne touchent que `.accueilApp`, rendu dans la
+ * seule coquille : le site n'en voit rien.
+ *
+ * Le bloc « Reprendre » est la bande marine de l'accueil web ramenée à un
+ * bloc : c'est l'action du jour. Les trois autres ne sont pas des cartes mais
+ * des rangées séparées d'un filet, comme les listes du site. Un seul bouton
+ * jaune sur l'écran, celui de la leçon.
+ */
+.accueilApp {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.accueilApp__bloc {
+  padding: 1.25rem 0;
+  border-top: 2px solid var(--filet);
+}
+
+.accueilApp__reprendre {
+  --anneau: var(--jaune);
+  margin-bottom: 0.5rem;
+  padding: 1.25rem;
+  border: 2px solid var(--panneau-filet);
+  border-radius: var(--rayon);
+  background: var(--bande);
+  color: var(--bande-texte);
+}
+
+.accueilApp__reprendre + .accueilApp__bloc { border-top: 0; }
+
+.accueilApp__chapitre {
+  margin: 0 0 0.4rem;
+  color: var(--bande-doux);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.accueilApp__lecon {
+  margin: 0 0 1.25rem;
+  font-size: 1.9rem;
+  line-height: 1.05;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.accueilApp__avancement { margin-bottom: 1.25rem; }
+
+.accueilApp__jauge {
+  height: 0.5rem;
+  border-radius: var(--rayon);
+  background: color-mix(in srgb, var(--bande-texte) 22%, transparent);
+  overflow: hidden;
+}
+.accueilApp__jauge span {
+  display: block;
+  height: 100%;
+  background: var(--jaune);
+  transform-origin: left;
+}
+
+.accueilApp__compte {
+  margin: 0.45rem 0 0;
+  color: var(--bande-doux);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.accueilApp__titre {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+}
+
+.accueilApp__texte { margin: 0; }
+.accueilApp__fort { font-weight: 700; font-size: 1.15rem; }
+
+.accueilApp__nombre {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+/* Les boutons prennent toute la largeur : une cible au pouce, 48 pt de haut. */
+.accueilApp__action {
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+}
+.accueilApp__reprendre .accueilApp__action { margin-top: 0; }
+
+/* Un lien seul est une cible : il tient les 44 pt. */
+.accueilApp__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 700;
+}
+.accueilApp__reprendre .accueilApp__lien { color: var(--bande-texte); }
+
+.accueilApp__serie {
+  margin: 0;
+  padding-top: 0.25rem;
+}
