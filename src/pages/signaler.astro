@@ -13,10 +13,15 @@ import { SITE } from '../lib/seo';
 const ADRESSE = 'contact@lepermiscotier.fr';
 
 // Clé publique, visible dans le source de la page : c'est sa nature. Elle
-// entre au build, jamais par un secret de Worker. Le secret qui va avec,
-// `TURNSTILE_SECRET_KEY`, ne sort pas du Worker.
+// entre au build, jamais par un secret de Worker, et le build Cloudflare n'a
+// pas de `.env` : la clé du widget de lepermiscotier.fr est écrite ici en
+// repli, comme l'identifiant Umami dans `mesure.ts`. Le secret qui va avec,
+// `TURNSTILE_SECRET_KEY`, ne sort pas du Worker. Une clé vide éteint l'envoi
+// en ligne et rend le formulaire au courrier.
 const CLE_TURNSTILE =
-  import.meta.env.TURNSTILE_SITE_KEY ?? process.env.TURNSTILE_SITE_KEY ?? '';
+  import.meta.env.TURNSTILE_SITE_KEY ??
+  process.env.TURNSTILE_SITE_KEY ??
+  '0x4AAAAAAFMTO43R4l4TgTgm';
 const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
 
 // L'adresse de la question dans le courrier. Sur le site, celle de la page

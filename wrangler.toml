@@ -50,4 +50,5 @@ simple = { limit = 5, period = 60 }
 # `SIGNALEMENT_MAIL_TO` et `SIGNALEMENT_MAIL_FROM` sont posés par
 # `wrangler secret put <NOM>`. Tant que Turnstile ou GitHub manquent,
 # l'endpoint rend 503 et la page retombe sur le `mailto:`.
-# `TURNSTILE_SITE_KEY`, elle, est publique et entre au build.
+# `TURNSTILE_SITE_KEY`, elle, est publique et entre au build : écrite en repli
+# dans `src/pages/signaler.astro`, une variable de build la remplace.
