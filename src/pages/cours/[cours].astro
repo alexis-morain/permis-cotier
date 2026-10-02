@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Parcours from '../../components/Parcours.tsx';
+import Parcours from '../../components/Parcours.astro';
+import '../../components/parcours.css';
 import { COURS, coursSuivant, leconsDuCours, cheminCours, type Cours } from '../../lib/parcours';
 import { leconDeLaNotion, leconsEcrites } from '../../lib/lecons';
 import { questionsDuTheme } from '../../lib/banque';
@@ -49,9 +50,13 @@ for (const l of lecons) for (const s of l.affichable.sources) if (!textes.has(s.
 // travail, `cibleJ1`, ramenée à quarante questions. La page le dit.
 const part = Math.round((theme.cibleJ1 / cibleTotaleJ1()) * 40);
 
-// Ce que l'îlot du parcours reçoit, dans l'app comme sur le site.
+// Ce que le parcours affiche, dans l'app comme sur le site. Le script de la
+// page (`cours-site.ts`) le relit dans un bloc JSON inerte pour rebâtir la
+// liste avec la progression ; le `<` est échappé pour qu'aucun texte ne
+// puisse fermer le bloc.
 const parcours = { code: cours.code, titre: cours.titre, lecons: lecons.map(({ affichable: _, ...l }) => l) };
 const versSuivant = suivant ? { chemin: cheminCours(suivant.code), titre: suivant.titre } : undefined;
+const donneesParcours = JSON.stringify({ cours: parcours, suivant: versSuivant }).replaceAll('<', '\\u003c');
 
 const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minutes, chacune vérifiée sur les questions de la banque.`;
 ---
@@ -91,7 +96,7 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     {POUR_APP && (
       <section class="lecons-app" id="lecons">
         <h2>Les leçons</h2>
-        <Parcours client:load cours={parcours} suivant={versSuivant} />
+        <Parcours cours={parcours} />
       </section>
     )}
 
@@ -134,7 +139,7 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
         </Fragment>
       )}
     </p>
-    <Parcours client:load cours={parcours} suivant={versSuivant} />
+    <Parcours cours={parcours} />
   </section>
   )}
 
@@ -231,6 +236,14 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
       </li>
     </ul>
   </nav>
+
+  <script type="application/json" id="parcours-donnees" is:inline set:html={donneesParcours} />
+  <script>
+    import { monterCours } from '../../components/cours-site';
+    import { quandLaPageEstPrete } from '../../lib/page';
+
+    quandLaPageEstPrete(() => monterCours());
+  </script>
 </Base>
 
 <style>

@@ -1,0 +1,41 @@
+---
+/**
+ * Les leçons d'un cours, telles que le serveur les rend : sans état, ni coche
+ * ni bloc de reprise. Le script de la page (`cours-site.ts`) rebâtit le
+ * conteneur avec la progression, depuis le bloc JSON que la page écrit une
+ * seule fois, même quand elle rend ce composant à deux endroits.
+ */
+import type { CoursAffichable } from './cours-site';
+import { POUR_APP } from '../lib/cible';
+
+interface Props {
+  cours: CoursAffichable;
+}
+
+const { lecons } = Astro.props.cours;
+---
+
+<div class="parcours" data-parcours>
+  <p class="chapitre__compte">
+    <span class="pastille">{lecons.length} leçon{lecons.length > 1 ? 's' : ''}</span>
+  </p>
+  <ol class="etapes">
+    {lecons.map((l, i) => (
+      <li>
+        <a href={l.chemin} class="etape" data-mesure="cours-lecon" data-mesure-notion={l.code}>
+          <span class="etape__rang" aria-hidden="true">{i + 1}</span>
+          <span class="etape__corps">
+            <span class="etape__nom">{l.nom}</span>
+            {POUR_APP ? (
+              !l.ecrite && <span class="etape__meta discret">résumé seulement</span>
+            ) : (
+              <span class="etape__meta discret">{l.duree} min{!l.ecrite && ' · résumé seulement'}</span>
+            )}
+          </span>
+          {POUR_APP && <span class="etape__duree discret">{l.duree} min</span>}
+          <span class="visuellement-cache"></span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</div>

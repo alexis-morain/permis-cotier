@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ListeCours from '../../components/ListeCours.tsx';
+import '../../components/parcours.css';
 import { COURS, leconsDuCours, cheminCours } from '../../lib/parcours';
 import { leconsEcrites, compteLeconsEcrites } from '../../lib/lecons';
 import { SITE, faq, absolue } from '../../lib/seo';
@@ -29,6 +29,13 @@ const cours = COURS.map((c) => {
   };
 });
 const minutes = cours.reduce((t, c) => t + c.minutes, 0);
+
+/**
+ * Ce que le script de la page lit pour rebâtir la liste avec la progression
+ * (`cours-site.ts`). En JSON dans un bloc inerte ; le `<` est échappé pour
+ * qu'aucun texte ne puisse fermer le bloc.
+ */
+const donneesListe = JSON.stringify({ cours }).replaceAll('<', '\\u003c');
 const heures = Math.round(minutes / 60);
 
 const questions = [
@@ -92,7 +99,48 @@ const liste = {
       </p>
     )}
 
-    <ListeCours client:load cours={cours} />
+    {/* Ce que le serveur rend avant le script : la liste sans état. Le script
+        pose le bloc de reprise et l'avancement de chaque cours. */}
+    <div class="coursListe" data-liste-cours>
+      {POUR_APP ? (
+        <ol class="chapitres">
+          {cours.map((c, i) => (
+            <li>
+              <a href={c.chemin} class="chapitres__cellule chapitres__cellule--vide" data-mesure="cours-ouvert" data-mesure-cours={c.code}>
+                <span class="chapitres__disque" role="img" aria-label={`Chapitre ${i + 1}, pas commencé`}>
+                  <span aria-hidden="true">{i + 1}</span>
+                </span>
+                <span class="chapitres__corps">
+                  <span class="chapitres__titre">{c.titre}</span>
+                  <span class="chapitres__compte">{c.lecons.length} leçon{c.lecons.length > 1 ? 's' : ''}</span>
+                  <span class="chapitres__jauge" aria-hidden="true"><span style="transform:scaleX(0)"></span></span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <ol class="coursListe__liste">
+          {cours.map((c, i) => (
+            <li class="coursListe__item">
+              <a href={c.chemin} data-mesure="cours-ouvert" data-mesure-cours={c.code}>
+                <span class="coursListe__rang" aria-hidden="true">{i + 1}</span>
+                <span class="coursListe__corps">
+                  <span class="coursListe__titre">{c.titre}</span>
+                  <span class="coursListe__promesse">{c.promesse}</span>
+                  <span class="coursListe__meta discret">
+                    <span>{c.lecons.length} leçon{c.lecons.length > 1 ? 's' : ''}</span>
+                    <span> · {c.minutes} min</span>
+                  </span>
+                </span>
+                <span class="visuellement-cache"></span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+    <script type="application/json" id="liste-cours-donnees" is:inline set:html={donneesListe} />
   </div>
 
   <section class="page page--etroite bloc web-seulement">
@@ -138,6 +186,13 @@ const liste = {
       ))}
     </dl>
   </section>
+
+  <script>
+    import { monterCours } from '../../components/cours-site';
+    import { quandLaPageEstPrete } from '../../lib/page';
+
+    quandLaPageEstPrete(() => monterCours());
+  </script>
 </Base>
 
 <style>

@@ -1,12 +1,13 @@
 /** @vitest-environment jsdom */
+/**
+ * La liste des cours et les leçons d'un chapitre telles que la coquille les
+ * montre. La version du site est tenue par `cours-site.test.ts`, dans la
+ * cible par défaut.
+ */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import ListeCours, { etatDuChapitre } from './ListeCours';
-import Parcours from './Parcours';
+import { monterCours } from './cours-site';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
 
-// Ces tests regardent la liste telle que la coquille la montre. La version du
-// site est tenue par `Parcours.test.tsx`, dans la cible par défaut.
 vi.mock('../lib/cible', () => ({ POUR_APP: true }));
 
 const cours = [
@@ -40,6 +41,19 @@ const cours = [
   },
 ];
 
+function pageListe() {
+  document.body.innerHTML = `
+    <div class="coursListe" data-liste-cours><ol class="chapitres"><li>rendu du serveur</li></ol></div>
+    <script type="application/json" id="liste-cours-donnees">${JSON.stringify({ cours })}</script>`;
+}
+
+function pageCours() {
+  const { code, titre, lecons } = cours[0]!;
+  document.body.innerHTML = `
+    <div class="parcours" data-parcours><ol class="etapes"><li>rendu du serveur</li></ol></div>
+    <script type="application/json" id="parcours-donnees">${JSON.stringify({ cours: { code, titre, lecons } })}</script>`;
+}
+
 function progression(codes: string[]) {
   const lecons = Object.fromEntries(codes.map((c) => [c, { faiteLe: '2026-09-20', bonnes: 1, total: 1 }]));
   localStorage.setItem(
@@ -52,63 +66,92 @@ function cellule(chemin: string): HTMLElement {
   return document.querySelector(`a.chapitres__cellule[href="${chemin}"]`)!;
 }
 
-beforeEach(() => localStorage.clear());
-afterEach(() => cleanup());
+function disque(nom: string): HTMLElement | null {
+  return document.querySelector(`.chapitres__disque[role="img"][aria-label="${nom}"]`);
+}
 
-describe('l’état d’un chapitre', () => {
-  it('se lit au compte des leçons faites', () => {
-    expect(etatDuChapitre(0, 4)).toBe('vide');
-    expect(etatDuChapitre(2, 4)).toBe('encours');
-    expect(etatDuChapitre(4, 4)).toBe('fait');
-  });
+beforeEach(() => localStorage.clear());
+afterEach(() => {
+  document.body.innerHTML = '';
 });
 
 describe('les chapitres dans l’app', () => {
   it('sont un parcours de cellules, un disque numéroté et une jauge chacun', () => {
-    render(<ListeCours cours={cours} />);
+    pageListe();
+    monterCours(document);
     expect(document.querySelectorAll('a.chapitres__cellule')).toHaveLength(3);
     expect(document.querySelector('.coursListe__liste')).toBeNull();
-    expect(screen.getByRole('img', { name: 'Chapitre 1, pas commencé' })).toBeTruthy();
-    expect(cellule('/cours/balisage').textContent).toContain('0 / 3 leçons');
+    expect(disque('Chapitre 1, pas commencé')).not.toBeNull();
+    const balisage = cellule('/cours/balisage');
+    expect(balisage.className).toBe('chapitres__cellule chapitres__cellule--vide');
+    expect(balisage.querySelector('.chapitres__compte')!.textContent).toBe('0 / 3 leçons');
+    expect(balisage.querySelector('.chapitres__disque [aria-hidden="true"]')!.textContent).toBe('1');
+    expect(balisage.getAttribute('data-mesure')).toBe('cours-ouvert');
+    expect(balisage.getAttribute('data-mesure-cours')).toBe('balisage');
+    expect(balisage.querySelector<HTMLElement>('.chapitres__jauge span')!.style.transform).toBe('scaleX(0)');
   });
 
   it('disent en toutes lettres le chapitre en cours et le chapitre terminé', () => {
     progression(['balisage-lateral', 'balisage-cardinal', 'barre-veille-vitesse']);
-    render(<ListeCours cours={cours} />);
+    pageListe();
+    monterCours(document);
 
     const balisage = cellule('/cours/balisage');
     expect(balisage.className).toContain('chapitres__cellule--encours');
     expect(balisage.textContent).toContain('2 / 3 leçons');
-    expect(screen.getByRole('img', { name: 'Chapitre 1, en cours' })).toBeTruthy();
+    expect(disque('Chapitre 1, en cours')).not.toBeNull();
     const jauge = balisage.querySelector<HTMLElement>('.chapitres__jauge span')!;
     expect(jauge.style.transform).toBe(`scaleX(${2 / 3})`);
 
     const barre = cellule('/cours/barre-route');
     expect(barre.className).toContain('chapitres__cellule--fait');
-    expect(screen.getByRole('img', { name: 'Chapitre 2, terminé' })).toBeTruthy();
+    expect(disque('Chapitre 2, terminé')).not.toBeNull();
     expect(barre.querySelector('svg')).not.toBeNull();
 
-    expect(screen.getByRole('img', { name: 'Chapitre 3, pas commencé' })).toBeTruthy();
+    expect(disque('Chapitre 3, pas commencé')).not.toBeNull();
   });
 
-  it('gardent le bloc Reprendre en haut', () => {
+  it('gardent le bloc Reprendre en haut, rebâti sans s’empiler', () => {
     progression(['balisage-lateral']);
-    render(<ListeCours cours={cours} />);
-    expect(screen.getByRole('link', { name: 'Reprendre : Marques cardinales' })).toBeTruthy();
+    pageListe();
+    monterCours(document);
+    monterCours(document);
+    const reprendre = [...document.querySelectorAll('a')].find((a) => a.textContent === 'Reprendre : Marques cardinales');
+    expect(reprendre?.getAttribute('data-mesure')).toBe('cours-reprise');
+    expect(document.querySelectorAll('.parcours__reprise')).toHaveLength(1);
+    expect(document.querySelectorAll('a.chapitres__cellule')).toHaveLength(3);
   });
 });
 
 describe('les leçons d’un chapitre dans l’app', () => {
   it('portent leur durée à droite, et la coche ou « à faire maintenant » en toutes lettres', () => {
     progression(['balisage-lateral']);
-    render(<Parcours cours={cours[0]!} />);
+    pageCours();
+    monterCours(document);
     const faite = document.querySelector('a.etape[href="/cours/balisage/balisage-lateral"]')!;
     expect(faite.querySelector('.etape__duree')?.textContent).toBe('3 min');
+    expect(faite.querySelector('.etape__meta')?.textContent).toBe('1 sur 1');
     expect(faite.textContent).toContain('leçon faite');
     expect(faite.querySelector('svg')).not.toBeNull();
     const prochaine = document.querySelector('a.etape[href="/cours/balisage/balisage-cardinal"]')!;
     expect(prochaine.className).toContain('etape--prochaine');
     expect(prochaine.querySelector('.etape__meta')?.textContent).toBe('à faire maintenant');
     expect(prochaine.querySelector('.etape__duree')?.textContent).toBe('5 min');
+    const resume = document.querySelector('a.etape[href="/cours/balisage/balisage-pictogrammes"]')!;
+    expect(resume.querySelector('.etape__meta')?.textContent).toBe('résumé seulement');
+  });
+
+  it('n’écrivent pas de méta quand il n’y a rien à dire', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null,
+        lecons: { 'balisage-lateral': { faiteLe: '2026-09-20', bonnes: 0, total: 0 } },
+      }),
+    );
+    pageCours();
+    monterCours(document);
+    const faite = document.querySelector('a.etape[href="/cours/balisage/balisage-lateral"]')!;
+    expect(faite.querySelector('.etape__meta')).toBeNull();
   });
 });
