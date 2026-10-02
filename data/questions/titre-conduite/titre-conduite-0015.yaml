@@ -9,10 +9,10 @@ enonce: >-
   un bateau à moteur ?
 propositions:
   - id: a
-    texte: Oui, de jour, un bateau de moins de 20 mètres, dans le cadre des activités
-      du club et sous encadrement
+    texte: Oui, de jour, un bateau de moins de 20 mètres, dans les activités encadrées
+      du club
   - id: b
-    texte: Non, rien n'est possible avant seize ans
+    texte: Non, rien n'est possible avant seize ans, même dans un club affilié
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

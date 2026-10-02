@@ -8,12 +8,11 @@ enonce: >-
   Outre le côté sain d'un danger, que peut signaler une marque cardinale ?
 propositions:
   - id: a
-    texte: Une configuration particulière du chenal, comme un coude, une jonction ou l'extrémité
-      d'un banc
+    texte: Un coude, une jonction ou l'extrémité d'un banc dans le chenal
   - id: b
-    texte: Une zone réservée à la baignade
+    texte: Une zone réservée à la baignade, au mouillage ou aux sports nautiques
   - id: c
-    texte: L'entrée d'un port
+    texte: L'entrée d'un port ou l'approche d'un estuaire depuis le large
 reponses:
   - a
 explication: >-
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

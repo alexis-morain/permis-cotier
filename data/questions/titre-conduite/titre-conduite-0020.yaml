@@ -9,9 +9,9 @@ enonce: >-
   été entendu ?
 propositions:
   - id: a
-    texte: Oui, pour huit jours au plus, pendant lesquels l'intéressé doit être entendu
+    texte: Oui, pour huit jours, durant lesquels il doit être entendu
   - id: b
-    texte: Non, jamais sans audition préalable
+    texte: Non, jamais sans audition préalable du titulaire par l'autorité
 reponses:
   - a
 explication: >-
@@ -24,5 +24,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -10,9 +10,9 @@ propositions:
   - id: a
     texte: Des petits fonds, d'autant plus faibles que la teinte est sombre
   - id: b
-    texte: L'estran, qui découvre à basse mer
+    texte: L'estran, qui découvre à basse mer et se couvre à pleine mer
   - id: c
-    texte: Des eaux profondes
+    texte: Des eaux profondes, d'autant plus que la teinte est sombre
 reponses:
   - a
 explication: >-
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

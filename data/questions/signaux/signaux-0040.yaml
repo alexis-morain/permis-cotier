@@ -9,12 +9,11 @@ enonce: >-
   Que dois-tu faire à la place ?
 propositions:
   - id: a
-    texte: Émettre un autre signal sonore efficace, à des intervalles ne dépassant pas
-      deux minutes
+    texte: Émettre un autre signal sonore efficace, toutes les deux minutes au plus
   - id: b
-    texte: Rien, tu n'es tenu à aucun signal
+    texte: Rien, sous 12 mètres tu n'es tenu à aucun signal sonore dans la brume
   - id: c
-    texte: Émettre un MAYDAY sur le canal 16
+    texte: Émettre un MAYDAY sur le canal 16 pour signaler ta position
 reponses:
   - a
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -16,9 +16,9 @@ propositions:
     texte: Il ne comprend pas tes intentions, ou doute que tu manœuvres assez pour éviter
       l'abordage.
   - id: b
-    texte: Il t'annonce qu'il vient sur bâbord.
+    texte: Il t'annonce qu'il vient sur bâbord et te demande de garder ta route.
   - id: c
-    texte: Il est en détresse et demande assistance.
+    texte: Il est en détresse et te demande de lui porter assistance sans tarder.
 reponses:
   - a
 explication: >-
@@ -34,5 +34,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

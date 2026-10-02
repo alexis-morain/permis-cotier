@@ -11,10 +11,9 @@ propositions:
   - id: a
     texte: Rien, la consultation avant le départ suffit
   - id: b
-    texte: Un dispositif permettant de recevoir les prévisions météorologiques marines
-      à bord
+    texte: Un moyen de recevoir à bord les prévisions météo marines
   - id: c
-    texte: Un baromètre enregistreur
+    texte: Un baromètre enregistreur installé à poste
 reponses:
   - b
 explication: >-
@@ -31,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

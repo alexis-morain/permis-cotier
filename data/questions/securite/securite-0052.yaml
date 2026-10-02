@@ -9,12 +9,12 @@ enonce: >-
   règle 19 d) avant même de manœuvrer ?
 propositions:
   - id: a
-    texte: De déterminer si une situation très rapprochée est en train de se créer ou si
-      un risque d'abordage existe
+    texte: De déterminer si une situation très rapprochée se crée ou si un risque
+      d'abordage existe
   - id: b
-    texte: D'appeler ce navire sur le canal 16 avant toute autre chose
+    texte: D'appeler ce navire sur le canal 16 avant toute autre manœuvre d'évitement
   - id: c
-    texte: De stopper immédiatement et d'attendre qu'il soit passé
+    texte: De stopper immédiatement et d'attendre qu'il soit passé sur ton arrière
 reponses:
   - a
 explication: >-
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

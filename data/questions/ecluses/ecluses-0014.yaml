@@ -15,12 +15,11 @@ propositions:
   - id: a
     texte: Tu restes en attente, ce signal n'autorise pas encore l'accès
   - id: b
-    texte: Tu relèves tes ancres et tu prépares les défenses flottantes qu'il te faudra
-      dans le sas
+    texte: Tu relèves tes ancres et prépares tes défenses flottantes pour le sas
   - id: c
-    texte: Tu entres sans attendre, le vert autorise le passage
+    texte: Tu entres sans attendre, le vert autorise le passage dès qu'il s'allume
   - id: d
-    texte: Tu fais demi-tour, l'écluse est hors service
+    texte: Tu fais demi-tour, ce signal annonce une écluse hors service
 reponses:
   - a
   - b
@@ -39,5 +38,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

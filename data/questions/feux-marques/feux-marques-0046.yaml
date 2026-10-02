@@ -11,9 +11,9 @@ propositions:
   - id: a
     texte: Deux, le second à l'arrière du premier et plus haut
   - id: b
-    texte: Un seul, à l'avant
+    texte: Un seul, à l'avant, le second n'étant exigé qu'à partir de 100 mètres
   - id: c
-    texte: Trois, superposés
+    texte: Trois, superposés sur le même mât, à l'avant du navire
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

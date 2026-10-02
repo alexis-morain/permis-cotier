@@ -8,11 +8,11 @@ enonce: >-
   La pêche de loisir peut-elle être soumise à autorisation ?
 propositions:
   - id: a
-    texte: Non, elle est libre par nature
+    texte: Non, elle reste libre par nature, quelle que soit l'espèce pêchée
   - id: b
     texte: Oui, pour les activités qui affectent l'état des ressources halieutiques
   - id: c
-    texte: Oui, mais uniquement pour la pêche à pied
+    texte: Oui, mais uniquement pour la pêche à pied, jamais depuis un bateau
 reponses:
   - b
 explication: >-
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

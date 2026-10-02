@@ -9,12 +9,11 @@ enonce: >-
   extrémité de la vergue. Que fait-il, et à quelle distance restes-tu ?
 propositions:
   - id: a
-    texte: Il effectue des opérations de déminage, ne pas s'approcher à moins de 1 000
-      mètres
+    texte: Il fait du déminage, ne pas s'approcher à moins de 1 000 mètres
   - id: b
-    texte: Il est échoué, passer au large de sa poupe
+    texte: Il est échoué par petits fonds, ne pas s'approcher à moins de 500 mètres
   - id: c
-    texte: Il remorque, passer à plus de 200 mètres
+    texte: Il remorque un long train, ne pas passer à moins de 200 mètres de son arrière
 reponses:
   - a
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

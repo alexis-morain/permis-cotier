@@ -15,9 +15,9 @@ propositions:
   - id: a
     texte: Le navire est échoué.
   - id: b
-    texte: Le navire peut compléter ce signal par un signal approprié au sifflet.
+    texte: Le navire peut y ajouter un signal approprié au sifflet.
   - id: c
-    texte: Le navire est au mouillage.
+    texte: Le navire est au mouillage et ne fait pas route.
   - id: d
     texte: Le navire n'est pas maître de sa manœuvre.
 reponses:
@@ -35,5 +35,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

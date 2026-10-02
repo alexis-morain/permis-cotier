@@ -10,12 +10,11 @@ enonce: >-
   s'en soucie-t-il ?
 propositions:
   - id: a
-    texte: Oui, il punit le fait de laisser écouler indirectement en mer des substances
-      nuisibles aux animaux et végétaux marins
+    texte: Oui, il punit aussi l'écoulement indirect en mer de substances nuisibles
   - id: b
     texte: Non, seul un rejet versé directement par-dessus bord est visé
   - id: c
-    texte: Non, tant qu'aucun produit pur n'a été déversé
+    texte: Non, tant qu'aucun produit pur n'a été déversé dans l'eau du port
 reponses:
   - a
 explication: >-
@@ -30,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -9,11 +9,11 @@ enonce: >-
   que tu es dans une situation de routes directement opposées ?
 propositions:
   - id: a
-    texte: Tu vois l'autre navire par le travers tribord.
+    texte: Tu vois l'autre navire par le travers tribord, sa route croisant la tienne
   - id: b
-    texte: Tu vois l'autre navire s'éloigner sur ton arrière.
+    texte: Tu vois l'autre navire s'éloigner sur ton arrière, dans ta route
   - id: c
-    texte: Tu vois l'autre navire devant toi ou pratiquement devant toi, sous l'angle correspondant.
+    texte: Tu vois l'autre navire devant toi ou pratiquement devant toi
 reponses:
   - c
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-10-02'

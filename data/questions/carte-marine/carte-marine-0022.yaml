@@ -9,12 +9,15 @@ enonce: >-
   année et une variation annuelle. Pourquoi ?
 propositions:
   - id: a
-    texte: Parce que la déclinaison bouge lentement et qu'une rose ancienne demande une
+    texte: >-
+      Parce que la déclinaison bouge lentement et qu'une rose ancienne demande une
       correction
   - id: b
-    texte: Parce que la déclinaison change avec la saison
+    texte: >-
+      Parce que la déclinaison change avec la saison et qu'il faut la corriger chaque
+      été
   - id: c
-    texte: Parce que la carte a été dessinée cette année-là
+    texte: Parce que la carte a été dessinée cette année-là et n'est plus valable ensuite
 reponses:
   - a
 explication: >-
@@ -27,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

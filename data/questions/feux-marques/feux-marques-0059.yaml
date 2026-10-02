@@ -8,7 +8,7 @@ enonce: >-
   De jour, quelle marque peut montrer un navire handicapé par son tirant d'eau ?
 propositions:
   - id: a
-    texte: Une marque cylindrique
+    texte: Un cylindre
   - id: b
     texte: Une boule
   - id: c
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

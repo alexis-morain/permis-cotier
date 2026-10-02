@@ -8,12 +8,11 @@ enonce: >-
   Quelle est la conséquence d'une fausse alerte de détresse ?
 propositions:
   - id: a
-    texte: Elle mobilise des moyens de secours pour rien et met en danger ceux qui en
-      ont besoin ailleurs
+    texte: Elle mobilise pour rien des secours qui manquent alors ailleurs
   - id: b
     texte: Aucune, les secours vérifient toujours avant de partir
   - id: c
-    texte: Elle bloque ta VHF pendant vingt-quatre heures
+    texte: Elle bloque l'émission de ta VHF pendant vingt-quatre heures
 reponses:
   - a
 explication: >-
@@ -29,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

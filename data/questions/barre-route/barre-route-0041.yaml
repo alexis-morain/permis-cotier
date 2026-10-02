@@ -9,12 +9,17 @@ enonce: >-
   7 sur la conclusion à en tirer ?
 propositions:
   - id: a
-    texte: On doit éviter de tirer des conclusions de renseignements insuffisants, notamment
-      de renseignements radar insuffisants
+    texte: >-
+      Tu dois éviter de tirer des conclusions de renseignements insuffisants,
+      notamment radar
   - id: b
-    texte: Un écho faible signifie qu'il n'y a pas de risque d'abordage
+    texte: >-
+      Un écho faible signifie qu'il n'y a pas de risque d'abordage, tu peux garder ta
+      route
   - id: c
-    texte: Le radar fait foi et dispense de la veille visuelle
+    texte: >-
+      Le radar fait foi et dispense de la veille visuelle, tu te fies à ce qu'il
+      montre
 reponses:
   - a
 explication: >-
@@ -27,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

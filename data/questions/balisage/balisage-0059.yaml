@@ -14,7 +14,7 @@ propositions:
   - id: c
     texte: Cylindrique
   - id: d
-    texte: Conique
+    texte: Charpente ou espar, avec deux sphères superposées
 reponses:
   - a
   - b
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-09'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

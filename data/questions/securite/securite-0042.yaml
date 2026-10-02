@@ -8,12 +8,11 @@ enonce: >-
   Tu ranges ton extincteur dans un placard fermé. Que demande l'annexe 240-A3 ?
 propositions:
   - id: a
-    texte: Que la porte du placard porte le pictogramme approprié, l'extincteur restant
-      immédiatement accessible
+    texte: Que la porte porte le symbole approprié et que l'extincteur reste accessible
   - id: b
-    texte: Rien, un extincteur se range où l'on veut
+    texte: Rien, un extincteur se range où l'on veut tant qu'il est à bord
   - id: c
-    texte: Que le placard soit dans le compartiment moteur
+    texte: Que le placard soit dans le compartiment moteur, fermé à clé en navigation
 reponses:
   - a
 explication: >-
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -10,9 +10,9 @@ propositions:
   - id: a
     texte: La couleur et le rythme de son feu
   - id: b
-    texte: La forme de son corps
+    texte: La forme et la couleur de son corps
   - id: c
-    texte: Son voyant
+    texte: La forme et la couleur de son voyant
 reponses:
   - a
 explication: >-
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

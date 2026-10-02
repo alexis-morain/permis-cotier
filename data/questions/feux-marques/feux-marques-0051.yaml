@@ -10,11 +10,11 @@ enonce: >-
 propositions:
   - id: a
     texte: Tenir prête une lampe électrique ou un fanal à feu blanc, à montrer immédiatement
-      pour prévenir un abordage
   - id: b
     texte: Rien, les voiliers de moins de 7 mètres sont dispensés de tout
   - id: c
-    texte: Montrer un feu rouge au-dessus d'un feu vert
+    texte: Montrer en tête de mât un feu rouge au-dessus d'un feu vert, visibles sur tout
+      l'horizon
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

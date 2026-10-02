@@ -8,12 +8,13 @@ enonce: >-
   Un rejet effectué depuis un navire est-il toujours punissable ?
 propositions:
   - id: a
-    texte: Oui, sans exception
+    texte: Oui, sans exception, quelle que soit la raison du rejet ou l'urgence de la
+      situation à bord
   - id: b
-    texte: 'Non : un rejet effectué à des fins de sécurité, de sauvetage ou de lutte contre
-      la pollution ne l''est pas'
+    texte: "Non : un rejet fait pour la sécurité, le sauvetage ou la lutte contre la pollution ne l'est pas"
   - id: c
-    texte: Non, à condition d'être effectué au-delà des eaux territoriales
+    texte: Non, un rejet volontaire ne l'est pas dès qu'il est effectué au-delà des eaux
+      territoriales
 reponses:
   - b
 explication: >-
@@ -28,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

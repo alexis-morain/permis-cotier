@@ -8,12 +8,17 @@ enonce: >-
   Qu'appelle-t-on « visibilité réduite » au sens du RIPAM ?
 propositions:
   - id: a
-    texte: Toute situation où la visibilité est diminuée par la brume, la bruine, la neige,
-      de forts grains de pluie ou une cause analogue
+    texte: >-
+      Toute visibilité diminuée par la brume, la bruine, la neige, de forts grains de
+      pluie ou une cause analogue
   - id: b
-    texte: La nuit, entre le coucher et le lever du soleil
+    texte: >-
+      La nuit, entre le coucher et le lever du soleil, quand seuls les feux des
+      navires restent visibles
   - id: c
-    texte: Une visibilité inférieure à un mille, mesurée au radar
+    texte: >-
+      Une visibilité inférieure à un mille, mesurée au radar ou estimée sur les amers
+      de la côte
 reponses:
   - a
 explication: >-
@@ -27,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

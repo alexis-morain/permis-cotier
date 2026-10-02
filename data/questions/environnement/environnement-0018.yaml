@@ -9,10 +9,11 @@ enonce: >-
   le code de l'environnement ?
 propositions:
   - id: a
-    texte: Un rejet provenant d'une avarie, au-delà des eaux territoriales, n'est pas
-      une infraction sous les conditions de la convention MARPOL
+    texte: Hors eaux territoriales, un rejet dû à une avarie n'est pas une infraction,
+      sous conditions MARPOL
   - id: b
-    texte: Tout rejet est puni, quelle qu'en soit la cause
+    texte: Tout rejet est puni, quelle qu'en soit la cause, avarie comprise, au large
+      comme près de la côte
 reponses:
   - a
 explication: >-
@@ -26,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

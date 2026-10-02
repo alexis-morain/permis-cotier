@@ -9,8 +9,7 @@ enonce: >-
   sont-elles suspendues au profit de la seule règle 19 ?
 propositions:
   - id: a
-    texte: Non, elles continuent de s'appliquer, en tenant dûment compte des circonstances
-      et de la visibilité réduite
+    texte: Non, elles s'appliquent toujours, en tenant compte de la visibilité réduite
   - id: b
     texte: Oui, la règle 19 les remplace tant que dure la visibilité réduite
   - id: c
@@ -29,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

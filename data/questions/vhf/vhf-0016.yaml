@@ -9,12 +9,12 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: Qu'elles sont couvertes par une assurance
+    texte: Qu'elles sont couvertes par une assurance contre la panne et le vol
   - id: b
-    texte: Qu'elles présentent des caractéristiques suffisantes pour assurer le trafic
-      de détresse dans les zones où tu navigues
+    texte: Qu'elles suffisent à assurer le trafic de détresse dans tes zones de
+      navigation
   - id: c
-    texte: Qu'elles portent le marquage CE, ce qui suffit
+    texte: Qu'elles portent le marquage CE, ce qui suffit quelle que soit la zone
 reponses:
   - b
 explication: >-
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

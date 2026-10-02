@@ -9,12 +9,17 @@ enonce: >-
   dit la règle 8 du seul changement de cap ?
 propositions:
   - id: a
-    texte: Il peut être la manœuvre la plus efficace, s'il est fait largement à temps,
-      franchement, et sans créer une autre situation rapprochée
+    texte: >-
+      Il peut être la manœuvre la plus efficace, s'il est fait largement à temps,
+      franchement, sans créer une autre situation rapprochée
   - id: b
-    texte: Il est interdit sans réduction de vitesse
+    texte: >-
+      Il ne suffit jamais, il doit toujours s'accompagner d'une réduction de vitesse,
+      même avec de la place
   - id: c
-    texte: Il ne vaut que par visibilité réduite
+    texte: >-
+      Il ne vaut que par visibilité réduite, et doit alors se faire par petites
+      touches successives
 reponses:
   - a
 explication: >-
@@ -28,5 +33,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

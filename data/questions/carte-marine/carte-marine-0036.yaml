@@ -8,12 +8,17 @@ enonce: >-
   Pourquoi le marnage est-il maximal en vive-eau ?
 propositions:
   - id: a
-    texte: Parce que le Soleil et la Lune tirent dans le même sens et que leurs effets
+    texte: >-
+      Parce que le Soleil et la Lune tirent dans le même sens et que leurs effets
       s'ajoutent
   - id: b
-    texte: Parce que la Lune est alors au plus près de la Terre
+    texte: >-
+      Parce que la Lune est alors au plus près de la Terre et que son attraction
+      double
   - id: c
-    texte: Parce que le vent d'ouest pousse l'eau vers la côte
+    texte: >-
+      Parce que le vent d'ouest pousse alors l'eau vers la côte et gonfle la pleine
+      mer
 reponses:
   - a
 explication: >-
@@ -26,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -8,12 +8,13 @@ enonce: >-
   Comment la division 240 définit-elle le chef de bord ?
 propositions:
   - id: a
-    texte: Le membre d'équipage responsable de la conduite du navire, du respect des règlements
-      et de la sécurité des personnes embarquées
+    texte: Le membre d'équipage responsable de la conduite du navire et de la sécurité à
+      bord
   - id: b
-    texte: Le propriétaire du navire, qu'il soit à bord ou non
+    texte: Le propriétaire du navire, responsable de sa conduite qu'il soit à bord ou
+      non
   - id: c
-    texte: La personne la plus âgée à bord
+    texte: La personne la plus âgée ou la plus expérimentée parmi l'équipage
 reponses:
   - a
 explication: >-
@@ -27,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -9,12 +9,11 @@ enonce: >-
   l'axe longitudinal. Que permet la règle 23 ?
 propositions:
   - id: a
-    texte: Le placer hors de l'axe, à condition que les feux de côté soient combinés en
-      un seul fanal dans l'axe
+    texte: Le placer hors de l'axe, si les feux de côté forment un seul fanal dans l'axe
   - id: b
-    texte: Le placer n'importe où, sans condition
+    texte: Le placer hors de l'axe, sans autre condition puisqu'il mesure moins de 12 mètres
   - id: c
-    texte: Rien, le feu blanc doit toujours être dans l'axe
+    texte: Rien, le feu blanc doit rester dans l'axe, quelle que soit la taille du bateau
 reponses:
   - a
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

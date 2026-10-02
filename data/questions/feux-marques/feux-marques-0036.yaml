@@ -14,10 +14,9 @@ propositions:
   - id: a
     texte: Ce navire pêche, autrement qu'au chalut
   - id: b
-    texte: De jour, à la place de ces feux, il montrerait une marque formée de deux cônes
-      superposés réunis par la pointe
+    texte: De jour, il montrerait à la place deux cônes superposés réunis par la pointe
   - id: c
-    texte: Ce navire tire un chalut
+    texte: Ce navire tire dans l'eau un chalut ou un autre engin de pêche
 reponses:
   - a
   - b
@@ -38,5 +37,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

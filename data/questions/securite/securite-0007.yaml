@@ -9,11 +9,11 @@ enonce: >-
   d'armement basique n'es-tu pas tenu d'avoir à bord ?
 propositions:
   - id: a
-    texte: Le moyen de connaître les heures et coefficients de marée du jour.
+    texte: Le moyen de connaître les heures et coefficients de marée
   - id: b
-    texte: L'extincteur portatif d'incendie.
+    texte: Le ou les extincteurs portatifs d'incendie
   - id: c
-    texte: La ligne de mouillage.
+    texte: La ligne de mouillage appropriée au navire et à la zone
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

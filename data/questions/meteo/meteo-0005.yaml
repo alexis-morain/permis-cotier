@@ -11,10 +11,10 @@ propositions:
   - id: a
     texte: Tu écoutes le bulletin sur le canal 16, qui le diffuse en continu
   - id: b
-    texte: Tu écoutes le canal 16, où le CROSS annonce le bulletin, puis tu bascules sur
-      la voie de travail indiquée
+    texte: Tu écoutes l'annonce du CROSS sur le 16, puis tu passes sur la voie de
+      travail indiquée
   - id: c
-    texte: Tu appelles le 196 pour te le faire lire
+    texte: Tu appelles le 196 pour qu'on te lise le dernier bulletin en vigueur
 reponses:
   - b
 explication: >-
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

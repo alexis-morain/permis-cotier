@@ -10,12 +10,16 @@ enonce: >-
 propositions:
   - id: a
     texte: >-
-      Tu maintiens ton cap et ta vitesse, mais tu peux manœuvrer dès qu'il devient évident
-      qu'il n'effectue pas la manœuvre attendue.
+      Tu maintiens cap et vitesse, mais tu peux manœuvrer dès qu'il devient évident
+      qu'il n'effectue pas la manœuvre attendue
   - id: b
-    texte: Tu maintiens ton cap et ta vitesse en toutes circonstances, jusqu'au bout.
+    texte: >-
+      Tu maintiens ton cap et ta vitesse en toutes circonstances, jusqu'au bout, même
+      si l'abordage devient imminent
   - id: c
-    texte: Tu manœuvres immédiatement, deux manœuvres valant mieux qu'une.
+    texte: >-
+      Tu manœuvres immédiatement pour t'écarter, sans attendre de voir s'il effectue
+      la manœuvre attendue
 reponses:
   - a
 explication: >-
@@ -31,5 +35,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

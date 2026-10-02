@@ -9,12 +9,11 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: Le sens général que suit un navire venant de la haute mer vers un port, une
-      rivière ou un estuaire
+    texte: Le sens d'un navire qui vient de la haute mer vers un port ou un estuaire
   - id: b
-    texte: Le sens du courant de marée dominant
+    texte: Le sens du courant de marée dominant à l'entrée du port ou de la rivière
   - id: c
-    texte: Le sens qui va du nord vers le sud le long de la côte
+    texte: Le sens qui va du nord vers le sud en longeant les côtes du continent
 reponses:
   - a
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

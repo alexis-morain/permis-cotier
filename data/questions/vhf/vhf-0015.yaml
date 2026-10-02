@@ -9,12 +9,11 @@ enonce: >-
   en permanence ?
 propositions:
   - id: a
-    texte: La vitesse et le cap du navire
+    texte: La vitesse et le cap du navire, pour les joindre à tout appel ASN
   - id: b
-    texte: Des renseignements sur la position du navire, afin d'être inclus dans l'alerte
-      de détresse initiale
+    texte: La position du navire, pour l'inclure dans l'alerte de détresse initiale
   - id: c
-    texte: Rien de plus, l'appareil ne transmet qu'à la demande
+    texte: Rien de plus, l'appareil ne transmet sa position qu'à la demande
 reponses:
   - b
 explication: >-
@@ -30,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

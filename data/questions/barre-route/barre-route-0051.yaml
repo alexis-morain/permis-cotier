@@ -9,10 +9,11 @@ enonce: >-
   cargo remonte. Que t'impose la règle 10 ?
 propositions:
   - id: a
-    texte: Ne pas gêner le passage du navire à propulsion mécanique qui suit la voie de
-      circulation
+    texte: Ne pas gêner le passage du cargo qui suit la voie de circulation
   - id: b
-    texte: Rien, le voilier est privilégié sur le navire à moteur
+    texte: >-
+      Rien, le voilier reste privilégié sur le navire à moteur, le cargo doit
+      s'écarter
 reponses:
   - a
 explication: >-
@@ -26,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

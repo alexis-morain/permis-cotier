@@ -10,9 +10,9 @@ enonce: >-
   du voilier ?
 propositions:
   - id: a
-    texte: Non, ces feux ne doivent pas être montrés en même temps que le fanal unique
+    texte: Non, ils ne doivent pas être montrés en même temps que le fanal unique
   - id: b
-    texte: Oui, plus tu montres de feux, mieux tu es vu
+    texte: Oui, ces feux superposés peuvent toujours s'ajouter à ceux du fanal unique
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -9,10 +9,11 @@ enonce: >-
   Es-tu un « navire en train de pêcher » au sens du RIPAM ?
 propositions:
   - id: a
-    texte: Non, la définition exclut les lignes traînantes qui ne réduisent pas la capacité
-      de manœuvre
+    texte: Non, des lignes traînantes qui ne gênent pas ta manœuvre en sont exclues
   - id: b
-    texte: Oui, dès qu'une ligne est à l'eau
+    texte: >-
+      Oui, dès qu'une ligne est à l'eau, quel que soit l'engin, tu es en train de
+      pêcher
 reponses:
   - a
 explication: >-
@@ -26,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

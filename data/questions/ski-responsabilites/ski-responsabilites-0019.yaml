@@ -9,12 +9,11 @@ enonce: >-
   de remettre le moteur en marche ?
 propositions:
   - id: a
-    texte: Que l'hélice et le circuit de refroidissement ne sont pas obstrués par le sable
-      ou la vase
+    texte: Que l'hélice et le circuit de refroidissement ne sont pas obstrués
   - id: b
-    texte: Que le réservoir est plein
+    texte: Que le réservoir est plein pour pouvoir t'éloigner du banc de sable
   - id: c
-    texte: Que le compas n'a pas été déréglé par le choc
+    texte: Que le compas n'a pas été déréglé par le choc contre le fond
 reponses:
   - a
 explication: >-
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

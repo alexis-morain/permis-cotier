@@ -12,7 +12,7 @@ propositions:
   - id: b
     texte: Deux signaux successifs sont séparés de dix secondes au moins
   - id: c
-    texte: Chaque éclat dure de quatre à six secondes
+    texte: Chaque éclat dure de quatre à six secondes, séparé du suivant par deux secondes
 reponses:
   - a
   - b
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

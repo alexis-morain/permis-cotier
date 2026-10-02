@@ -9,12 +9,12 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: À ceux qui ne sont pas en vue les uns des autres et qui naviguent à l'intérieur
-      ou à proximité d'une zone de visibilité réduite
+    texte: À ceux qui ne se voient pas et naviguent dans une zone de visibilité réduite
+      ou à proximité
   - id: b
     texte: À tous les navires dès que le brouillard tombe, y compris ceux qui se voient
   - id: c
-    texte: Aux seuls navires à propulsion mécanique
+    texte: Aux seuls navires à propulsion mécanique, qu'ils se voient ou non
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

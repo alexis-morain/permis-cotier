@@ -11,7 +11,7 @@ propositions:
   - id: a
     texte: Le numéro d'immatriculation du navire
   - id: b
-    texte: Le MMSI attribué par l'autorité compétente pour les licences de stations
+    texte: Le MMSI attribué avec la licence de station
   - id: c
     texte: Le numéro de la licence de station
 reponses:
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

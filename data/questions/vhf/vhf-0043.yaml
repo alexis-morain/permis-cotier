@@ -9,10 +9,9 @@ enonce: >-
   avec le MMSI du navire ?
 propositions:
   - id: a
-    texte: Oui, fixes et portatives munies de l'ASN reçoivent le MMSI attribué avec la
-      licence
+    texte: Oui, comme la VHF fixe, puisqu'elle est munie de l'ASN
   - id: b
-    texte: Non, seule la VHF fixe est programmée
+    texte: Non, seule la VHF fixe reçoit le MMSI du navire
 reponses:
   - a
 explication: >-
@@ -25,5 +24,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

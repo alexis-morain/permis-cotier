@@ -9,10 +9,9 @@ enonce: >-
   Te faut-il un permis ?
 propositions:
   - id: a
-    texte: Oui, le moteur dépasse 4,5 kilowatts
+    texte: Oui, le moteur auxiliaire dépasse 4,5 kilowatts, seuil du permis côtier
   - id: b
-    texte: Non, en eaux maritimes la conduite d'un bateau de plaisance à voile n'est pas
-      subordonnée au permis, même avec un moteur auxiliaire
+    texte: Non, en mer un voilier n'exige pas de permis, même avec un moteur auxiliaire
 reponses:
   - b
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

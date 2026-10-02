@@ -8,11 +8,11 @@ enonce: >-
   Un navire de 80 mètres est au mouillage de nuit. Quels feux montre-t-il ?
 propositions:
   - id: a
-    texte: Un feu blanc à l'avant et un feu blanc à l'arrière, plus bas que le premier
+    texte: Un feu blanc à l'avant, un second à l'arrière, plus bas
   - id: b
     texte: Un seul feu blanc visible sur tout l'horizon
   - id: c
-    texte: Deux feux rouges superposés
+    texte: Deux feux rouges superposés à l'endroit le plus visible
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

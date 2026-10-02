@@ -8,11 +8,11 @@ enonce: >-
   Quelle forme l'arrêté impose-t-il à une marque de danger isolé ?
 propositions:
   - id: a
-    texte: Aucune en particulier, pourvu qu'elle ne prête pas à confusion avec une latérale
+    texte: Au choix, sans confusion possible avec une marque latérale
   - id: b
     texte: La forme sphérique, comme la marque d'eaux saines
   - id: c
-    texte: La forme conique, pointe en haut
+    texte: La forme charpente, à l'exclusion de toute autre
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-09'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

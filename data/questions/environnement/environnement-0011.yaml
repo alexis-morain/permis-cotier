@@ -11,9 +11,9 @@ propositions:
   - id: a
     texte: Un fusil de chasse
   - id: b
-    texte: Une eau de javel diluée versée dans les trous de rocher
+    texte: De l'eau de javel pour déloger les poissons
   - id: c
-    texte: Un casier à crustacés
+    texte: Deux casiers à crustacés et une épuisette
 reponses:
   - a
   - b
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -9,13 +9,13 @@ enonce: >-
   documents doivent être à bord ?
 propositions:
   - id: a
-    texte: Les cartes marines officielles de la zone, à jour, sur papier ou sur écran
+    texte: Les cartes marines officielles de la zone, tenues à jour
   - id: b
     texte: Le RIPAM, ou un résumé textuel et graphique
   - id: c
-    texte: Le journal de bord
+    texte: Le journal de bord, tenu à jour pendant la sortie
   - id: d
-    texte: Le livre des feux
+    texte: Le livre des feux, à jour ou sur support électronique
 reponses:
   - a
   - b
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

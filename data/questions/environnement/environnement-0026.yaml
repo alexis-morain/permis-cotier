@@ -9,10 +9,9 @@ enonce: >-
   ouverte. L'article L. 218-73 s'applique-t-il là ?
 propositions:
   - id: a
-    texte: Oui, il vise la mer et la partie des cours d'eau, canaux ou plans d'eau où les
-      eaux sont salées
+    texte: Oui, il vise aussi les cours d'eau, canaux ou plans d'eau aux eaux salées
   - id: b
-    texte: Non, il ne vise que la mer
+    texte: Non, il ne vise que la mer, jamais les canaux ni les cours d'eau
   - id: c
     texte: Non, il ne s'applique qu'au-delà des eaux territoriales
 reponses:
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

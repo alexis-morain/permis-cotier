@@ -9,11 +9,11 @@ enonce: >-
   en action de pêche en même temps ?
 propositions:
   - id: a
-    texte: Douze au maximum sur l'ensemble des lignes, un leurre comptant pour un hameçon
+    texte: Douze au total sur toutes les lignes, un leurre comptant pour un
   - id: b
     texte: Douze par ligne, sans limite du nombre de lignes
   - id: c
-    texte: Trente, comme sur une palangre
+    texte: Trente au total, autant que sur une palangre de loisir
 reponses:
   - a
 explication: >-
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

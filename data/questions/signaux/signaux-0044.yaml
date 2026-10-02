@@ -9,9 +9,9 @@ enonce: >-
   l'annexe IV du RIPAM ?
 propositions:
   - id: a
-    texte: C'est interdit, sauf pour indiquer un cas de détresse ou un besoin d'assistance
+    texte: C'est interdit, sauf en cas de détresse ou de besoin d'assistance
   - id: b
-    texte: C'est permis si la fusée est périmée
+    texte: C'est permis si la fusée est périmée et tirée loin de tout navire
   - id: c
     texte: C'est permis à moins de 300 mètres du rivage
 reponses:
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

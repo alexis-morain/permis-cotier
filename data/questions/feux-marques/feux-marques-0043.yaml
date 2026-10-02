@@ -9,12 +9,12 @@ enonce: >-
   Que dit la règle 20 ?
 propositions:
   - id: a
-    texte: Aucun autre feu pouvant être confondu avec les feux réglementaires ou gêner
-      la veille ne doit être montré
+    texte: Ne montrer aucun feu pouvant être confondu avec les feux prescrits ou gêner la
+      veille
   - id: b
     texte: Tout est permis tant que les feux réglementaires sont allumés
   - id: c
-    texte: Seules les lampes rouges sont interdites
+    texte: Seules les lampes rouges sont interdites, les autres couleurs restent permises
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

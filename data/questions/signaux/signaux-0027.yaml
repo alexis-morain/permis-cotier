@@ -16,9 +16,9 @@ propositions:
   - id: a
     texte: Un navire remorqué, s'il a un équipage à bord.
   - id: b
-    texte: Le dernier navire du convoi, quand plusieurs navires sont remorqués.
+    texte: Le dernier du convoi, quand plusieurs navires sont remorqués.
   - id: c
-    texte: Le navire qui en remorque un autre.
+    texte: Le navire qui en remorque un autre, quelle que soit sa longueur.
   - id: d
     texte: Un navire à voile faisant route.
 reponses:
@@ -38,5 +38,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

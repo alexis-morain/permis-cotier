@@ -9,11 +9,11 @@ enonce: >-
   dépasser ?
 propositions:
   - id: a
-    texte: Oui, c'est un maximum absolu
+    texte: Oui, c'est un maximum absolu, quel que soit le gain tiré de l'infraction
   - id: b
     texte: Non, le montant peut être porté jusqu'au double de l'avantage tiré de l'infraction
   - id: c
-    texte: Non, le juge peut le tripler sans autre condition
+    texte: Non, le juge peut le porter au triple de l'amende, sans autre condition
 reponses:
   - b
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

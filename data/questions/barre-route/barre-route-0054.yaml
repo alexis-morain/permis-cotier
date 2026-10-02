@@ -9,9 +9,9 @@ enonce: >-
   t'écarter, dispensé de le faire ?
 propositions:
   - id: a
-    texte: Non, la règle 17 ne dispense jamais le navire non privilégié de s'écarter
+    texte: Non, ton obligation de t'écarter de sa route reste entière
   - id: b
-    texte: Oui, sa manœuvre remplace la tienne
+    texte: Oui, sa manœuvre remplace la tienne, tu gardes ton cap et ta vitesse
 reponses:
   - a
 explication: >-
@@ -24,5 +24,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

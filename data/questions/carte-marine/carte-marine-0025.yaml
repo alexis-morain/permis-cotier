@@ -11,9 +11,9 @@ propositions:
   - id: a
     texte: Une zone interdite ou réglementée
   - id: b
-    texte: L'estran
+    texte: L'estran, qui découvre à basse mer
   - id: c
-    texte: Un chenal balisé
+    texte: Un chenal balisé à emprunter
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

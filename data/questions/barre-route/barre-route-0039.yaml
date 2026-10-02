@@ -13,9 +13,9 @@ propositions:
   - id: b
     texte: La densité du trafic, notamment les concentrations de navires de pêche
   - id: c
-    texte: La puissance maximale de ton moteur
+    texte: La puissance maximale de ton moteur et la vitesse que le constructeur annonce
   - id: d
-    texte: L'heure d'arrivée prévue au port
+    texte: L'heure d'arrivée prévue au port et le carburant qu'il te reste à bord
 reponses:
   - a
   - b
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

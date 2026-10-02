@@ -9,10 +9,13 @@ enonce: >-
   a pas de risque d'abordage ?
 propositions:
   - id: a
-    texte: Non, un risque peut exister malgré une variation appréciable du relèvement,
-      surtout avec un très grand navire ou à courte distance
+    texte: >-
+      Non, le risque peut subsister, surtout avec un très grand navire ou à courte
+      distance
   - id: b
-    texte: Oui, un relèvement qui varie écarte tout risque
+    texte: >-
+      Oui, un relèvement qui varie nettement écarte tout risque, quelle que soit la
+      taille du navire
 reponses:
   - a
 explication: >-
@@ -27,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

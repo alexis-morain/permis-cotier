@@ -10,9 +10,9 @@ propositions:
   - id: a
     texte: Une croix ou un astérisque, souvent avec sa hauteur soulignée
   - id: b
-    texte: Une ancre
+    texte: Une ancre, souvent accompagnée de sa sonde soulignée
   - id: c
-    texte: Un symbole en fuseau
+    texte: Un symbole en fuseau, souvent avec sa hauteur soulignée
 reponses:
   - a
 explication: >-
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

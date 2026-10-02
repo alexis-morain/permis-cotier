@@ -11,9 +11,9 @@ propositions:
   - id: a
     texte: Un feu à secteurs, dont la couleur change selon l'arc d'où on le voit
   - id: b
-    texte: Un feu à éclats alternatifs
+    texte: Un feu à éclats alternatifs, qui change de couleur à chaque éclat
   - id: c
-    texte: Une marque latérale flottante
+    texte: Une marque latérale flottante, dont le feu rouge indique bâbord
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

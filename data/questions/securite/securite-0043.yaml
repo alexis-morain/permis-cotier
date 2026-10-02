@@ -8,9 +8,9 @@ enonce: >-
   Un vieil extincteur au Halon traîne dans le garage. Peux-tu l'embarquer ?
 propositions:
   - id: a
-    texte: Non, les agents extincteurs au Halon et au perfluorocarbone sont interdits
+    texte: Non, les agents au Halon et au perfluorocarbone sont interdits
   - id: b
-    texte: Oui, s'il est encore sous pression
+    texte: Oui, s'il est encore sous pression et dans sa durée de vie
 reponses:
   - a
 explication: >-
@@ -23,5 +23,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

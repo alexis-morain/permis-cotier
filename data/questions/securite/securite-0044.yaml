@@ -8,12 +8,11 @@ enonce: >-
   Qu'appelle-t-on un « abri » au sens de la division 240 ?
 propositions:
   - id: a
-    texte: Un endroit de la côte où le navire et son équipage peuvent se mettre en sécurité
-      et repartir sans assistance
+    texte: Un endroit de la côte où se mettre en sécurité et repartir sans assistance
   - id: b
-    texte: Un port de plaisance disposant d'une capitainerie
+    texte: Un port de plaisance disposant d'une capitainerie et d'un poste d'accueil
   - id: c
-    texte: Tout point de la côte visible depuis le bateau
+    texte: Tout point de la côte visible depuis le bateau, quelle que soit la météo
 reponses:
   - a
 explication: >-
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -9,12 +9,11 @@ enonce: >-
   te permet-elle ?
 propositions:
   - id: a
-    texte: Des signaux lumineux ou sonores qui ne peuvent être confondus avec aucun signal
-      réglementaire
+    texte: Des signaux lumineux ou sonores qu'on ne peut confondre avec aucun autre
   - id: b
-    texte: Cinq sons brefs, le signal de doute
+    texte: Cinq sons brefs au sifflet, puisque c'est le signal prévu pour cela
   - id: c
-    texte: Une fusée rouge
+    texte: Une fusée rouge, tirée une seule fois pour ne pas alerter les secours
 reponses:
   - a
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

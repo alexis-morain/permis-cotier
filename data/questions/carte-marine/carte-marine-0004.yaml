@@ -16,11 +16,11 @@ visuel:
   credit: code
 propositions:
   - id: a
-    texte: Une profondeur douteuse, à vérifier
+    texte: Une profondeur douteuse, signalée à vérifier par le service hydrographique
   - id: b
     texte: La hauteur d'un haut-fond qui découvre, comptée au-dessus du zéro des cartes
   - id: c
-    texte: La hauteur d'un amer à terre
+    texte: La hauteur d'un amer à terre, comptée au-dessus du zéro des cartes
 reponses:
   - b
 explication: >-
@@ -35,5 +35,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

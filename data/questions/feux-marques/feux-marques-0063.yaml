@@ -9,9 +9,9 @@ enonce: >-
   superposés du navire échoué ?
 propositions:
   - id: a
-    texte: Non, les navires de moins de 12 mètres échoués en sont dispensés
+    texte: Non, sous 12 mètres un navire échoué en est dispensé
   - id: b
-    texte: Oui, tout navire échoué doit les montrer
+    texte: Oui, seuls ceux de moins de 7 mètres en sont dispensés
 reponses:
   - a
 explication: >-
@@ -24,5 +24,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

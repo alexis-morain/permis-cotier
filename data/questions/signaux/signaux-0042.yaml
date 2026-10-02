@@ -10,11 +10,11 @@ propositions:
   - id: a
     texte: Un signal fumigène produisant une fumée orange
   - id: b
-    texte: Des battements lents et répétés des bras étendus de chaque côté
+    texte: Des battements lents et répétés des bras étendus
   - id: c
-    texte: Une fusée projetant des étoiles vertes
+    texte: Une fusée projetant des étoiles vertes, lancées une à une
   - id: d
-    texte: Un pavillon jaune hissé en tête de mât
+    texte: Un pavillon jaune hissé seul en tête de mât
 reponses:
   - a
   - b
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

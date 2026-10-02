@@ -10,9 +10,9 @@ propositions:
   - id: a
     texte: Un éclat long, d'au moins deux secondes
   - id: b
-    texte: Un feu fixe
+    texte: Un feu fixe, qui ne s'éteint jamais
   - id: c
-    texte: Un feu à occultations
+    texte: Un feu à occultations, de deux secondes au moins
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

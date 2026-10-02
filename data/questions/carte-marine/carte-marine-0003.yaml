@@ -15,11 +15,11 @@ visuel:
   credit: code
 propositions:
   - id: a
-    texte: Les eaux profondes
+    texte: Les eaux profondes, au-delà des petits fonds
   - id: b
     texte: L'estran, la zone qui découvre entre haute et basse mer
   - id: c
-    texte: Une zone de mouillage autorisé
+    texte: Une zone de mouillage autorisé par les autorités du port
 reponses:
   - b
 explication: >-
@@ -34,5 +34,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

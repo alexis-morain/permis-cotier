@@ -8,11 +8,11 @@ enonce: >-
   Tu pars naviguer seul. Que recommande la division 240 ?
 propositions:
   - id: a
-    texte: Porter en permanence un EIF d'au moins 50 auquel est assujettie une VHF portable
+    texte: Porter en permanence un EIF d'au moins 50 auquel est fixée une VHF portable
   - id: b
-    texte: Rester à moins de 300 mètres d'un abri
+    texte: Rester en permanence à moins de 300 mètres d'un abri, de jour seulement
   - id: c
-    texte: Prévenir la capitainerie de ton heure de retour
+    texte: Prévenir la capitainerie de ton itinéraire et de ton heure de retour
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

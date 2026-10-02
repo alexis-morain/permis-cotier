@@ -8,9 +8,9 @@ enonce: >-
   Qui délivre le permis de conduire des bateaux de plaisance ?
 propositions:
   - id: a
-    texte: Le préfet du département dans lequel le service instructeur a son siège
+    texte: Le préfet du département où le service instructeur a son siège
   - id: b
-    texte: L'établissement de formation agréé
+    texte: L'établissement de formation agréé où tu as validé ta pratique
 reponses:
   - a
 explication: >-
@@ -24,5 +24,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

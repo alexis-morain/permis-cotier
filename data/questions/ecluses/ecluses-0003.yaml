@@ -9,10 +9,9 @@ enonce: >-
   fais-tu ?
 propositions:
   - id: a
-    texte: Tu entres, l'absence de signal vaut autorisation
+    texte: "Tu entres : sans feu ni panneau, l'accès est libre tant que le personnel ne l'interdit pas"
   - id: b
-    texte: 'Tu n''entres pas : sans feu ni panneau, l''accès est interdit, sauf ordre
-      du personnel de l''écluse'
+    texte: "Tu n'entres pas : sans feu ni panneau, l'accès est interdit sauf ordre du personnel"
 reponses:
   - b
 explication: >-
@@ -26,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

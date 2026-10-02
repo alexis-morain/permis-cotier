@@ -9,12 +9,12 @@ enonce: >-
   t'impose l'arrêté du préfet maritime ?
 propositions:
   - id: a
-    texte: Dans un rayon de 100 mètres, une vitesse appropriée à la sécurité du plongeur,
-      et en tout état de cause limitée à 5 nœuds
+    texte: Une vitesse adaptée à sa sécurité, limitée à 5 nœuds dans un rayon de 100
+      mètres
   - id: b
-    texte: Rien de particulier tant que tu passes à plus de 20 mètres
+    texte: Rien de particulier tant que tu passes à plus de 20 mètres du pavillon
   - id: c
-    texte: L'arrêt complet des machines dans un rayon de 500 mètres
+    texte: L'arrêt complet des machines dans un rayon de 500 mètres autour du pavillon
 reponses:
   - a
 explication: >-
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-02'

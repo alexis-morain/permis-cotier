@@ -8,11 +8,11 @@ enonce: >-
   De jour, quelle marque montre un navire en train de pêcher ?
 propositions:
   - id: a
-    texte: Une boule, à l'avant.
+    texte: Une boule noire, à l'avant du navire.
   - id: b
     texte: Deux cônes superposés réunis par la pointe.
   - id: c
-    texte: Une marque biconique.
+    texte: Une marque biconique, bien visible.
 reponses:
   - b
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-10-02'

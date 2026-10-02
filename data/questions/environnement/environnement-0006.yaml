@@ -10,12 +10,13 @@ propositions:
   - id: a
     texte: Une grappette à dents en Méditerranée
   - id: b
-    texte: Un filet maillant calé ou un trémail de 50 mètres au plus en mer du Nord, Manche
-      ou Atlantique
+    texte: Un filet maillant calé ou un trémail de 50 mètres au plus en Manche,
+      Atlantique ou mer du Nord
   - id: c
-    texte: Deux filets de 100 mètres partout
+    texte: Deux filets maillants de 100 mètres chacun, sur toutes les façades maritimes
   - id: d
-    texte: Un chalut de fond de petite taille
+    texte: Un petit chalut de fond, en Manche et en Atlantique seulement, de 50 mètres
+      au plus
 reponses:
   - a
   - b
@@ -31,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-10-02'

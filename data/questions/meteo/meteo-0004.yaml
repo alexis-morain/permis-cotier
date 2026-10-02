@@ -8,9 +8,9 @@ enonce: >-
   Que mesure exactement le degré Beaufort annoncé dans un bulletin ?
 propositions:
   - id: a
-    texte: La vitesse des rafales
+    texte: La vitesse maximale des rafales sur la dernière heure
   - id: b
-    texte: Le vent moyen sur dix minutes, mesuré à dix mètres au-dessus de la surface
+    texte: Le vent moyen sur dix minutes, à dix mètres de hauteur
 reponses:
   - b
 explication: >-
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

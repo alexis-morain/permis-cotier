@@ -9,12 +9,11 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: Leur emploi est obligatoire, et elles doivent être flottantes lorsqu'elles
-      sont amovibles
+    texte: Elles sont obligatoires, et flottantes lorsqu'elles sont amovibles
   - id: b
-    texte: Elles sont recommandées, sans obligation
+    texte: Elles sont recommandées, sans obligation, et doivent être lestées
   - id: c
-    texte: Elles sont interdites, elles abîment les bajoyers
+    texte: Elles sont interdites dans le sas, elles abîment les bajoyers
 reponses:
   - a
 explication: >-
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

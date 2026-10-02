@@ -9,12 +9,11 @@ enonce: >-
   240 ?
 propositions:
   - id: a
-    texte: L'utilisateur doit être titulaire du permis côtier ou être accompagné par un
-      titulaire de ce permis
+    texte: Il doit avoir le permis côtier ou être accompagné d'un titulaire de ce permis
   - id: b
-    texte: Aucun titre n'est exigé, l'engin n'est pas un bateau
+    texte: Aucun titre n'est exigé, l'engin n'est pas un bateau au sens de la division
   - id: c
-    texte: Il lui faut le certificat restreint de radiotéléphoniste
+    texte: Il lui faut le certificat restreint de radiotéléphoniste, sans autre titre
 reponses:
   - a
 explication: >-
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

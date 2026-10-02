@@ -8,12 +8,11 @@ enonce: >-
   Que punit l'article L. 218-73 du code de l'environnement ?
 propositions:
   - id: a
-    texte: Le rejet en mer de substances nuisibles à la conservation ou à la reproduction
-      des animaux et végétaux marins
+    texte: Le rejet en mer de substances nuisibles aux animaux et végétaux marins
   - id: b
-    texte: La pêche sans licence
+    texte: La pêche de loisir pratiquée sans licence dans les eaux territoriales
   - id: c
-    texte: Le dépassement du nombre de personnes à bord
+    texte: L'arrachage ou la destruction des herbiers de posidonies protégés
 reponses:
   - a
 explication: >-
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

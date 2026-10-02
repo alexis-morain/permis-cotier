@@ -9,15 +9,16 @@ enonce: >-
   VHF fixe de ton bateau de plaisance. Que dois tu détenir ?
 propositions:
   - id: a
-    texte: Le certificat restreint de radiotéléphoniste du service mobile maritime, et
-      lui seul.
+    texte: Le certificat restreint de radiotéléphoniste maritime, et lui seul, quel que
+      soit ton permis
   - id: b
-    texte: Le certificat restreint de radiotéléphoniste du service mobile maritime ou
-      le permis de conduire en mer les bateaux de plaisance à moteur.
+    texte: Le certificat restreint de radiotéléphoniste maritime ou le permis plaisance
+      à moteur en mer
   - id: c
-    texte: Le certificat restreint de radiotéléphoniste du service mobile fluvial.
+    texte: Le certificat restreint de radiotéléphoniste fluvial ou le permis plaisance
+      en eaux intérieures
   - id: d
-    texte: Aucun titre, la VHF fixe est libre dans les eaux territoriales françaises.
+    texte: Aucun titre, la VHF fixe est libre dans les eaux territoriales françaises
 reponses:
   - b
 explication: >-
@@ -32,5 +33,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-10-02'

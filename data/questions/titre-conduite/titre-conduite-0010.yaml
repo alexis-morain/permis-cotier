@@ -9,14 +9,13 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: L'inobservation des règlements de police de la circulation en eaux maritimes
-      ou intérieures
+    texte: L'inobservation des règlements de police de la circulation
   - id: b
     texte: La conduite en état d'ébriété ou après consommation de stupéfiants
   - id: c
-    texte: Le défaut d'assurance du bateau
+    texte: Le défaut d'assurance du bateau au moment du contrôle
   - id: d
-    texte: L'absence de visite technique annuelle
+    texte: L'absence de visite technique annuelle du bateau et du moteur
 reponses:
   - a
   - b
@@ -33,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-10-02'

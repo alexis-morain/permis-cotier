@@ -11,7 +11,7 @@ propositions:
   - id: a
     texte: Non, sauf si tu participes à des opérations de plongée
   - id: b
-    texte: Non, sans aucune exception
+    texte: Non, sans aucune exception, quelle que soit ton activité
 reponses:
   - a
 explication: >-
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

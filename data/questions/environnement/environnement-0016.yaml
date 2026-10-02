@@ -9,11 +9,11 @@ enonce: >-
   t'autorise-t-elle ?
 propositions:
   - id: a
-    texte: Jusqu'à trois vire-lignes ou moulinets électriques de 800 watts au plus chacun
+    texte: Trois moulinets électriques au plus, de 800 watts chacun au maximum
   - id: b
-    texte: Un vire-casier électrique
+    texte: Un vire-casier électrique, de 800 watts au plus par navire
   - id: c
-    texte: Aucun engin électrique
+    texte: Aucun, les engins électriques sont tous interdits en pêche de loisir
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

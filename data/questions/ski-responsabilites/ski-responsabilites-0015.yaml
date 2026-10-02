@@ -13,9 +13,9 @@ propositions:
   - id: b
     texte: Un équipement en néoprène d'au moins 2 mm d'épaisseur
   - id: c
-    texte: Un casque
+    texte: Un casque homologué, quelle que soit la distance d'un abri
   - id: d
-    texte: Un harnais et sa longe
+    texte: Un harnais et sa longe, frappée sur un point fixe de l'engin
 reponses:
   - a
   - b
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

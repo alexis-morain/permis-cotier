@@ -9,12 +9,12 @@ enonce: >-
   240 demande-t-elle un second coupe-circuit accessible à bord ?
 propositions:
   - id: a
-    texte: Pour que ceux restés à bord puissent redémarrer et aller chercher la personne
-      tombée à l'eau
+    texte: Pour que ceux restés à bord puissent redémarrer et récupérer la personne à
+      l'eau
   - id: b
-    texte: Pour remplacer le premier quand il s'use
+    texte: Pour remplacer le premier quand le cordon s'use ou se détériore à l'usage
   - id: c
-    texte: Pour pouvoir rallonger le cordon si le pilote se déplace
+    texte: Pour rallonger le cordon quand le pilote doit se déplacer à l'avant du bateau
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

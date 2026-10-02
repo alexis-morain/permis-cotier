@@ -11,9 +11,9 @@ propositions:
   - id: a
     texte: Il n'est pas maître de sa manœuvre
   - id: b
-    texte: Il est au mouillage
+    texte: Il est au mouillage ou amarré à une bouée
   - id: c
-    texte: Il est en détresse
+    texte: Il est en détresse et demande assistance
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

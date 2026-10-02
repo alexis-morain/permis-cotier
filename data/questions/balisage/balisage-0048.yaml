@@ -10,9 +10,9 @@ propositions:
   - id: a
     texte: Une croix jaune à branches verticale et horizontale
   - id: b
-    texte: Une croix jaune en X
+    texte: Une croix jaune en X, à branches inclinées
   - id: c
-    texte: Deux sphères noires superposées
+    texte: Deux sphères noires superposées au sommet
 reponses:
   - a
 explication: >-
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

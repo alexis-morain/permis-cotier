@@ -9,10 +9,9 @@ enonce: >-
   une menue embarcation. Entres-tu dans le sas ?
 propositions:
   - id: a
-    texte: Seulement après y avoir été invité par le personnel chargé de la manœuvre de
-      l'écluse
+    texte: Seulement après y avoir été invité par le personnel de l'écluse
   - id: b
-    texte: Oui, sans attendre, le feu vert suffit
+    texte: "Oui, sans attendre : seul dans le garage, le feu vert suffit"
   - id: c
     texte: Non, une menue embarcation seule n'est jamais éclusée
 reponses:
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

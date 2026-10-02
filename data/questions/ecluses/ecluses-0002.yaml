@@ -12,11 +12,11 @@ visuel:
   credit: code
 propositions:
   - id: a
-    texte: Tu entres, le vert autorise le passage
+    texte: Tu entres, le vert autorise le passage dès qu'il est allumé
   - id: b
-    texte: 'Tu attends : l''accès est encore interdit, mais l''écluse se prépare à ouvrir'
+    texte: "Tu attends : accès interdit, l'écluse se prépare à ouvrir"
   - id: c
-    texte: Tu fais demi-tour, l'écluse est hors service
+    texte: "Tu fais demi-tour : le rouge au-dessus annonce une écluse hors service"
 reponses:
   - b
 explication: >-
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

@@ -9,12 +9,12 @@ enonce: >-
   avec toi à bord ?
 propositions:
   - id: a
-    texte: Oui, pendant un an, si tu détiens ton permis depuis au moins trois ans et as
-      fait la déclaration de conduite accompagnée
+    texte: Oui, un an, si tu as le permis depuis trois ans et déclares la conduite
+      accompagnée
   - id: b
     texte: Non, la conduite sans permis est interdite quel que soit l'accompagnateur
   - id: c
-    texte: Oui, sans condition, tant que tu es à bord
+    texte: Oui, dès lors que tu es à bord et titulaire d'un permis, sans autre formalité
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

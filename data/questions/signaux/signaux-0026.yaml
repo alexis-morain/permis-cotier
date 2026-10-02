@@ -15,9 +15,9 @@ propositions:
   - id: a
     texte: Il est à propulsion mécanique.
   - id: b
-    texte: Il fait route, mais il est stoppé et n'a plus d'erre.
+    texte: Il fait route, mais stoppé, sans erre.
   - id: c
-    texte: Il avance encore sur l'eau.
+    texte: Il avance encore sur l'eau, avec de l'erre.
   - id: d
     texte: Il est au mouillage.
 reponses:
@@ -37,5 +37,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'
