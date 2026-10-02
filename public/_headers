@@ -30,6 +30,12 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
+# La police, taillée par `scripts/police.py` et posée dans `public/` sous un
+# nom qui porte son empreinte : immuable au même titre. Le motif ne recoupe
+# aucun autre porteur de durée.
+/polices/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Les visuels portent leur contenu dans leur nom : ils peuvent être gardés.
 /visuels/*
   Cache-Control: public, max-age=31536000, immutable
