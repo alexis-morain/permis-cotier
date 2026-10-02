@@ -55,13 +55,81 @@ def test_la_reponse_doit_designer_le_meme_texte():
     assert any("bonne réponse" in p for p in verifier(AVANT, casse))
 
 
-def test_une_proposition_reformulee_est_refusee():
+def test_convertir_et_reformuler_dans_le_meme_geste_est_refuse():
+    # On retire deux propositions et on réécrit celle qui reste : la réponse
+    # ne peut plus être suivie par son texte, le garde-fou ne voit plus rien.
     casse = apres(
         propositions=[AVANT["propositions"][0], {"id": "b", "texte": "Oui, bien sûr"}],
         meta={"relu_par": "claude"},
     )
     del casse["meta"]["relu_le"]
     assert any("texte" in p for p in verifier(AVANT, casse))
+
+
+# Le quatrième geste : rééquilibrer les longueurs. `longueur.py` signale les
+# bonnes réponses qui se reconnaissent à leur taille ; on raccourcit la bonne
+# ou on allonge les distracteurs, à lettres, nombre et réponse constants.
+REEQUILIBREE = apres(
+    propositions=[
+        {"id": "a", "texte": "Non, elle relève de l'extension hauturière"},
+        {"id": "b", "texte": "Oui"},
+        {"id": "c", "texte": "Non, aucun texte ne s'en occupe"},
+        {"id": "d", "texte": "Oui, au-dessus de 6 mètres"},
+    ],
+    meta={"relu_par": "claude", "relu_le": "2026-10-02"},
+)
+
+
+def test_un_reequilibrage_propre_ne_pose_aucun_probleme():
+    assert verifier(AVANT, REEQUILIBREE) == []
+
+
+def test_un_reequilibrage_qui_garde_la_relecture_humaine_est_signale():
+    casse = {**REEQUILIBREE, "meta": {**REEQUILIBREE["meta"], "relu_par": "alexis"}}
+    assert any("relu_par" in p for p in verifier(AVANT, casse))
+
+
+def test_un_reequilibrage_ne_change_pas_la_lettre_de_la_reponse():
+    casse = {**REEQUILIBREE, "reponses": ["a"]}
+    assert any("lettre" in p for p in verifier(AVANT, casse))
+
+
+def test_un_reequilibrage_qui_echange_la_bonne_et_un_distracteur_est_refuse():
+    # Les textes de a et b permutent sous couvert d'une réécriture de c, la
+    # réponse reste « b » : elle désigne maintenant l'ancien distracteur. Un
+    # rééquilibrage n'a pas ce droit.
+    casse = apres(
+        propositions=[
+            {"id": "a", "texte": "Oui, le programme le demande"},
+            {"id": "b", "texte": "Non, elle relève de l'extension hauturière"},
+            {"id": "c", "texte": "Non, aucun texte n'en parle"},
+            AVANT["propositions"][3],
+        ],
+        meta={"relu_par": "claude"},
+    )
+    assert any("distracteur" in p for p in verifier(AVANT, casse))
+    # Sans réécriture, la permutation seule tombe sous le contrôle général.
+    permutee = apres(
+        propositions=[
+            {"id": "a", "texte": "Oui, le programme le demande"},
+            {"id": "b", "texte": "Non, elle relève de l'extension hauturière"},
+            AVANT["propositions"][2],
+            AVANT["propositions"][3],
+        ],
+        meta={"relu_par": "claude"},
+    )
+    assert any("bonne réponse" in p for p in verifier(AVANT, permutee))
+
+
+def test_reequilibrer_et_resourcer_dans_le_meme_geste_est_refuse():
+    casse = {**REEQUILIBREE, "sources": [{"texte": "Arrêté du 30 novembre 2017, annexe I, 3.3.2",
+                                           "ref": "arrete-2017-11-30"}]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+def test_un_reequilibrage_ne_touche_pas_l_explication():
+    casse = {**REEQUILIBREE, "explication": "Autre explication."}
+    assert any("explication" in p for p in verifier(AVANT, casse))
 
 
 def test_une_proposition_ajoutee_est_refusee():
