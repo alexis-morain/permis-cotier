@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 292" width="320" height="292" role="img">
+<defs><radialGradient id="h0"><stop offset="0" stop-color="#fdf3dc" stop-opacity="0.60" /><stop offset="0.30" stop-color="#fdf3dc" stop-opacity="0.24" /><stop offset="0.62" stop-color="#fdf3dc" stop-opacity="0.07" /><stop offset="1" stop-color="#fdf3dc" stop-opacity="0" /></radialGradient><radialGradient id="h1"><stop offset="0" stop-color="#f04438" stop-opacity="0.60" /><stop offset="0.30" stop-color="#f04438" stop-opacity="0.24" /><stop offset="0.62" stop-color="#f04438" stop-opacity="0.07" /><stop offset="1" stop-color="#f04438" stop-opacity="0" /></radialGradient><radialGradient id="h2"><stop offset="0" stop-color="#2ec26b" stop-opacity="0.60" /><stop offset="0.30" stop-color="#2ec26b" stop-opacity="0.24" /><stop offset="0.62" stop-color="#2ec26b" stop-opacity="0.07" /><stop offset="1" stop-color="#2ec26b" stop-opacity="0" /></radialGradient></defs>
+<rect width="320" height="292" fill="#080f18" />
+<rect y="258.1" width="320" height="33.9" fill="#0d1926" />
+<polygon points="94,94.9 226,94.9 226,161.4 94,161.4" fill="#1f2b38" />
+<polygon points="28,151.1 160,129.5 292,151.1 292,174.7 252.4,258.1 67.6,258.1 28,174.7" fill="#18232f" stroke-linejoin="round" />
+<line x1="160" y1="129.5" x2="160" y2="258.1" stroke="#1f2b38" stroke-width="2.4" stroke-linecap="round" />
+<line x1="160" y1="94.9" x2="160" y2="22" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<circle cx="160" cy="39.4" r="20.4" fill="url(#h0)" />
+<circle cx="292" cy="140.4" r="20.4" fill="url(#h1)" />
+<circle cx="28" cy="140.4" r="20.4" fill="url(#h2)" />
+<circle class="feu" cx="160" cy="39.4" r="6" fill="#fdf3dc" />
+<circle class="feu" cx="292" cy="140.4" r="6" fill="#f04438" />
+<circle class="feu" cx="28" cy="140.4" r="6" fill="#2ec26b" />
+</svg>

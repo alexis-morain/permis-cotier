@@ -24,6 +24,7 @@
     "longueur": "python3 scripts/longueur.py",
     "feux": "python3 scripts/feux.py",
     "balisage": "python3 scripts/balisage.py",
+    "navires": "python3 scripts/navires.py",
     "ecluses": "python3 scripts/ecluses.py",
     "carte": "python3 scripts/carte.py",
     "rythmes": "python3 scripts/rythmes.py",

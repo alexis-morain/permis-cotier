@@ -1,0 +1,177 @@
+# Les navires que dessine scripts/navires.py, un fichier SVG par entrée.
+#
+# Une entrée dit ce que la règle décrit, jamais ce qu'il faut dessiner : le
+# script tire les feux et les marques de sa table, article par article, et ne
+# garde que ceux dont le secteur couvre le relèvement.
+#
+#   navire     moteur, voile, voile-au-moteur, chalut, peche, non-maitre,
+#              capacite-restreinte, dragueur, tirant-d-eau, remorqueur, pilote
+#   longueur   en mètres : < 7, < 12, < 20, < 50, ≥ 50 décident des feux
+#   situation  route (avec erre), sans-erre, mouillage, echoue
+#   vue        d'où on le regarde : avant, babord, tribord, arriere, ou
+#              avant-babord, avant-tribord, arriere-babord, arriere-tribord
+#   moment     nuit (feux) ou jour (marques)
+#   train      remorqueur : longueur du train de remorque, en mètres
+#   cote_libre dragueur : le bord par lequel on peut passer
+#   fanal      voile de moins de 20 m : feux de côté et de poupe réunis
+#   regle      l'article cité
+#   alt        ce qu'on voit, sans nommer la règle ni le navire ; pas de « : »
+#              suivi d'une espace, guillemets doubles, une ligne
+
+voilier-au-moteur-nuit:
+  navire: voile-au-moteur
+  longueur: 11
+  situation: route
+  vue: babord
+  moment: nuit
+  regle: "RIPAM, règle 23 a)"
+  alt: "Silhouette à grand mât, toile hissée, vue de son flanc gauche, l'avant à gauche. Un feu blanc à mi-hauteur du mât, un feu rouge à l'avant, sur le côté."
+
+voilier-au-moteur-jour:
+  navire: voile-au-moteur
+  longueur: 11
+  situation: route
+  vue: babord
+  moment: jour
+  regle: "RIPAM, règle 25 e)"
+  alt: "Silhouette à grand mât, toile hissée, vue de son flanc gauche, l'avant à gauche. À l'avant, sur l'étai, un cône noir pointe en bas."
+
+chalutier-nuit:
+  navire: chalut
+  longueur: 30
+  situation: route
+  vue: avant
+  moment: nuit
+  regle: "RIPAM, règle 26 b) i) et iii)"
+  alt: "Navire vu de face. Sur le mât, deux feux superposés, vert au-dessus, blanc en dessous. Plus bas, un feu vert à gauche et un feu rouge à droite."
+
+chalutier-jour:
+  navire: chalut
+  longueur: 30
+  situation: route
+  vue: avant
+  moment: jour
+  regle: "RIPAM, règle 26 b) i)"
+  alt: "Navire vu de face. Sur le mât, deux cônes noirs superposés, réunis par leurs pointes."
+
+capacite-restreinte-nuit:
+  navire: capacite-restreinte
+  longueur: 40
+  situation: route
+  vue: babord
+  moment: nuit
+  regle: "RIPAM, règle 27 b) i) et iii)"
+  alt: "Navire vu de son flanc gauche, l'avant à gauche. En haut du mât un feu blanc, sous lui trois feux superposés, rouge, blanc puis rouge. Plus bas sur le côté, un feu rouge."
+
+capacite-restreinte-jour:
+  navire: capacite-restreinte
+  longueur: 40
+  situation: route
+  vue: babord
+  moment: jour
+  regle: "RIPAM, règle 27 b) ii)"
+  alt: "Navire vu de son flanc gauche, l'avant à gauche. Sur le mât, trois marques noires superposées, une boule, deux cônes joints par leur base, une boule."
+
+remorqueur-nuit:
+  navire: remorqueur
+  longueur: 30
+  train: 250
+  situation: route
+  vue: babord
+  moment: nuit
+  regle: "RIPAM, règle 24 a) i) et ii)"
+  alt: "Navire vu de son flanc gauche, l'avant à gauche, un câble tendu part de l'arrière vers la droite. Trois feux blancs superposés en haut du mât, un feu rouge sur le côté."
+
+remorqueur-jour:
+  navire: remorqueur
+  longueur: 30
+  train: 250
+  situation: route
+  vue: babord
+  moment: jour
+  regle: "RIPAM, règle 24 a) v)"
+  alt: "Navire vu de son flanc gauche, l'avant à gauche, un câble tendu part de l'arrière vers la droite. Sur le mât, deux cônes noirs joints par leur base."
+
+mouillage-nuit:
+  navire: moteur
+  longueur: 30
+  situation: mouillage
+  vue: tribord
+  moment: nuit
+  regle: "RIPAM, règle 30 b)"
+  alt: "Navire vu de son flanc droit, l'avant à droite. Un seul feu blanc, en haut du mât, et aucun autre feu."
+
+mouillage-jour:
+  navire: moteur
+  longueur: 30
+  situation: mouillage
+  vue: tribord
+  moment: jour
+  regle: "RIPAM, règle 30 a) i)"
+  alt: "Navire vu de son flanc droit, l'avant à droite. Une boule noire hissée à l'avant, sur un mâtereau."
+
+echoue-nuit:
+  navire: moteur
+  longueur: 60
+  situation: echoue
+  vue: babord
+  moment: nuit
+  regle: "RIPAM, règle 30 a) et d) i)"
+  alt: "Long navire vu de son flanc gauche, l'avant à gauche. Un feu blanc haut à l'avant, un feu blanc plus bas à l'arrière, et sur le mât avant deux feux rouges superposés."
+
+echoue-jour:
+  navire: moteur
+  longueur: 60
+  situation: echoue
+  vue: babord
+  moment: jour
+  regle: "RIPAM, règle 30 d) ii)"
+  alt: "Long navire vu de son flanc gauche, l'avant à gauche. Sur le mât avant, trois boules noires superposées."
+
+moteur-moins-de-7-m-nuit:
+  navire: moteur
+  longueur: 6
+  situation: route
+  vue: avant
+  moment: nuit
+  regle: "RIPAM, règle 23 d) ii)"
+  alt: "Petite embarcation vue de face. Un feu blanc en haut d'un court mât, et plus bas, à l'avant, un feu vert à gauche et un feu rouge à droite."
+
+pilote-nuit:
+  navire: pilote
+  longueur: 16
+  situation: route
+  vue: tribord
+  moment: nuit
+  regle: "RIPAM, règle 29 a) i) et ii)"
+  alt: "Navire vu de son flanc droit, l'avant à droite. En haut du mât, deux feux superposés, blanc au-dessus, rouge en dessous. Plus bas sur le côté, un feu vert."
+
+dragueur-nuit:
+  navire: dragueur
+  longueur: 40
+  cote_libre: tribord
+  situation: route
+  vue: avant
+  moment: nuit
+  regle: "RIPAM, règle 27 d) i) et ii)"
+  alt: "Navire vu de face. En haut du mât un feu blanc, sous lui trois feux superposés, rouge, blanc puis rouge. Au bout d'une vergue, deux feux verts superposés à gauche, deux feux rouges superposés à droite. Plus bas, un feu vert à gauche et un feu rouge à droite."
+
+dragueur-jour:
+  navire: dragueur
+  longueur: 40
+  cote_libre: tribord
+  situation: route
+  vue: avant
+  moment: jour
+  regle: "RIPAM, règle 27 d) i) et ii)"
+  alt: "Navire vu de face. Sur le mât, une boule, deux cônes joints par leur base, une boule, toutes noires. Au bout d'une vergue, à gauche deux paires de cônes joints par leur base, à droite deux boules."
+
+voilier-moins-de-20-m-nuit:
+  navire: voile
+  longueur: 10
+  fanal: true
+  situation: route
+  vue: avant
+  moment: nuit
+  regle: "RIPAM, règle 25 b)"
+  alt: "Silhouette à grand mât vue de face. Tout en haut du mât, un feu vert et un feu rouge accolés, le vert à gauche. Aucun autre feu."

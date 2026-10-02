@@ -88,6 +88,7 @@ npm run dev
 | `npm run longueur` | signale les questions dont la bonne réponse est longue face aux distracteurs |
 | `npm run ecluses` | redessine les signaux d'écluse |
 | `npm run carte` | redessine les planches de carte marine |
+| `npm run navires` | redessine les navires vus sous un relèvement, feux de nuit et marques de jour, depuis `data/visuels/navires.yaml` |
 | `npm run build:app` | construit `dist-app/`, ce que la coquille iOS embarque |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
@@ -273,6 +274,8 @@ data/VERSION                       version de la banque, dans le cache hors lign
 data/CREDITS.md                    crédits des visuels, généré par script
 prompts/question.md                gabarit de génération
 scripts/                           sources.py, generer.py, valider.py, credits.py, doublons.py
+                                   navires.py : un navire vu sous un relèvement, ses feux tirés
+                                   des règles 21 à 30 du RIPAM, décrit dans data/visuels/navires.yaml
 src/lib/                           moteur : thèmes, notions, parcours, cours, schéma, tirage,
                                    session, progression, profil, apparence, mesure, recherche,
                                    hors-ligne (ce qui est précaché, gardé à la demande, ou au réseau)

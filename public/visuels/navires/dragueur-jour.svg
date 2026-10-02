@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 306" width="320" height="306" role="img">
+<rect width="320" height="306" fill="#dfe9f0" />
+<rect y="272" width="320" height="34" fill="#8fb0c4" />
+<polygon points="141.9,208.8 178.1,208.8 178.1,242.1 141.9,242.1" fill="#6b6b6b" />
+<polygon points="123.8,237.6 160,228.3 196.2,237.6 196.2,247.9 185.3,272 134.7,272 123.8,247.9" fill="#4a4a4a" stroke-linejoin="round" />
+<line x1="160" y1="228.3" x2="160" y2="272" stroke="#6b6b6b" stroke-width="2.4" stroke-linecap="round" />
+<line x1="160" y1="208.8" x2="160" y2="22" stroke="#4a4a4a" stroke-width="2.6" stroke-linecap="round" />
+<line x1="208.2" y1="132" x2="111.8" y2="132" stroke="#4a4a4a" stroke-width="2.6" stroke-linecap="round" />
+<line x1="196.2" y1="230.2" x2="123.8" y2="230.2" stroke="#4a4a4a" stroke-width="2.6" stroke-linecap="round" />
+<circle class="marque" cx="160" cy="40" r="7.5" fill="#1b1b1b" />
+<polygon class="marque" points="160,53.5 167.5,68.5 160,83.5 152.5,68.5" fill="#1b1b1b" />
+<circle class="marque" cx="160" cy="97" r="7.5" fill="#1b1b1b" />
+<circle class="marque" cx="208.2" cy="142.5" r="7.5" fill="#1b1b1b" />
+<circle class="marque" cx="208.2" cy="163.5" r="7.5" fill="#1b1b1b" />
+<polygon class="marque" points="111.8,135 119.3,150 111.8,165 104.3,150" fill="#1b1b1b" />
+<polygon class="marque" points="111.8,171 119.3,186 111.8,201 104.3,186" fill="#1b1b1b" />
+</svg>
