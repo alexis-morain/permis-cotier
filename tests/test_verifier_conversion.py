@@ -208,3 +208,76 @@ def test_convertir_et_resourcer_dans_le_meme_geste_est_refuse():
     casse = {**CONVERTIE, "sources": [{"texte": "Arrêté du 30 novembre 2017, annexe I, 3.3.2",
                                        "ref": "arrete-2017-11-30"}]}
     assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+# Le cinquième geste : illustrer. Une question publiée qui décrivait une image
+# en mots reçoit un visuel, et son énoncé est réécrit pour désigner l'image.
+# Propositions, réponse, explication et sources ne bougent pas ; la relecture
+# humaine portait sur un énoncé que le candidat ne verra plus, elle retombe
+# sur Claude.
+VISUEL = {"fichier": "navires/peche-nuit.svg",
+          "alt": "Navire vu de face, deux feux superposés sur le mât, rouge au-dessus, blanc en dessous.",
+          "credit": "code"}
+ILLUSTREE = apres(
+    enonce="De nuit, ce navire te montre ces feux. Que fait-il ?",
+    visuel=VISUEL,
+    meta={"relu_par": "claude", "relu_le": "2026-10-03"},
+)
+
+
+def test_une_illustration_propre_ne_pose_aucun_probleme():
+    assert verifier(AVANT, ILLUSTREE) == []
+
+
+def test_une_illustration_peut_remplacer_un_visuel():
+    avant = {**AVANT, "visuel": {"fichier": "feux/peche-hors-chalut.svg", "alt": "Deux feux superposés.", "credit": "code"}}
+    assert verifier(avant, ILLUSTREE) == []
+
+
+def test_une_illustration_peut_poser_une_famille():
+    # Deux questions qui reçoivent la même image se renseignent : la famille
+    # se pose dans le même geste, elle ne dit rien du fond de la question.
+    assert verifier(AVANT, {**ILLUSTREE, "famille": "feux-remorque-200"}) == []
+
+
+def test_une_illustration_qui_garde_la_relecture_humaine_est_signalee():
+    casse = {**ILLUSTREE, "meta": {**ILLUSTREE["meta"], "relu_par": "alexis"}}
+    assert any("relu_par" in p for p in verifier(AVANT, casse))
+
+
+def test_retirer_un_visuel_n_est_pas_une_illustration():
+    avant = {**AVANT, "visuel": VISUEL}
+    casse = apres(meta={"relu_par": "claude"})
+    assert any("visuel" in p for p in verifier(avant, casse))
+
+
+def test_une_illustration_ne_touche_ni_propositions_ni_reponse():
+    casse = {**ILLUSTREE, "propositions": [
+        {"id": "a", "texte": "Non, elle relève de l'extension hauturière"},
+        {"id": "b", "texte": "Oui"},
+        {"id": "c", "texte": "Non, aucun texte ne s'en occupe"},
+        {"id": "d", "texte": "Oui, au-dessus de 6 mètres"},
+    ]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+    casse = {**ILLUSTREE, "reponses": ["a"]}
+    assert any("bonne réponse" in p for p in verifier(AVANT, casse))
+
+
+def test_une_illustration_ne_touche_pas_l_explication():
+    casse = {**ILLUSTREE, "explication": "Autre explication."}
+    assert any("explication" in p for p in verifier(AVANT, casse))
+
+
+def test_illustrer_et_convertir_dans_le_meme_geste_est_refuse():
+    casse = {**ILLUSTREE, "propositions": AVANT["propositions"][:2]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+def test_illustrer_et_resourcer_dans_le_meme_geste_est_refuse():
+    casse = {**ILLUSTREE, "sources": [{"texte": "RIPAM, règle 26 c) i)", "ref": "decret-77-733"}]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+def test_un_enonce_reecrit_sans_visuel_reste_refuse():
+    casse = apres(enonce="De nuit, ce navire te montre ces feux. Que fait-il ?", meta={"relu_par": "claude"})
+    assert any("enonce" in p for p in verifier(AVANT, casse))
