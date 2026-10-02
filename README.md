@@ -91,6 +91,7 @@ npm run dev
 | `npm run navires` | redessine les navires vus sous un relèvement, feux de nuit et marques de jour, depuis `data/visuels/navires.yaml` |
 | `npm run build:app` | construit `dist-app/`, ce que la coquille iOS embarque |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
+| `npm run poids` | ce que pèsent l'accueil, un cours et une leçon en brotli, actifs compris ; `-- --reference <dist de main>` dit l'écart |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
 
 ## Le signalement en ligne
