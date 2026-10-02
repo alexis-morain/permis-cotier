@@ -311,3 +311,23 @@ def test_un_voilier_de_cinquante_metres_est_refuse_faute_de_gabarit():
 def test_le_dragueur_vu_par_le_travers_est_refuse_ses_feux_lateraux_se_confondraient():
     with pytest.raises(ValueError):
         svg_de_situation(situation(navire="dragueur", cote_libre="tribord", longueur=40, vue="babord"))
+
+
+# --- Règle 30 : les bornes de longueur, mouillage et échouage séparés -------
+
+def test_un_navire_echoue_de_moins_de_7_m_montre_son_feu_de_mouillage():
+    # 30 e) ne dispense que « lorsqu'ils sont au mouillage » ; 30 d) exige les
+    # feux de a) ou b) pour tout navire échoué, et 30 f) ne dispense les moins
+    # de 12 m que des deux rouges.
+    feux = feux_visibles(situation(longueur=6, situation="echoue"))
+    assert couleurs(feux) == {"blanc": 1}
+
+
+def test_un_navire_au_mouillage_de_moins_de_7_m_n_a_aucun_feu():
+    assert feux_visibles(situation(longueur=6, situation="mouillage")) == []
+
+
+def test_le_mouillage_de_100_m_et_plus_est_refuse():
+    # 30 c) ajoute l'éclairage des ponts, que le générateur ne dessine pas.
+    with pytest.raises(ValueError, match="30 c"):
+        situation(longueur=120, situation="mouillage")

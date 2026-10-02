@@ -147,6 +147,8 @@ class Situation:
             raise ValueError("le fanal combiné est réservé au navire à voile de moins de 20 m (25 b)")
         if self.navire in ("voile", "voile-au-moteur") and self.longueur >= 50:
             raise ValueError("pas de gabarit pour un voilier de 50 m et plus : un mât, pas de mâtereau")
+        if self.situation == "mouillage" and self.longueur >= 100:
+            raise ValueError("à 100 m et plus, 30 c) ajoute l'éclairage des ponts, que le générateur ne dessine pas")
         if self.navire in ("non-maitre", "capacite-restreinte", "dragueur") and self.longueur < 12:
             raise ValueError("règle 27 g) : sous 12 m, ces feux et marques ne sont pas exigés")
 
@@ -226,8 +228,10 @@ FEUX_30 = [
     (_si(A_L_ARRET, _longueur(50)), "RIPAM, règle 30 a) i)", [_horizon("blanc", "mouillage-avant")]),
     (_si(A_L_ARRET, _longueur(50)), "RIPAM, règle 30 a) ii)", [_horizon("blanc", "mouillage-arriere")]),
     # Sous 50 m, 30 b) permet un seul feu au lieu des deux : c'est lui qu'on dessine.
-    # Sous 7 m, 30 e) dispense de tout feu de mouillage.
-    (_si(A_L_ARRET, _longueur(7, 50)), "RIPAM, règle 30 b)", [_horizon("blanc", "sommet")]),
+    # Sous 7 m, 30 e) dispense de tout feu, mais seulement « au mouillage » : le
+    # navire échoué garde le sien, 30 d) renvoie à a) ou b) sans borne basse.
+    (_si(AU_MOUILLAGE, _longueur(7, 50)), "RIPAM, règle 30 b)", [_horizon("blanc", "sommet")]),
+    (_si(ECHOUE, _longueur(0, 50)), "RIPAM, règle 30 b)", [_horizon("blanc", "sommet")]),
     # Sous 12 m, 30 f) dispense le navire échoué des deux rouges.
     (_si(ECHOUE, _longueur(12)), "RIPAM, règle 30 d) i)", [_horizon("rouge"), _horizon("rouge")]),
 ]

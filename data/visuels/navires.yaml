@@ -135,7 +135,7 @@ moteur-moins-de-7-m-nuit:
   vue: avant
   moment: nuit
   regle: "RIPAM, règle 23 d) ii)"
-  alt: "Petite embarcation vue de face. Un feu blanc en haut d'un court mât, et plus bas, à l'avant, un feu vert à gauche et un feu rouge à droite."
+  alt: "Petite embarcation vue de face. Un feu blanc en haut du mât, et plus bas, à l'avant, un feu vert à gauche et un feu rouge à droite."
 
 pilote-nuit:
   navire: pilote
