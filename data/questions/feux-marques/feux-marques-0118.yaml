@@ -2,12 +2,11 @@ id: feux-marques-0118
 option: cotier
 theme: feux-marques
 notion: feux-peche
-famille: feux-peche-mouillage
+famille: feux-peche-hors-chalut
 statut: publie
 difficulte: 3
 enonce: >-
-  Ce navire pêche aux filets, au mouillage. De nuit, il te montre ces feux, et aucun
-  autre. Que peux-tu en dire ?
+  De nuit, ce navire pêche au mouillage, son engin à moins de 150 mètres. Il te montre ces feux, et aucun autre. Que peux-tu en dire ?
 visuel:
   fichier: navires/peche-mouillage-nuit.svg
   alt: Navire vu de son flanc gauche, l'avant à gauche. Sur le mât, deux feux superposés, rouge au-dessus, blanc en dessous. Aucun autre feu.
@@ -26,7 +25,7 @@ reponses:
 explication: >-
   En pêche, le navire qui fait route ou qui est au mouillage ne montre que les feux de la
   règle 26, règle 26 a). Hors chalut, ce sont un rouge au-dessus d'un blanc, 26 c) i), et
-  rien d'autre sans erre. Le piège est le feu de mouillage de la règle 30, qu'il n'ajoute
+  rien d'autre sans erre tant que l'engin ne s'étend pas à plus de 150 mètres, 26 c) ii). Le piège est le feu de mouillage de la règle 30, qu'il n'ajoute
   pas ; le chalutier montrerait un vert au-dessus du blanc.
 sources:
   - texte: RIPAM, règle 26 a)

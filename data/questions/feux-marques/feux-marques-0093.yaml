@@ -6,7 +6,7 @@ famille: feux-mouillage-boule
 statut: publie
 difficulte: 2
 enonce: >-
-  De jour, ce navire porte cette marque à l'avant. Que fait-il ?
+  De jour, ce navire est immobile et porte cette marque. Que fait-il ?
 visuel:
   fichier: navires/mouillage-jour.svg
   alt: "Navire vu de son flanc droit, l'avant à droite. Une boule noire hissée à l'avant, sur un mâtereau."
