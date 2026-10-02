@@ -1,0 +1,39 @@
+id: feux-marques-0101
+option: cotier
+theme: feux-marques
+notion: feux-voile-aviron
+famille: feux-voilier-fanal
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, ce navire vient vers toi et te montre ces feux, et aucun autre. Que peux-tu en
+  dire ?
+visuel:
+  fichier: navires/voilier-moins-de-20-m-nuit.svg
+  alt: Silhouette à grand mât vue de face. Tout en haut du mât, un feu vert et un feu rouge accolés, le vert à gauche. Aucun autre feu.
+  credit: code
+propositions:
+  - id: a
+    texte: Il montre les feux superposés que la règle permet en plus aux voiliers
+  - id: b
+    texte: Il marche au moteur et vient droit sur toi
+  - id: c
+    texte: Il fait route à la voile et mesure moins de 20 mètres
+  - id: d
+    texte: Il fait route à la voile et mesure 20 mètres ou plus
+reponses:
+  - c
+explication: >-
+  La règle 25 b) permet au navire à voile de moins de 20 mètres de réunir ses feux de côté
+  et son feu de poupe en un seul fanal, au sommet du mât. De face, tu vois ses deux
+  secteurs côte à côte, le vert à ta gauche, et aucun feu blanc : il ne marche pas au
+  moteur. Le piège est la règle 25 c) : ses feux rouge et vert sont superposés, le rouge
+  au-dessus, et ne se montrent jamais avec le fanal.
+sources:
+  - texte: RIPAM, règle 25 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-02'

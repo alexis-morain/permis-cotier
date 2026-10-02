@@ -1,0 +1,39 @@
+id: feux-marques-0115
+option: cotier
+theme: feux-marques
+notion: feux-pilote
+famille: feux-pilote-mouillage
+statut: publie
+difficulte: 3
+enonce: >-
+  Ce bateau-pilote est en service et ne bouge pas. De nuit, il te montre ces feux, et
+  aucun autre. Que peux-tu en dire ?
+visuel:
+  fichier: navires/pilote-mouillage-nuit.svg
+  alt: Navire vu de son flanc droit, l'avant à droite. En haut du mât, trois feux superposés, blanc, rouge puis blanc. Aucun feu sur le côté.
+  credit: code
+propositions:
+  - id: a
+    texte: Il est stoppé, sans être mouillé
+  - id: b
+    texte: Il est échoué
+  - id: c
+    texte: Il est au mouillage
+  - id: d
+    texte: Il n'est plus en service de pilotage
+reponses:
+  - c
+explication: >-
+  Le bateau-pilote en service montre un blanc au-dessus d'un rouge, en tête de mât, règle
+  29 a) i). Au mouillage, il ajoute le feu de la règle 30, 29 a) iii) : c'est le second
+  blanc, sous le rouge. Stoppé sans être mouillé, il fait encore route au sens de la règle
+  3 i) et garderait ses feux de côté (règle 29 a) ii) ; échoué, il montrerait deux rouges
+  superposés.
+sources:
+  - texte: RIPAM, règle 29 a) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-02'

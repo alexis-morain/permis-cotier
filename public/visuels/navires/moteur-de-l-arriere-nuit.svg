@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 306" width="320" height="306" role="img">
+<defs><radialGradient id="h0"><stop offset="0" stop-color="#fdf3dc" stop-opacity="0.60" /><stop offset="0.30" stop-color="#fdf3dc" stop-opacity="0.24" /><stop offset="0.62" stop-color="#fdf3dc" stop-opacity="0.07" /><stop offset="1" stop-color="#fdf3dc" stop-opacity="0" /></radialGradient></defs>
+<rect width="320" height="306" fill="#080f18" />
+<rect y="272" width="320" height="34" fill="#0d1926" />
+<polygon points="112.3,105.4 207.7,105.4 207.7,193.2 112.3,193.2" fill="#1f2b38" />
+<polygon points="64.6,208.4 64.6,189.4 64.6,181.4 160,156.8 255.4,181.4 255.4,189.4 255.4,208.4 226.8,272 93.2,272" fill="#18232f" stroke-linejoin="round" />
+<line x1="160" y1="105.4" x2="160" y2="22" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<line x1="64.6" y1="161.7" x2="255.4" y2="161.7" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<circle cx="160" cy="192.5" r="20.4" fill="url(#h0)" />
+<circle class="feu" cx="160" cy="192.5" r="6" fill="#fdf3dc" />
+</svg>

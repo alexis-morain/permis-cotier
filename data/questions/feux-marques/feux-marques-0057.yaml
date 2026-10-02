@@ -2,11 +2,15 @@ id: feux-marques-0057
 option: cotier
 theme: feux-marques
 notion: feux-manoeuvre-restreinte
+famille: feux-non-maitre
 statut: publie
 difficulte: 2
 enonce: >-
-  De jour, un navire montre à l'endroit le plus visible deux boules noires superposées.
-  Que t'indique-t-il ?
+  De jour, ce navire porte cette marque. Que t'indique-t-il ?
+visuel:
+  fichier: navires/non-maitre-jour.svg
+  alt: "Navire vu de son flanc gauche, l'avant à gauche. Sur le mât, deux boules noires superposées."
+  credit: code
 propositions:
   - id: a
     texte: Il n'est pas maître de sa manœuvre
@@ -26,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
+  relu_par: claude
   relu_le: '2026-10-02'

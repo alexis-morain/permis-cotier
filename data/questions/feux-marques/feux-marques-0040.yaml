@@ -2,11 +2,15 @@ id: feux-marques-0040
 option: cotier
 theme: feux-marques
 notion: feux-definitions
+famille: feux-quel-bord
 statut: publie
 difficulte: 1
 enonce: >-
-  De nuit, tu aperçois le feu rouge d'un navire qui fait route. Quel bord te présente-t-il
-  ?
+  De nuit, ce navire fait route et te montre ces feux. Quel bord te présente-t-il ?
+visuel:
+  fichier: navires/moteur-babord-nuit.svg
+  alt: "Petite embarcation vue de son flanc gauche, l'avant à gauche. Un feu blanc en haut du mât, et plus bas, à l'avant, un feu rouge."
+  credit: code
 propositions:
   - id: a
     texte: Son bâbord
@@ -23,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

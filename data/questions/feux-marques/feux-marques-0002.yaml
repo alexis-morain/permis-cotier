@@ -2,11 +2,15 @@ id: feux-marques-0002
 option: cotier
 theme: feux-marques
 notion: feux-peche
+famille: feux-peche-hors-chalut
 statut: publie
 difficulte: 2
 enonce: >-
-  De nuit, un navire te montre un feu rouge au-dessus d'un feu blanc, tous deux visibles
-  sur tout l'horizon : que fait-il ?
+  De nuit, ce navire te montre ces feux. Que fait-il ?
+visuel:
+  fichier: navires/peche-nuit.svg
+  alt: "Navire vu de face. Sur le mât, deux feux superposés, rouge au-dessus, blanc en dessous. Plus bas, un feu vert à gauche et un feu rouge à droite."
+  credit: code
 propositions:
   - id: a
     texte: Il pêche, mais pas au chalut
@@ -27,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-02'

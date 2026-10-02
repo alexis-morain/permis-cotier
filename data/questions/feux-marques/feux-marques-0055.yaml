@@ -6,8 +6,11 @@ famille: feux-capacite-restreinte-rythme
 statut: publie
 difficulte: 3
 enonce: >-
-  Une drague au travail te montre de nuit, en plus de ses trois feux rouge, blanc, rouge,
-  deux feux verts d'un côté et deux feux rouges de l'autre. De quel côté passes-tu ?
+  De nuit, cette drague au travail te montre ces feux. De quel côté passes-tu ?
+visuel:
+  fichier: navires/dragueur-nuit.svg
+  alt: "Navire vu de face. En haut du mât un feu blanc, sous lui trois feux superposés, rouge, blanc puis rouge. Au bout d'une vergue, deux feux verts superposés à gauche, deux feux rouges superposés à droite. Plus bas, un feu vert à gauche et un feu rouge à droite."
+  credit: code
 propositions:
   - id: a
     texte: Du côté des deux feux verts
@@ -27,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'

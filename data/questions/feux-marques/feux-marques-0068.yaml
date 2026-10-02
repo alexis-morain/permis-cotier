@@ -2,11 +2,15 @@ id: feux-marques-0068
 option: cotier
 theme: feux-marques
 notion: marques-jour
+famille: feux-remorque-200
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu croises un remorqueur qui montre une marque biconique. Quelle longueur son train de
-  remorque dépasse-t-il ?
+  Tu croises ce remorqueur, qui porte cette marque. Quelle longueur son train de remorque dépasse-t-il ?
+visuel:
+  fichier: navires/remorqueur-jour.svg
+  alt: "Navire vu de son flanc gauche, l'avant à gauche, un câble tendu part de l'arrière vers la droite. Sur le mât, deux cônes noirs joints par leur base."
+  credit: code
 propositions:
   - id: a
     texte: 50 mètres.
@@ -29,5 +33,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-10-02'

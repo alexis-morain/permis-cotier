@@ -1,0 +1,39 @@
+id: feux-marques-0117
+option: cotier
+theme: feux-marques
+notion: feux-mouillage-echoue
+famille: feux-echoue
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, ce navire ne bouge pas. Il te montre ces feux, et aucun autre. Que peux-tu en
+  dire ?
+visuel:
+  fichier: navires/echoue-nuit.svg
+  alt: Long navire vu de son flanc gauche, l'avant à gauche. Un feu blanc haut à l'avant, un feu blanc plus bas à l'arrière, et sur le mât avant deux feux rouges superposés.
+  credit: code
+propositions:
+  - id: a
+    texte: Il n'est pas maître de sa manœuvre et fait route
+  - id: b
+    texte: Il est au mouillage et pêche
+  - id: c
+    texte: Sa capacité de manœuvre est restreinte
+  - id: d
+    texte: Il est échoué
+reponses:
+  - d
+explication: >-
+  Le navire échoué montre les feux du mouillage et, en plus, deux feux rouges superposés
+  visibles sur tout l'horizon, règle 30 d) i). Les deux rouges seuls feraient penser au
+  navire qui n'est pas maître de sa manœuvre, mais la règle 27 a) ne lui donne pas de feux
+  blancs de mouillage, et avec de l'erre il montrerait ses feux de côté. Rouge, blanc,
+  rouge serait la capacité de manœuvre restreinte.
+sources:
+  - texte: RIPAM, règle 30 d) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-02'

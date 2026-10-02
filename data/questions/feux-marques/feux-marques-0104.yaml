@@ -1,0 +1,37 @@
+id: feux-marques-0104
+option: cotier
+theme: feux-marques
+notion: feux-moteur-route
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, ce voilier a sa toile hissée et te montre ces feux. Que peux-tu en dire ?
+visuel:
+  fichier: navires/voilier-au-moteur-nuit.svg
+  alt: Silhouette à grand mât, toile hissée, vue de son flanc gauche, l'avant à gauche. Un feu blanc à mi-hauteur du mât, un feu rouge à l'avant, sur le côté.
+  credit: code
+propositions:
+  - id: a
+    texte: Il fait route à la voile seule
+  - id: b
+    texte: Il est au mouillage, son feu blanc allumé
+  - id: c
+    texte: Il fait route à la voile, et ce feu blanc est son feu de poupe
+  - id: d
+    texte: Il marche au moteur, et montre les feux d'un navire à propulsion mécanique
+reponses:
+  - d
+explication: >-
+  La règle 3 c) ne tient pour navire à voile que celui dont la machine ne sert pas. Dès
+  que le moteur tourne, il porte les feux de la règle 23 a) : feu de tête de mât, feux de
+  côté, feu de poupe. Le blanc à mi-mât est son feu de tête de mât ; ce n'est pas le feu
+  de poupe, que tu ne vois pas par le travers (règle 21 c), et la toile hissée ne change
+  rien.
+sources:
+  - texte: RIPAM, règles 3 c) et 23 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-02'

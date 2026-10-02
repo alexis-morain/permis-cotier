@@ -2,11 +2,15 @@ id: feux-marques-0048
 option: cotier
 theme: feux-marques
 notion: feux-moteur-route
+famille: feux-quel-bord
 statut: publie
 difficulte: 2
 enonce: >-
-  De nuit, tu vois un feu blanc au-dessus d'un feu vert, et rien d'autre. Que peux-tu
-  en dire ?
+  De nuit, tu vois ces feux, et rien d'autre. Que peux-tu en dire ?
+visuel:
+  fichier: navires/moteur-tribord-nuit.svg
+  alt: "Petite embarcation vue de son flanc droit, l'avant à droite. Un feu blanc en haut du mât, et plus bas, à l'avant, un feu vert."
+  credit: code
 propositions:
   - id: a
     texte: Un navire à propulsion mécanique fait route et te présente son tribord
@@ -26,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-02'
