@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 306" width="320" height="306" role="img">
+<defs><radialGradient id="h0"><stop offset="0" stop-color="#fdf3dc" stop-opacity="0.60" /><stop offset="0.30" stop-color="#fdf3dc" stop-opacity="0.24" /><stop offset="0.62" stop-color="#fdf3dc" stop-opacity="0.07" /><stop offset="1" stop-color="#fdf3dc" stop-opacity="0" /></radialGradient><radialGradient id="h1"><stop offset="0" stop-color="#f04438" stop-opacity="0.60" /><stop offset="0.30" stop-color="#f04438" stop-opacity="0.24" /><stop offset="0.62" stop-color="#f04438" stop-opacity="0.07" /><stop offset="1" stop-color="#f04438" stop-opacity="0" /></radialGradient><radialGradient id="h2"><stop offset="0" stop-color="#2ec26b" stop-opacity="0.60" /><stop offset="0.30" stop-color="#2ec26b" stop-opacity="0.24" /><stop offset="0.62" stop-color="#2ec26b" stop-opacity="0.07" /><stop offset="1" stop-color="#2ec26b" stop-opacity="0" /></radialGradient></defs>
+<rect width="320" height="306" fill="#080f18" />
+<rect y="272" width="320" height="34" fill="#0d1926" />
+<polygon points="139.6,200.7 180.4,200.7 180.4,238.2 139.6,238.2" fill="#1f2b38" />
+<polygon points="119.2,233.2 160,222.7 200.8,233.2 200.8,244.8 188.6,272 131.4,272 119.2,244.8" fill="#18232f" stroke-linejoin="round" />
+<line x1="160" y1="222.7" x2="160" y2="272" stroke="#1f2b38" stroke-width="2.4" stroke-linecap="round" />
+<line x1="160" y1="200.7" x2="160" y2="22" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<line x1="214.5" y1="146.2" x2="105.5" y2="146.2" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<line x1="200.8" y1="224.8" x2="119.2" y2="224.8" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<circle cx="160" cy="30.5" r="20.4" fill="url(#h0)" />
+<circle cx="160" cy="71.3" r="20.4" fill="url(#h1)" />
+<circle cx="160" cy="98.6" r="20.4" fill="url(#h0)" />
+<circle cx="160" cy="125.8" r="20.4" fill="url(#h1)" />
+<circle cx="214.5" cy="146.2" r="20.4" fill="url(#h1)" />
+<circle cx="214.5" cy="173.4" r="20.4" fill="url(#h1)" />
+<circle cx="105.5" cy="146.2" r="20.4" fill="url(#h2)" />
+<circle cx="105.5" cy="173.4" r="20.4" fill="url(#h2)" />
+<circle cx="200.8" cy="220.7" r="20.4" fill="url(#h1)" />
+<circle cx="119.2" cy="220.7" r="20.4" fill="url(#h2)" />
+<circle class="feu" cx="160" cy="30.5" r="6" fill="#fdf3dc" />
+<circle class="feu" cx="160" cy="71.3" r="6" fill="#f04438" />
+<circle class="feu" cx="160" cy="98.6" r="6" fill="#fdf3dc" />
+<circle class="feu" cx="160" cy="125.8" r="6" fill="#f04438" />
+<circle class="feu" cx="214.5" cy="146.2" r="6" fill="#f04438" />
+<circle class="feu" cx="214.5" cy="173.4" r="6" fill="#f04438" />
+<circle class="feu" cx="105.5" cy="146.2" r="6" fill="#2ec26b" />
+<circle class="feu" cx="105.5" cy="173.4" r="6" fill="#2ec26b" />
+<circle class="feu" cx="200.8" cy="220.7" r="6" fill="#f04438" />
+<circle class="feu" cx="119.2" cy="220.7" r="6" fill="#2ec26b" />
+</svg>

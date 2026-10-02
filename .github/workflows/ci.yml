@@ -56,6 +56,12 @@ jobs:
       - name: Vérifier les marques de balisage
         run: python scripts/balisage.py --verifier
 
+      # Les feux d'un navire vu sous un relèvement sortent de la table des
+      # règles 23 à 30 et des secteurs de la règle 21 : le recompte échoue si
+      # un feu manque au fichier livré ou s'y trouve en trop.
+      - name: Vérifier les navires
+        run: python scripts/navires.py --verifier
+
       - name: Vérifier les signaux d'écluse
         run: python scripts/ecluses.py --verifier
 
