@@ -3,7 +3,6 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import Parcours from './Parcours';
 import ListeCours from './ListeCours';
-import ReprendreCours from './ReprendreCours';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
 
 const balisage = {
@@ -101,21 +100,5 @@ describe('la liste des cours', () => {
     render(<ListeCours cours={cours} />);
     expect(document.querySelector('.coursListe__item--fait a')?.getAttribute('href')).toBe('/cours/balisage');
     expect(screen.getByRole('link', { name: 'Reprendre : Veille et vitesse' })).toBeTruthy();
-  });
-});
-
-describe('la reprise sur l’accueil', () => {
-  const lecons = cours.flatMap((c) => c.lecons.map((l) => ({ code: l.code, nom: l.nom, chemin: l.chemin })));
-
-  it('invite à commencer quand rien n’est fait', () => {
-    render(<ReprendreCours lecons={lecons} />);
-    expect(screen.getByRole('link', { name: /Commencer le cours/ }).getAttribute('href')).toBe('/cours/balisage/balisage-lateral');
-  });
-
-  it('compte les leçons faites et pointe la suivante', () => {
-    progression({ 'balisage-lateral': { faiteLe: '2026-09-05', bonnes: 3, total: 3 } });
-    render(<ReprendreCours lecons={lecons} />);
-    expect(document.querySelector('.reprendreCours')?.textContent).toContain('1 leçon faite sur 4');
-    expect(screen.getByRole('link', { name: /Reprendre : Marques cardinales/ }).getAttribute('href')).toBe('/cours/balisage/balisage-cardinal');
   });
 });

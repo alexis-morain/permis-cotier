@@ -1,8 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import DateExamen from '../components/DateExamen.tsx';
-import Reprise from '../components/Reprise.tsx';
-import ReprendreCours from '../components/ReprendreCours.tsx';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
 import { POUR_APP } from '../lib/cible';
@@ -15,6 +12,7 @@ const questions = await questionsPubliees();
 const total = questions.length;
 const couverts = themes.filter((t) => t.publiees > 0).length;
 const lecons = leconsDuParcours().map((l) => ({ code: l.notion.code, nom: l.notion.nom, chemin: l.chemin }));
+const premiere = lecons[0];
 const cours = await compteLeconsEcrites();
 const ecrites = await codesLeconsEcrites();
 const base = Astro.site ?? new URL(SITE.domaine);
@@ -41,6 +39,19 @@ const parcours = COURS.map((c) => ({
 const MONTREE = 'barre-route-0029';
 const demo = questions.find((q) => q.id === MONTREE) ?? questions.find((q) => q.visuel);
 const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
+
+/**
+ * Ce que le script de la page lit pour les trois blocs qui suivent la
+ * progression (`accueil-site.ts`) : les leçons dans l'ordre du parcours, et
+ * la banque publiée réduite à l'identifiant et au thème. En JSON dans un bloc
+ * inerte, et non en props d'îlot : sérialisées dans un attribut, les 570
+ * questions faisaient 85 Ko de HTML. Le `<` est échappé pour qu'aucun texte
+ * ne puisse fermer le bloc.
+ */
+const donneesAccueil = JSON.stringify({
+  lecons,
+  banque: questions.map((q) => ({ id: q.id, theme: q.theme })),
+}).replaceAll('<', '\\u003c');
 
 // Les quatorze cours en `ItemList`. Pas de `FAQPage` ici : chaque page de
 // guide porte déjà le sien, et l'accueil se mettrait en concurrence avec ses
@@ -75,7 +86,13 @@ const liste = {
         </p>
 
         <div class="ouverture__actions">
-          <ReprendreCours client:load lecons={lecons} />
+          {/* Ce que le serveur rend avant le script : la première leçon. Le
+              script repointe le lien et pose le compte des leçons faites. */}
+          {premiere && (
+            <p class="reprendreCours" data-reprendre-cours>
+              <a class="bouton bouton--principal" href={premiere.chemin} data-mesure="accueil-cours" data-mesure-notion={premiere.code}>Commencer le cours</a>
+            </p>
+          )}
           <a class="bouton" href="/examen" data-mesure="accueil-examen">Passer un examen blanc</a>
         </div>
 
@@ -215,12 +232,9 @@ const liste = {
       une fois visité, et tout se relit ou s’efface depuis <a href="/profil">ta fiche</a>.
     </p>
     <div class="reprendre__grille">
-      <div class="reprendre__etat">
-        <Reprise client:only="react" banque={questions.map((q) => ({ id: q.id, theme: q.theme }))} />
-      </div>
-      <div class="reprendre__date encadre">
-        <DateExamen client:only="react" ids={questions.map((q) => q.id)} />
-      </div>
+      {/* Vides jusqu'au script, comme les îlots `client:only` qu'ils remplacent. */}
+      <div class="reprendre__etat" data-reprise></div>
+      <div class="reprendre__date encadre" data-date-examen></div>
     </div>
   </section>
 
@@ -282,7 +296,31 @@ const liste = {
       Le détail de la fabrication est sur la page <a href="/a-propos">qui écrit ces questions</a>.
     </p>
   </section>
+
+  <script type="application/json" id="accueil-donnees" is:inline set:html={donneesAccueil} />
+  <script>
+    import { monterAccueil } from '../components/accueil-site';
+    import { quandLaPageEstPrete } from '../lib/page';
+
+    quandLaPageEstPrete(() => monterAccueil());
+  </script>
 </Base>
+
+<style is:global>
+  /* Les trois blocs que le script rend : hors de la portée du style de page,
+     puisque leurs éléments n'ont pas l'attribut de portée d'Astro. */
+  .reprendreCours { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin: 1.5rem 0 0; }
+  .reprendreCours__compte { font-weight: 600; }
+
+  .reprise { border-top: 2px solid var(--filet); padding-top: 0.9rem; margin-top: 1.25rem; font-size: 0.95rem; }
+  .reprise p { margin: 0; }
+  .reprise__raison { margin-top: 0.4rem; font-weight: 600; }
+  .reprise q { quotes: '« ' ' »'; }
+
+  .dateExamen label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
+  .dateExamen__compte { margin: 0.5rem 0 0; }
+  .dateExamen__note { margin: 0.4rem 0 0; }
+</style>
 
 <style>
   /* La bande marine, soulignée de la ligne de flottaison jaune. Sur ce fond,
