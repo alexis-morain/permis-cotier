@@ -3,7 +3,8 @@
  * Les leçons d'un cours, telles que le serveur les rend : sans état, ni coche
  * ni bloc de reprise. Le script de la page (`cours-site.ts`) rebâtit le
  * conteneur avec la progression, depuis le bloc JSON que la page écrit une
- * seule fois, même quand elle rend ce composant à deux endroits.
+ * seule fois ; `[cours].astro` l'appelle à deux endroits, mais une seule branche
+ * rend, site ou app, donc une page n'en porte qu'un.
  */
 import type { CoursAffichable } from './cours-site';
 import { POUR_APP } from '../lib/cible';
