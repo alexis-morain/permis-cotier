@@ -52,9 +52,11 @@ PREFIXE = "archivo-latin"
 AXES = {"wght": (400, 800), "wdth": (100, 125)}
 
 # Les fonctions gardées : crénage, ligatures, chiffres tabulaires (le site les
-# demande partout) et proportionnels, composition, formes locales, et `rvrn`,
-# que toute police variable exige. Fractions et exposants ne servent nulle part.
-FONCTIONS = ["kern", "liga", "tnum", "pnum", "ccmp", "locl", "rvrn"]
+# demande partout) et proportionnels, composition, formes locales, le
+# positionnement des accents combinants (U+0304 et U+0308 sont dans la plage),
+# et `rvrn`, que toute police variable exige. Fractions et exposants ne servent
+# nulle part.
+FONCTIONS = ["kern", "liga", "tnum", "pnum", "ccmp", "locl", "mark", "mkmk", "rvrn"]
 
 # Les noms gardés : famille, style, identifiants, version, et la licence OFL
 # avec son adresse, qu'un sous-ensemble doit emporter.

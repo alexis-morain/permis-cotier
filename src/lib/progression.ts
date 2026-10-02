@@ -173,11 +173,6 @@ export function terminerLecon(
   };
 }
 
-/** Les codes des leçons faites, sous la forme que le parcours attend. */
-export function leconsFaites(etat: Etat): Record<string, boolean> {
-  return Object.fromEntries(Object.keys(etat.lecons).map((code) => [code, true]));
-}
-
 export function enregistrerEnCours(etat: Etat, session: SessionSauvegardee): Etat {
   return { ...etat, enCours: session };
 }

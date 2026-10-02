@@ -242,7 +242,7 @@ const banqueDemandee = /"source":"([^"]*banque\/v\/[^"]*)"/.exec(corpsExamen)?.[
   ?? new RegExp(`/banque/v/${versionBanque}\\.json`).exec(corpsExamen)?.[0];
 
 if (!police) {
-  ko('charge utile', 'la police n’est pas préchargée', '90 Ko découverts deux sauts après le HTML : vérifier le bloc de préchargement de `Base.astro`');
+  ko('charge utile', 'la police n’est pas préchargée', '52 Ko découverts deux sauts après le HTML : vérifier le bloc de préchargement de `Base.astro`');
 } else if (!banquePrechargee) {
   ko('charge utile', '/examen ne précharge pas la banque', 'la banque part au quatrième aller-retour : poser `prechargeBanque` sur l’écran');
 } else if (banqueDemandee && banquePrechargee !== banqueDemandee) {

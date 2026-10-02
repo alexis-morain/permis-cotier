@@ -10,7 +10,7 @@
  * sous un nom neuf. Le script réécrit cette constante et `global.css` ; les
  * deux sont tenus ensemble par `police.test.ts`.
  */
-export const POLICE = '/polices/archivo-latin.c1ee93fa.woff2';
+export const POLICE = '/polices/archivo-latin.4a1617c6.woff2';
 
 /** Ce que le lot E promet : moins de 55 Ko. */
 export const POIDS_MAX_POLICE = 55_000;

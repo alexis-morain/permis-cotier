@@ -8,7 +8,9 @@
  * script lit `dist/` comme un navigateur lirait la page : le HTML, puis tout
  * ce qu'il charge (feuilles, scripts, préchargements, îlots et leur runtime),
  * puis ce que chaque script importe à son tour. Chaque fichier est compressé
- * en brotli, comme Cloudflare le sert, et compté une fois.
+ * en brotli, comme Cloudflare le sert, et compté une fois. Les images, le
+ * favicon et le manifeste ne comptent pas : ce sont du contenu ou des fichiers
+ * lus hors du rendu, pas la charge que le code impose à chaque page.
  *
  * Trois pages témoins : l'accueil, un cours, une leçon. Avec `--reference`,
  * le tableau met un autre `dist/` en face — celui d'un build de `main` — et

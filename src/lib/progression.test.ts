@@ -13,7 +13,6 @@ import {
   sauvegarder,
   effacer,
   terminerLecon,
-  leconsFaites,
   CLE_STOCKAGE,
   profilVide,
   enregistrerProfil,
@@ -361,13 +360,12 @@ describe('date d’examen', () => {
 
 describe('leçons suivies', () => {
   it('n’en a aucune au départ', () => {
-    expect(leconsFaites(etatInitial())).toEqual({});
+    expect(etatInitial().lecons).toEqual({});
   });
 
   it('marque une leçon faite avec son score et sa date', () => {
     const e = terminerLecon(etatInitial(), 'balisage-lateral', { bonnes: 2, total: 3 }, '2026-09-05');
     expect(e.lecons['balisage-lateral']).toEqual({ faiteLe: '2026-09-05', bonnes: 2, total: 3 });
-    expect(leconsFaites(e)).toEqual({ 'balisage-lateral': true });
   });
 
   it('garde la dernière fois qu’on la refait', () => {

@@ -28,12 +28,18 @@ describe('la police servie', () => {
     expect(css).toMatch(/unicode-range: U\+0000-00FF, U\+0131, U\+0152-0153/);
   });
 
-  it('a sa propre règle de cache, qui ne recouvre aucun autre motif', () => {
+  it('a sa propre règle de cache, et aucune autre règle à durée n’attrape son adresse', () => {
     const headers = lire('public/_headers');
-    const regles = [...headers.matchAll(/^(\/\S*)\n((?:  .+\n)+)/gm)].map(([, motif, corps]) => ({ motif, corps }));
+    const regles = [...headers.matchAll(/^(\/\S*)\n((?:  .+\n)+)/gm)].map((m) => ({ motif: m[1] ?? '', corps: m[2] ?? '' }));
     const polices = regles.find((r) => r.motif === '/polices/*');
     expect(polices?.corps).toContain('Cache-Control: public, max-age=31536000, immutable');
-    const porteursDeDuree = regles.filter((r) => r.corps.includes('Cache-Control')).map((r) => r.motif);
-    expect(porteursDeDuree.filter((m) => m !== '/polices/*' && m.startsWith('/polices'))).toEqual([]);
+    // Cloudflare additionne les règles qui matchent et la première gagne : un
+    // `Cache-Control` sur `/*` ou sur un motif plus large passerait devant.
+    const motifEnRegex = (motif: string) => new RegExp(`^${motif.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*')}$`);
+    const autresADuree = regles
+      .filter((r) => r.motif !== '/polices/*' && r.corps.includes('Cache-Control'))
+      .filter((r) => motifEnRegex(r.motif).test(POLICE))
+      .map((r) => r.motif);
+    expect(autresADuree).toEqual([]);
   });
 });
