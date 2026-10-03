@@ -169,6 +169,13 @@ et, en bas, une section « L'app » : version de banque, « À propos », « Cr�
 et licences », « Réglages » (apparence), « Signaler une erreur ». C'est le seul
 écran qui porte ce que le pied de page web disait partout.
 
+La jauge de l'indice, en sombre (décidé le 3 octobre 2026) : le « vu » prend
+`--indice-vu`, le jaune mêlé à 60 % au rail (`#9f8433`), le « retenu » reste la
+couleur du texte comme en clair, les examens le filet fort. Vu/retenu 3,21:1,
+retenu/examens 4,21:1, examens/piste 3,46:1 ; les puces de légende suivent leur
+part. Le jaune plein reste à l'action. Le jaune plein contre le retenu presque
+blanc ne faisait que 1,39:1.
+
 ## Les règles de la coquille (Swift)
 
 - Cinq onglets, teinte de marque par un jeu de couleurs `Accent` dans

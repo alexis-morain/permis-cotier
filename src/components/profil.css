@@ -147,9 +147,17 @@
   transform: scaleX(var(--part, 0));
   transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
 }
-.indice__part--vu, .indice__puce--vu { background: var(--jauge); }
+.indice__part--vu, .indice__puce--vu { background: var(--indice-vu, var(--jauge)); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
 .indice__part--examens, .indice__puce--examens { background: var(--filet-fort); }
+/* En sombre, le retenu prend la couleur du texte, presque blanche : contre le
+   jaune plein du vu, elle ne fait que 1,39:1. Le vu s'éteint donc au jaune
+   mêlé à 60 % au rail (`--fond-2`), 3,21:1 contre le retenu, et le jaune plein
+   reste à l'action. Le même bloc deux fois, comme dans global.css. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-apparence="clair"]) { --indice-vu: #9f8433; }
+}
+:root[data-apparence="sombre"] { --indice-vu: #9f8433; }
 .indice__legende {
   list-style: none;
   display: flex;
