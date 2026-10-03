@@ -247,7 +247,7 @@ describe('termeMesurable', () => {
     // Un champ libre finit toujours par recevoir autre chose qu'une
     // recherche. Ce site promet de ne rien savoir de personne : le doute
     // suffit à ne pas envoyer.
-    expect(termeMesurable('contact@lepermiscotier.fr')).toBeNull();
+    expect(termeMesurable('prenom.nom@exemple.fr')).toBeNull();
     expect(termeMesurable('https://exemple.fr/page')).toBeNull();
     expect(termeMesurable('www.exemple.fr')).toBeNull();
     expect(termeMesurable('0612345678')).toBeNull();
