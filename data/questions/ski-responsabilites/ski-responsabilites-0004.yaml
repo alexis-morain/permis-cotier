@@ -17,8 +17,9 @@ reponses:
 explication: >-
   L'annexe I de l'arrêté du 27 mars 1991, paragraphe 2, décrit les limites latérales des
   chenaux traversiers : les bouées sont cylindriques à bâbord et coniques à tribord en
-  accédant au rivage. Le sens de parcours est donc défini vers la terre, l'inverse du
-  réflexe pris en balisage latéral d'entrée de port. La bouée sphérique existe aussi dans
+  accédant au rivage. Le sens de parcours est défini vers la terre, le même réflexe qu'en
+  balisage latéral d'entrée de port, où l'on vient du large : cylindrique à bâbord,
+  conique à tribord. La bouée sphérique existe aussi dans
   le chenal, mais elle marque la limite commune de deux chenaux contigus ; et l'article 2
   du même arrêté précise que ces bouées sont dépourvues de voyant.
 sources:
@@ -27,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

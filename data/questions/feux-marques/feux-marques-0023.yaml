@@ -23,13 +23,14 @@ explication: >-
   La règle 27 b) ii) prescrit trois marques superposées, les marques supérieure et inférieure
   étant des boules et celle du milieu un bicône. C'est la transposition de jour des trois
   feux rouge, blanc, rouge du paragraphe b) i). Deux boules seules désignent le navire
-  qui n'est pas maître de sa manœuvre, et trois boules le navire qui effectue des opérations
-  de déminage.
+  qui n'est pas maître de sa manœuvre, et trois boules superposées le navire échoué,
+  règle 30 d) ii). Les trois boules du déminage, règle 27 f), ne sont pas superposées :
+  une en tête du mât de misaine, une à chaque extrémité de sa vergue.
 sources:
   - texte: RIPAM, règle 27 b) ii)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-10-03'

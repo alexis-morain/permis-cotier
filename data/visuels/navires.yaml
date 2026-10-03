@@ -251,7 +251,7 @@ voilier-de-face-nuit:
   vue: avant
   moment: nuit
   regle: "RIPAM, règle 25 a)"
-  alt: "Silhouette à grand mât, toile hissée, vue de face. Bas sur l'avant, un feu vert à gauche et un feu rouge à droite. Rien sur le mât."
+  alt: "Silhouette à grand mât, vue de face. Bas sur l'avant, un feu vert à gauche et un feu rouge à droite. Rien sur le mât."
 
 moteur-de-face-nuit:
   navire: moteur

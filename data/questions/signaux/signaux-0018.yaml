@@ -23,12 +23,13 @@ explication: >-
   partie de chenal où des navires peuvent être cachés par un obstacle, et tout navire
   venant dans sa direction répond par un son prolongé. C'est le contexte qui tranche :
   le même son prolongé isolé, dans la brume, serait le signal du navire à moteur ayant
-  de l'erre de la règle 35 a). En vue et dans un chenal, il annonce un coude.
+  de l'erre de la règle 35 a). Par bonne visibilité, à l'approche d'un coude ou d'un
+  obstacle qui cache, il annonce un navire.
 sources:
   - texte: RIPAM, règle 34 e)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

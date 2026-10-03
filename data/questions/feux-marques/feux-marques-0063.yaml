@@ -17,12 +17,13 @@ reponses:
 explication: >-
   Les navires de longueur inférieure à 12 mètres, lorsqu'ils sont échoués, ne sont pas
   tenus de montrer les deux feux rouges ni les trois boules de la règle 30 d). La dispense
-  ne vaut que pour ces signaux d'échouement, pas pour le feu de mouillage si le lieu l'exige.
+  ne vaut que pour ces signaux d'échouement, pas pour le feu de mouillage, que la règle
+  30 d) maintient : échoué, tu montres le feu blanc du navire au mouillage.
 sources:
   - texte: RIPAM, règle 30 f)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

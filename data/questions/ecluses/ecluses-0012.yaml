@@ -12,7 +12,7 @@ visuel:
   credit: code
 propositions:
   - id: a
-    texte: Tu peux entrer, l'accès est autorisé
+    texte: L'accès est autorisé, tu peux entrer à ton tour
   - id: b
     texte: Tu réduis ta vitesse à l'entrée, de façon à éviter tout choc contre les portes,
       les dispositifs de protection ou les autres bateaux
@@ -28,16 +28,18 @@ explication: >-
   Un feu vert isolé autorise l'accès. Avec deux feux verts juxtaposés, c'est le seul
   autre signal qui l'ouvre : partout ailleurs un rouge est présent, et sa présence suffit
   à interdire l'entrée, quelle que soit la disposition des feux. L'autorisation ne dispense
-  de rien pour autant. Lors de l'entrée dans les écluses, les bateaux doivent réduire
-  leur vitesse de façon à éviter tout choc contre les portes, les dispositifs de protection
-  ou d'autres bateaux. Le vert dit que la voie est libre, pas qu'on peut y aller vite.
+  de rien pour autant : à bord d'une menue embarcation, tu entres à ton tour et sur
+  l'invitation du personnel, et lors de l'entrée dans les écluses, les bateaux doivent
+  réduire leur vitesse de façon à éviter tout choc contre les portes, les dispositifs de
+  protection ou d'autres bateaux. Le vert dit que la voie est libre, pas qu'on peut y
+  aller vite.
 sources:
   - texte: Code des transports, article A. 4241-53-31, 1 d)
     ref: rgpni-ecluses
-  - texte: Code des transports, article A. 4241-53-30, 6
+  - texte: Code des transports, article A. 4241-53-30, 3 et 6
     ref: rgpni-ecluses
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

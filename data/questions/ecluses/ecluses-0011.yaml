@@ -5,31 +5,35 @@ notion: ecluses-signaux-acces
 statut: publie
 difficulte: 1
 enonce: >-
-  Tu attends ton tour dans le garage de l'écluse quand ce signal s'allume. Que fais-tu
-  ?
+  Tu attends ton tour dans le garage de l'écluse quand ce signal s'allume. Que
+  signifie-t-il ?
 visuel:
   fichier: ecluses/acces-deux-verts-juxtaposes.svg
   alt: Deux feux verts allumés, côte à côte.
   credit: code
 propositions:
   - id: a
-    texte: Tu entres, l'accès est autorisé
+    texte: L'accès est autorisé
   - id: b
-    texte: Tu attends, l'écluse se prépare seulement à ouvrir
+    texte: L'écluse se prépare seulement à ouvrir, il faut attendre
   - id: c
-    texte: Tu entres seulement si l'éclusier te fait signe, le vert ne suffit pas
+    texte: "L'accès est interdit : deux verts côte à côte ne valent pas un vert isolé"
 reponses:
   - a
 explication: >-
-  Deux feux verts juxtaposés autorisent l'accès, tout comme un feu vert isolé. C'est le
-  seul cas où le règlement ouvre l'écluse par un feu : dès qu'un rouge est présent, quelle
-  que soit sa disposition et quel que soit ce qui l'accompagne, l'accès est interdit.
-  Le vert seul décide.
+  Deux feux verts juxtaposés autorisent l'accès, tout comme un feu vert isolé. Ce sont
+  les deux seuls signaux qui ouvrent l'écluse : dès qu'un rouge est présent, quelle que
+  soit sa disposition et quel que soit ce qui l'accompagne, l'accès est interdit. Le feu
+  dit que l'écluse est ouverte, pas que c'est ton tour : le passage se fait dans l'ordre
+  d'arrivée, et une menue embarcation, ce qu'est ton bateau de plaisance, n'entre dans le
+  sas qu'après y avoir été invitée par le personnel.
 sources:
   - texte: Code des transports, article A. 4241-53-31, 1
+    ref: rgpni-ecluses
+  - texte: Code des transports, article A. 4241-53-30, 3
     ref: rgpni-ecluses
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

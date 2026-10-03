@@ -144,8 +144,8 @@ EMPRISES = {"cylindre": (68, 78), "cone": (80, 88), "pilier": (48, 108)}
 # Hauteur occupée par chaque voyant, pour cadrer l'image dessus.
 HAUTEURS_VOYANT = {
     "cylindre": 30, "cone-haut": 32, "sphere": 32, "croix": 34, "croix-droite": 34,
-    "deux-cones-haut": 58, "deux-cones-bas": 58, "deux-cones-base": 58,
-    "deux-cones-pointe": 58, "deux-spheres": 60,
+    "deux-cones-haut": 66, "deux-cones-bas": 66, "deux-cones-base": 66,
+    "deux-cones-pointe": 66, "deux-spheres": 68,
 }
 
 
@@ -219,8 +219,9 @@ def _voyant(genre: str, base: float, teinte: str) -> list[str]:
         ]
     if genre == "deux-spheres":
         return [
+            # Un jour de 8 entre les deux : l'annexe I les veut « nettement séparées ».
             f'<circle cx="{CENTRE}" cy="{base - 15}" r="15" fill="{teinte}" />',
-            f'<circle cx="{CENTRE}" cy="{base - 45}" r="15" fill="{teinte}" />',
+            f'<circle cx="{CENTRE}" cy="{base - 53}" r="15" fill="{teinte}" />',
         ]
 
     orientations = {
@@ -232,9 +233,11 @@ def _voyant(genre: str, base: float, teinte: str) -> list[str]:
     if genre not in orientations:
         raise ValueError(f"voyant inconnu : {genre}")
     haut, bas = orientations[genre]
+    # Un jour de 8 entre les deux cônes : l'annexe I les veut « nettement séparés »,
+    # et deux cônes jointifs par la base se lisaient en un seul losange.
     return [
         _cone(bas, base - 14.5, 30, 29, teinte),
-        _cone(haut, base - 43.5, 30, 29, teinte),
+        _cone(haut, base - 51.5, 30, 29, teinte),
     ]
 
 

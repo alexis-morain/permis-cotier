@@ -21,14 +21,15 @@ explication: >-
   La règle 14 b) décrit exactement cette observation : de nuit, voir les feux de mât de
   l'autre navire l'un par l'autre ou presque et ses deux feux de côté signifie qu'il est
   devant toi ou pratiquement devant toi, donc en routes directement opposées. Voir les
-  deux feux de côté à la fois est la signature de la situation. Si tu ne voyais qu'un
-  seul feu de côté, vert ou rouge, tu serais dans une situation de routes qui se croisent,
-  régie par une autre règle.
+  deux feux de côté à la fois est la signature de la situation. Un seul feu de côté, avec
+  des feux de mât nettement décalés, signerait plutôt une route qui croise, régie par une
+  autre règle. Mais la règle dit « et/ou » : des feux de mât alignés suffisent à faire
+  craindre le face-à-face, même si un seul feu de côté se voit.
 sources:
   - texte: RIPAM, règle 14 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

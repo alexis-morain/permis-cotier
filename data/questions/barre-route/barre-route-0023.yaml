@@ -19,8 +19,10 @@ reponses:
 explication: >-
   C'est le critère de la règle 7 d) i) : un relèvement qui ne varie pas, alors que la
   distance diminue, signe la route de collision. Un relèvement constant ne veut pas dire
-  route parallèle, au contraire : deux navires sur des routes parallèles se relèvent sous
-  un angle qui change. Attention aussi à la réciproque, que la règle écarte : un
+  route parallèle : deux navires sur des routes parallèles et décalées, à des vitesses
+  différentes, se relèvent sous un angle qui change ; s'ils se relèvent sous le même
+  angle tandis que la distance diminue, ils se rejoignent. Attention aussi à la
+  réciproque, que la règle écarte : un
   relèvement qui varie n'exclut pas le risque, notamment avec un très grand navire, un
   train de remorque ou un navire à courte distance.
 sources:
@@ -29,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -5,24 +5,26 @@ notion: vhf-asn
 statut: publie
 difficulte: 3
 enonce: >-
-  Ta VHF portative est munie de l'appel sélectif numérique. Doit-elle être programmée
-  avec le MMSI du navire ?
+  Ta VHF portative est munie de l'appel sélectif numérique. Avec quel MMSI doit-elle
+  être programmée ?
 propositions:
   - id: a
-    texte: Oui, comme la VHF fixe, puisqu'elle est munie de l'ASN
+    texte: Celui qu'attribue l'autorité qui délivre les licences, comme pour la VHF fixe
   - id: b
-    texte: Non, seule la VHF fixe reçoit le MMSI du navire
+    texte: "Aucun : seule la VHF fixe est programmée avec un MMSI"
 reponses:
   - a
 explication: >-
-  L'article 240-2.20 vise les installations fixes et portatives munies de l'appel sélectif
-  numérique : lorsqu'elles sont programmées, elles le sont avec le MMSI attribué par l'autorité
-  qui délivre les licences. La portative n'y échappe pas.
+  L'article 240-2.20, III, vise les installations fixes et portatives munies de l'appel
+  sélectif numérique : lorsqu'elles sont programmées, elles le sont avec le MMSI attribué
+  par l'autorité qui délivre les licences de stations. La portative n'y échappe pas. Le
+  texte ne dit pas « le MMSI du navire » : seul le IV, qui ne vise que la VHF fixe, le
+  nomme ainsi. Une portative peut recevoir son propre identifiant.
 sources:
   - texte: Division 240, article 240-2.20, III
     ref: division-240
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

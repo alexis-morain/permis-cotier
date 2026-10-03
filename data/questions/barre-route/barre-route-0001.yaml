@@ -16,8 +16,8 @@ reponses:
   - a
 explication: >-
   La règle 12 a) i) vise le cas de deux voiliers qui reçoivent le vent d'un bord différent
-  : celui qui reçoit le vent de bâbord s'écarte de la route de l'autre. Ici tu es tribord
-  amures pour personne, tu es bâbord amures, donc la manœuvre est pour toi. Le piège est
+  : celui qui reçoit le vent de bâbord s'écarte de la route de l'autre. Ici tu es bâbord
+  amures, donc la manœuvre est pour toi. Le piège est
   de croire que la position au vent ou sous le vent entre en jeu : ce critère n'intervient
   que si les deux voiliers reçoivent le vent du même bord.
 sources:
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

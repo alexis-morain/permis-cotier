@@ -163,7 +163,7 @@ SCENES: dict[str, dict] = {
     "tu-es-rattrape": {
         "navires": [
             {"a": (122, 74), "cap": 0, "route": 40, "role": "toi"},
-            {"a": (96, 138), "cap": 0, "route": 42, "role": "autre"},
+            {"a": (96, 138), "cap": 0, "route": 60, "role": "autre"},
         ],
         "alt": "Vue de dessus. Ton bateau fait route vers le haut de l'image. Un navire "
                "à moteur plus rapide le rejoint par l'arrière, en le débordant "
@@ -172,7 +172,7 @@ SCENES: dict[str, dict] = {
     },
     "tu-rattrapes": {
         "navires": [
-            {"a": (118, 138), "cap": 0, "route": 42, "role": "toi"},
+            {"a": (118, 138), "cap": 0, "route": 60, "role": "toi"},
             {"a": (144, 74), "cap": 0, "route": 40, "role": "autre"},
         ],
         "alt": "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image et "
@@ -195,13 +195,15 @@ SCENES: dict[str, dict] = {
     },
     "voiliers-memes-amures": {
         "vent": (32, 36, 250),
+        # Les deux reçoivent le vent de tribord ; leurs routes convergent vers le
+        # haut, sans quoi rien ne ferait craindre l'abordage de la règle 12 a).
         "navires": [
             {"a": (156, 108), "cap": 340, "route": 56, "role": "toi", "voile": "babord"},
-            {"a": (74, 108), "cap": 340, "route": 56, "role": "autre", "voile": "babord"},
+            {"a": (74, 108), "cap": 20, "route": 56, "role": "autre", "voile": "babord"},
         ],
-        "alt": "Vue de dessus. Deux voiliers font route au même cap, vent venant de la "
-               "droite de l'image, voiles portées du même côté. Ton voilier est le plus "
-               "proche du vent, l'autre est plus loin sous le vent.",
+        "alt": "Vue de dessus. Deux voiliers convergent vers le haut de l'image, vent "
+               "venant de la droite, voiles portées du même côté, à bâbord. Ton voilier "
+               "est à droite, l'autre à gauche.",
         "regle": "RIPAM, règle 12 a) ii), voiliers qui ont les mêmes amures",
     },
 }

@@ -142,8 +142,8 @@ RYTHMES: dict[str, dict] = {
     "eaux-saines-eclat-long": {
         "motif": [(ECLAT_LONG, "blanc"), (2.4, None)],
         "fenetre": 2,
-        "alt": "Feu blanc montrant un éclat long isolé, plus long que l'obscurité qui "
-               "le sépare du suivant.",
+        "alt": "Feu blanc montrant un éclat long isolé, suivi d'une obscurité plus "
+               "longue encore.",
         "regle": "AISM, région A, marque d'eaux saines, un éclat long toutes les 10 s, "
                  "pause abrégée au dessin",
     },

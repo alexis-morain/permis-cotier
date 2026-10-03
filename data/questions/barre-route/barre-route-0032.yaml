@@ -5,8 +5,8 @@ notion: barre-rattrapant
 statut: publie
 difficulte: 1
 enonce: >-
-  Tu es le bateau du bas et tu fais route au moteur. Un navire à moteur plus rapide te
-  rejoint par l'arrière. Qui doit s'écarter ?
+  Tu fais route au moteur. Un navire à moteur plus rapide te rejoint par l'arrière. Qui
+  doit s'écarter ?
 visuel:
   fichier: situations/tu-es-rattrape.svg
   alt: "Vue de dessus. Ton bateau fait route vers le haut de l'image. Un navire à moteur plus rapide le rejoint par l'arrière, en le débordant légèrement sur sa gauche."
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

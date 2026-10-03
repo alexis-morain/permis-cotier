@@ -21,14 +21,14 @@ reponses:
 explication: >-
   La règle 35 a) prescrit un son prolongé au navire à propulsion mécanique qui a de l'erre,
   autrement dit qui avance encore sur l'eau. Stoppé, il en émettrait deux. À la voile,
-  il émettrait un son prolongé suivi de deux sons brefs. Le même son prolongé isolé annonce
-  aussi un coude, mais seulement en vue d'un autre navire et dans un chenal, pas au large
-  dans la brume : c'est la situation qui donne le sens.
+  il émettrait un son prolongé suivi de deux sons brefs. Le même son prolongé isolé est
+  aussi le signal du coude, règle 34 e), à l'approche d'un chenal où un obstacle peut
+  cacher un navire, pas au large dans la brume : c'est la situation qui donne le sens.
 sources:
   - texte: RIPAM, règle 35 a)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

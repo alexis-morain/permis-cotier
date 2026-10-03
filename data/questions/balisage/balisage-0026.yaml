@@ -10,7 +10,7 @@ enonce: >-
   marque te signale-t-il ?
 visuel:
   fichier: rythmes/eaux-saines-eclat-long.svg
-  alt: "Feu blanc montrant un éclat long isolé, plus long que l'obscurité qui le sépare du suivant."
+  alt: "Feu blanc montrant un éclat long isolé, suivi d'une obscurité plus longue encore."
   credit: code
 propositions:
   - id: a
@@ -33,5 +33,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'

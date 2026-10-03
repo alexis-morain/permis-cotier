@@ -23,13 +23,16 @@ reponses:
 explication: >-
   La règle 13 b) donne deux formulations de la même limite. Géométriquement, le rattrapant
   vient de plus de 22,5 degrés sur l'arrière du travers. De nuit, cela se vérifie à l'œil :
-  depuis cette zone il ne voit que le feu arrière, aucun feu de côté. Dès qu'un feu de côté
-  apparaît, on n'est plus dans le rattrapage mais dans une route qui croise.
+  depuis cette zone il ne voit que le feu arrière, aucun feu de côté. Si un feu de côté
+  se voit dès l'approche, l'autre n'arrive pas par ce secteur et ce n'est pas un
+  rattrapage. Une fois le rattrapage engagé, en revanche, la règle 13 d) est formelle :
+  voir apparaître un feu de côté en cours de dépassement ne change rien, le rattrapant
+  reste rattrapant.
 sources:
   - texte: RIPAM, règle 13 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

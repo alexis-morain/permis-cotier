@@ -73,7 +73,8 @@ FRISE_X0 = 20
 FRISE_Y = 100
 BARRE_H = 13
 ECHELLE = 14.5            # pixels par seconde, la même pour tous les dessins
-PAUSE = 1.2               # respiration avant que le motif se répète
+PAUSE = 3.5               # respiration avant que le motif se répète : plus longue que
+                          # tout intervalle interne (2 s), sinon deux signaux se confondent
 
 BREF = 1.0                # règle 32 b)
 PROLONGE = 5.0            # règle 32 c), quatre à six secondes

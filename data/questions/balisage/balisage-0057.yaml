@@ -17,8 +17,9 @@ reponses:
   - a
 explication: >-
   L'arrêté donne pour forme « cylindrique, charpente ou espar » à bâbord et « conique,
-  charpente ou espar » à tribord. Une charpente est une structure ajourée posée sur le fond,
-  un espar un simple mât : ni l'une ni l'autre n'a la silhouette d'un cylindre ou d'un cône.
+  charpente ou espar » à tribord. Une bouée charpente porte une superstructure ajourée sur
+  son flotteur, une bouée espar n'est qu'un long fût : ni l'une ni l'autre n'a la
+  silhouette d'un cylindre ou d'un cône.
   La couleur, elle, ne change pas. Ce n'est pas propre à la région B, qui décrit les mêmes
   formes.
 sources:
@@ -31,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-09'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'
