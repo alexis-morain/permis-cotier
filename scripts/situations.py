@@ -107,14 +107,18 @@ def _navire(cap: float, couleur: str, voile: str | None = None) -> str:
 
 def _fleche_vent(x: float, y: float, cap: float) -> str:
     """Le vent, dessiné là où il ne recouvre aucun navire. `cap` est sa direction
-    de propagation : un vent de nord souffle vers le sud, donc cap 180."""
+    de propagation : un vent de nord souffle vers le sud, donc cap 180.
+
+    La pointe est dessinée vers le haut, cap zéro, comme l'étrave des navires :
+    `rotate(cap)` l'envoie alors bien vers où le vent souffle. Elle fut un temps
+    dessinée vers le bas, et la flèche montrait l'inverse des voiles."""
     return (
         f'<g transform="translate({x},{y}) rotate({cap})" opacity="0.72">'
-        f'<line x1="0" y1="-16" x2="0" y2="12" stroke="{ENCRE_DOUCE}" stroke-width="1.6" />'
-        f'<path d="M0,16 L-4.5,7 L4.5,7 Z" fill="{ENCRE_DOUCE}" />'
-        f'<line x1="-7" y1="-13" x2="-7" y2="-2" stroke="{ENCRE_DOUCE}" stroke-width="1.1" '
+        f'<line x1="0" y1="16" x2="0" y2="-12" stroke="{ENCRE_DOUCE}" stroke-width="1.6" />'
+        f'<path d="M0,-16 L-4.5,-7 L4.5,-7 Z" fill="{ENCRE_DOUCE}" />'
+        f'<line x1="-7" y1="13" x2="-7" y2="2" stroke="{ENCRE_DOUCE}" stroke-width="1.1" '
         f'stroke-opacity="0.6" />'
-        f'<line x1="7" y1="-13" x2="7" y2="-2" stroke="{ENCRE_DOUCE}" stroke-width="1.1" '
+        f'<line x1="7" y1="13" x2="7" y2="2" stroke="{ENCRE_DOUCE}" stroke-width="1.1" '
         f'stroke-opacity="0.6" />'
         f"</g>"
     )
