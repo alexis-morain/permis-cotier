@@ -69,7 +69,6 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
   ]}
 >
   <article class="page page--etroite" style="padding-block:2.5rem 0">
-    <p class="chapitre web-seulement"><a href={`/theme/${notion.theme}`}>{nomTheme}</a></p>
     <h1>{notion.nom}</h1>
 
     <p class="chapo">{notion.resume}</p>
@@ -225,8 +224,6 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.5;
-    border-left: 3px solid var(--accent);
-    padding-left: 1rem;
     margin: 0 0 1.25rem;
   }
 

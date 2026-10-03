@@ -54,7 +54,6 @@ const miettes = [
   jsonLd={[quiz(q, theme, base)]}
 >
   <article class="page page--etroite" style="padding-block:3rem 0">
-    <p class="chapitre"><a href={`/theme/${q.theme}`}>{nomDuTheme(q.theme)}</a></p>
     <h1 class="question">{q.enonce}</h1>
 
     {q.visuel && (
@@ -145,7 +144,7 @@ const miettes = [
     border-radius: 999px;
     font-size: 0.85rem; font-weight: 800;
   }
-  .bonne .lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
+  .bonne .lettre { background: var(--vert); border-color: var(--vert); color: var(--blanc); }
   .sourcesListe { padding-left: 1.2rem; }
   .sourcesListe li { margin-bottom: 0.35rem; }
   .versNotion { margin-top: 2rem; max-width: 58ch; }

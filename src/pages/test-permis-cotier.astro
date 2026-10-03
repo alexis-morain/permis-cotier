@@ -19,7 +19,6 @@ const sources = [
   miettes={[{ nom: 'Test permis côtier', chemin: '/test-permis-cotier' }]}
 >
   <article class="page page--etroite test" style="padding-block:2.5rem 0">
-    <p class="chapitre">Test gratuit</p>
     <h1>Teste-toi avant l’examen du permis côtier</h1>
     <p class="test__chapo">
       Un examen blanc gratuit de quarante questions, puis la correction complète avec la règle
@@ -82,17 +81,15 @@ const sources = [
 
 <style>
   .test__chapo {
-    border-left: var(--bord) solid var(--accent);
     font-size: 1.25rem;
     font-stretch: var(--large);
     font-weight: 600;
     line-height: 1.4;
     margin: 1.5rem 0 2rem;
     max-width: 54ch;
-    padding-left: 1.1rem;
   }
   .test__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 3rem; }
   .test section { margin-top: 2.75rem; }
-  .test section p, .test li { max-width: 66ch; }
+  .test section p, .test li { max-width: var(--mesure); }
   .test li { margin-bottom: 0.5rem; }
 </style>

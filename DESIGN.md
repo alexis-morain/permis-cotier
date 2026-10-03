@@ -36,7 +36,7 @@ Une famille, Archivo variable, sur deux largeurs.
 - Display : largeur 125 %, graisse 800, interlettrage -0,01 em. Titres de page,
   grands nombres, chrono, compteur, wordmark.
 - Interface et corps : largeur 100 %, graisses 400, 600, 700. Corps 17 px,
-  interligne 1,5, mesure 66 ch.
+  interligne 1,5, mesure 56 ch, soit soixante-douze caractères rendus.
 - Chiffres tabulaires partout.
 
 ## Forme
@@ -51,6 +51,12 @@ Une famille, Archivo variable, sur deux largeurs.
 - Une bande marine pleine largeur ouvre l'accueil, soulignée d'une ligne jaune
   de 6 px, la « ligne de flottaison ». C'est le seul endroit où elle apparaît.
 - Les liens sont soulignés d'un trait jaune de 2 px, comme un surligneur.
+- Un chapeau, un résumé, une réponse courte se distinguent par la largeur
+  125 % et la graisse 600, rien d'autre : ni trait de côté, ni label au-dessus.
+  Le fil d'Ariane dit où l'on est ; le titre n'a pas besoin d'un sur-titre.
+- Un bouton désactivé garde sa place et sa forme et perd sa couleur d'action :
+  fond `--fond-2` (jaune pâle pour le principal), texte doux, relief en filet.
+  Jamais d'opacité : à 50 %, le texte se devine au lieu de se lire.
 
 ## Mouvement
 

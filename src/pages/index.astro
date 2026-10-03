@@ -379,7 +379,7 @@ const liste = {
   /* Les trois façons de réviser. Trois colonnes séparées par un filet, comme
      les listes du site, et non trois cartes : rien n'y est encadré. */
   .trois { padding-block: 3.5rem 0; }
-  .trois__chapo { max-width: 62ch; margin-bottom: 2rem; }
+  .trois__chapo { max-width: var(--mesure); margin-bottom: 2rem; }
   .trois__liste {
     list-style: none;
     display: grid;
@@ -402,7 +402,7 @@ const liste = {
 
   /* La question montrée : le seul endroit de la page où le contenu est encadré. */
   .preuve { padding-block: 3.5rem 0; }
-  .preuve__chapo { max-width: 62ch; margin-bottom: 1.75rem; }
+  .preuve__chapo { max-width: var(--mesure); margin-bottom: 1.75rem; }
   .preuve__cadre {
     display: grid;
     gap: 1.5rem;
@@ -439,7 +439,7 @@ const liste = {
     border-radius: 999px;
     font-size: 0.85rem; font-weight: 800;
   }
-  .preuve .bonne .lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
+  .preuve .bonne .lettre { background: var(--vert); border-color: var(--vert); color: var(--blanc); }
   /* La couleur ne suffit pas : la bonne réponse se lit aussi en toutes lettres,
      au lecteur d'écran comme à qui ne distingue pas le vert. */
   .preuve__juste {
@@ -450,13 +450,13 @@ const liste = {
     font-weight: 800;
     white-space: nowrap;
   }
-  .preuve__explication { max-width: 62ch; }
+  .preuve__explication { max-width: var(--mesure); }
   .preuve__source {
     margin-top: 1rem;
     padding-top: 0.9rem;
     border-top: 2px solid var(--filet);
     font-weight: 600;
-    max-width: 62ch;
+    max-width: var(--mesure);
   }
   .preuve__etiquette {
     display: inline-block;
@@ -476,14 +476,14 @@ const liste = {
      peut poser. Hors du premier écran, parce qu'elle ne parle qu'à celui qui
      a déjà commencé. */
   .reprendre { padding-block: 3.5rem 0; }
-  .reprendre__chapo { max-width: 62ch; margin-bottom: 1.75rem; }
+  .reprendre__chapo { max-width: var(--mesure); margin-bottom: 1.75rem; }
   .reprendre__grille { display: grid; gap: 1.5rem; align-items: start; }
   .reprendre__etat { min-width: 0; }
   .reprendre__date { max-width: 26rem; }
   .reprendre :global(.reprise) { border-top: 0; padding-top: 0; margin-top: 0; }
 
   .cours { padding-block: 3.5rem 0; }
-  .cours__note { margin-bottom: 1.5rem; max-width: 62ch; }
+  .cours__note { margin-bottom: 1.5rem; max-width: var(--mesure); }
   .listeCours { list-style: none; margin: 0; padding: 0; }
   .listeCours li {
     border-top: 2px solid var(--filet);
@@ -502,7 +502,7 @@ const liste = {
   }
   .listeCours a:hover .listeCours__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
   .listeCours__nom { font-size: 1.2rem; font-weight: 700; }
-  .listeCours p { margin: 0.1rem 0 0; max-width: 60ch; }
+  .listeCours p { margin: 0.1rem 0 0; max-width: var(--mesure); }
 
   .guide { padding-block: 3.5rem 0; }
   .guide__liens { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 46rem; }

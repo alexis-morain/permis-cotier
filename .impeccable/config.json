@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/pages/index.astro"
+        ],
+        "createdAt": "2026-10-03T23:51:35.409Z",
+        "reason": "Ligne de flottaison sous la bande marine de l'accueil, voulue, DESIGN.md « Forme »"
+      }
+    ]
+  }
+}

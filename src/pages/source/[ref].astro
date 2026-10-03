@@ -127,7 +127,7 @@ const lecons = leconsDuParcours().filter((l) =>
           {lecons.map((l) => (
             <li>
               <a href={l.chemin}>{l.notion.nom}</a>
-              <span class="discret"> — {l.cours.titre}</span>
+              <span class="discret"> · {l.cours.titre}</span>
             </li>
           ))}
         </ul>
@@ -143,7 +143,7 @@ const lecons = leconsDuParcours().filter((l) =>
           {questions.map((q) => (
             <li>
               {POUR_APP ? <LienQuestion id={q.id} enonce={q.enonce} /> : <a href={`/question/${q.id}`}>{q.enonce}</a>}
-              <span class="discret"> — {nomDuTheme(q.theme)}</span>
+              <span class="discret"> · {nomDuTheme(q.theme)}</span>
             </li>
           ))}
         </ul>
@@ -177,7 +177,7 @@ const lecons = leconsDuParcours().filter((l) =>
     padding: 1.25rem 1.4rem;
     margin: 0 0 2.5rem;
   }
-  .nature__phrase { font-weight: 600; margin: 0 0 1rem; max-width: 60ch; }
+  .nature__phrase { font-weight: 600; margin: 0 0 1rem; max-width: var(--mesure); }
   .nature dl { margin: 0; display: grid; gap: 0.75rem; }
   .nature dt {
     font-size: 0.78rem;
@@ -186,7 +186,7 @@ const lecons = leconsDuParcours().filter((l) =>
     text-transform: uppercase;
     color: var(--texte-doux);
   }
-  .nature dd { margin: 0.15rem 0 0; max-width: 62ch; }
+  .nature dd { margin: 0.15rem 0 0; max-width: var(--mesure); }
 
   /* Le corps de la fiche est du markdown : tableaux, listes, séparateurs. Le
      style reste ici, aucune feuille partagée n'est touchée. */
@@ -217,7 +217,7 @@ const lecons = leconsDuParcours().filter((l) =>
   .appuis { margin-top: 3rem; }
   .appuis h2 { font-size: 1.05rem; }
   .appuis ul { padding-left: 1.1rem; margin: 0; }
-  .appuis li { margin-bottom: 0.5rem; max-width: 62ch; }
+  .appuis li { margin-bottom: 0.5rem; max-width: var(--mesure); }
 
   .rappel { margin-top: 3rem; }
 </style>

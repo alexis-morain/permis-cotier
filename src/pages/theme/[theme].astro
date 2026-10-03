@@ -91,7 +91,7 @@ const cours = coursParCode(theme.code);
                 <li>
                   {POUR_APP ? <LienQuestion id={q.id} enonce={q.enonce} /> : <a href={`/question/${q.id}`}>{q.enonce}</a>}
                   <span class="discret">
-                    {' '}— {q.sources.map((s) => s.texte).join(', ')}
+                    {' '}· {q.sources.map((s) => s.texte).join(', ')}
                   </span>
                 </li>
               ))}

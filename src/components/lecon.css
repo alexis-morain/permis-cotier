@@ -124,7 +124,7 @@ html:not(.js) .lecon__mode { display: none; }
   margin: 0 0 0.6rem;
 }
 .retenir ul { margin: 0; padding-left: 1.2rem; }
-.retenir li { margin-bottom: 0.45rem; max-width: 60ch; }
+.retenir li { margin-bottom: 0.45rem; max-width: var(--mesure); }
 .retenir li:last-child { margin-bottom: 0; }
 
 .verification__compteur {

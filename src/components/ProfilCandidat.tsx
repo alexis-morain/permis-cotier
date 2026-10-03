@@ -523,9 +523,11 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                 Annuler
               </button>
             </div>
+          ) : rien && !profilRempli(p) ? (
+            <p className="reglage__valeur discret">Rien à effacer pour l’instant.</p>
           ) : (
             <p className="reglage__valeur">
-              <button className="bouton" type="button" onClick={() => setConfirme(true)} disabled={rien && !profilRempli(p)}>
+              <button className="bouton" type="button" onClick={() => setConfirme(true)}>
                 Effacer ma progression et ma fiche
               </button>
             </p>

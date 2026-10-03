@@ -79,7 +79,9 @@
   --sans: 'Archivo Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --large: 125%;
 
-  --mesure: 66ch;
+  /* `ch` vaut la chasse du « 0 », large chez Archivo : 66ch rendaient
+     quatre-vingt-dix caractères par ligne, 56ch en rendent soixante-douze. */
+  --mesure: 56ch;
   --rayon: 1rem;
   --rayon-petit: 0.625rem;
   --bord: 3px;
@@ -270,11 +272,17 @@ img { max-width: 100%; height: auto; }
   transform: translateY(var(--bord));
   box-shadow: 0 0 0 var(--filet-fort);
 }
+/* Désactivé : le bouton garde sa place et sa forme, perd sa couleur d'action
+   et son relief fort. Pas d'opacité : à 50 %, « Valider » lisait à 2,2:1 et
+   se devinait plus qu'il ne se lisait. Ici le texte doux tient 4,5:1 sur les
+   deux fonds, clair et sombre. */
 .bouton[disabled] {
-  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 var(--bord) 0 var(--filet-fort);
+  background: var(--fond-2);
+  border-color: var(--filet);
+  color: var(--texte-doux);
+  box-shadow: 0 var(--bord) 0 var(--filet);
 }
 
 .bouton--principal {
@@ -287,7 +295,12 @@ img { max-width: 100%; height: auto; }
 }
 .bouton--principal:hover { background: var(--jaune-vif); border-color: var(--jaune-vif); }
 .bouton--principal:active { box-shadow: 0 0 0 var(--jaune-sombre); }
-.bouton--principal[disabled] { box-shadow: 0 var(--bord) 0 var(--jaune-sombre); }
+.bouton--principal[disabled] {
+  background: var(--jaune-pale);
+  border-color: var(--jaune-pale);
+  color: var(--texte-doux);
+  box-shadow: 0 var(--bord) 0 var(--filet);
+}
 
 .bouton--discret {
   border-color: transparent;

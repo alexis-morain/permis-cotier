@@ -183,13 +183,13 @@
   background: var(--vert-pale);
   box-shadow: 0 var(--bord) 0 var(--vert);
 }
-.proposition--juste .proposition__lettre { background: var(--vert); border-color: var(--vert); color: #fff; }
+.proposition--juste .proposition__lettre { background: var(--vert); border-color: var(--vert); color: var(--blanc); }
 .proposition--fausse {
   border-color: var(--rouge);
   background: var(--rouge-pale);
   box-shadow: 0 var(--bord) 0 var(--rouge);
 }
-.proposition--fausse .proposition__lettre { background: var(--rouge); border-color: var(--rouge); color: #fff; }
+.proposition--fausse .proposition__lettre { background: var(--rouge); border-color: var(--rouge); color: var(--blanc); }
 
 /* Une fois corrigé, ou quand deux cases sont déjà cochées, les autres
    propositions s'effacent un peu — pas au point de ne plus se lire : ce sont

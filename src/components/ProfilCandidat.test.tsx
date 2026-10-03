@@ -76,6 +76,14 @@ describe('la fiche', () => {
     expect(screen.getByText(/Examen dans \d+ jours/)).toBeTruthy();
   });
 
+  it('ne propose rien à effacer tant que rien n’est enregistré', () => {
+    // Un bouton désactivé à demi-opacité se devine plus qu'il ne se lit :
+    // quand il n'y a rien à effacer, la fiche le dit en toutes lettres.
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(screen.queryByRole('button', { name: /Effacer ma progression/ })).toBeNull();
+    expect(screen.getByText('Rien à effacer pour l’instant.')).toBeTruthy();
+  });
+
   it('efface tout après confirmation, fiche comprise', () => {
     sauvegarder(enregistrerProfil(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()), { ...profilVide(), prenom: 'Léa', rempliLe: '2026-09-01' }));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
