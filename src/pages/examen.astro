@@ -3,11 +3,17 @@ import Base from '../layouts/Base.astro';
 import SansScript from '../components/SansScript.astro';
 import Quiz from '../components/Quiz.tsx';
 import { cheminBanque } from '../lib/banque';
+import { prochaineLecon } from '../lib/parcours';
 
 // La banque n'est plus sérialisée dans la page : elle arrive par un JSON dont
 // le nom porte la version, commun aux seize écrans de jeu et gardé en cache
 // immuable. La page tombe de sept cents kilo-octets à quelques-uns.
 const banque = cheminBanque();
+
+// Ce que l'écran de départ propose à qui n'a encore rien révisé. Lu ici, au
+// build : le parcours entier n'a pas à partir dans le navigateur pour un lien.
+const premiere = prochaineLecon({});
+const premiereLecon = { chemin: premiere.chemin, nom: premiere.notion.nom };
 ---
 
 <Base
@@ -18,6 +24,6 @@ const banque = cheminBanque();
 >
   <div class="page page--etroite">
     <SansScript ecran="L’examen blanc" />
-    <Quiz client:only="react" mode="examen" source={banque} />
+    <Quiz client:only="react" mode="examen" source={banque} premiereLecon={premiereLecon} />
   </div>
 </Base>

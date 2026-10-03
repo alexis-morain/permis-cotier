@@ -306,9 +306,13 @@
 }
 .encadre__titre { font: inherit; font-weight: 700; margin: 0 0 0.4rem; }
 .depart__retour { margin: 0; }
-.depart__reprise { margin-top: 0.25rem; background: var(--jaune-pale); border-color: var(--jaune-pale); }
-.depart__reprise p { margin: 0; }
-.depart__reprise p + p { margin-top: 0.4rem; }
+/* La reprise et l'avertissement au novice ne s'affichent jamais ensemble. */
+.depart__reprise,
+.depart__novice { margin-top: 0.25rem; background: var(--jaune-pale); border-color: var(--jaune-pale); }
+.depart__reprise p,
+.depart__novice p { margin: 0; }
+.depart__reprise p + p,
+.depart__novice p + p { margin-top: 0.4rem; }
 
 /* Confirmation avant d'arrêter un examen en cours. */
 .arret {

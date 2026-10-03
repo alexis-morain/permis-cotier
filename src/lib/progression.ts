@@ -237,6 +237,20 @@ export function enregistrerReponse(etat: Etat, id: string, reussie: boolean, dat
   };
 }
 
+/**
+ * Rien révisé encore : ni question répondue, ni leçon suivie, ni examen passé.
+ * Le questionnaire de départ ne compte pas, il dit pourquoi on vient, pas ce
+ * qu'on sait. C'est le visiteur qui ouvre l'examen blanc en arrivant, et qui
+ * le quitte dans les deux premières minutes.
+ */
+export function rienRevise(etat: Etat): boolean {
+  return (
+    Object.keys(etat.questions).length === 0 &&
+    Object.keys(etat.lecons).length === 0 &&
+    etat.examens.length === 0
+  );
+}
+
 export function enregistrerExamen(etat: Etat, examen: ExamenPasse): Etat {
   return { ...etat, examens: [examen, ...etat.examens].slice(0, MAX_EXAMENS) };
 }

@@ -17,6 +17,7 @@ import {
   profilVide,
   enregistrerProfil,
   migrerQuestions,
+  rienRevise,
 } from './progression';
 import type { Stockage } from './progression';
 
@@ -447,5 +448,22 @@ describe('activité par jour', () => {
     }
     expect(Object.keys(e.activite)).toHaveLength(400);
     expect(e.activite['2025-01-01']).toBeUndefined();
+  });
+});
+
+describe('rien révisé encore', () => {
+  it('vaut pour un navigateur neuf', () => {
+    expect(rienRevise(etatInitial())).toBe(true);
+  });
+
+  it('tombe dès une question répondue, une leçon suivie ou un examen passé', () => {
+    expect(rienRevise(enregistrerReponse(etatInitial(), 'meteo-0001', true, '2026-10-03'))).toBe(false);
+    expect(rienRevise(terminerLecon(etatInitial(), 'balisage-lateral', { bonnes: 2, total: 3 }, '2026-10-03'))).toBe(false);
+    expect(rienRevise(enregistrerExamen(etatInitial(), { date: '2026-10-03', bonnes: 20, total: 40, reussi: false }))).toBe(false);
+  });
+
+  it('ne tient pas compte du seul questionnaire de départ', () => {
+    const profil = { ...profilVide(), motivations: ['louer'], rempliLe: '2026-10-03' };
+    expect(rienRevise(enregistrerProfil(etatInitial(), profil))).toBe(true);
   });
 });

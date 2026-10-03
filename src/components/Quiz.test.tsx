@@ -243,6 +243,41 @@ describe('clavier', () => {
   });
 });
 
+describe('avant un premier examen sans révision', () => {
+  const premiereLecon = { chemin: '/cours/balisage/balisage-lateral', nom: 'Le balisage latéral' };
+
+  it('prévient, chiffre à l’appui, et montre la première leçon', () => {
+    render(<Quiz mode="examen" questions={trois} premiereLecon={premiereLecon} />);
+    expect(screen.getByText(/Tu n’as encore rien révisé/)).toBeTruthy();
+    expect(screen.getByText(/autour de 20 sur 40/)).toBeTruthy();
+    const lien = screen.getByRole('link', { name: /Le balisage latéral/ });
+    expect(lien.getAttribute('href')).toBe('/cours/balisage/balisage-lateral');
+    expect(lien.getAttribute('data-mesure')).toBe('examen-premiere-lecon');
+    // Il prévient, il ne retient pas : l’examen reste à un clic.
+    expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy();
+  });
+
+  it('se tait dès qu’on a révisé quelque chose', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [],
+        dateExamen: null,
+        lecons: { 'balisage-lateral': { faiteLe: '2026-10-03', bonnes: 3, total: 3 } },
+      }),
+    );
+    render(<Quiz mode="examen" questions={trois} premiereLecon={premiereLecon} />);
+    expect(screen.queryByText(/Tu n’as encore rien révisé/)).toBeNull();
+  });
+
+  it('se tait sur un entraînement', () => {
+    render(<Quiz mode="entrainement" questions={trois} premiereLecon={premiereLecon} />);
+    expect(screen.queryByText(/Tu n’as encore rien révisé/)).toBeNull();
+  });
+});
+
 describe('arrêt d’un examen en cours', () => {
   it('prévient de ce qui va se passer avant d’arrêter', () => {
     render(<Quiz mode="examen" questions={trois} />);
@@ -400,6 +435,103 @@ describe('ce que la série raconte à la mesure', () => {
     expect(track.mock.calls.filter((c) => c[0] === 'examen-abandonne')).toHaveLength(1);
   });
 
+  it('ne dit pas reçu un examen arrêté en route, même sans faute', () => {
+    const track = traceur();
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
+
+    expect(track).toHaveBeenCalledWith('examen-termine', {
+      bonnes: 1,
+      erreurs: 0,
+      total: 1,
+      reussi: false,
+      interrompu: true,
+      absent: false,
+    });
+  });
+
+  describe('la page passée en arrière-plan', () => {
+    let cache = false;
+    beforeEach(() => {
+      cache = false;
+      Object.defineProperty(document, 'hidden', { configurable: true, get: () => cache });
+    });
+    afterEach(() => {
+      delete (document as unknown as { hidden?: boolean }).hidden;
+    });
+    function masquer(valeur: boolean) {
+      cache = valeur;
+      document.dispatchEvent(new Event('visibilitychange'));
+    }
+
+    it('compte l’abandon dès que la page se cache, là où pagehide ne part pas', () => {
+      const track = traceur();
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+
+      masquer(true);
+      expect(track).toHaveBeenCalledWith('examen-abandonne', { rang: 2, total: 3, theme: undefined });
+
+      // La page qui se ferme ensuite ne compte pas une seconde fois.
+      window.dispatchEvent(new Event('pagehide'));
+      expect(track.mock.calls.filter((c) => c[0] === 'examen-abandonne')).toHaveLength(1);
+    });
+
+    it('dit le retour, pour que les abandons nets se lisent par soustraction', () => {
+      const track = traceur();
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+
+      masquer(true);
+      masquer(false);
+      expect(track).toHaveBeenCalledWith('examen-revenu', { rang: 1, total: 3, theme: undefined });
+
+      // Revenu, il peut repartir : un nouvel abandon se compte.
+      masquer(true);
+      expect(track.mock.calls.filter((c) => c[0] === 'examen-abandonne')).toHaveLength(2);
+    });
+
+    it('marque absent un examen fini page cachée, que le chrono a mené seul au bout', () => {
+      const track = traceur();
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+
+      masquer(true);
+      // Le chrono est une horloge murale : il passe les questions sans personne.
+      for (let i = 0; i < trois.length; i += 1) {
+        fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+      }
+
+      expect(track).toHaveBeenCalledWith('examen-termine', expect.objectContaining({ absent: true }));
+      expect(track.mock.calls.map((c) => c[0])).not.toContain('examen-revenu');
+    });
+
+    it('ne marque pas absent un examen fini après le retour', () => {
+      const track = traceur();
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      masquer(true);
+      masquer(false);
+      for (let i = 0; i < trois.length; i += 1) {
+        fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+      }
+      expect(track).toHaveBeenCalledWith('examen-termine', expect.objectContaining({ absent: false }));
+    });
+
+    it('ne dit rien d’un retour qui n’a pas suivi d’abandon', () => {
+      const track = traceur();
+      render(<Quiz mode="examen" questions={trois} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      masquer(false);
+      expect(track.mock.calls.map((c) => c[0])).not.toContain('examen-revenu');
+    });
+  });
+
   it('ne compte pas comme abandon une série allée au bout', () => {
     const track = traceur();
     render(<Quiz mode="examen" questions={trois} />);
@@ -417,6 +549,7 @@ describe('ce que la série raconte à la mesure', () => {
       total: 3,
       reussi: true,
       interrompu: false,
+      absent: false,
     });
   });
 });

@@ -28,6 +28,7 @@ import {
   enregistrerEnCoursSerie,
   effacerEnCoursSerie,
   aujourdhui,
+  rienRevise,
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
 import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
@@ -63,6 +64,12 @@ interface Props {
   notion?: { code: string; nom: string };
   /** Série des seules questions ratées, tous thèmes mêlés. */
   revoir?: boolean;
+  /**
+   * La première leçon du parcours, que l'examen propose à qui n'a encore rien
+   * révisé. Passée par la page pour la même raison que `notion` : le parcours
+   * ne voyage pas jusqu'au navigateur pour un seul lien.
+   */
+  premiereLecon?: { chemin: string; nom: string };
 }
 
 /** Action propre à l'écran, que le modèle de session n'a pas à connaître. */
@@ -138,7 +145,7 @@ function LienLecon({ question, retour }: { question: QuestionAffichable; retour:
  * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
  * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
  */
-function Partie({ mode, questions, theme, notion, revoir = false }: Props & { questions: QuestionAffichable[] }) {
+function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon }: Props & { questions: QuestionAffichable[] }) {
   // La progression est lue une fois, au montage : le tirage et la reprise
   // doivent partir du même état, pas d'un état qui bouge sous eux.
   const [depart] = useState(() => charger());
@@ -316,6 +323,10 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, retourSerie, session.phase, session.index, session.selections, session.journal]);
 
+  // Un abandon déjà compté pour la série en cours, et pas encore suivi d'un
+  // retour. Partagé entre l'effet qui l'envoie et celui qui annonce la fin.
+  const abandonEnvoye = useRef(false);
+
   useEffect(() => {
     if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
     const r = session.resultat;
@@ -336,8 +347,12 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
         bonnes: r.bonnes,
         erreurs: r.erreurs,
         total: r.total,
-        reussi: r.reussi,
+        // Le résultat juge les seules questions jouées : trois justes sur
+        // quatre y sont « reçu ». Un examen arrêté n'a pas de verdict, ni à
+        // l'écran ni dans la mesure.
+        reussi: r.reussi && !session.interrompu,
         interrompu: session.interrompu,
+        absent: abandonEnvoye.current,
       });
     } else {
       evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
@@ -360,17 +375,37 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
 
   useEffect(() => {
     if (session.phase !== 'en-cours') return;
-    let envoye = false;
+    abandonEnvoye.current = false;
     const partir = () => {
       const s = enCours.current;
-      if (envoye || s.phase !== 'en-cours') return;
-      envoye = true;
+      if (abandonEnvoye.current || s.phase !== 'en-cours') return;
+      abandonEnvoye.current = true;
       evenement(`${nomSerie}-abandonne`, { rang: s.index + 1, total: s.total, theme });
     };
-    // `pagehide` couvre la fermeture, la navigation et le passage en arrière-plan
-    // sur mobile, là où `unload` ne part plus. L'envoi survit à la page.
+    // `pagehide` couvre la fermeture et la navigation, là où `unload` ne part
+    // plus. Il manque pourtant sur mobile : téléphone verrouillé, autre app,
+    // onglet tué depuis le sélecteur. Huit examens sur vingt-neuf finissaient
+    // ainsi sans un mot, en septembre 2026. La page cachée compte donc comme
+    // un abandon ; si elle revient, `-revenu` le dit, et les abandons nets
+    // se lisent par soustraction dans Umami. Un examen qui finit page cachée,
+    // mené au bout par le chrono sans personne, reste un abandon : son
+    // `examen-termine` porte `absent: true`, à retirer des examens terminés.
+    const surVisibilite = () => {
+      if (document.hidden) {
+        partir();
+        return;
+      }
+      const s = enCours.current;
+      if (!abandonEnvoye.current || s.phase !== 'en-cours') return;
+      abandonEnvoye.current = false;
+      evenement(`${nomSerie}-revenu`, { rang: s.index + 1, total: s.total, theme });
+    };
     window.addEventListener('pagehide', partir);
-    return () => window.removeEventListener('pagehide', partir);
+    document.addEventListener('visibilitychange', surVisibilite);
+    return () => {
+      window.removeEventListener('pagehide', partir);
+      document.removeEventListener('visibilitychange', surVisibilite);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.phase === 'en-cours', nomSerie, theme]);
 
@@ -507,6 +542,25 @@ function Partie({ mode, questions, theme, notion, revoir = false }: Props & { qu
         <h1 className="depart__titre">
           {POUR_APP ? 'Examen blanc' : 'Quarante questions, dans les conditions de l’épreuve.'}
         </h1>
+
+        {/* Un premier examen sans rien avoir lu : on tourne autour de vingt
+            sur quarante, et on part avant la dixième question. Huit premiers
+            essais mesurés en septembre 2026 : de 14 à 25, médiane 19,5. Le
+            chiffre se revoit quand la mesure en aura davantage. Sous le titre,
+            pas sous les règles : sur un téléphone, le bouton collant est déjà
+            là et l'encart, plus bas, ne se verrait pas. */}
+        {mode === 'examen' && premiereLecon && !reprise && rienRevise(depart) && (
+          <div className="encadre depart__novice">
+            <p>
+              <strong>Tu n’as encore rien révisé.</strong> Au premier essai, on tourne autour de 20 sur 40,
+              et il en faut 35.
+            </p>
+            <p>
+              Commence plutôt par la première leçon :{' '}
+              <a href={premiereLecon.chemin} data-mesure="examen-premiere-lecon">{premiereLecon.nom}</a>.
+            </p>
+          </div>
+        )}
 
         <ul className="depart__format">
           <li>
