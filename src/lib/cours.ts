@@ -117,7 +117,7 @@ export interface EtapeAffichable {
   liste?: string[];
 }
 
-/** Une leçon telle que la page la donne à l'îlot React. */
+/** Une leçon telle que la page la rend (`Lecon.astro`) et la donne au script de leçon. */
 export interface LeconAffichable {
   code: string;
   nom: string;

@@ -1,0 +1,84 @@
+---
+/**
+ * L'écran de leçon, tel que le serveur le rend : tout le texte, le premier
+ * écran marqué courant, la vérification réduite à ce qu'elle annonce. C'est
+ * ce que lisent les moteurs et ce que voit qui n'a pas de script.
+ *
+ * Le script de la page (`lecon-site.ts`) le prend ensuite en main sans le
+ * rebâtir : il lit les écrans dans le DOM, bouge l'écran courant, monte la
+ * vérification et la fin depuis le bloc JSON. Les écrans ne portent pas
+ * `aria-hidden` ici : sans script, tout se lit à la suite, et un écran visible
+ * ne doit pas être tu au lecteur d'écran. Le script le pose en pas à pas.
+ */
+import type { LeconAffichable } from '../lib/cours';
+import { ecransDe, libelleSuite } from './lecon-site';
+import { POUR_APP } from '../lib/cible';
+import './quiz.css';
+import './lecon.css';
+
+interface Props {
+  lecon: LeconAffichable;
+  cours: { code: string; titre: string; chemin: string };
+  /** Rang de la leçon dans son cours, à partir de 1. */
+  rang: number;
+  /** Nombre de leçons du cours. */
+  total: number;
+}
+
+const { lecon, cours, rang, total } = Astro.props;
+const ecrans = ecransDe(lecon);
+const types = ecrans.map((e) => e.type);
+const n = lecon.questions.length;
+---
+
+<div class="lecon lecon--pas-a-pas">
+  <div class="lecon__entete">
+    {POUR_APP ? (
+      <p class="lecon__chapitre"><span>Leçon {rang} / {total}</span><span class="discret" aria-hidden="true"> · </span><a href={cours.chemin}>{cours.titre}</a></p>
+    ) : (
+      <p class="lecon__chapitre"><a href={cours.chemin}>{cours.titre}</a><span class="discret"> · leçon {rang} sur {total} · {lecon.duree} min</span></p>
+    )}
+    <div class="lecon__barre" aria-hidden="true"><span style="transform:scaleX(0)"></span></div>
+    <p class="visuellement-cache" aria-live="polite">Écran 1 sur {ecrans.length}</p>
+  </div>
+
+  {ecrans.map((e, i) => e.type === 'fin' ? null : (
+    <section class={`ecran ecran--${e.type}${i === 0 ? ' ecran--courant' : ''}`} tabindex={i === 0 ? '-1' : undefined}>
+      {e.type === 'accroche' && <p class="ecran__accroche">{e.texte}</p>}
+
+      {e.type === 'etape' && (
+        <Fragment>
+          <h2 class="ecran__titre">{!lecon.courte && <span class="ecran__numero">{e.numero}</span>}{e.etape.titre}</h2>
+          {e.etape.visuel && (
+            <figure class="ecran__visuel">
+              <img src={`/visuels/${e.etape.visuel}`} alt={e.etape.alt ?? ''} loading={i === 0 ? 'eager' : 'lazy'} />
+            </figure>
+          )}
+          {e.etape.paragraphes.map((p) => <p>{p}</p>)}
+          {e.etape.liste && <ul class="ecran__liste">{e.etape.liste.map((l) => <li>{l}</li>)}</ul>}
+        </Fragment>
+      )}
+
+      {e.type === 'piege' && (
+        <div class="piege"><p class="piege__titre">Le piège</p><p>{e.texte}</p></div>
+      )}
+
+      {e.type === 'retenir' && (
+        <div class="retenir"><p class="retenir__titre">À retenir</p><ul>{e.lignes.map((l) => <li>{l}</li>)}</ul></div>
+      )}
+
+      {e.type === 'verification' && (
+        <Fragment>
+          <h2 class="ecran__titre">Vérifie ce que tu as retenu</h2>
+          <p class="discret">{n} question{n > 1 ? 's' : ''} de la banque sur cette notion, corrigée{n > 1 ? 's' : ''} une par une. La vérification a besoin de JavaScript.</p>
+        </Fragment>
+      )}
+
+      {i === 0 && e.type !== 'verification' && (
+        <div class="lecon__suite"><button class="bouton bouton--principal" type="button">{libelleSuite(types, 0)}</button></div>
+      )}
+    </section>
+  ))}
+
+  <p class="lecon__mode"><button type="button" class="bouton bouton--discret">Tout lire d’une traite</button></p>
+</div>

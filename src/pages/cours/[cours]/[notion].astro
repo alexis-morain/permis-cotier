@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import Lecon, { type Suite } from '../../../components/Lecon.tsx';
+import Lecon from '../../../components/Lecon.astro';
+import { ID_LECON, type DonneesLecon, type Suite } from '../../../components/lecon-site';
 import {
   leconsDuParcours,
   leconsDuCours,
@@ -46,6 +47,18 @@ if (apres && apres.cours.code === cours.code) {
 // s'indexe pas, la fiche de notion est déjà là pour ça.
 const indexable = !affichable.courte;
 const description = affichable.accroche ?? notion.resume;
+
+const coursDeLaLecon = { code: cours.code, titre: cours.titre, chemin: cheminCours(cours.code) };
+// Ce que le script de la leçon lit : le texte est déjà dans la page, il ne
+// lui faut que les questions et ce qui vient après. `<` échappé, pour qu'aucun
+// texte ne ferme le bloc.
+const donneesLecon: DonneesLecon = {
+  code: affichable.code,
+  cours: coursDeLaLecon,
+  ...(suite ? { suite } : {}),
+  questions: affichable.questions,
+};
+const blocLecon = JSON.stringify(donneesLecon).replaceAll('<', '\\u003c');
 ---
 
 <Base
@@ -75,7 +88,7 @@ const description = affichable.accroche ?? notion.resume;
       : []
   }
 >
-  {/* Avant l'îlot : la classe qui autorise le pas à pas. Posée ici et non
+  {/* Avant le script : la classe qui autorise le pas à pas. Posée ici et non
       dans le layout, elle ne dit rien aux autres pages. */}
   <script is:inline>document.documentElement.classList.add('js');</script>
 
@@ -83,14 +96,7 @@ const description = affichable.accroche ?? notion.resume;
     {!POUR_APP && <p class="chapitre"><a href={cheminCours(cours.code)}>{cours.titre}</a></p>}
     <h1>{notion.nom}</h1>
 
-    <Lecon
-      client:load
-      lecon={affichable}
-      cours={{ code: cours.code, titre: cours.titre, chemin: cheminCours(cours.code) }}
-      rang={lecon.rangDansCours}
-      total={duCours.length}
-      suite={suite}
-    />
+    <Lecon lecon={affichable} cours={coursDeLaLecon} rang={lecon.rangDansCours} total={duCours.length} />
   </article>
 
   <aside class="page page--etroite origine">
@@ -145,6 +151,13 @@ const description = affichable.accroche ?? notion.resume;
       fiche <a href={`/notion/${notion.code}`}>{notion.nom.toLowerCase()}</a>.
     </p>
   </aside>
+  <script type="application/json" id={ID_LECON} is:inline set:html={blocLecon} />
+  <script>
+    import { monterLecon } from '../../../components/lecon-site';
+    import { quandLaPageEstPrete } from '../../../lib/page';
+
+    quandLaPageEstPrete(() => monterLecon());
+  </script>
 </Base>
 
 <style>
