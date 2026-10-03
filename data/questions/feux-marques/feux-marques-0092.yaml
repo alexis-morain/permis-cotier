@@ -1,0 +1,36 @@
+id: feux-marques-0092
+option: cotier
+theme: feux-marques
+notion: feux-peche
+famille: feux-marque-de-peche
+statut: publie
+difficulte: 2
+enonce: >-
+  De jour, ce navire porte cette marque. Que fait-il ?
+visuel:
+  fichier: navires/chalutier-jour.svg
+  alt: "Navire vu de face. Sur le mât, deux cônes noirs superposés, réunis par leurs pointes."
+  credit: code
+propositions:
+  - id: a
+    texte: Il fait route à la voile et au moteur
+  - id: b
+    texte: Il remorque un train de plus de 200 mètres
+  - id: c
+    texte: Il est au mouillage
+  - id: d
+    texte: Il est en train de pêcher
+reponses:
+  - d
+explication: >-
+  Deux cônes superposés réunis par la pointe sont la marque du navire en train de pêcher, au chalut comme autrement, règles 26 b) i) et 26 c) i). Le piège est le bicône, deux cônes réunis par la base, qui signale un train de remorque de plus de 200 mètres. Un seul cône pointe en bas désigne le voilier qui marche aussi au moteur, et la boule le mouillage.
+sources:
+  - texte: RIPAM, règle 26 b) i)
+    ref: decret-77-733
+  - texte: RIPAM, règle 26 c) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

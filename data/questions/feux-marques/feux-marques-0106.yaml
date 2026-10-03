@@ -1,0 +1,38 @@
+id: feux-marques-0106
+option: cotier
+theme: feux-marques
+notion: feux-definitions
+famille: feux-poupe-sillage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu suis ce navire de nuit, droit dans son sillage. Il fait route. Que vois-tu de lui ?
+visuel:
+  fichier: navires/moteur-de-l-arriere-nuit.svg
+  alt: Navire vu de l'arrière. Un seul feu blanc, bas, au milieu de l'arrière. Aucun autre feu.
+  credit: code
+propositions:
+  - id: a
+    texte: Son feu de tête de mât
+  - id: b
+    texte: Son feu de mouillage
+  - id: c
+    texte: Son feu de poupe
+  - id: d
+    texte: Son feu de remorquage
+reponses:
+  - c
+explication: >-
+  Le feu de poupe est blanc et couvre 67,5 degrés de chaque bord à partir de l'arrière
+  (règle 21 c). Le feu de tête de mât s'arrête à 22,5 degrés sur l'arrière du travers
+  (règle 21 a) : droit derrière, tu ne le vois pas, pas plus que les feux de côté. Le
+  piège est de prendre ce blanc bas pour un feu de mouillage, alors que le navire fait
+  route.
+sources:
+  - texte: RIPAM, règle 21 c)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

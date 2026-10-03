@@ -1,0 +1,38 @@
+id: feux-marques-0119
+option: cotier
+theme: feux-marques
+notion: feux-tirant-eau
+famille: feux-tirant-eau-nuit
+statut: publie
+difficulte: 2
+enonce: >-
+  De nuit, ce navire vient droit sur toi et te montre ces feux. Que peux-tu en dire ?
+visuel:
+  fichier: navires/tirant-d-eau-de-face-nuit.svg
+  alt: Long navire vu de face. Dans l'axe, de haut en bas, deux feux blancs puis trois feux rouges superposés. Plus bas, un feu vert à gauche et un feu rouge à droite.
+  credit: code
+propositions:
+  - id: a
+    texte: Sa capacité de manœuvre est restreinte
+  - id: b
+    texte: Il n'est pas maître de sa manœuvre
+  - id: c
+    texte: Il est handicapé par son tirant d'eau
+  - id: d
+    texte: Il est échoué
+reponses:
+  - c
+explication: >-
+  La règle 28 permet au navire handicapé par son tirant d'eau de montrer trois feux rouges
+  superposés, en plus des feux de la règle 23 : ici ses deux feux de tête de mât et ses
+  feux de côté. Compte les rouges du mât : deux seuls désigneraient le navire qui n'est
+  pas maître de sa manœuvre, et un blanc entre deux rouges la capacité de manœuvre
+  restreinte.
+sources:
+  - texte: RIPAM, règle 28
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

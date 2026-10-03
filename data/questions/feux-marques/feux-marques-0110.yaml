@@ -1,0 +1,37 @@
+id: feux-marques-0110
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+famille: feux-non-maitre
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu relèves ce navire de nuit. Que t'apprennent ses feux ?
+visuel:
+  fichier: navires/non-maitre-avec-erre-nuit.svg
+  alt: Navire vu de son flanc gauche, l'avant à gauche. Sur le mât, deux feux rouges superposés. Plus bas sur le côté, un feu rouge.
+  credit: code
+propositions:
+  - id: a
+    texte: Il n'est pas maître de sa manœuvre et il a de l'erre
+  - id: b
+    texte: Il n'est pas maître de sa manœuvre et il est stoppé
+  - id: c
+    texte: Il est échoué
+  - id: d
+    texte: Sa capacité de manœuvre est restreinte et il a de l'erre
+reponses:
+  - a
+explication: >-
+  Deux feux rouges superposés visibles sur tout l'horizon disent le navire qui n'est pas
+  maître de sa manœuvre, règle 27 a) i). Il n'ajoute ses feux de côté et son feu de poupe
+  que lorsqu'il a de l'erre, 27 a) iii) : le rouge bas sur le côté dit qu'il avance. Le
+  piège est de lire les trois rouges ensemble ; seuls ceux du mât sont superposés.
+sources:
+  - texte: RIPAM, règle 27 a) iii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

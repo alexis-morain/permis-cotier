@@ -1,0 +1,38 @@
+id: feux-marques-0107
+option: cotier
+theme: feux-marques
+notion: feux-moteur-route
+famille: feux-50-m
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, ce navire te montre ces feux. Que peux-tu en dire ?
+visuel:
+  fichier: navires/moteur-50-m-nuit.svg
+  alt: Long navire vu de son flanc gauche, l'avant à gauche. Deux feux blancs sur deux mâts, celui de l'arrière plus haut que celui de l'avant. Plus bas sur le côté, un feu rouge.
+  credit: code
+propositions:
+  - id: a
+    texte: Il fait route au moteur
+  - id: b
+    texte: Il remorque
+  - id: c
+    texte: Il est au mouillage
+  - id: d
+    texte: Il chalute
+reponses:
+  - a
+explication: >-
+  La règle 23 a) ii) donne un second feu de tête de mât, à l'arrière du premier et plus
+  haut, au navire à propulsion mécanique ; il est obligatoire dès 50 mètres. Avec le feu
+  de côté rouge, c'est un navire qui fait route au moteur. Le piège est le remorqueur,
+  dont les feux de tête de mât sont superposés sur le même mât (règle 24 a), et le navire
+  au mouillage, dont le feu le plus haut est à l'avant (règle 30 a).
+sources:
+  - texte: RIPAM, règle 23 a) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

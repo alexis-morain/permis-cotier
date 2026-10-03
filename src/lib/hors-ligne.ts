@@ -33,13 +33,14 @@
  * Le partage vaut ~1,5 Mo au lieu de 18, et `/examen` comme `/entrainement`
  * fonctionnent au premier lancement sans réseau.
  *
- * Ce qui reste au noyau alors qu'on pourrait croire le contraire : les 71 SVG
+ * Ce qui reste au noyau alors qu'on pourrait croire le contraire : les SVG
  * de `/visuels/`. Ce ne sont pas des illustrations de page, ce sont les
- * visuels des questions — la banque les référence tous les soixante et onze,
- * et 72 des 516 questions en portent un. Les sortir du précache rendrait
- * `/examen` injouable au premier lancement sans réseau, une question sur sept
- * s'ouvrant sur une image cassée. Leurs 139 Kio bruts sont le prix de la
- * promesse, et le seul poste du précache qu'on ne peut pas rendre.
+ * visuels des questions — la banque les référence, et plus d'une question sur
+ * sept en porte un depuis que `feux-marques` est en images. Les sortir du
+ * précache rendrait `/examen` injouable au premier lancement sans réseau, une
+ * question sur sept s'ouvrant sur une image cassée. Leur poids brut, mesuré
+ * au journal à chaque lot de visuels, est le prix de la promesse, et le seul
+ * poste du précache qu'on ne peut pas rendre.
  */
 
 /**

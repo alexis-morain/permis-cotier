@@ -13,8 +13,11 @@ le resourcement, qui remplace la citation affichée sans toucher à la question
 et rend la relecture à Claude ; le rééquilibrage, qui réécrit le texte des
 propositions à lettres, nombre et réponse constants, pour que la bonne réponse
 ne se reconnaisse plus à sa longueur (`longueur.py`), et rend lui aussi la
-relecture à Claude. Un geste à la fois : convertir et resourcer dans le même
-diff cache les deux vérifications l'une derrière l'autre.
+relecture à Claude ; l'illustration, qui pose ou remplace le visuel d'une
+question dont l'énoncé décrivait l'image en mots, réécrit cet énoncé pour
+désigner l'image, laisse propositions, réponse, explication et sources
+intactes, et rend la relecture à Claude. Un geste à la fois : convertir et
+resourcer dans le même diff cache les deux vérifications l'une derrière l'autre.
 
     python3 scripts/verifier_conversion.py            # contre HEAD
     python3 scripts/verifier_conversion.py --ref main
@@ -35,9 +38,9 @@ LETTRES = "abcd"
 
 # Ce qu'une conversion ne touche jamais. `sources` n'y figure pas : rendre à
 # une question sa source officielle est un geste légitime, traité plus bas
-# comme un resourcement, à la seule condition qu'il rende la relecture.
-INTOUCHABLES = ("id", "option", "theme", "notion", "statut", "difficulte", "enonce",
-                "explication", "visuel")
+# comme un resourcement, à la seule condition qu'il rende la relecture. `enonce`
+# et `visuel` ne bougent que dans une illustration, et ensemble.
+INTOUCHABLES = ("id", "option", "theme", "notion", "statut", "difficulte", "explication")
 
 
 def _textes(question: dict) -> dict[str, str]:
@@ -51,6 +54,16 @@ def verifier(avant: dict, apres: dict) -> list[str]:
     for champ in INTOUCHABLES:
         if avant.get(champ) != apres.get(champ):
             problemes.append(f"le champ {champ} a changé, une conversion ne retire que des propositions")
+
+    # Une illustration pose un visuel, ou en remplace un, et réécrit l'énoncé
+    # pour qu'il désigne l'image au lieu de la décrire. Retirer un visuel n'est
+    # pas un geste connu, un énoncé réécrit sans visuel non plus.
+    visuel_change = avant.get("visuel") != apres.get("visuel")
+    illustree = visuel_change and apres.get("visuel") is not None
+    if visuel_change and not illustree:
+        problemes.append("le visuel a été retiré, aucun geste connu ne fait cela")
+    if avant.get("enonce") != apres.get("enonce") and not illustree:
+        problemes.append("le champ enonce a changé sans visuel posé, une conversion ne retire que des propositions")
 
     textes_avant, textes_apres = _textes(avant), _textes(apres)
     if len(textes_apres) > len(textes_avant):
@@ -89,6 +102,16 @@ def verifier(avant: dict, apres: dict) -> list[str]:
     # Ce n'est pas une conversion, mais la relecture humaine portait sur une
     # citation que le candidat ne verra plus : elle retombe sur Claude.
     resource = avant.get("sources") != apres.get("sources")
+    for autre, nom in ((converti, "convertie"), (reequilibree, "rééquilibrée"), (resource, "resourcée")):
+        if illustree and autre:
+            problemes.append(
+                f"deux gestes dans le même diff : la question est illustrée et {nom} à la fois, "
+                "chacun demande sa vérification, ils se relisent séparément"
+            )
+    if illustree and relu_par != "claude":
+        problemes.append(
+            f"question illustrée mais meta.relu_par vaut {relu_par!r} : la relecture porte sur un énoncé que le candidat ne verra plus"
+        )
     if converti and resource:
         problemes.append(
             "deux gestes dans le même diff : la question est convertie et resourcée à la fois, "
@@ -110,7 +133,7 @@ def verifier(avant: dict, apres: dict) -> list[str]:
     # porterait alors sur une forme que personne n'a lue.
     substance = lambda q: {c: v for c, v in q.items() if c not in ("meta", "sources")}
     retouchee = substance(avant) != substance(apres)
-    if (not converti and not resource and not reequilibree and retouchee
+    if (not converti and not resource and not reequilibree and not illustree and retouchee
             and relu_par != (avant.get("meta") or {}).get("relu_par")):
         problemes.append("meta.relu_par a changé sur une question retouchée")
 

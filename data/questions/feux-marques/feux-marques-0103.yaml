@@ -1,0 +1,37 @@
+id: feux-marques-0103
+option: cotier
+theme: feux-marques
+notion: feux-voile-aviron
+famille: feux-de-face
+statut: publie
+difficulte: 1
+enonce: >-
+  De nuit, tu relèves ces feux droit sur ton avant. Que peux-tu en dire ?
+visuel:
+  fichier: navires/voilier-de-face-nuit.svg
+  alt: Silhouette à grand mât, toile hissée, vue de face. Bas sur l'avant, un feu vert à gauche et un feu rouge à droite. Rien sur le mât.
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire fait route au moteur et vient sur toi
+  - id: b
+    texte: Un navire fait route à la voile et vient sur toi
+  - id: c
+    texte: Un navire est au mouillage
+  - id: d
+    texte: Un navire te présente son arrière
+reponses:
+  - b
+explication: >-
+  Le navire à voile qui fait route montre ses feux de côté et son feu de poupe, règle 25
+  a), et rien sur le mât. Tu vois ses deux feux de côté à la fois : il vient sur toi. Le
+  piège est le feu blanc qui manque : un navire au moteur montrerait au-dessus son feu de
+  tête de mât, et la toile hissée ne prouve rien.
+sources:
+  - texte: RIPAM, règle 25 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

@@ -1,0 +1,38 @@
+id: feux-marques-0111
+option: cotier
+theme: feux-marques
+notion: feux-manoeuvre-restreinte
+famille: feux-capacite-restreinte-rythme
+statut: publie
+difficulte: 3
+enonce: >-
+  De nuit, ce navire te montre ces feux, et aucun autre. Que peux-tu en dire ?
+visuel:
+  fichier: navires/capacite-restreinte-mouillage-nuit.svg
+  alt: Long navire vu de son flanc gauche, l'avant à gauche. Sur le mât avant, trois feux superposés, rouge, blanc puis rouge. Un feu blanc haut à l'avant, un feu blanc plus bas à l'arrière.
+  credit: code
+propositions:
+  - id: a
+    texte: Sa capacité de manœuvre est restreinte et il fait route
+  - id: b
+    texte: Il n'est pas maître de sa manœuvre et il est au mouillage
+  - id: c
+    texte: Sa capacité de manœuvre est restreinte et il est au mouillage
+  - id: d
+    texte: Il est échoué
+reponses:
+  - c
+explication: >-
+  Rouge, blanc, rouge superposés : c'est le navire à capacité de manœuvre restreinte,
+  règle 27 b) i). Au mouillage, il montre en plus les feux de la règle 30, 27 b) iv) : un
+  blanc haut à l'avant, un blanc plus bas à l'arrière. Le piège est la route : il
+  montrerait alors feu de tête de mât et feux de côté (27 b) iii), et l'échoué aurait deux
+  rouges, sans blanc entre eux.
+sources:
+  - texte: RIPAM, règle 27 b) iv)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

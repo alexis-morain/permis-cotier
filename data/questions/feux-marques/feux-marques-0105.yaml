@@ -1,0 +1,37 @@
+id: feux-marques-0105
+option: cotier
+theme: feux-marques
+notion: feux-moteur-route
+famille: feux-de-face
+statut: publie
+difficulte: 1
+enonce: >-
+  De nuit, tu relèves ces feux sur ton avant. Qu'as-tu devant toi ?
+visuel:
+  fichier: navires/moteur-de-face-nuit.svg
+  alt: Navire vu de face. Un feu blanc en haut du mât, et plus bas un feu vert à gauche et un feu rouge à droite.
+  credit: code
+propositions:
+  - id: a
+    texte: Un navire à propulsion mécanique qui vient droit sur toi
+  - id: b
+    texte: Un navire à voile qui vient droit sur toi
+  - id: c
+    texte: Un navire à propulsion mécanique qui s'éloigne de toi
+  - id: d
+    texte: Un navire au mouillage, tous feux allumés
+reponses:
+  - a
+explication: >-
+  La règle 23 a) donne au navire à propulsion mécanique qui fait route un feu de tête de
+  mât, des feux de côté et un feu de poupe. Tu vois le blanc au-dessus et les deux feux de
+  côté à la fois : il te montre son avant. Le piège est le voilier, qui n'a pas de feu de
+  tête de mât, et le navire qui s'éloigne, dont tu ne verrais que le feu de poupe.
+sources:
+  - texte: RIPAM, règle 23 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

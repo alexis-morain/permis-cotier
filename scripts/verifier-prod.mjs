@@ -218,7 +218,7 @@ if (!swDemande || !manifesteLie) {
     ko(
       'hors ligne',
       'les visuels des questions ne sont plus au précache',
-      'la banque référence les 71 SVG de `/visuels/` : sans eux, une question sur sept s’ouvre sur une image cassée au premier lancement hors ligne',
+      'la banque référence les SVG de `/visuels/` : sans eux, plus d’une question sur sept s’ouvre sur une image cassée au premier lancement hors ligne',
     );
   } else {
     const entrees = (sw.corps.match(/\{url:/g) ?? []).length;

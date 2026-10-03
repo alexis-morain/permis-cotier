@@ -48,10 +48,10 @@ describe('politique', () => {
   });
 
   it('garde les visuels au noyau : les questions de la banque les affichent', () => {
-    // Les 71 SVG de `/visuels/` sont les visuels des questions — la banque les
+    // Les SVG de `/visuels/` sont les visuels des questions — la banque les
     // référence tous. Les sortir du précache rendrait /examen injouable hors
-    // ligne au premier lancement, une question sur sept montrant une image
-    // cassée. Ils pèsent 139 Kio bruts : c'est le prix de la promesse.
+    // ligne au premier lancement, plus d'une question sur sept montrant une
+    // image cassée. Leur poids, mesuré au journal, est le prix de la promesse.
     expect(politique('/visuels/balisage/cardinale-nord.svg')).toBe('noyau');
   });
 

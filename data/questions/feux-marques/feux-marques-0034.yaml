@@ -5,7 +5,11 @@ notion: marques-jour
 statut: publie
 difficulte: 2
 enonce: >-
-  De jour, un navire montre à l'avant un cône noir pointe en bas. Que t'indique-t-il ?
+  De jour, tu croises ce navire qui porte cette marque. Que t'indique-t-elle ?
+visuel:
+  fichier: navires/voilier-au-moteur-jour.svg
+  alt: "Silhouette à grand mât, toile hissée, vue de son flanc gauche, l'avant à gauche. À l'avant, sur l'étai, un cône noir pointe en bas."
+  credit: code
 propositions:
   - id: a
     texte: Qu'il marche à la voile et au moteur à la fois.
@@ -30,4 +34,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_le: '2026-10-02'

@@ -1,0 +1,37 @@
+id: feux-marques-0102
+option: cotier
+theme: feux-marques
+notion: feux-voile-aviron
+famille: feux-voilier-fanal
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu croises ce voilier de nuit. Que peux-tu dire de ce qu'il te montre ?
+visuel:
+  fichier: navires/voilier-fanal-babord-nuit.svg
+  alt: Silhouette à grand mât, toile hissée, vue de son flanc gauche, l'avant à gauche. Un seul feu rouge, tout en haut du mât. Aucun autre feu.
+  credit: code
+propositions:
+  - id: a
+    texte: Il te présente son tribord, ses feux réunis en un seul fanal
+  - id: b
+    texte: Il te présente son bâbord, ses feux réunis en un seul fanal
+  - id: c
+    texte: Il mesure 20 mètres ou plus et te présente son bâbord
+  - id: d
+    texte: Il marche au moteur et te présente son bâbord
+reponses:
+  - b
+explication: >-
+  En tête de mât, c'est le fanal unique de la règle 25 b), réservé au navire à voile de
+  moins de 20 mètres ; à 20 mètres et plus, les feux de côté restent bas, sur la coque. Le
+  rouge est le secteur bâbord (règle 21 b). Sans feu blanc de tête de mât, il ne marche
+  pas au moteur.
+sources:
+  - texte: RIPAM, règle 25 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-02'
+  genere_par: claude
+  relu_par: alexis
+  relu_le: '2026-10-02'

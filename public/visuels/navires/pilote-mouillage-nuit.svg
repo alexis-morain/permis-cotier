@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 181" width="320" height="181" role="img">
+<defs><radialGradient id="h0"><stop offset="0" stop-color="#fdf3dc" stop-opacity="0.60" /><stop offset="0.30" stop-color="#fdf3dc" stop-opacity="0.24" /><stop offset="0.62" stop-color="#fdf3dc" stop-opacity="0.07" /><stop offset="1" stop-color="#fdf3dc" stop-opacity="0" /></radialGradient><radialGradient id="h1"><stop offset="0" stop-color="#f04438" stop-opacity="0.60" /><stop offset="0.30" stop-color="#f04438" stop-opacity="0.24" /><stop offset="0.62" stop-color="#f04438" stop-opacity="0.07" /><stop offset="1" stop-color="#f04438" stop-opacity="0" /></radialGradient></defs>
+<rect width="320" height="181" fill="#080f18" />
+<rect y="147.3" width="320" height="33.7" fill="#0d1926" />
+<polygon points="154.7,92 215.4,92 223.4,118.4 154.7,121.1" fill="#1f2b38" />
+<polygon points="28,126.2 292,109 257.7,147.3 29.3,147.3" fill="#18232f" stroke-linejoin="round" />
+<line x1="207.5" y1="92" x2="207.5" y2="22" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<line x1="284.1" y1="115.6" x2="284.1" y2="78.5" stroke="#1d2a38" stroke-width="2.6" stroke-linecap="round" />
+<circle cx="207.5" cy="28.6" r="20.4" fill="url(#h0)" />
+<circle cx="207.5" cy="49.7" r="20.4" fill="url(#h1)" />
+<circle cx="207.5" cy="70.8" r="20.4" fill="url(#h0)" />
+<circle class="feu" cx="207.5" cy="28.6" r="6" fill="#fdf3dc" />
+<circle class="feu" cx="207.5" cy="49.7" r="6" fill="#f04438" />
+<circle class="feu" cx="207.5" cy="70.8" r="6" fill="#fdf3dc" />
+</svg>

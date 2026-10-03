@@ -119,6 +119,44 @@ FEUX_ATTENDUS = {
     "dragueur-nuit": {"rouge": 5, "blanc": 2, "vert": 3},
     # 25 b), 10 m vu de l'avant : le fanal montre son rouge et son vert.
     "voilier-moins-de-20-m-nuit": {"rouge": 1, "vert": 1},
+    # --- Lot A, C3.2 : les situations qu'illustrent les questions publiées ---
+    # 26 c) i) et iii), 20 m vu de l'avant : rouge sur blanc, deux feux de côté.
+    "peche-nuit": {"rouge": 2, "blanc": 1, "vert": 1},
+    # 27 a) i), 25 m sans erre vu de bâbord : deux rouges, rien d'autre.
+    "non-maitre-nuit": {"rouge": 2},
+    # 23 a), 11 m vu de bâbord : tête de mât, feu rouge.
+    "moteur-babord-nuit": {"blanc": 1, "rouge": 1},
+    # 23 a), 11 m vu de tribord : tête de mât, feu vert.
+    "moteur-tribord-nuit": {"blanc": 1, "vert": 1},
+    # --- Lot B, C3.2 ---
+    # 25 b), 10 m vu de bâbord : du fanal, seul le secteur rouge.
+    "voilier-fanal-babord-nuit": {"rouge": 1},
+    # 25 a), 12 m vu de l'avant : deux feux de côté, rien sur le mât.
+    "voilier-de-face-nuit": {"rouge": 1, "vert": 1},
+    # 23 a), 30 m vu de l'avant : tête de mât, deux feux de côté.
+    "moteur-de-face-nuit": {"blanc": 1, "rouge": 1, "vert": 1},
+    # 21 c) et 23 a) iv), vu de l'arrière : le feu de poupe seul.
+    "moteur-de-l-arriere-nuit": {"blanc": 1},
+    # 23 a) i) à iii), 60 m vu de bâbord : deux têtes de mât, rouge.
+    "moteur-50-m-nuit": {"blanc": 2, "rouge": 1},
+    # 26 b) i), 30 m sans erre : vert sur blanc, rien d'autre.
+    "chalutier-sans-erre-nuit": {"vert": 1, "blanc": 1},
+    # 27 a) i) et iii), 25 m vu de bâbord : deux rouges, feu rouge de côté.
+    "non-maitre-avec-erre-nuit": {"rouge": 3},
+    # 27 b) i) et iv), puis 30 a), 60 m : rouge-blanc-rouge, deux feux de mouillage.
+    "capacite-restreinte-mouillage-nuit": {"rouge": 2, "blanc": 3},
+    # 24 a) i) et ii), train de 100 m, vu de bâbord : deux têtes de mât, rouge.
+    "remorqueur-court-nuit": {"blanc": 2, "rouge": 1},
+    # 24 a) iii) et iv), vu de l'arrière par bâbord : poupe, remorquage au-dessus.
+    "remorqueur-de-l-arriere-nuit": {"blanc": 1, "jaune": 1},
+    # 29 a) i) et iii), puis 30 b), 16 m : blanc sur rouge, un feu de mouillage.
+    "pilote-mouillage-nuit": {"blanc": 2, "rouge": 1},
+    # 30 a), 80 m : feu avant, feu arrière plus bas.
+    "mouillage-50-m-nuit": {"blanc": 2},
+    # 26 a) et c) i), au mouillage : rouge sur blanc, pas de feu de mouillage.
+    "peche-mouillage-nuit": {"rouge": 1, "blanc": 1},
+    # 23 a) et 28, 60 m vu de l'avant : deux têtes de mât, trois rouges, deux feux de côté.
+    "tirant-d-eau-de-face-nuit": {"blanc": 2, "rouge": 4, "vert": 1},
 }
 
 MARQUES_ATTENDUES = {
@@ -129,6 +167,8 @@ MARQUES_ATTENDUES = {
     "mouillage-jour": {"boule": 1},                            # 30 a) i)
     "echoue-jour": {"boule": 3},                               # 30 d) ii)
     "dragueur-jour": {"boule": 4, "bicone": 3},                # 27 d) i) et ii), b) ii)
+    "non-maitre-jour": {"boule": 2},                           # 27 a) ii)
+    "tirant-d-eau-jour": {"cylindre": 1},                      # 28
 }
 
 
