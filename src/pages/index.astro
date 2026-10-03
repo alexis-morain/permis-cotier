@@ -345,10 +345,16 @@ const liste = {
     gap: 0.85rem 1rem;
     margin-top: 2rem;
   }
-  /* L'îlot rend son propre paragraphe : il s'aligne sur la rangée plutôt que
-     de la casser avec sa marge. */
-  .ouverture__actions :global(.reprendreCours) { margin: 0; }
-  .ouverture__actions :global(.reprendreCours__compte) { color: var(--bande-doux); }
+  /* Le paragraphe du script s'efface : le compte, le bouton du cours et le
+     bouton de l'examen sont trois enfants de la même rangée. Le compte prend
+     toute la largeur et passe au-dessus, les deux boutons restent côte à
+     côte, alignés entre eux ; sans compte, la rangée ne change pas. */
+  .ouverture__actions :global(.reprendreCours) { display: contents; }
+  .ouverture__actions :global(.reprendreCours__compte) {
+    flex: 1 1 100%;
+    margin-bottom: -0.1rem;
+    color: var(--bande-doux);
+  }
   .ouverture__deja { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 48ch; }
   .ouverture__deja a { color: var(--bande-texte); }
 
