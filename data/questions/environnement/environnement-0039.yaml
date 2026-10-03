@@ -1,0 +1,32 @@
+id: environnement-0039
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+famille: env-peche-amende-22500
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu gardes dans ta glacière un poisson plus petit que la taille minimale de capture. Que
+  prévoit le code rural et de la pêche maritime ?
+propositions:
+  - id: a
+    texte: Une amende de 22 500 euros
+  - id: b
+    texte: Un simple rappel à la règle, le poisson étant rejeté à l'eau
+  - id: c
+    texte: Une amende de 135 euros, comme une contravention routière
+reponses:
+  - a
+explication: >-
+  L'article L. 945-4 du code rural et de la pêche maritime punit de 22 500 euros d'amende le
+  fait de pêcher ou de détenir à bord des produits qui n'ont pas la taille, le calibre ou le
+  poids requis, au 15° de son I. C'est la même peine que pour la pêche d'une espèce en zone
+  ou en période interdite. Un poisson sous la taille se remet à l'eau tout de suite.
+sources:
+  - texte: Code rural et de la pêche maritime, article L. 945-4, I, 15°
+    ref: peche-loisir
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

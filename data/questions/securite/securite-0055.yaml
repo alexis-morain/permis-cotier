@@ -1,0 +1,35 @@
+id: securite-0055
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Au large d'une côte méditerranéenne, tu passes à 150 mètres d'un rocher émergé qui ne
+  porte aucun balisage. La limitation de vitesse de la bande littorale s'applique-t-elle
+  autour de ce rocher ?
+propositions:
+  - id: a
+    texte: Oui, la bande de 300 mètres entoure aussi les îles, îlots et rochers émergés,
+      balisés ou non
+  - id: b
+    texte: Non, la bande de 300 mètres ne se compte que le long du rivage continental
+reponses:
+  - a
+explication: >-
+  L'article 2.1 étend la bande littorale de 300 mètres autour des îles et îlots du littoral,
+  y compris les rochers émergés, balisés ou non, ainsi qu'autour des ouvrages artificiels
+  gagnés sur la mer comme les digues et les jetées. Un rocher émergé sans balisage est
+  donc entouré d'une zone de vitesse réduite. L'arrêté de l'Atlantique dit la même chose
+  des îles, îlots, roches et bancs de sable émergés. Le piège consiste à croire que la
+  limitation ne vaut qu'à partir de la côte continentale.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.1
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 1er
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

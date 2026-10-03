@@ -1,0 +1,35 @@
+id: securite-0056
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu approches d'une plage où aucune bouée ne matérialise la bande des 300 mètres. Quand la limitation de vitesse de cette bande s'applique-t-elle ?
+propositions:
+  - id: a
+    texte: Seulement quand un balisage la matérialise
+  - id: b
+    texte: Seulement pendant la saison estivale
+  - id: c
+    texte: En permanence, qu'il y ait un balisage ou non
+reponses:
+  - c
+explication: >-
+  Les trois préfets maritimes l'écrivent dans les mêmes termes : la limitation de vitesse
+  dans la bande littorale des 300 mètres est générale et permanente, et elle n'est pas
+  subordonnée à la présence d'un balisage.
+  L'absence de bouées ne te dispense donc de rien. Le piège classique est d'attendre une
+  ligne de bouées jaunes pour ralentir.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.1
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 2
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de la Manche et de la mer du Nord n° 41/2018, article 2
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

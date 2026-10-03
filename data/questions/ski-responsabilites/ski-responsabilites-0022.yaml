@@ -1,0 +1,33 @@
+id: ski-responsabilites-0022
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu veux tirer un skieur devant une plage. Dans quelle zone la pratique est-elle autorisée
+  ?
+propositions:
+  - id: a
+    texte: À l'intérieur de la bande des 300 mètres, à vitesse réduite.
+  - id: b
+    texte: Au-delà de la bande littorale des 300 mètres.
+  - id: c
+    texte: Entre 100 et 300 mètres du rivage, hors des zones de baignade.
+reponses:
+  - b
+explication: >-
+  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée réserve le ski nautique
+  à la zone située « au-delà de la bande littorale des 300 mètres ». La bande des 300
+  mètres est celle des baigneurs : on n'y tracte pas un skieur, même lentement. Les
+  100 mètres sont une autre règle, celle du rayon autour d'un pavillon de plongeur.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de la Manche et de la mer du Nord n° 41/2018, article 3.7
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -1,0 +1,30 @@
+id: securite-0058
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu empruntes un chenal de vitesse créé par arrêté préfectoral dans le cadre du plan
+  de balisage d'une commune méditerranéenne. La limitation de vitesse de la bande des
+  300 mètres s'y applique-t-elle ?
+propositions:
+  - id: a
+    texte: Oui, tu restes soumis à la limitation de la bande littorale
+  - id: b
+    texte: Non, la limitation ne s'applique pas dans ces chenaux
+reponses:
+  - b
+explication: >-
+  L'article 2.3 exclut de la limitation de vitesse les chenaux de vitesse créés par arrêté
+  préfectoral dans le cadre du plan de balisage des communes littorales, ainsi que les
+  chenaux faisant l'objet d'une réglementation spécifique. C'est l'exception prévue par
+  l'arrêté à la règle générale de la bande des 300 mètres.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.3
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

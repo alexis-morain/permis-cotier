@@ -1,0 +1,33 @@
+id: ski-responsabilites-0027
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu tires deux skieurs, avec un équipier à bord pour les surveiller. Que doit pouvoir
+  faire ton bateau ?
+propositions:
+  - id: a
+    texte: Embarquer la totalité des skieurs en plus de son équipage.
+  - id: b
+    texte: Embarquer un skieur à la fois, l'autre restant à l'eau en attendant.
+  - id: c
+    texte: Rien de particulier, les skieurs regagnent le rivage par le chenal.
+reponses:
+  - a
+explication: >-
+  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée impose que le navire
+  tracteur soit « en mesure d'embarquer à son bord la totalité des skieurs en plus de
+  son équipage ». Si la séance tourne mal, tout le monde doit pouvoir monter à bord d'un
+  coup. L'arrêté de l'Atlantique ajoute que le navire doit disposer d'un accès adéquat.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 3-3
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

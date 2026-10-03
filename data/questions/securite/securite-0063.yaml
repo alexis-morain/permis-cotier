@@ -1,0 +1,35 @@
+id: securite-0063
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 3
+enonce: >-
+  La marée descend et la plage s'élargit. D'où se comptent les 300 mètres de la bande
+  littorale ?
+propositions:
+  - id: a
+    texte: De la limite des eaux à l'instant considéré
+  - id: b
+    texte: Du trait de côte porté sur la carte marine
+  - id: c
+    texte: De la ligne des plus hautes mers
+reponses:
+  - a
+explication: >-
+  Les arrêtés des préfets maritimes font partir la bande des 300 mètres de la limite des
+  eaux à l'instant considéré. Celui de l'Atlantique ajoute que cette limite évolue selon
+  la marée. La bande suit donc l'eau : à marée basse, elle s'éloigne du haut de plage. Ni
+  le trait de côte de la carte ni la ligne des plus hautes mers ne servent de référence.
+sources:
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 1er
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de la Manche et de la mer du Nord n° 41/2018, article 1er
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.1
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -1,0 +1,30 @@
+id: environnement-0034
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu pêches des coquilles Saint-Jacques en Atlantique. À partir de quelle taille peux-tu
+  les garder ?
+propositions:
+  - id: a
+    texte: 11 cm
+  - id: b
+    texte: 10 cm
+  - id: c
+    texte: 12 cm
+reponses:
+  - a
+explication: >-
+  En mer du Nord, Manche et Atlantique, l'annexe I fixe la taille minimale de la coquille
+  Saint-Jacques à 11 cm. La valeur de 10 cm existe aussi dans l'arrêté, mais elle concerne
+  la Méditerranée, où l'espèce pêchée est différente.
+sources:
+  - texte: Arrêté du 26 octobre 2012, annexe I, I. Mer du Nord, Manche, Atlantique, mollusques
+    ref: arrete-2012-10-26
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

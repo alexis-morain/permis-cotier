@@ -1,0 +1,31 @@
+id: environnement-0035
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu navigues tantôt en Bretagne, tantôt en Méditerranée. Les tailles minimales de capture
+  sont-elles les mêmes pour une espèce donnée sur les deux façades ?
+propositions:
+  - id: a
+    texte: Oui, l'arrêté fixe une taille unique par espèce
+  - id: b
+    texte: Non, la Méditerranée a son propre tableau
+  - id: c
+    texte: Non, chaque département fixe les siennes
+reponses:
+  - b
+explication: >-
+  L'annexe I de l'arrêté sépare deux tableaux : l'un pour la mer du Nord, la Manche et
+  l'Atlantique, l'autre pour la Méditerranée. Une même espèce peut y avoir deux tailles,
+  comme l'anchois à 12 cm d'un côté et 9 cm de l'autre. Il faut donc vérifier le tableau
+  de la façade où l'on pêche.
+sources:
+  - texte: Arrêté du 26 octobre 2012, article 2 et annexe I
+    ref: arrete-2012-10-26
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

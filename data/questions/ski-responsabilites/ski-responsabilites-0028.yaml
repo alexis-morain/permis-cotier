@@ -1,0 +1,34 @@
+id: ski-responsabilites-0028
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu es titulaire du brevet d'État de moniteur de ski nautique. À quelle condition peux-tu
+  conduire le tracteur sans surveillant à bord ?
+propositions:
+  - id: a
+    texte: Si tu ne tractes qu'un seul skieur à la fois.
+  - id: b
+    texte: Si le navire tracteur est équipé d'un rétroviseur.
+  - id: c
+    texte: Si la remorque dispose d'un système de largage rapide.
+reponses:
+  - b
+explication: >-
+  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée permet aux titulaires
+  du brevet d'État de moniteur de ski nautique d'assurer seuls conduite et surveillance,
+  « sous réserve que le navire à moteur tractant soit équipé d'un rétroviseur ». Le nombre
+  de skieurs n'entre pas en compte. Le largage rapide est une exigence propre aux engins
+  pneumatiques tractés, pas une condition de cette dérogation.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 3-3.1
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -1,0 +1,31 @@
+id: securite-0057
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu navigues en Méditerranée au-delà de la bande littorale des 300 mètres. Une limitation
+  locale de vitesse peut-elle encore s'y appliquer ?
+propositions:
+  - id: a
+    texte: Non, au-delà de la bande des 300 mètres la vitesse est toujours libre
+  - id: b
+    texte: Oui, par arrêté particulier du préfet maritime de la Méditerranée
+  - id: c
+    texte: Oui, mais seulement par arrêté du maire de la commune
+reponses:
+  - b
+explication: >-
+  L'article 2.2 prévoit qu'au-delà de la bande littorale des 300 mètres, des limitations
+  locales de vitesse peuvent faire l'objet d'arrêtés particuliers du préfet maritime de
+  la Méditerranée. Sortir de la bande ne garantit donc pas une vitesse libre partout.
+  C'est le préfet maritime qui est nommé par le texte, pas le maire.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.2
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

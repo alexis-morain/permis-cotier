@@ -1,0 +1,36 @@
+id: ski-responsabilites-0030
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu tractes une bouée gonflable avec deux enfants dessus. Qu'exigent les arrêtés du
+  bateau remorqueur, en plus de la flamme orange et du surveillant ?
+propositions:
+  - id: a
+    texte: Un rétroviseur orienté vers la bouée
+  - id: b
+    texte: Un système de largage rapide de la remorque
+  - id: c
+    texte: Un second moteur prêt à démarrer
+reponses:
+  - b
+explication: >-
+  Pour les engins pneumatiques tractés, l'article 4.2 de l'arrêté de la Méditerranée exige
+  que le remorqueur dispose d'un système de largage rapide de la remorque, et que l'engin
+  comme la remorque soient de couleur vive. L'Atlantique et la Manche demandent la même
+  chose. Si la bouée se retourne, on largue tout de suite. Le rétroviseur n'est la condition
+  que du moniteur qui tracte seul un skieur.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.2
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 3-3.2
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de la Manche et de la mer du Nord n° 41/2018, article 3.7
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

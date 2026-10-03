@@ -1,0 +1,29 @@
+id: environnement-0031
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu remontes un homard dans un casier en Bretagne. Le minimum est de 9 cm. Quelle dimension
+  compares-tu à ce minimum ?
+propositions:
+  - id: a
+    texte: La longueur céphalothoracique
+  - id: b
+    texte: La longueur totale, de la tête à la queue
+reponses:
+  - a
+explication: >-
+  Pour le homard en mer du Nord, Manche et Atlantique, l'annexe I indique 9 cm suivi de
+  la mention LC, pour longueur céphalothoracique. On mesure donc le corps sans la queue.
+  Un homard mesuré en longueur totale paraît bien plus grand, et le pêcheur croit à tort
+  qu'il peut le garder.
+sources:
+  - texte: Arrêté du 26 octobre 2012, annexe I, I. Mer du Nord, Manche, Atlantique, crustacés
+    ref: arrete-2012-10-26
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

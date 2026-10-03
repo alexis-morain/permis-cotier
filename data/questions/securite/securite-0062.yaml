@@ -1,0 +1,36 @@
+id: securite-0062
+option: cotier
+theme: securite
+notion: securite-limitations
+famille: securite-300-m-5-noeuds
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu longes une plage à 200 mètres du bord sur ton bateau à moteur. Quelle vitesse ne
+  dois-tu pas dépasser ?
+propositions:
+  - id: a
+    texte: 3 nœuds
+  - id: b
+    texte: 5 nœuds
+  - id: c
+    texte: 10 nœuds
+reponses:
+  - b
+explication: >-
+  Aucun texte national ne fixe cette vitesse : ce sont les arrêtés des préfets maritimes,
+  façade par façade, et les trois disent la même chose. La vitesse est limitée à 5 nœuds
+  à l'intérieur de la bande littorale des 300 mètres, comptée depuis la limite des eaux.
+  À 200 mètres du rivage, tu es dedans. Ni 3 ni 10 nœuds ne figurent dans ces arrêtés.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.1
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 2
+    ref: bande-300-metres
+  - texte: Arrêté du préfet maritime de la Manche et de la mer du Nord n° 41/2018, article 2
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

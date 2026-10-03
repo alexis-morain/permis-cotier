@@ -1,0 +1,28 @@
+id: environnement-0033
+option: cotier
+theme: environnement
+notion: env-peche-loisir
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu ramasses des oursins. Comment mesures-tu leur taille pour la comparer au minimum
+  réglementaire ?
+propositions:
+  - id: a
+    texte: Piquants compris
+  - id: b
+    texte: Piquants exclus
+reponses:
+  - b
+explication: >-
+  Pour l'oursin, l'annexe I précise à chaque ligne que la taille se mesure piquants exclus.
+  On mesure le test, c'est-à-dire la coquille seule. Compter les piquants ferait passer
+  pour réglementaire un oursin trop petit.
+sources:
+  - texte: Arrêté du 26 octobre 2012, annexe I, mollusques
+    ref: arrete-2012-10-26
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

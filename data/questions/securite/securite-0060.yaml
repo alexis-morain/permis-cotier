@@ -1,0 +1,31 @@
+id: securite-0060
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 1
+enonce: >-
+  Le plan de balisage d'une commune méditerranéenne prévoit un chenal traversier. À quoi
+  sert-il ?
+propositions:
+  - id: a
+    texte: À transiter entre la côte et le large, dans un sens ou dans l'autre
+  - id: b
+    texte: À délimiter la zone réservée aux baigneurs
+  - id: c
+    texte: À mouiller à l'abri de la bande des 300 mètres
+reponses:
+  - a
+explication: >-
+  L'article 10.3 définit les chenaux traversiers comme des couloirs de transit qui permettent
+  un accès de la côte vers le large et inversement. Ils sont créés par le plan de balisage,
+  qui réserve aussi des zones aux activités nautiques. Ce ne sont ni des zones de baignade
+  ni des zones de mouillage.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 10.3
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

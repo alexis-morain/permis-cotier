@@ -1,0 +1,30 @@
+id: ski-responsabilites-0029
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 1
+enonce: >-
+  Ton skieur nage très bien et préfère skier sans gilet. Que dit l'arrêté ?
+propositions:
+  - id: a
+    texte: Il doit porter un équipement individuel de flottabilité conforme à la réglementation.
+  - id: b
+    texte: Le gilet est seulement recommandé, à l'appréciation du chef de bord.
+reponses:
+  - a
+explication: >-
+  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée dispose que « le ou
+  les skieurs doivent porter un équipement individuel de flottabilité conforme à la réglementation
+  ». L'Atlantique précise même un gilet de couleur vive. C'est une obligation, pas un
+  conseil : le niveau de natation du skieur ne la lève pas.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
+    ref: fiche-ski-nautique
+  - texte: Arrêté du préfet maritime de l'Atlantique n° 2018/090, article 3-3
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

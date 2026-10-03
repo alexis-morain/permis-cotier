@@ -1,0 +1,31 @@
+id: securite-0061
+option: cotier
+theme: securite
+notion: securite-limitations
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu rejoins le rivage par un chenal réservé aux navires et engins motorisés. Qu'est-ce
+  que l'arrêté 125/2013 t'interdit d'y faire ?
+propositions:
+  - id: a
+    texte: D'y entrer par l'extrémité côté mer
+  - id: b
+    texte: D'y naviguer avec un moteur de plus de 6 chevaux
+  - id: c
+    texte: D'y stationner ou d'y mouiller
+reponses:
+  - c
+explication: >-
+  L'article 10.5.1 impose dans ces chenaux une navigation régulière, directe et continue,
+  et y interdit le stationnement et le mouillage. Le chenal s'emprunte à partir de l'une
+  ou l'autre de ses extrémités, côté terre ou côté mer, l'entrée côté mer est donc permise.
+  Aucune limite de puissance n'y est posée.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 10.5.1
+    ref: bande-300-metres
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'

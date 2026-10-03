@@ -1,0 +1,32 @@
+id: ski-responsabilites-0023
+option: cotier
+theme: ski-responsabilites
+notion: ski-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton skieur attend sur la plage. Comment rejoins-tu la zone de pratique au large ?
+propositions:
+  - id: a
+    texte: En empruntant un chenal de vitesse, dégagé et libre de tout obstacle.
+  - id: b
+    texte: En traversant la bande des 300 mètres à 5 nœuds, skieur déjà tracté.
+  - id: c
+    texte: En partant de n'importe quel point du rivage, à condition de ne pas remorquer
+      avant les 300 mètres.
+reponses:
+  - a
+explication: >-
+  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée précise que le ski nautique
+  « au départ du rivage, et inversement », ne peut s'effectuer « qu'en empruntant un chenal
+  de vitesse qui doit être dégagé et libre de tout obstacle ». Sortie comme retour passent
+  par ce chenal. Traverser la bande des 300 mètres hors chenal est interdit, à 5 nœuds
+  comme à toute autre vitesse.
+sources:
+  - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
+    ref: fiche-ski-nautique
+meta:
+  cree_le: '2026-10-03'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-03'
