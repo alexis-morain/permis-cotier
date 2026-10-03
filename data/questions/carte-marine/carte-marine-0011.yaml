@@ -5,11 +5,11 @@ notion: carte-symboles
 statut: publie
 difficulte: 2
 enonce: >-
-  Ce feu blanc lance des éclats brefs à cadence régulière, sans jamais s'arrêter. Quelle
-  abréviation la carte porte-t-elle pour lui ?
+  Ce feu blanc scintille : des éclats brefs qui se suivent sans interruption, environ un par
+  seconde. Quelle abréviation la carte porte-t-elle pour lui ?
 visuel:
   fichier: rythmes/caractere-scintillant.svg
-  alt: "Feu scintillant, fait d'éclats brefs qui se suivent à cadence régulière, sans interruption."
+  alt: "Feu scintillant, fait d'éclats brefs qui se suivent sans interruption, environ un par seconde."
   credit: code
 propositions:
   - id: a
@@ -21,11 +21,12 @@ propositions:
 reponses:
   - a
 explication: >-
-  Un feu scintillant s'abrège Q, et c'est le feu des marques cardinales : la cardinale
-  Nord montre un scintillant continu, Q, ou un scintillant rapide continu, VQ. Ne confonds
-  pas Q avec Fl : le feu à éclats laisse entre ses éclats une obscurité bien plus longue
-  que le scintillant, qui enchaîne. Le chiffre entre parenthèses ne s'ajoute que si les
-  éclats sont groupés, ce qui n'est pas le cas ici.
+  Un feu scintillant s'abrège Q : de cinquante à soixante-dix-neuf éclats par minute, à peu
+  près un par seconde. C'est le feu des marques cardinales : la cardinale Nord montre un
+  scintillant continu, Q, ou un scintillant rapide continu, VQ. Ne confonds pas Q avec Fl :
+  le feu à éclats est bien plus lent, et il laisse entre ses éclats une obscurité bien plus
+  longue. Le chiffre entre parenthèses ne s'ajoute que si les éclats sont groupés, ce qui
+  n'est pas le cas ici.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 3.3.1
     ref: arrete-2017-11-30
@@ -34,5 +35,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'

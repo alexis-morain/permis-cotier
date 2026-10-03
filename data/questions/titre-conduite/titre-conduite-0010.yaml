@@ -15,22 +15,24 @@ propositions:
   - id: c
     texte: Le défaut d'assurance du bateau au moment du contrôle
   - id: d
-    texte: L'absence de visite technique annuelle du bateau et du moteur
+    texte: Le défaut de présentation immédiate du permis lors d'un contrôle
 reponses:
   - a
   - b
 explication: >-
   Le décret énumère trois familles de motifs : l'inobservation des règlements de police
-  afférents à la circulation en eaux maritimes ou intérieures ; la négligence ou l'imprudence
-  grave de nature à compromettre la sécurité du conducteur, des passagers ou des tiers
-  ; et la conduite en état d'ébriété ou après consommation de stupéfiants. Ni l'assurance
-  ni une visite technique n'y figurent : ce sont d'autres obligations, qui ne se sanctionnent
-  pas par le retrait du titre.
+  afférents à la circulation en eaux maritimes ou intérieures ; la négligence ou
+  l'imprudence grave de nature à compromettre la sécurité du conducteur, des passagers ou
+  des tiers ; et la conduite en état d'ébriété ou après consommation de stupéfiants.
+  L'assurance n'y figure pas, et ne pas présenter ses pièces sur place est autre chose : une
+  contravention de la 2e classe, article 18 du même décret, pas un motif de retrait.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 6
+    ref: decret-2007-1167
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 18
     ref: decret-2007-1167
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

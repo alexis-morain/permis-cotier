@@ -21,16 +21,16 @@ propositions:
 reponses:
   - a
 explication: >-
-  Les deux feux rouges superposés sont le seul signal qui annonce une écluse hors service
-  : inutile d'attendre, elle ne s'ouvrira pas. Le distinguo se joue sur la disposition.
-  Deux feux rouges juxtaposés, côte à côte, ou un feu rouge isolé disent seulement que
-  l'écluse est fermée, donc que ton tour viendra. Superposés, l'un au-dessus de l'autre,
-  ils disent que le service est interrompu.
+  Les deux feux rouges superposés sont le seul signal qui annonce une écluse hors service :
+  ce n'est pas ton tour que tu attends, c'est le service qui est interrompu. Le distinguo se
+  joue sur la disposition. Deux feux rouges juxtaposés, côte à côte, ou un feu rouge isolé
+  disent seulement que l'écluse est fermée, donc que ton tour viendra. Superposés, l'un
+  au-dessus de l'autre, ils disent que le service est interrompu.
 sources:
   - texte: Code des transports, article A. 4241-53-31, 1
     ref: rgpni-ecluses
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

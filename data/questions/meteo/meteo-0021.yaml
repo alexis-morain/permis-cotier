@@ -18,14 +18,14 @@ reponses:
   - a
 explication: >-
   Le bulletin météorologique spécial, ou BMS, est un avis diffusé hors des heures normales
-  dès qu'un vent de force 7 au moins est attendu ou observé. Il porte le nom de l'avis,
-  grand frais, coup de vent, tempête, et les CROSS le diffusent dès sa parution sans attendre
-  l'heure du bulletin.
+  dès qu'un vent de force 7 au moins est attendu ou observé sur une zone côtière, force 8 au
+  large. Il porte le nom de l'avis, grand frais, coup de vent, tempête, et les CROSS le
+  diffusent dès sa parution sans attendre l'heure du bulletin.
 sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
     ref: fiche-meteo
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

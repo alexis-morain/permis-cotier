@@ -9,17 +9,18 @@ enonce: >-
   ?
 propositions:
   - id: a
-    texte: Une zone ou une installation particulière, pas un danger de navigation
+    texte: Une zone ou une installation particulière, à lire dans les documents nautiques
   - id: b
     texte: Un danger récemment découvert, absent des documents nautiques
 reponses:
   - a
 explication: >-
   La marque spéciale est jaune, avec un voyant en croix jaune posée en X, et son feu est
-  jaune. Elle ne signale aucun danger de navigation : elle délimite une zone de mouillage, un
-  câble, une conduite, une zone d'exercices ou une installation de loisirs. Le piège est la
-  bouée d'épave en cas d'urgence, à bandes verticales bleues et jaunes et feu bleu et jaune
-  alternés : sa croix jaune, elle, a les branches droites, verticale et horizontale.
+  jaune. Elle n'a pas pour but principal d'aider la navigation : elle indique une zone de
+  mouillage, un câble, une conduite, une zone d'exercices ou une installation de loisirs, et
+  les documents nautiques disent laquelle. Le piège est la bouée d'épave en cas d'urgence, à
+  bandes verticales bleues et jaunes et feu bleu et jaune alternés : sa croix jaune, elle, a
+  les branches droites, verticale et horizontale.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
     ref: arrete-2017-11-30
@@ -30,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'

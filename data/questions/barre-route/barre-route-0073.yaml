@@ -16,14 +16,14 @@ reponses:
   - b
 explication: >-
   La règle 7 b) ne laisse pas le choix : s'il y a à bord un équipement radar en état de
-  marche, on doit l'utiliser de façon appropriée. Le piège est de confondre l'obligation
-  d'emporter un radar, qui n'existe pas en plaisance, avec l'obligation de s'en servir
-  quand on en a un. La bonne visibilité ne lève pas cette obligation.
+  marche, on doit l'utiliser de façon appropriée. Le piège est de confondre emporter un
+  radar, ce que la règle n'impose pas, et s'en servir quand on en a un. La bonne visibilité
+  ne lève pas cette obligation.
 sources:
   - texte: RIPAM, règle 7 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-10-03'

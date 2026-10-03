@@ -19,13 +19,12 @@ explication: >-
   La règle 16 tient en une phrase : le navire non privilégié manœuvre de bonne heure,
   franchement, et s'écarte largement. Les trois mots comptent. Attendre pour voir, c'est
   précisément ce que la règle écarte, puisque l'autre navire est de son côté tenu de
-  maintenir son cap et sa vitesse. Le signal sonore accompagne la manœuvre, il ne la
-  conditionne pas.
+  maintenir son cap et sa vitesse.
 sources:
   - texte: RIPAM, règle 16
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

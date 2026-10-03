@@ -15,7 +15,7 @@ propositions:
   - id: c
     texte: Le nombre de bateaux déjà sortis du port ce matin
   - id: d
-    texte: La date de la dernière révision du moteur
+    texte: La longueur du bateau, qui fixe à elle seule la limite de vent
 reponses:
   - a
   - b
@@ -25,7 +25,8 @@ explication: >-
   de vent et la hauteur de vague pour lesquelles il est conçu, et avec l'équipage, dont
   la fatigue et l'inexpérience ramènent la limite acceptable de plusieurs degrés Beaufort.
   Se fier aux autres bateaux sortis n'est pas un critère : on ne connaît ni leur bateau
-  ni leur équipage.
+  ni leur équipage. Et la taille seule ne dit rien : la capacité à remonter au vent et à faire
+  route au moteur dans le clapot compte autant.
 sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer, section « Décider
       de sa sortie »'
@@ -33,5 +34,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

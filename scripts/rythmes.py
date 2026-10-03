@@ -194,8 +194,8 @@ RYTHMES: dict[str, dict] = {
     "caractere-scintillant": {
         "motif": scintillements(1),
         "fenetre": 6,
-        "alt": "Feu scintillant, fait d'éclats brefs qui se suivent à cadence "
-               "régulière, sans interruption.",
+        "alt": "Feu scintillant, fait d'éclats brefs qui se suivent sans "
+               "interruption, environ un par seconde.",
         "regle": "Caractère de feu : scintillant, Q",
     },
     "caractere-scintillant-rapide": {

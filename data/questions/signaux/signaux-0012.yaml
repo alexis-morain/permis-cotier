@@ -21,13 +21,13 @@ explication: >-
   répond à l'identique, c'est ce qui permet à chacun de savoir qu'il a été entendu. Le
   piège est de le confondre avec le signal du doute, qui est une série rapide d'au moins
   cinq sons brefs, ou avec les signaux de manœuvre en sons brefs, qui disent un changement
-  de cap. Cet alinéa porte d'ailleurs une coquille dans le texte publié au Journal
-  officiel, où il est imprimé « c) » alors qu'il vient après le d).
+  de cap. Cet alinéa porte d'ailleurs une coquille dans le texte diffusé par le ministère
+  de la Mer, où il est imprimé « c) » alors qu'il vient après le d).
 sources:
   - texte: RIPAM, règle 34 e)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

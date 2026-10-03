@@ -15,7 +15,7 @@ propositions:
   - id: c
     texte: Un broyeur dilacérateur rejetant directement à la mer
   - id: d
-    texte: Un jeu de bidons portatifs vidés à terre après chaque sortie
+    texte: Aucun dispositif, les toilettes marines rejetant par nature à la mer
 reponses:
   - a
   - b
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -5,25 +5,25 @@ notion: carte-dangers-amers
 statut: publie
 difficulte: 2
 enonce: >-
-  Comment une roche qui découvre est-elle dessinée sur la carte ?
+  Comment une roche qui couvre et découvre est-elle dessinée sur la carte ?
 propositions:
   - id: a
-    texte: Une croix ou un astérisque, souvent avec sa hauteur soulignée
+    texte: Un astérisque, souvent avec sa hauteur soulignée
   - id: b
-    texte: Une ancre, souvent accompagnée de sa sonde soulignée
+    texte: Une croix seule
   - id: c
     texte: Un symbole en fuseau, souvent avec sa hauteur soulignée
 reponses:
   - a
 explication: >-
-  Une roche qui découvre se dessine par une croix ou un astérisque, souvent accompagné
-  de sa hauteur soulignée, comptée au-dessus du zéro des cartes. L'ancre est un mouillage,
-  et le fuseau une épave.
+  Une roche qui couvre et découvre se dessine par un astérisque, souvent accompagné de sa
+  hauteur soulignée, comptée au-dessus du zéro des cartes. La croix seule est une roche
+  toujours submergée, de profondeur inconnue, et le fuseau une épave.
 sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
     ref: fiche-carte-marine
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

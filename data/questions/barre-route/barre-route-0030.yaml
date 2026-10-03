@@ -18,7 +18,7 @@ propositions:
   - id: b
     texte: Éviter de croiser sa route sur l'avant, si les circonstances le permettent.
   - id: c
-    texte: Venir sur tribord pour passer bâbord contre bâbord.
+    texte: Venir sur bâbord pour lui passer devant.
   - id: d
     texte: Maintenir ton cap et ta vitesse jusqu'à ce qu'il manœuvre.
 reponses:
@@ -26,15 +26,15 @@ reponses:
   - b
 explication: >-
   La règle 15 tient en une phrase qui porte deux obligations : celui qui voit l'autre sur
-  tribord s'écarte, et il évite en outre, si les circonstances le permettent, de couper
-  la route de l'autre devant lui. Passer sur son arrière est donc la manœuvre naturelle.
-  Venir sur tribord pour se croiser bâbord contre bâbord est la règle 14, celle des routes
-  opposées ; maintenir cap et vitesse est le devoir du navire privilégié, ce que tu n'es pas ici.
+  tribord s'écarte, et il évite en outre, si les circonstances le permettent, de couper la
+  route de l'autre devant lui. Passer sur son arrière est donc la manœuvre naturelle, et
+  venir sur bâbord pour lui passer devant est exactement ce que la règle écarte. Maintenir
+  cap et vitesse est le devoir du navire privilégié, ce que tu n'es pas ici.
 sources:
   - texte: RIPAM, règle 15
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

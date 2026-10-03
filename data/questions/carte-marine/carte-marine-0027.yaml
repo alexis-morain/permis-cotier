@@ -8,7 +8,7 @@ enonce: >-
   Dans la description « Fl(2) R 10s 12m 9M », que signifie « 12m » ?
 propositions:
   - id: a
-    texte: La hauteur du feu au-dessus du niveau de la mer
+    texte: La hauteur du feu au-dessus des pleines mers de vive-eau
   - id: b
     texte: La portée du feu, douze milles
   - id: c
@@ -16,9 +16,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le caractère se lit avant la couleur et la période : Fl(2) deux éclats, R rouge, 10s
-  la période, 12m la hauteur du feu au-dessus du niveau de la mer, et 9M sa portée en
-  milles. La hauteur se compte depuis le niveau moyen des pleines mers de vive-eau.
+  Le caractère se lit avant la couleur et la période : Fl(2) deux éclats, R rouge, 10s la
+  période, 12m la hauteur du feu, et 9M sa portée en milles. La hauteur se compte depuis le
+  niveau moyen des pleines mers de vive-eau, comme toutes les altitudes des cartes du SHOM,
+  et non depuis le zéro des cartes, qui ne sert qu'aux sondes.
 sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de
       feu »
@@ -26,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

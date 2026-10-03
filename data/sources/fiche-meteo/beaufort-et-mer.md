@@ -9,7 +9,10 @@
   « la météorologie : savoir se procurer les prévisions ; connaître l'échelle
   anémométrique Beaufort et l'état de la mer ».
 - Référence publiée : Météo-France, « Comprendre les bulletins marine ».
-  https://meteofrance.com/meteo-marine
+  https://meteofrance.com/meteo-marine ; seuils des BMS : Météo-France,
+  « Descriptif technique des informations Bulletins météorologiques spéciaux »,
+  février 2022, https://donneespubliques.meteofrance.fr/client/document/descriptif_technique_bms_complet_2022_mar-20220224_284.pdf
+  (vérifié le 2026-10-03).
 
 ## Nature de cette fiche
 
@@ -78,9 +81,11 @@ Météo-France publie trois portées de bulletin marine :
 Le bulletin de côte donne, pour chaque zone : la situation générale, puis vent,
 mer, temps et visibilité.
 
-Le bulletin météorologique spécial, ou BMS, est un avis diffusé hors des heures
-normales dès qu'un vent de force 7 au moins est attendu ou observé. Il porte un
-nom selon la force annoncée :
+Le bulletin météorologique spécial, ou BMS, est un avis d'alerte émis dès qu'un
+seuil de vent moyen est observé ou prévu, et réactualisé au moins deux fois par
+jour. Le seuil dépend du domaine : le BMS côte est émis dès la force 7, le BMS
+large et le BMS grand large dès la force 8. Il porte un nom selon la force
+annoncée :
 
 - avis de grand frais, à partir de force 7 ;
 - avis de coup de vent, à partir de force 8 ;

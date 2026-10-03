@@ -5,8 +5,8 @@ notion: barre-visibilite-reduite
 statut: publie
 difficulte: 3
 enonce: >-
-  Dans la brume, ton radar montre un navire qui vient par ton travers. Tu décides de changer
-  de cap. Quelle manœuvre la règle 19 te demande-t-elle d'éviter ?
+  Dans la brume, ton radar montre un navire qui vient par ton travers bâbord. Tu décides de
+  changer de cap. Quelle manœuvre la règle 19 te demande-t-elle d'éviter ?
 propositions:
   - id: a
     texte: Un changement de cap en direction de ce navire
@@ -17,14 +17,16 @@ propositions:
 reponses:
   - a
 explication: >-
-  Quand les mesures consistent en un changement de cap, la règle 19 d) demande d'éviter
-  un changement de cap sur bâbord pour un navire sur l'avant du travers, et un changement
-  de cap en direction d'un navire qui vient par le travers ou sur l'arrière du travers.
+  Quand les mesures consistent en un changement de cap, la règle 19 d) demande d'éviter un
+  changement de cap sur bâbord pour un navire sur l'avant du travers, et un changement de
+  cap en direction d'un navire qui vient par le travers ou sur l'arrière du travers.
+  Celui-ci vient par bâbord : tu ne viens pas sur bâbord. Venir sur tribord, qui l'éloigne,
+  n'est pas interdit.
 sources:
   - texte: RIPAM, règle 19 d) ii)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

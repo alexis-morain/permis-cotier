@@ -1,7 +1,7 @@
 # Lecture d'une carte marine : symboles élémentaires et marée
 
 - Référence : fiche-carte-marine
-- Version consultée le : 2026-09-04
+- Version consultée le : 2026-10-03
 - Autorité : Service hydrographique et océanographique de la marine (SHOM),
   ouvrage 1D, « Symboles, abréviations et termes utilisés sur les cartes
   marines », qui reprend la publication S-4 de l'Organisation hydrographique
@@ -18,7 +18,9 @@ Ce document n'est pas un texte réglementaire extrait par machine. Les symboles
 de carte marine sont publiés en planches par le SHOM, sans texte exploitable.
 Cette fiche en est une mise en forme écrite, limitée à ce que le programme
 appelle les symboles élémentaires, à vérifier contre l'ouvrage 1D cité
-ci-dessus, qui fait foi.
+ci-dessus, qui fait foi. Les symboles de roches (section K) et le niveau de
+référence des altitudes (section H) ont été vérifiés contre l'ouvrage 1D le
+3 octobre 2026.
 
 ---
 
@@ -92,13 +94,18 @@ parce qu'elle bouge lentement et qu'une rose ancienne demande une correction.
 
 - Un phare ou un feu : une étoile ou un point avec un éclat magenta, suivi de la
   description du feu, par exemple « Fl(2) R 10s 12m 9M » : deux éclats rouges
-  toutes les dix secondes, feu à douze mètres, portée neuf milles.
+  toutes les dix secondes, feu à douze mètres au-dessus des pleines mers de
+  vive-eau, portée neuf milles.
 - Une bouée : sa silhouette coloriée selon la marque, avec un petit cercle à sa
   base qui marque la position exacte, et son nom en italique. C'est le cercle
   qui porte le point, pas le milieu du dessin.
-- Une roche qui découvre : une croix ou un astérisque, souvent avec sa hauteur
-  soulignée.
-- Une roche à fleur d'eau ou dangereuse : entourée d'un pointillé de danger.
+- Une roche qui couvre et découvre : un astérisque, sa hauteur au-dessus du zéro
+  des cartes soulignée ou entre parenthèses (ouvrage 1D, K 11).
+- Une roche à fleur d'eau, au niveau du zéro des cartes : une croix entourée de
+  quatre points (K 12).
+- Une roche toujours submergée : une croix seule si sa profondeur est inconnue
+  (K 13), sa sonde dans un pointillé de danger si elle est connue (K 14). Le
+  pointillé de danger entoure plus généralement tout danger pour la navigation.
 - Une épave : un symbole en fuseau, barré selon qu'elle est dangereuse ou non.
 - Un mouillage : une ancre.
 - Une zone interdite ou réglementée : une limite en tireté magenta, avec sa
@@ -127,8 +134,9 @@ sépare les caractères tient en une comparaison de durées.
 - **Al**, feu alternatif, qui change de couleur d'une phase à l'autre.
 
 Le caractère se lit avant la couleur et la période. Dans « Fl(2) R 10s 12m 9M »,
-Fl(2) est le caractère, R la couleur, 10s la période, 12m la hauteur du feu
-au-dessus du niveau de la mer et 9M sa portée.
+Fl(2) est le caractère, R la couleur, 10s la période, 12m la hauteur du feu,
+comptée depuis le niveau moyen des pleines mers de vive-eau comme toutes les
+altitudes des cartes du SHOM, et 9M sa portée.
 
 Deux pièges se tendent tout seuls. Le chiffre entre parenthèses compte les
 éclats du groupe, jamais des secondes ; la période, elle, est le nombre suivi de

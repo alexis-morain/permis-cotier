@@ -34,9 +34,9 @@ RIPAM.
 - **Canal 16**, 156,800 MHz : voie internationale de détresse, d'urgence et
   d'appel. On y lance l'appel, puis on bascule sur une voie de travail pour la
   conversation. Elle se garde libre.
-- **Canal 70** : appel sélectif numérique (ASN) seulement. Aucune phonie n'y
+- **Canal 70**, 156,525 MHz : appel sélectif numérique (ASN) seulement. Aucune phonie n'y
   passe, jamais : c'est une voie de données.
-- **Canal 6** : voie de sécurité, coordination des opérations de recherche et
+- **Canal 6**, 156,300 MHz : voie de sécurité, coordination des opérations de recherche et
   de sauvetage entre navires et aéronefs.
 - **Canaux 9, 12, 14** et voisins : voies portuaires, capitaineries.
 - **Canaux 72, 77** et voisins : voies de travail entre navires.

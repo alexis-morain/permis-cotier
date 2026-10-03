@@ -20,13 +20,12 @@ explication: >-
   MAYDAY RELAY est le relais, par un navire ou une station, d'un message de détresse émis
   par un autre et resté sans réponse. Tu es peut-être le seul à l'avoir capté : ta position
   ou la hauteur de ton antenne te fait entendre ce que la côte n'entend pas. Un MAYDAY
-  à ton nom ferait croire que c'est toi qui es en détresse, et une voie de travail ne
-  serait veillée par personne.
+  à ton nom ferait croire que c'est toi qui es en détresse.
 sources:
   - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
     ref: fiche-vhf
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

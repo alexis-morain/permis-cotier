@@ -18,13 +18,19 @@ reponses:
   - a
 explication: >-
   L'armement côtier exige autant d'EIF de niveau de performance d'au moins 100 que de
-  personnes embarquées. Le niveau 50 suffit à moins de deux milles, et le niveau 150 s'impose
-  à partir de six milles, avec l'armement semi-hauturier.
+  personnes embarquées. Le même point ouvre une seule exception : qui sait nager et porte
+  effectivement un EIF de niveau 50 au moins, ou une combinaison aux caractéristiques fixées
+  par l'article. Le niveau 50 est celui de l'armement basique, à moins de deux milles, et le
+  niveau 150 s'impose à partir de six milles, avec l'armement semi-hauturier.
 sources:
   - texte: Division 240, article 240-2.04, point 3
+    ref: division-240
+  - texte: Division 240, article 240-2.03, point 1
+    ref: division-240
+  - texte: Division 240, article 240-2.05, point 1
     ref: division-240
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -21,12 +21,13 @@ explication: >-
   montrer un seul feu blanc visible sur tout l'horizon, à l'endroit le plus visible, au
   lieu des deux feux du paragraphe a). Le piège vient des autres longueurs de la même
   règle : 100 mètres est le seuil à partir duquel l'illumination des ponts devient obligatoire,
-  et 12 mètres celui de la dispense des marques d'échouement.
+  et 12 mètres celui en dessous duquel un navire échoué est dispensé des feux et marques
+  d'échouement, règle 30 f).
 sources:
   - texte: RIPAM, règle 30 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

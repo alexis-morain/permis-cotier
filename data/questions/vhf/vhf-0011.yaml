@@ -18,12 +18,13 @@ explication: >-
   Le matériel d'armement et de sécurité semi-hauturier, exigé de 6 à moins de 60 milles
   d'un abri, comprend une installation radioélectrique VHF fixe conforme aux exigences
   de l'article 240-2.20. C'est le seuil où la VHF devient obligatoire : en deçà de 6 milles,
-  l'armement côtier ne l'impose pas, même si l'emporter reste évidemment recommandé.
+  l'armement côtier ne l'impose pas à un navire ordinaire, la location et les embarcations à
+  énergie humaine ayant leurs règles propres.
 sources:
   - texte: Division 240, article 240-2.05, point 2
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

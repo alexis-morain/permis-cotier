@@ -17,18 +17,16 @@ propositions:
 reponses:
   - b
 explication: >-
-  PAN PAN annonce une urgence sans danger grave et imminent : une avarie qui te prive
-  de propulsion sans mettre de vie en jeu dans l'immédiat en est le cas type. MAYDAY est
+  PAN PAN annonce une urgence sans danger grave et imminent : une avarie qui te prive de
+  propulsion sans mettre de vie en jeu dans l'immédiat en est le cas type. MAYDAY est
   réservé au danger grave et imminent, celui qui appelle une assistance immédiate. Employer
-  MAYDAY ici mobiliserait des moyens hors de proportion, et le RIPAM interdit l'usage
-  d'un signal de détresse hors d'un cas de détresse ou d'un besoin d'assistance.
+  MAYDAY ici mobiliserait des moyens hors de proportion : PAN PAN dit exactement ce que tu
+  vis, un besoin d'aide sans péril.
 sources:
   - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
     ref: fiche-vhf
-  - texte: RIPAM, annexe IV, 2
-    ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

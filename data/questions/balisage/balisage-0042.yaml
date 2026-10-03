@@ -18,14 +18,14 @@ reponses:
   - a
 explication: >-
   Le sens conventionnel de balisage est le sens général que suit le navire venant de la
-  haute mer lorsqu'il s'approche d'un port, d'une rivière, d'un estuaire ou d'une autre
-  voie d'eau. Le long des côtes, quand rien ne l'impose, il suit les contours des continents
-  dans le sens des aiguilles d'une montre.
+  haute mer lorsqu'il s'approche d'un port, d'une rivière, d'un estuaire ou d'une autre voie
+  d'eau. Ailleurs, il est défini par les autorités compétentes, et il convient en principe
+  qu'il suive les contours des continents dans le sens des aiguilles d'une montre.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.1
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

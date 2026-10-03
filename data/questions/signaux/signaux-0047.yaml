@@ -11,21 +11,23 @@ propositions:
   - id: a
     texte: SOS, trois points, trois traits, trois points
   - id: b
-    texte: NC, un trait un point, puis un trait un point un trait un point
+    texte: D, un trait deux points
   - id: c
     texte: A, un point un trait
 reponses:
   - a
 explication: >-
   Le groupe SOS du code Morse, trois points, trois traits, trois points, émis par tout
-  système de signalisation, est un signal de détresse de l'annexe IV. NC est aussi un
-  signal de détresse, mais du Code international de signaux, par pavillons. Morse A est
-  le rythme d'une marque d'eaux saines.
+  système de signalisation, est un signal de détresse de l'annexe IV. Morse D est le code
+  d'une balise radar de danger nouveau, Morse A le rythme d'une marque d'eaux saines : ni
+  l'un ni l'autre ne parle de détresse.
 sources:
   - texte: RIPAM, annexe IV, 1 d)
     ref: decret-77-733
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.4
+    ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

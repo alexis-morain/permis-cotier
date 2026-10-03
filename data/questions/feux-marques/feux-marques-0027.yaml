@@ -18,8 +18,7 @@ reponses:
 explication: >-
   La règle 30 d) impose au navire échoué les feux du mouillage, plus deux feux rouges
   superposés visibles sur tout l'horizon à l'endroit le plus visible. Le rouge sur blanc
-  est le signal d'un navire en train de pêcher, pas d'un échouement. Trois éléments superposés
-  existent bien dans la règle, mais ce sont les trois boules de jour, et le feu doit couvrir
+  est le signal d'un navire en train de pêcher, pas d'un échouement. Le feu doit couvrir
   tout l'horizon, jamais un simple secteur avant.
 sources:
   - texte: RIPAM, règle 30 d) i)
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

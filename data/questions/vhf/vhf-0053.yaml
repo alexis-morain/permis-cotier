@@ -17,17 +17,21 @@ propositions:
 reponses:
   - a
 explication: >-
-  La liste du matériel d'armement côtier de l'article 240-2.04, pour une navigation de
-  2 à moins de 6 milles d'un abri, ne comporte pas de VHF. Elle devient obligatoire avec
-  l'armement semi-hauturier, à partir de 6 milles. Seul un bateau proposé à la location
-  doit en avoir une dès 2 milles, article 240-3.03.
+  La liste du matériel d'armement côtier de l'article 240-2.04, pour une navigation de 2 à
+  moins de 6 milles d'un abri, ne comporte pas de VHF. Elle devient obligatoire avec
+  l'armement semi-hauturier, à partir de 6 milles. Avant, la division ne l'exige que dans
+  des cas particuliers : un navire proposé à la location au-delà de 2 milles, article
+  240-3.03, ou une embarcation à énergie humaine qui s'éloigne de 2 à 6 milles, article
+  240-2.10.
 sources:
   - texte: Division 240, article 240-2.04
     ref: division-240
   - texte: Division 240, article 240-3.03
     ref: division-240
+  - texte: Division 240, article 240-2.10, point 3
+    ref: division-240
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

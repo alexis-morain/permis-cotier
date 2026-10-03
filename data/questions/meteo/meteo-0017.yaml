@@ -18,12 +18,12 @@ reponses:
 explication: >-
   L'avis de grand frais est émis à partir de la force 7, 28 à 33 nœuds. L'avis de coup
   de vent commence à la force 8, et l'avis de tempête à la force 10. C'est à partir de
-  la force 7 que Météo-France diffuse un bulletin météorologique spécial.
+  la force 7 que Météo-France diffuse un bulletin météorologique spécial pour la côte.
 sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
     ref: fiche-meteo
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -20,13 +20,13 @@ explication: >-
   L'article 18 du décret du 2 août 2007 punit de l'amende de la 2e classe le fait de ne
   pas présenter immédiatement les autorisations, déclarations et pièces administratives
   exigées. Le même article réserve la 4e classe à celui qui, invité à justifier dans un
-  délai de cinq jours, ne présente toujours rien au bout du délai. Ce délai n'efface donc
-  pas la première contravention, il en ouvre une seconde, plus lourde.
+  délai de cinq jours, ne présente toujours rien au bout du délai. Ce sont deux manquements
+  distincts : ne rien présenter sur place, puis ne rien présenter dans les cinq jours.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 18
     ref: decret-2007-1167
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

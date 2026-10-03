@@ -19,15 +19,15 @@ reponses:
 explication: >-
   La règle 30 e) dispense de feu de mouillage les navires de moins de 7 mètres, mais elle
   réserve expressément le cas du mouillage dans un chenal étroit, une voie d'accès, un
-  ancrage, à proximité de ces lieux ou sur les routes fréquentées par d'autres navires.
-  Là où tu gênes, tu te signales. Les deux feux rouges appartiennent au navire échoué,
-  règle 30 d), et le seuil de 12 mètres ne concerne que la dispense des marques d'échouement,
-  règle 30 f).
+  ancrage, à proximité de ces lieux ou sur les routes fréquentées par d'autres navires. Là
+  où tu gênes, tu te signales. Le seuil de 12 mètres est autre chose : en dessous, un navire
+  échoué est dispensé des feux et marques d'échouement, règle 30 f), pas du feu de
+  mouillage.
 sources:
   - texte: RIPAM, règle 30 e)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

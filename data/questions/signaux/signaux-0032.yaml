@@ -19,12 +19,12 @@ reponses:
 explication: >-
   Trois feux verticaux verts signifient passage autorisé sous certaines conditions. Le
   message principal peut être complété par des signaux auxiliaires, dont la lecture demande
-  les publications nautiques, et des règlements locaux de police s'appliquent toujours.
+  les publications nautiques, et des règlements locaux de police s'y ajoutent souvent.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe V, 6.15
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -10,7 +10,8 @@ propositions:
   - id: a
     texte: La consommation horaire est une constante du bateau, quelle que soit l'allure
   - id: b
-    texte: La consommation horaire dépend du régime moteur et monte plus vite que la vitesse
+    texte: La consommation horaire dépend du régime moteur et, sur une coque planante, monte
+      plus vite que la vitesse
   - id: c
     texte: La capacité annoncée du réservoir n'est pas entièrement utilisable
   - id: d
@@ -30,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-10-03'

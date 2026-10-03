@@ -23,12 +23,13 @@ explication: >-
   Après la nature de la détresse viennent l'assistance demandée et le nombre de personnes
   à bord, puis tout renseignement utile et À VOUS. Ces deux éléments commandent les moyens
   que le CROSS engage : ce qu'il faut faire, et pour combien de gens. Le cap, la vitesse
-  et le numéro de licence ne font pas partie du message et se demandent ensuite, si besoin.
+  et le numéro de licence ne sont pas exigés par le message ; le CROSS les demandera ensuite,
+  si besoin.
 sources:
   - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
     ref: fiche-vhf
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-10-03'

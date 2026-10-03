@@ -20,12 +20,12 @@ explication: >-
   loisir qui affectent l'état des ressources halieutiques, ou qui répondent à d'autres
   critères posés par une réglementation internationale ou européenne. L'autorisation peut
   alors limiter les quantités détenues à bord, l'effort de pêche, les types d'engins et
-  les conditions d'exercice. Le thon rouge en est l'exemple le plus connu.
+  les conditions d'exercice.
 sources:
   - texte: Code rural et de la pêche maritime, article R. 921-85
     ref: peche-loisir
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

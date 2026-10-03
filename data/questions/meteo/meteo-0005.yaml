@@ -5,7 +5,7 @@ notion: meteo-sources
 statut: publie
 difficulte: 1
 enonce: >-
-  Tu navigues à 10 milles d'un abri et tu veux entendre le bulletin météo en mer. Comment
+  Tu navigues à 5 milles d'un abri et tu veux entendre le bulletin météo en mer. Comment
   procèdes-tu ?
 propositions:
   - id: a
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

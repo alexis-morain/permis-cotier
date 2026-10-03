@@ -17,17 +17,18 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 25 d) ii) écrit que le navire à l'aviron « peut » montrer les feux prescrits
-  pour les navires à voile : le verbe marque une faculté, pas une obligation, à la différence
-  du paragraphe a) qui impose ses feux au voilier faisant route. La contrepartie est ailleurs
-  dans la même phrase, et elle n'est pas facultative. Le piège est de confondre obligation
-  d'emport et faculté d'usage, et d'aller chercher un seuil de longueur que ce texte ne
-  pose pas pour l'aviron.
+  La règle 25 d) ii) écrit que le navire à l'aviron « peut » montrer les feux prescrits pour
+  les navires à voile : le verbe marque une faculté, pas une obligation, à la différence du
+  paragraphe a) qui impose ses feux au voilier faisant route. La contrepartie est dans la
+  même phrase, et elle n'est pas facultative : s'il ne les montre pas, il doit être prêt à
+  montrer immédiatement, pour prévenir un abordage, une lampe électrique ou un fanal à feu
+  blanc. Le piège est d'aller chercher un seuil de longueur que ce texte ne pose pas pour
+  l'aviron : les 7 mètres du i) visent le voilier.
 sources:
   - texte: RIPAM, règle 25 d) ii)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-10-03'

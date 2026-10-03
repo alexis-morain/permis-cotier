@@ -24,14 +24,14 @@ reponses:
   - b
 explication: >-
   En tête de mât, c'est le fanal unique de la règle 25 b), réservé au navire à voile de
-  moins de 20 mètres ; à 20 mètres et plus, les feux de côté restent bas, sur la coque. Le
-  rouge est le secteur bâbord (règle 21 b). Sans feu blanc de tête de mât, il ne marche
-  pas au moteur.
+  moins de 20 mètres ; à 20 mètres et plus, ce fanal combiné n'est plus permis, les feux de
+  côté sont séparés, un de chaque bord. Le rouge est le secteur bâbord (règle 21 b). Sans
+  feu blanc de tête de mât, il ne marche pas au moteur.
 sources:
   - texte: RIPAM, règle 25 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-10-02'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-10-03'

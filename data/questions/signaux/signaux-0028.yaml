@@ -27,12 +27,12 @@ explication: >-
   émet d'abord celui que lui vaut son état de marche. Ne le confonds pas avec la série
   rapide d'au moins cinq sons brefs, qui est le signal du doute de la règle 34 d) et ne
   vaut qu'entre navires en vue l'un de l'autre. Le navire non maître de sa manœuvre émet
-  un son prolongé et deux sons brefs, et l'échouement se signale à la cloche.
+  un son prolongé et deux sons brefs.
 sources:
   - texte: RIPAM, règle 35 k)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

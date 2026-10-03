@@ -2,6 +2,7 @@ id: securite-0006
 option: cotier
 theme: securite
 notion: securite-armement-basique
+famille: securite-dispense-mouillage
 statut: publie
 difficulte: 3
 enonce: >-

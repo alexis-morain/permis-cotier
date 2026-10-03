@@ -14,7 +14,7 @@ propositions:
   - id: a
     texte: Elle délimite une zone ou une installation particulière
   - id: b
-    texte: Elle ne signale par elle-même aucun danger pour la navigation
+    texte: Sa nature exacte se lit dans les documents nautiques
   - id: c
     texte: Elle borde un chenal et se laisse sur bâbord en venant du large
   - id: d
@@ -23,10 +23,11 @@ reponses:
   - a
   - b
 explication: >-
-  Corps jaune et voyant en croix jaune en X : c'est une marque spéciale. Elle délimite une
-  zone de mouillage, un câble, une conduite, une zone d'exercices, une zone de dépôt ou une
-  installation de loisirs, et elle ne dit rien d'un danger de navigation. Le piège est la
-  bouée d'épave en cas d'urgence, qui porte elle aussi une croix jaune et un corps à bandes
+  Corps jaune et voyant en croix jaune en X : c'est une marque spéciale. Elle n'a pas pour
+  but principal d'aider la navigation : elle indique une zone ou une configuration
+  particulière, mouillage, câble, conduite, zone d'exercices, dépôt, installation de
+  loisirs, dont la nature exacte se lit dans les documents nautiques. Le piège est la bouée
+  d'épave en cas d'urgence, qui porte elle aussi une croix jaune et un corps à bandes
   verticales bleues et jaunes, mais dont la croix a les branches droites, verticale et
   horizontale, quand celle de la marque spéciale est posée en X.
 sources:
@@ -39,5 +40,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'

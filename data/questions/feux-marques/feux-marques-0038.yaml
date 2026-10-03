@@ -20,23 +20,25 @@ reponses:
   - a
 explication: >-
   Un navire au mouillage montre en principe deux feux blancs visibles sur tout l'horizon,
-  l'un à l'avant, l'autre plus bas à l'arrière. En dessous de 50 mètres, il peut se contenter
-  d'un seul feu blanc à l'endroit le plus visible : ce feu unique te renseigne donc à
-  la fois sur ce qu'il fait et sur sa taille. Le seuil de 7 mètres est celui d'une tout
-  autre exemption, qui dispense de montrer un feu de mouillage, sauf dans un chenal étroit,
-  une voie d'accès, un ancrage ou sur une route fréquentée. Un navire échoué d'au moins
-  12 mètres ajoute à ce feu blanc deux feux rouges superposés. Quant au navire à propulsion
-  mécanique de moins de 7 mètres ne dépassant pas 7 nœuds, il montre bien lui aussi ce
-  feu blanc seul : c'est l'immobilité qui te dit lequel des deux tu as devant toi.
+  l'un à l'avant, l'autre plus bas à l'arrière. En dessous de 50 mètres, il peut se
+  contenter d'un seul feu blanc à l'endroit le plus visible : ce feu unique te renseigne
+  donc à la fois sur ce qu'il fait et sur sa taille. Le seuil de 7 mètres est celui d'une
+  tout autre exemption, qui dispense de montrer un feu de mouillage, sauf dans un chenal
+  étroit, une voie d'accès, un ancrage ou sur une route fréquentée. Un navire échoué ajoute
+  à ses feux de mouillage deux feux rouges superposés, mais la règle 30 f) en dispense ceux
+  de moins de 12 mètres : ce feu seul peut donc aussi être un petit navire échoué, de moins
+  de 50 mètres dans tous les cas. Quant au navire à propulsion mécanique de moins de 7
+  mètres ne dépassant pas 7 nœuds, il montre bien lui aussi ce feu blanc seul : c'est
+  l'immobilité qui te dit lequel tu as devant toi.
 sources:
   - texte: RIPAM, règle 30 b)
     ref: decret-77-733
-  - texte: RIPAM, règle 30 a), d) et e)
+  - texte: RIPAM, règle 30 a), d), e) et f)
     ref: decret-77-733
   - texte: RIPAM, règle 23 d) ii)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'

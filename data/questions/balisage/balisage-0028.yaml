@@ -23,11 +23,12 @@ reponses:
   - a
   - b
 explication: >-
-  La marque spéciale porte un feu jaune de rythme quelconque, choisi seulement pour ne
-  pas se confondre avec ceux des marques à feu blanc. Elle ne signale aucun danger de
-  navigation : zone de mouillage, câble, conduite, zone d'exercices, installation de loisirs.
-  De nuit, tu ne cherches donc pas à compter ses éclats, tu regardes sa couleur. Compter
-  le rythme n'a de sens que pour les cardinales et le danger isolé, dont le feu est blanc.
+  La marque spéciale porte un feu jaune de rythme quelconque, choisi seulement pour ne pas
+  se confondre avec ceux des cardinales, du danger isolé et des eaux saines, qui sont à feu
+  blanc. Elle n'a pas pour but principal d'aider la navigation : zone de mouillage, câble,
+  conduite, zone d'exercices, installation de loisirs. De nuit, tu ne cherches donc pas à
+  compter ses éclats, tu regardes sa couleur. Compter le rythme sert pour les marques à feu
+  blanc, et pour le chenal préféré, dont le 2 + 1 distingue la marque latérale ordinaire.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
     ref: arrete-2017-11-30
@@ -36,5 +37,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'

@@ -22,7 +22,7 @@ explication: >-
   cardinale ou de danger isolé, tant que ce danger ne figure pas sur les documents nautiques.
   Elle porte une croix jaune aux branches droites, verticale et horizontale, et un feu bleu et
   jaune alternés. Le piège vient de cette croix, que la marque spéciale porte aussi mais posée
-  en X, sur un corps entièrement jaune qui ne signale aucun danger.
+  en X, sur un corps entièrement jaune, qui n'a pas pour but de baliser un danger.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
     ref: arrete-2017-11-30
@@ -33,5 +33,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-03'

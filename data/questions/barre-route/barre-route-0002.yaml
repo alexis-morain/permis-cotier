@@ -19,7 +19,7 @@ reponses:
 explication: >-
   La règle 12 a) ii) tranche le cas des deux voiliers qui reçoivent le vent du même bord
   : celui qui est au vent s'écarte de la route de celui qui est sous le vent. Le voilier
-  sous le vent, gêné dans ses manœuvres, garde sa route. Le critère bâbord ou tribord
+  sous le vent garde sa route. Le critère bâbord ou tribord
   ne sert plus à rien ici, puisque les deux reçoivent le vent du même bord.
 sources:
   - texte: RIPAM, règle 12 a) ii)
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-10-03'
