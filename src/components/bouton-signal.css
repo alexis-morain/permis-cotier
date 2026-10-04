@@ -1,0 +1,13 @@
+/* « Écouter le signal, 7 s » : sous la frise, dont il est la bande son. Le
+   bouton garde sa largeur quand il devient « Arrêter », pour que rien ne
+   saute sous le doigt pendant la lecture. */
+.signal-ecoute { min-width: 15rem; }
+.signal-ecoute-lieu { margin: 0; }
+figure > .signal-ecoute-lieu { margin-top: 0.75rem; }
+.jeu > .signal-ecoute-lieu { margin-top: -0.5rem; }
+
+/* Écran bas et large : le jeu passe en deux colonnes, le bouton reste avec
+   l'énoncé et la frise, à gauche. */
+@media (max-height: 31.25rem) and (min-width: 44rem) {
+  .jeu > .signal-ecoute-lieu { grid-column: 1; margin-top: 0; }
+}

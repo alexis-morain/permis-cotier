@@ -1509,3 +1509,42 @@ describe('hors du laboratoire', () => {
     expect(screen.getByText(/Ton examen d’avant : 30 sur 40/)).toBeTruthy();
   });
 });
+
+/**
+ * Le son des signaux (lot H). Une frise de `sons/` porte son bouton
+ * « Écouter le signal » juste dessous, en entraînement comme en examen blanc ;
+ * aucun autre visuel n'en a. Le bouton arrive en `import()`, d'où l'attente.
+ */
+describe('le son des signaux', () => {
+  beforeEach(() => {
+    vi.stubGlobal('AudioContext', class { resume() { return Promise.resolve(); } });
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  const coude = (id = 'signaux-0018'): QuestionAffichable => ({
+    ...question(id, 'signaux'),
+    visuel: { fichier: 'sons/coude.svg', alt: 'Un son prolongé au sifflet.', credit: 'code' },
+  });
+
+  it('pose le bouton sous la frise, en entraînement', async () => {
+    render(<Quiz mode="entrainement" questions={[coude()]} />);
+    const bouton = await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' });
+    expect(bouton.parentElement?.previousElementSibling?.matches('img.jeu__visuel')).toBe(true);
+  });
+
+  it('le pose aussi en examen blanc', async () => {
+    render(<Quiz mode="examen" questions={[coude('signaux-0001'), coude('signaux-0002'), coude('signaux-0003')]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    expect(await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' })).toBeTruthy();
+  });
+
+  it("n'en pose aucun sous un autre visuel", async () => {
+    render(<Quiz mode="entrainement" questions={[{
+      ...question('ecluses-0001'),
+      visuel: { fichier: 'ecluses/acces-vert-isole.svg', alt: 'Un feu vert isolé allumé.', credit: 'code' },
+    }]} />);
+    await act(async () => {});
+    expect(document.querySelector('.signal-ecoute-lieu')).toBeNull();
+    expect(screen.queryByRole('button', { name: /Écouter le signal/ })).toBeNull();
+  });
+});

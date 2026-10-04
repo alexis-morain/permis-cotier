@@ -4,6 +4,7 @@ import { questionsPubliees, nomDuTheme } from '../../lib/banque';
 import { SITE, quiz, titreQuestion, descriptionsDesQuestions } from '../../lib/seo';
 import { resoudreSources } from '../../lib/sources';
 import MarqueSource from '../../components/MarqueSource.astro';
+import LieuSignal from '../../components/LieuSignal.astro';
 import { notionParCode } from '../../lib/notions';
 import { POUR_APP } from '../../lib/cible';
 
@@ -59,6 +60,7 @@ const miettes = [
     {q.visuel && (
       <figure style="margin:1.5rem 0">
         <img src={`/visuels/${q.visuel.fichier}`} alt={q.visuel.alt} style="width:min(100%,30rem);height:auto;border:2px solid var(--filet);border-radius:var(--rayon);background:var(--fond-carte)" />
+        {q.visuel.fichier.startsWith('sons/') && <LieuSignal fichier={q.visuel.fichier} />}
         <figcaption class="discret" style="margin-top:0.4rem">{q.visuel.alt}</figcaption>
       </figure>
     )}

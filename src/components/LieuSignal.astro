@@ -1,0 +1,21 @@
+---
+/**
+ * Le lieu du bouton « Écouter le signal », sous une frise sonore d'une page
+ * servie par Astro (`/question/[id]`). Rendu seulement pour un visuel de
+ * `sons/` : son script, et la table qu'il importe, ne vont que sur ces pages.
+ */
+interface Props {
+  fichier: string;
+}
+const { fichier } = Astro.props;
+---
+
+<p class="signal-ecoute-lieu" data-signal={fichier} hidden></p>
+
+<script>
+  import { monterBoutonSignal } from './bouton-signal';
+
+  for (const lieu of document.querySelectorAll<HTMLElement>('.signal-ecoute-lieu[data-signal]')) {
+    monterBoutonSignal(lieu, lieu.dataset.signal ?? '');
+  }
+</script>

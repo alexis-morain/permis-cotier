@@ -490,3 +490,47 @@ describe('le retour vers la série', () => {
     expect(lien.getAttribute('href')).toBe('/entrainement/notion/balisage-lateral');
   });
 });
+
+/**
+ * Le son des signaux (lot H) : une question de vérification qui montre une
+ * frise de `sons/` porte le bouton « Écouter le signal » juste dessous. Le
+ * bouton arrive en `import()`, chargé seulement pour ces questions-là.
+ */
+describe('le son des signaux', () => {
+  beforeEach(() => {
+    vi.stubGlobal('AudioContext', class { resume() { return Promise.resolve(); } });
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  const avecSon: LeconAffichable = {
+    ...ecrite,
+    questions: [
+      { ...question('signaux-0018'), visuel: { fichier: 'sons/coude.svg', alt: 'Un son prolongé.', credit: 'code' } },
+      question('balisage-0002', ['b']),
+    ],
+  };
+
+  it('pose le bouton sous la frise, et le retire à la question suivante', async () => {
+    monter(avecSon);
+    allerALaVerification();
+    await vi.dynamicImportSettled();
+    const bouton = screen.getByRole('button', { name: 'Écouter le signal, 5 secondes' });
+    expect(bouton.parentElement?.previousElementSibling?.matches('img.jeu__visuel')).toBe(true);
+    cliquer(/Première/);
+    cliquer('Valider');
+    cliquer('Question suivante');
+    await vi.dynamicImportSettled();
+    expect(screen.queryByRole('button', { name: /Écouter le signal/ })).toBeNull();
+    expect(document.querySelector('.signal-ecoute-lieu')).toBeNull();
+  });
+
+  it("n'en pose aucun sous un autre visuel", async () => {
+    monter({
+      ...ecrite,
+      questions: [{ ...question('balisage-0001'), visuel: { fichier: 'balisage/laterale-babord.svg', alt: 'Une bouée rouge.', credit: 'code' } }],
+    });
+    allerALaVerification();
+    await vi.dynamicImportSettled();
+    expect(document.querySelector('.signal-ecoute-lieu')).toBeNull();
+  });
+});

@@ -42,6 +42,7 @@ import { pointFinal, rappel } from '../lib/profil';
 import { POUR_APP } from '../lib/cible';
 import { modeConcentration, partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
 import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
+import BoutonSignal from './BoutonSignal';
 import './quiz.css';
 
 interface Props {
@@ -919,6 +920,7 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
                   {d.visuel && (
                     <img className="jeu__visuel" src={`/visuels/${d.visuel.fichier}`} alt={d.visuel.alt} loading="lazy" />
                   )}
+                  {d.visuel?.fichier.startsWith('sons/') && <BoutonSignal fichier={d.visuel.fichier} />}
                   <ul className="propositions">
                     {/* Le même ordre qu'en jeu : la revue doit montrer l'écran
                         que le candidat a eu sous les yeux. */}
@@ -1198,6 +1200,12 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
           onError={() => setVisuelAbsent(question.id)}
         />
       ))}
+      {/* Présent en examen blanc comme ailleurs : écouter consomme les vingt
+          secondes de la question, comme regarder la frise. Le `key` le
+          démonte à chaque question, ce qui coupe un son encore en cours. */}
+      {affichee.visuel?.fichier.startsWith('sons/') && (
+        <BoutonSignal key={`signal-${question.id}`} fichier={affichee.visuel.fichier} />
+      )}
 
       <ul className="propositions" key={`propositions-${question.id}`}>
         {ordre.map((p, rang) => {
