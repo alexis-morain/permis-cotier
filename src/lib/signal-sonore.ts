@@ -81,9 +81,11 @@ export function programmer(contexte: ContexteAudio, signal: SignalSonore, table:
     const { hz, partiels, volee } = table.cloche;
     const somme = partiels.reduce((s, [, amp]) => s + amp!, 0);
     // Les coups d'une volée se recouvrent : chaque coup s'allège de ce que la
-    // résonance des précédents porte encore, et la volée tient sous la crête.
+    // résonance des précédents porte encore. Leurs phases ne s'alignent pas, ils
+    // s'additionnent en puissance : au rendu, la volée tient à -15 dBFS de
+    // crête, sous la crête des coups, et 3 dB sous eux à l'oreille.
     const pas = (volee[1] ?? 1) - (volee[0] ?? 0);
-    const tassement = 1 - Math.exp(-pas / (partiels[0]?.[2] ?? 1));
+    const tassement = Math.sqrt(1 - Math.exp((-2 * pas) / (partiels[0]?.[2] ?? 1)));
     const coup = (depart: number, niveau: number) => {
       for (const [rapport, amp, decroissance] of partiels) {
         const g = son(hz * rapport!, depart, Math.min(depart + 5 * decroissance!, fin));

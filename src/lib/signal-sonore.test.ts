@@ -161,14 +161,19 @@ describe('programmer, à la cloche', () => {
     const c = faux();
     programmer(commeContexte(c), signal('brume-echouement'));
     const parDepart = new Map<number, number>();
-    for (const g of c.gains) {
+    const enveloppes = new Set(c.oscillateurs.flatMap((o) => o.sorties));
+    for (const g of c.gains.filter((x) => enveloppes.has(x))) {
       const attaque = g.gain.appels.find((a) => a[0] === 'lineaire');
       if (attaque) parDepart.set(attaque[2], (parDepart.get(attaque[2]) ?? 0) + attaque[1]);
     }
     const sommes = [...parDepart.values()];
     expect(Math.max(...sommes)).toBeLessThanOrEqual(CRETE + 1e-9);
-    // Un coup de volée est plus doux qu'un coup isolé : ils se recouvrent.
-    expect(Math.min(...sommes)).toBeLessThan(Math.max(...sommes) * 0.6);
+    // Un coup de volée est plus doux qu'un coup isolé, puisqu'ils se recouvrent ;
+    // pas trop : leurs résonances s'additionnent en puissance, pas en phase. Au
+    // rendu réel, la volée tient à -15 dBFS de crête, 3 dB sous les coups en RMS.
+    const rapport = Math.min(...sommes) / Math.max(...sommes);
+    expect(rapport).toBeGreaterThan(0.75);
+    expect(rapport).toBeLessThan(0.85);
   });
 
   it('rien ne sonne après la fin du motif', () => {
