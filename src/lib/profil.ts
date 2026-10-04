@@ -102,6 +102,19 @@ export const PALIERS: Record<Palier, { titre: string; phrase: string }> = {
 };
 
 /**
+ * La phrase sous le palier. Celle de « Tu démarres » parle de ce qu'on a vu
+ * et retenu : juste au premier jour, fausse au lendemain d'un 31 sur 40, où
+ * l'examen pèse déjà presque tout l'indice. Elle dit alors d'où vient le
+ * chiffre et ce qui le fera monter.
+ */
+export function phraseDuPalier(ind: Indice): string {
+  if (ind.palier === 'demarre' && ind.examensComptes > 0) {
+    return `Tes examens blancs pèsent déjà ${ind.parts.examens} points sur 45. Le reste vient des questions : en rencontrer plus, et les réussir deux jours différents.`;
+  }
+  return PALIERS[ind.palier].phrase;
+}
+
+/**
  * Trois parts : ce qu'on a vu de la banque, ce qu'on en retient, et les trois
  * derniers examens blancs complets. « Retenu » veut dire réussi deux jours
  * différents, pas réussi à la dernière rencontre : la seconde définition

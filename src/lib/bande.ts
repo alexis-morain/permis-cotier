@@ -25,7 +25,7 @@
  *    trace : il n'y a rien à reprendre.
  */
 import type { Etat, ExamenPasse } from './progression';
-import { estDue } from './quiz';
+import { TAILLE_SERIE_PAR_DEFAUT, estDue } from './quiz';
 import { joursAvant } from './jour';
 
 /** Une leçon dans l'ordre du parcours, telle que la page la passe. */
@@ -71,10 +71,12 @@ export function choisirBande(
   ids: readonly string[],
   jour: string,
 ): Bande {
-  // Bornées à la banque publiée, comme le compte du bloc d'état et la série
-  // de `/revoir` : le chiffre annoncé et la série jouée ne divergent pas.
+  // Ce que `/revoir` jouera : les dues bornées à la banque publiée, et
+  // plafonnées au rythme, qui est la taille de série de `serieDuJour`. Le
+  // bouton « Revoir 216 questions » promettait une séance qui n'existe pas.
   const publiees = ids.filter((id) => etat.questions[id] !== undefined);
-  const aRevoir = publiees.filter((id) => estDue(etat.questions[id], jour)).length;
+  const dues = publiees.filter((id) => estDue(etat.questions[id], jour)).length;
+  const aRevoir = Math.min(dues, etat.profil.rythme ?? TAILLE_SERIE_PAR_DEFAUT);
 
   const suivies = lecons.filter((l) => etat.lecons[l.code] !== undefined);
   const prochaine = lecons.find((l) => etat.lecons[l.code] === undefined) ?? null;

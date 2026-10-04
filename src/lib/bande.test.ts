@@ -81,6 +81,12 @@ describe('après un examen blanc', () => {
     expect(choisir(etat)).toMatchObject({ cas: 'recu', prochaine: null });
   });
 
+  it('annonce la série que /revoir jouera : les dues, plafonnées au rythme', () => {
+    const quatre = ['vhf-0', 'vhf-1', 'vhf-2', 'vhf-3'].reduce((e, id) => enregistrerReponse(e, id, false, '2026-10-03'), recale(etatInitial()));
+    expect(choisir({ ...quatre, profil: { ...quatre.profil, rythme: 3 } })).toMatchObject({ cas: 'recale', aRevoir: 3 });
+    expect(choisir(quatre)).toMatchObject({ cas: 'recale', aRevoir: 4 });
+  });
+
   it('borne les questions dues à la banque publiée, comme /revoir', () => {
     const etat = enregistrerReponse(recale(etatInitial()), 'question-retiree', false, '2026-10-03');
     expect(choisir(etat)).toMatchObject({ cas: 'recale', aRevoir: 0 });

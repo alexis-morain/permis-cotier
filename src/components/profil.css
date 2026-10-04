@@ -109,6 +109,12 @@
 .fiche section > .discret { margin-bottom: 1rem; }
 .fiche__tete { display: flex; flex-direction: column; }
 .fiche__invitation { margin: 0; max-width: var(--mesure); }
+/* Le score du recalé sous le titre : un résumé, donc la largeur et la graisse
+   d'un chapeau, rien d'autre (DESIGN.md, « Forme »). */
+.fiche__dernier { margin: 0.75rem 0 0; font-stretch: var(--large); font-weight: 600; max-width: var(--mesure); }
+/* `.jeu__actions` n'a de règle que dans la feuille de l'app : sur le site,
+   « Annuler » et « Oui, tout effacer » se touchaient. */
+.fiche .jeu__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; }
 .fiche__details { max-width: var(--mesure); margin-top: 0.75rem; }
 .fiche__details summary { cursor: pointer; font-weight: 700; min-height: 2.75rem; display: flex; align-items: center; }
 .fiche__details p { margin: 0.5rem 0 0; }
@@ -141,7 +147,12 @@
 }
 .indice__part--vu, .indice__puce--vu { background: var(--indice-vu, var(--jauge)); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
-.indice__part--examens, .indice__puce--examens { background: var(--filet-fort); }
+/* Les examens, la plus grosse part, ne se peignent plus de la couleur d'un
+   rail : des hachures du même marine que le retenu, pleines à l'œil, et
+   distinctes de lui sans dépendre de la couleur. */
+.indice__part--examens, .indice__puce--examens {
+  background: repeating-linear-gradient(-45deg, var(--texte) 0 3px, var(--filet-fort) 3px 6px);
+}
 /* En sombre, le retenu prend la couleur du texte, presque blanche : contre le
    jaune plein du vu, elle ne fait que 1,39:1. Le vu s'éteint donc au jaune
    mêlé à 60 % au rail (`--fond-2`), 3,21:1 contre le retenu, et le jaune plein

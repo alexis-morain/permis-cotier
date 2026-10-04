@@ -186,6 +186,8 @@ describe('la fiche', () => {
     expect(boutons.map((b) => b.textContent)).toEqual(['Annuler', 'Oui, tout effacer']);
     expect(boutons[0]!.className).toBe('bouton');
     expect(boutons[1]!.className).toBe('bouton bouton--danger');
+    // Le bouton d'ouverture disparaît au clic : le focus va sur Annuler, pas sur `body`.
+    expect(document.activeElement).toBe(boutons[0]);
     // Annuler ne touche à rien.
     fireEvent.click(boutons[0]!);
     expect(charger().examens).toHaveLength(1);
@@ -337,5 +339,93 @@ describe('le changement de comptage', () => {
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     expect(screen.queryByText(/on compte autrement/)).toBeNull();
+  });
+});
+
+describe('la remesure du 4 octobre', () => {
+  const recaleHier = () => {
+    let e = enregistrerProfil(etatInitial(), { ...profilVide(), motivations: ['peche'], rempliLe: '2026-09-01' });
+    const hier = new Date(`${aujourdhui()}T00:00:00Z`);
+    hier.setUTCDate(hier.getUTCDate() - 1);
+    e = enregistrerExamen(e, { date: hier.toISOString().slice(0, 10), bonnes: 31, total: 40, reussi: false });
+    return e;
+  };
+
+  it('dit le score du recalé sous le titre, avec la barre, raison ou pas', () => {
+    sauvegarder(recaleHier());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.fiche__tete .fiche__dernier')!.textContent).toBe('Hier, 31 sur 40, recalé : il en fallait 35.');
+    cleanup();
+    sauvegarder({ ...recaleHier(), profil: profilVide() });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.fiche__tete .fiche__dernier')).not.toBeNull();
+  });
+
+  it('ne dit rien de tel après un reçu', () => {
+    sauvegarder(enregistrerExamen(etatInitial(), { date: aujourdhui(), bonnes: 37, total: 40, reussi: true }));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.fiche__dernier')).toBeNull();
+  });
+
+  it('range les examens blancs avant les thèmes', () => {
+    sauvegarder(enregistrerReponse(recaleHier(), 'vhf-0', false, '2026-09-20'));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const sections = [...document.querySelectorAll('section')].map((s) => s.className);
+    expect(sections.indexOf('fiche__examens')).toBeGreaterThan(-1);
+    expect(sections.indexOf('fiche__examens')).toBeLessThan(sections.indexOf('fiche__themes'));
+  });
+
+  it('explique un indice bas par ce qui manque, quand un examen pèse déjà', () => {
+    sauvegarder(recaleHier());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const texte = document.querySelector('.indice__texte')!.textContent!;
+    expect(texte).not.toContain('Une leçon ou une série de questions, et il bouge');
+    expect(texte).toContain('Tes examens blancs pèsent déjà 35 points sur 45.');
+  });
+
+  it('écrit les parts de l’indice en points', () => {
+    sauvegarder(recaleHier());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const legende = [...document.querySelectorAll('.indice__legende li')].map((li) => li.textContent);
+    expect(legende).toEqual(['Vu : 0 point sur 20', 'Retenu : 0 point sur 35', 'Examens : 35 points sur 45']);
+  });
+
+  it('annonce la série que /revoir joue, pas tout le stock dû', () => {
+    let e = banque.reduce((etat, q) => enregistrerReponse(etat, q.id, false, '2026-09-20'), etatInitial());
+    e = { ...e, profil: { ...profilVide(), rythme: 10 } };
+    sauvegarder(e);
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.jeu__actions a')!.textContent).toBe('Revoir mes 10 questions du jour');
+    expect(screen.getByText(/20 questions à revoir en tout/).textContent).toBe(
+      '20 questions à revoir en tout : la série du jour en prend 10, les plus anciennes d’abord.',
+    );
+  });
+
+  it('montre ce qui est fait au-delà de l’objectif, plutôt qu’un plafond', () => {
+    const e = banque.slice(0, 12).reduce((etat, q) => enregistrerReponse(etat, q.id, true, aujourdhui()), etatInitial());
+    sauvegarder({ ...e, profil: { ...profilVide(), rythme: 10 } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.jour__objectif .jour__chiffre')!.textContent).toBe('12 questions');
+    expect(document.querySelector('.jour__objectif .jour__note')!.textContent).toBe('Objectif du jour fait, et 2 de plus.');
+  });
+
+  it('compare le rythme qu’exige la date à l’objectif, au lieu d’en poser un second', () => {
+    const dans = (n: number) => {
+      const d = new Date(`${aujourdhui()}T00:00:00Z`);
+      d.setUTCDate(d.getUTCDate() + n);
+      return d.toISOString().slice(0, 10);
+    };
+    const e = enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui());
+    sauvegarder({ ...e, dateExamen: dans(2), profil: { ...profilVide(), rythme: 5 } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.jour__examen')!.textContent).toContain(
+      'Il te reste 19 questions jamais vues : environ 10 par jour pour toutes les voir, plus que ton objectif de 5. Il se règle plus bas.',
+    );
+    cleanup();
+    sauvegarder({ ...e, dateExamen: dans(10), profil: { ...profilVide(), rythme: 5 } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.jour__examen')!.textContent).toContain(
+      'Il te reste 19 questions jamais vues : ton objectif de 5 par jour suffit pour toutes les voir.',
+    );
   });
 });
