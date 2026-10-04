@@ -76,6 +76,11 @@ La direction artistique et les règles écran par écran sont dans `docs/app-da.
   `Ecran` n'a tourné que forcé sur iOS 26.
 - **Le compte développeur Apple** reste le seul verrou pour TestFlight et la
   soumission.
+- [ ] H2, le son des signaux à l'oreille (lot H, avec la recette du lot D,
+  Alexis présent, sur son iPhone et pas au simulateur) : bouton silencieux, le
+  signal se tait ; musique en cours, elle continue ; VoiceOver lit « Écouter
+  le signal, sept secondes, bouton ». Si la session audio passe en `.playback`,
+  plan B natif (`docs/app-da.md`, « Le son des signaux »).
 
 ## 10 septembre 2026 — la coquille est parquée, et remise à niveau
 
