@@ -95,7 +95,7 @@ const POIDS = { vu: 20, retenu: 35, examens: 45 } as const;
 const EXAMENS_COMPTES = 3;
 
 export const PALIERS: Record<Palier, { titre: string; phrase: string }> = {
-  demarre: { titre: 'Tu démarres', phrase: 'Tout reste à voir. Une leçon ou une série de questions, et l’indice bouge.' },
+  demarre: { titre: 'Tu démarres', phrase: 'L’indice part de ce que tu as vu et retenu. Une leçon ou une série de questions, et il bouge.' },
   'en-route': { titre: 'En route', phrase: 'Tu as vu une partie du programme. Les examens blancs pèsent maintenant le plus.' },
   presque: { titre: 'Presque', phrase: 'Il manque deux examens blancs reçus de suite pour se dire prêt.' },
   pret: { titre: 'Prêt', phrase: 'Deux des trois derniers examens blancs sont reçus. Garde le rythme jusqu’au jour J.' },
