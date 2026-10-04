@@ -431,6 +431,15 @@
   .verdict { scroll-margin-block: 1rem 10rem; }
 }
 
+@media (min-width: 46rem) {
+  .jeu { gap: 1.5rem; padding-block: 2rem 3rem; }
+  /* Plus large que sur mobile, pas plus étroit : l'énoncé est l'élément le
+     plus important de l'écran, il ne se lit pas en colonne de cinq lignes. */
+  .jeu__enonce { max-width: 48ch; }
+  /* Sur un grand écran, le bouton principal garde une taille de bouton. */
+  .jeu__actions .bouton--principal { flex: 0 1 auto; min-width: 16rem; }
+}
+
 /* Le téléphone couché : 844 × 390, et 390 c'est tout ce qu'il y a. L'en-tête
    du site et le fil d'Ariane en prennent 150, la barre d'action 51 ; ce qui
    reste ne loge ni l'énoncé ni le visuel ni les propositions l'un sous
@@ -441,7 +450,9 @@
    les propositions à la hauteur de l'énoncé, visuel ou non. Hors d'ici, rien
    ne change : au-dessus de 500 px de haut, c'est la colonne de toujours.
 
-   L'app est verrouillée en portrait : ces règles ne la concernent pas. */
+   L'app est verrouillée en portrait : ces règles ne la concernent pas. Le bloc
+   vient après celui de 46 rem, qui pose lui aussi l'écart, le retrait et la
+   mesure de l'énoncé à même spécificité : l'ordre décide. */
 @media (max-height: 31.25rem) and (min-width: 44rem) {
   .jeu {
     display: grid;
@@ -456,7 +467,7 @@
   .jeu > .jeu__visuel { grid-column: 1; }
   .jeu > .propositions { grid-column: 2; grid-row: span 2; }
   .jeu__enonce { font-size: 1.2rem; max-width: none; }
-  .jeu__visuel { max-height: 48vh; }
+  .jeu__visuel:not(.jeu__visuel--absent) { max-height: 48vh; }
   .propositions { gap: 0.5rem; }
   .proposition { min-height: 2.75rem; padding: 0.55rem 0.85rem; }
   /* La barre collée prenait 77 des 390 px : un bouton de 44 px et une marge
@@ -466,16 +477,7 @@
   /* L'écran de départ et le résultat restent une colonne : rien n'y est en
      deux parties. */
   .depart,
-  .jeu:has(> .resultat__titre, > div > .resultat__titre) { display: flex; }
-}
-
-@media (min-width: 46rem) {
-  .jeu { gap: 1.5rem; padding-block: 2rem 3rem; }
-  /* Plus large que sur mobile, pas plus étroit : l'énoncé est l'élément le
-     plus important de l'écran, il ne se lit pas en colonne de cinq lignes. */
-  .jeu__enonce { max-width: 48ch; }
-  /* Sur un grand écran, le bouton principal garde une taille de bouton. */
-  .jeu__actions .bouton--principal { flex: 0 1 auto; min-width: 16rem; }
+  .jeu:has(> .resultat__titre, > div > .resultat__titre) { display: flex; align-items: stretch; }
 }
 
 /* Mouvement.

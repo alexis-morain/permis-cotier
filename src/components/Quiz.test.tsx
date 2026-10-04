@@ -1265,10 +1265,20 @@ describe('hors du laboratoire', () => {
   });
 
   it('n’écoute plus les autres onglets une fois l’examen lancé', () => {
-    localStorage.setItem(CLE_STOCKAGE, etatAvecEnCours(1));
+    // L'examen d'avant, lu au montage, est ce que le résultat compare : si
+    // l'écran relisait encore le stockage après le lancement, il comparerait
+    // à ce que l'autre onglet vient d'écrire.
+    const avant = JSON.parse(etatAvecEnCours(1));
+    avant.examens = [{ date: '2026-09-01', bonnes: 30, total: 40, reussi: false }];
+    localStorage.setItem(CLE_STOCKAGE, JSON.stringify(avant));
     render(<Quiz mode="examen" questions={trois} />);
     fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
-    act(() => autreOnglet(null));
-    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+
+    const ailleurs = { ...avant, enCours: null, examens: [{ date: '2026-09-02', bonnes: 10, total: 40, reussi: false }] };
+    act(() => autreOnglet(JSON.stringify(ailleurs)));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.getByText(/Ton examen d’avant : 30 sur 40/)).toBeTruthy();
   });
 });

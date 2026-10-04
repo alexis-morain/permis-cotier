@@ -147,8 +147,9 @@ function LienLecon({ question, retour }: { question: QuestionAffichable; retour:
  * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
  */
 function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon }: Props & { questions: QuestionAffichable[] }) {
-  // La progression est lue une fois, au montage : le tirage et la reprise
-  // doivent partir du même état, pas d'un état qui bouge sous eux.
+  // La progression est lue au montage, puis relue seulement tant que l'examen
+  // n'est pas lancé (voir l'effet `storage` plus bas) : le tirage et la reprise
+  // partent du même état, pas d'un état qui bouge sous eux.
   const [depart, setDepart] = useState(charger);
 
   // Le tirage se fait au montage, côté navigateur : chaque visite est un
