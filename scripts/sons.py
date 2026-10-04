@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
-"""Dessine en SVG animé les signaux sonores du RIPAM, au sifflet et à la cloche.
+"""Dessine en SVG animé les signaux sonores du RIPAM, et écrit la table qui les fait entendre.
 
-    python3 scripts/sons.py            # écrit public/visuels/sons/
+    python3 scripts/sons.py            # écrit public/visuels/sons/ et src/lib/sons-motifs.json
     python3 scripts/sons.py --verifier # échoue si un fichier n'est plus à jour
+
+**Le même motif nourrit le dessin et le son.** En plus des seize SVG, ce script
+écrit `src/lib/sons-motifs.json` : pour chaque signal, l'instrument, la suite
+de `[durée, son, navire]` et la durée totale, avec les hauteurs du sifflet et
+la recette de la cloche. `src/lib/signal-sonore.ts` le joue en Web Audio, sans
+aucun fichier audio : le son ne peut pas se désaccorder de la frise, et ce
+script reste la seule source du motif.
 
 Un signal sonore est un motif dans le temps, comme un rythme de feu, et il
 souffre du même problème : « deux sons prolongés suivis d'un son bref » ne se
@@ -32,7 +39,8 @@ jamais depuis ces images.
 
 Le temps réel est tenu, sans accélération : un son prolongé dure vraiment quatre
 à six secondes en mer, et sentir cette longueur fait partie de ce qu'on apprend.
-Rien n'est immobile pendant ce temps, les ondes battent.
+Rien n'est immobile pendant ce temps, les ondes battent, et le curseur passe
+sous chaque barre au moment où elle sonne, puis attend au bout de la frise.
 
 Deux instruments
 ----------------
@@ -43,16 +51,36 @@ coups distincts de l'échouement, règle 35 h), sont des traits isolés.
 
 Aucun libellé dans l'image : le dessin montre le motif, la question demande ce
 qu'il veut dire. Crédit `code`.
+
+Le son
+------
+La hauteur du sifflet vient de l'annexe III du RIPAM, § 1 b) : la fréquence
+fondamentale d'un sifflet de navire de moins de 75 mètres, la plaisance, est
+comprise entre 250 et 700 Hz. Un signal émis par un seul navire sonne au
+sifflet du navire 1. Un motif qui met deux navires en scène, un signal et sa
+réponse, donne au second une autre hauteur, une quinte au-dessus et toujours
+dans la bande, pour que l'oreille entende deux navires et non un seul qui
+répète. Aucun motif de la table n'en met deux aujourd'hui : le coude de la
+règle 34 e) est dessiné et demandé comme le seul son prolongé qu'on entend.
+
+La cloche reprend la recette de la cloche de bord de `sons_app.py`, la même
+fondamentale et les mêmes partiels inharmoniques ; une volée est une suite de
+coups, un par hachure de son dessin, jamais un son tenu. La période de
+répétition n'est pas jouée, comme elle n'est pas dessinée.
 """
 from __future__ import annotations
 
+import json
 import math
+import sys
 from pathlib import Path
 
 from _commun import main_dessin
+from sons_app import LA4, PARTIELS_CLOCHE
 
 RACINE = Path(__file__).resolve().parents[1]
 SORTIE = RACINE / "public" / "visuels" / "sons"
+SORTIE_MOTIFS = RACINE / "src" / "lib" / "sons-motifs.json"
 
 # La brume, puisque la moitié de ces signaux ne s'entendent que par visibilité
 # réduite. Plus pâle que la mer des scènes de rencontre, pour qu'on ne confonde
@@ -81,16 +109,29 @@ PROLONGE = 5.0            # règle 32 c), quatre à six secondes
 INTERVALLE = 1.0          # non sourcé pour le son, voir la note en tête
 VOLEE = 5.0               # règle 35 g), cloche sonnée rapidement cinq secondes
 COUP = 0.35               # un coup de cloche isolé, règle 35 h)
+PAS_VOLEE_PX = 4.2        # l'écart des hachures d'une volée, en pixels : un coup chacune
+
+# Annexe III du RIPAM, § 1 b) : 250 à 700 Hz sous 75 mètres. Le navire 1 émet
+# tous les signaux à un seul navire ; le navire 2, celui qui répond, sonne une
+# quinte juste au-dessus (3/2), franchement distinct et toujours dans la bande.
+SIFFLET_HZ = {1: 440.0, 2: 660.0}
+CLOCHE_HZ = LA4           # la cloche de bord de sons_app.py
 
 
-def suite(*sons: str, intervalle: float = INTERVALLE) -> list[tuple[float, str | None]]:
-    """Des sons séparés par leur intervalle. « b » pour bref, « p » pour prolongé."""
+Motif = list[tuple[float, str | None, int | None]]
+
+
+def suite(*sons: str, intervalle: float = INTERVALLE, navire: int = 1) -> Motif:
+    """Des sons séparés par leur intervalle. « b » pour bref, « p » pour prolongé.
+
+    Chaque son porte le navire qui l'émet ; un silence n'est à personne.
+    """
     durees = {"b": BREF, "p": PROLONGE, "v": VOLEE, "c": COUP}
-    motif: list[tuple[float, str | None]] = []
+    motif: Motif = []
     for i, son in enumerate(sons):
         if i:
-            motif.append((intervalle, None))
-        motif.append((durees[son], son))
+            motif.append((intervalle, None, None))
+        motif.append((durees[son], son, navire))
     return motif
 
 
@@ -194,7 +235,7 @@ SIGNAUX: dict[str, dict] = {
     },
     "brume-mouillage": {
         "instrument": "cloche",
-        "motif": [(VOLEE, "v")],
+        "motif": suite("v"),
         "alt": "La cloche sonnée rapidement pendant cinq secondes environ, une suite "
                "serrée de coups et non un son tenu.",
         "regle": "RIPAM, règle 35 g), navire au mouillage",
@@ -203,7 +244,7 @@ SIGNAUX: dict[str, dict] = {
         "instrument": "cloche",
         "motif": (
             suite("c", "c", "c", intervalle=0.65)
-            + [(1.0, None), (VOLEE, "v"), (1.0, None)]
+            + [(1.0, None, None), (VOLEE, "v", 1), (1.0, None, None)]
             + suite("c", "c", "c", intervalle=0.65)
         ),
         "alt": "Trois coups de cloche séparés et distincts, puis la cloche sonnée "
@@ -214,8 +255,8 @@ SIGNAUX: dict[str, dict] = {
 }
 
 
-def duree(motif: list[tuple[float, str | None]]) -> float:
-    return sum(d for d, _ in motif)
+def duree(motif: Motif) -> float:
+    return sum(d for d, _, _ in motif)
 
 
 def _instrument(sorte: str) -> list[str]:
@@ -252,11 +293,21 @@ def _ondes() -> list[str]:
     return arcs
 
 
-def _blocs(motif: list[tuple[float, str | None]]) -> list[str]:
+def _hachures(largeur: float) -> list[float]:
+    """Où tombent les coups d'une volée, en pixels depuis son début : une hachure par coup."""
+    positions = []
+    xi = 1.2
+    while xi < largeur - 1:
+        positions.append(xi)
+        xi += PAS_VOLEE_PX
+    return positions
+
+
+def _blocs(motif: Motif) -> list[str]:
     """Le motif tracé sur la frise, à l'échelle commune à tous les dessins."""
     blocs: list[str] = []
     t = 0.0
-    for d, sorte in motif:
+    for d, sorte, _ in motif:
         x = FRISE_X0 + t * ECHELLE
         largeur = d * ECHELLE
         if sorte in ("b", "p"):
@@ -270,14 +321,11 @@ def _blocs(motif: list[tuple[float, str | None]]) -> list[str]:
                 f'<rect x="{x:.2f}" y="{FRISE_Y - BARRE_H}" width="{largeur:.2f}" '
                 f'height="{BARRE_H}" fill="{ENCRE}" fill-opacity="0.16" />'
             )
-            pas = 4.2
-            xi = x + 1.2
-            while xi < x + largeur - 1:
+            for dx in _hachures(largeur):
                 blocs.append(
-                    f'<rect x="{xi:.2f}" y="{FRISE_Y - BARRE_H}" width="1.7" '
+                    f'<rect x="{x + dx:.2f}" y="{FRISE_Y - BARRE_H}" width="1.7" '
                     f'height="{BARRE_H}" fill="{ENCRE}" />'
                 )
-                xi += pas
         elif sorte == "c":
             blocs.append(
                 f'<rect x="{x:.2f}" y="{FRISE_Y - BARRE_H - 3}" width="{largeur:.2f}" '
@@ -287,11 +335,11 @@ def _blocs(motif: list[tuple[float, str | None]]) -> list[str]:
     return blocs
 
 
-def _keyframes(cle: str, motif: list[tuple[float, str | None]], cycle: float) -> str:
+def _keyframes(cle: str, motif: Motif, cycle: float) -> str:
     """L'instrument sonne pendant les sons, se tait pendant les silences."""
     arrets: list[str] = []
     t = 0.0
-    for d, sorte in motif:
+    for d, sorte, _ in motif:
         arrets.append(f"{t / cycle * 100:.4g}%{{opacity:{0 if sorte is None else 1}}}")
         t += d
     arrets.append(f"{t / cycle * 100:.4g}%{{opacity:0}}")   # la pause finale
@@ -328,8 +376,11 @@ def svg_de_signal(nom: str) -> str:
         "animation:propagation 1.05s linear infinite}",
         f".curseur{{transform-box:view-box;animation:{cle}-balayage {cycle:.4g}s "
         "linear infinite}",
-        f"@keyframes {cle}-balayage{{from{{transform:translateX(0)}}"
-        f"to{{transform:translateX({total * ECHELLE:.2f}px)}}}}",
+        # Le curseur passe la frise en temps réel, puis attend au bout pendant la
+        # pause : il est sous la barre qu'on entend, quand on l'entend.
+        f"@keyframes {cle}-balayage{{0%{{transform:translateX(0px)}}"
+        f"{total / cycle * 100:.4g}%{{transform:translateX({total * ECHELLE:.2f}px)}}"
+        f"100%{{transform:translateX({total * ECHELLE:.2f}px)}}}}",
         # Mouvement coupé : l'instrument sonne, la frise porte déjà tout le motif.
         "@media (prefers-reduced-motion:reduce){.son,.onde{animation:none}"
         ".son{opacity:1}.curseur{display:none}}",
@@ -352,9 +403,51 @@ def svg_de_signal(nom: str) -> str:
     ]) + "\n"
 
 
+def motifs() -> dict:
+    """La table que joue `src/lib/signal-sonore.ts`, tirée des mêmes motifs que les dessins."""
+    return {
+        "sifflet": {"hz": {str(n): hz for n, hz in SIFFLET_HZ.items()}},
+        "cloche": {
+            "hz": round(CLOCHE_HZ, 4),
+            "partiels": [list(p) for p in PARTIELS_CLOCHE],
+            # Les instants des coups d'une volée, depuis son début : ceux des hachures.
+            "volee": [round(dx / ECHELLE, 4) for dx in _hachures(VOLEE * ECHELLE)],
+        },
+        "signaux": {
+            nom: {
+                "instrument": signal["instrument"],
+                "motif": [list(t) for t in signal["motif"]],
+                "duree": round(duree(signal["motif"]), 4),
+            }
+            for nom, signal in SIGNAUX.items()
+        },
+    }
+
+
+def json_des_motifs() -> str:
+    return json.dumps(motifs(), ensure_ascii=False, indent=2) + "\n"
+
+
+def _ecrire_ou_verifier_motifs(verifier: bool) -> int:
+    contenu = json_des_motifs()
+    try:
+        affiche = SORTIE_MOTIFS.relative_to(RACINE)
+    except ValueError:
+        affiche = SORTIE_MOTIFS
+    if verifier:
+        if not SORTIE_MOTIFS.is_file() or SORTIE_MOTIFS.read_text(encoding="utf-8") != contenu:
+            print(f"{affiche} n'est plus à jour, lance `npm run sons`", file=sys.stderr)
+            return 1
+        print(f"{len(SIGNAUX)} motif(s) sonore(s) à jour.")
+        return 0
+    SORTIE_MOTIFS.write_text(contenu, encoding="utf-8")
+    print(f"écrit {affiche}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     elements = {nom: svg_de_signal(nom) for nom in SIGNAUX}
-    return main_dessin(
+    code = main_dessin(
         argv,
         racine=RACINE,
         sortie=SORTIE,
@@ -362,6 +455,9 @@ def main(argv: list[str] | None = None) -> int:
         commande_npm="sons",
         label="signal(aux) sonore(s)",
     )
+    # `main_dessin` a déjà refusé tout autre argument.
+    verifier = "--verifier" in (sys.argv[1:] if argv is None else argv)
+    return max(code, _ecrire_ou_verifier_motifs(verifier))
 
 
 if __name__ == "__main__":

@@ -144,6 +144,8 @@ function monterVerification(
   let lignes: { id: string; bouton: HTMLButtonElement }[] = [];
   let consigne: HTMLElement | null = null;
   let verdict: HTMLElement | null = null;
+  /** Le bouton « Écouter le signal » de la question affichée, à démonter avec elle. */
+  let demonterSignal: (() => void) | null = null;
 
   const action = bouton('bouton bouton--principal', 'Valider', () => (corrigee ? suivante() : valider()));
   const signaler = el('a', { class: 'signaler', href: '#' }, 'Signaler une erreur');
@@ -182,6 +184,8 @@ function monterVerification(
    */
   const afficher = () => {
     const q = question();
+    demonterSignal?.();
+    demonterSignal = null;
     for (const enfant of [...racine.children]) if (enfant !== actions) enfant.remove();
     verdict = null;
     consigne = index === 0
@@ -202,14 +206,26 @@ function monterVerification(
       });
       return { id: p.id, bouton: b };
     });
+    const fichier = q.visuel?.fichier;
+    const lieuSignal = fichier?.startsWith('sons/') ? el('p', { class: 'signal-ecoute-lieu', hidden: '' }) : null;
     actions.before(
       el('p', { class: 'verification__compteur' },
         `Question ${index + 1} `, el('span', { class: 'discret' }, `sur ${questions.length}`)),
       ...[consigne].filter((n): n is HTMLElement => n !== null),
       el('h3', { class: 'verification__enonce' }, q.enonce),
       ...(q.visuel ? [el('img', { class: 'jeu__visuel', src: `/visuels/${q.visuel.fichier}`, alt: q.visuel.alt })] : []),
+      ...(lieuSignal ? [lieuSignal] : []),
       el('ul', { class: 'propositions' }, ...lignes.map(({ bouton: b }) => el('li', {}, b))),
     );
+    if (lieuSignal && fichier) {
+      // Le bouton et sa table n'arrivent que pour une frise sonore : les autres
+      // leçons ne paient rien.
+      import('./bouton-signal')
+        .then(({ monterBoutonSignal }) => {
+          if (lieuSignal.isConnected) demonterSignal = monterBoutonSignal(lieuSignal, fichier);
+        })
+        .catch(() => {});
+    }
     signaler.setAttribute('href', `/signaler?question=${encodeURIComponent(q.id)}`);
     actualiser();
   };
@@ -251,6 +267,8 @@ function monterVerification(
 
   const suivante = () => {
     if (index + 1 >= questions.length) {
+      demonterSignal?.();
+      demonterSignal = null;
       onFin({ bonnes, total: questions.length });
       return;
     }

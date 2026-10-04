@@ -268,3 +268,67 @@ qu'on entende ce qu'on vient d'activer. Le choix se garde sous la clé
 `permis-cotier:son` (`src/lib/son.ts`) ; couper tait aussi un son qui résonne
 encore. Les vibrations ne dépendent pas de ce réglage : elles suivent celui du
 système.
+
+## Le son des signaux
+
+Décidé le 3 octobre 2026 (lot H du plan final), tranché au grill le 4 : les
+seize signaux au sifflet et à la cloche de `public/visuels/sons/` s'entendent,
+sur le site comme dans l'app. Ce ne sont pas des bruitages : c'est la matière
+de la question, et ils ne suivent pas les règles de la palette ci-dessus.
+
+### D'où vient le son
+
+Aucun fichier audio. `scripts/sons.py` dessine les frises et écrit
+`src/lib/sons-motifs.json`, la même table ; `src/lib/signal-sonore.ts` la joue
+en Web Audio. Le son ne peut donc pas se désaccorder du dessin, et il ne pèse
+rien au précache.
+
+| | Valeur | Source |
+|---|---|---|
+| Bref, prolongé | 1 s, 5 s | règle 32 b) et c) |
+| Sifflet, navire 1 | 440 Hz, fondamentale et deux harmoniques | annexe III, § 1 b) : 250 à 700 Hz sous 75 m |
+| Sifflet, navire 2 | 660 Hz, une quinte au-dessus | même bande ; pour un motif à deux navires, aucun aujourd'hui |
+| Cloche | la 440 Hz, partiels à 2, 2,76 et 5,4 | la recette de `sons_app.py`, une seule dans le dépôt |
+| Volée | 17 coups en 5 s, un par hachure du dessin | règle 35 g), « sonnée rapidement » |
+| Crête | -12 dBFS, volée à -15 | convention : jamais plus fort qu'une notification |
+| Enveloppe | 50 ms d'attaque et de chute au sifflet, 5 ms de frappe à la cloche | convention : pas de clic |
+
+Les intervalles entre sons sont la convention écrite en tête de `sons.py`. La
+période de répétition n'est ni dessinée ni jouée.
+
+### Le bouton
+
+« Écouter le signal, 7 s » sous la frise, partout où elle s'affiche : écran de
+jeu (examen blanc compris), revue, vérification de leçon, `/question/[id]`.
+La durée écrite dit le prix : en examen blanc, écouter consomme les vingt
+secondes de la question, comme regarder la frise, et le chrono n'en sait rien.
+Pendant la lecture il devient « Arrêter », même largeur. VoiceOver lit
+« Écouter le signal, sept secondes, bouton ».
+
+Quand le son part, la frise repart du début, une seule passe, et s'arrête avec
+lui sur sa dernière image. Le curseur passe sous chaque barre au moment où elle
+sonne. Un écouteur Bluetooth ajoute sa latence : l'œil et l'oreille restent
+ensemble à la seconde, pas mieux.
+
+### Les règles
+
+- Aucun son sans geste : le contexte audio s'ouvre dans l'appui, seul moment
+  où WebKit l'autorise. Rien à l'affichage, rien au chrono.
+- Un seul signal à la fois dans la page ; changer de question coupe le son.
+- Le réglage « Jouer les sons » ne gouverne que les bruitages : un signal
+  demandé du doigt se joue. Il suit le bouton silencieux, à vérifier sur
+  l'iPhone (H2).
+- Le poids : le bouton et la table n'arrivent en `import()` que sous une
+  frise sonore, le moteur au premier appui. Mesuré le 4 octobre : accueil à
+  zéro, `/examen` +0,9 Kio brotli.
+- Événement `signal-ecoute` dans la mesure, nom du signal seulement.
+
+### Dans l'app, à prouver sur l'iPhone
+
+WebKit peut passer la session audio en `.playback` au premier son Web Audio :
+le bouton silencieux serait ignoré et la musique coupée, l'inverse des règles
+du greffon `Son`. Aujourd'hui `SonPlugin` ne pose `.ambient` qu'une fois, au
+premier bruitage, et rien ne la repose après un signal. Deux réponses selon ce
+que montre l'iPhone : reposer la session à chaque signal, ou le plan B, le
+greffon reçoit `signal({ motif })` et rend le son en natif depuis le même JSON.
+Ça se vérifie à la recette du lot D (H2), pas au simulateur.
