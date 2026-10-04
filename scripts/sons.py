@@ -65,7 +65,7 @@ règle 34 e) est dessiné et demandé comme le seul son prolongé qu'on entend.
 
 La cloche reprend la recette de la cloche de bord de `sons_app.py`, la même
 fondamentale et les mêmes partiels inharmoniques ; une volée est une suite de
-coups au pas des hachures de son dessin, jamais un son tenu. La période de
+coups, un par hachure de son dessin, jamais un son tenu. La période de
 répétition n'est pas jouée, comme elle n'est pas dessinée.
 """
 from __future__ import annotations
@@ -109,8 +109,7 @@ PROLONGE = 5.0            # règle 32 c), quatre à six secondes
 INTERVALLE = 1.0          # non sourcé pour le son, voir la note en tête
 VOLEE = 5.0               # règle 35 g), cloche sonnée rapidement cinq secondes
 COUP = 0.35               # un coup de cloche isolé, règle 35 h)
-PAS_VOLEE_PX = 4.2        # l'écart des hachures d'une volée, en pixels
-PAS_VOLEE = PAS_VOLEE_PX / ECHELLE   # le même écart entre deux coups joués
+PAS_VOLEE_PX = 4.2        # l'écart des hachures d'une volée, en pixels : un coup chacune
 
 # Annexe III du RIPAM, § 1 b) : 250 à 700 Hz sous 75 mètres. Le navire 1 émet
 # tous les signaux à un seul navire ; le navire 2, celui qui répond, sonne une
@@ -294,6 +293,16 @@ def _ondes() -> list[str]:
     return arcs
 
 
+def _hachures(largeur: float) -> list[float]:
+    """Où tombent les coups d'une volée, en pixels depuis son début : une hachure par coup."""
+    positions = []
+    xi = 1.2
+    while xi < largeur - 1:
+        positions.append(xi)
+        xi += PAS_VOLEE_PX
+    return positions
+
+
 def _blocs(motif: Motif) -> list[str]:
     """Le motif tracé sur la frise, à l'échelle commune à tous les dessins."""
     blocs: list[str] = []
@@ -312,13 +321,11 @@ def _blocs(motif: Motif) -> list[str]:
                 f'<rect x="{x:.2f}" y="{FRISE_Y - BARRE_H}" width="{largeur:.2f}" '
                 f'height="{BARRE_H}" fill="{ENCRE}" fill-opacity="0.16" />'
             )
-            xi = x + 1.2
-            while xi < x + largeur - 1:
+            for dx in _hachures(largeur):
                 blocs.append(
-                    f'<rect x="{xi:.2f}" y="{FRISE_Y - BARRE_H}" width="1.7" '
+                    f'<rect x="{x + dx:.2f}" y="{FRISE_Y - BARRE_H}" width="1.7" '
                     f'height="{BARRE_H}" fill="{ENCRE}" />'
                 )
-                xi += PAS_VOLEE_PX
         elif sorte == "c":
             blocs.append(
                 f'<rect x="{x:.2f}" y="{FRISE_Y - BARRE_H - 3}" width="{largeur:.2f}" '
@@ -403,7 +410,8 @@ def motifs() -> dict:
         "cloche": {
             "hz": round(CLOCHE_HZ, 4),
             "partiels": [list(p) for p in PARTIELS_CLOCHE],
-            "pas_volee": round(PAS_VOLEE, 4),
+            # Les instants des coups d'une volée, depuis son début : ceux des hachures.
+            "volee": [round(dx / ECHELLE, 4) for dx in _hachures(VOLEE * ECHELLE)],
         },
         "signaux": {
             nom: {

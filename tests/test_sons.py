@@ -194,15 +194,17 @@ def test_le_json_porte_les_hauteurs_et_la_cloche():
     # La recette de sons_app.py, et pas une deuxième : rapport, amplitude, décroissance.
     rapports = [p[0] for p in table["cloche"]["partiels"]]
     assert rapports == [1.0, 2.0, 2.76, 5.4]
-    assert 0 < table["cloche"]["pas_volee"] < 0.5
 
 
-def test_le_pas_de_la_volee_est_celui_des_hachures():
-    """Le son et le dessin d'une volée comptent les mêmes coups."""
+def test_la_volee_sonne_un_coup_par_hachure():
+    """Le son et le dessin d'une volée comptent les mêmes coups, aux mêmes instants."""
     svg = svg_de_signal("brume-mouillage")
     hachures = [float(x) for x in re.findall(r'<rect x="([\d.]+)" y="\d+" width="1.7"', svg)]
-    pas_dessine = (hachures[1] - hachures[0]) / sons.ECHELLE
-    assert motifs()["cloche"]["pas_volee"] == pytest.approx(pas_dessine, abs=1e-3)
+    instants = [(x - sons.FRISE_X0) / sons.ECHELLE for x in hachures]
+    volee = motifs()["cloche"]["volee"]
+    assert len(volee) == len(hachures) >= 10
+    assert volee == pytest.approx(instants, abs=1e-3)
+    assert all(0 <= t < sons.VOLEE for t in volee)
 
 
 def test_le_json_est_deterministe():
