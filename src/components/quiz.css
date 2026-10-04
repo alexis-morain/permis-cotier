@@ -441,12 +441,14 @@
 .jeu > .propositions { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) 70ms both; }
 
 /* Le moment écrit du site : le verdict monte sous les propositions, pendant
-   que la barre d'action prend sa couleur. */
+   que la barre d'action prend sa couleur et que la lettre des propositions
+   corrigées se marque. 200 ms, le plafond de DESIGN.md : un verdict qui
+   traîne ressemble à une hésitation. */
 @keyframes verdict-entree {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-.jeu > .verdict { animation: verdict-entree 220ms cubic-bezier(0.2, 0, 0, 1) both; }
+.jeu > .verdict { animation: verdict-entree 200ms cubic-bezier(0.2, 0, 0, 1) both; }
 
 @keyframes pastille-marquee {
   from { transform: scale(0.7); }
@@ -454,17 +456,19 @@
 }
 .jeu > .propositions .proposition--juste .proposition__lettre,
 .jeu > .propositions .proposition--fausse .proposition__lettre {
-  animation: pastille-marquee 220ms cubic-bezier(0.2, 0, 0, 1);
+  animation: pastille-marquee 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-@keyframes chrono-battement {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-.jeu__chrono--urgent { animation: chrono-battement 1s ease-in-out infinite; }
+/* Les cinq dernières secondes du chrono se disent par la couleur, plus haut
+   dans la feuille : le rouge du chiffre et de la jauge. Elles ne clignotent
+   pas : DESIGN.md n'écrit qu'un moment, et un battement qui dure cinq
+   secondes en est un second. */
 
-.resultat__score { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) both; }
-.resultat__verdict { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) 90ms both; }
+/* L'écran de résultat remplace l'écran de jeu d'un coup : le score et le
+   verdict entrent comme une question entre, même durée, même geste, ensemble.
+   Ce n'est pas un moment, c'est la preuve que la page a changé. */
+.resultat__score,
+.resultat__verdict { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
   .jeu > .jeu__enonce,
@@ -473,7 +477,6 @@
   .jeu > .verdict,
   .jeu > .propositions .proposition--juste .proposition__lettre,
   .jeu > .propositions .proposition--fausse .proposition__lettre,
-  .jeu__chrono--urgent,
   .resultat__score,
   .resultat__verdict {
     animation: none;

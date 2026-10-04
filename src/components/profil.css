@@ -145,7 +145,7 @@
   inset: 0;
   transform-origin: left;
   transform: scaleX(var(--part, 0));
-  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 .indice__part--vu, .indice__puce--vu { background: var(--indice-vu, var(--jauge)); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
@@ -183,7 +183,7 @@
   border-radius: inherit;
   background: var(--jauge);
   transform-origin: left;
-  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 .jour__note { margin: 0.5rem 0 0; }
 .jour__examen { margin: 0 0 1.25rem; max-width: 46ch; }

@@ -61,8 +61,21 @@ Une famille, Archivo variable, sur deux largeurs.
 ## Mouvement
 
 Transform et opacité seulement, 120 à 200 ms, sortie exponentielle. Un seul
-moment écrit : le verdict, qui colore d'un coup la barre d'action et fait
-monter l'explication. Tout se coupe sous `prefers-reduced-motion`.
+moment écrit : le verdict, qui colore d'un coup la barre d'action, marque la
+lettre des propositions corrigées et fait monter l'explication. Tout se coupe
+sous `prefers-reduced-motion`.
+
+Le reste n'est pas un moment, c'est de la preuve : un contrôle répond en
+120 ms, une jauge se remplit en 200 ms, une question ou un écran de résultat
+qui remplace le précédent entre en 180 ms, pour qu'on voie que la page a
+changé. Deux exceptions, nommées dans le test `mouvement.test.ts` et nulle
+part ailleurs : l'horloge du chrono glisse une seconde en linéaire entre deux
+battements, et la silhouette bat le temps que la banque arrive. Rien ne
+clignote pour attirer l'œil, les cinq dernières secondes se disent en rouge.
+
+Quand le son des signaux arrivera, il fera le même geste que le verdict : la
+frise repart du début à l'instant où le son part, et s'arrête avec lui. Aucun
+mouvement propre au son, aucun son sans geste du candidat.
 
 ## Écran de jeu
 
