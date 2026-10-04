@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { POUR_APP } from '../lib/cible';
 import { SITE } from '../lib/seo';
+import { raisonDuRepli } from '../lib/signalement';
 
 // Deux chemins, dans cet ordre. Si Turnstile est configuré au build, le
 // formulaire poste sur `/api/signaler` : le Worker vérifie le jeton, ouvre une
@@ -29,6 +30,19 @@ const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
 // vaudrait « capacitor://localhost », inouvrable pour qui reçoit le
 // signalement : le formulaire porte alors le domaine du site.
 const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
+
+// Pourquoi le repli vers le courrier, dit au visiteur. La table vient de la
+// bibliothèque testée ; le script en ligne ne peut pas l'importer, il la lit
+// dans un attribut.
+const RAISONS = JSON.stringify({
+  403: raisonDuRepli(403),
+  429: raisonDuRepli(429),
+  503: raisonDuRepli(503),
+  autre: raisonDuRepli(500),
+  reseau: raisonDuRepli(null),
+  sansJeton: raisonDuRepli('sans-jeton'),
+});
+
 ---
 
 <Base titre="Signaler une erreur" description="Signaler une question fausse ou une explication incorrecte." indexable={false}>
@@ -41,7 +55,7 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
     </p>
 
     <form class="signalement" id="signalement" method="post" enctype="text/plain"
-      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-origine={ORIGINE_APP}>
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-origine={ORIGINE_APP} data-raisons={RAISONS}>
       <p>
         <label for="question">Identifiant de la question</label>
         <input id="question" name="question" class="champ" required readonly />
@@ -112,6 +126,7 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
 
     <div class="confirmation" id="confirmation" role="status" tabindex="-1" hidden>
       <p class="confirmation__titre">Ton logiciel de courrier s’ouvre avec le message pré-rempli.</p>
+      <p id="confirmation-raison" hidden></p>
       <p>
         Il ne part pas tout seul : relis-le, puis envoie-le. Rien n’est enregistré ici.
       </p>
@@ -148,6 +163,7 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
     const confirmation = document.getElementById('confirmation');
     const confirmationEnvoi = document.getElementById('confirmation-envoi');
     const bouton = document.getElementById('envoyer');
+    const raisons = JSON.parse(formulaire?.dataset.raisons ?? '{}');
 
     // Un réseau muet ne rejette rien : un portail captif ou un mobile qui a
     // lâché accepte la connexion et se tait, et le bouton restait sur
@@ -165,7 +181,7 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
     };
 
     /** Le repli, inchangé : un courrier pré-rempli que le visiteur relit et envoie. */
-    function replierSurCourrier(question, motif, details) {
+    function replierSurCourrier(question, motif, details, raison) {
       const corps = [
         `Question : ${question}`,
         `Motif : ${MOTIFS[motif] ?? motif}`,
@@ -182,6 +198,13 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
 
       const marque = document.getElementById('confirmation-id');
       if (marque && question) marque.textContent = question;
+      // Une erreur nomme le problème avant la sortie : sans clé Turnstile au
+      // build, le courrier est la voie normale, et il n'y a rien à expliquer.
+      const explication = document.getElementById('confirmation-raison');
+      if (explication && raison) {
+        explication.textContent = raison;
+        explication.hidden = false;
+      }
       if (formulaire) formulaire.hidden = true;
       if (confirmation) {
         confirmation.hidden = false;
@@ -215,7 +238,7 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
       // l'endpoint refuserait de toute façon. Droit au courrier.
       const jeton = cleTurnstile ? (window.turnstile?.getResponse() ?? '') : '';
       if (!cleTurnstile || !jeton) {
-        replierSurCourrier(question, motif, details);
+        replierSurCourrier(question, motif, details, cleTurnstile ? raisons.sansJeton : '');
         return;
       }
 
@@ -233,18 +256,21 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
           body: JSON.stringify({ question, motif, details, turnstile: jeton }),
           signal: controleur.signal,
         });
-        if (!reponse.ok) throw new Error(`HTTP ${reponse.status}`);
+        if (!reponse.ok) throw Object.assign(new Error(`HTTP ${reponse.status}`), { statut: reponse.status });
         const rendu = await reponse.json().catch(() => ({}));
         // Le motif seul part à la mesure : jamais le texte du signalement.
         window.umami?.track('signalement-envoye', { motif });
         annoncerEnvoi(typeof rendu.url === 'string' ? rendu.url : '');
-      } catch {
+      } catch (erreur) {
         window.turnstile?.reset();
         if (bouton) {
           bouton.disabled = false;
           bouton.textContent = 'Envoyer le signalement';
         }
-        replierSurCourrier(question, motif, details);
+        // Le statut du Worker nomme la cause ; sans réponse, c'est le réseau.
+        const statut = erreur && typeof erreur.statut === 'number' ? erreur.statut : null;
+        const raison = statut === null ? raisons.reseau : raisons[statut] ?? raisons.autre;
+        replierSurCourrier(question, motif, details, raison);
       } finally {
         clearTimeout(echeance);
       }

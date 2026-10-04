@@ -79,10 +79,9 @@ const liste = {
       <div class="ouverture__texte">
         <h1>Révise le permis côtier au format de l’épreuve.</h1>
         <p class="ouverture__promesse">
-          Le cours d’abord, {cours.ecrites} leçons de trois minutes. L’entraînement ensuite,
-          thème par thème, avec la correction après chaque réponse. L’examen blanc pour finir,
-          quarante questions et cinq erreurs admises, comme le jour J. Gratuit, sans compte, et
-          chaque réponse cite l’article dont elle sort.
+          Gratuit, sans compte. Le cours en {cours.ecrites} leçons de trois minutes, puis
+          l’examen blanc au format du jour J : quarante questions, vingt secondes chacune, cinq
+          erreurs admises. Chaque réponse cite l’article dont elle sort.
         </p>
 
         <div class="ouverture__actions">
@@ -97,14 +96,11 @@ const liste = {
         </div>
 
         <p class="ouverture__deja">
-          Tu veux simplement te situer ?
-          <a href="/test-permis-cotier" data-mesure="accueil-test">Fais le test gratuit du permis côtier</a>.
-        </p>
-
-        <p class="ouverture__deja">
-          Déjà en bateau-école ?
+          Tu veux juste te situer ? L’examen blanc est aussi
+          <a href="/test-permis-cotier" data-mesure="accueil-test">le test gratuit du permis côtier</a>,
+          le même, en dix minutes. Déjà en bateau-école ?
           <a href="/entrainement" data-mesure="accueil-entrainement">Entraîne-toi thème par thème</a>,
-          sans chrono, ou <a href="/cours" data-mesure="accueil-cours-lien">regarde le plan du cours</a>.
+          sans chrono.
         </p>
       </div>
 
@@ -175,8 +171,7 @@ const liste = {
       <h2>À quoi ressemble une question</h2>
       <p class="preuve__chapo">
         Celle-ci sort de la banque telle quelle. Ce qui compte est en bas : le texte dont la
-        réponse est tirée, avec son numéro. C’est la seule chose que ce site fait et que les
-        autres ne font pas.
+        réponse est tirée, avec son numéro.
       </p>
 
       <div class="preuve__cadre encadre">
@@ -217,7 +212,7 @@ const liste = {
                 ou{' '}
               </Fragment>
             )}
-            <a href="/themes" data-mesure="accueil-themes">parcourir les {total} autres</a>.
+            <a href="/themes" data-mesure="accueil-themes">parcourir les {total - 1} autres</a>.
           </p>
         </div>
       </div>
@@ -292,7 +287,7 @@ const liste = {
     </p>
     <p>
       Le code et la banque sont publics, sous licence libre. Si une question te paraît fausse,
-      le bouton de signalement est juste dessous et la correction arrive dans la semaine.
+      le bouton de signalement est sous chaque question et la correction arrive dans la semaine.
       Le détail de la fabrication est sur la page <a href="/a-propos">qui écrit ces questions</a>.
     </p>
   </section>
@@ -465,10 +460,9 @@ const liste = {
     border-radius: var(--rayon-petit);
     background: var(--jaune);
     color: var(--marine);
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-stretch: var(--large);
   }
   .preuve__lien { margin-top: 1rem; }
 

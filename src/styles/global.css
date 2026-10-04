@@ -306,7 +306,9 @@ img { max-width: 100%; height: auto; }
   border-color: transparent;
   background: transparent;
   box-shadow: none;
-  padding-inline: 0.25rem;
+  /* Le filet transparent compte comme un bord pour le détecteur, et quatre
+     pixels à côté du texte lisent serré : la même marge qu'un bouton. */
+  padding-inline: 0.75rem;
   font-weight: 600;
   text-decoration: underline;
   text-decoration-color: var(--jaune);
@@ -337,28 +339,27 @@ img { max-width: 100%; height: auto; }
 }
 
 /* Le rappel de la raison de passer le permis, dite au questionnaire de
-   départ. Il revient en tête de la fiche, sur l'accueil et sur l'écran de
-   résultat quand l'examen est recalé : d'où sa place ici. */
+   départ. Une seule phrase, « Tu passes ce permis pour … », la raison en
+   largeur 125 % et graisse 600 : c'est ainsi que le système distingue un
+   chapeau, sans label au-dessus. Il revient sur l'écran de résultat, sur
+   l'accueil et sur la fiche le jour où un examen blanc est recalé, et sur
+   l'écran de fin du questionnaire : d'où sa place ici. */
 .rappel {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
   margin: 0;
   padding: 1rem 1.2rem;
   border-radius: var(--rayon);
   background: var(--jaune-pale);
   max-width: 40rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
-.rappel__amorce { font-size: 0.9rem; font-weight: 700; color: var(--texte-doux); }
 .rappel q {
   font-stretch: var(--large);
   font-weight: 800;
-  font-size: 1.25rem;
-  line-height: 1.2;
   letter-spacing: -0.01em;
   quotes: '« ' ' »';
 }
-.rappel__modifier { align-self: flex-start; font-size: 0.85rem; font-weight: 600; color: var(--texte-doux); margin-top: 0.3rem; }
+.rappel .discret { display: block; margin-top: 0.5rem; font-weight: 400; }
 
 
 /* Le contrôle segmenté : des boutons collés, l'enfoncé est marine. Sert au

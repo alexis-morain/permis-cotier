@@ -65,6 +65,25 @@ describe('mes erreurs', () => {
     expect(document.querySelector('.erreurs__dues')).toBeNull();
   });
 
+  it('écrit les deux bonnes réponses en liste, sans tiret, et le rang sous le titre', () => {
+    const double = { ...question('balisage-0004', 'balisage-cardinal', ['a', 'b']), propositions: [
+      { id: 'a', texte: 'Six scintillements' },
+      { id: 'b', texte: 'Un éclat long' },
+      { id: 'c', texte: 'Rien de tout ça' },
+    ] };
+    sauvegarder(enregistrerReponse(etatInitial(), 'balisage-0004', false, '2026-09-05'));
+    render(<Erreurs questions={[...banque, double]} jour={jour} />);
+    const item = document.querySelector('.erreur')!;
+    expect(item.textContent).toContain('Les deux bonnes réponses');
+    expect([...item.querySelectorAll('.erreur__bonnes li')].map((n) => n.textContent)).toEqual(['Six scintillements', 'Un éclat long']);
+    expect(item.textContent).not.toContain('—');
+    // Le thème et le compte de ratés ne coiffent pas l'énoncé : un sur-titre
+    // est ce que DESIGN.md refuse, et un lecteur d'écran qui va de titre en
+    // titre le sautait.
+    const titre = item.querySelector('h3')!;
+    expect(titre.compareDocumentPosition(item.querySelector('.erreur__rang')!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it('ne dit rien de faux quand rien n’a été joué', () => {
     render(<Erreurs questions={banque} jour={jour} />);
     expect(screen.getByText('Rien à revoir, rien de raté.')).toBeTruthy();

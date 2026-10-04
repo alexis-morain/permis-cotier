@@ -3,6 +3,7 @@ import {
   LONGUEUR_DETAILS_MAX,
   MOTIFS,
   corpsIssue,
+  raisonDuRepli,
   texteInerte,
   titreIssue,
   valider,
@@ -290,5 +291,22 @@ describe('corpsIssue', () => {
   it('dit quand le visiteur n’a rien ajouté', () => {
     const corps = corpsIssue({ question: 'balisage-0001', motif: 'visuel', details: '' });
     expect(corps).toContain('(rien de plus)');
+  });
+});
+
+describe('raisonDuRepli', () => {
+  // Le repli vers le courrier disait « ton logiciel de courrier s'ouvre » sans
+  // dire pourquoi : une erreur nomme le problème avant la sortie.
+  it('nomme le refus anti-robot, la limite, la fermeture et la panne', () => {
+    expect(raisonDuRepli(403)).toBe('La vérification anti-robot a refusé l’envoi.');
+    expect(raisonDuRepli(429)).toBe('Trop de signalements d’affilée : le serveur demande une minute.');
+    expect(raisonDuRepli(503)).toBe('Le signalement en ligne est fermé pour l’instant.');
+    expect(raisonDuRepli(500)).toBe('Le serveur n’a pas pris le signalement.');
+    expect(raisonDuRepli(400)).toBe('Le serveur n’a pas pris le signalement.');
+  });
+
+  it('dit la coupure quand aucune réponse n’est arrivée, et le widget qui n’a pas chargé', () => {
+    expect(raisonDuRepli(null)).toBe('La connexion a coupé avant la réponse du serveur.');
+    expect(raisonDuRepli('sans-jeton')).toBe('La vérification anti-robot n’a pas chargé.');
   });
 });

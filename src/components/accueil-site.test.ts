@@ -10,6 +10,7 @@ import { monterAccueil } from './accueil-site';
 import {
   aujourdhui,
   charger,
+  enregistrerExamen,
   enregistrerProfil,
   enregistrerReponse,
   etatInitial,
@@ -107,22 +108,69 @@ describe('la reprise du cours', () => {
 });
 
 describe('la reprise sur l’accueil', () => {
-  it('invite le nouveau venu au questionnaire', () => {
+  it('invite le nouveau venu au questionnaire, en disant ce qu’on en fera', () => {
     page({ lecons, banque });
     monterAccueil(document);
-    const a = lien(/pourquoi tu passes le permis/);
+    const a = lien('Dis en trente secondes pourquoi tu passes le permis');
     expect(a.getAttribute('href')).toBe('/profil/depart');
     expect(a.getAttribute('data-mesure')).toBe('accueil-profil-depart');
+    // La promesse est précise : un rappel, le jour d'un examen blanc recalé.
+    // « Le site se règle à ta main » promettait plus que ce qui change.
+    expect(document.querySelector('.reprise')!.textContent).toContain('le jour où un examen blanc est recalé');
+  });
+
+  it('commence la ligne par une majuscule quand il n’y a pas de prénom', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise p:not(.reprise__examen)')!.textContent).toMatch(/^Indice de préparation/);
+  });
+
+  it('redit le dernier examen blanc, et la raison seulement s’il est recalé', () => {
+    let e = enregistrerProfil(etatInitial(), { ...profilVide(), motivations: ['peche'], rempliLe: '2026-09-01' });
+    e = enregistrerExamen(e, { date: aujourdhui(), bonnes: 11, total: 40, reussi: false });
+    sauvegarder(e);
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise__examen')!.textContent).toBe('Dernier examen blanc : 11 sur 40, recalé.');
+    expect(document.querySelector('.reprise__raison')!.textContent).toContain('pêcher');
+
+    // Reçu : le score reste, le rappel se tait. Il n'aide que quand ça coince.
+    e = enregistrerExamen(e, { date: aujourdhui(), bonnes: 37, total: 40, reussi: true });
+    sauvegarder(e);
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise__examen')!.textContent).toBe('Dernier examen blanc : 37 sur 40, reçu.');
+    expect(document.querySelector('.reprise__raison')).toBeNull();
+  });
+
+  it('ne double pas le point quand la phrase du candidat en porte un', () => {
+    let e = enregistrerProfil(etatInitial(), { ...profilVide(), phrase: 'Emmener mon père pêcher.', rempliLe: '2026-09-01' });
+    e = enregistrerExamen(e, { date: aujourdhui(), bonnes: 11, total: 40, reussi: false });
+    sauvegarder(e);
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise__raison')!.textContent).toBe('Tu passes ce permis pour Emmener mon père pêcher.');
+  });
+
+  it('dit l’objectif du jour atteint plutôt qu’un plafond muet', () => {
+    const e = ids.reduce((etat, id) => enregistrerReponse(etat, id, true, aujourdhui()), etatInitial());
+    sauvegarder({ ...e, profil: { ...profilVide(), rythme: 10 } });
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise p:not(.reprise__examen)')!.textContent).toContain('Objectif du jour fait, 10 questions');
   });
 
   it('résume l’indice, le jour, les erreurs et la raison', () => {
     let e = enregistrerProfil(etatInitial(), { ...profilVide(), prenom: 'Léa', motivations: ['peche'], rempliLe: '2026-09-01' });
     e = enregistrerReponse(e, 'vhf-0', false, aujourdhui());
     e = enregistrerReponse(e, 'vhf-1', true, aujourdhui());
+    // La raison ne revient sur l'accueil qu'après un examen blanc recalé.
+    e = enregistrerExamen(e, { date: aujourdhui(), bonnes: 20, total: 40, reussi: false });
     sauvegarder(e);
     page({ lecons, banque });
     monterAccueil(document);
-    const texte = document.querySelector('.reprise p')!.textContent!;
+    const texte = document.querySelector('.reprise p:not(.reprise__examen)')!.textContent!;
     expect(texte).toMatch(/^Léa, indice de préparation \d+ sur 100, /);
     expect(texte).toContain('sur 100');
     expect(texte).toMatch(/Aujourd’hui 2 questions sur \d+, 1 jour de suite\./);
@@ -143,7 +191,7 @@ describe('la reprise sur l’accueil', () => {
     page({ lecons, banque });
     monterAccueil(document);
     expect(document.querySelector('.reprise img')).toBeNull();
-    expect(document.querySelector('.reprise p')!.textContent).toContain('<img src=x>, indice');
+    expect(document.querySelector('.reprise p:not(.reprise__examen)')!.textContent).toContain('<img src=x>, indice');
   });
 });
 
@@ -196,7 +244,7 @@ describe('la date d’examen, la nuit du 15 janvier à Paris', () => {
 
   it('dit que c’est passé la veille au soir devenue lendemain', () => {
     afficher('2026-01-14');
-    expect(compte()).toBe('C’est passé. Tu peux effacer la date dans les réglages.');
+    expect(compte()).toBe('C’est passé. Efface la date au-dessus, ou pose la prochaine.');
   });
 
   it('enregistre la date posée, la compte, et l’efface quand on la retire', () => {

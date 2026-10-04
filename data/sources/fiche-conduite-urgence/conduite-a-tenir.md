@@ -14,11 +14,10 @@
 
 ## Nature de cette fiche
 
-Ce document n'est pas un texte réglementaire extrait par machine, contrairement
-aux règles du RIPAM et aux articles de la division 240. Aucun texte de droit
-français ne décrit les gestes à faire face à un homme à la mer, une voie d'eau,
-un incendie ou un échouement : ces conduites relèvent de la pratique marine, que
-le programme de l'examen exige pourtant. Cette fiche en est une mise en forme
+Aucun texte de droit français ne décrit les gestes à faire face à un homme à
+la mer, une voie d'eau, un incendie ou un échouement : ces conduites relèvent
+de la pratique marine, que le programme de l'examen exige pourtant. Cette
+fiche, écrite à la main et non extraite d'un texte, en est une mise en forme
 écrite, à vérifier contre les publications de la SNSM et des CROSS.
 
 Ce qui relève du droit est ailleurs, et les questions le citent directement : la

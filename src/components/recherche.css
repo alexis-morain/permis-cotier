@@ -355,6 +355,24 @@ kbd.touche {
   margin: 0;
   color: var(--texte-doux);
 }
+/* Les mots proposés à vide : des boutons qui se lisent comme des liens, la
+   même cible de 44 px que le reste, sans sortir de la phrase. */
+.recherche__exemple {
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: 0 0.15rem;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--texte);
+  text-decoration: underline;
+  text-decoration-color: var(--jaune);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+  cursor: pointer;
+}
+.recherche__exemple:hover { text-decoration-color: currentColor; }
 .recherche__legende {
   margin: 0 0 0.4rem;
   font-size: 0.8rem;

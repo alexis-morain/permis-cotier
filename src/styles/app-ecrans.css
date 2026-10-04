@@ -246,11 +246,6 @@ html[data-app] .indice__mot {
   color: var(--texte-doux);
 }
 html[data-app] .indice__nombre .display { font-size: clamp(5rem, 28vw, 7.5rem); }
-html[data-app] .rappel__modifier {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-}
 html[data-app] .faibles,
 html[data-app] .maitrise,
 html[data-app] .reglage { max-width: none; }

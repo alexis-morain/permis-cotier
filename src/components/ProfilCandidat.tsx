@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
 import { aujourdhui, charger, effacer, enregistrerProfil, sauvegarder } from '../lib/progression';
 import { estDue } from '../lib/quiz';
@@ -12,6 +12,7 @@ import {
   maitriseParTheme,
   notionsLesPlusFaibles,
   objectifDuJour,
+  pointFinal,
   profilRempli,
   quatorzeJours,
   rappel,
@@ -48,6 +49,34 @@ const JOURS_COURTS = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 const CHANGEMENT_COMPTAGE = '2026-09-10';
 const FIN_AVIS_COMPTAGE = '2026-10-10';
 
+/** « 1 vue », « 2 vues » : zéro et un au singulier, comme on le dit. */
+function accorde(n: number, mot: string): string {
+  return `${n} ${mot}${n > 1 ? 's' : ''}`;
+}
+
+/**
+ * Le compte d'une ligne de thème ou de notion. Le rouge dit une faute, jamais
+ * « pas encore retenu » : le premier jour, rien ne l'est, puisqu'il faut deux
+ * jours. Sans retenue et avec des ratées, c'est le compte des ratées qu'on
+ * montre, le seul qui dise quelque chose ce jour-là.
+ */
+function Compte({ vues, retenues, ratees, total }: { vues: number; retenues: number; ratees: number; total: number }) {
+  const [nombre, mot] = retenues === 0 && ratees > 0 ? [ratees, 'ratée'] : [retenues, 'retenue'];
+  return (
+    <>
+      <span className={ratees > 0 ? 'maitrise__faible' : ''}>{nombre}</span>
+      <span className="discret">{` ${mot}${nombre > 1 ? 's' : ''} sur ${accorde(vues, 'vue')}, ${total} en banque`}</span>
+    </>
+  );
+}
+
+/** « 2 questions, 1 examen blanc, ta raison et ta date. », sans ce qui vaut zéro. */
+function ceQuiPart(parts: string[]): string {
+  if (parts.length === 0) return '';
+  const phrase = parts.length === 1 ? parts[0]! : `${parts.slice(0, -1).join(', ')} et ${parts[parts.length - 1]}`;
+  return `${phrase.charAt(0).toUpperCase()}${phrase.slice(1)}.`;
+}
+
 function Coche() {
   return (
     <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -65,9 +94,18 @@ function Coche() {
 export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const [etat, setEtat] = useState<Etat | null>(null);
   const [confirme, setConfirme] = useState(false);
+  const [efface, setEfface] = useState(false);
   const [jour] = useState(() => aujourdhui());
+  const titre = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => setEtat(charger()), []);
+
+  // Après l'effacement, on repart du haut : la page a changé sous le bouton.
+  useEffect(() => {
+    if (!efface) return;
+    window.scrollTo({ top: 0 });
+    titre.current?.focus({ preventScroll: true });
+  }, [efface]);
 
   if (!etat) return null;
 
@@ -97,6 +135,11 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const recus = examens.filter((x) => x.reussi).length;
   const meilleur = examens.reduce((m, x) => Math.max(m, x.bonnes), 0);
   const rien = vues.length === 0 && examens.length === 0 && Object.keys(etat.lecons).length === 0;
+  // La relecture des erreurs montre les questions ratées au moins une fois :
+  // sans elles, le lien mènerait à une page vide.
+  const ratees = vues.some(([, e]) => e.ratees > 0);
+  // La raison ne s'affiche en tête que le jour où ça coince.
+  const recale = examens[0] !== undefined && !examens[0].reussi;
   // Le changement de comptage ne concerne que ceux qui révisaient avant lui.
   const direLeChangement =
     jour < FIN_AVIS_COMPTAGE && vues.some(([, e]) => e.vueLe < CHANGEMENT_COMPTAGE);
@@ -117,23 +160,37 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
       ? { href: '/cours', texte: 'Continuer le cours' }
       : { href: '/examen', texte: 'Faire un examen blanc' };
 
-  const blocRappel = raison ? (
-    <p className="rappel">
-      <span className="rappel__amorce">Tu passes ce permis pour</span>
-      <q>{raison}</q>
-      <a className="rappel__modifier" href="/profil/depart">modifier</a>
+  // Un point final de trop si la phrase du candidat en porte déjà un.
+  const finRappel = raison ? pointFinal(raison) : '';
+  const blocRappel = !raison ? (
+    <p className="fiche__invitation">
+      <a href="/profil/depart" data-mesure="profil-invitation">Dis en trente secondes pourquoi tu passes le permis</a>
+      {'\u00a0'}: on te le rappellera le jour où un examen blanc est recalé.
     </p>
-  ) : (
-    <div className="encadre fiche__invitation">
-      <p>
-        <b>Trente secondes pour dire pourquoi tu passes le permis.</b> On te le rappellera le jour
-        où un examen blanc est recalé, et la fiche se règle à ta main.
-      </p>
-      <a className="bouton bouton--principal" href="/profil/depart" data-mesure="profil-invitation">
-        Répondre
+  ) : recale ? (
+    <p className="rappel">
+      Tu passes ce permis pour <q>{raison}</q>{finRappel}
+    </p>
+  ) : null;
+
+  const blocSuite = (
+    <div className="jeu__actions">
+      <a className="bouton bouton--principal" href={suite.href} data-mesure="profil-suite" data-mesure-vers={suite.href}>
+        {suite.texte}
       </a>
     </div>
   );
+
+  // Ce qui part avec l'effacement, compté, sans ce qui vaut zéro.
+  const nbQuestions = Object.keys(etat.questions).length;
+  const nbLecons = Object.keys(etat.lecons).length;
+  const partira = ceQuiPart([
+    ...(nbQuestions > 0 ? [accorde(nbQuestions, 'question')] : []),
+    ...(etat.examens.length > 0 ? [`${etat.examens.length} examen${etat.examens.length > 1 ? 's blancs' : ' blanc'}`] : []),
+    ...(nbLecons > 0 ? [accorde(nbLecons, 'leçon')] : []),
+    ...(raison ? ['ta raison'] : []),
+    ...(etat.dateExamen ? ['ta date'] : []),
+  ]);
 
   const blocIndice = (
     <section className="fiche__indice" aria-labelledby="indice-titre">
@@ -147,13 +204,13 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
         </p>
         <div className="indice__texte">
           <p className="indice__palier">{palier.titre}</p>
-          <p>{rien ? (POUR_APP ? 'Rien d’enregistré sur ce téléphone pour l’instant.' : 'Rien d’enregistré dans ce navigateur pour l’instant.') : palier.phrase}</p>
+          <p>{palier.phrase}</p>
         </div>
       </div>
       {/* Trois calques pleins, du plus long au plus court, chacun mis à
           l'échelle : la part se lit à la couleur qui s'arrête, et le
           mouvement passe par `transform`, jamais par `width`. */}
-      <div className="indice__jauge" role="img" aria-label={`${ind.parts.vu} points pour ce qui est vu, ${ind.parts.retenu} pour ce qui est retenu, ${ind.parts.examens} pour les examens blancs`}>
+      <div className="indice__jauge" role="img" aria-label={`${accorde(ind.parts.vu, 'point')} sur 20 pour ce qui est vu, ${ind.parts.retenu} sur 35 pour ce qui est retenu, ${ind.parts.examens} sur 45 pour les examens blancs`}>
         <span
           className="indice__part indice__part--examens"
           style={{ '--part': (ind.parts.vu + ind.parts.retenu + ind.parts.examens) / 100 } as React.CSSProperties}
@@ -188,7 +245,8 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           la moyenne de tes trois derniers examens blancs terminés
           {ind.examensComptes > 0 ? `, ${ind.examensComptes} pour l’instant` : ', aucun pour l’instant'}.
           « Prêt » demande en plus deux examens reçus sur les trois derniers : un nombre ne dit pas qu’on tient
-          quarante questions en vingt secondes chacune.
+          quarante questions en vingt secondes chacune. Une question réussie revient un jour plus tard,
+          puis trois, puis sept, puis vingt et un. Une faute la ramène tout de suite et remet le compteur à zéro.
         </p>
       </details>
     </section>
@@ -196,237 +254,229 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
 
   return (
     <div className="fiche">
-      {POUR_APP ? (
-        // Dans l'app, l'écran s'appelle comme son onglet, et l'indice passe
-        // en tête : c'est le chiffre qu'on vient voir.
-        <>
-          <header className="fiche__tete">
-            <h1>Ta fiche</h1>
-          </header>
-          {blocIndice}
-          <div className="fiche__tete">{blocRappel}</div>
-        </>
-      ) : (
-        <>
-          <header className="fiche__tete">
-            <h1>{prenom ? `${prenom}, voilà où tu en es.` : 'Voilà où tu en es.'}</h1>
-            {blocRappel}
-          </header>
-          {blocIndice}
-        </>
-      )}
-
-      <section className="fiche__jour" aria-labelledby="jour-titre">
-        <h2 id="jour-titre">Aujourd’hui</h2>
-        <div className="jour">
-          <div className="jour__objectif">
-            <p className="jour__chiffre">
-              <span className="display">{Math.min(objectif.faites, objectif.cible)}</span>
-              <span className="discret"> sur {objectif.cible} questions</span>
-            </p>
-            <div className="jour__barre" aria-hidden="true">
-              <span style={{ transform: `scaleX(${Math.min(1, objectif.faites / objectif.cible)})` }} />
-            </div>
-            <p className="discret jour__note">
-              {objectif.atteint
-                ? `Objectif du jour fait${objectif.faites > objectif.cible ? `, et ${objectif.faites - objectif.cible} de plus` : ''}.`
-                : objectif.faites === 0
-                  ? 'Rien encore aujourd’hui.'
-                  : `Encore ${objectif.cible - objectif.faites} pour l’objectif.`}
-            </p>
-          </div>
-          <div className="jour__serie">
-            <p className="jour__chiffre">
-              <span className="display">{serie.jours}</span>
-              <span className="discret"> jour{serie.jours > 1 ? 's' : ''} de suite</span>
-            </p>
-            <ol className="jours" aria-label="Les quatorze derniers jours">
-              {cases.map((c, i) => {
-                const actif = c.reponses > 0;
-                const estAujourdhui = i === cases.length - 1;
-                return (
-                  <li
-                    key={c.date}
-                    className={`jours__case${actif ? ' jours__case--actif' : ''}${estAujourdhui ? ' jours__case--aujourdhui' : ''}`}
-                    aria-label={`${dateLisible(c.date)} : ${c.reponses} réponse${c.reponses > 1 ? 's' : ''}`}
-                  >
-                    <span aria-hidden="true">{JOURS_COURTS[jourDeLaSemaine(c.date) ?? 0]}</span>
-                  </li>
-                );
-              })}
-            </ol>
-            <p className="discret jour__note">
-              {serie.jours === 0
-                ? 'Une question aujourd’hui, et la série démarre.'
-                : serie.aujourdhui
-                  ? 'La série tient.'
-                  : 'Une question avant ce soir, et la série tient.'}
-            </p>
-          </div>
-        </div>
-
-        {jours !== null && (
-          <p className="jour__examen">
-            {jours > 1 && <><b>Examen dans {jours} jours</b>, le {dateLisible(etat.dateExamen!)}.</>}
-            {jours === 1 && <><b>Examen demain.</b> Deux examens blancs ce soir, puis dors.</>}
-            {jours === 0 && <><b>Examen aujourd’hui.</b> Bon vent.</>}
-            {jours < 0 && <>La date d’examen est passée. Tu peux la changer plus bas.</>}
-            {jours > 1 && banque.length > vues.length && (
-              <span className="discret">
-                {' '}Il te reste {banque.length - vues.length} questions jamais vues : environ{' '}
-                {Math.max(1, Math.ceil((banque.length - vues.length) / jours))} par jour pour toutes les voir.
-              </span>
-            )}
+      {/* Le geste du jour juste sous le titre, avant tout le reste : c'est
+          pour lui qu'on ouvre la fiche. */}
+      <header className="fiche__tete">
+        <h1 ref={titre} tabIndex={-1}>
+          {POUR_APP
+            // Dans l'app, l'écran s'appelle comme son onglet.
+            ? 'Ta fiche'
+            : rien
+              ? (prenom ? `${prenom}, rien encore sur ta fiche.` : 'Rien encore sur ta fiche.')
+              : (prenom ? `${prenom}, voilà où tu en es.` : 'Voilà où tu en es.')}
+        </h1>
+        {rien && (
+          <p>
+            Elle se remplit en jouant : un examen blanc dit en dix minutes où sont tes trous, une leçon
+            ce que tu tiens.
           </p>
         )}
+        {blocRappel}
+      </header>
+      {blocSuite}
+      {!rien && blocIndice}
 
-        <div className="jeu__actions">
-          <a className="bouton bouton--principal" href={suite.href} data-mesure="profil-suite" data-mesure-vers={suite.href}>
-            {suite.texte}
-          </a>
-          {suite.href !== '/examen' && <a className="bouton" href="/examen">Examen blanc</a>}
-          {suite.href !== '/cours' && <a className="bouton bouton--discret" href="/cours">Le cours</a>}
-        </div>
-        {/* Relire n'est pas rejouer, et les deux gestes ne se remplacent pas. */}
-        <p className="discret jour__note">
-          <a href="/profil/erreurs" data-mesure="profil-erreurs">Relire ce que j’ai raté</a>, la
-          bonne réponse et l’explication en face, sans rejouer.
-        </p>
-      </section>
-
-      {!rien && faibles.length > 0 && (
-        <section className="fiche__faibles" aria-labelledby="faibles-titre">
-          <h2 id="faibles-titre">À reprendre en premier</h2>
-          <p className="discret">
-            Quatorze thèmes, cent cinq notions : « feux et marques » ne dit pas si le trou est le
-            remorquage ou la portée des feux. Ces trois-là sont ce qui tient le moins.
-          </p>
-          <ul className="faibles">
-            {faibles.map((n) => (
-              <li className="faible" key={n.code}>
-                <p className="faible__nom">
-                  <b>{n.nom}</b> <span className="discret">{nomDuTheme(n.theme)}</span>
+      {/* Une fiche vide n'a que des zéros à montrer : on n'en montre aucun. */}
+      {!rien && (
+        <>
+          <section className="fiche__jour" aria-labelledby="jour-titre">
+            <h2 id="jour-titre">Aujourd’hui</h2>
+            <div className="jour">
+              <div className="jour__objectif">
+                <p className="jour__chiffre">
+                  <span className="display">{Math.min(objectif.faites, objectif.cible)}</span>
+                  <span className="discret"> sur {objectif.cible} questions</span>
                 </p>
-                <p className="faible__note discret">
-                  {n.vues === 0
-                    ? `Jamais ouverte, ${n.total} question${n.total > 1 ? 's' : ''} en banque.`
-                    : `${n.retenues} retenue${n.retenues > 1 ? 's' : ''} sur ${n.vues} vue${n.vues > 1 ? 's' : ''}, ${n.total} en banque.`}
+                <div className="jour__barre" aria-hidden="true">
+                  <span style={{ transform: `scaleX(${Math.min(1, objectif.faites / objectif.cible)})` }} />
+                </div>
+                <p className="discret jour__note">
+                  {objectif.atteint
+                    ? `Objectif du jour fait${objectif.faites > objectif.cible ? `, et ${objectif.faites - objectif.cible} de plus` : ''}.`
+                    : objectif.faites === 0
+                      ? 'Rien encore aujourd’hui.'
+                      : `Encore ${objectif.cible - objectif.faites} pour l’objectif.`}
                 </p>
-                <p className="faible__actions">
-                  <a className="faible__lecon" href={n.chemin} data-mesure="profil-notion-lecon" data-mesure-notion={n.code}>
-                    La leçon
-                  </a>
-                  <a
-                    className="faible__serie"
-                    href={`/entrainement/notion/${n.code}`}
-                    data-mesure="profil-notion-serie"
-                    data-mesure-notion={n.code}
-                  >
-                    Ses questions
-                  </a>
+              </div>
+              <div className="jour__serie">
+                <p className="jour__chiffre">
+                  <span className="display">{serie.jours}</span>
+                  <span className="discret"> jour{serie.jours > 1 ? 's' : ''} de suite</span>
                 </p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+                <ol className="jours" aria-label="Les quatorze derniers jours">
+                  {cases.map((c, i) => {
+                    const actif = c.reponses > 0;
+                    const estAujourdhui = i === cases.length - 1;
+                    return (
+                      <li
+                        key={c.date}
+                        className={`jours__case${actif ? ' jours__case--actif' : ''}${estAujourdhui ? ' jours__case--aujourdhui' : ''}`}
+                      >
+                        {/* Un aria-label sur un li sans rôle, certains lecteurs le taisent. */}
+                        <span className="visuellement-cache">{`${dateLisible(c.date)} : ${accorde(c.reponses, 'réponse')}`}</span>
+                        <span aria-hidden="true">{JOURS_COURTS[jourDeLaSemaine(c.date) ?? 0]}</span>
+                      </li>
+                    );
+                  })}
+                </ol>
+                <p className="discret jour__note">
+                  {serie.jours === 0
+                    ? 'Une question aujourd’hui, et la série démarre.'
+                    : serie.aujourdhui
+                      ? 'La série tient.'
+                      : 'Une question avant ce soir, et la série tient.'}
+                </p>
+              </div>
+            </div>
 
-      <section className="fiche__themes" aria-labelledby="themes-titre">
-        <h2 id="themes-titre">Thème par thème</h2>
-        <p className="discret">
-          Les plus faibles d’abord. Retenu, c’est réussi deux jours différents : une question revient un jour plus tard,
-          puis trois, puis sept, puis vingt et un. Une faute la ramène tout de suite et remet le compteur à zéro.
-        </p>
-        <ul className="maitrise">
-          {themes.map((t) => (
-            <li
-              key={t.code}
-              style={{ '--vues': t.vues / t.total, '--retenues': t.retenues / t.total } as React.CSSProperties}
-            >
-              <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
-                <b>{nomDuTheme(t.code)}</b>
-                <span className="maitrise__note">
-                  {t.vues === 0 ? (
-                    <span className="pastille">jamais ouvert</span>
-                  ) : (
-                    <>
-                      <span className={t.retenues < t.vues ? 'maitrise__faible' : ''}>{t.retenues}</span>
-                      <span className="discret"> retenues sur {t.vues} vues, {t.total} en banque</span>
-                    </>
-                  )}
-                </span>
-                <span className="maitrise__jauge" aria-hidden="true">
-                  <span className="maitrise__vues" />
-                  <span className="maitrise__retenues" />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="fiche__examens" aria-labelledby="examens-titre">
-        <h2 id="examens-titre">Examens blancs</h2>
-        {examens.length === 0 ? (
-          <p className="discret">
-            Aucun examen blanc terminé. Quarante questions, vingt secondes chacune : c’est ce qui pèse le plus dans l’indice.
-          </p>
-        ) : (
-          <>
-            <p>
-              <b>{examens.length}</b> terminé{examens.length > 1 ? 's' : ''}, <b>{recus}</b> reçu{recus > 1 ? 's' : ''}.
-              Meilleur score : <b>{meilleur} sur 40</b>.
-              {examens.length >= 2 && (
-                <>
-                  {' '}Le dernier fait{' '}
-                  {examens[0]!.bonnes === examens[1]!.bonnes
-                    ? 'le même score que l’avant-dernier'
-                    : `${Math.abs(examens[0]!.bonnes - examens[1]!.bonnes)} ${examens[0]!.bonnes > examens[1]!.bonnes ? 'de plus' : 'de moins'} que l’avant-dernier`}
-                  .
-                </>
-              )}
-            </p>
-            <ol className="examens" aria-label="Les derniers examens blancs, le plus récent en premier">
-              {examens.slice(0, 8).map((x, i) => (
-                <li key={`${x.date}-${i}`} style={{ '--part': x.bonnes / x.total } as React.CSSProperties}>
-                  <span className="examens__date">{dateLisible(x.date)}</span>
-                  <span className={`examens__score${x.reussi ? ' examens__score--recu' : ' examens__score--recale'}`}>
-                    {x.bonnes} / {x.total}
+            {jours !== null && (
+              <p className="jour__examen">
+                {jours > 1 && <><b>Examen dans {jours} jours</b>, le {dateLisible(etat.dateExamen!)}.</>}
+                {jours === 1 && <><b>Examen demain.</b> Deux examens blancs ce soir, puis dors.</>}
+                {jours === 0 && <><b>Examen aujourd’hui.</b> Bon vent.</>}
+                {jours < 0 && <>La date d’examen est passée. Tu peux la changer plus bas.</>}
+                {jours > 1 && banque.length > vues.length && (
+                  <span className="discret">
+                    {' '}Il te reste {banque.length - vues.length} questions jamais vues : environ{' '}
+                    {Math.max(1, Math.ceil((banque.length - vues.length) / jours))} par jour pour toutes les voir.
                   </span>
-                  <span className="examens__verdict">{x.reussi ? 'reçu' : 'recalé'}</span>
+                )}
+              </p>
+            )}
+
+            {/* Relire n'est pas rejouer, et les deux gestes ne se remplacent pas. */}
+            {ratees && (
+              <p className="discret jour__note">
+                <a href="/profil/erreurs" data-mesure="profil-erreurs">Relire ce que j’ai raté</a>, la
+                bonne réponse et l’explication en face, sans rejouer.
+              </p>
+            )}
+          </section>
+
+          {faibles.length > 0 && (
+            <section className="fiche__faibles" aria-labelledby="faibles-titre">
+              <h2 id="faibles-titre">À reprendre en premier</h2>
+              <p className="discret">Les trois notions qui ont le plus coûté. Une leçon de trois minutes chacune.</p>
+              <ul className="faibles">
+                {faibles.map((n) => (
+                  <li className="faible" key={n.code}>
+                    <p className="faible__nom">
+                      <b>{n.nom}</b> <span className="discret">{nomDuTheme(n.theme)}</span>
+                    </p>
+                    <p className="faible__note discret">
+                      {n.vues === 0 ? `Jamais ouverte, ${accorde(n.total, 'question')} en banque.` : <Compte {...n} />}
+                    </p>
+                    <p className="faible__actions">
+                      <a className="faible__lecon" href={n.chemin} data-mesure="profil-notion-lecon" data-mesure-notion={n.code}>
+                        La leçon
+                      </a>
+                      <a
+                        className="faible__serie"
+                        href={`/entrainement/notion/${n.code}`}
+                        data-mesure="profil-notion-serie"
+                        data-mesure-notion={n.code}
+                      >
+                        Ses questions
+                      </a>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <section className="fiche__themes" aria-labelledby="themes-titre">
+            <h2 id="themes-titre">Thème par thème</h2>
+            <p className="discret">Les plus fragiles d’abord.</p>
+            <ul className="maitrise">
+              {themes.map((t) => (
+                <li
+                  key={t.code}
+                  style={{ '--vues': t.vues / t.total, '--retenues': t.retenues / t.total } as React.CSSProperties}
+                >
+                  <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
+                    <b>{nomDuTheme(t.code)}</b>
+                    <span className="maitrise__note">
+                      {t.vues === 0 ? (
+                        <span className="pastille">jamais ouvert</span>
+                      ) : (
+                        <Compte {...t} />
+                      )}
+                    </span>
+                    <span className="maitrise__jauge" aria-hidden="true">
+                      <span className="maitrise__vues" />
+                      <span className="maitrise__retenues" />
+                    </span>
+                  </a>
                 </li>
               ))}
-            </ol>
-            <p className="discret">Le trait marque 35 sur 40, la barre d’admission.</p>
-          </>
-        )}
-      </section>
+            </ul>
+          </section>
 
-      <section className="fiche__jalons" aria-labelledby="jalons-titre">
-        <h2 id="jalons-titre">Jalons</h2>
-        <p className="discret">
-          {atteints} sur {listeJalons.length}. Un jalon atteint reste atteint.
-        </p>
-        <ul className="jalons">
-          {listeJalons.map((j) => (
-            <li key={j.code} className={`jalon${j.atteint ? ' jalon--atteint' : ''}`}>
-              <span className="jalon__marque" aria-hidden="true">{j.atteint && <Coche />}</span>
-              <span className="jalon__corps">
-                <b>{j.titre}</b>
-                <span className="discret">{j.detail}</span>
-              </span>
-              <span className="visuellement-cache">{j.atteint ? ', atteint' : ', à atteindre'}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+          <section className="fiche__examens" aria-labelledby="examens-titre">
+            <h2 id="examens-titre">Examens blancs</h2>
+            {examens.length === 0 ? (
+              <p className="discret">
+                Aucun examen blanc terminé. Quarante questions, vingt secondes chacune : c’est ce qui pèse le plus dans l’indice.
+              </p>
+            ) : (
+              <>
+                <p>
+                  <b>{examens.length}</b> terminé{examens.length > 1 ? 's' : ''}, <b>{recus}</b> reçu{recus > 1 ? 's' : ''}.
+                  Meilleur score : <b>{meilleur} sur 40</b>.
+                  {examens.length >= 2 && (
+                    <>
+                      {' '}Le dernier fait{' '}
+                      {examens[0]!.bonnes === examens[1]!.bonnes
+                        ? 'le même score que l’avant-dernier'
+                        : `${Math.abs(examens[0]!.bonnes - examens[1]!.bonnes)} ${examens[0]!.bonnes > examens[1]!.bonnes ? 'de plus' : 'de moins'} que l’avant-dernier`}
+                      .
+                    </>
+                  )}
+                </p>
+                <ol className="examens" aria-label="Les derniers examens blancs, le plus récent en premier">
+                  {examens.slice(0, 8).map((x, i) => (
+                    <li key={`${x.date}-${i}`} style={{ '--part': x.bonnes / x.total } as React.CSSProperties}>
+                      <span className="examens__date">{dateLisible(x.date)}</span>
+                      <span className={`examens__score${x.reussi ? ' examens__score--recu' : ' examens__score--recale'}`}>
+                        {x.bonnes} / {x.total}
+                      </span>
+                      <span className="examens__verdict">{x.reussi ? 'reçu' : 'recalé'}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="discret">Le trait marque 35 sur 40, la barre d’admission.</p>
+              </>
+            )}
+          </section>
+
+          <section className="fiche__jalons" aria-labelledby="jalons-titre">
+            <h2 id="jalons-titre">Jalons</h2>
+            <p className="discret">
+              {atteints} sur {listeJalons.length}. Un jalon atteint reste atteint.
+            </p>
+            <ul className="jalons">
+              {listeJalons.map((j) => (
+                <li key={j.code} className={`jalon${j.atteint ? ' jalon--atteint' : ''}`}>
+                  <span className="jalon__marque" aria-hidden="true">{j.atteint && <Coche />}</span>
+                  <span className="jalon__corps">
+                    <b>{j.titre}</b>
+                    <span className="discret">{j.detail}</span>
+                  </span>
+                  <span className="visuellement-cache">{j.atteint ? ', atteint' : ', à atteindre'}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
+      )}
 
       <section className="fiche__reglages" aria-labelledby="reglages-titre">
         <h2 id="reglages-titre">Tes réglages</h2>
         <p className="discret">
           {POUR_APP
             ? 'Tout reste sur ton téléphone. Supprimer l’app efface la fiche.'
-            : 'Tout reste dans ce navigateur. Changer d’appareil ou vider le cache efface la fiche.'}
+            : 'Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.'}
         </p>
 
         <div className="reglage">
@@ -482,7 +532,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             />
             {etat.dateExamen && (
               <button className="signaler" type="button" onClick={() => ecrire({ ...etat, dateExamen: null })}>
-                effacer la date
+                Effacer la date
               </button>
             )}
           </div>
@@ -507,22 +557,28 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
         <div className="reglage reglage--danger">
           <p className="reglage__titre">Effacer</p>
           {confirme ? (
-            <div className="jeu__actions">
-              <button
-                className="bouton bouton--principal"
-                type="button"
-                onClick={() => {
-                  effacer();
-                  setConfirme(false);
-                  setEtat(charger());
-                }}
-              >
-                Oui, tout effacer
-              </button>
-              <button className="bouton bouton--discret" type="button" onClick={() => setConfirme(false)}>
-                Annuler
-              </button>
-            </div>
+            <>
+              {partira && <p className="reglage__valeur">{partira}</p>}
+              <div className="jeu__actions">
+                <button className="bouton" type="button" onClick={() => setConfirme(false)}>
+                  Annuler
+                </button>
+                <button
+                  className="bouton bouton--danger"
+                  type="button"
+                  onClick={() => {
+                    effacer();
+                    setConfirme(false);
+                    setEtat(charger());
+                    setEfface(true);
+                  }}
+                >
+                  Oui, tout effacer
+                </button>
+              </div>
+            </>
+          ) : efface && rien && !profilRempli(p) ? (
+            <p className="reglage__valeur" role="status">Fiche effacée.</p>
           ) : rien && !profilRempli(p) ? (
             <p className="reglage__valeur discret">Rien à effacer pour l’instant.</p>
           ) : (

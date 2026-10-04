@@ -12,10 +12,9 @@
 
 ## Nature de cette fiche
 
-Attention, ce document n'est pas un texte réglementaire extrait par machine,
-contrairement aux règles du RIPAM et aux articles de l'arrêté de 2007. Le
-balisage n'est publié qu'en planches d'images, sans texte exploitable. Cette
-fiche est donc une mise en forme écrite du système, à vérifier contre la
+Le balisage n'est publié qu'en planches d'images, sans texte qu'on puisse
+citer, à la différence des règles du RIPAM et des articles de l'arrêté de 2007.
+Cette fiche, écrite à la main, est donc une mise en forme du système, à vérifier contre la
 planche officielle citée ci-dessus, qui fait foi.
 
 ---

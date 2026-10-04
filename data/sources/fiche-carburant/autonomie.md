@@ -9,9 +9,9 @@
 
 ## Nature de cette fiche
 
-Ce document n'est pas un texte réglementaire extrait par machine. Le programme
-demande des notions d'autonomie sans qu'un texte les définisse : cette fiche
-pose les calculs et l'usage tels qu'ils sont enseignés. Les questions qui en
+Aucun texte ne définit l'autonomie d'un bateau à moteur, et le programme la
+demande pourtant : cette fiche, écrite à la main, pose les calculs et l'usage
+tels qu'ils sont enseignés. Les questions qui en
 sortent portent sur de l'arithmétique vérifiable, pas sur du droit.
 
 ---

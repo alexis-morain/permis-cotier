@@ -45,24 +45,25 @@ interface Ligne {
   etat: EtatQuestion;
 }
 
-/** Le texte des bonnes réponses, dans l'ordre de la question. */
-function bonnesReponses(q: QuestionAffichable): string {
-  return q.propositions
-    .filter((p) => q.reponses.includes(p.id))
-    .map((p) => p.texte)
-    .join(' — ');
+/** Le texte des bonnes réponses, dans l'ordre de la question, en liste. */
+function bonnesReponses(q: QuestionAffichable): string[] {
+  return q.propositions.filter((p) => q.reponses.includes(p.id)).map((p) => p.texte);
 }
 
 function Erreur({ question, etat, jour }: Ligne & { jour: string }) {
   const retard = etat.revoirLe && etat.revoirLe < jour ? etat.revoirLe : null;
+  const bonnes = bonnesReponses(question);
   return (
     <li className="erreur">
+      {/* Le thème et le compte sous l'énoncé, jamais au-dessus : un sur-titre
+          est ce que le système refuse, et un lecteur d'écran qui va de titre
+          en titre le sautait. */}
+      <h3 className="erreur__enonce">{question.enonce}</h3>
       <p className="erreur__rang discret">
         {nomDuTheme(question.theme)}
         {etat.ratees > 0 && ` · ratée ${etat.ratees === 1 ? 'une fois' : `${etat.ratees} fois`}`}
         {retard && ` · due depuis le ${dateLisible(retard)}`}
       </p>
-      <h3 className="erreur__enonce">{question.enonce}</h3>
       {question.visuel && (
         <img
           className="erreur__visuel"
@@ -71,9 +72,20 @@ function Erreur({ question, etat, jour }: Ligne & { jour: string }) {
           loading="lazy"
         />
       )}
-      <p className="erreur__bonne">
-        <b>La bonne réponse :</b> {bonnesReponses(question)}
-      </p>
+      {bonnes.length > 1 ? (
+        <div className="erreur__bonne">
+          <b>Les deux bonnes réponses :</b>
+          <ul className="erreur__bonnes">
+            {bonnes.map((texte) => (
+              <li key={texte}>{texte}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="erreur__bonne">
+          <b>La bonne réponse :</b> {bonnes[0]}
+        </p>
+      )}
       <p className="erreur__explication">{question.explication}</p>
       {question.notion && (
         <p className="erreur__lecon">

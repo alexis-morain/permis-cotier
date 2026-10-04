@@ -28,20 +28,23 @@ export interface Motivation {
   readonly code: string;
   /** La case, à la première personne. */
   readonly libelle: string;
-  /** Ce qu'on rappelle au candidat, à la deuxième. */
+  /**
+   * Ce qu'on rappelle au candidat, à la deuxième personne : un groupe qui
+   * complète « Tu passes ce permis pour … », minuscule initiale, sans point.
+   */
   readonly rappel: string;
 }
 
 export const MOTIVATIONS: readonly Motivation[] = [
-  { code: 'famille', libelle: 'Emmener ma famille ou mes amis en mer', rappel: 'Emmener les tiens en mer, avec toi à la barre.' },
-  { code: 'location', libelle: 'Louer un bateau en vacances', rappel: 'Louer un bateau cet été, sans demander à personne.' },
-  { code: 'bateau', libelle: 'Avoir mon propre bateau', rappel: 'Ton bateau à toi, et la mer devant.' },
-  { code: 'peche', libelle: 'Aller pêcher au large', rappel: 'Aller pêcher là où la côte ne se voit plus.' },
-  { code: 'glisse', libelle: 'Tracter du ski, du wake, ou piloter un jet', rappel: 'Tracter, glisser, piloter : ça commence par ce permis.' },
-  { code: 'plongee', libelle: 'Plonger ou pêcher sous l’eau loin de la plage', rappel: 'Mouiller au-dessus du bon tombant, par tes propres moyens.' },
-  { code: 'travail', libelle: 'J’en ai besoin pour mon travail', rappel: 'Ce permis, c’est ton travail qui l’attend.' },
-  { code: 'hauturier', libelle: 'C’est la première marche vers le hauturier', rappel: 'Le hauturier vient après. Celui-ci d’abord.' },
-  { code: 'defi', libelle: 'Un vieux rêve, ou un défi que je me suis lancé', rappel: 'Tu t’es lancé ce défi. Il tient toujours.' },
+  { code: 'famille', libelle: 'Emmener ma famille ou mes amis en mer', rappel: 'emmener les tiens en mer, toi à la barre' },
+  { code: 'location', libelle: 'Louer un bateau en vacances', rappel: 'louer un bateau cet été, sans demander à personne' },
+  { code: 'bateau', libelle: 'Avoir mon propre bateau', rappel: 'avoir ton bateau à toi, et la mer devant' },
+  { code: 'peche', libelle: 'Aller pêcher au large', rappel: 'aller pêcher là où la côte ne se voit plus' },
+  { code: 'glisse', libelle: 'Tracter du ski, du wake, ou piloter un jet', rappel: 'tracter, glisser, piloter' },
+  { code: 'plongee', libelle: 'Plonger ou pêcher sous l’eau loin de la plage', rappel: 'mouiller au-dessus du bon tombant, par tes propres moyens' },
+  { code: 'travail', libelle: 'J’en ai besoin pour mon travail', rappel: 'ton travail, qui l’attend' },
+  { code: 'hauturier', libelle: 'C’est la première marche vers le hauturier', rappel: 'passer ensuite le hauturier, celui-ci d’abord' },
+  { code: 'defi', libelle: 'Un vieux rêve, ou un défi que je me suis lancé', rappel: 'tenir un vieux rêve, ou le défi que tu t’es lancé' },
 ];
 
 export interface Depart {
@@ -92,7 +95,7 @@ const POIDS = { vu: 20, retenu: 35, examens: 45 } as const;
 const EXAMENS_COMPTES = 3;
 
 export const PALIERS: Record<Palier, { titre: string; phrase: string }> = {
-  demarre: { titre: 'Tu démarres', phrase: 'Tout reste à voir. Une leçon ou une série de questions, et l’indice bouge.' },
+  demarre: { titre: 'Tu démarres', phrase: 'L’indice part de ce que tu as vu et retenu. Une leçon ou une série de questions, et il bouge.' },
   'en-route': { titre: 'En route', phrase: 'Tu as vu une partie du programme. Les examens blancs pèsent maintenant le plus.' },
   presque: { titre: 'Presque', phrase: 'Il manque deux examens blancs reçus de suite pour se dire prêt.' },
   pret: { titre: 'Prêt', phrase: 'Deux des trois derniers examens blancs sont reçus. Garde le rythme jusqu’au jour J.' },
@@ -212,6 +215,28 @@ export interface MaitriseTheme {
   vues: number;
   /** Vues et réussies deux jours différents. */
   retenues: number;
+  /** Vues dont la dernière réponse est fausse. */
+  ratees: number;
+}
+
+/**
+ * Une question compte en ratée tant que sa dernière réponse est fausse. Pas
+ * `ratees > 0`, qui garderait rouge à vie une faute reprise et réussie
+ * depuis. Une faute remet `succes` à zéro : une question n'est jamais
+ * retenue et ratée à la fois, d'où `retenues + ratees <= vues`.
+ */
+function estRatee(e: { derniereReussie: boolean }): boolean {
+  return !e.derniereReussie;
+}
+
+/**
+ * La clé de tri, la plus faible d'abord. Le premier jour rien n'est retenu,
+ * puisque « retenu » demande deux jours : sans les ratées, tout vaudrait zéro
+ * et l'ordre du programme déciderait. Retirer les ratées fait passer ce qui
+ * a coûté devant ce qui a été réussi. Jamais vu vaut 2, derrière tout.
+ */
+function cleFaiblesse(m: { vues: number; retenues: number; ratees: number }): number {
+  return m.vues === 0 ? 2 : (m.retenues - m.ratees) / m.vues;
 }
 
 /**
@@ -223,19 +248,19 @@ export interface MaitriseTheme {
 export function maitriseParTheme(etat: Etat, banque: readonly QuestionConnue[]): MaitriseTheme[] {
   const parTheme = new Map<string, MaitriseTheme>();
   for (const q of banque) {
-    const t = parTheme.get(q.theme) ?? { code: q.theme, total: 0, vues: 0, retenues: 0 };
+    const t = parTheme.get(q.theme) ?? { code: q.theme, total: 0, vues: 0, retenues: 0, ratees: 0 };
     t.total += 1;
     const e = etat.questions[q.id];
     if (e) {
       t.vues += 1;
       if (estRetenue(e)) t.retenues += 1;
+      if (estRatee(e)) t.ratees += 1;
     }
     parTheme.set(q.theme, t);
   }
   const rangProgramme = new Map(THEMES.map((t, i) => [t.code, i]));
-  const cle = (t: MaitriseTheme) => (t.vues === 0 ? 2 : t.retenues / t.vues);
   return [...parTheme.values()].sort(
-    (a, b) => cle(a) - cle(b) || (rangProgramme.get(a.code) ?? 99) - (rangProgramme.get(b.code) ?? 99),
+    (a, b) => cleFaiblesse(a) - cleFaiblesse(b) || (rangProgramme.get(a.code) ?? 99) - (rangProgramme.get(b.code) ?? 99),
   );
 }
 
@@ -253,6 +278,8 @@ export interface MaitriseNotion {
   vues: number;
   /** Vues et réussies deux jours différents. */
   retenues: number;
+  /** Vues dont la dernière réponse est fausse. */
+  ratees: number;
   /** L'adresse de la leçon, pour aller boucher le trou tout de suite. */
   chemin: string;
 }
@@ -285,6 +312,7 @@ export function maitriseParNotion(etat: Etat, banque: readonly QuestionConnue[])
       total: 0,
       vues: 0,
       retenues: 0,
+      ratees: 0,
       chemin: cheminLecon(notion),
     };
     n.total += 1;
@@ -292,14 +320,14 @@ export function maitriseParNotion(etat: Etat, banque: readonly QuestionConnue[])
     if (e) {
       n.vues += 1;
       if (estRetenue(e)) n.retenues += 1;
+      if (estRatee(e)) n.ratees += 1;
     }
     parNotion.set(notion.code, n);
   }
 
   const rangProgramme = new Map(NOTIONS.map((n, i) => [n.code, i]));
-  const cle = (n: MaitriseNotion) => (n.vues === 0 ? 2 : n.retenues / n.vues);
   return [...parNotion.values()].sort(
-    (a, b) => cle(a) - cle(b) || (rangProgramme.get(a.code) ?? 999) - (rangProgramme.get(b.code) ?? 999),
+    (a, b) => cleFaiblesse(a) - cleFaiblesse(b) || (rangProgramme.get(a.code) ?? 999) - (rangProgramme.get(b.code) ?? 999),
   );
 }
 
@@ -406,6 +434,16 @@ export function rappel(profil: Profil): string | null {
     if (m) return m.rappel;
   }
   return null;
+}
+
+/**
+ * Ce qui ferme « Tu passes ce permis pour « … » » : un point, sauf si la
+ * raison du candidat en porte déjà un (les rappels de `MOTIVATIONS` n'en ont
+ * jamais). Partagé par le résultat, la fiche, l'accueil et le questionnaire,
+ * pour que « …pêcher.». » ne se voie nulle part.
+ */
+export function pointFinal(raison: string): string {
+  return /[.!?…]$/.test(raison.trim()) ? '' : '.';
 }
 
 /** Le profil a-t-il été rempli, ne serait-ce qu'en partie ? */

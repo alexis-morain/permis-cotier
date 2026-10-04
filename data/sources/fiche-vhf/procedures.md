@@ -13,11 +13,10 @@
 
 ## Nature de cette fiche
 
-Ce document n'est pas un texte réglementaire extrait par machine. Le Règlement
-des radiocommunications de l'UIT n'est pas ouvert et la division 219, qui traite
-du SMDSM, exclut la plaisance à son article 219-01 : ce serait le mauvais droit
-pour le candidat. Cette fiche est donc une mise en forme écrite de la pratique
-radio, à vérifier contre le Règlement des radiocommunications et les
+Le Règlement des radiocommunications de l'UIT n'est pas ouvert, et la division
+219, qui traite du SMDSM, exclut la plaisance à son article 219-01 : ce serait
+le mauvais droit pour le candidat. Cette fiche, écrite à la main, est donc une
+mise en forme de la pratique radio, à vérifier contre le Règlement des radiocommunications et les
 publications des CROSS.
 
 Ce qui relève du droit français est ailleurs, et les questions le citent
