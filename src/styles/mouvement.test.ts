@@ -114,7 +114,7 @@ describe('le mouvement du site', () => {
     for (const { chemin, css } of feuilles) {
       const sans = css.replace(/\/\*[\s\S]*?\*\//g, '');
       for (const m of sans.matchAll(/@keyframes\s+([\w-]+)\s*\{([\s\S]*?)\}\s*\}/g)) {
-        const proprietes = [...m[2].matchAll(/([a-z-]+)\s*:/g)].map((p) => p[1]);
+        const proprietes = [...(m[2] ?? '').matchAll(/([a-z-]+)\s*:/g)].map((p) => p[1]);
         for (const p of proprietes) {
           if (p !== 'transform' && p !== 'opacity') fautes.push(`${nom(chemin)} @keyframes ${m[1]} anime ${p}`);
         }
