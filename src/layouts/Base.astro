@@ -7,6 +7,7 @@ import Coquille from '../components/Coquille.astro';
 import Mesure from '../components/Mesure.astro';
 import Recherche from '../components/Recherche.astro';
 import { SCRIPT_APPARENCE } from '../lib/apparence';
+import { SCRIPT_DEFILEMENT_NAVIGATION } from '../lib/navigation';
 import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 import { lienRetour, pageCourante } from '../lib/page';
@@ -237,6 +238,8 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
           <a href="/profil" aria-current={courant('/profil')}>Ta fiche</a>
         </nav>
+        {/* Sur un téléphone, la barre s'ouvre sur l'entrée courante. */}
+        <script is:inline set:html={SCRIPT_DEFILEMENT_NAVIGATION} />
       </div>
     </header>
     )}
@@ -385,7 +388,22 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
       /* Sous 48 rem, la navigation prend sa propre ligne. Six entrées, la
          marque et la loupe ne tiennent pas côte à côte : la ligne file jusqu'aux
          bords de l'écran et se fait glisser au doigt, le fondu à droite le dit.
-         Les réglages sont aussi dans le plan du site, en pied de page. */
+         Les réglages sont aussi dans le plan du site, en pied de page.
+
+         Le fondu à gauche dit l'inverse : il y a des entrées avant. Il n'a pas
+         lieu d'être au début de la barre, et la barre ne commence pas toujours
+         au début, puisqu'elle s'ouvre sur l'entrée courante. Sa largeur suit
+         donc le défilement, de rien à 2,5 rem sur les premiers 2,5 rem. Sans
+         animation pilotée par le défilement, il reste à zéro : la coupe nette
+         d'avant. */
+      @property --fondu-gauche {
+        syntax: '<length>';
+        inherits: false;
+        initial-value: 0px;
+      }
+      @keyframes fondu-gauche {
+        to { --fondu-gauche: 2.5rem; }
+      }
       @media (max-width: 47.999rem) {
         .entete__interieur {
           grid-template-areas: 'marque recherche' 'nav nav';
@@ -403,7 +421,20 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
           overflow-x: auto;
           scrollbar-width: none;
           -webkit-overflow-scrolling: touch;
-          mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+          mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 var(--fondu-gauche),
+            #000 calc(100% - 2.5rem),
+            transparent
+          );
+        }
+        @supports (animation-timeline: scroll()) {
+          .entete nav {
+            animation: fondu-gauche linear both;
+            animation-timeline: scroll(self inline);
+            animation-range: 0 2.5rem;
+          }
         }
         .entete nav::-webkit-scrollbar { display: none; }
         .entete nav a { padding-inline: 0.4rem; font-size: 0.8125rem; white-space: nowrap; flex: 0 0 auto; }
