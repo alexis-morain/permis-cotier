@@ -60,10 +60,14 @@ Une famille, Archivo variable, sur deux largeurs.
 
 ## Mouvement
 
-Transform et opacité seulement, 120 à 200 ms, sortie exponentielle. Un seul
-moment écrit : le verdict, qui colore d'un coup la barre d'action, marque la
-lettre des propositions corrigées et fait monter l'explication. Tout se coupe
-sous `prefers-reduced-motion`.
+Transform et opacité seulement, 120 à 200 ms, sortie exponentielle. Deux
+moments écrits, pas un de plus. Le verdict, qui colore d'un coup la barre
+d'action, marque la lettre des propositions corrigées et fait monter
+l'explication. L'examen blanc reçu, qui hisse le pavillon Q, jaune uni, le
+long d'un mât marine à gauche du score : la libre pratique du Code
+international des signaux, l'entrée au port. Recalé, interrompu, entraînement
+n'ont pas de moment. Tout se coupe sous `prefers-reduced-motion`, le pavillon
+est alors en tête d'emblée.
 
 Le reste n'est pas un moment, c'est de la preuve : un contrôle répond en
 120 ms, une jauge se remplit en 200 ms, une question ou un écran de résultat

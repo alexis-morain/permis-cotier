@@ -656,6 +656,11 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
     // question passée au buzzer compte comme une erreur, une réponse arrachée
     // à la dernière seconde ne tiendra pas dans une salle.
     const lent = lenteurs(session);
+    // Le second moment écrit du site : un examen blanc reçu hisse le pavillon
+    // Q, jaune uni, le long d'un mât qui longe le score et le verdict. Il est
+    // dessiné en CSS sur ce bloc, rien de plus ici. Recalé, interrompu,
+    // entraînement : le bloc n'a pas de classe, et rien ne se hisse.
+    const recu = mode === 'examen' && !session.interrompu && r.total > 0 && r.reussi;
     return (
       <div className="jeu">
         <h1 className="visuellement-cache">{titre}, résultat</h1>
@@ -672,24 +677,35 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
             </p>
           ) : (
             <>
-              <p className="resultat__score">
-                {r.bonnes}<small> / {r.total}</small>
-              </p>
-              {mode === 'examen' && (
-                session.interrompu ? (
-                  <p className="resultat__verdict">
-                    Examen interrompu, {r.total} question{r.total > 1 ? 's' : ''} jouée{r.total > 1 ? 's' : ''} sur{' '}
-                    {session.questions.length}, dont {r.erreurs} ratée{r.erreurs > 1 ? 's' : ''}.
-                    Une note sur un examen entier demande d’aller au bout.
+              <div className={recu ? 'resultat--recu' : undefined}>
+                <p className="resultat__score">
+                  {r.bonnes}<small> / {r.total}</small>
+                </p>
+                {mode === 'examen' && (
+                  session.interrompu ? (
+                    <p className="resultat__verdict">
+                      Examen interrompu, {r.total} question{r.total > 1 ? 's' : ''} jouée{r.total > 1 ? 's' : ''} sur{' '}
+                      {session.questions.length}, dont {r.erreurs} ratée{r.erreurs > 1 ? 's' : ''}.
+                      Une note sur un examen entier demande d’aller au bout.
+                    </p>
+                  ) : (
+                    <p className={`resultat__verdict resultat__verdict--${r.reussi ? 'reussi' : 'echoue'}`}>
+                      {r.reussi
+                        ? `Reçu. ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
+                        : `Recalé. ${r.erreurs} erreurs, l’épreuve en admet ${ERREURS_ADMISES}.`}
+                    </p>
+                  )
+                )}
+                {recu && (
+                  <p className="resultat__pavillon">
+                    Pavillon Q hissé : libre pratique.
+                    <span className="discret">
+                      Au Code international des signaux, le pavillon jaune seul demande l’entrée au port.
+                      Tu peux y aller.
+                    </span>
                   </p>
-                ) : (
-                  <p className={`resultat__verdict resultat__verdict--${r.reussi ? 'reussi' : 'echoue'}`}>
-                    {r.reussi
-                      ? `Reçu. ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
-                      : `Recalé. ${r.erreurs} erreurs, l’épreuve en admet ${ERREURS_ADMISES}.`}
-                  </p>
-                )
-              )}
+                )}
+              </div>
               {precedent && (
                 <p className="resultat__ecart">
                   Ton examen d’avant : {precedent.bonnes} sur {precedent.total}.{' '}

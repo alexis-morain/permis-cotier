@@ -351,6 +351,36 @@
 
 .resultat__ecart { margin: -0.75rem 0 1.25rem; font-weight: 600; color: var(--texte-doux); }
 
+/* Le pavillon Q, quand l'examen blanc est reçu.
+
+   Au Code international des signaux, le pavillon Q, jaune uni, demande la
+   libre pratique : l'entrée au port. C'est le seul pavillon qui tienne dans les
+   deux couleurs du site. Un mât marine longe le score et le verdict, le
+   pavillon est en tête ; rien d'autre, deux pseudo-éléments, aucun actif. */
+.resultat--recu { position: relative; padding-left: 3.75rem; }
+.resultat--recu::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 0.3rem;
+  bottom: 1.1rem;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--texte);
+}
+.resultat--recu::after {
+  content: '';
+  position: absolute;
+  left: calc(0.75rem + 3px);
+  top: 0.3rem;
+  width: 2.5rem;
+  height: 1.8rem;
+  border-radius: 0 3px 3px 0;
+  background: var(--jaune);
+}
+.resultat__pavillon { margin: -0.75rem 0 1.25rem; font-weight: 600; }
+.resultat__pavillon .discret { display: block; margin-top: 0.15rem; font-weight: 400; }
+
 /* Le temps, sous le score : ce que le nombre de bonnes réponses ne dit pas. */
 .resultat__temps { margin: 0 0 1.25rem; max-width: 46ch; }
 .resultat__temps .discret { display: block; }
@@ -470,6 +500,16 @@
 .resultat__score,
 .resultat__verdict { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) both; }
 
+/* Le second moment écrit : le pavillon Q monte le long du mât pendant que le
+   score entre, une fois, 200 ms. Il part de cinq rem plus bas, à peu près le
+   pied du mât quel que soit le corps du score ; l'œil lit « hissé », pas la
+   distance. Sous `prefers-reduced-motion`, il est en tête d'emblée. */
+@keyframes pavillon-hisse {
+  from { transform: translateY(5rem); }
+  to { transform: none; }
+}
+.resultat--recu::after { animation: pavillon-hisse 200ms cubic-bezier(0.2, 0, 0, 1) both; }
+
 @media (prefers-reduced-motion: reduce) {
   .jeu > .jeu__enonce,
   .jeu > .jeu__visuel,
@@ -478,7 +518,8 @@
   .jeu > .propositions .proposition--juste .proposition__lettre,
   .jeu > .propositions .proposition--fausse .proposition__lettre,
   .resultat__score,
-  .resultat__verdict {
+  .resultat__verdict,
+  .resultat--recu::after {
     animation: none;
   }
   .jeu__barre span { transition: none; }
