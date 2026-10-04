@@ -165,6 +165,28 @@ def test_la_duree_du_json_est_le_cycle_du_dessin_moins_sa_pause():
         assert float(cycle.group(1)) - PAUSE == pytest.approx(table[nom]["duree"], abs=1e-3), nom
 
 
+def test_le_curseur_passe_la_frise_en_temps_reel_puis_attend():
+    """Le curseur est au bout de la frise quand le son finit, pas au bout du cycle.
+
+    Il balayait la frise sur tout le cycle, pause comprise : sur le coude, il
+    n'en était qu'aux trois cinquièmes quand le prolongé se taisait.
+    """
+    for nom, signal in SIGNAUX.items():
+        svg = svg_de_signal(nom)
+        total = duree(signal["motif"])
+        cycle = total + PAUSE
+        cle = nom.replace("-", "")
+        regle = re.search(rf"@keyframes {cle}-balayage\{{(.*?)\}}\}}", svg)
+        assert regle, nom
+        arrets = re.findall(r"([\d.]+)%\{transform:translateX\(([\d.]+)px\)", regle.group(1) + "}")
+        arrets = [(float(p), float(x)) for p, x in arrets]
+        bout = total * sons.ECHELLE
+        assert arrets[0] == (0.0, 0.0), nom
+        assert arrets[1][0] == pytest.approx(total / cycle * 100, abs=0.01), nom
+        assert arrets[1][1] == pytest.approx(bout, abs=0.01), nom
+        assert arrets[-1] == (100.0, pytest.approx(bout, abs=0.01)), nom
+
+
 def test_le_json_porte_les_hauteurs_et_la_cloche():
     table = motifs()
     assert table["sifflet"]["hz"] == {"1": SIFFLET_HZ[1], "2": SIFFLET_HZ[2]}

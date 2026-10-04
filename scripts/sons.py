@@ -39,7 +39,8 @@ jamais depuis ces images.
 
 Le temps réel est tenu, sans accélération : un son prolongé dure vraiment quatre
 à six secondes en mer, et sentir cette longueur fait partie de ce qu'on apprend.
-Rien n'est immobile pendant ce temps, les ondes battent.
+Rien n'est immobile pendant ce temps, les ondes battent, et le curseur passe
+sous chaque barre au moment où elle sonne, puis attend au bout de la frise.
 
 Deux instruments
 ----------------
@@ -368,8 +369,11 @@ def svg_de_signal(nom: str) -> str:
         "animation:propagation 1.05s linear infinite}",
         f".curseur{{transform-box:view-box;animation:{cle}-balayage {cycle:.4g}s "
         "linear infinite}",
-        f"@keyframes {cle}-balayage{{from{{transform:translateX(0)}}"
-        f"to{{transform:translateX({total * ECHELLE:.2f}px)}}}}",
+        # Le curseur passe la frise en temps réel, puis attend au bout pendant la
+        # pause : il est sous la barre qu'on entend, quand on l'entend.
+        f"@keyframes {cle}-balayage{{0%{{transform:translateX(0px)}}"
+        f"{total / cycle * 100:.4g}%{{transform:translateX({total * ECHELLE:.2f}px)}}"
+        f"100%{{transform:translateX({total * ECHELLE:.2f}px)}}}}",
         # Mouvement coupé : l'instrument sonne, la frise porte déjà tout le motif.
         "@media (prefers-reduced-motion:reduce){.son,.onde{animation:none}"
         ".son{opacity:1}.curseur{display:none}}",
