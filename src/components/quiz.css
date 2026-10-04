@@ -351,6 +351,36 @@
 
 .resultat__ecart { margin: -0.75rem 0 1.25rem; font-weight: 600; color: var(--texte-doux); }
 
+/* Le pavillon Q, quand l'examen blanc est reçu.
+
+   Au Code international des signaux, le pavillon Q, jaune uni, demande la
+   libre pratique : l'entrée au port. C'est le seul pavillon qui tienne dans les
+   deux couleurs du site. Un mât marine longe le score et le verdict, le
+   pavillon est en tête ; rien d'autre, deux pseudo-éléments, aucun actif. */
+.resultat--recu { position: relative; padding-left: 3.75rem; }
+.resultat--recu::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 0.3rem;
+  bottom: 1.1rem;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--texte);
+}
+.resultat--recu::after {
+  content: '';
+  position: absolute;
+  left: calc(0.75rem + 3px);
+  top: 0.3rem;
+  width: 2.5rem;
+  height: 1.8rem;
+  border-radius: 0 3px 3px 0;
+  background: var(--jaune);
+}
+.resultat__pavillon { margin: -0.75rem 0 1.25rem; font-weight: 600; }
+.resultat__pavillon .discret { display: block; margin-top: 0.15rem; font-weight: 400; }
+
 /* Le temps, sous le score : ce que le nombre de bonnes réponses ne dit pas. */
 .resultat__temps { margin: 0 0 1.25rem; max-width: 46ch; }
 .resultat__temps .discret { display: block; }
@@ -441,12 +471,14 @@
 .jeu > .propositions { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) 70ms both; }
 
 /* Le moment écrit du site : le verdict monte sous les propositions, pendant
-   que la barre d'action prend sa couleur. */
+   que la barre d'action prend sa couleur et que la lettre des propositions
+   corrigées se marque. 200 ms, le plafond de DESIGN.md : un verdict qui
+   traîne ressemble à une hésitation. */
 @keyframes verdict-entree {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-.jeu > .verdict { animation: verdict-entree 220ms cubic-bezier(0.2, 0, 0, 1) both; }
+.jeu > .verdict { animation: verdict-entree 200ms cubic-bezier(0.2, 0, 0, 1) both; }
 
 @keyframes pastille-marquee {
   from { transform: scale(0.7); }
@@ -454,17 +486,29 @@
 }
 .jeu > .propositions .proposition--juste .proposition__lettre,
 .jeu > .propositions .proposition--fausse .proposition__lettre {
-  animation: pastille-marquee 220ms cubic-bezier(0.2, 0, 0, 1);
+  animation: pastille-marquee 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-@keyframes chrono-battement {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-.jeu__chrono--urgent { animation: chrono-battement 1s ease-in-out infinite; }
+/* Les cinq dernières secondes du chrono se disent par la couleur, plus haut
+   dans la feuille : le rouge du chiffre et de la jauge. Elles ne clignotent
+   pas : DESIGN.md n'écrit qu'un moment, et un battement qui dure cinq
+   secondes en est un second. */
 
-.resultat__score { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) both; }
-.resultat__verdict { animation: jeu-entree 260ms cubic-bezier(0.2, 0, 0, 1) 90ms both; }
+/* L'écran de résultat remplace l'écran de jeu d'un coup : le score et le
+   verdict entrent comme une question entre, même durée, même geste, ensemble.
+   Ce n'est pas un moment, c'est la preuve que la page a changé. */
+.resultat__score,
+.resultat__verdict { animation: jeu-entree 180ms cubic-bezier(0.2, 0, 0, 1) both; }
+
+/* Le second moment écrit : le pavillon Q monte le long du mât pendant que le
+   score entre, une fois, 200 ms. Il part de cinq rem plus bas, à peu près le
+   pied du mât quel que soit le corps du score ; l'œil lit « hissé », pas la
+   distance. Sous `prefers-reduced-motion`, il est en tête d'emblée. */
+@keyframes pavillon-hisse {
+  from { transform: translateY(5rem); }
+  to { transform: none; }
+}
+.resultat--recu::after { animation: pavillon-hisse 200ms cubic-bezier(0.2, 0, 0, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
   .jeu > .jeu__enonce,
@@ -473,9 +517,9 @@
   .jeu > .verdict,
   .jeu > .propositions .proposition--juste .proposition__lettre,
   .jeu > .propositions .proposition--fausse .proposition__lettre,
-  .jeu__chrono--urgent,
   .resultat__score,
-  .resultat__verdict {
+  .resultat__verdict,
+  .resultat--recu::after {
     animation: none;
   }
   .jeu__barre span { transition: none; }
