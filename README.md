@@ -285,6 +285,8 @@ src/pages/                         Astro : accueil, cours, thèmes, questions, e
                                    profil, recherche et son index recherche.json
 src/components/                    îlot React du quiz, panneau de recherche
 src/lib/signalement.ts             validation et mise en inertie du texte reçu
+src/lib/sons-motifs.json           les seize signaux sonores, écrits par scripts/sons.py
+                                   avec leurs frises ; signal-sonore.ts les joue en Web Audio
 src/worker.ts                      le Worker : POST /api/signaler, le reste aux actifs
 ```
 
