@@ -119,6 +119,9 @@ export function programmer(contexte: ContexteAudio, signal: SignalSonore, table:
           /* Un vieux WebKit refuse un second `stop` : le premier tient déjà. */
         }
       }
+      // La chute passée, on débranche : les nœuds de l'écoute partent au
+      // ramasse-miettes au lieu de rester accrochés à la sortie.
+      setTimeout(() => maitre.disconnect(), (RAMPE + 0.1) * 1000);
     },
   };
 }
@@ -149,7 +152,13 @@ export function creerLecteur(contexte: ContexteAudio): Lecteur {
     jouer(signal, surFin) {
       if (courant) return false;
       const programme = programmer(contexte, signal);
-      const minuterie = setTimeout(finir, (programme.fin - contexte.currentTime) * 1000);
+      // La fin suit une minuterie, pas l'horloge du contexte, qui peut prendre du
+      // retard (contexte suspendu, appel sur l'iPhone) : ce qui résonnerait
+      // encore est coupé, pour qu'un nouvel appui ne sonne jamais par-dessus.
+      const minuterie = setTimeout(() => {
+        programme.arreter();
+        finir();
+      }, (programme.fin - contexte.currentTime) * 1000);
       courant = { programme, surFin, minuterie };
       return true;
     },

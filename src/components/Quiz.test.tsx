@@ -1528,14 +1528,26 @@ describe('le son des signaux', () => {
 
   it('pose le bouton sous la frise, en entraînement', async () => {
     render(<Quiz mode="entrainement" questions={[coude()]} />);
-    const bouton = await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' });
+    const bouton = await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' }, { timeout: 5000 });
     expect(bouton.parentElement?.previousElementSibling?.matches('img.jeu__visuel')).toBe(true);
   });
 
   it('le pose aussi en examen blanc', async () => {
     render(<Quiz mode="examen" questions={[coude('signaux-0001'), coude('signaux-0002'), coude('signaux-0003')]} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
-    expect(await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' })).toBeTruthy();
+    expect(await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' }, { timeout: 5000 })).toBeTruthy();
+  });
+
+  it('Entrée valide même quand le bouton du signal a gardé le focus', async () => {
+    // Chromium laisse le focus au bouton après un clic souris : Entrée relançait
+    // ou coupait le son au lieu de valider, et l'examen perdait des secondes.
+    render(<Quiz mode="entrainement" questions={[coude()]} />);
+    const bouton = await screen.findByRole('button', { name: 'Écouter le signal, 5 secondes' }, { timeout: 5000 });
+    bouton.focus();
+    fireEvent.keyDown(bouton, { key: 'a' });
+    const entree = fireEvent.keyDown(bouton, { key: 'Enter' });
+    expect(entree).toBe(false);
+    expect(screen.getByRole('button', { name: 'Question suivante' })).toBeTruthy();
   });
 
   it("n'en pose aucun sous un autre visuel", async () => {

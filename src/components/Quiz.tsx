@@ -489,10 +489,13 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
       // Un bouton d'action qui a le focus s'active tout seul : ne pas doubler.
       // Une proposition est un bouton elle aussi, mais Chromium lui laisse le
       // focus après un clic souris : sans cette exception, Entrée décochait la
-      // réponse au lieu de valider, alors que l'écran de départ le promet.
+      // réponse au lieu de valider, alors que l'écran de départ le promet. Même
+      // chose pour « Écouter le signal » : Entrée y relançait le son, et
+      // l'examen perdait ses secondes. L'espace, elle, l'active toujours.
       const activable =
         (cible?.tagName === 'BUTTON' || cible?.tagName === 'A') &&
-        !cible.classList.contains('proposition');
+        !cible.classList.contains('proposition') &&
+        !cible.classList.contains('signal-ecoute');
 
       const { session: s, ordre: o, mode: m, arretDemande: arret } = contexte.current;
 

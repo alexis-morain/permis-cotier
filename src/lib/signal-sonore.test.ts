@@ -38,7 +38,8 @@ class FauxOscillateur extends FauxNoeud {
   fin = Infinity;
   onde: unknown = null;
   start(t = 0) { this.debut = t; }
-  stop(t = 0) { this.fin = Math.min(this.fin, t); }
+  /** Comme en Web Audio, le dernier `stop` l'emporte. */
+  stop(t = 0) { this.fin = t; }
   setPeriodicWave(o: unknown) { this.onde = o; }
 }
 
@@ -209,6 +210,28 @@ describe('le lecteur', () => {
     expect(fini).toHaveBeenCalledTimes(1);
     // Et l'on peut rejouer.
     expect(lecteur.jouer(signal('coude'))).toBe(true);
+  });
+
+  it('à la fin comme à l’arrêt, coupe ce qui résonne encore et débranche tout', () => {
+    // La fin suit une minuterie : si l'horloge du contexte a pris du retard, la
+    // traîne sonnerait encore sous un nouvel appui. On la coupe, puis on rend
+    // les nœuds au ramasse-miettes.
+    vi.useFakeTimers();
+    const c = faux();
+    const lecteur = creerLecteur(commeContexte(c));
+    lecteur.jouer(signal('coude'));
+    const maitre = c.gains[0]!;
+    c.currentTime = 5.1;
+    vi.advanceTimersByTime(5100);
+    expect(c.oscillateurs.every((o) => o.fin <= 5.1 + 0.05 + 1e-9)).toBe(true);
+    vi.advanceTimersByTime(200);
+    expect(maitre.deconnecte).toBe(true);
+
+    lecteur.jouer(signal('brume-stoppe'));
+    const second = c.gains.find((g) => g !== maitre && g.sorties.includes(c.destination))!;
+    lecteur.arreter();
+    vi.advanceTimersByTime(200);
+    expect(second.deconnecte).toBe(true);
   });
 
   it('dit quand le signal a fini, une seule fois', () => {
