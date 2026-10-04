@@ -38,7 +38,7 @@ import { nomDuTheme } from '../lib/themes-client';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
 import { lienLecon } from '../lib/retour';
-import { rappel } from '../lib/profil';
+import { pointFinal, rappel } from '../lib/profil';
 import { POUR_APP } from '../lib/cible';
 import { modeConcentration, partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
 import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
@@ -772,7 +772,7 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
 
         {raison && (
           <>
-            <p className="rappel resultat__rappel">Tu passes ce permis pour <q>{raison}</q>.</p>
+            <p className="rappel resultat__rappel">Tu passes ce permis pour <q>{raison}</q>{pointFinal(raison)}</p>
             <p className="discret">
               {mode !== 'examen' ? (
                 'Chaque question ratée revient jusqu’à ce que tu la tiennes. C’est le principe.'

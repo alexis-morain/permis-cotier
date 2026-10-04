@@ -667,6 +667,29 @@ describe('le rappel de la raison sur le résultat', () => {
     expect(screen.getByText(/Ton examen d’avant : 2 sur 6/).textContent).toContain('2 de moins que la dernière fois.');
   });
 
+  it('ne double pas le point quand la phrase du candidat en porte un', () => {
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({
+        version: VERSION_STOCKAGE,
+        questions: {},
+        examens: [],
+        dateExamen: null,
+        enCours: null,
+        enCoursSerie: null,
+        lecons: {},
+        activite: {},
+        profil: { prenom: '', motivations: [], phrase: 'Emmener mon père pêcher.', depart: null, rythme: null, rempliLe: '2026-09-01' },
+      }),
+    );
+    const six = ['a-1', 'a-2', 'a-3', 'a-4', 'a-5', 'a-6'].map((id) => question(id));
+    render(<Quiz mode="examen" questions={six} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    // Six questions sans réponse : six erreurs, recalé, donc le rappel s'affiche.
+    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(document.querySelector('.resultat__rappel')?.textContent).toBe('Tu passes ce permis pour Emmener mon père pêcher.');
+  });
+
   it('se tait quand l’examen est reçu', () => {
     localStorage.setItem(
       CLE_STOCKAGE,

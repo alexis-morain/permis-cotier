@@ -12,6 +12,7 @@ import {
   maitriseParTheme,
   notionsLesPlusFaibles,
   objectifDuJour,
+  pointFinal,
   profilRempli,
   quatorzeJours,
   rappel,
@@ -160,7 +161,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
       : { href: '/examen', texte: 'Faire un examen blanc' };
 
   // Un point final de trop si la phrase du candidat en porte déjà un.
-  const finRappel = raison && /[.!?…]$/.test(raison) ? '' : '.';
+  const finRappel = raison ? pointFinal(raison) : '';
   const blocRappel = !raison ? (
     <p className="fiche__invitation">
       <a href="/profil/depart" data-mesure="profil-invitation">Dis en trente secondes pourquoi tu passes le permis</a>

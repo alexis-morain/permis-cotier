@@ -436,6 +436,16 @@ export function rappel(profil: Profil): string | null {
   return null;
 }
 
+/**
+ * Ce qui ferme « Tu passes ce permis pour « … » » : un point, sauf si la
+ * raison du candidat en porte déjà un (les rappels de `MOTIVATIONS` n'en ont
+ * jamais). Partagé par le résultat, la fiche, l'accueil et le questionnaire,
+ * pour que « …pêcher.». » ne se voie nulle part.
+ */
+export function pointFinal(raison: string): string {
+  return /[.!?…]$/.test(raison.trim()) ? '' : '.';
+}
+
 /** Le profil a-t-il été rempli, ne serait-ce qu'en partie ? */
 export function profilRempli(profil: Profil): boolean {
   return profil.rempliLe !== null;

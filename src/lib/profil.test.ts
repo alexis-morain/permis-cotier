@@ -19,6 +19,7 @@ import {
   notionsLesPlusFaibles,
   jalons,
   rappel,
+  pointFinal,
   quatorzeJours,
   joursAvant,
 } from './profil';
@@ -358,5 +359,18 @@ describe('jours avant l’examen', () => {
 
   it('rend null pour une date illisible', () => {
     expect(joursAvant('bientôt', '2026-09-05')).toBeNull();
+  });
+});
+
+describe('pointFinal', () => {
+  // « Tu passes ce permis pour « … ». » : le point ferme la phrase, sauf si la
+  // raison du candidat en porte déjà un. Les rappels de MOTIVATIONS n'en ont pas.
+  it('ajoute un point quand la raison n’en finit pas une', () => {
+    expect(pointFinal('emmener les tiens en mer')).toBe('.');
+  });
+  it('se tait quand la raison finit déjà par un point, un ! ou des points de suspension', () => {
+    expect(pointFinal('Emmener mon père pêcher.')).toBe('');
+    expect(pointFinal('Enfin !')).toBe('');
+    expect(pointFinal('On verra…')).toBe('');
   });
 });

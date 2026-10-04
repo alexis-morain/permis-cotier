@@ -26,6 +26,7 @@ import {
   indice,
   joursAvant,
   objectifDuJour,
+  pointFinal,
   profilRempli,
   rappel,
   serieDeJours,
@@ -169,7 +170,7 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   // La raison ne revient que quand ça coince : affichée à chaque visite, elle
   // devenait du décor, et perdait sa force pour le jour où elle sert.
   if (raison && dernier && !dernier.reussi) {
-    bloc.append(el('p', { class: 'reprise__raison' }, 'Tu passes ce permis pour ', el('q', {}, raison), '.'));
+    bloc.append(el('p', { class: 'reprise__raison' }, 'Tu passes ce permis pour ', el('q', {}, raison), pointFinal(raison)));
   }
   racine.append(bloc);
 }

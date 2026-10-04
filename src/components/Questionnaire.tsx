@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { aujourdhui, charger, enregistrerProfil, sauvegarder } from '../lib/progression';
 import type { Profil } from '../lib/progression';
-import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, rappel } from '../lib/profil';
+import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, pointFinal, rappel } from '../lib/profil';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
 import { POUR_APP } from '../lib/cible';
@@ -256,7 +256,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
           </h1>
           {raison && (
             <p className="rappel">
-              Tu passes ce permis pour <q>{raison}</q>{/[.!?…]$/.test(raison) ? '' : '.'}
+              Tu passes ce permis pour <q>{raison}</q>{pointFinal(raison)}
             </p>
           )}
           <p>{conseil.conseil}</p>
@@ -272,7 +272,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
             <a className="bouton bouton--principal" href={conseil.lien} data-mesure="profil-depart-suite" data-mesure-vers={conseil.code}>
               {conseil.lien === '/cours' ? 'Commencer le cours' : 'Faire un examen blanc'}
             </a>
-            <a className="bouton" href="/profil">Voir ma fiche</a>
+            <a className="bouton" href="/profil">Voir ta fiche</a>
           </div>
         </section>
       )}

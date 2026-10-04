@@ -144,6 +144,15 @@ describe('la reprise sur l’accueil', () => {
     expect(document.querySelector('.reprise__raison')).toBeNull();
   });
 
+  it('ne double pas le point quand la phrase du candidat en porte un', () => {
+    let e = enregistrerProfil(etatInitial(), { ...profilVide(), phrase: 'Emmener mon père pêcher.', rempliLe: '2026-09-01' });
+    e = enregistrerExamen(e, { date: aujourdhui(), bonnes: 11, total: 40, reussi: false });
+    sauvegarder(e);
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise__raison')!.textContent).toBe('Tu passes ce permis pour Emmener mon père pêcher.');
+  });
+
   it('dit l’objectif du jour atteint plutôt qu’un plafond muet', () => {
     const e = ids.reduce((etat, id) => enregistrerReponse(etat, id, true, aujourdhui()), etatInitial());
     sauvegarder({ ...e, profil: { ...profilVide(), rythme: 10 } });
