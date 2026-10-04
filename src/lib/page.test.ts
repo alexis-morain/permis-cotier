@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { lienRetour, rafraichirSiLaProgressionAChange } from './page';
+import { lienRetour, pageCourante, rafraichirSiLaProgressionAChange } from './page';
 
 /**
  * Le contrat entre les scripts de page et la navigation de la coquille.
@@ -77,6 +77,41 @@ describe('lienRetour', () => {
     expect(lienRetour('/cours', cours)).toBeNull();
     expect(lienRetour('/cours/', cours)).toBeNull();
     expect(lienRetour('/', [])).toBeNull();
+  });
+});
+
+describe('pageCourante', () => {
+  it('reconnaît la page servie sous son nom de fichier, comme le build « file » l’écrit', () => {
+    expect(pageCourante('/profil.html', '/profil')).toBe('page');
+    expect(pageCourante('/examen.html', '/examen')).toBe('page');
+    expect(pageCourante('/cours/balisage.html', '/cours')).toBe('page');
+  });
+
+  it('reconnaît une page de la section, et l’index d’une section', () => {
+    expect(pageCourante('/profil/depart.html', '/profil')).toBe('page');
+    expect(pageCourante('/cours/index.html', '/cours')).toBe('page');
+  });
+
+  it('reconnaît les chemins de la coquille, en format « directory »', () => {
+    expect(pageCourante('/profil', '/profil')).toBe('page');
+    expect(pageCourante('/profil/', '/profil')).toBe('page');
+    expect(pageCourante('/cours/balisage/', '/cours')).toBe('page');
+  });
+
+  it('accepte plusieurs sections pour une même entrée', () => {
+    expect(pageCourante('/revoir.html', '/entrainement', '/revoir')).toBe('page');
+    expect(pageCourante('/notion/cardinales.html', '/themes', '/theme', '/notion')).toBe('page');
+  });
+
+  it('ne prend pas un préfixe de mot pour une section', () => {
+    expect(pageCourante('/themes.html', '/theme')).toBeUndefined();
+    expect(pageCourante('/profilage.html', '/profil')).toBeUndefined();
+  });
+
+  it('ne marque rien hors de la section', () => {
+    expect(pageCourante('/index.html', '/cours')).toBeUndefined();
+    expect(pageCourante('/', '/profil')).toBeUndefined();
+    expect(pageCourante('/guide/prix.html', '/examen')).toBeUndefined();
   });
 });
 
