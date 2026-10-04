@@ -587,6 +587,55 @@ describe('ce que la série raconte à la mesure', () => {
   });
 });
 
+describe('le pavillon Q sur le résultat reçu', () => {
+  const profilVide = () =>
+    localStorage.setItem(
+      CLE_STOCKAGE,
+      JSON.stringify({ version: VERSION_STOCKAGE, questions: {}, examens: [], profil: null }),
+    );
+
+  it('se hisse quand l’examen blanc est reçu, avec la libre pratique dite', () => {
+    profilVide();
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    const bloc = document.querySelector('.resultat--recu');
+    expect(bloc).toBeTruthy();
+    // Le score et le verdict sont dans le bloc : le mât les longe tous les deux.
+    expect(bloc?.querySelector('.resultat__score')).toBeTruthy();
+    expect(bloc?.querySelector('.resultat__verdict--reussi')).toBeTruthy();
+    expect(screen.getByText(/Pavillon Q hissé : libre pratique\./)).toBeTruthy();
+    expect(screen.getByText(/Code international des signaux/)).toBeTruthy();
+  });
+
+  it('reste à terre quand l’examen est recalé', () => {
+    profilVide();
+    const six = [question('a-1'), question('a-2'), question('a-3'), question('a-4'), question('a-5'), question('a-6')];
+    render(<Quiz mode="examen" questions={six} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    // Six questions sans réponse : six erreurs, une de trop.
+    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    expect(screen.getByText(/Recalé/)).toBeTruthy();
+    expect(document.querySelector('.resultat--recu')).toBeNull();
+    expect(screen.queryByText(/libre pratique/)).toBeNull();
+  });
+
+  it('ne se hisse pas en entraînement, même sans faute', () => {
+    profilVide();
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+      fireEvent.click(screen.getByRole('button', { name: /Question suivante|Voir le résultat/ }));
+    }
+    expect(document.querySelector('.resultat__score')).toBeTruthy();
+    expect(document.querySelector('.resultat--recu')).toBeNull();
+  });
+});
+
 describe('le rappel de la raison sur le résultat', () => {
   it('revient quand l’examen est recalé, avec l’écart au précédent', () => {
     const quatre = [question('a-1'), question('a-2'), question('a-3'), question('a-4'), question('a-5'), question('a-6')];
