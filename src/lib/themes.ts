@@ -138,7 +138,9 @@ export const THEMES: readonly Theme[] = [
   },
 ] as const;
 
-export const CODES_THEMES: readonly string[] = THEMES.map((t) => t.code);
+// Annoté sans effet de bord : un empaqueteur qui ne lit que `estDue` dans
+// `quiz.ts` (le script en ligne de l'accueil) laisse alors la table entière.
+export const CODES_THEMES: readonly string[] = /* @__PURE__ */ THEMES.map((t) => t.code);
 
 export function themeParCode(code: string): Theme | undefined {
   return THEMES.find((t) => t.code === code);

@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
 import { aujourdhui, charger, effacer, enregistrerProfil, sauvegarder } from '../lib/progression';
-import { estDue } from '../lib/quiz';
+import { ERREURS_ADMISES, estDue } from '../lib/quiz';
+import { depuisLe } from '../lib/accueil';
 import type { Etat } from '../lib/progression';
 import {
   PALIERS,
+  phraseDuPalier,
   RYTHMES,
   indice,
   jalons,
@@ -50,6 +52,9 @@ const CHANGEMENT_COMPTAGE = '2026-09-10';
 const FIN_AVIS_COMPTAGE = '2026-10-10';
 
 /** « 1 vue », « 2 vues » : zéro et un au singulier, comme on le dit. */
+/** La première lettre en capitale : « hier » ouvre une phrase. */
+const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+
 function accorde(n: number, mot: string): string {
   return `${n} ${mot}${n > 1 ? 's' : ''}`;
 }
@@ -144,18 +149,15 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const direLeChangement =
     jour < FIN_AVIS_COMPTAGE && vues.some(([, e]) => e.vueLe < CHANGEMENT_COMPTAGE);
 
+  // Ce que `/revoir` joue vraiment : le rythme entier, les dues d'abord (les
+  // plus anciennes en tête), puis des neuves (`serieDuJour`). Le bouton nomme
+  // la série ; la phrase sous « Aujourd'hui » dit combien de dues elle prend.
+  const serieRevue = Math.min(aRevoir, objectif.cible);
+
   // La prochaine chose à faire, une seule : ce qui est dû aujourd'hui d'abord,
   // sinon ce que le point de départ conseille.
   const suite = aRevoir > 0
-    // « Revoir mes 1 question » ne se dit pas : au singulier, c'est le
-    // déterminant qui porte le compte, pas un chiffre devant un pluriel absent.
-    ? {
-        href: '/revoir',
-        texte:
-          aRevoir > 1
-            ? `Revoir mes ${aRevoir} questions du jour`
-            : 'Revoir ma question du jour',
-      }
+    ? { href: '/revoir', texte: 'Faire ma série du jour' }
     : p.depart === 'zero' && Object.keys(etat.lecons).length < totalLecons
       ? { href: '/cours', texte: 'Continuer le cours' }
       : { href: '/examen', texte: 'Faire un examen blanc' };
@@ -170,6 +172,16 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   ) : recale ? (
     <p className="rappel">
       Tu passes ce permis pour <q>{raison}</q>{finRappel}
+    </p>
+  ) : null;
+
+  // Le lendemain d'un recalé, le score était au quatrième écran, sous les
+  // quatorze thèmes : il passe sous le titre, avec la barre qu'il manquait.
+  const dernierExamen = examens[0];
+  const blocDernier = recale && dernierExamen ? (
+    <p className="fiche__dernier">
+      {majuscule(depuisLe(Math.max(0, -(joursAvant(dernierExamen.date, jour) ?? 0))))}, {dernierExamen.bonnes}{'\u00a0'}sur{'\u00a0'}{dernierExamen.total}, recalé
+      {'\u00a0'}: il en fallait{'\u00a0'}{dernierExamen.total - ERREURS_ADMISES}.
     </p>
   ) : null;
 
@@ -197,16 +209,32 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
       <h2 id="indice-titre" className={POUR_APP ? 'indice__mot' : 'visuellement-cache'}>
         Indice de préparation
       </h2>
-      <div className="indice">
-        <p className="indice__nombre">
-          <span className="display">{ind.score}</span>
-          <small> / 100</small>
-        </p>
-        <div className="indice__texte">
-          <p className="indice__palier">{palier.titre}</p>
-          <p>{palier.phrase}</p>
+      {/* Avec un examen, le palier se lit sur lui et passe en tête ; l'indice
+          suit, plus petit et nommé. Sans examen, l'indice reste devant. */}
+      {ind.dernier ? (
+        <div className="indice indice--examens">
+          <div className="indice__texte">
+            <p className="indice__palier">{palier.titre}</p>
+            <p>{phraseDuPalier(ind)}</p>
+          </div>
+          <p className="indice__nombre">
+            <small>Indice </small>
+            <span className="display">{ind.score}</span>
+            <small> / 100</small>
+          </p>
         </div>
-      </div>
+      ) : (
+        <div className="indice">
+          <p className="indice__nombre">
+            <span className="display">{ind.score}</span>
+            <small> / 100</small>
+          </p>
+          <div className="indice__texte">
+            <p className="indice__palier">{palier.titre}</p>
+            <p>{phraseDuPalier(ind)}</p>
+          </div>
+        </div>
+      )}
       {/* Trois calques pleins, du plus long au plus court, chacun mis à
           l'échelle : la part se lit à la couleur qui s'arrête, et le
           mouvement passe par `transform`, jamais par `width`. */}
@@ -225,9 +253,9 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
         />
       </div>
       <ul className="indice__legende" aria-hidden="true">
-        <li><i className="indice__puce indice__puce--vu" />Vu {ind.parts.vu} sur 20</li>
-        <li><i className="indice__puce indice__puce--retenu" />Retenu {ind.parts.retenu} sur 35</li>
-        <li><i className="indice__puce indice__puce--examens" />Examens {ind.parts.examens} sur 45</li>
+        <li><i className="indice__puce indice__puce--vu" />Vu{'\u00a0'}: {accorde(ind.parts.vu, 'point')} sur 20</li>
+        <li><i className="indice__puce indice__puce--retenu" />Retenu{'\u00a0'}: {accorde(ind.parts.retenu, 'point')} sur 35</li>
+        <li><i className="indice__puce indice__puce--examens" />Examens{'\u00a0'}: {accorde(ind.parts.examens, 'point')} sur 45</li>
       </ul>
       {direLeChangement && (
         <p className="indice__changement">
@@ -244,8 +272,9 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           réponse ne compte pas comme une mémoire, la correction était encore à l’écran. Quarante-cinq pour
           la moyenne de tes trois derniers examens blancs terminés
           {ind.examensComptes > 0 ? `, ${ind.examensComptes} pour l’instant` : ', aucun pour l’instant'}.
-          « Prêt » demande en plus deux examens reçus sur les trois derniers : un nombre ne dit pas qu’on tient
-          quarante questions en vingt secondes chacune. Une question réussie revient un jour plus tard,
+          Dès qu’un examen blanc est terminé, le palier se lit sur les examens, pas sur ce nombre : prêt avec deux
+          reçus sur les trois derniers, presque si le dernier est reçu, en route s’il est recalé de dix erreurs ou
+          moins. Un nombre ne dit pas qu’on tient quarante questions en vingt secondes chacune. Une question réussie revient un jour plus tard,
           puis trois, puis sept, puis vingt et un. Une faute la ramène tout de suite et remet le compteur à zéro.
         </p>
       </details>
@@ -272,6 +301,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           </p>
         )}
         {blocRappel}
+        {blocDernier}
       </header>
       {blocSuite}
       {!rien && blocIndice}
@@ -283,9 +313,13 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             <h2 id="jour-titre">Aujourd’hui</h2>
             <div className="jour">
               <div className="jour__objectif">
+                {/* Au-delà de l'objectif, le chiffre dit ce qui est fait : « 20 sur
+                    20 » après quarante réponses plafonnait sans le dire. */}
                 <p className="jour__chiffre">
-                  <span className="display">{Math.min(objectif.faites, objectif.cible)}</span>
-                  <span className="discret"> sur {objectif.cible} questions</span>
+                  <span className="display">{objectif.faites}</span>
+                  <span className="discret">
+                    {objectif.faites > objectif.cible ? ' questions' : ` sur ${objectif.cible} questions`}
+                  </span>
                 </p>
                 <div className="jour__barre" aria-hidden="true">
                   <span style={{ transform: `scaleX(${Math.min(1, objectif.faites / objectif.cible)})` }} />
@@ -335,14 +369,32 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                 {jours === 1 && <><b>Examen demain.</b> Deux examens blancs ce soir, puis dors.</>}
                 {jours === 0 && <><b>Examen aujourd’hui.</b> Bon vent.</>}
                 {jours < 0 && <>La date d’examen est passée. Tu peux la changer plus bas.</>}
-                {jours > 1 && banque.length > vues.length && (
-                  <span className="discret">
-                    {' '}Il te reste {banque.length - vues.length} questions jamais vues : environ{' '}
-                    {Math.max(1, Math.ceil((banque.length - vues.length) / jours))} par jour pour toutes les voir.
-                  </span>
-                )}
+                {/* Un seul objectif par jour : le rythme qu'exige la date se compare
+                    à celui du candidat, au lieu de poser un second nombre à côté. */}
+                {jours > 1 && banque.length > vues.length && (() => {
+                  const restantes = banque.length - vues.length;
+                  const parJour = Math.max(1, Math.ceil(restantes / jours));
+                  return (
+                    <span className="discret">
+                      {' '}Il te reste {restantes} questions jamais vues{'\u00a0'}:{' '}
+                      {parJour > objectif.cible
+                        ? `environ ${parJour} par jour pour toutes les voir, plus que ton objectif de ${objectif.cible}. Il se règle plus bas.`
+                        : `ton objectif de ${objectif.cible} par jour suffit pour toutes les voir.`}
+                    </span>
+                  );
+                })()}
               </p>
             )}
+
+            {aRevoir > serieRevue ? (
+              <p className="discret jour__note">
+                {aRevoir} questions à revoir en tout{'\u00a0'}: la série du jour en prend {serieRevue}, les plus anciennes d’abord.
+              </p>
+            ) : aRevoir > 0 ? (
+              <p className="discret jour__note">
+                {accorde(aRevoir, 'question')} à revoir aujourd’hui, en tête de ta série.
+              </p>
+            ) : null}
 
             {/* Relire n'est pas rejouer, et les deux gestes ne se remplacent pas. */}
             {ratees && (
@@ -385,34 +437,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             </section>
           )}
 
-          <section className="fiche__themes" aria-labelledby="themes-titre">
-            <h2 id="themes-titre">Thème par thème</h2>
-            <p className="discret">Les plus fragiles d’abord.</p>
-            <ul className="maitrise">
-              {themes.map((t) => (
-                <li
-                  key={t.code}
-                  style={{ '--vues': t.vues / t.total, '--retenues': t.retenues / t.total } as React.CSSProperties}
-                >
-                  <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
-                    <b>{nomDuTheme(t.code)}</b>
-                    <span className="maitrise__note">
-                      {t.vues === 0 ? (
-                        <span className="pastille">jamais ouvert</span>
-                      ) : (
-                        <Compte {...t} />
-                      )}
-                    </span>
-                    <span className="maitrise__jauge" aria-hidden="true">
-                      <span className="maitrise__vues" />
-                      <span className="maitrise__retenues" />
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-
           <section className="fiche__examens" aria-labelledby="examens-titre">
             <h2 id="examens-titre">Examens blancs</h2>
             {examens.length === 0 ? (
@@ -448,6 +472,34 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                 <p className="discret">Le trait marque 35 sur 40, la barre d’admission.</p>
               </>
             )}
+          </section>
+
+          <section className="fiche__themes" aria-labelledby="themes-titre">
+            <h2 id="themes-titre">Thème par thème</h2>
+            <p className="discret">Les plus fragiles d’abord.</p>
+            <ul className="maitrise">
+              {themes.map((t) => (
+                <li
+                  key={t.code}
+                  style={{ '--vues': t.vues / t.total, '--retenues': t.retenues / t.total } as React.CSSProperties}
+                >
+                  <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
+                    <b>{nomDuTheme(t.code)}</b>
+                    <span className="maitrise__note">
+                      {t.vues === 0 ? (
+                        <span className="pastille">jamais ouvert</span>
+                      ) : (
+                        <Compte {...t} />
+                      )}
+                    </span>
+                    <span className="maitrise__jauge" aria-hidden="true">
+                      <span className="maitrise__vues" />
+                      <span className="maitrise__retenues" />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </section>
 
           <section className="fiche__jalons" aria-labelledby="jalons-titre">
@@ -560,7 +612,9 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             <>
               {partira && <p className="reglage__valeur">{partira}</p>}
               <div className="jeu__actions">
-                <button className="bouton" type="button" onClick={() => setConfirme(false)}>
+                {/* Le bouton qui ouvrait la confirmation vient de disparaître :
+                    sans ceci, le focus tombait sur `body`. */}
+                <button className="bouton" type="button" onClick={() => setConfirme(false)} autoFocus>
                   Annuler
                 </button>
                 <button

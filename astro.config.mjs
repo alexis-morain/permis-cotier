@@ -10,6 +10,7 @@ import {
   reglesALaDemande,
 } from './src/lib/hors-ligne.ts';
 import { existsSync, readFileSync } from 'node:fs';
+import { construireScriptBande } from './scripts/bande-avant-rendu.mjs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
 
@@ -85,6 +86,29 @@ function siteSansApp() {
       if (!fichier.startsWith('src/') || !/\.tsx?$/.test(fichier)) return null;
       const sansCible = code.replace(IMPORT_CIBLE, 'const POUR_APP = false;');
       return sansCible === code ? null : { code: sansCible, map: null };
+    },
+  };
+}
+
+/**
+ * Le script en ligne de la bande d'ouverture de l'accueil, servi comme une
+ * chaîne par le module `virtual:bande-avant-rendu`. Il est empaqueté par
+ * esbuild depuis les modules testés (`scripts/bande-avant-rendu.mjs`) ; en
+ * dev, toucher l'un d'eux le reconstruit. Pour le site comme pour l'app :
+ * la bande ne dépend pas de la cible.
+ */
+function bandeAvantRendu() {
+  const ID = 'virtual:bande-avant-rendu';
+  return {
+    name: 'permis-cotier:bande-avant-rendu',
+    resolveId(id) {
+      return id === ID ? `\0${ID}` : null;
+    },
+    load(id) {
+      if (id !== `\0${ID}`) return null;
+      const { code, entrees } = construireScriptBande();
+      for (const fichier of entrees) this.addWatchFile(fichier);
+      return `export default ${JSON.stringify(code)};`;
     },
   };
 }
@@ -190,7 +214,7 @@ export default defineConfig({
     ]),
   ],
   vite: {
-    plugins: pourApp ? [] : [siteSansApp()],
+    plugins: pourApp ? [bandeAvantRendu()] : [siteSansApp(), bandeAvantRendu()],
     define: {
       __VERSION_BANQUE__: JSON.stringify(versionBanque),
       __POUR_APP__: JSON.stringify(pourApp),

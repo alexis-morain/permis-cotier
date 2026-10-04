@@ -1,17 +1,17 @@
 /**
- * Les trois blocs de l'accueil qui lisent la progression, sans React.
+ * Les deux blocs de l'accueil qui lisent la progression, sans React.
  *
- * Ils étaient trois îlots (`ReprendreCours`, `Reprise`, `DateExamen`) pour
- * trois kilooctets de logique, et les trois faisaient charger le runtime
- * React entier sur la page la plus vue du site : 50 Ko brotli, un tiers de
- * sa charge. Le script de `index.astro` les rend maintenant en DOM nu, à
- * partir du même `progression.ts` et des mêmes règles de `profil.ts`.
+ * Ils étaient des îlots (`Reprise`, `DateExamen`, et `ReprendreCours` pour le
+ * bouton du cours) qui faisaient charger le runtime React entier sur la page
+ * la plus vue du site : 50 Ko brotli, un tiers de sa charge. Le script de
+ * `index.astro` les rend maintenant en DOM nu, à partir du même
+ * `progression.ts` et des mêmes règles de `profil.ts`. Vides jusqu'au script,
+ * comme les îlots `client:only` qu'ils remplacent. Les textes, les liens et
+ * les attributs `data-mesure` sont ceux des îlots, un par clic, et jamais deux.
  *
- * Ce que la page sert avant le script est ce que l'îlot `client:load`
- * rendait côté serveur : « Commencer le cours » vers la première leçon. Les
- * deux autres blocs étaient `client:only` : vides jusqu'au script, ils le
- * restent. Les textes, les liens et les attributs `data-mesure` sont ceux
- * des îlots, un par clic, et jamais deux.
+ * La bande d'ouverture n'est plus à ce script : elle se choisit avant la
+ * première peinture, dans un script en ligne (`bande-rendu.ts`). Ce module
+ * différé arrivait après, et changeait le bouton sous les yeux.
  *
  * Les données de la page (les leçons dans l'ordre du parcours, la banque
  * publiée) sont lues dans un `<script type="application/json">` : 570
@@ -21,6 +21,7 @@ import { aujourdhui, charger, sauvegarder, type Etat } from '../lib/progression'
 import { estDue } from '../lib/quiz';
 import { evenement } from '../lib/mesure';
 import { programmerRappels } from '../lib/natif';
+import { ID_DONNEES } from '../lib/bande-rendu';
 import {
   PALIERS,
   indice,
@@ -33,19 +34,12 @@ import {
   type QuestionConnue,
 } from '../lib/profil';
 
-export interface LeconAccueil {
-  code: string;
-  nom: string;
-  chemin: string;
-}
-
 export interface DonneesAccueil {
-  lecons: LeconAccueil[];
   banque: QuestionConnue[];
 }
 
-/** L'identifiant du bloc JSON que la page écrit. */
-export const ID_DONNEES = 'accueil-donnees';
+/** L'identifiant du bloc JSON que la page écrit, partagé avec la bande. */
+export { ID_DONNEES };
 
 type Enfant = Node | string | null | false | undefined;
 
@@ -68,32 +62,10 @@ export function lireDonnees(doc: Document): DonneesAccueil | null {
   if (!bloc) return null;
   try {
     const brut = JSON.parse(bloc.textContent ?? '') as Partial<DonneesAccueil>;
-    if (!Array.isArray(brut.lecons) || !Array.isArray(brut.banque)) return null;
-    return { lecons: brut.lecons, banque: brut.banque };
+    if (!Array.isArray(brut.banque)) return null;
+    return { banque: brut.banque };
   } catch {
     return null;
-  }
-}
-
-/**
- * Où on en est dans le cours, et la leçon à faire maintenant. Le lien est
- * déjà dans la page : on le repointe, et on pose le compte devant.
- */
-export function monterReprendreCours(racine: HTMLElement, lecons: readonly LeconAccueil[], etat: Etat): void {
-  const faites = etat.lecons;
-  const nombre = lecons.filter((l) => faites[l.code] !== undefined).length;
-  const prochaine = lecons.find((l) => faites[l.code] === undefined) ?? lecons[0];
-  const lien = racine.querySelector('a');
-  if (!prochaine || !lien) return;
-
-  lien.setAttribute('href', prochaine.chemin);
-  lien.setAttribute('data-mesure-notion', prochaine.code);
-  lien.textContent = nombre > 0 ? `Reprendre : ${prochaine.nom}` : 'Commencer le cours';
-
-  racine.querySelector('.reprendreCours__compte')?.remove();
-  if (nombre > 0) {
-    const s = nombre > 1 ? 's' : '';
-    racine.prepend(el('span', { class: 'reprendreCours__compte' }, b(nombre), ` leçon${s} faite${s} sur ${lecons.length}. `));
   }
 }
 
@@ -130,8 +102,9 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   const objectif = objectifDuJour(etat, jour);
   const serie = serieDeJours(etat, jour);
   const prenom = etat.profil.prenom.trim();
-  // Le dernier examen blanc terminé : c'est ce que le candidat qui revient
-  // vient chercher, et il passe avant l'indice.
+  // Le dernier examen blanc terminé. La bande d'ouverture le dit déjà, en
+  // tête de page, dans tous ses états : il ne sert plus ici qu'à savoir si
+  // la raison doit revenir.
   const dernier = etat.examens.find((x) => x.total > 0) ?? null;
 
   // Sans prénom, la phrase commence à « Indice » : une minuscule en tête de
@@ -158,15 +131,7 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   }
   ligne.append(' ', el('a', { href: '/profil', 'data-mesure': 'accueil-profil' }, 'Ta fiche'), '.');
 
-  const bloc = el('div', { class: 'reprise' });
-  if (dernier) {
-    bloc.append(
-      el('p', { class: 'reprise__examen' },
-        'Dernier examen blanc : ', b(`${dernier.bonnes} sur ${dernier.total}`), `, ${dernier.reussi ? 'reçu' : 'recalé'}.`,
-      ),
-    );
-  }
-  bloc.append(ligne);
+  const bloc = el('div', { class: 'reprise' }, ligne);
   // La raison ne revient que quand ça coince : affichée à chaque visite, elle
   // devenait du décor, et perdait sa force pour le jour où elle sert.
   if (raison && dernier && !dernier.reussi) {
@@ -237,17 +202,15 @@ export function monterDateExamen(racine: HTMLElement, ids: readonly string[], et
  * que le serveur a rendu.
  */
 export function monterAccueil(doc: Document = document): void {
-  const reprendre = doc.querySelector<HTMLElement>('[data-reprendre-cours]');
   const reprise = doc.querySelector<HTMLElement>('[data-reprise]');
   const date = doc.querySelector<HTMLElement>('[data-date-examen]');
-  if (!reprendre && !reprise && !date) return;
+  if (!reprise && !date) return;
 
   const donnees = lireDonnees(doc);
   if (!donnees) return;
 
   const etat = charger();
   const jour = aujourdhui();
-  if (reprendre) monterReprendreCours(reprendre, donnees.lecons, etat);
   if (reprise) monterReprise(reprise, donnees.banque, etat, jour);
   if (date) monterDateExamen(date, donnees.banque.map((q) => q.id), etat, jour);
 }

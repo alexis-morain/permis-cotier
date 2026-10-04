@@ -1,4 +1,4 @@
-import { enDate, jourPlus } from './jour';
+import { jourPlus } from './jour';
 import type { Etat, Profil } from './progression';
 import { estRetenue } from './quiz';
 import { NOTIONS, notionParCode } from './notions';
@@ -89,6 +89,8 @@ export interface Indice {
   palier: Palier;
   /** Les examens complets pris dans la moyenne, le plus récent d'abord. */
   examensComptes: number;
+  /** Le dernier examen complet, ou `null` : c'est lui qui nomme le palier. */
+  dernier: { bonnes: number; total: number; reussi: boolean } | null;
 }
 
 const POIDS = { vu: 20, retenu: 35, examens: 45 } as const;
@@ -101,13 +103,31 @@ export const PALIERS: Record<Palier, { titre: string; phrase: string }> = {
   pret: { titre: 'Prêt', phrase: 'Deux des trois derniers examens blancs sont reçus. Garde le rythme jusqu’au jour J.' },
 };
 
+/** Au-delà de ce nombre d'erreurs, un recalé n'est plus « de peu ». */
+const RECALE_DE_PEU = 10;
+
+/**
+ * La phrase sous le palier. Sans examen, celle du palier. Avec un examen,
+ * elle part du dernier : c'est lui qui nomme le palier (voir `indice`).
+ */
+export function phraseDuPalier(ind: Indice): string {
+  const d = ind.dernier;
+  if (!d) return PALIERS[ind.palier].phrase;
+  if (ind.palier === 'pret') return PALIERS.pret.phrase;
+  if (d.reussi) return 'Ton dernier examen blanc est reçu. Un deuxième sur les trois derniers, et tu es prêt.';
+  const erreurs = d.total - d.bonnes;
+  return erreurs <= RECALE_DE_PEU
+    ? `Ton dernier examen blanc est recalé de peu, ${erreurs} erreurs pour cinq admises. Les notions à reprendre en premier sont plus bas.`
+    : `Ton dernier examen blanc est recalé, ${erreurs} erreurs pour cinq admises. Commence par les notions à reprendre en premier, plus bas.`;
+}
+
 /**
  * Trois parts : ce qu'on a vu de la banque, ce qu'on en retient, et les trois
  * derniers examens blancs complets. « Retenu » veut dire réussi deux jours
  * différents, pas réussi à la dernière rencontre : la seconde définition
- * comptait comme mémoire une correction relue dix secondes plus tôt. « Prêt » exige en plus deux examens reçus
- * sur les trois derniers : un nombre seul ne dit pas qu'on tient quarante
- * questions en vingt secondes chacune.
+ * comptait comme mémoire une correction relue dix secondes plus tôt. Dès qu'un
+ * examen est terminé, le palier se lit sur les examens et non sur le nombre :
+ * un nombre seul ne dit pas qu'on tient quarante questions en vingt secondes.
  */
 export function indice(etat: Etat, banque: readonly QuestionConnue[]): Indice {
   const publiees = new Set(banque.map((q) => q.id));
@@ -125,9 +145,17 @@ export function indice(etat: Etat, banque: readonly QuestionConnue[]): Indice {
   const score = Math.round(partVu + partRetenu + partExamens);
   const recus = complets.filter((x) => x.reussi).length;
 
+  // Sans examen, le palier suit l'indice. Avec un examen, il suit les
+  // examens (décision d'Alexis, 4 octobre) : « 36 sur 100, tu démarres » au
+  // lendemain d'un 31 sur 40 démentait le seul chiffre qui compte le jour de
+  // l'épreuve. L'indice reste, en second.
+  const dernier = complets[0] ?? null;
   let palier: Palier = 'demarre';
-  if (score >= 85 && recus >= 2) palier = 'pret';
-  else if (score >= 70) palier = 'presque';
+  if (dernier) {
+    if (recus >= 2) palier = 'pret';
+    else if (dernier.reussi) palier = 'presque';
+    else if (dernier.total - dernier.bonnes <= RECALE_DE_PEU) palier = 'en-route';
+  } else if (score >= 70) palier = 'presque';
   else if (score >= 40) palier = 'en-route';
 
   return {
@@ -135,6 +163,7 @@ export function indice(etat: Etat, banque: readonly QuestionConnue[]): Indice {
     parts: { vu: Math.round(partVu), retenu: Math.round(partRetenu), examens: Math.round(partExamens) },
     palier,
     examensComptes: complets.length,
+    dernier: dernier ? { bonnes: dernier.bonnes, total: dernier.total, reussi: dernier.reussi } : null,
   };
 }
 
@@ -195,15 +224,10 @@ export function quatorzeJours(etat: Etat, aujourdhui: string): { date: string; r
 
 /**
  * Jours entre aujourd'hui et une date, négatif si elle est passée, `null` si
- * elle est illisible. Les deux bouts sont des jours parisiens comparés comme
- * des cases de calendrier : jamais un jour d'un côté et un instant de l'autre.
+ * elle est illisible. Le calcul vit dans `jour.ts`, avec les autres jours ;
+ * la fiche le réexporte pour ceux qui l'importaient d'ici.
  */
-export function joursAvant(date: string, aujourdhui: string): number | null {
-  const cible = enDate(date);
-  const ici = enDate(aujourdhui);
-  if (!cible || !ici) return null;
-  return Math.round((cible.getTime() - ici.getTime()) / 86_400_000);
-}
+export { joursAvant } from './jour';
 
 /* ------------------------------------------------------------------------ */
 /* Par thème                                                                 */

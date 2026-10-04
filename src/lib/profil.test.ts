@@ -10,6 +10,8 @@ import {
 import type { Etat } from './progression';
 import {
   MOTIVATIONS,
+  PALIERS,
+  phraseDuPalier,
   RYTHMES,
   indice,
   serieDeJours,
@@ -106,21 +108,45 @@ describe('indice de préparation', () => {
     e = examen(e, 33, '2026-09-01');
     e = examen(e, 34, '2026-09-02');
     e = examen(e, 40, '2026-09-03');
-    const presque = indice(e, banque);
-    expect(presque.score).toBeGreaterThanOrEqual(85);
-    expect(presque.palier).toBe('presque');
+    expect(indice(e, banque).palier).toBe('presque');
 
     e = examen(e, 37, '2026-09-04');
     expect(indice(e, banque).palier).toBe('pret');
   });
 
-  it('nomme les paliers intermédiaires', () => {
+  it('sans examen, nomme le palier d’après l’indice', () => {
     let e = etatInitial();
     for (const q of banque) e = retenir(e, q.id);
     expect(indice(e, banque).score).toBe(55);
     expect(indice(e, banque).palier).toBe('en-route');
-    e = examen(e, 30);
-    expect(indice(e, banque).palier).toBe('presque');
+    expect(indice(etatInitial(), banque).palier).toBe('demarre');
+  });
+
+  // Décision d'Alexis, 4 octobre : dès qu'un examen existe, le palier se lit
+  // sur les examens. « 36 sur 100, tu démarres » au lendemain d'un 31 sur 40
+  // démentait le seul chiffre qui compte le jour de l'épreuve.
+  it('avec un examen, nomme le palier d’après les examens, pas d’après l’indice', () => {
+    // Rien vu à l'entraînement : l'indice est bas, l'examen dit le vrai.
+    expect(indice(examen(etatInitial(), 31), banque)).toMatchObject({ palier: 'en-route', dernier: { bonnes: 31, total: 40, reussi: false } });
+    expect(indice(examen(etatInitial(), 29), banque).palier).toBe('demarre');
+    expect(indice(examen(etatInitial(), 30), banque).palier).toBe('en-route');
+    expect(indice(examen(etatInitial(), 36), banque).palier).toBe('presque');
+    expect(indice(examen(examen(etatInitial(), 36, '2026-09-01'), 37, '2026-09-02'), banque).palier).toBe('pret');
+    // Reçu puis recalé : le dernier compte, le reçu d'avant ne fait pas « presque ».
+    expect(indice(examen(examen(etatInitial(), 37, '2026-09-01'), 25, '2026-09-02'), banque).palier).toBe('demarre');
+  });
+
+  it('dit le dernier examen dans la phrase du palier', () => {
+    expect(phraseDuPalier(indice(examen(etatInitial(), 31), banque))).toBe(
+      'Ton dernier examen blanc est recalé de peu, 9 erreurs pour cinq admises. Les notions à reprendre en premier sont plus bas.',
+    );
+    expect(phraseDuPalier(indice(examen(etatInitial(), 20), banque))).toBe(
+      'Ton dernier examen blanc est recalé, 20 erreurs pour cinq admises. Commence par les notions à reprendre en premier, plus bas.',
+    );
+    expect(phraseDuPalier(indice(examen(etatInitial(), 36), banque))).toBe(
+      'Ton dernier examen blanc est reçu. Un deuxième sur les trois derniers, et tu es prêt.',
+    );
+    expect(phraseDuPalier(indice(etatInitial(), banque))).toBe(PALIERS.demarre.phrase);
   });
 });
 
