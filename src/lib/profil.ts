@@ -195,15 +195,10 @@ export function quatorzeJours(etat: Etat, aujourdhui: string): { date: string; r
 
 /**
  * Jours entre aujourd'hui et une date, négatif si elle est passée, `null` si
- * elle est illisible. Les deux bouts sont des jours parisiens comparés comme
- * des cases de calendrier : jamais un jour d'un côté et un instant de l'autre.
+ * elle est illisible. Le calcul vit dans `jour.ts`, avec les autres jours ;
+ * la fiche le réexporte pour ceux qui l'importaient d'ici.
  */
-export function joursAvant(date: string, aujourdhui: string): number | null {
-  const cible = enDate(date);
-  const ici = enDate(aujourdhui);
-  if (!cible || !ici) return null;
-  return Math.round((cible.getTime() - ici.getTime()) / 86_400_000);
-}
+export { joursAvant } from './jour';
 
 /* ------------------------------------------------------------------------ */
 /* Par thème                                                                 */

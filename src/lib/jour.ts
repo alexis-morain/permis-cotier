@@ -53,3 +53,16 @@ export function jourPlus(iso: string, n: number): string {
   // en texte : c'est pour ça que l'arithmétique reste en UTC.
   return d.toISOString().slice(0, 10);
 }
+
+/**
+ * Combien de jours de `aujourdhui` à `date`, négatif si elle est passée.
+ * `null` si l'une des deux est illisible. Ici et non dans `profil.ts` : la
+ * bande d'ouverture de l'accueil en a besoin dans un script qui tourne avant
+ * le premier rendu, et qui ne doit pas embarquer la fiche entière.
+ */
+export function joursAvant(date: string, aujourdhui: string): number | null {
+  const cible = enDate(date);
+  const ici = enDate(aujourdhui);
+  if (!cible || !ici) return null;
+  return Math.round((cible.getTime() - ici.getTime()) / 86_400_000);
+}

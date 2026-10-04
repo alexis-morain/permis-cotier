@@ -1,9 +1,10 @@
 /** @vitest-environment jsdom */
 /**
- * Les trois blocs de l'accueil qui lisent la progression, en DOM nu : ce que
- * les îlots `ReprendreCours`, `Reprise` et `DateExamen` rendaient, le script
- * de la page le rend maintenant sans React. Mêmes textes, mêmes liens, mêmes
- * attributs de mesure ; les tests reprennent ceux des îlots.
+ * Les deux blocs de l'accueil qui lisent la progression, en DOM nu : ce que
+ * les îlots `Reprise` et `DateExamen` rendaient, le script de la page le rend
+ * maintenant sans React. Mêmes textes, mêmes liens, mêmes attributs de
+ * mesure ; les tests reprennent ceux des îlots. La bande d'ouverture a ses
+ * propres tests (`bande*.test.ts`).
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { monterAccueil } from './accueil-site';
@@ -32,9 +33,6 @@ const ids = Array.from({ length: 10 }, (_, i) => `vhf-${i}`);
 /** La page telle qu'`index.astro` la rend avant le script. */
 function page(donnees: unknown = { lecons, banque: ids.map((id) => ({ id, theme: 'vhf' })) }) {
   document.body.innerHTML = `
-    <p class="reprendreCours" data-reprendre-cours>
-      <a class="bouton bouton--principal" href="${lecons[0]!.chemin}" data-mesure="accueil-cours" data-mesure-notion="${lecons[0]!.code}">Commencer le cours</a>
-    </p>
     <div class="reprendre__etat" data-reprise></div>
     <div class="reprendre__date encadre" data-date-examen></div>
     <script type="application/json" id="accueil-donnees">${JSON.stringify(donnees)}</script>`;
@@ -46,13 +44,6 @@ function lien(nom: RegExp | string): HTMLAnchorElement {
   );
   if (!trouve) throw new Error(`pas de lien ${nom}`);
   return trouve;
-}
-
-function progression(faites: Record<string, { faiteLe: string; bonnes: number; total: number }>) {
-  localStorage.setItem(
-    CLE_STOCKAGE,
-    JSON.stringify({ ...etatInitial(), version: VERSION_STOCKAGE, lecons: faites }),
-  );
 }
 
 beforeEach(() => localStorage.clear());
@@ -72,38 +63,8 @@ describe('les données de la page', () => {
     page();
     document.getElementById('accueil-donnees')!.textContent = '{pas du json';
     monterAccueil(document);
-    expect(lien('Commencer le cours').getAttribute('href')).toBe('/cours/balisage/balisage-lateral');
     expect(document.querySelector('[data-reprise]')!.children.length).toBe(0);
-  });
-});
-
-describe('la reprise du cours', () => {
-  it('invite à commencer quand rien n’est fait', () => {
-    page();
-    monterAccueil(document);
-    expect(lien(/Commencer le cours/).getAttribute('href')).toBe('/cours/balisage/balisage-lateral');
-    expect(document.querySelector('.reprendreCours__compte')).toBeNull();
-  });
-
-  it('compte les leçons faites et pointe la suivante', () => {
-    progression({ 'balisage-lateral': { faiteLe: '2026-09-05', bonnes: 3, total: 3 } });
-    page();
-    monterAccueil(document);
-    expect(document.querySelector('.reprendreCours')?.textContent?.replace(/\s+/g, ' ').trim()).toContain('1 leçon faite sur 4');
-    const a = lien(/Reprendre : Marques cardinales/);
-    expect(a.getAttribute('href')).toBe('/cours/balisage/balisage-cardinal');
-    expect(a.getAttribute('data-mesure')).toBe('accueil-cours');
-    expect(a.getAttribute('data-mesure-notion')).toBe('balisage-cardinal');
-  });
-
-  it('accorde le pluriel', () => {
-    progression({
-      'balisage-lateral': { faiteLe: '2026-09-05', bonnes: 3, total: 3 },
-      'balisage-cardinal': { faiteLe: '2026-09-05', bonnes: 3, total: 3 },
-    });
-    page();
-    monterAccueil(document);
-    expect(document.querySelector('.reprendreCours__compte')?.textContent).toContain('2 leçons faites sur 4');
+    expect(document.querySelector('[data-date-examen]')!.children.length).toBe(0);
   });
 });
 
@@ -123,16 +84,18 @@ describe('la reprise sur l’accueil', () => {
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
     page({ lecons, banque });
     monterAccueil(document);
-    expect(document.querySelector('.reprise p:not(.reprise__examen)')!.textContent).toMatch(/^Indice de préparation/);
+    expect(document.querySelector('.reprise p:not(.reprise__raison)')!.textContent).toMatch(/^Indice de préparation/);
   });
 
-  it('redit le dernier examen blanc, et la raison seulement s’il est recalé', () => {
+  it('laisse le dernier examen blanc à la bande, et redit la raison seulement s’il est recalé', () => {
     let e = enregistrerProfil(etatInitial(), { ...profilVide(), motivations: ['peche'], rempliLe: '2026-09-01' });
     e = enregistrerExamen(e, { date: aujourdhui(), bonnes: 11, total: 40, reussi: false });
     sauvegarder(e);
     page({ lecons, banque });
     monterAccueil(document);
-    expect(document.querySelector('.reprise__examen')!.textContent).toBe('Dernier examen blanc : 11 sur 40, recalé.');
+    // La bande d'ouverture le dit déjà, en tête de page : le redire ici
+    // était le demi-correctif du 4 octobre.
+    expect(document.querySelector('.reprise')!.textContent).not.toContain('Dernier examen blanc');
     expect(document.querySelector('.reprise__raison')!.textContent).toContain('pêcher');
 
     // Reçu : le score reste, le rappel se tait. Il n'aide que quand ça coince.
@@ -140,7 +103,7 @@ describe('la reprise sur l’accueil', () => {
     sauvegarder(e);
     page({ lecons, banque });
     monterAccueil(document);
-    expect(document.querySelector('.reprise__examen')!.textContent).toBe('Dernier examen blanc : 37 sur 40, reçu.');
+    expect(document.querySelector('.reprise')!.textContent).not.toContain('Dernier examen blanc');
     expect(document.querySelector('.reprise__raison')).toBeNull();
   });
 
@@ -158,7 +121,7 @@ describe('la reprise sur l’accueil', () => {
     sauvegarder({ ...e, profil: { ...profilVide(), rythme: 10 } });
     page({ lecons, banque });
     monterAccueil(document);
-    expect(document.querySelector('.reprise p:not(.reprise__examen)')!.textContent).toContain('Objectif du jour fait, 10 questions');
+    expect(document.querySelector('.reprise p:not(.reprise__raison)')!.textContent).toContain('Objectif du jour fait, 10 questions');
   });
 
   it('résume l’indice, le jour, les erreurs et la raison', () => {
@@ -170,7 +133,7 @@ describe('la reprise sur l’accueil', () => {
     sauvegarder(e);
     page({ lecons, banque });
     monterAccueil(document);
-    const texte = document.querySelector('.reprise p:not(.reprise__examen)')!.textContent!;
+    const texte = document.querySelector('.reprise p:not(.reprise__raison)')!.textContent!;
     expect(texte).toMatch(/^Léa, indice de préparation \d+ sur 100, /);
     expect(texte).toContain('sur 100');
     expect(texte).toMatch(/Aujourd’hui 2 questions sur \d+, 1 jour de suite\./);
@@ -191,7 +154,7 @@ describe('la reprise sur l’accueil', () => {
     page({ lecons, banque });
     monterAccueil(document);
     expect(document.querySelector('.reprise img')).toBeNull();
-    expect(document.querySelector('.reprise p:not(.reprise__examen)')!.textContent).toContain('<img src=x>, indice');
+    expect(document.querySelector('.reprise p:not(.reprise__raison)')!.textContent).toContain('<img src=x>, indice');
   });
 });
 

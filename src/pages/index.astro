@@ -6,6 +6,7 @@ import { POUR_APP } from '../lib/cible';
 import { COURS, cheminCours, leconsDuCours, leconsDuParcours } from '../lib/parcours';
 import { codesLeconsEcrites, compteLeconsEcrites } from '../lib/lecons';
 import { SITE, absolue } from '../lib/seo';
+import SCRIPT_BANDE from 'virtual:bande-avant-rendu';
 
 const themes = await themesAvecComptes();
 const questions = await questionsPubliees();
@@ -41,12 +42,13 @@ const demo = questions.find((q) => q.id === MONTREE) ?? questions.find((q) => q.
 const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 
 /**
- * Ce que le script de la page lit pour les trois blocs qui suivent la
- * progression (`accueil-site.ts`) : les leçons dans l'ordre du parcours, et
- * la banque publiée réduite à l'identifiant et au thème. En JSON dans un bloc
- * inerte, et non en props d'îlot : sérialisées dans un attribut, les 570
- * questions faisaient 85 Ko de HTML. Le `<` est échappé pour qu'aucun texte
- * ne puisse fermer le bloc.
+ * Ce que lisent la bande d'ouverture (`bande-rendu.ts`) et les blocs qui
+ * suivent la progression (`accueil-site.ts`) : les leçons dans l'ordre du
+ * parcours, et la banque publiée réduite à l'identifiant et au thème. En JSON
+ * dans un bloc inerte, et non en props d'îlot : sérialisées dans un attribut,
+ * les 570 questions faisaient 85 Ko de HTML. Le `<` est échappé pour qu'aucun
+ * texte ne puisse fermer le bloc. Le bloc ouvre la bande : le script en ligne
+ * qui la choisit le lit avant que le reste de la page existe.
  */
 const donneesAccueil = JSON.stringify({
   lecons,
@@ -75,8 +77,14 @@ const liste = {
   jsonLd={[liste]}
 >
   <section class="ouverture">
-    <div class="page ouverture__grille">
-      <div class="ouverture__texte">
+    <script type="application/json" id="accueil-donnees" is:inline set:html={donneesAccueil} />
+    <div class="page ouverture__grille" data-bande-grille>
+      {/* Avant la colonne du nouveau venu, pour tourner avant la première
+          peinture : chez qui a déjà une trace, il pose devant la colonne de
+          la suite logique, et `data-bande` sur la section cache celle-ci.
+          Sans JavaScript, rien ne change. Voir `bande-rendu.ts`. */}
+      <script is:inline set:html={SCRIPT_BANDE} />
+      <div class="ouverture__texte ouverture__texte--nouveau">
         <h1>Révise le permis côtier au format de l’épreuve.</h1>
         <p class="ouverture__promesse">
           Gratuit, sans compte. Le cours en {cours.ecrites} leçons de trois minutes, puis
@@ -85,12 +93,8 @@ const liste = {
         </p>
 
         <div class="ouverture__actions">
-          {/* Ce que le serveur rend avant le script : la première leçon. Le
-              script repointe le lien et pose le compte des leçons faites. */}
           {premiere && (
-            <p class="reprendreCours" data-reprendre-cours>
-              <a class="bouton bouton--principal" href={premiere.chemin} data-mesure="accueil-cours" data-mesure-notion={premiere.code}>Commencer le cours</a>
-            </p>
+            <a class="bouton bouton--principal" href={premiere.chemin} data-mesure="accueil-cours" data-mesure-notion={premiere.code}>Commencer le cours</a>
           )}
           <a class="bouton" href="/examen" data-mesure="accueil-examen">Passer un examen blanc</a>
         </div>
@@ -292,7 +296,6 @@ const liste = {
     </p>
   </section>
 
-  <script type="application/json" id="accueil-donnees" is:inline set:html={donneesAccueil} />
   <script>
     import { monterAccueil } from '../components/accueil-site';
     import { quandLaPageEstPrete } from '../lib/page';
@@ -302,11 +305,8 @@ const liste = {
 </Base>
 
 <style is:global>
-  /* Les trois blocs que le script rend : hors de la portée du style de page,
+  /* Les blocs que le script rend : hors de la portée du style de page,
      puisque leurs éléments n'ont pas l'attribut de portée d'Astro. */
-  .reprendreCours { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin: 1.5rem 0 0; }
-  .reprendreCours__compte { font-weight: 600; }
-
   .reprise { border-top: 2px solid var(--filet); padding-top: 0.9rem; margin-top: 1.25rem; font-size: 0.95rem; }
   .reprise p { margin: 0; }
   .reprise__raison { margin-top: 0.4rem; font-weight: 600; }
@@ -331,27 +331,27 @@ const liste = {
     gap: 2.5rem;
     padding-block: 3rem 3.5rem;
   }
-  .ouverture h1 { max-width: 16ch; }
-  .ouverture__promesse { font-size: 1.15rem; max-width: 46ch; color: var(--bande-doux); }
-  .ouverture__actions {
+  /* La colonne de qui revient est rendue par le script en ligne, sans
+     l'attribut de portée : ses classes se visent en `:global`, sous la
+     section qui, elle, le porte. Posée, elle cache celle du nouveau venu. */
+  .ouverture[data-bande] .ouverture__texte--nouveau { display: none; }
+  /* Sur téléphone, le panneau des comptes est la preuve faite au nouveau
+     venu : chez qui revient, il remplissait le bas du premier écran sous la
+     suite logique. Sur grand écran, il tient la seconde colonne. */
+  @media (max-width: 51.99rem) {
+    .ouverture[data-bande] .ouverture__cote { display: none; }
+  }
+  .ouverture :global(h1) { max-width: 16ch; }
+  .ouverture :global(.ouverture__promesse) { font-size: 1.15rem; max-width: 46ch; color: var(--bande-doux); }
+  .ouverture :global(.ouverture__actions) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.85rem 1rem;
     margin-top: 2rem;
   }
-  /* Le paragraphe du script s'efface : le compte, le bouton du cours et le
-     bouton de l'examen sont trois enfants de la même rangée. Le compte prend
-     toute la largeur et passe au-dessus, les deux boutons restent côte à
-     côte, alignés entre eux ; sans compte, la rangée ne change pas. */
-  .ouverture__actions :global(.reprendreCours) { display: contents; }
-  .ouverture__actions :global(.reprendreCours__compte) {
-    flex: 1 1 100%;
-    margin-bottom: -0.1rem;
-    color: var(--bande-doux);
-  }
-  .ouverture__deja { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 48ch; }
-  .ouverture__deja a { color: var(--bande-texte); }
+  .ouverture :global(.ouverture__deja) { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 48ch; }
+  .ouverture :global(.ouverture__deja a) { color: var(--bande-texte); }
 
   /* Le panneau blanc posé sur la bande. */
   .ouverture__cote {
