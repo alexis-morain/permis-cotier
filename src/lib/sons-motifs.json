@@ -1,0 +1,532 @@
+{
+  "sifflet": {
+    "hz": {
+      "1": 440.0,
+      "2": 660.0
+    }
+  },
+  "cloche": {
+    "hz": 440.0,
+    "partiels": [
+      [
+        1.0,
+        1.0,
+        0.55
+      ],
+      [
+        2.0,
+        0.55,
+        0.32
+      ],
+      [
+        2.76,
+        0.4,
+        0.2
+      ],
+      [
+        5.4,
+        0.22,
+        0.08
+      ]
+    ],
+    "pas_volee": 0.2897
+  },
+  "signaux": {
+    "manoeuvre-tribord": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 1.0
+    },
+    "manoeuvre-babord": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 3.0
+    },
+    "manoeuvre-arriere": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 5.0
+    },
+    "avertissement-doute": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          0.5,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          0.5,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          0.5,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          0.5,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 7.0
+    },
+    "depassement-tribord": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 13.0
+    },
+    "depassement-babord": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 15.0
+    },
+    "accord-depassement": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 15.0
+    },
+    "coude": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ]
+      ],
+      "duree": 5.0
+    },
+    "brume-avec-erre": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ]
+      ],
+      "duree": 5.0
+    },
+    "brume-stoppe": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          2.0,
+          null,
+          null
+        ],
+        [
+          5.0,
+          "p",
+          1
+        ]
+      ],
+      "duree": 12.0
+    },
+    "brume-manoeuvre-restreinte": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 9.0
+    },
+    "brume-remorque": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 11.0
+    },
+    "brume-pilote": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 7.0
+    },
+    "mouillage-abordage": {
+      "instrument": "sifflet",
+      "motif": [
+        [
+          1.0,
+          "b",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          5.0,
+          "p",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          1.0,
+          "b",
+          1
+        ]
+      ],
+      "duree": 9.0
+    },
+    "brume-mouillage": {
+      "instrument": "cloche",
+      "motif": [
+        [
+          5.0,
+          "v",
+          1
+        ]
+      ],
+      "duree": 5.0
+    },
+    "brume-echouement": {
+      "instrument": "cloche",
+      "motif": [
+        [
+          0.35,
+          "c",
+          1
+        ],
+        [
+          0.65,
+          null,
+          null
+        ],
+        [
+          0.35,
+          "c",
+          1
+        ],
+        [
+          0.65,
+          null,
+          null
+        ],
+        [
+          0.35,
+          "c",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          5.0,
+          "v",
+          1
+        ],
+        [
+          1.0,
+          null,
+          null
+        ],
+        [
+          0.35,
+          "c",
+          1
+        ],
+        [
+          0.65,
+          null,
+          null
+        ],
+        [
+          0.35,
+          "c",
+          1
+        ],
+        [
+          0.65,
+          null,
+          null
+        ],
+        [
+          0.35,
+          "c",
+          1
+        ]
+      ],
+      "duree": 11.7
+    }
+  }
+}

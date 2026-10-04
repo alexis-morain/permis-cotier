@@ -97,24 +97,29 @@ def note(freq: float, duree: float, decroissance: float, partiels: tuple[tuple[f
     return sortie
 
 
+# La cloche de bord : rapport à la fondamentale, amplitude, décroissance en
+# secondes. `sons.py` la reprend telle quelle pour la cloche de brume des
+# règles 35 g) et h) : une seule recette de cloche dans le dépôt.
+PARTIELS_CLOCHE = (
+    (1.0, 1.0, 0.55),
+    (2.0, 0.55, 0.32),
+    (2.76, 0.40, 0.20),
+    (5.4, 0.22, 0.08),
+)
+
+
 def cloche(freq: float, duree: float) -> list[float]:
     """Une cloche de bord : partiels inharmoniques, chacun sa décroissance.
 
     Les aigus meurent vite, la fondamentale tient : c'est ce qui fait sonner
     la cloche plutôt que le carillon.
     """
-    partiels = (  # rapport, amplitude, décroissance en secondes
-        (1.0, 1.0, 0.55),
-        (2.0, 0.55, 0.32),
-        (2.76, 0.40, 0.20),
-        (5.4, 0.22, 0.08),
-    )
     n = round(duree * TAUX)
     sortie = []
     for i in range(n):
         t = i / TAUX
         v = sum(amp * math.exp(-t / dec) * math.sin(2 * math.pi * freq * r * t)
-                for r, amp, dec in partiels)
+                for r, amp, dec in PARTIELS_CLOCHE)
         sortie.append(v * enveloppe(i, n, 1e9))
     return sortie
 
