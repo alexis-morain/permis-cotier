@@ -1,4 +1,5 @@
 import { POUR_APP } from './cible';
+import { cheminServi } from './seo';
 
 /**
  * Quand la page est prête à recevoir ses écouteurs.
@@ -44,6 +45,21 @@ export function lienRetour(chemin: string, miettes: readonly Miette[]): Miette |
   const nu = chemin.length > 1 ? chemin.replace(/\/+$/, '') : chemin;
   if (miettes.length === 0 || RACINES_D_ONGLET.has(nu)) return null;
   return miettes.length === 1 ? { nom: 'Accueil', chemin: '/' } : (miettes[miettes.length - 2] ?? null);
+}
+
+/**
+ * La valeur d'`aria-current` d'une entrée de navigation : `'page'` quand la
+ * page est dans l'une de ses sections, rien sinon.
+ *
+ * `Astro.url.pathname` donne le nom du fichier construit, pas l'adresse
+ * servie : `/profil.html` sur le site, en format `file`, et `/profil` ou
+ * `/profil/` dans la coquille, en format `directory`. Comparé tel quel à
+ * `/profil`, il ne marquait aucune page de premier niveau. `cheminServi()`
+ * ramène les deux formats à l'adresse que le lien porte.
+ */
+export function pageCourante(chemin: string, ...sections: string[]): 'page' | undefined {
+  const servi = cheminServi(chemin);
+  return sections.some((s) => servi === s || servi.startsWith(`${s}/`)) ? 'page' : undefined;
 }
 
 /** Le préfixe de tout ce que l'app garde dans `localStorage`. */

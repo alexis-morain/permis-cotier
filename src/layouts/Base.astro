@@ -9,7 +9,7 @@ import Recherche from '../components/Recherche.astro';
 import { SCRIPT_APPARENCE } from '../lib/apparence';
 import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
-import { lienRetour } from '../lib/page';
+import { lienRetour, pageCourante } from '../lib/page';
 // L'adresse que `scripts/police.py` écrit, et non un nom tapé à la main : le
 // fichier porte l'empreinte de son contenu, et un préchargement qui vise
 // l'ancien nom télécharge une police que personne n'affiche.
@@ -91,7 +91,7 @@ const relecture = await comptesDeRelecture();
 
 // La section courante, soulignée dans la navigation.
 const chemin = Astro.url.pathname;
-const courant = (prefixe: string) => (chemin === prefixe || chemin.startsWith(`${prefixe}/`) ? 'page' : undefined);
+const courant = (...sections: string[]) => pageCourante(chemin, ...sections);
 
 // Dans l'app, le fil d'Ariane se réduit à l'échelon du dessus.
 const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : null;
@@ -231,9 +231,9 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
         </a>
         <nav aria-label="Navigation principale">
           <a href="/cours" aria-current={courant('/cours')}>Cours</a>
-          <a href="/entrainement" aria-current={courant('/entrainement') ?? courant('/revoir')}>Entraînement</a>
+          <a href="/entrainement" aria-current={courant('/entrainement', '/revoir')}>Entraînement</a>
           <a href="/examen" aria-current={courant('/examen')}>Examen blanc</a>
-          <a href="/themes" aria-current={courant('/themes') ?? courant('/theme') ?? courant('/notion')}>Programme</a>
+          <a href="/themes" aria-current={courant('/themes', '/theme', '/notion')}>Programme</a>
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
           <a href="/profil" aria-current={courant('/profil')}>Ta fiche</a>
         </nav>
