@@ -7,6 +7,7 @@ import Coquille from '../components/Coquille.astro';
 import Mesure from '../components/Mesure.astro';
 import Recherche from '../components/Recherche.astro';
 import { SCRIPT_APPARENCE } from '../lib/apparence';
+import { SCRIPT_DEFILEMENT_NAVIGATION } from '../lib/navigation';
 import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 import { lienRetour, pageCourante } from '../lib/page';
@@ -237,6 +238,8 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
           <a href="/guide" aria-current={courant('/guide')}>Guide</a>
           <a href="/profil" aria-current={courant('/profil')}>Ta fiche</a>
         </nav>
+        {/* Sur un téléphone, la barre s'ouvre sur l'entrée courante. */}
+        <script is:inline set:html={SCRIPT_DEFILEMENT_NAVIGATION} />
       </div>
     </header>
     )}
