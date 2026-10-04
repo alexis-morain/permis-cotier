@@ -16,11 +16,9 @@
 
 ## Nature de cette fiche
 
-Ce document n'est pas un texte réglementaire extrait par machine, contrairement
-aux règles du RIPAM et aux articles de la division 240. Aucun texte de droit ne
-porte l'échelle de Beaufort : elle relève d'une convention internationale de
-mesure, publiée par l'OMM et reprise telle quelle par Météo-France. Cette fiche
-en est une mise en forme écrite, à vérifier contre la publication de
+L'échelle de Beaufort n'est dans aucun texte de droit : c'est une convention
+internationale de mesure, publiée par l'OMM et reprise telle quelle par
+Météo-France. Cette fiche, écrite à la main, en est une mise en forme écrite, à vérifier contre la publication de
 Météo-France citée ci-dessus, qui fait foi.
 
 ---

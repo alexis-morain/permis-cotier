@@ -5,6 +5,7 @@ import Quiz from './Quiz';
 import type { QuestionAffichable } from '../lib/banque';
 import { CLE_STOCKAGE, VERSION_STOCKAGE } from '../lib/progression';
 import { modeConcentration, partager, vibrer } from '../lib/natif';
+import { nomDuTheme } from '../lib/themes-client';
 
 // Les greffons de la coquille, attrapés pour qu'on voie ce que l'écran leur
 // demande. Sur le site ils ne font rien : les attraper ne change aucun test.
@@ -276,6 +277,24 @@ describe('avant un premier examen sans révision', () => {
     render(<Quiz mode="entrainement" questions={trois} premiereLecon={premiereLecon} />);
     expect(screen.queryByText(/Tu n’as encore rien révisé/)).toBeNull();
   });
+
+  it('ne contredit pas le questionnaire, qui envoie à l’examen qui navigue ou repasse', () => {
+    for (const depart of ['navigue', 'repasse']) {
+      localStorage.setItem(
+        CLE_STOCKAGE,
+        JSON.stringify({
+          version: VERSION_STOCKAGE,
+          questions: {},
+          examens: [],
+          dateExamen: null,
+          profil: { prenom: '', motivations: [], phrase: '', depart, rythme: null, rempliLe: '2026-10-01' },
+        }),
+      );
+      render(<Quiz mode="examen" questions={trois} premiereLecon={premiereLecon} />);
+      expect(screen.queryByText(/Tu n’as encore rien révisé/)).toBeNull();
+      cleanup();
+    }
+  });
 });
 
 describe('arrêt d’un examen en cours', () => {
@@ -387,6 +406,20 @@ describe('la série du jour', () => {
     progression({}, 2);
     render(<Quiz mode="entrainement" questions={trois} revoir />);
     expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 2');
+  });
+
+  it('dit qu’elle est faite de questions neuves quand rien n’est dû', () => {
+    progression({ 'ecluses-0001': rangee });
+    render(<Quiz mode="entrainement" questions={trois} revoir />);
+    expect(screen.getByText(/Rien n’est dû aujourd’hui/).textContent).toBe(
+      'Rien n’est dû aujourd’hui\u00a0: voilà 2 questions jamais vues, prises dans tes notions les plus fragiles.',
+    );
+  });
+
+  it('ne dit rien de plus quand des questions sont dues', () => {
+    progression({ 'ecluses-0002': ratee });
+    render(<Quiz mode="entrainement" questions={trois} revoir />);
+    expect(screen.queryByText(/Rien n’est dû aujourd’hui/)).toBeNull();
   });
 
   it('le dit franchement quand rien n’est dû aujourd’hui', () => {
@@ -571,9 +604,18 @@ describe('le rappel de la raison sur le résultat', () => {
     // Six questions sans réponse : six erreurs, recalé.
     for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     expect(screen.getByText(/Recalé/)).toBeTruthy();
-    expect(screen.getByText(/Tu passes ce permis pour/)).toBeTruthy();
-    expect(screen.getByText('Ton bateau à toi, et la mer devant.')).toBeTruthy();
-    expect(screen.getByText(/Ton examen d’avant : 2 sur 6/).textContent).toContain('2 de moins');
+    const rappel = document.querySelector('.resultat__rappel');
+    expect(rappel?.textContent).toBe('Tu passes ce permis pour avoir ton bateau à toi, et la mer devant.');
+    // Une phrase, pas un sur-titre au-dessus d'une citation.
+    expect(document.querySelector('.rappel__amorce')).toBeNull();
+    // La consigne mène là où les erreurs attendent.
+    const consigne = screen.getByText(/Tes 6 erreurs sont dans/);
+    expect(consigne.textContent).toBe(
+      'Tes 6 erreurs sont dans ce que tu as raté, et elles reviennent dans ta série du jour jusqu’à ce que tu les tiennes.',
+    );
+    expect(screen.getByRole('link', { name: 'ce que tu as raté' }).getAttribute('href')).toBe('/profil/erreurs');
+    // Deux examens peuvent dater du même jour : l'écart se dit par rapport au dernier.
+    expect(screen.getByText(/Ton examen d’avant : 2 sur 6/).textContent).toContain('2 de moins que la dernière fois.');
   });
 
   it('se tait quand l’examen est reçu', () => {
@@ -808,7 +850,7 @@ describe('mélange des propositions', () => {
     for (let i = 0; i < 3; i += 1) {
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les 3 questions' }));
     const premiere = document.querySelector('.revue__item');
     const revus = [...premiere!.querySelectorAll('.proposition')].map(
       (n) => n.children[1]?.textContent ?? '',
@@ -902,7 +944,7 @@ describe('de la question ratée à la leçon', () => {
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Deuxième proposition' }));
     fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Revoir les questions' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir mon erreur' }));
 
     expect(screen.getByRole('link', { name: /La leçon/ }).getAttribute('href')).toBe(
       '/cours/balisage/balisage-lateral?retour=%2Fprofil%2Ferreurs',
@@ -949,7 +991,7 @@ describe('la série reprise là où on l’a laissée', () => {
 });
 
 describe('le temps, au résultat de l’examen', () => {
-  it('dit les questions passées au buzzer', async () => {
+  it('dit les questions restées sans réponse faute de temps', async () => {
     vi.useFakeTimers();
     try {
       render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
@@ -958,7 +1000,7 @@ describe('le temps, au résultat de l’examen', () => {
         vi.advanceTimersByTime(21_000);
       });
       expect(document.querySelector('.resultat__temps')?.textContent).toContain(
-        '1 question passée au buzzer, sans réponse dans les vingt secondes.',
+        '1 question sans réponse\u00a0: les vingt secondes sont passées avant toi.',
       );
     } finally {
       vi.useRealTimers();
@@ -970,7 +1012,7 @@ describe('le temps, au résultat de l’examen', () => {
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
     fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
-    expect(screen.queryByText(/au buzzer/)).toBeNull();
+    expect(screen.queryByText(/sans réponse/)).toBeNull();
     expect(screen.queryByText(/dernière seconde/)).toBeNull();
   });
 
@@ -979,7 +1021,118 @@ describe('le temps, au résultat de l’examen', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
     fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
-    expect(screen.queryByText(/au buzzer/)).toBeNull();
+    expect(screen.queryByText(/les vingt secondes sont passées/)).toBeNull();
+  });
+});
+
+describe('le geste suivant, au résultat de l’examen sur le site', () => {
+  /** Trois questions : la première juste, les autres selon `reponses`. */
+  function finir(reponses: (string | null)[]) {
+    lancerExamen();
+    for (const texte of reponses) {
+      if (texte) fireEvent.click(screen.getByRole('button', { name: texte }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+  }
+
+  it('propose d’abord de revoir les erreurs, puis de refaire un examen', () => {
+    finir(['Première proposition', null, null]);
+    const erreurs = screen.getByRole('button', { name: 'Revoir mes 2 erreurs' });
+    expect(erreurs.className).toContain('bouton--principal');
+    expect(erreurs.getAttribute('aria-expanded')).toBe('false');
+    const refaire = screen.getByRole('link', { name: 'Refaire un examen' });
+    expect(refaire.getAttribute('href')).toBe('/examen');
+    expect(refaire.className).not.toContain('bouton--principal');
+    expect(screen.queryByRole('link', { name: 'Recommencer' })).toBeNull();
+    expect(screen.getByRole('link', { name: 'Accueil' }).className).toContain('bouton--discret');
+
+    fireEvent.click(erreurs);
+    expect(document.querySelectorAll('.revue__item')).toHaveLength(2);
+    expect(screen.getByRole('button', { name: 'Masquer mes erreurs' }).getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('garde la revue entière à un clic, plus discrète', () => {
+    finir(['Première proposition', null, null]);
+    const toutes = screen.getByRole('button', { name: 'Revoir les 3 questions' });
+    expect(toutes.className).not.toContain('bouton--principal');
+    fireEvent.click(toutes);
+    expect(document.querySelectorAll('.revue__item')).toHaveLength(3);
+    expect(toutes.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('dit « mon erreur » quand il n’y en a qu’une', () => {
+    finir(['Première proposition', 'Première proposition', null]);
+    expect(screen.getByRole('button', { name: 'Revoir mon erreur' })).toBeTruthy();
+  });
+
+  it('sans erreur, met « Refaire un examen » devant et garde la revue en second', () => {
+    finir(['Première proposition', 'Première proposition', 'Première proposition']);
+    expect(screen.queryByRole('button', { name: /mes .*erreurs|mon erreur/ })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Revoir les questions' }).className).not.toContain('bouton--principal');
+    expect(screen.getByRole('link', { name: 'Refaire un examen' }).className).toContain('bouton--principal');
+  });
+
+  it('mène chaque thème du résultat à son entraînement, par son nom', () => {
+    finir([null, null, null]);
+    const lien = screen.getByRole('link', { name: nomDuTheme('ecluses') });
+    expect(lien.getAttribute('href')).toBe('/entrainement/ecluses');
+    expect(lien.closest('.parTheme li')).toBeTruthy();
+    // La note reste du texte : le lien porte le nom, pas le score.
+    expect(lien.textContent).not.toContain('/');
+  });
+});
+
+describe('la revue dit ce que le candidat a coché', () => {
+  /** La marque écrite sur la proposition qui porte ce texte, dans un article. */
+  function marque(article: Element, texte: string) {
+    const ligne = [...article.querySelectorAll('.proposition')].find((n) => n.children[1]?.textContent === texte);
+    return ligne?.querySelector('.proposition__marque')?.textContent ?? null;
+  }
+
+  const deuxBonnes = question('ecluses-0001', 'ecluses', ['a', 'b']);
+  const une = question('ecluses-0002');
+  const sansReponse = question('ecluses-0003');
+
+  function revoir(coches: string[][]) {
+    render(<Quiz mode="examen" questions={[deuxBonnes, une, sansReponse]} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    // L'ordre du tirage est aléatoire : on coche selon l'énoncé affiché.
+    for (let i = 0; i < 3; i++) {
+      const enonce = screen.getByRole('heading', { level: 2 }).textContent ?? '';
+      const id = ['ecluses-0001', 'ecluses-0002', 'ecluses-0003'].find((x) => enonce.includes(x))!;
+      const rang = Number(id.slice(-1)) - 1;
+      for (const texte of coches[rang] ?? []) fireEvent.click(screen.getByRole('button', { name: texte }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    fireEvent.click(screen.getByRole('button', { name: 'Revoir les 3 questions' }));
+    const articles = [...document.querySelectorAll('.revue__item')];
+    return (id: string) => articles.find((a) => a.textContent?.includes(`Énoncé de ${id}`))!;
+  }
+
+  it('dit la case juste cochée, la bonne oubliée, et ce qu’il en manquait', () => {
+    const article = revoir([['Première proposition'], ['Deuxième proposition'], []]);
+    const double = article('ecluses-0001');
+    expect(marque(double, 'Première proposition')).toBe('ta réponse, juste');
+    expect(marque(double, 'Deuxième proposition')).toBe('bonne réponse, oubliée');
+    expect(double.querySelector('.discret')?.textContent).toBe('Il fallait deux réponses, tu en as coché une.');
+
+    const fausse = article('ecluses-0002');
+    expect(marque(fausse, 'Deuxième proposition')).toBe('ta réponse');
+    expect(marque(fausse, 'Première proposition')).toBe('bonne réponse, oubliée');
+    expect(fausse.textContent).not.toContain('Il fallait deux réponses');
+
+    // Rien de coché : rien d'oublié, la bonne réponse se dit simplement.
+    expect(marque(article('ecluses-0003'), 'Première proposition')).toBe('bonne réponse');
+  });
+
+  it('dit la case juste d’une question réussie, et le rang sans tiret', () => {
+    const article = revoir([['Première proposition', 'Deuxième proposition'], ['Première proposition'], []]);
+    const reussie = article('ecluses-0002');
+    expect(marque(reussie, 'Première proposition')).toBe('ta réponse, juste');
+    const rang = article('ecluses-0003').querySelector('.revue__rang')?.textContent ?? '';
+    expect(rang).toMatch(new RegExp(`^Question \\d sur 3, ${nomDuTheme('ecluses')}, ratée$`));
+    expect(reussie.querySelector('.revue__rang')?.textContent).not.toContain('ratée');
+    expect(document.querySelector('.revue')?.textContent).not.toContain('—');
   });
 });
 
@@ -1125,6 +1278,8 @@ describe('l’écran de jeu dans l’app', () => {
     // Trois questions sans réponse : trois erreurs, et la revue ne montre qu'elles.
     fireEvent.click(revoir);
     expect(document.querySelectorAll('.revue__item')).toHaveLength(3);
+    // Les onglets portent la navigation : le thème reste un nom, pas un lien.
+    expect(screen.queryByRole('link', { name: nomDuTheme('ecluses') })).toBeNull();
   });
 
   it('fait sentir un examen reçu', () => {

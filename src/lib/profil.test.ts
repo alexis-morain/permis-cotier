@@ -187,8 +187,28 @@ describe('maîtrise par thème', () => {
     for (let k = 0; k < 5; k++) e = retenir(e, `feux-${k}`);
     const m = maitriseParTheme(e, banque);
     expect(m.map((t) => t.code)).toEqual(['vhf', 'feux-marques']);
-    expect(m[0]).toEqual({ code: 'vhf', total: 10, vues: 10, retenues: 4 });
-    expect(m[1]).toEqual({ code: 'feux-marques', total: 10, vues: 5, retenues: 5 });
+    // Six vhf ratées le 1er et jamais reprises : `ratees` compte les questions
+    // dont la dernière réponse est fausse, pas les fautes passées.
+    expect(m[0]).toEqual({ code: 'vhf', total: 10, vues: 10, retenues: 4, ratees: 6 });
+    expect(m[1]).toEqual({ code: 'feux-marques', total: 10, vues: 5, retenues: 5, ratees: 0 });
+  });
+
+  it('le premier jour, sort le thème raté devant le thème réussi', () => {
+    // Le même jour, rien n'est encore retenu : sans les ratées, les deux thèmes
+    // valent zéro et l'ordre du programme mettrait feux, réussi, devant vhf.
+    let e = etatInitial();
+    for (let k = 0; k < 2; k++) e = enregistrerReponse(e, `vhf-${k}`, false, '2026-09-01');
+    for (let k = 0; k < 2; k++) e = enregistrerReponse(e, `feux-${k}`, true, '2026-09-01');
+    const m = maitriseParTheme(e, banque);
+    expect(m.map((t) => t.code)).toEqual(['vhf', 'feux-marques']);
+    expect(m[0]).toMatchObject({ vues: 2, retenues: 0, ratees: 2 });
+    expect(m[1]).toMatchObject({ vues: 2, retenues: 0, ratees: 0 });
+  });
+
+  it('ne compte plus en ratée une question reprise et réussie', () => {
+    let e = enregistrerReponse(etatInitial(), 'vhf-0', false, '2026-09-01');
+    e = enregistrerReponse(e, 'vhf-0', true, '2026-09-02');
+    expect(maitriseParTheme(e, banque).find((t) => t.code === 'vhf')!.ratees).toBe(0);
   });
 
   it('ne liste pas un thème sans question publiée', () => {
@@ -225,6 +245,8 @@ describe('maîtrise par notion', () => {
       total: 4,
       vues: 4,
       retenues: 1,
+      // Trois ratées le 1er, jamais reprises.
+      ratees: 3,
       chemin: '/cours/feux-marques/feux-remorquage',
     });
     expect(m.map((n) => n.code)).toEqual(['feux-remorquage', 'feux-moteur-route', 'vhf-canaux']);
@@ -234,6 +256,18 @@ describe('maîtrise par notion', () => {
     let e = etatInitial();
     for (let k = 0; k < 4; k++) e = enregistrerReponse(e, `feux-m${k}`, false, '2026-09-01');
     expect(maitriseParNotion(e, parNotion)[0]!.code).toBe('feux-moteur-route');
+  });
+
+  it('le premier jour, sort la notion ratée devant la notion réussie', () => {
+    // Moteur et route vient avant remorquage dans le programme : à zéro retenue
+    // partout, c'est la ratée qui doit passer devant, pas l'ordre du cours.
+    let e = etatInitial();
+    for (let k = 0; k < 2; k++) e = enregistrerReponse(e, `feux-r${k}`, false, '2026-09-01');
+    for (let k = 0; k < 2; k++) e = enregistrerReponse(e, `feux-m${k}`, true, '2026-09-01');
+    const m = maitriseParNotion(e, parNotion);
+    expect(m.map((n) => n.code)).toEqual(['feux-remorquage', 'feux-moteur-route', 'vhf-canaux']);
+    expect(m[0]!.ratees).toBe(2);
+    expect(m[1]!.ratees).toBe(0);
   });
 
   it('ne liste pas une notion sans question publiée', () => {
@@ -299,6 +333,14 @@ describe('rappel de la motivation', () => {
   it('préfère la phrase du candidat à la case cochée', () => {
     const p = { ...profilVide(), motivations: ['famille'], phrase: 'Emmener mon père pêcher.' };
     expect(rappel(p)).toBe('Emmener mon père pêcher.');
+  });
+
+  it('écrit chaque rappel pour compléter « Tu passes ce permis pour »', () => {
+    for (const m of MOTIVATIONS) {
+      expect(m.rappel[0], m.code).toBe(m.rappel[0]!.toLowerCase());
+      expect(m.rappel.endsWith('.'), m.code).toBe(false);
+      expect(m.rappel, m.code).not.toContain('—');
+    }
   });
 
   it('retombe sur le libellé de la première case cochée', () => {

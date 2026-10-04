@@ -1,4 +1,5 @@
 ---
+import { Fragment } from 'astro/jsx-runtime';
 /**
  * Le panneau de recherche : un champ, une liste de résultats, et de quoi
  * commencer quand rien n'est tapé.
@@ -29,6 +30,9 @@ const DEPART = [
   { titre: 'Les quatorze thèmes', url: '/themes' },
   { titre: 'Guide du permis côtier', url: '/guide' },
 ];
+
+/** Les mots qu'on propose quand la recherche ne rend rien : un clic les cherche. */
+const EXEMPLES = ['cardinale', 'feu vert', 'VHF', 'marée'];
 ---
 
 <div class="recherche" data-recherche data-recherche-mode={mode}>
@@ -91,8 +95,14 @@ const DEPART = [
     </ul>
 
     <p class="recherche__rien" data-recherche-rien hidden>
-      Rien sous ce mot-là. Essaie un mot du programme : <b>cardinale</b>, <b>feu vert</b>, <b>VHF</b>,
-      <b>marée</b>.
+      Rien sous ce mot-là. Essaie un mot du programme :
+      {
+        EXEMPLES.map((mot, i) => (
+          <Fragment>
+            <button type="button" class="recherche__exemple" data-recherche-exemple>{mot}</button>{i < EXEMPLES.length - 1 ? ', ' : '.'}
+          </Fragment>
+        ))
+      }
     </p>
 
     <p class="recherche__attente" data-recherche-attente hidden>Recherche en cours…</p>
@@ -235,6 +245,9 @@ const DEPART = [
     let frappe = 0;
 
     const options = () => Array.from(liste.querySelectorAll<HTMLAnchorElement>('a[role="option"]'));
+    // Les mots proposés à vide, lus dans le balisage : le script ne voit pas
+    // les constantes du gabarit, et la liste n'existe qu'à un endroit.
+    const exemples = Array.from(rien.querySelectorAll<HTMLButtonElement>('[data-recherche-exemple]'));
 
     function viser(rang: number): void {
       const cibles = options();
@@ -321,7 +334,7 @@ const DEPART = [
       etat.textContent = !cherche
         ? ''
         : resultats.length === 0
-          ? 'Aucun résultat.'
+          ? `Aucun résultat. Essaie ${exemples.map((e) => e.textContent).join(', ')}.`
           : `${resultats.length} résultat${resultats.length > 1 ? 's' : ''}.`;
     }
 
@@ -406,6 +419,15 @@ const DEPART = [
     champ.addEventListener('input', () => {
       compterQuandLaFrappeSArrete();
       void lancer();
+    });
+    // Un exemple proposé à vide se cherche d'un clic : dire quoi taper sans
+    // offrir le geste laissait le candidat retaper le mot.
+    exemples.forEach((exemple) => {
+      exemple.addEventListener('click', () => {
+        champ.value = exemple.textContent ?? '';
+        champ.focus();
+        void lancer();
+      });
     });
     champ.addEventListener('focus', () => void index().catch(() => {}));
 

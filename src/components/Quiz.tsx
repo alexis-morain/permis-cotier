@@ -13,6 +13,7 @@ import {
   SECONDES_PAR_QUESTION,
   ERREURS_ADMISES,
   aleaSeme,
+  estDue,
   ordonnerEntrainement,
   serieDuJour,
   tirerExamen,
@@ -190,7 +191,9 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
   // avant la première visite. Une image cassée et son `alt` nu ne disent pas
   // ce qui s'est passé ; la description, elle, permet encore de répondre.
   const [visuelAbsent, setVisuelAbsent] = useState<string | null>(null);
-  const [revue, setRevue] = useState(false);
+  // La revue dépliée au résultat : les seules ratées, ou toutes les questions.
+  const [revue, setRevue] = useState<'erreurs' | 'toutes' | null>(null);
+  const basculerRevue = (quoi: 'erreurs' | 'toutes') => setRevue((v) => (v === quoi ? null : quoi));
   const [arretDemande, setArretDemande] = useState(false);
   const journalEcrit = useRef(0);
   const verdict = useRef<HTMLDivElement>(null);
@@ -238,6 +241,10 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
     [mode, questions, retourSerie, depart],
   );
   const [repriseEcartee, setRepriseEcartee] = useState(false);
+
+  // Une série du jour sans rien de dû : elle n'est faite que de questions
+  // jamais vues, et le candidat doit savoir pourquoi elles sont neuves.
+  const rienDu = revoir && !serie.some((q) => estDue(depart.questions[q.id], aujourdhui()));
 
   const titre = mode === 'examen'
     ? 'Examen blanc'
@@ -570,7 +577,11 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
             chiffre se revoit quand la mesure en aura davantage. Sous le titre,
             pas sous les règles : sur un téléphone, le bouton collant est déjà
             là et l'encart, plus bas, ne se verrait pas. */}
-        {mode === 'examen' && premiereLecon && !reprise && rienRevise(depart) && (
+        {/* Qui a déjà navigué, ou repasse l'épreuve, vient d'entendre le
+            questionnaire lui dire de faire un examen blanc tout de suite :
+            l'encart le contredirait. */}
+        {mode === 'examen' && premiereLecon && !reprise && rienRevise(depart) &&
+          depart.profil.depart !== 'navigue' && depart.profil.depart !== 'repasse' && (
           <div className="encadre depart__novice">
             <p>
               <strong>Tu n’as encore rien révisé.</strong> Au premier essai, on tourne autour de 20 sur 40,
@@ -714,8 +725,8 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
               {precedent && (
                 <p className="resultat__ecart">
                   Ton examen d’avant : {precedent.bonnes} sur {precedent.total}.{' '}
-                  {ecart > 0 && `${ecart} de plus aujourd’hui.`}
-                  {ecart < 0 && `${-ecart} de moins aujourd’hui.`}
+                  {ecart > 0 && `${ecart} de plus que la dernière fois.`}
+                  {ecart < 0 && `${-ecart} de moins que la dernière fois.`}
                   {ecart === 0 && 'Le même score.'}
                 </p>
               )}
@@ -728,10 +739,9 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
             {lent.auBuzzer.length > 0 && (
               <>
                 <b>
-                  {lent.auBuzzer.length} question{lent.auBuzzer.length > 1 ? 's' : ''} passée
-                  {lent.auBuzzer.length > 1 ? 's' : ''} au buzzer
+                  {lent.auBuzzer.length} question{lent.auBuzzer.length > 1 ? 's' : ''} sans réponse
                 </b>
-                , sans réponse dans les vingt secondes.{' '}
+                {' : les vingt secondes sont passées avant toi. '}
               </>
             )}
             {lent.aLaLimite.length > 0 && (
@@ -745,15 +755,22 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
         )}
 
         {raison && (
-          <p className="rappel resultat__rappel">
-            <span className="rappel__amorce">Tu passes ce permis pour</span>
-            <q>{raison}</q>
-            <span className="discret">
-              {mode === 'examen'
-                ? 'Les questions ratées sont dans la revue, et elles reviennent en entraînement jusqu’à ce que tu les tiennes.'
-                : 'Chaque question ratée revient jusqu’à ce que tu la tiennes. C’est le principe.'}
-            </span>
-          </p>
+          <>
+            <p className="rappel resultat__rappel">Tu passes ce permis pour <q>{raison}</q>.</p>
+            <p className="discret">
+              {mode !== 'examen' ? (
+                'Chaque question ratée revient jusqu’à ce que tu la tiennes. C’est le principe.'
+              ) : POUR_APP ? (
+                'Les questions ratées sont dans la revue, et elles reviennent en entraînement jusqu’à ce que tu les tiennes.'
+              ) : (
+                <>
+                  {r.erreurs > 1 ? `Tes ${r.erreurs} erreurs sont` : 'Ton erreur est'} dans{' '}
+                  <a href="/profil/erreurs">ce que tu as raté</a>, et {r.erreurs > 1 ? 'elles reviennent' : 'elle revient'} dans
+                  ta série du jour jusqu’à ce que tu {r.erreurs > 1 ? 'les tiennes' : 'la tiennes'}.
+                </>
+              )}
+            </p>
+          </>
         )}
 
         {r.total > 0 && (
@@ -762,7 +779,10 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
               .sort(([, a], [, b]) => a.bonnes / a.total - b.bonnes / b.total)
               .map(([code, note], rang) => (
                 <li key={code} style={{ '--part': note.bonnes / note.total, '--rang': rang } as React.CSSProperties}>
-                  <b>{nomDuTheme(code)}</b>
+                  {/* Sur le site, le nom mène à l'entraînement du thème. Dans
+                      l'app, chaque onglet est sa propre webview : un lien
+                      ouvrirait l'entraînement sous l'onglet Examen. */}
+                  <b>{POUR_APP ? nomDuTheme(code) : <a href={`/entrainement/${code}`}>{nomDuTheme(code)}</a>}</b>
                   <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
                     {note.bonnes} / {note.total}
                   </span>
@@ -785,10 +805,10 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
                 <button
                   className="bouton bouton--principal"
                   type="button"
-                  aria-expanded={revue}
-                  onClick={() => setRevue((v) => !v)}
+                  aria-expanded={revue === 'erreurs'}
+                  onClick={() => basculerRevue('erreurs')}
                 >
-                  {revue ? 'Masquer mes erreurs' : 'Revoir mes erreurs'}
+                  {revue === 'erreurs' ? 'Masquer mes erreurs' : 'Revoir mes erreurs'}
                 </button>
               )}
               <a
@@ -822,12 +842,36 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
           </>
         ) : (
           <div className="jeu__actions">
-            {r.total > 0 && (
-              <button className="bouton" type="button" onClick={() => setRevue((v) => !v)}>
-                {revue ? 'Masquer la revue' : 'Revoir les questions'}
+            {/* Comme dans l'app : ce qui a été raté d'abord, puis refaire. */}
+            {ratees.size > 0 && (
+              <button
+                className="bouton bouton--principal"
+                type="button"
+                aria-expanded={revue === 'erreurs'}
+                onClick={() => basculerRevue('erreurs')}
+              >
+                {revue === 'erreurs'
+                  ? 'Masquer mes erreurs'
+                  : ratees.size > 1 ? `Revoir mes ${ratees.size} erreurs` : 'Revoir mon erreur'}
               </button>
             )}
-            <a className="bouton bouton--principal" href={retour}>Recommencer</a>
+            {r.total > 0 && (
+              <button
+                className={`bouton${ratees.size > 0 ? ' bouton--discret' : ''}`}
+                type="button"
+                aria-expanded={revue === 'toutes'}
+                onClick={() => basculerRevue('toutes')}
+              >
+                {revue === 'toutes'
+                  ? 'Masquer la revue'
+                  : ratees.size === 0
+                    ? 'Revoir les questions'
+                    : r.total > 1 ? `Revoir les ${r.total} questions` : 'Revoir la question'}
+              </button>
+            )}
+            <a className={`bouton${ratees.size > 0 ? '' : ' bouton--principal'}`} href={retour}>
+              {mode === 'examen' ? 'Refaire un examen' : 'Recommencer'}
+            </a>
             {/* Pas de partage dessiné sur le site : le bouton de partage du
                 navigateur est déjà là, un doublon en HTML n'ajoute rien. */}
             <a className="bouton bouton--discret" href="/">Accueil</a>
@@ -841,15 +885,21 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
               if (!d) return null;
               const donnee = session.selections[i] ?? [];
               const rate = ratees.has(q.id);
-              // Dans l'app, le bouton promet les erreurs : la revue les tient seules.
-              if (POUR_APP && !rate) return null;
+              // Le bouton des erreurs les promet : la revue les tient seules.
+              if (revue === 'erreurs' && !rate) return null;
+              // Une seule case cochée quand il en fallait deux : le candidat
+              // ne voyait pas qu'il manquait une réponse, seulement laquelle.
+              const incomplete = rate && q.reponses.length === 2 && donnee.length === 1;
               return (
                 <article className="revue__item" key={q.id}>
                   <p className="revue__rang">
                     Question {i + 1} sur {jouees.length}, {nomDuTheme(q.theme)}
-                    {rate ? ' — ratée' : ''}
+                    {rate ? ', ratée' : ''}
                   </p>
                   <h2 className="revue__enonce">{d.enonce}</h2>
+                  {incomplete && (
+                    <p className="discret">Il fallait deux réponses, tu en as coché une.</p>
+                  )}
                   {d.visuel && (
                     <img className="jeu__visuel" src={`/visuels/${d.visuel.fichier}`} alt={d.visuel.alt} loading="lazy" />
                   )}
@@ -867,7 +917,9 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
                             <span>{p.texte}</span>
                             {(bonne || cochee) && (
                               <span className="proposition__marque">
-                                {bonne ? 'bonne réponse' : 'ta réponse'}
+                                {cochee
+                                  ? bonne ? 'ta réponse, juste' : 'ta réponse'
+                                  : rate && donnee.length > 0 ? 'bonne réponse, oubliée' : 'bonne réponse'}
                               </span>
                             )}
                           </div>
@@ -1072,6 +1124,13 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
             </div>
           )}
         </>
+      )}
+
+      {rienDu && session.index === 0 && (
+        <p className="discret">
+          Rien n’est dû aujourd’hui : voilà {serie.length} question{serie.length > 1 ? 's' : ''} jamais
+          vue{serie.length > 1 ? 's' : ''}, prise{serie.length > 1 ? 's' : ''} dans tes notions les plus fragiles.
+        </p>
       )}
 
       {mode === 'entrainement' && session.index === 0 && (

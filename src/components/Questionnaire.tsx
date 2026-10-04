@@ -104,7 +104,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
       {ecran === 'pourquoi' && (
         <section className="questionnaire__ecran">
           <h1 ref={titre} tabIndex={-1}>Pourquoi tu passes le permis côtier ?</h1>
-          <p className="discret">Coche ce qui te ressemble. On te le rappellera le jour où ça coince.</p>
+          <p className="discret">Coche ce qui te ressemble. C’est la seule réponse qu’on te relira : le jour où un examen blanc est recalé.</p>
           <ul className="choix" role="list">
             {MOTIVATIONS.map((m) => {
               const coche = p.motivations.includes(m.code);
@@ -130,8 +130,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
         <section className="questionnaire__ecran">
           <h1 ref={titre} tabIndex={-1}>Dis-le avec tes mots.</h1>
           <p className="discret">
-            Une phrase, la tienne. C’est elle qu’on affichera quand un examen blanc sera recalé,
-            avant la case cochée.
+            Une phrase, la tienne, qui complète « Je passe ce permis pour… ». Elle remplace la case cochée.
           </p>
           <label className="visuellement-cache" htmlFor="phrase">Ta raison, en une phrase</label>
           <textarea
@@ -139,7 +138,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
             className="champ questionnaire__phrase"
             rows={3}
             maxLength={160}
-            placeholder="Emmener mon père pêcher au large, cet été."
+            placeholder="emmener mon père pêcher au large, cet été"
             value={p.phrase}
             onChange={(e) => ecrire({ ...p, phrase: e.target.value })}
           />
@@ -206,7 +205,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
         <section className="questionnaire__ecran">
           <h1 ref={titre} tabIndex={-1}>Ton examen est quand ?</h1>
           <p className="discret">
-            Sers à compter les jours et à répartir ce qui reste à voir. Laisse vide si tu ne sais pas encore.
+            Elle sert à compter les jours et à répartir ce qui reste à voir. Laisse vide si tu ne sais pas encore.
           </p>
           <label className="visuellement-cache" htmlFor="date-examen">Date de l’examen</label>
           <input
@@ -257,8 +256,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
           </h1>
           {raison && (
             <p className="rappel">
-              <span className="rappel__amorce">Tu passes ce permis pour</span>
-              <q>{raison}</q>
+              Tu passes ce permis pour <q>{raison}</q>{/[.!?…]$/.test(raison) ? '' : '.'}
             </p>
           )}
           <p>{conseil.conseil}</p>
@@ -266,6 +264,8 @@ export default function Questionnaire({ totalQuestions }: Props) {
             <p className="discret">
               À {p.rythme} questions par jour, tu en verras {jours * p.rythme} d’ici là. La banque en compte{' '}
               {totalQuestions}.
+              {jours * p.rythme < totalQuestions &&
+                ` Pour tout voir une fois, il en faudrait ${Math.ceil(totalQuestions / jours)} par jour.`}
             </p>
           )}
           <div className="jeu__actions">

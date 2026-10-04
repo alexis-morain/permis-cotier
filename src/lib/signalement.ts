@@ -181,6 +181,22 @@ export function valider(donnees: unknown): Validation {
   return { ok: true, valeur: { question, motif: motif as Motif, details, turnstile } };
 }
 
+/**
+ * Pourquoi le signalement en ligne n'est pas passé, dit au visiteur avant de
+ * replier sur le courrier. `null` : aucune réponse n'est arrivée (réseau coupé,
+ * ou Worker muet au-delà du délai) ; `'sans-jeton'` : le widget Turnstile n'a pas
+ * chargé. Les statuts sont ceux du Worker : 403 Turnstile refusé, 429 trop
+ * d'envois, 503 secret absent.
+ */
+export function raisonDuRepli(statut: number | null | 'sans-jeton'): string {
+  if (statut === 'sans-jeton') return 'La vérification anti-robot n’a pas chargé.';
+  if (statut === null) return 'La connexion a coupé avant la réponse du serveur.';
+  if (statut === 403) return 'La vérification anti-robot a refusé l’envoi.';
+  if (statut === 429) return 'Trop de signalements d’affilée : le serveur demande une minute.';
+  if (statut === 503) return 'Le signalement en ligne est fermé pour l’instant.';
+  return 'Le serveur n’a pas pris le signalement.';
+}
+
 /** `Signalement <question> — <motif>`, la forme convenue. */
 export function titreIssue(signalement: Signalement): string {
   return `Signalement ${signalement.question} — ${signalement.motif}`;

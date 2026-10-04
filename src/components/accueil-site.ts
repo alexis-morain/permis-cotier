@@ -118,7 +118,7 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
         el('p', {},
           'Première fois ici ? ',
           el('a', { href: '/profil/depart', 'data-mesure': 'accueil-profil-depart' }, 'Dis en trente secondes pourquoi tu passes le permis'),
-          ' : le site se règle à ta main, et te le rappelle quand ça coince.',
+          ' : on te le rappellera le jour où un examen blanc est recalé.',
         ),
       ),
     );
@@ -129,13 +129,23 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   const objectif = objectifDuJour(etat, jour);
   const serie = serieDeJours(etat, jour);
   const prenom = etat.profil.prenom.trim();
-  const faites = Math.min(objectif.faites, objectif.cible);
+  // Le dernier examen blanc terminé : c'est ce que le candidat qui revient
+  // vient chercher, et il passe avant l'indice.
+  const dernier = etat.examens.find((x) => x.total > 0) ?? null;
 
+  // Sans prénom, la phrase commence à « Indice » : une minuscule en tête de
+  // ligne fait cassé.
   const ligne = el('p', {},
-    prenom ? `${prenom}, ` : '',
-    'indice de préparation ', b(ind.score), ' sur 100, ', PALIERS[ind.palier].titre.toLowerCase(),
-    '. Aujourd’hui ', b(faites), ` question${faites > 1 ? 's' : ''} sur ${objectif.cible}`,
+    prenom ? `${prenom}, indice` : 'Indice',
+    ' de préparation ', b(ind.score), ' sur 100, ', PALIERS[ind.palier].titre.toLowerCase(), '. ',
   );
+  // L'objectif atteint se dit : « 20 sur 20 » après quarante réponses
+  // plafonnait sans le dire.
+  if (objectif.atteint) {
+    ligne.append('Objectif du jour fait, ', b(objectif.faites), ` question${objectif.faites > 1 ? 's' : ''}`);
+  } else {
+    ligne.append('Aujourd’hui ', b(objectif.faites), ` question${objectif.faites > 1 ? 's' : ''} sur ${objectif.cible}`);
+  }
   if (serie.jours > 0) ligne.append(', ', b(serie.jours), ` jour${serie.jours > 1 ? 's' : ''} de suite`);
   ligne.append('.');
   if (aRevoir > 0) {
@@ -147,8 +157,20 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   }
   ligne.append(' ', el('a', { href: '/profil', 'data-mesure': 'accueil-profil' }, 'Ta fiche'), '.');
 
-  const bloc = el('div', { class: 'reprise' }, ligne);
-  if (raison) bloc.append(el('p', { class: 'reprise__raison' }, 'Tu passes ce permis pour ', el('q', {}, raison)));
+  const bloc = el('div', { class: 'reprise' });
+  if (dernier) {
+    bloc.append(
+      el('p', { class: 'reprise__examen' },
+        'Dernier examen blanc : ', b(`${dernier.bonnes} sur ${dernier.total}`), `, ${dernier.reussi ? 'reçu' : 'recalé'}.`,
+      ),
+    );
+  }
+  bloc.append(ligne);
+  // La raison ne revient que quand ça coince : affichée à chaque visite, elle
+  // devenait du décor, et perdait sa force pour le jour où elle sert.
+  if (raison && dernier && !dernier.reussi) {
+    bloc.append(el('p', { class: 'reprise__raison' }, 'Tu passes ce permis pour ', el('q', {}, raison), '.'));
+  }
   racine.append(bloc);
 }
 
@@ -163,7 +185,7 @@ function compteARebours(date: string, restantes: number, jour: string): string |
   }
   if (jours === 1) return 'Demain. Fais deux examens blancs ce soir.';
   if (jours === 0) return 'Aujourd’hui. Bon vent.';
-  return 'C’est passé. Tu peux effacer la date dans les réglages.';
+  return 'C’est passé. Efface la date au-dessus, ou pose la prochaine.';
 }
 
 /**

@@ -108,15 +108,7 @@
 .fiche h2 { margin-bottom: 0.5rem; }
 .fiche section > .discret { margin-bottom: 1rem; }
 .fiche__tete { display: flex; flex-direction: column; }
-.fiche__invitation {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1.5rem;
-  max-width: 40rem;
-}
-.fiche__invitation p { margin: 0; max-width: 34ch; }
+.fiche__invitation { margin: 0; max-width: var(--mesure); }
 .fiche__details { max-width: var(--mesure); margin-top: 0.75rem; }
 .fiche__details summary { cursor: pointer; font-weight: 700; min-height: 2.75rem; display: flex; align-items: center; }
 .fiche__details p { margin: 0.5rem 0 0; }
@@ -352,7 +344,16 @@
   cursor: pointer;
 }
 .reglage__ligne .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
-.reglage--danger .bouton { border-color: var(--rouge); box-shadow: 0 var(--bord) 0 var(--rouge); color: var(--rouge-texte); }
+/* Le seul bouton rouge : celui qui efface. Plein, pour qu'on le lise avant
+   de l'enfoncer ; « Annuler » reste un bouton ordinaire, sans couleur. */
+.bouton--danger {
+  background: var(--rouge);
+  border-color: var(--rouge);
+  color: var(--blanc);
+  box-shadow: 0 var(--bord) 0 var(--rouge-texte);
+}
+.bouton--danger:hover { background: var(--rouge-texte); border-color: var(--rouge-texte); }
+.bouton--danger:active { box-shadow: 0 0 0 var(--rouge-texte); }
 
 @media (min-width: 40rem) {
   .jour { grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -380,7 +381,8 @@
   max-width: none;
 }
 .erreurs__liste .erreur:last-child { border-bottom: 2px solid var(--filet); }
-.erreur__rang { margin: 0 0 0.35rem; font-size: 0.85rem; font-weight: 600; }
+.erreur__rang { margin: 0.25rem 0 0.5rem; font-size: 0.85rem; font-weight: 600; }
+.erreur__bonnes { margin: 0.25rem 0 0; padding-left: 1.2rem; }
 .erreur__enonce { font-size: 1.1rem; margin: 0 0 0.5rem; }
 .erreur__visuel {
   display: block;
