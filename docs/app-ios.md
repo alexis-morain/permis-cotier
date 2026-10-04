@@ -1,9 +1,41 @@
 # L'app iOS — état des lieux
 
-Ce fichier vit sur la branche `app-ios` seulement. Il dit où en est la coquille
-iPhone, ce qui la bloque, et ce qu'il resterait à faire pour la livrer. Il
-existe pour qu'on puisse reprendre le chantier sans relire les commits.
+Ce fichier dit où en est la coquille iPhone, ce qui la bloque, et ce qu'il
+resterait à faire. Il existe pour qu'on puisse reprendre le chantier sans
+relire les commits.
 La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
+
+## 4 octobre 2026 — l'app suit main
+
+### Ce qui a changé
+
+- **Chaque push sur `main` construit l'app** (`.github/workflows/app-ios.yml`,
+  hors `docs/`, `plans/` et `*.md`), plus un passage quotidien à 6 h 17 UTC
+  et un lancement à la main. Trois jobs : `preparer` décide, `construire`
+  archive sans signature sur `macos-26` puis exporte avec
+  `ios/ExportOptions.plist`, signé dans le nuage et téléversé par la clé
+  d'API, `soumettre` attend le traitement, écrit `main <sha court>` dans
+  « À tester » de TestFlight et envoie en revue si c'est permis.
+- **L'environnement GitHub `app-store`**, réservé à `main`, porte
+  `ASC_KEY_ID`, `ASC_ISSUER_ID` et `ASC_KEY_P8`. `pyjwt[crypto]` vit dans
+  `requirements-app.txt` : la CI du site ne bouge pas.
+- **La règle**, dans `decider()` de `scripts/app_store.py`, testée : version
+  la plus haute modifiable, on la vise ; en vente, on vise le patch suivant ;
+  en revue, en attente de revue ou de sortie, patch suivant sur TestFlight
+  seul. Un commit déjà dans la version la plus haute, ou déjà porté par le
+  dernier build de la version visée, ne se reconstruit pas. Un binaire
+  rejeté ne se resoumet jamais seul. Numéro de build : le plus haut connu + 1.
+- **`ios/nouveautes.txt`** devient les « Nouveautés » fr-FR de chaque version
+  soumise (sauf la 1.0) ; vide, la soumission échoue.
+- **La branche `app-ios` n'a plus de raison d'être** : tout le code de l'app
+  est sur `main`.
+
+### Ce qui reste manuel
+
+- Poser les trois secrets dans l'environnement `app-store`.
+- Tenir `ios/nouveautes.txt` à jour avant un changement visible.
+- Une revue rejetée : la corriger, puis un nouveau commit la renvoie, ou la
+  renvoyer depuis App Store Connect si seules les métadonnées étaient en cause.
 
 ## 25 septembre 2026 — la coquille tourne, et n'est plus une copie du site
 

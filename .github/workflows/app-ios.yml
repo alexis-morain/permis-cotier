@@ -1,0 +1,165 @@
+name: App iOS
+
+# L'app suit `main` : chaque changement part sur TestFlight, puis en revue
+# dès qu'aucune revue n'est en cours. La décision est dans
+# `scripts/app_store.py`, testée ; ce fichier ne fait qu'enchaîner.
+on:
+  push:
+    branches: [main]
+    # Un changement de documentation ne change pas l'app.
+    paths-ignore:
+      - 'docs/**'
+      - 'plans/**'
+      - '**/*.md'
+  # Une version sortie dans la nuit libère la soumission de la suivante sans
+  # attendre un nouveau push.
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Jamais deux passages à la fois : ils prendraient le même numéro de build.
+# Et pas d'annulation, on ne coupe pas un téléversement en cours.
+concurrency:
+  group: app-ios
+  cancel-in-progress: false
+
+jobs:
+  preparer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # L'environnement porte la clé d'API, et n'est ouvert qu'à `main`.
+    environment: app-store
+    outputs:
+      action: ${{ steps.decision.outputs.action }}
+      version: ${{ steps.decision.outputs.version }}
+      build: ${{ steps.decision.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-app.txt
+
+      - name: Décider
+        id: decision
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          COMMIT: ${{ github.sha }}
+        run: python scripts/app_store.py preparer --commit "$COMMIT"
+
+  construire:
+    needs: preparer
+    if: needs.preparer.outputs.action == 'construire'
+    runs-on: macos-26
+    timeout-minutes: 60
+    environment: app-store
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # `build:app` valide la banque avant de construire.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      # L'image porte plusieurs Xcode ; le SDK le plus récent est celui
+      # qu'App Store Connect exige en premier.
+      - name: Choisir Xcode 26
+        run: |
+          xcode=$(printf '%s\n' /Applications/Xcode_26*.app | grep -iv beta | sort -V | tail -1)
+          sudo xcode-select -s "$xcode/Contents/Developer"
+          xcodebuild -version
+
+      - run: npm run build:app
+      - run: npx cap sync ios
+
+      - name: Écrire la clé d'API
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          umask 077
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+
+      # Archive sans signature : aucun certificat sur la machine. C'est
+      # l'export qui signe, dans le nuage, avec la clé d'API.
+      - name: Archiver
+        env:
+          VERSION: ${{ needs.preparer.outputs.version }}
+          BUILD: ${{ needs.preparer.outputs.build }}
+        run: |
+          xcodebuild archive \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -destination generic/platform=iOS \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            MARKETING_VERSION="$VERSION" \
+            CURRENT_PROJECT_VERSION="$BUILD"
+
+      - name: Signer et téléverser
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist ios/ExportOptions.plist \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+
+      - name: Effacer la clé
+        if: always()
+        run: rm -f "$RUNNER_TEMP/AuthKey.p8"
+
+  # Tourne aussi quand le build est déjà en ligne (`soumettre`) : `construire`
+  # est alors sauté, et un job sauté ferait sauter ses dépendants sans
+  # `always()`.
+  soumettre:
+    needs: [preparer, construire]
+    if: >-
+      always()
+      && needs.preparer.result == 'success'
+      && needs.preparer.outputs.action != 'rien'
+      && (needs.construire.result == 'success' || needs.construire.result == 'skipped')
+    runs-on: ubuntu-latest
+    # Le traitement d'un build chez Apple prend jusqu'à 45 minutes.
+    timeout-minutes: 60
+    environment: app-store
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-app.txt
+
+      # Le script relit l'état avant de soumettre : une revue ouverte entre-temps
+      # laisse le build sur TestFlight seul.
+      - name: Soumettre
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          VERSION: ${{ needs.preparer.outputs.version }}
+          BUILD: ${{ needs.preparer.outputs.build }}
+          COMMIT: ${{ github.sha }}
+        run: >-
+          python scripts/app_store.py soumettre
+          --version "$VERSION" --build "$BUILD" --commit "$COMMIT"
