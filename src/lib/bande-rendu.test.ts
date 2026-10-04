@@ -4,9 +4,9 @@
  * la page avant le premier rendu.
  */
 import { describe, it, expect, beforeEach } from 'vitest';
-import { monterBande, rendreBande } from './bande-rendu';
+import { monterBande, rendreBande, rendrePanneau } from './bande-rendu';
 import type { Bande, LeconBande } from './bande';
-import { enregistrerExamen, enregistrerReponse, etatInitial } from './progression';
+import { enregistrerExamen, enregistrerReponse, etatInitial, terminerLecon, type ExamenPasse } from './progression';
 import { ERREURS_ADMISES } from './quiz';
 
 const lecon: LeconBande = { code: 'balisage-cardinal', nom: 'Marques cardinales', chemin: '/cours/balisage/balisage-cardinal' };
@@ -205,5 +205,104 @@ describe('la bande posée dans la page', () => {
     const etat = enregistrerReponse(etatInitial(), 'vhf-0', false, '2026-10-03');
     monterBande(document, etat, '2026-10-04');
     expect(document.querySelector('img')).toBeNull();
+  });
+});
+
+describe('le panneau des derniers examens blancs', () => {
+  const trois: ExamenPasse[] = [
+    { date: '2026-10-03', bonnes: 29, total: 40, reussi: false },
+    { date: '2026-09-28', bonnes: 36, total: 40, reussi: true },
+    { date: '2026-09-20', bonnes: 30, total: 40, reussi: false },
+  ];
+  const panneau = (examens: ExamenPasse[]) => {
+    const p = rendrePanneau(document, examens, 'recale');
+    if (!p) throw new Error('pas de panneau');
+    return p;
+  };
+  const lignes = (p: HTMLElement) =>
+    [...p.querySelectorAll('li')].map((li) => [...li.children].map((c) => c.textContent).join(' | '));
+
+  it('rien sans examen', () => {
+    expect(rendrePanneau(document, [], 'recale')).toBeNull();
+  });
+
+  it('un titre, puis une ligne par examen : la date, le score, le verdict en mots', () => {
+    const p = panneau(trois);
+    expect(p.tagName).toBe('ASIDE');
+    expect(p.querySelector('h2')?.textContent).toBe('Tes derniers examens blancs');
+    expect(lignes(p)).toEqual([
+      '3 octobre | 29 / 40 | recalé',
+      '28 septembre | 36 / 40 | reçu',
+      '20 septembre | 30 / 40 | recalé',
+    ]);
+  });
+
+  it('un seul examen, une seule ligne', () => {
+    expect(lignes(panneau(trois.slice(0, 1)))).toEqual(['3 octobre | 29 / 40 | recalé']);
+  });
+
+  it('la barre lit sa part du score dans --part', () => {
+    const [premier, second] = panneau(trois).querySelectorAll('li');
+    expect(premier?.style.getPropertyValue('--part')).toBe('0.725');
+    expect(second?.style.getPropertyValue('--part')).toBe('0.9');
+  });
+
+  it('dit ce que marque le trait, et renvoie à la fiche, compté', () => {
+    const p = panneau(trois);
+    const note = p.querySelector('p');
+    expect(note?.textContent).toBe('Le trait marque 35 sur 40, la barre d’admission. Ta\u00a0fiche les garde tous.');
+    const lien = note?.querySelector('a');
+    expect(lien?.getAttribute('href')).toBe('/profil');
+    expect(lien?.getAttribute('data-mesure')).toBe('accueil-bande');
+    expect(lien?.getAttribute('data-mesure-cas')).toBe('recale');
+    expect(lien?.getAttribute('data-mesure-geste')).toBe('fiche');
+  });
+
+  it('une date illisible reste du texte, jamais du HTML', () => {
+    const p = panneau([{ date: '<img src=x onerror=alert(1)>', bonnes: 29, total: 40, reussi: false }]);
+    expect(p.querySelector('img')).toBeNull();
+    expect(p.querySelector('li')?.firstElementChild?.textContent).toBe('<img src=x onerror=alert(1)>');
+  });
+});
+
+describe('le panneau posé dans la page', () => {
+  beforeEach(() => page(DONNEES));
+  const avecExamens = (n: number) => {
+    let etat = etatInitial();
+    for (let i = n; i >= 1; i--) etat = enregistrerExamen(etat, { date: `2026-09-2${i}`, bonnes: 30 + i, total: 40, reussi: i >= 5 });
+    return etat;
+  };
+
+  it('chez qui a des examens : juste après sa colonne, et la section le dit', () => {
+    monterBande(document, avecExamens(4), '2026-10-04');
+    const retour = document.querySelector('.ouverture__texte--retour');
+    const panneau = retour?.nextElementSibling;
+    expect(panneau?.classList.contains('ouverture__examens')).toBe(true);
+    expect(panneau?.querySelectorAll('li')).toHaveLength(3);
+    expect(document.querySelector('.ouverture')?.getAttribute('data-panneau')).toBe('examens');
+    // Le panneau des comptes reste dans la page : la feuille le cache.
+    expect(document.querySelector('.ouverture__cote')).not.toBeNull();
+  });
+
+  it('le nom d’une leçon contenant du HTML reste du texte, panneau compris', () => {
+    page({ lecons: [{ ...lecon, nom: '<img src=x onerror=alert(1)>' }], banque: [{ id: 'vhf-0', theme: 'vhf' }] });
+    const etat = terminerLecon(avecExamens(1), lecon.code, { bonnes: 3, total: 3 }, '2026-10-02');
+    monterBande(document, enregistrerReponse(etat, 'vhf-0', false, '2026-10-03'), '2026-10-04');
+    expect(document.querySelector('.ouverture__examens')).not.toBeNull();
+    expect(document.querySelector('img')).toBeNull();
+  });
+
+  it('rien pour qui revient sans examen terminé', () => {
+    const etat = enregistrerExamen(enregistrerReponse(etatInitial(), 'vhf-0', false, '2026-10-03'), { date: '2026-10-03', bonnes: 0, total: 0, reussi: false });
+    monterBande(document, etat, '2026-10-04');
+    expect(document.querySelector('.ouverture')?.getAttribute('data-bande')).toBe('entrainement');
+    expect(document.querySelector('.ouverture__examens')).toBeNull();
+    expect(document.querySelector('.ouverture')?.hasAttribute('data-panneau')).toBe(false);
+  });
+
+  it('rien pour le nouveau venu', () => {
+    monterBande(document, etatInitial(), '2026-10-04');
+    expect(document.querySelector('.ouverture__examens')).toBeNull();
+    expect(document.querySelector('.ouverture')?.hasAttribute('data-panneau')).toBe(false);
   });
 });

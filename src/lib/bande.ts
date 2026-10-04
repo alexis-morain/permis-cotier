@@ -65,6 +65,15 @@ function examenBande(e: ExamenPasse, jour: string): ExamenBande & { reussi: bool
   };
 }
 
+/**
+ * Les `n` derniers examens blancs terminés, le plus récent en premier : ce
+ * que le panneau de la bande montre à droite, sur grand écran. Un examen
+ * quitté avant toute réponse (`total` à zéro) ne compte pas.
+ */
+export function derniersExamens(etat: Etat, n = 3): ExamenPasse[] {
+  return etat.examens.filter((x) => x.total > 0).slice(0, n);
+}
+
 export function choisirBande(
   etat: Etat,
   lecons: readonly LeconBande[],

@@ -65,6 +65,14 @@ describe('le script en ligne de la bande', () => {
     expect(document.querySelector('.ouverture__texte--retour h1')?.textContent).toBe('Dernier examen blanc : 37\u00a0sur\u00a040, reçu.');
   });
 
+  it('pose aussi le panneau des derniers examens', () => {
+    const etat = enregistrerExamen(etatInitial(), { date: '2020-01-01', bonnes: 29, total: 40, reussi: false });
+    localStorage.setItem(CLE_STOCKAGE, JSON.stringify(etat));
+    executer();
+    expect(document.querySelector('.ouverture')?.getAttribute('data-panneau')).toBe('examens');
+    expect(document.querySelector('.ouverture__examens li')?.textContent).toBe('1 janvier29 / 40recalé');
+  });
+
   it('laisse le nouveau venu tel quel, et ne lève rien sur un stockage abîmé', () => {
     const avant = document.body.innerHTML;
     executer();

@@ -357,7 +357,7 @@ describe('la remesure du 4 octobre', () => {
   it('dit le score du recalé sous le titre, avec la barre, raison ou pas', () => {
     sauvegarder(recaleHier());
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    expect(document.querySelector('.fiche__tete .fiche__dernier')!.textContent).toBe('Hier, 31 sur 40, recalé : il en fallait 35.');
+    expect(document.querySelector('.fiche__tete .fiche__dernier')!.textContent).toBe('Hier, 31 sur 40, recalé : il en fallait 35.');
     cleanup();
     sauvegarder({ ...recaleHier(), profil: profilVide() });
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
@@ -378,12 +378,24 @@ describe('la remesure du 4 octobre', () => {
     expect(sections.indexOf('fiche__examens')).toBeLessThan(sections.indexOf('fiche__themes'));
   });
 
-  it('explique un indice bas par ce qui manque, quand un examen pèse déjà', () => {
+  it('avec un examen, nomme le palier d’après lui, et met l’indice en second', () => {
     sauvegarder(recaleHier());
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    const texte = document.querySelector('.indice__texte')!.textContent!;
-    expect(texte).not.toContain('Une leçon ou une série de questions, et il bouge');
-    expect(texte).toContain('Tes examens blancs pèsent déjà 35 points sur 45.');
+    const bloc = document.querySelector('.indice')!;
+    expect(bloc.className).toContain('indice--examens');
+    expect(document.querySelector('.indice__palier')!.textContent).toBe('En route');
+    expect(document.querySelector('.indice__texte')!.textContent).toContain('Ton dernier examen blanc est recalé de peu, 9 erreurs pour cinq admises.');
+    // L'indice reste lisible, nommé, après le palier.
+    expect(bloc.firstElementChild!.className).toBe('indice__texte');
+    expect(document.querySelector('.indice__nombre')!.textContent).toBe('Indice 35 / 100');
+  });
+
+  it('sans examen, garde l’indice en tête', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', false, '2026-09-20'));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const bloc = document.querySelector('.indice')!;
+    expect(bloc.className).not.toContain('indice--examens');
+    expect(bloc.firstElementChild!.className).toBe('indice__nombre');
   });
 
   it('écrit les parts de l’indice en points', () => {

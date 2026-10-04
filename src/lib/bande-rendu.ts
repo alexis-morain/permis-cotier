@@ -9,11 +9,17 @@
  * bande du nouveau venu entrevue. Sans JavaScript, ou si quoi que ce soit
  * manque, rien ne bouge et le nouveau venu a sa bande, entière.
  *
+ * Chez qui a terminé un examen blanc, un second bloc prend la place du
+ * panneau des comptes : ses trois derniers examens (`rendrePanneau`), posé
+ * juste après la colonne, la section prenant `data-panneau="examens"`. Sur
+ * téléphone, la feuille le cache comme le panneau des comptes.
+ *
  * Les textes disent toujours le verdict en mots : la couleur ne dit jamais
  * seule reçu ou recalé.
  */
-import type { Etat } from './progression';
-import { choisirBande, type Bande, type ExamenBande, type LeconBande } from './bande';
+import type { Etat, ExamenPasse } from './progression';
+import { choisirBande, derniersExamens, type Bande, type ExamenBande, type LeconBande } from './bande';
+import { dateLisible } from './jour';
 
 type Enfant = Node | string | null | false | undefined;
 
@@ -201,6 +207,29 @@ export function rendreBande(doc: Document, bande: Bande): HTMLElement | null {
   );
 }
 
+/**
+ * Le panneau des derniers examens blancs, ou `null` s'il n'y en a aucun. Une
+ * ligne par examen : la date, la barre du score (sa part dans `--part`, le
+ * trait de la barre d'admission posé par la feuille), le score, le verdict.
+ */
+export function rendrePanneau(doc: Document, examens: readonly ExamenPasse[], cas: Bande['cas']): HTMLElement | null {
+  if (examens.length === 0) return null;
+  return el(doc, 'aside', { class: 'ouverture__examens' },
+    el(doc, 'h2', {}, 'Tes derniers examens blancs'),
+    el(doc, 'ol', {}, ...examens.map((x) =>
+      el(doc, 'li', { style: `--part:${x.bonnes / x.total}` },
+        el(doc, 'span', {}, dateLisible(x.date)),
+        el(doc, 'b', { class: x.reussi ? 'recu' : 'recale' }, `${x.bonnes} / ${x.total}`),
+        el(doc, 'span', {}, x.reussi ? 'reçu' : 'recalé'),
+      ))),
+    el(doc, 'p', { class: 'discret' },
+      'Le trait marque 35 sur 40, la barre d’admission. ',
+      el(doc, 'a', { href: '/profil', 'data-mesure': 'accueil-bande', 'data-mesure-cas': cas, 'data-mesure-geste': 'fiche' }, 'Ta\u00a0fiche'),
+      ' les garde tous.',
+    ),
+  );
+}
+
 /** L'identifiant du bloc JSON de l'accueil, partagé avec `accueil-site.ts`. */
 export const ID_DONNEES = 'accueil-donnees';
 
@@ -231,4 +260,9 @@ export function monterBande(doc: Document, etat: Etat, jour: string): void {
   if (!colonne) return;
   grille.prepend(colonne);
   section.setAttribute('data-bande', bande.cas);
+
+  const panneau = rendrePanneau(doc, derniersExamens(etat), bande.cas);
+  if (!panneau) return;
+  colonne.after(panneau);
+  section.setAttribute('data-panneau', 'examens');
 }

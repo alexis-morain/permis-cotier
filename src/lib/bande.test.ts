@@ -3,7 +3,7 @@
  * part d'un `Etat` écrit à la main et d'un jour posé : ni horloge ni stockage.
  */
 import { describe, it, expect } from 'vitest';
-import { choisirBande, type LeconBande } from './bande';
+import { choisirBande, derniersExamens, type LeconBande } from './bande';
 import { enregistrerExamen, enregistrerReponse, etatInitial, terminerLecon, type Etat } from './progression';
 import { joursAvant as joursAvantProfil } from './profil';
 import { joursAvant } from './jour';
@@ -172,5 +172,30 @@ describe('les jours, comptés à un seul endroit', () => {
       expect(joursAvant(date, jour)).toBe(joursAvantProfil(date, jour));
     }
     expect(joursAvant('2026-03-30', '2026-03-28')).toBe(2);
+  });
+});
+
+describe('les derniers examens blancs, pour le panneau de la bande', () => {
+  const examen = (date: string, bonnes: number, total = 40) => ({ date, bonnes, total, reussi: total - bonnes <= 5 });
+  const avec = (...examens: ReturnType<typeof examen>[]) =>
+    examens.reduceRight((e, x) => enregistrerExamen(e, x), etatInitial());
+
+  it('aucun sans examen terminé', () => {
+    expect(derniersExamens(etatInitial())).toEqual([]);
+  });
+
+  it('un seul, tel quel', () => {
+    expect(derniersExamens(avec(examen('2026-10-03', 29)))).toEqual([examen('2026-10-03', 29)]);
+  });
+
+  it('les trois plus récents sur quatre, le plus récent en premier', () => {
+    const etat = avec(examen('2026-10-04', 36), examen('2026-10-03', 29), examen('2026-10-01', 33), examen('2026-09-28', 25));
+    expect(derniersExamens(etat).map((x) => x.date)).toEqual(['2026-10-04', '2026-10-03', '2026-10-01']);
+    expect(derniersExamens(etat, 2)).toHaveLength(2);
+  });
+
+  it('ignore un examen vide, interrompu avant toute réponse', () => {
+    const etat = avec(examen('2026-10-04', 0, 0), examen('2026-10-03', 29));
+    expect(derniersExamens(etat)).toEqual([examen('2026-10-03', 29)]);
   });
 });

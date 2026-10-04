@@ -181,7 +181,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const blocDernier = recale && dernierExamen ? (
     <p className="fiche__dernier">
       {majuscule(depuisLe(Math.max(0, -(joursAvant(dernierExamen.date, jour) ?? 0))))}, {dernierExamen.bonnes}{'\u00a0'}sur{'\u00a0'}{dernierExamen.total}, recalé
-      {'\u00a0'}: il en fallait {dernierExamen.total - ERREURS_ADMISES}.
+      {'\u00a0'}: il en fallait{'\u00a0'}{dernierExamen.total - ERREURS_ADMISES}.
     </p>
   ) : null;
 
@@ -209,16 +209,32 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
       <h2 id="indice-titre" className={POUR_APP ? 'indice__mot' : 'visuellement-cache'}>
         Indice de préparation
       </h2>
-      <div className="indice">
-        <p className="indice__nombre">
-          <span className="display">{ind.score}</span>
-          <small> / 100</small>
-        </p>
-        <div className="indice__texte">
-          <p className="indice__palier">{palier.titre}</p>
-          <p>{phraseDuPalier(ind)}</p>
+      {/* Avec un examen, le palier se lit sur lui et passe en tête ; l'indice
+          suit, plus petit et nommé. Sans examen, l'indice reste devant. */}
+      {ind.dernier ? (
+        <div className="indice indice--examens">
+          <div className="indice__texte">
+            <p className="indice__palier">{palier.titre}</p>
+            <p>{phraseDuPalier(ind)}</p>
+          </div>
+          <p className="indice__nombre">
+            <small>Indice </small>
+            <span className="display">{ind.score}</span>
+            <small> / 100</small>
+          </p>
         </div>
-      </div>
+      ) : (
+        <div className="indice">
+          <p className="indice__nombre">
+            <span className="display">{ind.score}</span>
+            <small> / 100</small>
+          </p>
+          <div className="indice__texte">
+            <p className="indice__palier">{palier.titre}</p>
+            <p>{phraseDuPalier(ind)}</p>
+          </div>
+        </div>
+      )}
       {/* Trois calques pleins, du plus long au plus court, chacun mis à
           l'échelle : la part se lit à la couleur qui s'arrête, et le
           mouvement passe par `transform`, jamais par `width`. */}
@@ -256,8 +272,9 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           réponse ne compte pas comme une mémoire, la correction était encore à l’écran. Quarante-cinq pour
           la moyenne de tes trois derniers examens blancs terminés
           {ind.examensComptes > 0 ? `, ${ind.examensComptes} pour l’instant` : ', aucun pour l’instant'}.
-          « Prêt » demande en plus deux examens reçus sur les trois derniers : un nombre ne dit pas qu’on tient
-          quarante questions en vingt secondes chacune. Une question réussie revient un jour plus tard,
+          Dès qu’un examen blanc est terminé, le palier se lit sur les examens, pas sur ce nombre : prêt avec deux
+          reçus sur les trois derniers, presque si le dernier est reçu, en route s’il est recalé de dix erreurs ou
+          moins. Un nombre ne dit pas qu’on tient quarante questions en vingt secondes chacune. Une question réussie revient un jour plus tard,
           puis trois, puis sept, puis vingt et un. Une faute la ramène tout de suite et remet le compteur à zéro.
         </p>
       </details>

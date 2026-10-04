@@ -127,6 +127,12 @@
 .indice__texte { flex: 1 1 16rem; }
 .indice__texte p { margin: 0; max-width: 40ch; }
 .indice__palier { font-stretch: var(--large); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
+/* Avec un examen, le palier en tête et en grand ; l'indice en second. */
+.indice--examens .indice__palier { font-size: clamp(1.8rem, 1.2rem + 2.5vw, 2.6rem); line-height: 1.05; margin-bottom: 0.4rem; }
+.indice--examens .indice__nombre { align-self: flex-end; }
+.indice--examens .indice__nombre .display { font-size: 2.4rem; }
+/* Le nombre est en flex : l'espace après « Indice » n'y survit pas. */
+.indice--examens .indice__nombre small:first-child { margin-right: 0.35rem; }
 .indice__jauge {
   position: relative;
   height: 14px;

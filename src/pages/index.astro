@@ -81,8 +81,10 @@ const liste = {
     <div class="page ouverture__grille" data-bande-grille>
       {/* Avant la colonne du nouveau venu, pour tourner avant la première
           peinture : chez qui a déjà une trace, il pose devant la colonne de
-          la suite logique, et `data-bande` sur la section cache celle-ci.
-          Sans JavaScript, rien ne change. Voir `bande-rendu.ts`. */}
+          la suite logique, et `data-bande` sur la section cache celle-ci ;
+          chez qui a un examen terminé, ses derniers examens remplacent le
+          panneau des comptes (`data-panneau`). Sans JavaScript, rien ne
+          change. Voir `bande-rendu.ts`. */}
       <script is:inline set:html={SCRIPT_BANDE} />
       <div class="ouverture__texte ouverture__texte--nouveau">
         <h1>Révise le permis côtier au format de l’épreuve.</h1>
@@ -315,6 +317,64 @@ const liste = {
   .dateExamen label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
   .dateExamen__compte { margin: 0.5rem 0 0; }
   .dateExamen__note { margin: 0.4rem 0 0; }
+
+  /* Les derniers examens blancs de qui revient, posés par le script de la
+     bande à la place du panneau des comptes, dont ils prennent l'apparence.
+     Une ligne par examen : la date, le score, le verdict en mots, et dessous
+     la barre du score avec le trait de la barre d'admission à 35 sur 40,
+     comme la liste de la fiche. Le rail est le filet et non `--fond-2` : en
+     sombre, le panneau a déjà la couleur du fond, la barre s'y perdrait. */
+  .ouverture__examens {
+    /* Sur le panneau clair, l'anneau jaune de la bande ne se voit pas : il
+       reprend la couleur du texte du panneau. */
+    --anneau: var(--texte);
+    align-self: start;
+    background: var(--panneau);
+    color: var(--texte);
+    border: 2px solid var(--panneau-filet);
+    border-radius: var(--rayon);
+    padding: 1.5rem;
+  }
+  .ouverture__examens h2 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+  .ouverture__examens ol { list-style: none; margin: 0; padding: 0; }
+  .ouverture__examens li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 3rem;
+    align-items: baseline;
+    gap: 0.35rem 0.75rem;
+    padding: 0.55rem 0;
+    max-width: none;
+    font-size: 0.95rem;
+  }
+  .ouverture__examens li::before,
+  .ouverture__examens li::after {
+    content: '';
+    grid-row: 2;
+    grid-column: 1 / -1;
+    align-self: center;
+  }
+  .ouverture__examens li::before {
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--texte) calc(var(--part, 0) * 100%), var(--filet) 0);
+  }
+  .ouverture__examens li::after {
+    justify-self: start;
+    width: 2px;
+    height: 16px;
+    margin-left: calc(35 / 40 * 100%);
+    background: var(--jauge);
+  }
+  .ouverture__examens li > span:first-child { color: var(--texte-doux); font-weight: 600; }
+  .ouverture__examens li > span:last-child { color: var(--texte-doux); font-size: 0.8rem; font-weight: 700; }
+  .ouverture__examens b { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ouverture__examens .recu { color: var(--vert-texte); }
+  .ouverture__examens .recale { color: var(--rouge-texte); }
+  .ouverture__examens .discret { margin: 1rem 0 0; }
+  /* Sur téléphone, rien sous la suite logique, comme le panneau des comptes. */
+  @media (max-width: 51.99rem) {
+    .ouverture__examens { display: none; }
+  }
 </style>
 
 <style>
@@ -341,6 +401,8 @@ const liste = {
   @media (max-width: 51.99rem) {
     .ouverture[data-bande] .ouverture__cote { display: none; }
   }
+  /* Qui a terminé un examen blanc voit ses derniers à la place des comptes. */
+  .ouverture[data-panneau] .ouverture__cote { display: none; }
   .ouverture :global(h1) { max-width: 16ch; }
   .ouverture :global(.ouverture__promesse) { font-size: 1.15rem; max-width: 46ch; color: var(--bande-doux); }
   .ouverture :global(.ouverture__actions) {
@@ -355,6 +417,8 @@ const liste = {
 
   /* Le panneau blanc posé sur la bande. */
   .ouverture__cote {
+    /* Le panneau est clair : l'anneau jaune de la bande ne s'y verrait pas. */
+    --anneau: var(--texte);
     align-self: start;
     /* En sombre, la surface a la couleur de la bande : le panneau se détache
        par le fond de page et un filet. Les deux jetons sont dans global.css. */
