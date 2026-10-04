@@ -91,7 +91,10 @@ describe('la fiche', () => {
     // Le dernier examen est reçu : la raison reste dans les réglages, pas en tête.
     expect(document.querySelector('.rappel')).toBeNull();
     expect(screen.getAllByText('Emmener mon père pêcher.')).toHaveLength(1);
-    expect(screen.getByRole('link', { name: 'Revoir ma question du jour' }).getAttribute('href')).toBe('/revoir');
+    expect(screen.getByRole('link', { name: 'Faire ma série du jour' }).getAttribute('href')).toBe('/revoir');
+    // La série joue le rythme entier, complété de neuves : le bouton ne
+    // promet pas « 1 question », la phrase dit ce qui est dû.
+    expect(screen.getByText('1 question à revoir aujourd’hui, en tête de ta série.')).toBeTruthy();
     // Le thème raté passe devant, avec le lien vers son entraînement.
     const themes = screen.getAllByRole('link', { name: / en banque|jamais ouvert/ });
     expect(themes[0]!.getAttribute('href')).toBe('/entrainement/vhf');
@@ -395,7 +398,7 @@ describe('la remesure du 4 octobre', () => {
     e = { ...e, profil: { ...profilVide(), rythme: 10 } };
     sauvegarder(e);
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    expect(document.querySelector('.jeu__actions a')!.textContent).toBe('Revoir mes 10 questions du jour');
+    expect(document.querySelector('.jeu__actions a')!.textContent).toBe('Faire ma série du jour');
     expect(screen.getByText(/20 questions à revoir en tout/).textContent).toBe(
       '20 questions à revoir en tout : la série du jour en prend 10, les plus anciennes d’abord.',
     );

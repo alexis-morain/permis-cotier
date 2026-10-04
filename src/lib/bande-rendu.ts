@@ -54,8 +54,19 @@ interface Geste {
 const EXAMEN: Geste = { texte: 'Passer un examen blanc', href: '/examen', geste: 'examen' };
 const REFAIRE: Geste = { texte: 'Refaire un examen blanc', href: '/examen', geste: 'examen' };
 const ENTRAINEMENT: Geste = { texte: 'S’entraîner par thème', href: '/entrainement', geste: 'entrainement' };
-const revoir = (n: number): Geste => ({ texte: `Revoir ${pluriel(n, 'question')}`, href: '/revoir', geste: 'revoir' });
-const reprendre = (l: LeconBande): Geste => ({ texte: 'Reprendre le cours', href: l.chemin, geste: 'cours' });
+/**
+ * La série du jour de `/revoir` joue le rythme entier : les dues d'abord, les
+ * plus anciennes en tête, puis des neuves. « Revoir 3 questions » ouvrait une
+ * série de vingt ; le bouton nomme la série, le texte dit ce qui est dû.
+ */
+const SERIE: Geste = { texte: 'Faire la série du jour', href: '/revoir', geste: 'revoir' };
+/** Le cours se reprend s'il est entamé, il se commence sinon. */
+const cours = (l: LeconBande, entame: boolean): Geste => ({
+  texte: entame ? 'Reprendre le cours' : 'Commencer le cours',
+  href: l.chemin,
+  geste: 'cours',
+});
+const reprendre = (l: LeconBande): Geste => cours(l, true);
 
 interface Contenu {
   titre: string;
@@ -66,9 +77,9 @@ interface Contenu {
   suite: { avant: string; lien: Geste; apres: string } | null;
 }
 
-/** Le second geste quand rien n'est dû : le cours s'il en reste, sinon l'entraînement. */
-const ensuite = (aRevoir: number, prochaine: LeconBande | null): Geste =>
-  aRevoir > 0 ? revoir(aRevoir) : prochaine ? reprendre(prochaine) : ENTRAINEMENT;
+/** Le second geste : la série s'il y a du dû, sinon le cours s'il en reste, sinon l'entraînement. */
+const ensuite = (aRevoir: number, prochaine: LeconBande | null, entame: boolean): Geste =>
+  aRevoir > 0 ? SERIE : prochaine ? cours(prochaine, entame) : ENTRAINEMENT;
 
 function contenu(bande: Exclude<Bande, { cas: 'nouveau' }>): Contenu {
   switch (bande.cas) {
@@ -85,39 +96,46 @@ function contenu(bande: Exclude<Bande, { cas: 'nouveau' }>): Contenu {
         titre,
         phrase: bande.examen ? `${dernier(bande.examen, bande.examen.reussi)} ${conseil}` : conseil,
         principal: EXAMEN,
-        second: bande.aRevoir > 0 ? revoir(bande.aRevoir) : null,
+        second: bande.aRevoir > 0 ? SERIE : null,
         suite: null,
       };
     }
     case 'recale': {
-      const { examen, aRevoir, prochaine } = bande;
+      const { examen, aRevoir, prochaine, coursEntame } = bande;
       const bilan = `${depuis(examen.depuis)}, avec ${pluriel(examen.erreurs, 'erreur')}${DEUX_POINTS} l’épreuve en admet cinq.`;
       return aRevoir > 0
         ? {
             titre: dernier(examen, false),
-            phrase: `${bilan} Revois-les avant d’en repasser un, elles sont dans ta série du jour.`,
-            principal: revoir(aRevoir),
+            // Pas « elles sont dans ta série du jour » : la série prend les
+            // dues les plus anciennes d'abord, et des erreurs d'hier peuvent
+            // attendre demain. Elles y reviennent, c'est ce qui est sûr.
+            phrase: `${bilan} Revois-les avant d’en repasser un${DEUX_POINTS} elles reviennent dans ta série du jour jusqu’à ce que tu les tiennes.`,
+            principal: SERIE,
             second: REFAIRE,
             suite: prochaine
-              ? { avant: 'Ou reprends le cours à ', lien: { ...reprendre(prochaine), texte: prochaine.nom }, apres: '.' }
+              ? {
+                  avant: coursEntame ? 'Ou reprends le cours à ' : 'Ou commence le cours par ',
+                  lien: { ...cours(prochaine, coursEntame), texte: prochaine.nom },
+                  apres: '.',
+                }
               : null,
           }
         : {
             titre: dernier(examen, false),
             phrase: `${bilan} Tes questions à revoir sont faites, refais un examen pour voir si ça tient.`,
             principal: REFAIRE,
-            second: prochaine ? reprendre(prochaine) : ENTRAINEMENT,
+            second: prochaine ? cours(prochaine, coursEntame) : ENTRAINEMENT,
             suite: null,
           };
     }
     case 'recu': {
-      const { examen, aRevoir, prochaine } = bande;
+      const { examen, aRevoir, prochaine, coursEntame } = bande;
       const fautes = examen.erreurs === 0 ? 'sans une erreur' : `avec ${pluriel(examen.erreurs, 'erreur')} sur les cinq admises`;
       return {
         titre: dernier(examen, true),
         phrase: `${depuis(examen.depuis)}, ${fautes}. Un examen reçu ne dit rien du suivant${DEUX_POINTS} les quarante questions changent à chaque tirage.`,
         principal: REFAIRE,
-        second: ensuite(aRevoir, prochaine),
+        second: ensuite(aRevoir, prochaine, coursEntame),
         suite: null,
       };
     }
@@ -142,7 +160,7 @@ function contenu(bande: Exclude<Bande, { cas: 'nouveau' }>): Contenu {
         titre: `Les ${bande.total} leçons du cours sont faites.`,
         phrase: `Reste à te mesurer au format du jour J${DEUX_POINTS} quarante questions, vingt secondes chacune, cinq erreurs admises.`,
         principal: EXAMEN,
-        second: ensuite(bande.aRevoir, null),
+        second: ensuite(bande.aRevoir, null, true),
         suite: null,
       };
     case 'entrainement':
@@ -151,8 +169,8 @@ function contenu(bande: Exclude<Bande, { cas: 'nouveau' }>): Contenu {
         phrase: `L’examen blanc dit si ça tient au format du jour J${DEUX_POINTS} quarante questions, vingt secondes chacune, cinq erreurs admises.`,
         principal: EXAMEN,
         second:
-          bande.aRevoir > 0 ? revoir(bande.aRevoir)
-          : bande.premiere ? { texte: 'Commencer le cours', href: bande.premiere.chemin, geste: 'cours' }
+          bande.aRevoir > 0 ? SERIE
+          : bande.premiere ? cours(bande.premiere, false)
           : ENTRAINEMENT,
         suite: null,
       };

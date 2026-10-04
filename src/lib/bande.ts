@@ -46,7 +46,7 @@ export interface ExamenBande {
 export type Bande =
   | { cas: 'nouveau' }
   | { cas: 'echeance'; jours: number; examen: (ExamenBande & { reussi: boolean }) | null; aRevoir: number }
-  | { cas: 'recale' | 'recu'; examen: ExamenBande; aRevoir: number; prochaine: LeconBande | null }
+  | { cas: 'recale' | 'recu'; examen: ExamenBande; aRevoir: number; prochaine: LeconBande | null; coursEntame: boolean }
   | { cas: 'cours'; faites: number; total: number; prochaine: LeconBande; examen: (ExamenBande & { reussi: boolean }) | null; aRevoir: number }
   | { cas: 'coursFini'; total: number; aRevoir: number }
   | { cas: 'entrainement'; vues: number; aRevoir: number; premiere: LeconBande | null };
@@ -71,9 +71,9 @@ export function choisirBande(
   ids: readonly string[],
   jour: string,
 ): Bande {
-  // Ce que `/revoir` jouera : les dues bornées à la banque publiée, et
-  // plafonnées au rythme, qui est la taille de série de `serieDuJour`. Le
-  // bouton « Revoir 216 questions » promettait une séance qui n'existe pas.
+  // Les dues que la série du jour de `/revoir` prendra : bornées à la banque
+  // publiée, plafonnées au rythme, qui est la taille de série de
+  // `serieDuJour`. Le reste de la série, s'il y en a, est fait de neuves.
   const publiees = ids.filter((id) => etat.questions[id] !== undefined);
   const dues = publiees.filter((id) => estDue(etat.questions[id], jour)).length;
   const aRevoir = Math.min(dues, etat.profil.rythme ?? TAILLE_SERIE_PAR_DEFAUT);
@@ -95,7 +95,7 @@ export function choisirBande(
       return { cas: 'cours', faites: suivies.length, total: lecons.length, prochaine, examen, aRevoir };
     }
     const { reussi: _, ...sansVerdict } = examen;
-    return { cas: passe.reussi ? 'recu' : 'recale', examen: sansVerdict, aRevoir, prochaine };
+    return { cas: passe.reussi ? 'recu' : 'recale', examen: sansVerdict, aRevoir, prochaine, coursEntame: suivies.length > 0 };
   }
 
   if (suivies.length > 0) {

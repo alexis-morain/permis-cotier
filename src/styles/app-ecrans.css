@@ -41,8 +41,7 @@ html[data-app][data-apparence="sombre"] {
    tête, sous le titre. */
 
 html[data-app] .coursListe .parcours__reprise { margin-top: 1rem; }
-html[data-app] .parcours__reprise .bouton--principal,
-html[data-app] .reprendreCours .bouton--principal {
+html[data-app] .parcours__reprise .bouton--principal {
   flex: 1 1 100%;
   min-height: 3.25rem;
   text-align: center;

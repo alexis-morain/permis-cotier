@@ -1,4 +1,4 @@
-import { enDate, jourPlus } from './jour';
+import { jourPlus } from './jour';
 import type { Etat, Profil } from './progression';
 import { estRetenue } from './quiz';
 import { NOTIONS, notionParCode } from './notions';

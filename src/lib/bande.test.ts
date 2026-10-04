@@ -48,6 +48,7 @@ describe('après un examen blanc', () => {
       examen: { bonnes: 29, total: 40, erreurs: 11, depuis: 1 },
       aRevoir: 2,
       prochaine: lecons[0],
+      coursEntame: false,
     });
   });
 
@@ -62,7 +63,13 @@ describe('après un examen blanc', () => {
       examen: { bonnes: 37, total: 40, erreurs: 3, depuis: 3 },
       aRevoir: 0,
       prochaine: lecons[0],
+      coursEntame: false,
     });
+  });
+
+  it('dit si le cours est entamé, pour ne pas faire « reprendre » ce qui n’a pas commencé', () => {
+    const etat = terminerLecon(recu(etatInitial(), '2026-10-03'), 'balisage-lateral', { bonnes: 3, total: 3 }, '2026-10-01');
+    expect(choisir(etat)).toMatchObject({ cas: 'recu', prochaine: lecons[1], coursEntame: true });
   });
 
   it('lit le dernier examen terminé, pas un examen vide', () => {

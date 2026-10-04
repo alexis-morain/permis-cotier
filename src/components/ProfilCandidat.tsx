@@ -149,23 +149,15 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const direLeChangement =
     jour < FIN_AVIS_COMPTAGE && vues.some(([, e]) => e.vueLe < CHANGEMENT_COMPTAGE);
 
-  // Ce que `/revoir` joue vraiment : les dues, plafonnées au rythme (c'est
-  // `serieDuJour`, et le rythme y est la taille de série). Annoncer les 216
-  // dues sur le bouton promettait une séance qui n'existe pas.
+  // Ce que `/revoir` joue vraiment : le rythme entier, les dues d'abord (les
+  // plus anciennes en tête), puis des neuves (`serieDuJour`). Le bouton nomme
+  // la série ; la phrase sous « Aujourd'hui » dit combien de dues elle prend.
   const serieRevue = Math.min(aRevoir, objectif.cible);
 
   // La prochaine chose à faire, une seule : ce qui est dû aujourd'hui d'abord,
   // sinon ce que le point de départ conseille.
   const suite = aRevoir > 0
-    // « Revoir mes 1 question » ne se dit pas : au singulier, c'est le
-    // déterminant qui porte le compte, pas un chiffre devant un pluriel absent.
-    ? {
-        href: '/revoir',
-        texte:
-          serieRevue > 1
-            ? `Revoir mes ${serieRevue} questions du jour`
-            : 'Revoir ma question du jour',
-      }
+    ? { href: '/revoir', texte: 'Faire ma série du jour' }
     : p.depart === 'zero' && Object.keys(etat.lecons).length < totalLecons
       ? { href: '/cours', texte: 'Continuer le cours' }
       : { href: '/examen', texte: 'Faire un examen blanc' };
@@ -377,11 +369,15 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
               </p>
             )}
 
-            {aRevoir > serieRevue && (
+            {aRevoir > serieRevue ? (
               <p className="discret jour__note">
                 {aRevoir} questions à revoir en tout{'\u00a0'}: la série du jour en prend {serieRevue}, les plus anciennes d’abord.
               </p>
-            )}
+            ) : aRevoir > 0 ? (
+              <p className="discret jour__note">
+                {accorde(aRevoir, 'question')} à revoir aujourd’hui, en tête de ta série.
+              </p>
+            ) : null}
 
             {/* Relire n'est pas rejouer, et les deux gestes ne se remplacent pas. */}
             {ratees && (

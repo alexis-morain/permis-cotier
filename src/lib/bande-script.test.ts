@@ -39,6 +39,19 @@ describe('le script en ligne de la bande', () => {
     expect(code).not.toMatch(/\bimport\s*[{(*"']|\bexport\s|\brequire\(/);
   });
 
+  it('tient sous un seul try, horloge comprise', () => {
+    expect(code.startsWith('try{')).toBe(true);
+    expect(code.endsWith('}catch(e){}')).toBe(true);
+    const Intl0 = globalThis.Intl;
+    // @ts-expect-error une horloge absente, pour voir le script se taire
+    globalThis.Intl = undefined;
+    try {
+      expect(executer).not.toThrow();
+    } finally {
+      globalThis.Intl = Intl0;
+    }
+  });
+
   it('reste petit : il est dans le HTML de chaque visite de l’accueil', () => {
     expect(code.length).toBeLessThan(9000);
     expect(code).not.toContain('Signaux et pavillons');

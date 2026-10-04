@@ -32,13 +32,13 @@ describe('le texte, cas par cas', () => {
   });
 
   it('recalé avec des questions dues : revoir d’abord, l’examen ensuite', () => {
-    const c = colonne({ cas: 'recale', examen, aRevoir: 12, prochaine: lecon });
+    const c = colonne({ cas: 'recale', examen, aRevoir: 12, prochaine: lecon, coursEntame: true });
     expect(titre(c)).toBe('Dernier examen blanc : 29\u00a0sur\u00a040, recalé.');
     expect(phrase(c)).toBe(
-      'C’était hier, avec 11 erreurs : l’épreuve en admet cinq. Revois-les avant d’en repasser un, elles sont dans ta série du jour.',
+      'C’était hier, avec 11 erreurs : l’épreuve en admet cinq. Revois-les avant d’en repasser un : elles reviennent dans ta série du jour jusqu’à ce que tu les tiennes.',
     );
     expect(boutons(c)).toEqual([
-      { texte: 'Revoir 12 questions', href: '/revoir', principal: true },
+      { texte: 'Faire la série du jour', href: '/revoir', principal: true },
       { texte: 'Refaire un examen blanc', href: '/examen', principal: false },
     ]);
     const suite = c.querySelector('.ouverture__deja');
@@ -47,7 +47,7 @@ describe('le texte, cas par cas', () => {
   });
 
   it('recalé sans rien de dû : l’examen passe en principal', () => {
-    const c = colonne({ cas: 'recale', examen: { ...examen, depuis: 0 }, aRevoir: 0, prochaine: lecon });
+    const c = colonne({ cas: 'recale', examen: { ...examen, depuis: 0 }, aRevoir: 0, prochaine: lecon, coursEntame: true });
     expect(phrase(c)).toBe(
       'C’était aujourd’hui, avec 11 erreurs : l’épreuve en admet cinq. Tes questions à revoir sont faites, refais un examen pour voir si ça tient.',
     );
@@ -57,8 +57,15 @@ describe('le texte, cas par cas', () => {
     ]);
   });
 
+  it('sans leçon faite, le cours se commence, il ne se reprend pas', () => {
+    const recaleSans = colonne({ cas: 'recale', examen, aRevoir: 2, prochaine: lecon, coursEntame: false });
+    expect(recaleSans.querySelector('.ouverture__deja')?.textContent).toBe('Ou commence le cours par Marques cardinales.');
+    const recuSans = colonne({ cas: 'recu', examen, aRevoir: 0, prochaine: lecon, coursEntame: false });
+    expect(boutons(recuSans)[1]).toEqual({ texte: 'Commencer le cours', href: lecon.chemin, principal: false });
+  });
+
   it('reçu : le mot l’écrit, et l’examen se refait', () => {
-    const c = colonne({ cas: 'recu', examen: { bonnes: 37, total: 40, erreurs: 3, depuis: 4 }, aRevoir: 0, prochaine: null });
+    const c = colonne({ cas: 'recu', examen: { bonnes: 37, total: 40, erreurs: 3, depuis: 4 }, aRevoir: 0, prochaine: null, coursEntame: true });
     expect(titre(c)).toBe('Dernier examen blanc : 37\u00a0sur\u00a040, reçu.');
     expect(phrase(c)).toBe(
       'C’était il y a 4 jours, avec 3 erreurs sur les cinq admises. Un examen reçu ne dit rien du suivant : les quarante questions changent à chaque tirage.',
@@ -70,10 +77,10 @@ describe('le texte, cas par cas', () => {
   });
 
   it('reçu sans faute, puis avec une seule', () => {
-    const sans = colonne({ cas: 'recu', examen: { bonnes: 40, total: 40, erreurs: 0, depuis: 1 }, aRevoir: 1, prochaine: lecon });
+    const sans = colonne({ cas: 'recu', examen: { bonnes: 40, total: 40, erreurs: 0, depuis: 1 }, aRevoir: 1, prochaine: lecon, coursEntame: true });
     expect(phrase(sans)).toMatch(/^C’était hier, sans une erreur\. /);
-    expect(boutons(sans)[1]).toEqual({ texte: 'Revoir 1 question', href: '/revoir', principal: false });
-    const une = colonne({ cas: 'recu', examen: { bonnes: 39, total: 40, erreurs: 1, depuis: 1 }, aRevoir: 0, prochaine: lecon });
+    expect(boutons(sans)[1]).toEqual({ texte: 'Faire la série du jour', href: '/revoir', principal: false });
+    const une = colonne({ cas: 'recu', examen: { bonnes: 39, total: 40, erreurs: 1, depuis: 1 }, aRevoir: 0, prochaine: lecon, coursEntame: true });
     expect(phrase(une)).toMatch(/^C’était hier, avec 1 erreur sur les cinq admises\. /);
     expect(boutons(une)[1]).toEqual({ texte: 'Reprendre le cours', href: lecon.chemin, principal: false });
   });
@@ -84,7 +91,7 @@ describe('le texte, cas par cas', () => {
     expect(phrase(c)).toBe('Dernier examen blanc : 29\u00a0sur\u00a040, recalé. Fais deux examens blancs ce soir, au chrono.');
     expect(boutons(c)).toEqual([
       { texte: 'Passer un examen blanc', href: '/examen', principal: true },
-      { texte: 'Revoir 3 questions', href: '/revoir', principal: false },
+      { texte: 'Faire la série du jour', href: '/revoir', principal: false },
     ]);
   });
 
@@ -138,7 +145,7 @@ describe('le texte, cas par cas', () => {
   });
 
   it('chaque bouton se compte, avec le cas et le geste', () => {
-    const c = colonne({ cas: 'recale', examen, aRevoir: 2, prochaine: lecon });
+    const c = colonne({ cas: 'recale', examen, aRevoir: 2, prochaine: lecon, coursEntame: true });
     const [revoir, refaire] = c.querySelectorAll('.ouverture__actions a');
     expect(revoir?.getAttribute('data-mesure')).toBe('accueil-bande');
     expect(revoir?.getAttribute('data-mesure-cas')).toBe('recale');

@@ -27,6 +27,11 @@ export function construireScriptBande() {
     target: 'es2020',
     charset: 'utf8',
     legalComments: 'none',
+    // Tout le script sous un seul `try` : le jour parisien se lit au niveau du
+    // module (`jour.ts`), hors du `try` de l'entrée. Une horloge qui lève, et
+    // le nouveau venu garde sa bande, sans erreur en console.
+    banner: { js: 'try{' },
+    footer: { js: '}catch(e){}' },
     write: false,
     metafile: true,
   });
