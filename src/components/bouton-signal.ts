@@ -19,7 +19,6 @@
 import { libelleEcoute, motifDe, secondesEcrites } from '../lib/motif-sonore';
 import { evenement } from '../lib/mesure';
 import type { ContexteAudio, Lecteur } from '../lib/signal-sonore';
-import './bouton-signal.css';
 
 type Contexte = ContexteAudio & { resume(): Promise<void> };
 
@@ -78,6 +77,10 @@ export function boutonSignal(
   const bouton = document.createElement('button');
   bouton.type = 'button';
   bouton.className = 'bouton signal-ecoute';
+  // Il garde sa largeur quand il devient « Arrêter » : rien ne saute sous le
+  // doigt. En style posé, pas en feuille : une feuille importée par ce morceau
+  // chargé à la demande faisait dupliquer `quiz.css` dans les leçons.
+  bouton.style.minWidth = '15rem';
 
   const libelle = libelleEcoute(signal);
   const auRepos = () => {

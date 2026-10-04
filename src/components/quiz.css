@@ -118,6 +118,11 @@
   background: var(--fond-carte);
 }
 
+/* « Écouter le signal », sous une frise sonore : collé à elle, il en est la
+   bande son (`BoutonSignal.tsx`). */
+.signal-ecoute-lieu { margin: 0; }
+.jeu > .signal-ecoute-lieu { margin-top: -0.5rem; }
+
 /* Le visuel qui n'est pas venu : sa description tient sa place, dans le
    même cadre, pour que rien ne saute et qu'on puisse encore répondre. */
 .jeu__visuel--absent {
@@ -494,7 +499,9 @@
   }
   .jeu > * { grid-column: 1 / -1; }
   .jeu > .jeu__enonce,
-  .jeu > .jeu__visuel { grid-column: 1; }
+  .jeu > .jeu__visuel,
+  .jeu > .signal-ecoute-lieu { grid-column: 1; }
+  .jeu > .signal-ecoute-lieu { margin-top: 0; }
   .jeu > .propositions { grid-column: 2; grid-row: span 2; }
   .jeu__enonce { font-size: 1.2rem; max-width: none; }
   .jeu__visuel:not(.jeu__visuel--absent) { max-height: 48vh; }
