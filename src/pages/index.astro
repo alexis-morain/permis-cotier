@@ -514,6 +514,13 @@ const liste = {
 
   .quoi { padding-block: 3.5rem 0; }
 
+  /* Le téléphone couché : à 844 × 390, deux colonnes font courir le texte sur
+     une fois et demie l'écran pendant que le panneau tient dans un ; l'ouverture
+     repasse en une colonne, et chaque bloc se lit entier en défilant. */
+  @media (max-height: 31.25rem) {
+    .ouverture .ouverture__grille { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding-block: 2.5rem 3rem; }
+  }
+
   @media (min-width: 52rem) {
     .ouverture__grille {
       grid-template-columns: minmax(0, 1.6fr) minmax(17rem, 0.85fr);

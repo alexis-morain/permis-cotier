@@ -149,6 +149,12 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
     const confirmationEnvoi = document.getElementById('confirmation-envoi');
     const bouton = document.getElementById('envoyer');
 
+    // Un réseau muet ne rejette rien : un portail captif ou un mobile qui a
+    // lâché accepte la connexion et se tait, et le bouton restait sur
+    // « Envoi… » sans fin. Quinze secondes, comme pour la banque, puis le
+    // courrier. Le Worker, lui, répond en deux.
+    const ATTENTE_WORKER = 15000;
+
     const MOTIFS = {
       reponse: 'la bonne réponse indiquée est fausse',
       explication: 'l’explication est fausse ou incomplète',
@@ -218,11 +224,14 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
         bouton.textContent = 'Envoi…';
       }
 
+      const controleur = new AbortController();
+      const echeance = setTimeout(() => controleur.abort(), ATTENTE_WORKER);
       try {
         const reponse = await fetch('/api/signaler', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ question, motif, details, turnstile: jeton }),
+          signal: controleur.signal,
         });
         if (!reponse.ok) throw new Error(`HTTP ${reponse.status}`);
         const rendu = await reponse.json().catch(() => ({}));
@@ -236,6 +245,8 @@ const ORIGINE_APP = POUR_APP ? SITE.domaine : undefined;
           bouton.textContent = 'Envoyer le signalement';
         }
         replierSurCourrier(question, motif, details);
+      } finally {
+        clearTimeout(echeance);
       }
     });
   })();

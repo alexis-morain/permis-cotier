@@ -29,6 +29,7 @@ import {
   effacerEnCoursSerie,
   aujourdhui,
   rienRevise,
+  CLE_STOCKAGE,
 } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
 import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
@@ -146,9 +147,10 @@ function LienLecon({ question, retour }: { question: QuestionAffichable; retour:
  * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
  */
 function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon }: Props & { questions: QuestionAffichable[] }) {
-  // La progression est lue une fois, au montage : le tirage et la reprise
-  // doivent partir du même état, pas d'un état qui bouge sous eux.
-  const [depart] = useState(() => charger());
+  // La progression est lue au montage, puis relue seulement tant que l'examen
+  // n'est pas lancé (voir l'effet `storage` plus bas) : le tirage et la reprise
+  // partent du même état, pas d'un état qui bouge sous eux.
+  const [depart, setDepart] = useState(charger);
 
   // Le tirage se fait au montage, côté navigateur : chaque visite est un
   // examen différent, et le HTML servi reste le même pour tout le monde.
@@ -169,6 +171,25 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
 
   const parId = useMemo(() => new Map(questions.map((q) => [q.id, q])), [questions]);
   const [session, envoyer] = useReducer(reduireEcran, null, () => creerSession(mode, serie));
+
+  // Deux onglets sur le même examen. Le second, ouvert sur l'écran de départ,
+  // proposait de reprendre à la question où le premier en était au moment où
+  // il a été ouvert — y compris après que le premier l'a fini. Tant qu'on est
+  // au départ, on relit l'examen en cours quand un autre onglet l'écrit : la
+  // proposition suit, ou disparaît. Lancé, l'examen n'écoute plus personne.
+  useEffect(() => {
+    if (mode !== 'examen' || session.phase !== 'depart') return;
+    const relire = (e: StorageEvent) => {
+      if (e.key === null || e.key === CLE_STOCKAGE) setDepart(charger());
+    };
+    window.addEventListener('storage', relire);
+    return () => window.removeEventListener('storage', relire);
+  }, [mode, session.phase]);
+
+  // Le visuel qui n'est pas venu : un 404 sur `/visuels/`, ou le réseau coupé
+  // avant la première visite. Une image cassée et son `alt` nu ne disent pas
+  // ce qui s'est passé ; la description, elle, permet encore de répondre.
+  const [visuelAbsent, setVisuelAbsent] = useState<string | null>(null);
   const [revue, setRevue] = useState(false);
   const [arretDemande, setArretDemande] = useState(false);
   const journalEcrit = useRef(0);
@@ -1104,14 +1125,20 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
         {affichee.enonce}
       </h2>
 
-      {affichee.visuel && (
+      {affichee.visuel && (visuelAbsent === question.id ? (
+        <div className="jeu__visuel jeu__visuel--absent" key={`visuel-${question.id}`}>
+          <span className="discret">Visuel introuvable. Ce qu’il montre :</span>
+          <span>{affichee.visuel.alt}</span>
+        </div>
+      ) : (
         <img
           className="jeu__visuel"
           key={`visuel-${question.id}`}
           src={`/visuels/${affichee.visuel.fichier}`}
           alt={affichee.visuel.alt}
+          onError={() => setVisuelAbsent(question.id)}
         />
-      )}
+      ))}
 
       <ul className="propositions" key={`propositions-${question.id}`}>
         {ordre.map((p, rang) => {

@@ -86,8 +86,10 @@ mouvement propre au son, aucun son sans geste du candidat.
 Compteur et chrono en display, jauge du chrono en jaune (rouge sur les cinq
 dernières secondes), avancement de l'examen en marine dessous. Propositions en
 cartes blanches à bord plein, lettre dans un cercle ; cochée, la carte passe
-jaune pâle avec bordure marine ; corrigée, verte ou rouge. Sous 46 rem, la barre
-d'action est collée en bas et prend la couleur du verdict.
+jaune pâle avec bordure marine ; corrigée, verte ou rouge. Sous 53 rem de large, ou sous 500 px de haut, la
+barre d'action est collée en bas et prend la couleur du verdict. Sur un
+téléphone couché, l'énoncé et le visuel passent à gauche, les propositions à
+droite : la question se lit d'un regard.
 
 ## Ce qu'on refuse
 
