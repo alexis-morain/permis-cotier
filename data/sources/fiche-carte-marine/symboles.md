@@ -16,7 +16,7 @@
 
 Les symboles de carte marine n'existent qu'en planches, publiées par le SHOM,
 sans texte qu'on puisse citer. Cette fiche, écrite à la main, en est une mise
-en forme écrite, limitée à ce que le programme
+en forme, limitée à ce que le programme
 appelle les symboles élémentaires, à vérifier contre l'ouvrage 1D cité
 ci-dessus, qui fait foi. Les symboles de roches (section K) et le niveau de
 référence des altitudes (section H) ont été vérifiés contre l'ouvrage 1D le

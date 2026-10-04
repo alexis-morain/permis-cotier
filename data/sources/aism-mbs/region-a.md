@@ -14,7 +14,7 @@
 
 Le balisage n'est publié qu'en planches d'images, sans texte qu'on puisse
 citer, à la différence des règles du RIPAM et des articles de l'arrêté de 2007.
-Cette fiche, écrite à la main, est donc une mise en forme écrite du système, à vérifier contre la
+Cette fiche, écrite à la main, est donc une mise en forme du système, à vérifier contre la
 planche officielle citée ci-dessus, qui fait foi.
 
 ---

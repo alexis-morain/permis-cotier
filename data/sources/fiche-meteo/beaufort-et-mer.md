@@ -18,7 +18,7 @@
 
 L'échelle de Beaufort n'est dans aucun texte de droit : c'est une convention
 internationale de mesure, publiée par l'OMM et reprise telle quelle par
-Météo-France. Cette fiche, écrite à la main, en est une mise en forme écrite, à vérifier contre la publication de
+Météo-France. Cette fiche, écrite à la main, en est une mise en forme, à vérifier contre la publication de
 Météo-France citée ci-dessus, qui fait foi.
 
 ---
