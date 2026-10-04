@@ -50,6 +50,9 @@ EDITABLES = {
 # soumission interrompue, qu'on reprend. Rejetée, elle attend un humain ou
 # un nouveau commit, sans quoi le passage quotidien la renverrait chaque matin.
 A_REPRENDRE = {"PREPARE_FOR_SUBMISSION", "READY_FOR_REVIEW"}
+# Refusée par Apple : le message attend une réponse humaine dans Vérification
+# de l'app. Les builds partent sur TestFlight, la soumission se fait à la main.
+REFUSEES = {"REJECTED", "METADATA_REJECTED"}
 VENDUES = {
     "READY_FOR_SALE",
     "READY_FOR_DISTRIBUTION",
@@ -129,6 +132,8 @@ def viser(versions: list[Version]) -> tuple[str, bool, str]:
     if bloquantes:
         noms = ", ".join(f"{v.chaine} en {v.etat}" for v in bloquantes)
         return cible, False, f"{raison} ; TestFlight seul tant que {noms}"
+    if haute.etat in REFUSEES:
+        return cible, False, f"{raison} ; refus d'Apple à traiter à la main, TestFlight seul"
     return cible, True, raison
 
 

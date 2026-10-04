@@ -62,15 +62,36 @@ def test_v1_en_vente_et_dernier_build_1_0_1_au_meme_commit_soumet():
     assert d.soumission is True
 
 
-def test_v1_0_1_rejetee_et_nouveau_commit_construit_1_0_1_permis():
+def test_v1_0_1_rejetee_par_apple_construit_1_0_1_sans_soumission():
+    # Un refus d'Apple attend une réponse humaine dans Vérification de l'app ;
+    # un build renvoyé seul passerait par-dessus.
+    for etat in ("REJECTED", "METADATA_REJECTED"):
+        versions = [
+            Version("1.0", "READY_FOR_SALE", build=1),
+            Version("1.0.1", etat, build=2),
+        ]
+        builds = [Build(1, "1.0", None), Build(2, "1.0.1", AUTRE[:7])]
+        d = decider(versions, builds, SHA)
+        assert (d.action, d.version, d.build) == ("construire", "1.0.1", 3)
+        assert d.soumission is False
+
+
+def test_v1_0_1_retiree_par_le_developpeur_et_nouveau_commit_soumet():
     versions = [
         Version("1.0", "READY_FOR_SALE", build=1),
-        Version("1.0.1", "REJECTED", build=2),
+        Version("1.0.1", "DEVELOPER_REJECTED", build=2),
     ]
     builds = [Build(1, "1.0", None), Build(2, "1.0.1", AUTRE[:7])]
     d = decider(versions, builds, SHA)
     assert (d.action, d.version, d.build) == ("construire", "1.0.1", 3)
     assert d.soumission is True
+
+
+def test_premiere_version_rejetee_ne_soumet_pas():
+    # Le cas du 4 octobre : la 1.0 en « Information Needed ».
+    d = decider([Version("1.0", "REJECTED", build=1)], [Build(1, "1.0", None)], SHA)
+    assert (d.action, d.version, d.build) == ("construire", "1.0", 2)
+    assert d.soumission is False
 
 
 def test_meme_commit_deja_soumis_ne_fait_rien():
