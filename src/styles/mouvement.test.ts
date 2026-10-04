@@ -42,7 +42,7 @@ function regles(css: string): Regle[] {
       const selecteur = pile.pop() ?? '';
       const corps = sans.slice(depuis, i);
       if (!selecteur.startsWith('@')) {
-        const reduit = pile.some((p) => p.includes('prefers-reduced-motion'));
+        const reduit = pile.some((p) => /prefers-reduced-motion:\s*reduce/.test(p));
         sortie.push({ selecteur: selecteur.replace(/\s+/g, ' '), corps, reduit });
       }
       depuis = i + 1;
@@ -66,11 +66,13 @@ const temps = (segment: string) => [...segment.matchAll(/(\d*\.?\d+)(ms|s)\b/g)]
 const segments = (declaration: string) => declaration.replace(/\([^)]*\)/g, '()').split(',');
 
 /** Les durées d'une déclaration de mouvement : le premier temps de chaque
-    segment. Le second est un délai, qui a sa propre borne. */
+    segment. Le second est un délai, qui a sa propre borne. En propriété
+    longue (`animation-delay`), tous les temps sont des délais. */
+const estDelai = (declaration: string) => /^(transition|animation)-delay/.test(declaration);
 const durees = (declaration: string) =>
-  segments(declaration).map((segment) => temps(segment)[0]).filter((ms): ms is number => ms !== undefined);
+  estDelai(declaration) ? [] : segments(declaration).map((segment) => temps(segment)[0]).filter((ms): ms is number => ms !== undefined);
 const delais = (declaration: string) =>
-  segments(declaration).map((segment) => temps(segment)[1]).filter((ms): ms is number => ms !== undefined);
+  segments(declaration).flatMap((segment) => (estDelai(declaration) ? temps(segment) : temps(segment).slice(1, 2)));
 
 describe('le mouvement du site', () => {
   const feuilles = FEUILLES.map((chemin) => ({ chemin, css: lire(chemin), regles: regles(lire(chemin)) }));
@@ -132,6 +134,10 @@ describe('le mouvement du site', () => {
       );
       expect(coupe, `${cle} : ${TOLERES[cle]}`).toBe(true);
     }
+  });
+
+  it('tient le jeton --transition à 120 ms, que les contrôles lisent sans écrire de durée', () => {
+    expect(lire('src/styles/global.css')).toMatch(/--transition: 120ms cubic-bezier\(0\.2, 0, 0, 1\);/);
   });
 
   it('garde la coupe globale de global.css', () => {
