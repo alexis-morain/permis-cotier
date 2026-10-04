@@ -392,8 +392,14 @@
 
 /* Le bouton de validation tombait à 818 px sur un écran de 812 : il fallait
    scroller à chaque question, et en examen ce scroll se paye en points. Sous
-   46 rem la barre est collée en bas, et elle prend la couleur du verdict. */
-@media (max-width: 45.999rem) {
+   53 rem la barre est collée en bas, et elle prend la couleur du verdict.
+
+   53 rem et non 46 : à 768 px, une tablette tenue droite, « Valider » tombait
+   à 1 046 px sur un écran de 1 024 dès que la question porte un visuel ; et
+   sur un téléphone en paysage (844 px de large, 390 de haut) rien n'était
+   collé. La seconde condition couvre tout écran bas, quelle que soit sa
+   largeur : un téléphone de 932 px couché, un portable zoomé à 200 %. */
+@media (max-width: 52.999rem), (max-height: 31.25rem) {
   .jeu__actions--collant {
     position: sticky;
     bottom: 0;
@@ -411,6 +417,40 @@
   /* La barre monte à 141 px en entraînement, bouton plus lien de signalement :
      un verdict court remonté par le bas passerait dessous. */
   .verdict { scroll-margin-block: 1rem 10rem; }
+}
+
+/* Le téléphone couché : 844 × 390, et 390 c'est tout ce qu'il y a. L'en-tête
+   du site et le fil d'Ariane en prennent 150, la barre d'action 51 ; ce qui
+   reste ne loge ni l'énoncé ni le visuel ni les propositions l'un sous
+   l'autre. La largeur, elle, est là : l'énoncé et le visuel passent à gauche,
+   les propositions à droite, et l'écran se lit d'un regard, sans défilement,
+   pour une question de taille ordinaire. Tout le reste — en-tête, consigne,
+   verdict, barre d'action — garde la pleine largeur. `dense` fait remonter
+   les propositions à la hauteur de l'énoncé, visuel ou non. Hors d'ici, rien
+   ne change : au-dessus de 500 px de haut, c'est la colonne de toujours.
+
+   L'app est verrouillée en portrait : ces règles ne la concernent pas. */
+@media (max-height: 31.25rem) and (min-width: 44rem) {
+  .jeu {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-auto-flow: row dense;
+    align-items: start;
+    gap: 0.75rem 1.5rem;
+    padding-block: 0.75rem 1.5rem;
+  }
+  .jeu > * { grid-column: 1 / -1; }
+  .jeu > .jeu__enonce,
+  .jeu > .jeu__visuel { grid-column: 1; }
+  .jeu > .propositions { grid-column: 2; grid-row: span 2; }
+  .jeu__enonce { font-size: 1.2rem; max-width: none; }
+  .jeu__visuel { max-height: 48vh; }
+  .propositions { gap: 0.5rem; }
+  .proposition { min-height: 2.75rem; padding: 0.55rem 0.85rem; }
+  /* L'écran de départ et le résultat restent une colonne : rien n'y est en
+     deux parties. */
+  .depart,
+  .jeu:has(> .resultat__titre, > div > .resultat__titre) { display: flex; }
 }
 
 @media (min-width: 46rem) {
