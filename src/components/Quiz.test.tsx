@@ -1180,3 +1180,95 @@ describe('l’écran de jeu dans l’app', () => {
     expect(screen.queryByRole('button', { name: 'Partager' })).toBeNull();
   });
 });
+
+/**
+ * Ce qui casse hors du laboratoire (lot 5 du plan impeccable).
+ *
+ * Un visuel absent du cache — 404 sur `/visuels/` — laissait une image cassée
+ * et son `alt` nu, sans un mot ; deux onglets sur le même examen laissaient le
+ * second proposer une reprise que le premier avait déjà finie.
+ */
+describe('hors du laboratoire', () => {
+  it('remplace un visuel qui ne charge pas par sa description, et le dit', () => {
+    const avecVisuel: QuestionAffichable = {
+      ...question('ecluses-0001'),
+      visuel: { fichier: 'ecluses/acces-vert-isole.svg', alt: 'Un feu vert isolé allumé.', credit: 'code' },
+    };
+    render(<Quiz mode="entrainement" questions={[avecVisuel]} />);
+    const img = document.querySelector('img.jeu__visuel');
+    expect(img).toBeTruthy();
+    fireEvent.error(img!);
+    expect(document.querySelector('img.jeu__visuel')).toBeNull();
+    expect(screen.getByText('Un feu vert isolé allumé.')).toBeTruthy();
+    expect(screen.getByText(/Visuel introuvable/)).toBeTruthy();
+  });
+
+  it('ne garde pas un visuel absent d’une question à l’autre', () => {
+    const premiere: QuestionAffichable = {
+      ...question('ecluses-0001'),
+      visuel: { fichier: 'ecluses/manquant.svg', alt: 'Premier visuel.', credit: 'code' },
+    };
+    const seconde: QuestionAffichable = {
+      ...question('ecluses-0002'),
+      visuel: { fichier: 'ecluses/present.svg', alt: 'Second visuel.', credit: 'code' },
+    };
+    render(<Quiz mode="entrainement" questions={[premiere, seconde]} />);
+    fireEvent.error(document.querySelector('img.jeu__visuel')!);
+    fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
+    expect(document.querySelector('img.jeu__visuel')?.getAttribute('alt')).toBe('Second visuel.');
+    expect(screen.queryByText(/Visuel introuvable/)).toBeNull();
+  });
+
+  function etatAvecEnCours(index: number) {
+    return JSON.stringify({
+      version: VERSION_STOCKAGE,
+      questions: {},
+      examens: [],
+      dateExamen: null,
+      enCours: {
+        mode: 'examen',
+        theme: null,
+        ids: trois.map((q) => q.id),
+        index,
+        selections: [['a'], [], []],
+        echeance: Date.now() + 12_000,
+        journal: [{ id: 'ecluses-0001', juste: true, ms: 3_000 }],
+        majLe: Date.now(),
+      },
+    });
+  }
+
+  function autreOnglet(nouvelEtat: string | null) {
+    if (nouvelEtat === null) localStorage.removeItem(CLE_STOCKAGE);
+    else localStorage.setItem(CLE_STOCKAGE, nouvelEtat);
+    window.dispatchEvent(new StorageEvent('storage', { key: CLE_STOCKAGE, newValue: nouvelEtat, storageArea: localStorage }));
+  }
+
+  it('retire la reprise quand un autre onglet a fini l’examen', () => {
+    localStorage.setItem(CLE_STOCKAGE, etatAvecEnCours(1));
+    render(<Quiz mode="examen" questions={trois} />);
+    expect(screen.getByRole('button', { name: /Reprendre à la question 2/ })).toBeTruthy();
+
+    act(() => autreOnglet(JSON.stringify({ version: VERSION_STOCKAGE, questions: {}, examens: [], dateExamen: null, enCours: null })));
+
+    expect(screen.queryByRole('button', { name: /Reprendre/ })).toBeNull();
+    expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy();
+  });
+
+  it('suit la question où l’autre onglet en est', () => {
+    localStorage.setItem(CLE_STOCKAGE, etatAvecEnCours(1));
+    render(<Quiz mode="examen" questions={trois} />);
+    act(() => autreOnglet(etatAvecEnCours(2)));
+    expect(screen.getByRole('button', { name: /Reprendre à la question 3/ })).toBeTruthy();
+  });
+
+  it('n’écoute plus les autres onglets une fois l’examen lancé', () => {
+    localStorage.setItem(CLE_STOCKAGE, etatAvecEnCours(1));
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
+    act(() => autreOnglet(null));
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+  });
+});

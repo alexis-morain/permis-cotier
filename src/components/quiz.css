@@ -118,6 +118,18 @@
   background: var(--fond-carte);
 }
 
+/* Le visuel qui n'est pas venu : sa description tient sa place, dans le
+   même cadre, pour que rien ne saute et qu'on puisse encore répondre. */
+.jeu__visuel--absent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  max-height: none;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .propositions {
   list-style: none;
   margin: 0;
@@ -447,6 +459,10 @@
   .jeu__visuel { max-height: 48vh; }
   .propositions { gap: 0.5rem; }
   .proposition { min-height: 2.75rem; padding: 0.55rem 0.85rem; }
+  /* La barre collée prenait 77 des 390 px : un bouton de 44 px et une marge
+     de 8 suffisent, c'est encore une cible tactile. */
+  .jeu__actions--collant { padding-block: 0.5rem; }
+  .jeu__actions--collant .bouton { min-height: 2.75rem; padding-block: 0.5rem; }
   /* L'écran de départ et le résultat restent une colonne : rien n'y est en
      deux parties. */
   .depart,
