@@ -147,11 +147,12 @@
 }
 .indice__part--vu, .indice__puce--vu { background: var(--indice-vu, var(--jauge)); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
-/* Les examens, la plus grosse part, ne se peignent plus de la couleur d'un
-   rail : des hachures du même marine que le retenu, pleines à l'œil, et
-   distinctes de lui sans dépendre de la couleur. */
+/* Les examens, la plus grosse part, ne prennent plus `--filet-fort`, qui dit
+   « vu, pas retenu » dans les jauges de thème : un marine entre le texte et
+   ce filet, plein à l'œil et distinct du retenu par sa clarté. */
 .indice__part--examens, .indice__puce--examens {
-  background: repeating-linear-gradient(-45deg, var(--texte) 0 3px, var(--filet-fort) 3px 6px);
+  background: var(--filet-fort);
+  background: color-mix(in oklab, var(--texte) 55%, var(--filet-fort));
 }
 /* En sombre, le retenu prend la couleur du texte, presque blanche : contre le
    jaune plein du vu, elle ne fait que 1,39:1. Le vu s'éteint donc au jaune
