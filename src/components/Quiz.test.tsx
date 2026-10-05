@@ -1079,6 +1079,27 @@ describe('le temps, au résultat de l’examen', () => {
     }
   });
 
+  it('dit la question retenue au buzzer sur ce qui était coché, sans la dire sans réponse', async () => {
+    vi.useFakeTimers();
+    try {
+      render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+      await act(async () => {
+        vi.advanceTimersByTime(21_000);
+      });
+      expect(document.querySelector('.resultat__score')?.textContent).toBe('1 / 1');
+      const temps = document.querySelector('.resultat__temps')?.textContent ?? '';
+      expect(temps).toContain(
+        '1 question retenue telle que tu l’avais cochée : les vingt secondes sont passées avant ton clic. ' +
+          'À l’épreuve aussi, c’est ce qui est coché à ce moment-là qui compte.',
+      );
+      expect(temps).not.toContain('sans réponse');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('ne parle pas de temps quand tout a été répondu à l’aise', () => {
     render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));

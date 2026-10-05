@@ -250,7 +250,9 @@ export function reduire(s: Session, action: Action): Session {
       if (restant > 0) return restant === s.restant ? s : { ...s, restant };
       // Le temps de la question est passé, même si l'onglet dormait. On n'en
       // consomme qu'une par retour : une absence de dix minutes ne brûle pas
-      // trente questions d'un coup.
+      // trente questions d'un coup. Ce qui est coché est retenu tel quel : à
+      // l'épreuve sur tablette, les réponses prises en compte sont celles
+      // cochées à la fin des vingt secondes (README, « Le format de l'épreuve »).
       const juste = corriger(question, s.selections[s.index] ?? []);
       // Au buzzer, la question a coûté ses vingt secondes pleines, quel que
       // soit le retard du tic : c'est ce que l'épreuve lui accordait.
@@ -374,8 +376,13 @@ export function restaurerSession(
 }
 
 export interface Lenteur {
-  /** Questions non répondues dans les vingt secondes : passées au buzzer. */
-  auBuzzer: string[];
+  /** Questions où les vingt secondes sont tombées sur des cases vides. */
+  sansReponse: string[];
+  /**
+   * Questions où les vingt secondes sont tombées sur des cases cochées mais
+   * pas validées. Elles sont retenues telles quelles, justes ou non.
+   */
+  cocheesAuBuzzer: string[];
   /** Questions répondues dans la dernière seconde, arrachées de justesse. */
   aLaLimite: string[];
 }
@@ -390,9 +397,15 @@ export interface Lenteur {
  * chrono, et une durée n'y mesure que le temps qu'on a pris à lire.
  */
 export function lenteurs(s: Session): Lenteur {
-  if (s.mode !== 'examen' || s.phase !== 'resultat') return { auBuzzer: [], aLaLimite: [] };
+  if (s.mode !== 'examen' || s.phase !== 'resultat') {
+    return { sansReponse: [], cocheesAuBuzzer: [], aLaLimite: [] };
+  }
+  const rang = new Map(s.questions.map((q, i) => [q.id, i]));
+  const cochee = (id: string) => (s.selections[rang.get(id) ?? -1] ?? []).length > 0;
+  const auBuzzer = s.journal.filter((l) => l.ms >= MS_PAR_QUESTION).map((l) => l.id);
   return {
-    auBuzzer: s.journal.filter((l) => l.ms >= MS_PAR_QUESTION).map((l) => l.id),
+    sansReponse: auBuzzer.filter((id) => !cochee(id)),
+    cocheesAuBuzzer: auBuzzer.filter(cochee),
     aLaLimite: s.journal
       .filter((l) => l.ms >= MS_PAR_QUESTION - 1000 && l.ms < MS_PAR_QUESTION)
       .map((l) => l.id),

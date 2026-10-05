@@ -688,9 +688,10 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
     const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
     const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
     // Le temps, que le score ne dit pas. Vingt secondes par question, et
-    // l'échec par lenteur est le mode d'échec propre à cette épreuve : une
-    // question passée au buzzer compte comme une erreur, une réponse arrachée
-    // à la dernière seconde ne tiendra pas dans une salle.
+    // l'échec par lenteur est le mode d'échec propre à cette épreuve. Au
+    // buzzer, l'épreuve relève ce qui est coché : des cases vides font une
+    // erreur, des cases cochées comptent pour ce qu'elles valent. Une réponse
+    // arrachée à la dernière seconde ne tiendra pas dans une salle.
     const lent = lenteurs(session);
     // Le second moment écrit du site : un examen blanc reçu hisse le pavillon
     // Q, jaune uni, le long d'un mât qui longe le score et le verdict. Il est
@@ -754,14 +755,24 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
           )}
         </div>
 
-        {(lent.auBuzzer.length > 0 || lent.aLaLimite.length > 0) && (
+        {(lent.sansReponse.length > 0 || lent.cocheesAuBuzzer.length > 0 || lent.aLaLimite.length > 0) && (
           <p className="resultat__temps">
-            {lent.auBuzzer.length > 0 && (
+            {lent.sansReponse.length > 0 && (
               <>
                 <b>
-                  {lent.auBuzzer.length} question{lent.auBuzzer.length > 1 ? 's' : ''} sans réponse
+                  {lent.sansReponse.length} question{lent.sansReponse.length > 1 ? 's' : ''} sans réponse
                 </b>
                 {' : les vingt secondes sont passées avant toi. '}
+              </>
+            )}
+            {lent.cocheesAuBuzzer.length > 0 && (
+              <>
+                <b>
+                  {lent.cocheesAuBuzzer.length > 1
+                    ? `${lent.cocheesAuBuzzer.length} questions retenues telles que tu les avais cochées`
+                    : '1 question retenue telle que tu l’avais cochée'}
+                </b>
+                {' : les vingt secondes sont passées avant ton clic. À l’épreuve aussi, c’est ce qui est coché à ce moment-là qui compte. '}
               </>
             )}
             {lent.aLaLimite.length > 0 && (

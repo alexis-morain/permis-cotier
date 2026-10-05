@@ -110,6 +110,15 @@ describe('examen blanc', () => {
     expect(s.selections[0]).toEqual([]);
   });
 
+  it('relève au buzzer ce qui est coché, comme l’épreuve', () => {
+    // Sur la tablette, ce qui compte est ce qui est coché quand les vingt
+    // secondes tombent : le bouton ne fait qu'avancer plus tôt.
+    let s = examen();
+    s = reduire(s, { type: 'basculer', proposition: 'a' });
+    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    expect(s.journal[0]).toEqual({ id: 'vhf-0001', juste: true, ms: 20_000 });
+  });
+
   it('compte le temps réel, pas les battements reçus', () => {
     // Un onglet en arrière-plan reçoit un tic toutes les minutes au lieu d'un
     // par seconde : le compte à rebours doit avoir couru quand même.
@@ -254,17 +263,50 @@ describe('lenteur, le mode d’échec de cette épreuve', () => {
     return s;
   }
 
-  it('nomme les questions passées au buzzer et celles arrachées à la dernière seconde', () => {
+  it('nomme les questions retenues au buzzer et celles arrachées à la dernière seconde', () => {
     const s = jusquAuBout([2_000, 19_400, 20_000]);
     expect(s.phase).toBe('resultat');
     const l = lenteurs(s);
-    expect(l.auBuzzer).toEqual(['vhf-0003']);
+    expect(l.sansReponse).toEqual([]);
+    expect(l.cocheesAuBuzzer).toEqual(['vhf-0003']);
     expect(l.aLaLimite).toEqual(['vhf-0002']);
+  });
+
+  it('sépare le buzzer sur une case vide du buzzer sur des cases cochées', () => {
+    let s = examen();
+    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'basculer', proposition: 'b' });
+    s = reduire(s, { type: 'basculer', proposition: 'c' });
+    s = reduire(s, { type: 'tic', maintenant: T0 + 40_000 });
+    s = reduire(s, { type: 'basculer', proposition: 'd' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 43_000 });
+    expect(s.resultat).toMatchObject({ bonnes: 2, total: 3 });
+    expect(lenteurs(s)).toEqual({
+      sansReponse: ['vhf-0001'],
+      cocheesAuBuzzer: ['vhf-0002'],
+      aLaLimite: [],
+    });
+  });
+
+  it('ne dit pas « sans réponse » d’une question cochée juste puis retenue au buzzer', () => {
+    // Le cas filmé le 4 octobre : deux questions, la première cochée sans
+    // clic jusqu'au buzzer, puis l'examen arrêté. 2 sur 2, aucune ratée, et
+    // rien de « sans réponse ».
+    let s = examen();
+    s = reduire(s, { type: 'basculer', proposition: 'a' });
+    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'basculer', proposition: 'b' });
+    s = reduire(s, { type: 'basculer', proposition: 'c' });
+    s = reduire(s, { type: 'valider', maintenant: T0 + 25_000 });
+    s = reduire(s, { type: 'terminer' });
+    expect(s.resultat).toMatchObject({ bonnes: 2, total: 2, erreurs: 0 });
+    expect(lenteurs(s)).toEqual({ sansReponse: [], cocheesAuBuzzer: ['vhf-0001'], aLaLimite: [] });
   });
 
   it('ne compte ni l’une ni l’autre quand tout est répondu large', () => {
     const l = lenteurs(jusquAuBout([2_000, 3_000, 4_000]));
-    expect(l.auBuzzer).toEqual([]);
+    expect(l.sansReponse).toEqual([]);
+    expect(l.cocheesAuBuzzer).toEqual([]);
     expect(l.aLaLimite).toEqual([]);
   });
 
@@ -272,13 +314,13 @@ describe('lenteur, le mode d’échec de cette épreuve', () => {
     let s = examen();
     s = reduire(s, { type: 'basculer', proposition: 'a' });
     s = reduire(s, { type: 'valider', maintenant: T0 + 20_000 });
-    expect(lenteurs(s)).toEqual({ auBuzzer: [], aLaLimite: [] });
+    expect(lenteurs(s)).toEqual({ sansReponse: [], cocheesAuBuzzer: [], aLaLimite: [] });
 
     let t = entrainement();
     t = reduire(t, { type: 'basculer', proposition: 'a' });
     t = reduire(t, { type: 'valider', maintenant: T0 + 40_000 });
     t = reduire(t, { type: 'terminer' });
-    expect(lenteurs(t)).toEqual({ auBuzzer: [], aLaLimite: [] });
+    expect(lenteurs(t)).toEqual({ sansReponse: [], cocheesAuBuzzer: [], aLaLimite: [] });
   });
 });
 

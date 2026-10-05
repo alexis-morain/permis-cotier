@@ -67,6 +67,15 @@ durée, ni le support, ni le type de question : les 20 secondes par question et
 les 1 à 2 bonnes réponses viennent de la description de l'épreuve par les
 opérateurs agréés.
 
+Ce qui est coché à la fin des vingt secondes est retenu, validé ou non : la
+question passe d'elle-même, et les cases cochées comptent pour ce qu'elles
+valent. Aucun texte officiel ne le dit (ni l'arrêté, ni mer.gouv.fr) ; deux
+descriptions concordantes de l'épreuve sur tablette, celle de digiSchool pour
+La Poste (« les réponses prises en compte sont celles cochées à la fin du laps
+de temps accordé ») et la FAQ de l'école Littoral Nautic, relevées le
+4 octobre 2026. L'examen blanc fait de même : seules des cases vides au buzzer
+font une question « sans réponse ».
+
 Aucune pondération par thème n'est publiée. La répartition utilisée pour le
 tirage est une hypothèse de travail, ajustée avec les signalements.
 
@@ -190,8 +199,9 @@ Sous chaque réponse ratée, un lien mène à la leçon qui l'explique, et ramè
 série en cours. `/profil/erreurs` relit ce qui a été raté — énoncé, bonne
 réponse, explication, leçon — sans avoir à rejouer. `/entrainement/notion/<code>`
 donne l'étage qui manquait entre les quatorze thèmes et les cent cinq notions.
-Le résultat d'un examen blanc dit combien de questions sont passées au buzzer :
-l'échec par lenteur est le mode d'échec propre à cette épreuve.
+Le résultat d'un examen blanc dit combien de questions sont passées au buzzer,
+sans réponse ou retenues sur ce qui était coché : l'échec par lenteur est le
+mode d'échec propre à cette épreuve.
 
 Toute la progression reste dans le navigateur. Les dates sont lues en heure de
 Paris (`src/lib/jour.ts`), jamais en UTC : entre minuit et 2 h, une série de
