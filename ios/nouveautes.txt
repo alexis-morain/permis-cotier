@@ -1,0 +1,5 @@
+Une interface retravaillée : des écrans plus lisibles et un mouvement plus sobre.
+
+Les signaux sonores des règles de barre s'écoutent : un bouton « Écouter le signal » sous chacun des seize signaux te le fait entendre.
+
+Sur ta fiche, ton niveau se lit sur tes derniers examens blancs : prêt avec deux reçus sur les trois derniers.
