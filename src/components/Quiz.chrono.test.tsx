@@ -125,6 +125,26 @@ describe('le retour au premier plan', () => {
     expect(secondesAffichees()).toBe(20);
   });
 
+  it('relève au retour la réponse cochée avant que l’app dorme', () => {
+    commencer();
+    fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+
+    // Cochée, pas validée, et l'app part en arrière-plan au-delà des vingt
+    // secondes. À l'épreuve, la case cochée au bout du temps est retenue.
+    vi.setSystemTime(DEPART + 25_000);
+    act(() => retours.forEach((recaler) => recaler()));
+    expect(screen.getByText(/Énoncé de ecluses-0002/)).toBeTruthy();
+
+    for (let i = 0; i < 2; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    }
+    expect(document.querySelector('.resultat__score')?.textContent).toBe('3 / 3');
+    const temps = document.querySelector('.resultat__temps')?.textContent ?? '';
+    expect(temps).toContain('1 question retenue telle que tu l’avais cochée');
+    expect(temps).not.toContain('sans réponse');
+  });
+
   it('débranche l’écoute quand l’examen se termine', () => {
     commencer();
     expect(retours).toHaveLength(1);
