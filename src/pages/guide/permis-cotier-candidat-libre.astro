@@ -1,0 +1,120 @@
+---
+import { POUR_APP } from '../../lib/cible';
+import Guide from '../../layouts/Guide.astro';
+---
+
+<Guide
+  slug="permis-cotier-candidat-libre"
+  verifieLe="2026-10-09"
+  questions={[
+    {
+      question: 'Peut-on passer le permis côtier en candidat libre ?',
+      reponse:
+        'Non, pas pour une première option de base. Le candidat doit suivre les cinq heures de formation théorique en bateau-école et la formation pratique. Le ministère chargé de la mer réserve le candidat libre au titulaire d’une option qui passe l’autre, et à l’extension hauturière.',
+    },
+    {
+      question: 'Qui inscrit le candidat à l’épreuve théorique du permis côtier ?',
+      reponse:
+        'Le candidat réserve lui-même sa session, sur le site de l’organisme d’examen choisi. Le numéro de candidat porté sur le cerfa n° 14681*03 est fourni par l’établissement de formation.',
+    },
+    {
+      question: 'Peut-on passer l’extension hauturière en candidat libre ?',
+      reponse:
+        'Oui. L’arrêté du 28 septembre 2007 n’exige pour elle aucune formation, seulement l’option côtière, le permis A ou le permis mer côtier. Le candidat libre envoie son formulaire au service plaisance de son domicile.',
+    },
+    {
+      question: 'Faut-il refaire la formation pratique quand on a déjà l’option eaux intérieures ?',
+      reponse:
+        'Non. Le titulaire d’une option de base passe l’autre en candidat libre, sans refaire de formation pratique, et il est dispensé des cinq heures en salle.',
+    },
+  ]}
+>
+  <h2>Pour une première option, l’école est obligatoire</h2>
+  <p>
+    Le ministère chargé de la mer le dit sans détour dans sa page sur le permis plaisance,
+    mise à jour le 17 avril 2026 : un candidat qui passe sa première option de base « ne
+    peut pas se présenter à l’examen théorique en candidat libre ». Il doit suivre les
+    cinq heures de formation en bateau-école et la formation pratique.
+  </p>
+  <p>
+    Les textes vont dans le même sens. L’article 1er de l’arrêté du 28 septembre 2007
+    fixe la formation théorique « en salle et en présence du formateur » à cinq heures au
+    moins. L’article 4 du décret ne délivre le permis qu’aux candidats « dont la formation
+    pratique a été effectuée et validée par des établissements agréés ». Et l’article 3
+    de l’arrêté interdit de délivrer l’attestation de pratique avant la réussite à
+    l’épreuve théorique.
+  </p>
+
+  <h2>Ce qu’on fait seul : réserver sa session</h2>
+  <p>
+    L’épreuve théorique se passe dans le centre de l’un des quatre organismes retenus par
+    l’État : La Poste, Dekra, SGS et Bureau Veritas. On s’y inscrit « directement sur le
+    site de l’organisme privé », écrit le ministère, en choisissant sa date et son centre.
+  </p>
+  <p>
+    Mais pas sans école. Le numéro de candidat porté sur le formulaire d’inscription,
+    cerfa n° 14681*03, est fourni par l’établissement de formation. Réserver seul, oui ;
+    se passer de bateau-école pour une première option, non.
+  </p>
+
+  <h2>La vraie voie du candidat libre</h2>
+  <p>
+    Au sens du ministère, le candidat libre se présente sans passer par une école, et
+    suit pour cela une procédure à part. Pour une option de base, il règle 30 € à
+    l’organisme d’examen et renseigne un numéro OEDIPP, qu’il obtient en envoyant le
+    cerfa n° 14681 au service plaisance de son domicile, par courrier ou sur place, avec
+    les pièces demandées. Deux cas ouvrent cette voie.
+  </p>
+  <ul>
+    <li>
+      <strong>La seconde option de base.</strong> Le titulaire de l’option eaux intérieures
+      qui passe l’option côtière, ou l’inverse, s’y présente « en candidat libre, sans
+      nécessité de suivre de nouveau une formation pratique ». Le paragraphe 1.3 de
+      l’arrêté dispense aussi le titulaire de l’option eaux intérieures des cinq heures en
+      salle.
+    </li>
+    <li>
+      <strong>L’extension hauturière.</strong> L’article 4 de l’arrêté ne demande qu’une
+      épreuve théorique de navigation, et la détention préalable de l’option côtière, du
+      permis A ou du permis mer côtier. Le candidat libre envoie le cerfa n° 14680 au
+      service plaisance de son domicile. Les sessions restent organisées par l’administration,
+      dont le préfet désigne les examinateurs (article 18.1).
+    </li>
+  </ul>
+
+  <h2>Le cas de la carte mer</h2>
+  <p>
+    L’article 13 du décret ouvre l’option côtière aux titulaires de la carte mer « sous
+    réserve de passer avec succès une épreuve théorique », dans les conditions fixées par
+    l’arrêté. Il ne leur demande pas de formation pratique. L’arrêté, lui, ne les
+    dispense pas des cinq heures en salle, seuls les titulaires de l’option eaux
+    intérieures en sont dispensés, ni, dans sa lettre, de la formation pratique
+    (article 1.1). Ce site ne tranche pas ce point. Le service plaisance
+    de votre domicile y répond.
+  </p>
+
+  <h2>Réviser seul, rien ne l’interdit</h2>
+  {POUR_APP ? (
+  <p>
+    Les cinq heures en salle sont un plancher, pas un programme complet. Le reste se
+    travaille où l’on veut. Cette app est gratuite, sans compte et sans publicité, et
+    chacune de ses questions cite le texte dont elle sort.
+  </p>
+  ) : (
+  <p>
+    Les cinq heures en salle sont un plancher, pas un programme complet. Le reste se
+    travaille où l’on veut. Ce site est gratuit, sans compte et sans publicité, et chacune
+    de ses questions cite le texte dont elle sort.
+  </p>
+  )}
+
+  <div class="encadre" style="margin-top:2.5rem">
+    <p style="margin:0"><strong>La partie qu’on prépare seul, autant la préparer bien.</strong></p>
+    <p class="discret" style="margin:0.4rem 0 0.8rem">
+      Quarante questions, cinq erreurs admises, dans les conditions de l’épreuve.
+    </p>
+    <p style="margin:0">
+      <a class="bouton bouton--principal" href="/examen" data-mesure="guide-examen">Passer un examen blanc</a>
+    </p>
+  </div>
+</Guide>

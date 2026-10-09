@@ -14,12 +14,14 @@ from sources import (  # noqa: E402
     annexes_du_ripam,
     anomalies_de_lettrage,
     articles_utiles,
+    choisir_identifiant,
     etendre_numeros,
     invite_article,
     invite_recherche,
     nom_article,
     sans_balises,
     section_par_titre,
+    version_a_extraire,
 )
 
 
@@ -291,6 +293,60 @@ def test_invite_article_filtre_sur_le_nom_du_code():
     assert charge["recherche"]["filtres"] == [
         {"facette": "NOM_CODE", "valeurs": ["Code des transports"]}
     ]
+
+
+def reponse_de_recherche(*extraits):
+    return {"results": [{"sections": [{"extracts": [
+        {"num": num, "legalStatus": etat, "id": identifiant} for num, etat, identifiant in extraits
+    ]}]}]}
+
+
+def test_choisir_identifiant_prefere_la_version_en_vigueur():
+    # L6323-6 du code du travail revient avec dix versions, dont une « morte
+    # née » et plusieurs remplacées : seule celle en vigueur dit le droit.
+    reponse = reponse_de_recherche(
+        ("L6323-6", "MODIFIE", "ancienne"),
+        ("L6323-6", "MODIFIE_MORT_NE", "mort-nee"),
+        ("L6323-6", "VIGUEUR", "actuelle"),
+    )
+    assert choisir_identifiant(reponse, "L6323-6") == "actuelle"
+
+
+def test_choisir_identifiant_ignore_les_homonymes_et_les_etats_morts():
+    reponse = reponse_de_recherche(
+        ("L6323-60", "VIGUEUR", "voisin"),
+        ("L6323-6", "ABROGE", "abroge"),
+    )
+    assert choisir_identifiant(reponse, "L6323-6") is None
+
+
+def test_choisir_identifiant_ecarte_une_version_morte_nee():
+    reponse = reponse_de_recherche(
+        ("L6323-6", "MODIFIE_MORT_NE", "mort-nee"),
+        ("L6323-6", "MODIFIE", "ancienne"),
+    )
+    assert choisir_identifiant(reponse, "L6323-6") == "ancienne"
+
+
+def test_version_a_extraire_suit_les_versions_de_l_article():
+    # La recherche est paginée : elle peut ne rendre que d'anciennes
+    # rédactions. L'article, lui, liste toutes ses versions.
+    ancienne = {"id": "ancienne", "etat": "MODIFIE", "articleVersions": [
+        {"id": "ancienne", "etat": "MODIFIE"},
+        {"id": "actuelle", "etat": "VIGUEUR"},
+    ]}
+    assert version_a_extraire(ancienne) == "actuelle"
+    assert version_a_extraire({"id": "a", "etat": "VIGUEUR", "articleVersions": []}) == "a"
+
+
+def test_version_a_extraire_refuse_une_redaction_qui_n_est_plus_en_vigueur():
+    # Aucune version en vigueur : écrire l'ancienne rédaction en silence
+    # ferait citer du droit périmé. La commande le signale et passe.
+    perimee = {"id": "ancienne", "etat": "MODIFIE", "articleVersions": [
+        {"id": "ancienne", "etat": "MODIFIE"},
+        {"id": "abrogee", "etat": "ABROGE"},
+    ]}
+    assert version_a_extraire(perimee) is None
 
 
 # --- Découpe des annexes du RIPAM ------------------------------------------

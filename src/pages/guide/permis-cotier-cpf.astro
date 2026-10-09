@@ -1,0 +1,103 @@
+---
+import { POUR_APP } from '../../lib/cible';
+import Guide from '../../layouts/Guide.astro';
+---
+
+<Guide
+  slug="permis-cotier-cpf"
+  verifieLe="2026-10-09"
+  questions={[
+    {
+      question: 'Le permis bateau est-il éligible au CPF ?',
+      reponse:
+        'Non. L’article L6323-6 du code du travail, qui liste ce que le compte personnel de formation finance, ne cite parmi les permis que des permis routiers. Le permis plaisance n’y figure pas.',
+    },
+    {
+      question: 'Pourquoi le permis côtier n’est-il pas finançable par le CPF ?',
+      reponse:
+        'Parce que ce n’est pas une certification professionnelle. Le gouvernement l’a répondu à l’Assemblée nationale le 3 février 2026 : le permis plaisance est un titre de loisir, et il n’entend pas le faire inscrire au répertoire.',
+    },
+    {
+      question: 'Comment financer le permis côtier sans le CPF ?',
+      reponse:
+        'Si un métier l’exige, par l’employeur, qui paie directement la formation, ou par France Travail dans le cadre d’un projet professionnel. Sinon, le candidat la paie lui-même.',
+    },
+  ]}
+>
+  <h2>Ce que le code du travail finance</h2>
+  <p>
+    La liste est à l’article L6323-6 du code du travail. Le compte personnel de formation
+    paie notamment les formations qui mènent à une certification professionnelle
+    enregistrée au répertoire national ou au répertoire spécifique, les bilans de
+    compétences, la validation des acquis de l’expérience et la préparation de certains
+    permis. Le reste de l’article vise les bénévoles, les volontaires et les élus locaux.
+  </p>
+  <p>
+    Ces permis-là sont tous routiers : ceux du groupe lourd, et ceux du groupe léger pour
+    les demandeurs d’emploi ou quand un tiers cofinance. Le permis de conduire des bateaux
+    de plaisance n’est pas cité. Reste la première porte, la certification
+    professionnelle, et il ne la franchit pas non plus.
+  </p>
+
+  <h2>Pourquoi il n’y est pas</h2>
+  <p>
+    Le gouvernement s’en est expliqué deux fois devant le Parlement. Au Sénat en
+    octobre 2023 : les permis bateau « ne sont pas considérés comme un prérequis à
+    l’insertion professionnelle dans les zones dans lesquelles les disparités en matière
+    d’accès à la mobilité persistent ». À l’Assemblée nationale le 3 février 2026, plus
+    nettement : le permis plaisance à moteur « n’est pas une certification
+    professionnelle ». Les formations sans visée professionnelle ont quitté le répertoire,
+    et ce permis avec elles, parce que la quasi-totalité de ses titulaires l’utilisent
+    pour le loisir.
+  </p>
+  <p>
+    La même réponse ferme la porte pour la suite : le gouvernement n’entend pas engager
+    de démarche pour l’inscrire au répertoire. Rien n’indique donc un retour au CPF à
+    court terme.
+  </p>
+
+  <h2>Ce qui peut payer la formation</h2>
+  <p>
+    Quand le permis sert un métier, deux financeurs sont cités par le gouvernement.
+    L’employeur d’abord : s’il juge le permis nécessaire au poste, il paie la formation
+    directement, sans toucher au CPF du salarié. France Travail ensuite, qui peut la
+    financer dans le cadre d’un projet professionnel.
+  </p>
+  <p>
+    La réponse de 2026 cite aussi le BACPN, un brevet professionnel maritime enregistré à
+    France Compétences, que le CPF peut financer. Ce n’est pas le permis plaisance sous un
+    autre nom : c’est un titre pour travailler à bord, qui ne se choisit que si c’est le
+    métier visé.
+  </p>
+  <p>
+    Pour une navigation de loisir, il n’y a pas de détour : la formation se paie de sa
+    poche. Une offre de « permis bateau financé par le CPF » ne correspond à aucune ligne
+    de l’article L6323-6. Si vous en croisez une, demandez quelle certification
+    professionnelle elle prépare.
+  </p>
+
+  <h2>Ce qui ne coûte rien</h2>
+  {POUR_APP ? (
+  <p>
+    La formation est payante, la révision n’a pas à l’être. Cette app est gratuite, sans
+    compte et sans publicité. Elle ne remplace ni les cinq heures en salle ni la
+    formation pratique, qui sont obligatoires : elle remplace le fascicule d’entraînement.
+  </p>
+  ) : (
+  <p>
+    La formation est payante, la révision n’a pas à l’être. Ce site est gratuit, sans
+    compte et sans publicité. Il ne remplace ni les cinq heures en salle ni la formation
+    pratique, qui sont obligatoires : il remplace le fascicule d’entraînement.
+  </p>
+  )}
+
+  <div class="encadre" style="margin-top:2.5rem">
+    <p style="margin:0"><strong>Avant de payer une formation, mesurez où vous en êtes.</strong></p>
+    <p class="discret" style="margin:0.4rem 0 0.8rem">
+      Quarante questions, cinq erreurs admises, dans les conditions de l’épreuve.
+    </p>
+    <p style="margin:0">
+      <a class="bouton bouton--principal" href="/examen" data-mesure="guide-examen">Passer un examen blanc</a>
+    </p>
+  </div>
+</Guide>

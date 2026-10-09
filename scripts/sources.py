@@ -488,18 +488,45 @@ def etendre_numeros(demande: str) -> list[str]:
 def identifiant_article(numero: str, nom_code: str, acces: str, api: str) -> str | None:
     """L'identifiant LEGIARTI de l'article en vigueur, ou None s'il n'existe pas.
 
-    La recherche rend une entrée par version du code : le même article
-    revient autant de fois qu'il y a de dates de consolidation. On garde le
-    premier en vigueur, ils portent tous le même identifiant."""
+    La recherche rend une entrée par version du code, chacune sous son propre
+    identifiant. Voir `choisir_identifiant`."""
     reponse = appeler("/search", invite_article(numero, nom_code), acces, api)
+    return choisir_identifiant(reponse, numero)
+
+
+def choisir_identifiant(reponse: dict, numero: str) -> str | None:
+    """L'identifiant de la version en vigueur dans une réponse de `/search`.
+
+    Écarter les états morts ne suffit pas : chaque ancienne rédaction revient
+    sous son identifiant, en MODIFIE ou en MODIFIE_MORT_NE, et L6323-6 du
+    code du travail a ainsi rendu sa version de 2016 au lieu de celle de
+    2026. On prend la version VIGUEUR ; à défaut, la première qui n'est pas
+    morte, que `version_a_extraire` corrigera : la recherche est paginée et
+    ne rend pas toujours la version en vigueur."""
+    repli = None
     for resultat in reponse.get("results") or []:
         for section in resultat.get("sections") or []:
             for extrait in section.get("extracts") or []:
                 if (extrait.get("num") or "").strip() != numero:
                     continue
-                if (extrait.get("legalStatus") or "").upper() in ETATS_MORTS:
-                    continue
-                return extrait.get("id")
+                etat = (extrait.get("legalStatus") or "").upper()
+                if etat == "VIGUEUR":
+                    return extrait.get("id")
+                if etat not in ETATS_MORTS and not etat.endswith("MORT_NE") and repli is None:
+                    repli = extrait.get("id")
+    return repli
+
+
+def version_a_extraire(article: dict) -> str | None:
+    """L'identifiant de la version en vigueur d'un article rendu par
+    `/consult/getArticle` : le sien s'il l'est, sinon celui que donne
+    `articleVersions`. None si aucune version n'est en vigueur : la commande
+    le signale au lieu d'écrire une rédaction périmée."""
+    if (article.get("etat") or "").upper() == "VIGUEUR":
+        return article.get("id")
+    for version in article.get("articleVersions") or []:
+        if (version.get("etat") or "").upper() == "VIGUEUR":
+            return version.get("id")
     return None
 
 
@@ -524,6 +551,18 @@ def commande_code(args) -> int:
             continue
         donnees = appeler("/consult/getArticle", {"id": identifiant}, acces, api)
         article = donnees.get("article") or donnees
+        vigueur = version_a_extraire(article)
+        if vigueur is None:
+            print(
+                f"{numero} : aucune version en vigueur parmi celles de l'article, rien n'est écrit",
+                file=sys.stderr,
+            )
+            manquants.append(numero)
+            continue
+        if vigueur != identifiant:
+            identifiant = vigueur
+            donnees = appeler("/consult/getArticle", {"id": identifiant}, acces, api)
+            article = donnees.get("article") or donnees
         corps = sans_balises(article.get("texte") or article.get("content") or "")
         if not corps:
             manquants.append(numero)
