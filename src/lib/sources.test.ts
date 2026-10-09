@@ -4,6 +4,7 @@ import {
   resoudreSource,
   resoudreSources,
   citeLegifrance,
+  citeHorsLegifrance,
   citeUneFiche,
   NOM_PROVENANCE,
 } from './sources';
@@ -87,6 +88,22 @@ describe('ce que le bloc de sources peut affirmer', () => {
         ]),
       ),
     ).toBe(false);
+  });
+
+  it('reconnaît un texte officiel publié ailleurs que sur Légifrance', () => {
+    // Le pied du bloc ne peut pas dire « Textes publiés sur Légifrance » sous
+    // une réponse ministérielle au Parlement ou un communiqué du ministère.
+    const decret = { texte: 'Décret', ref: 'decret-2007-1167', fichier: 'article-2' };
+    expect(citeHorsLegifrance(resoudreSources([decret]))).toBe(false);
+    expect(citeHorsLegifrance(melange)).toBe(false);
+    expect(
+      citeHorsLegifrance(
+        resoudreSources([
+          decret,
+          { texte: 'Réponse au Sénat', ref: 'senat', url: 'https://www.senat.fr/questions/x.html' },
+        ]),
+      ),
+    ).toBe(true);
   });
 
   it('reconnaît qu’un bloc cite une fiche du site', () => {

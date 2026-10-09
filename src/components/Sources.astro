@@ -1,6 +1,6 @@
 ---
 import MarqueSource from './MarqueSource.astro';
-import { citeLegifrance, citeUneFiche, type SourceAffichee } from '../lib/sources';
+import { citeLegifrance, citeHorsLegifrance, citeUneFiche, type SourceAffichee } from '../lib/sources';
 import { POUR_APP } from '../lib/cible';
 
 /**
@@ -30,7 +30,11 @@ const { sources, verifieLe } = Astro.props;
 // sont pas sur Légifrance, et une fiche du site n'y sera jamais.
 const consultee = verifieLe ? `, version consultée le ${verifieLe}` : '';
 const phrases: string[] = [];
-if (citeLegifrance(sources)) {
+if (citeLegifrance(sources) && citeHorsLegifrance(sources)) {
+  phrases.push(
+    `Textes de loi publiés sur Légifrance sous Licence Ouverte 2.0, autres sources publiées par l’administration ou le Parlement${consultee}.`,
+  );
+} else if (citeLegifrance(sources)) {
   phrases.push(`Textes publiés sur Légifrance sous Licence Ouverte 2.0${consultee}.`);
 } else if (verifieLe) {
   phrases.push(`Sources consultées le ${verifieLe}.`);

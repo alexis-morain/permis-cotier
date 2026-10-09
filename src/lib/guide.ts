@@ -9,7 +9,10 @@ import { resoudreSources, type SourceAffichee, type SourceCitee } from './source
  * l'épreuve — trouvent aujourd'hui des réponses de seconde main, recopiées
  * d'un site à l'autre sans jamais citer le texte. Or ces réponses sont dans le
  * décret du 2 août 2007 et dans l'arrêté du 28 septembre 2007, tous deux
- * extraits dans `data/sources/`. Le guide les cite.
+ * extraits dans `data/sources/`, et pour le CPF dans le code du travail. Le
+ * guide les cite. Ce que les textes ne disent pas (qui organise l'examen, ce
+ * que le gouvernement répond au Parlement), il le cite chez l'administration
+ * ou au Parlement, jamais chez une école.
  *
  * `question` est la question à laquelle la page répond, écrite comme on la
  * pose. Elle sert de titre au hub, d'entrée de FAQ et de première phrase de la
@@ -25,9 +28,11 @@ export interface PageGuide {
   readonly question: string;
   /** La réponse en une phrase. Elle ouvre la page et sert de méta description. */
   readonly reponse: string;
-  /** Textes cités par la page. L'URL n'est pas écrite ici, elle est lue
-   *  dans `data/sources/<ref>/<fichier>.md` : trois des sept identifiants
-   *  recopiés à la main dans la première version étaient faux. */
+  /** Textes cités par la page. L'URL d'un texte extrait n'est pas écrite
+   *  ici, elle est lue dans `data/sources/<ref>/<fichier>.md` : trois des sept
+   *  identifiants recopiés à la main dans la première version étaient faux.
+   *  Seule une publication sans extrait (ministère, Parlement) porte son
+   *  `url` en dur. */
   readonly sources: readonly SourceCitee[];
 }
 
@@ -92,6 +97,54 @@ export const GUIDE: readonly PageGuide[] = [
       { texte: 'Arrêté du 28 septembre 2007, article 6', ref: 'arrete-2007-09-28', fichier: 'article-6' },
     ],
   },
+  {
+    slug: 'permis-cotier-candidat-libre',
+    titre: 'Passer le permis côtier en candidat libre',
+    court: 'En candidat libre',
+    question: 'Peut-on passer le permis côtier en candidat libre ?',
+    reponse:
+      'À moitié. Vous réservez seul votre place à l’épreuve théorique, mais après cinq heures de cours en salle, et seul un établissement agréé valide la pratique.',
+    sources: [
+      { texte: 'Décret n° 2007-1167 du 2 août 2007, article 4', ref: 'decret-2007-1167', fichier: 'article-4' },
+      { texte: 'Arrêté du 28 septembre 2007, article 1er', ref: 'arrete-2007-09-28', fichier: 'article-1' },
+      { texte: 'Arrêté du 28 septembre 2007, article 3', ref: 'arrete-2007-09-28', fichier: 'article-3' },
+      { texte: 'Arrêté du 28 septembre 2007, article 4', ref: 'arrete-2007-09-28', fichier: 'article-4' },
+      { texte: 'Décret n° 2007-1167 du 2 août 2007, article 13', ref: 'decret-2007-1167', fichier: 'article-13' },
+      { texte: 'Décret n° 2007-1167 du 2 août 2007, article 26', ref: 'decret-2007-1167', fichier: 'article-26' },
+      {
+        texte: 'Ministère de la Mer, « L’examen théorique du permis plaisance évolue », 1er juin 2022',
+        ref: 'mer-gouv',
+        url: 'https://www.mer.gouv.fr/lexamen-theorique-du-permis-plaisance-evolue',
+      },
+      {
+        texte: 'Formulaire cerfa n° 14681*03, demande d’inscription à une option de base',
+        ref: 'service-public',
+        url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/R21199',
+      },
+    ],
+  },
+  {
+    slug: 'permis-cotier-cpf',
+    titre: 'Le permis côtier avec son CPF',
+    court: 'Le CPF',
+    question: 'Peut-on payer le permis côtier avec son CPF ?',
+    reponse:
+      'Non. Le CPF finance des certifications professionnelles et certains permis routiers. Le permis bateau n’en fait pas partie, le gouvernement l’a redit en 2026.',
+    sources: [
+      { texte: 'Code du travail, article L6323-6', ref: 'code-travail', fichier: 'article-l6323-6' },
+      { texte: 'Arrêté du 28 septembre 2007, article 1er', ref: 'arrete-2007-09-28', fichier: 'article-1' },
+      {
+        texte: 'Assemblée nationale, question écrite n° 8471, réponse publiée au JO le 3 février 2026',
+        ref: 'assemblee-nationale',
+        url: 'https://questions.assemblee-nationale.fr/dyn/17/questions/QANR5L17QE8471',
+      },
+      {
+        texte: 'Sénat, question orale n° 0827S, réponse publiée au JO le 13 octobre 2023',
+        ref: 'senat',
+        url: 'https://www.senat.fr/questions/base/2023/qSEQ23100827S.html',
+      },
+    ],
+  },
 ] as const;
 
 export function pageGuide(slug: string): PageGuide | undefined {
@@ -128,6 +181,7 @@ const NOTIONS_ECLAIREES: Readonly<Record<string, readonly string[]>> = {
   'examen-du-permis-cotier': ['titre-conditions'],
   'prix-du-permis-cotier': ['titre-conditions'],
   'ou-passer-le-permis-cotier': ['titre-conditions'],
+  'permis-cotier-candidat-libre': ['titre-conditions'],
 };
 
 /** Les codes de notion que telle page du guide détaille. */

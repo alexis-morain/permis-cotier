@@ -1,0 +1,118 @@
+---
+import { POUR_APP } from '../../lib/cible';
+import Guide from '../../layouts/Guide.astro';
+---
+
+<Guide
+  slug="permis-cotier-candidat-libre"
+  verifieLe="2026-10-09"
+  questions={[
+    {
+      question: 'Peut-on passer le permis côtier en candidat libre ?',
+      reponse:
+        'Pas entièrement. La formation pratique doit être effectuée et validée par un établissement agréé, et cinq heures de formation théorique en salle sont obligatoires. Seule la place à l’épreuve théorique se réserve directement auprès de l’organisme d’examen.',
+    },
+    {
+      question: 'Qui inscrit le candidat à l’épreuve théorique du permis côtier ?',
+      reponse:
+        'Le dossier part de l’établissement de formation, qui fournit le numéro de candidat porté sur le formulaire cerfa n° 14681*03. Depuis le 1er juin 2022, la place à l’épreuve se réserve ensuite directement sur le site de l’un des organismes d’examen.',
+    },
+    {
+      question: 'Peut-on passer l’extension hauturière en candidat libre ?',
+      reponse:
+        'L’arrêté du 28 septembre 2007 n’exige pour elle aucune formation : une épreuve théorique de navigation, et l’option côtière déjà obtenue.',
+    },
+    {
+      question: 'Faut-il refaire les cours en salle quand on a déjà l’option eaux intérieures ?',
+      reponse:
+        'Non. Les titulaires de l’option eaux intérieures sont dispensés des cinq heures de formation théorique en salle exigées pour l’option côtière.',
+    },
+  ]}
+>
+  <h2>La pratique ne se passe jamais sans établissement agréé</h2>
+  <p>
+    C’est le décret qui le pose, à son article 4 : le permis est délivré aux candidats qui
+    ont réussi l’examen théorique et « dont la formation pratique a été effectuée et
+    validée par des établissements agréés ». Il n’existe pas d’épreuve pratique devant un
+    inspecteur, à laquelle on se présenterait après avoir appris ailleurs. La pratique est
+    une formation, et c’est l’établissement qui la valide.
+  </p>
+  <p>
+    L’article 3 de l’arrêté du 28 septembre 2007 en fixe le cadre : trois heures trente au
+    moins, des compétences validées une à une par le formateur, puis une attestation
+    délivrée par l’établissement. Cette attestation « ne doit pas être délivrée avant la
+    réussite à l’épreuve théorique ».
+  </p>
+
+  <h2>La théorie : l’examen se réserve seul, les cours non</h2>
+  <p>
+    Depuis le 1er juin 2022, l’épreuve théorique de l’option côtière est organisée par
+    quatre organismes indépendants des bateaux-écoles : La Poste, Dekra, SGS et Bureau
+    Veritas. Le ministère chargé de la mer l’a annoncé ainsi : les candidats s’inscrivent
+    « directement sur les sites internet respectifs des organismes ». La date et le centre
+    se choisissent donc sans passer par l’école.
+  </p>
+  <p>
+    Avant cela, l’arrêté impose un passage en salle. Son article 1er, paragraphe 1.3, fixe
+    la formation théorique « en salle et en présence du formateur » à cinq heures au
+    moins. Le texte ne dit pas en toutes lettres que ce formateur exerce dans un
+    établissement agréé. Le reste du dossier le suppose : le formulaire d’inscription,
+    cerfa n° 14681*03, porte un numéro de candidat « à fournir par l’établissement de
+    formation », et l’article 26 du décret charge l’établissement d’ouvrir le livret
+    d’apprentissage du candidat dès son inscription.
+  </p>
+  <p>
+    Réviser seul et choisir seul sa session, oui. Se passer d’école pour l’option côtière,
+    non : ni la pratique ni les cinq heures en salle ne s’y prêtent.
+  </p>
+
+  <h2>Les cas où la théorie suffit</h2>
+  <p>
+    Trois situations allègent le parcours, et une seule s’approche vraiment du candidat
+    libre.
+  </p>
+  <ul>
+    <li>
+      <strong>L’extension hauturière.</strong> L’article 4 de l’arrêté ne demande qu’une
+      épreuve théorique de navigation, et la détention préalable de l’option côtière. Aucune
+      formation n’est exigée par le texte. Ses sessions restent organisées par
+      l’administration, pas par les quatre organismes de l’option côtière.
+    </li>
+    <li>
+      <strong>Les titulaires de la carte mer.</strong> L’article 13 du décret leur ouvre
+      l’option côtière « sous réserve de passer avec succès une épreuve théorique ».
+    </li>
+    <li>
+      <strong>Les titulaires de l’option eaux intérieures.</strong> Le paragraphe 1.3 de
+      l’arrêté les dispense des cinq heures en salle. Le programme de la formation pratique
+      est commun aux deux options (article 3), mais le texte ne dit pas en toutes lettres
+      qu’une pratique déjà validée vaut pour la seconde : la question se pose au service
+      instructeur.
+    </li>
+  </ul>
+
+  <h2>Réviser seul, rien ne l’interdit</h2>
+  {POUR_APP ? (
+  <p>
+    Les cinq heures en salle sont un plancher, pas un programme complet. Le reste se
+    travaille où l’on veut. Cette app est gratuite, sans compte et sans publicité, et
+    chacune de ses questions cite le texte dont elle sort.
+  </p>
+  ) : (
+  <p>
+    Les cinq heures en salle sont un plancher, pas un programme complet. Le reste se
+    travaille où l’on veut. Ce site est gratuit, sans compte et sans publicité, et chacune
+    de ses questions cite le texte dont elle sort.
+  </p>
+  )}
+
+  <div class="encadre" style="margin-top:2.5rem">
+    <p style="margin:0"><strong>La partie qu’on prépare seul, autant la préparer bien.</strong></p>
+    <p class="discret" style="margin:0.4rem 0 0.8rem">
+      Quarante questions, cinq erreurs admises, dans les conditions de l’épreuve.
+    </p>
+    <p style="margin:0">
+      <a class="bouton bouton--principal" href="/examen" data-mesure="guide-examen">Passer un examen blanc</a>
+    </p>
+  </div>
+</Guide>

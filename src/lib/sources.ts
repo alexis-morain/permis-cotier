@@ -98,6 +98,20 @@ export function citeLegifrance(sources: readonly SourceAffichee[]): boolean {
   return sources.some((s) => s.url?.startsWith('https://www.legifrance.gouv.fr/') === true);
 }
 
+/**
+ * Vrai si un texte officiel vient d'ailleurs que de Légifrance : un
+ * communiqué du ministère, une réponse au Parlement. Le pied du bloc ne dit
+ * alors plus que tous les textes y sont publiés.
+ */
+export function citeHorsLegifrance(sources: readonly SourceAffichee[]): boolean {
+  return sources.some(
+    (s) =>
+      s.provenance === 'officiel' &&
+      s.url !== undefined &&
+      !s.url.startsWith('https://www.legifrance.gouv.fr/'),
+  );
+}
+
 export function citeUneFiche(sources: readonly SourceAffichee[]): boolean {
   return sources.some((s) => s.provenance === 'fiche');
 }
