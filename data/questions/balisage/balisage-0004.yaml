@@ -13,7 +13,7 @@ propositions:
   - id: b
     texte: Des eaux saines tout autour, milieu de chenal
   - id: c
-    texte: Un danger nouveau, pas encore porté sur les cartes
+    texte: Une zone particulière, comme une zone de mouillage ou de baignade
 reponses:
   - a
 explication: >-
@@ -21,8 +21,8 @@ explication: >-
   rouges, voyant de deux sphères noires superposées, feu blanc à deux éclats groupés.
   Elle est mouillée sur le danger lui-même, qui est de faible étendue et entouré d'eaux
   saines. Ne la confonds pas avec la marque d'eaux saines, qui porte une seule sphère
-  rouge et des bandes verticales, ni avec la marque de danger nouveau, à bandes bleues
-  et jaunes.
+  rouge et des bandes verticales, ni avec une marque spéciale, jaune, qui signale une
+  zone ou une configuration particulière.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 4.1
     ref: arrete-2017-11-30
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-09'
