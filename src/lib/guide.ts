@@ -79,7 +79,7 @@ export const GUIDE: readonly PageGuide[] = [
     court: 'Ce que ça coûte',
     question: 'Quel est le prix du permis côtier ?',
     reponse:
-      'Trois postes : 30 € d’inscription à l’organisme d’examen, 78 € de délivrance payés à l’État par timbre, et la formation en bateau-école, au prix libre.',
+      'Trois postes : 30 € d’inscription à l’organisme d’examen, 78 € de délivrance à l’État pour un premier permis, et la formation en bateau-école, au prix libre.',
     sources: [
       {
         texte: 'Ministère de la Mer, « Le permis plaisance », page mise à jour le 17 avril 2026',
@@ -90,6 +90,11 @@ export const GUIDE: readonly PageGuide[] = [
       { texte: 'Arrêté du 28 septembre 2007, article 3', ref: 'arrete-2007-09-28', fichier: 'article-3' },
       { texte: 'Arrêté du 28 septembre 2007, article 6', ref: 'arrete-2007-09-28', fichier: 'article-6' },
       { texte: 'Arrêté du 28 septembre 2007, article 18.3', ref: 'arrete-2007-09-28', fichier: 'article-18' },
+      {
+        texte: 'Formulaire cerfa n° 14681*03, demande d’inscription à une option de base',
+        ref: 'service-public',
+        url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/R21199',
+      },
     ],
   },
   {
