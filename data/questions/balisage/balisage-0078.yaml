@@ -1,0 +1,36 @@
+id: balisage-0078
+option: cotier
+theme: balisage
+notion: balisage-cardinal
+statut: publie
+difficulte: 2
+enonce: >-
+  L'arrêté associe l'emploi des marques latérales au sens conventionnel de balisage. À quoi
+  associe-t-il celui des marques cardinales ?
+propositions:
+  - id: a
+    texte: Au compas du navire
+  - id: b
+    texte: Au sens conventionnel de balisage, lui aussi
+  - id: c
+    texte: Aux documents nautiques de la zone
+reponses:
+  - a
+explication: >-
+  Le paragraphe 1.2.2 dit que l'emploi des marques cardinales est associé à celui du compas
+  du navire : elles indiquent dans quel quadrant le navire peut trouver des eaux saines. Leurs
+  quadrants sont limités par des relèvements vrais pris depuis le point à marquer (3.1.1),
+  quel que soit le sens d'entrée au port. Ce sont les marques spéciales dont la nature se lit
+  dans les documents nautiques (6.1).
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 1.2.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.1.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

@@ -1,0 +1,30 @@
+id: carburant-0009
+option: cotier
+theme: carburant
+notion: carburant-autonomie
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu rejoins un port à 27 milles en filant 18 nœuds, et ton moteur consomme 24 litres par
+  heure à ce régime. Combien de carburant ce trajet va-t-il brûler ?
+propositions:
+  - id: a
+    texte: 36 litres
+  - id: b
+    texte: 24 litres
+  - id: c
+    texte: 16 litres
+reponses:
+  - a
+explication: >-
+  Le nœud valant un mille par heure, le trajet dure 27 / 18 = 1,5 heure. À 24 litres par
+  heure, il brûle 1,5 × 24 = 36 litres. 24 litres ne paient qu'une heure de route, et 16
+  litres viennent d'une division faite à l'envers, 18 / 27 d'heure.
+sources:
+  - texte: Fiche autonomie en carburant, « Les deux calculs »
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

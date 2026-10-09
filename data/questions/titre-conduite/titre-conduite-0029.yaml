@@ -1,0 +1,33 @@
+id: titre-conduite-0029
+option: cotier
+theme: titre-conduite
+notion: titre-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Pendant la conduite effective de ta formation pratique, combien d'élèves au plus le
+  bateau-école peut-il embarquer ?
+propositions:
+  - id: a
+    texte: Deux
+  - id: b
+    texte: Trois
+  - id: c
+    texte: Six
+  - id: d
+    texte: Quatre
+reponses:
+  - d
+explication: >-
+  L'article 3 de l'arrêté fixe la part de conduite effective par candidat, celle où l'on
+  apprend la mise en route, la trajectoire, l'accostage, le mouillage et la récupération
+  d'une personne tombée à l'eau. Il ajoute que le nombre d'élèves embarqués ne doit pas
+  dépasser quatre.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 3
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

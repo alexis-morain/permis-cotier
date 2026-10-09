@@ -1,0 +1,32 @@
+id: titre-conduite-0027
+option: cotier
+theme: titre-conduite
+notion: titre-conditions
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu constitues ton dossier d'inscription à l'option côtière. Le certificat médical que
+  tu y joins doit dater de moins de combien de temps ?
+propositions:
+  - id: a
+    texte: Moins de trois mois
+  - id: b
+    texte: Moins de six mois
+  - id: c
+    texte: Moins d'un an
+  - id: d
+    texte: Moins de deux ans
+reponses:
+  - b
+explication: >-
+  L'article 6.1 de l'arrêté liste les pièces du dossier d'inscription à l'option côtière.
+  Il y range un certificat médical de moins de six mois, établi selon un modèle défini. Seul
+  le titulaire de la carte mer en est dispensé.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 6, 6.1 d)
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

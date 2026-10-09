@@ -1,0 +1,37 @@
+id: vhf-0064
+option: cotier
+theme: vhf
+notion: vhf-sauvetage
+statut: publie
+difficulte: 2
+enonce: >-
+  Lesquels de ces signaux radio le RIPAM range-t-il parmi les signaux de détresse ?
+propositions:
+  - id: a
+    texte: Un appel annoncé par PAN PAN sur le canal 16
+  - id: b
+    texte: Les signaux émis par une radiobalise de localisation des sinistres
+  - id: c
+    texte: Un message annoncé par SÉCURITÉ sur le canal 16
+  - id: d
+    texte: Les signaux d'un répondeur radar d'embarcation ou de radeau de sauvetage
+reponses:
+  - b
+  - d
+explication: >-
+  L'annexe IV du RIPAM compte parmi les signaux qui indiquent la détresse et le besoin
+  d'assistance les signaux émis par les radiobalises de localisation des sinistres, au
+  1 n), et les signaux approuvés des systèmes de radiocommunications, y compris les
+  répondeurs radar pour embarcations et radeaux de sauvetage, au 1 o). PAN PAN et
+  SÉCURITÉ n'y figurent pas : le premier annonce l'urgence, le second un message sur la
+  sécurité de la navigation, aucun ne dit la détresse.
+sources:
+  - texte: RIPAM, annexe IV, 1 n) et o)
+    ref: decret-77-733
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

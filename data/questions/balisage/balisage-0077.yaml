@@ -1,0 +1,29 @@
+id: balisage-0077
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 2
+enonce: >-
+  Un banc de sable vient d'être découvert et ne figure encore sur aucun document nautique.
+  Est-ce un danger nouveau au sens de l'arrêté ?
+propositions:
+  - id: a
+    texte: Non, le terme ne vise que les épaves et les obstructions humaines
+  - id: b
+    texte: Oui, un danger nouveau peut être naturel comme humain
+reponses:
+  - b
+explication: >-
+  Le paragraphe 7.1 appelle « danger nouveau » une obstruction découverte récemment et pas
+  encore indiquée dans les documents nautiques. Il y range les obstructions naturelles, comme
+  les bancs de sable ou les écueils, autant que les dangers dus à l'action humaine, comme les
+  épaves. Le nom de la bouée d'épave en cas d'urgence ne limite pas la notion aux épaves.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

@@ -1,0 +1,32 @@
+id: carte-marine-0038
+option: cotier
+theme: carte-marine
+notion: carte-symboles
+statut: publie
+difficulte: 3
+enonce: >-
+  Sur la carte, un feu est décrit « Mo (U) R 15s ». Que signifie « Mo (U) » ?
+propositions:
+  - id: a
+    texte: Un feu alternatif, dont la lettre U désigne la suite des couleurs
+  - id: b
+    texte: Un feu à signal Morse, qui bat la lettre U, deux points puis un trait
+  - id: c
+    texte: Un feu à éclats longs, groupés selon la lettre U
+reponses:
+  - b
+explication: >-
+  Mo abrège un feu à signal Morse, suivi de la lettre qu'il bat. L'arrêté de balisage écrit
+  ainsi « Mo (U) R » le feu rouge d'une plate-forme en mer, et donne la lettre U : deux
+  points puis un trait. Un feu alternatif, qui change de couleur, s'abrège Al, et un éclat
+  long LFl.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe II, 1.4.2 et 1.5
+    ref: arrete-2017-11-30
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, section « Les caractères de feu »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

@@ -1,0 +1,32 @@
+id: vhf-0066
+option: cotier
+theme: vhf
+notion: vhf-alphabet
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton voilier s'appelle DÉFI et tu dois en épeler le nom à la radio. Comment
+  l'épelles-tu ?
+propositions:
+  - id: a
+    texte: David Echo Foxtrot India
+  - id: b
+    texte: Delta Echo Fox India
+  - id: c
+    texte: Delta Edward Foxtrot India
+  - id: d
+    texte: Delta Echo Foxtrot India
+reponses:
+  - d
+explication: >-
+  L'alphabet phonétique international dit Delta pour D, Echo pour E, Foxtrot pour F et
+  India pour I. Fox n'est que le début de Foxtrot, et ni David ni Edward ne font partie
+  de cet alphabet : à la radio, on épelle avec ses mots exacts.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

@@ -1,0 +1,30 @@
+id: titre-conduite-0028
+option: cotier
+theme: titre-conduite
+notion: titre-examen
+statut: publie
+difficulte: 2
+enonce: >-
+  Ton formateur a validé toutes tes compétences pratiques, mais tu n'as pas encore réussi
+  l'épreuve théorique. L'établissement peut-il te remettre ton attestation de réussite à la
+  formation ?
+propositions:
+  - id: a
+    texte: Oui, dès que l'ensemble des compétences est validé
+  - id: b
+    texte: Non, pas avant ta réussite à l'épreuve théorique
+reponses:
+  - b
+explication: >-
+  L'article 3 de l'arrêté dit que la formation est réputée effectuée quand toutes les
+  compétences sont validées, et que l'établissement agréé délivre alors une attestation de
+  réussite. Mais cette attestation ne doit pas être délivrée avant la réussite à l'épreuve
+  théorique. La formation est finie, l'attestation attend la théorie.
+sources:
+  - texte: Arrêté du 28 septembre 2007, article 3
+    ref: arrete-2007-09-28
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

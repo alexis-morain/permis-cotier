@@ -1,0 +1,33 @@
+id: vhf-0065
+option: cotier
+theme: vhf
+notion: vhf-detresse
+statut: publie
+difficulte: 1
+enonce: >-
+  Un incendie s'est déclaré dans le compartiment moteur. Tu n'arrives pas à le
+  maîtriser et il gagne le pont. Quel signal emploies-tu à la VHF ?
+propositions:
+  - id: a
+    texte: MAYDAY
+  - id: b
+    texte: PAN PAN
+  - id: c
+    texte: SÉCURITÉ
+reponses:
+  - a
+explication: >-
+  MAYDAY annonce la détresse : un danger grave et imminent menace le navire ou une
+  personne, et une assistance immédiate est demandée. Un incendie que l'équipage ne
+  maîtrise plus est ce danger. PAN PAN vaut pour un message urgent sans danger
+  imminent, SÉCURITÉ pour un avis sur la sécurité de la navigation ou la météo.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+  - texte: RIPAM, annexe IV, 1 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

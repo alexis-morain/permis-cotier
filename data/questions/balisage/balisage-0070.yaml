@@ -1,0 +1,33 @@
+id: balisage-0070
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 3
+enonce: >-
+  Une bouée conique verte vient d'être mouillée dans un chenal pour baliser un danger
+  nouveau. De nuit, quel rythme bat son feu vert ?
+propositions:
+  - id: a
+    texte: Un rythme quelconque, comme toute marque de tribord
+  - id: b
+    texte: Un rythme scintillant ou scintillant rapide
+  - id: c
+    texte: Des éclats diversement groupés (2 + 1)
+reponses:
+  - b
+explication: >-
+  Le paragraphe 7.2.2 veut que les feux de toutes les marques employées pour baliser un
+  danger nouveau présentent le rythme scintillant rapide ou scintillant correspondant au
+  type de la marque. Une marque de tribord ordinaire peut battre tout rythme autre que (2 + 1),
+  mais pas sur un danger nouveau. Le rythme (2 + 1) est réservé aux marques de chenal préféré.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'
