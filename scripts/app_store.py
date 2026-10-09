@@ -6,8 +6,9 @@
 
 `preparer` lit les versions App Store et les builds, et dit s'il faut
 construire, seulement soumettre un build déjà téléversé, ou ne rien faire.
-`soumettre` attend la fin du traitement d'un build, écrit son commit dans
-« À tester » de TestFlight, puis l'envoie en revue si aucune revue n'est en cours.
+`soumettre` attend la fin du traitement d'un build, pose dans « À tester » de
+TestFlight le texte de `ios/a-tester.txt` suivi de la référence du commit, puis
+l'envoie en revue si aucune revue n'est en cours.
 
 Authentification par une clé d'API : `ASC_KEY_ID`, `ASC_ISSUER_ID`, et la clé
 privée dans `ASC_KEY_P8` (contenu) ou `ASC_KEY_PATH` (chemin). Ni la clé ni le
@@ -29,12 +30,16 @@ from pathlib import Path
 
 RACINE = Path(__file__).resolve().parents[1]
 NOUVEAUTES = RACINE / "ios" / "nouveautes.txt"
+A_TESTER = RACINE / "ios" / "a-tester.txt"
 
 APP_ID = "6818903859"
 API = "https://api.appstoreconnect.apple.com"
 LOCALE = "fr-FR"
 SONDAGE_S = 30
 ATTENTE_MAX_S = 45 * 60
+# « À tester » (`whatsNew` d'une `betaBuildLocalization`) plafonne à 4 000
+# caractères ; la ligne de référence prend sa part.
+LIMITE_A_TESTER = 3900
 
 # États d'une version App Store. `appVersionState` les nomme depuis 2024,
 # `appStoreState`, déprécié, avec d'autres mots pour les mêmes choses.
@@ -101,12 +106,29 @@ def patch_suivant(chaine: str) -> str:
 
 
 def commit_du_texte(texte: str | None) -> str | None:
-    trouve = re.search(r"\bmain ([0-9a-f]{7,40})\b", texte or "")
+    """Le commit d'un build, lu dans son « À tester ».
+
+    Le texte rédigé pour les testeurs finit par « Référence : <sha> » ; les
+    builds d'avant ne portaient que « main <sha> », qu'on lit toujours.
+    """
+    trouve = re.search(r"(?:\bmain|Référence\s*:)\s*([0-9a-f]{7,40})\b", texte or "")
     return trouve.group(1) if trouve else None
 
 
-def texte_a_tester(commit: str) -> str:
-    return f"main {commit[:7]}"
+def texte_a_tester(commit: str, notes: str) -> str:
+    return f"{notes.strip()}\n\nRéférence\u00a0: {commit[:7]}"
+
+
+def lire_a_tester(chemin: Path = A_TESTER) -> str:
+    """Ce que les testeurs TestFlight doivent essayer, écrit à la main."""
+    texte = chemin.read_text(encoding="utf-8").strip() if chemin.is_file() else ""
+    if not texte:
+        raise SystemExit(f"{chemin.name} est vide : rien à dire dans « À tester ».")
+    if len(texte) >= LIMITE_A_TESTER:
+        raise SystemExit(
+            f"{chemin.name} fait {len(texte)} caractères, « À tester » en prend moins de {LIMITE_A_TESTER}."
+        )
+    return texte
 
 
 def meme_commit(court: str | None, commit: str) -> bool:
@@ -311,6 +333,9 @@ def ecrire_sorties(sorties: dict[str, str]) -> None:
 
 
 def preparer(commit: str) -> int:
+    # Avant les trois minutes d'archive : un « À tester » vide ou trop long
+    # arrêterait `soumettre` après le téléversement.
+    lire_a_tester()
     versions, _ = lire_versions()
     decision = decider(versions, lire_builds(), commit)
     ecrire_sorties({
@@ -351,7 +376,7 @@ def attendre_build(version: str, build: int) -> dict:
 
 
 def poser_a_tester(build: dict, commit: str) -> None:
-    texte = texte_a_tester(commit)
+    texte = texte_a_tester(commit, lire_a_tester())
     donnees, _ = lister(f"/v1/builds/{build['id']}/betaBuildLocalizations", {"limit": "50"})
     existante = next((l for l in donnees if l["attributes"].get("locale") == LOCALE), None)
     if existante:
@@ -365,7 +390,7 @@ def poser_a_tester(build: dict, commit: str) -> None:
                      "attributes": {"locale": LOCALE, "whatsNew": texte},
                      "relationships": {"build": {"data": {"type": "builds", "id": build["id"]}}}},
         })
-    print(f"« À tester » : {texte}")
+    print(f"« À tester » posé, référence {commit[:7]}.")
 
 
 def lire_nouveautes() -> str:
