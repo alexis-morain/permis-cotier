@@ -79,9 +79,16 @@ export const GUIDE: readonly PageGuide[] = [
     court: 'Ce que ça coûte',
     question: 'Quel est le prix du permis côtier ?',
     reponse:
-      'Deux postes séparés : une redevance versée à l’État, payée par timbre dématérialisé et fixée par arrêté, et la formation en bateau-école, dont le prix est libre.',
+      'Trois postes : 30 € d’inscription à l’organisme d’examen, 78 € de délivrance payés à l’État par timbre, et la formation en bateau-école, au prix libre.',
     sources: [
+      {
+        texte: 'Ministère de la Mer, « Le permis plaisance », page mise à jour le 17 avril 2026',
+        ref: 'mer-gouv',
+        url: 'https://www.mer.gouv.fr/le-permis-plaisance-permis-de-conduire-les-bateaux-de-plaisance-moteur',
+      },
       { texte: 'Décret n° 2007-1167 du 2 août 2007, article 8-1', ref: 'decret-2007-1167', fichier: 'article-8-1' },
+      { texte: 'Arrêté du 28 septembre 2007, article 3', ref: 'arrete-2007-09-28', fichier: 'article-3' },
+      { texte: 'Arrêté du 28 septembre 2007, article 6', ref: 'arrete-2007-09-28', fichier: 'article-6' },
       { texte: 'Arrêté du 28 septembre 2007, article 18.3', ref: 'arrete-2007-09-28', fichier: 'article-18' },
     ],
   },
@@ -114,7 +121,7 @@ export const GUIDE: readonly PageGuide[] = [
     court: 'En candidat libre',
     question: 'Peut-on passer le permis côtier en candidat libre ?',
     reponse:
-      'Non, pas pour une première option : cinq heures en salle et pratique en bateau-école. La voie libre sert à la seconde option, la carte mer et l’hauturière.',
+      'Non, pas pour une première option : cinq heures en salle et pratique en bateau-école. La voie libre sert à la seconde option et à l’hauturière.',
     sources: [
       {
         texte: 'Ministère de la Mer, « Le permis plaisance », page mise à jour le 17 avril 2026',

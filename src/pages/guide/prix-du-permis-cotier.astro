@@ -5,68 +5,62 @@ import Guide from '../../layouts/Guide.astro';
 
 <Guide
   slug="prix-du-permis-cotier"
-  verifieLe="2026-09-05"
+  verifieLe="2026-10-09"
   questions={[
     {
       question: 'Combien coûte le permis côtier ?',
       reponse:
-        'Le coût se partage en deux : une redevance versée à l’État, payée par timbre dématérialisé et dont le tarif est fixé par arrêté du ministre chargé de la mer, et le prix du bateau-école, qui est libre.',
+        'Trois postes. Les droits d’inscription à l’épreuve théorique, 30 € réglés à l’organisme d’examen choisi. Le droit de délivrance du titre, 78 € payés à l’État par timbre fiscal électronique. Et la formation en bateau-école, dont le prix est libre.',
     },
     {
       question: 'Le prix du permis côtier est-il réglementé ?',
       reponse:
-        'En partie seulement. La redevance d’inscription à l’examen est fixée par arrêté. La formation, elle, relève du prix libre : deux écoles voisines peuvent afficher des montants très différents.',
+        'En partie seulement. Les droits d’inscription et le droit de délivrance ont chacun un montant unique, donné par le ministère. La formation, elle, relève du prix libre : deux écoles voisines peuvent afficher des montants très différents.',
     },
     {
       question: 'Que paie-t-on au bateau-école ?',
       reponse:
-        'La formation théorique en salle, cinq heures au minimum, la formation pratique à bord et sa validation, et le montage du dossier d’inscription.',
+        'La formation théorique en salle, cinq heures au minimum, et la formation pratique à bord avec sa validation.',
     },
   ]}
 >
-  <h2>Deux postes, un seul est réglementé</h2>
+  <h2>Trois postes, un seul est libre</h2>
   <p>
-    L’article 8-1 du décret du 2 août 2007 pose le principe : l’inscription à l’épreuve
-    théorique « donne lieu au paiement d’une redevance », dont « le tarif est déterminé
-    par arrêté du ministre chargé de la mer », acquittée « au moyen d’un timbre
-    dématérialisé ». C’est le poste public, identique partout en France.
+    Dans le cas courant, l’épreuve théorique se passe chez l’un des quatre organismes
+    retenus par l’État, et c’est à lui que se paient les droits d’inscription. Le
+    ministère chargé de la mer en donne le montant dans sa page mise à jour le
+    17 avril 2026 : 30 €, réglés à l’organisme choisi.
+  </p>
+  <p>
+    Reste dû à l’État le droit de délivrance du titre, acquitté par timbre dématérialisé
+    (article 6.1 d de l’arrêté). Le ministère le chiffre à 78 €, payés par timbre fiscal
+    électronique.
   </p>
   <p>
     Le reste va au bateau-école : les cinq heures de formation théorique en salle
-    exigées par l’arrêté, la formation pratique à bord et sa validation, le montage du
-    dossier. Ce prix-là est libre, et c’est lui qui fait tout l’écart entre deux devis.
+    exigées par l’arrêté, la formation pratique à bord et sa validation. Ce prix-là est
+    libre, et c’est lui qui fait tout l’écart entre deux devis.
   </p>
 
-  {POUR_APP ? (
-  <h2>Pourquoi cette app ne vous donne pas de montant</h2>
+  <h2>Le timbre d’inscription ne vaut que pour les sessions de l’administration</h2>
   <p>
-    Parce qu’elle ne l’a pas vérifié à la source. Le montant du timbre ne figure ni dans
-    le décret ni dans l’arrêté : ceux-ci renvoient au code des impositions sur les biens
-    et services, dont l’article n’a pas pu être extrait au moment de la rédaction de
-    cette page. Recopier un chiffre trouvé ailleurs reviendrait à faire ce que cette app
-    reproche aux autres.
+    L’article 8-1 du décret du 2 août 2007 prévoit bien une redevance d’inscription,
+    payée par timbre dématérialisé. Mais il la limite : « L’inscription à des sessions
+    d’examen aux épreuves théoriques pour l’obtention de l’option “ côtière ” ou de
+    l’option “ eaux intérieures ” organisées par l’administration donne lieu au paiement
+    d’une redevance. » L’arrêté suit : le timbre d’inscription n’entre au dossier que
+    pour les sessions de l’article 18.3 (article 6.1 c).
   </p>
-  ) : (
-  <h2>Pourquoi ce site ne vous donne pas de montant</h2>
   <p>
-    Parce qu’il ne l’a pas vérifié à la source. Le montant du timbre ne figure ni dans
-    le décret ni dans l’arrêté : ceux-ci renvoient au code des impositions sur les biens
-    et services, dont l’article n’a pas pu être extrait au moment de la rédaction de
-    cette page. Recopier un chiffre trouvé sur un autre site reviendrait à faire ce que
-    ce site reproche aux autres.
-  </p>
-  )}
-  <p>
-    Un seul montant est écrit noir sur blanc dans les textes cités, et il ne concerne
-    pas le cas courant : l’article 18.3 de l’arrêté fixe à 30 € la redevance des
-    sessions d’examen organisées à titre exceptionnel par le service instructeur, pour
-    les candidats en langue étrangère ou en situation de handicap.
+    Ces sessions sont organisées à titre exceptionnel par le service instructeur,
+    notamment pour les candidats en langue étrangère ou en situation de handicap.
+    L’article 18.3 fixe leur redevance à 30 €.
   </p>
 
   <h2>Ce qui fait varier le devis d’une école</h2>
   <p>
-    Trois choses, principalement. La durée réelle de la formation pratique, qui n’a pas
-    de plancher réglementaire contrairement aux cinq heures de théorie. La taille du
+    Trois choses, principalement. La durée réelle de la formation pratique, que
+    l’article 3 de l’arrêté fixe à trois heures trente au moins, sans plafond. La taille du
     groupe, une sortie à deux candidats ne coûtant pas ce que coûte une sortie
     individuelle. Et ce que le forfait inclut : timbre, certificat médical, photos et
     frais de dossier sont tantôt compris, tantôt facturés à part.
