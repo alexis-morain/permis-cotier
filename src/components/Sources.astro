@@ -32,7 +32,7 @@ const consultee = verifieLe ? `, version consultée le ${verifieLe}` : '';
 const phrases: string[] = [];
 if (citeLegifrance(sources) && citeHorsLegifrance(sources)) {
   phrases.push(
-    `Textes de loi publiés sur Légifrance sous Licence Ouverte 2.0, autres sources publiées par l’administration ou le Parlement${consultee}.`,
+    `Textes publiés sur Légifrance sous Licence Ouverte 2.0, autres sources publiées par l’administration ou le Parlement${consultee}.`,
   );
 } else if (citeLegifrance(sources)) {
   phrases.push(`Textes publiés sur Légifrance sous Licence Ouverte 2.0${consultee}.`);

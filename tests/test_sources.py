@@ -21,7 +21,7 @@ from sources import (  # noqa: E402
     nom_article,
     sans_balises,
     section_par_titre,
-    version_en_vigueur,
+    version_a_extraire,
 )
 
 
@@ -328,16 +328,25 @@ def test_choisir_identifiant_ecarte_une_version_morte_nee():
     assert choisir_identifiant(reponse, "L6323-6") == "ancienne"
 
 
-def test_version_en_vigueur_suit_les_versions_de_l_article():
+def test_version_a_extraire_suit_les_versions_de_l_article():
     # La recherche est paginée : elle peut ne rendre que d'anciennes
     # rédactions. L'article, lui, liste toutes ses versions.
-    ancienne = {"etat": "MODIFIE", "articleVersions": [
+    ancienne = {"id": "ancienne", "etat": "MODIFIE", "articleVersions": [
         {"id": "ancienne", "etat": "MODIFIE"},
         {"id": "actuelle", "etat": "VIGUEUR"},
     ]}
-    assert version_en_vigueur(ancienne) == "actuelle"
-    assert version_en_vigueur({"etat": "VIGUEUR", "articleVersions": []}) is None
-    assert version_en_vigueur({"etat": "MODIFIE", "articleVersions": []}) is None
+    assert version_a_extraire(ancienne) == "actuelle"
+    assert version_a_extraire({"id": "a", "etat": "VIGUEUR", "articleVersions": []}) == "a"
+
+
+def test_version_a_extraire_refuse_une_redaction_qui_n_est_plus_en_vigueur():
+    # Aucune version en vigueur : écrire l'ancienne rédaction en silence
+    # ferait citer du droit périmé. La commande le signale et passe.
+    perimee = {"id": "ancienne", "etat": "MODIFIE", "articleVersions": [
+        {"id": "ancienne", "etat": "MODIFIE"},
+        {"id": "abrogee", "etat": "ABROGE"},
+    ]}
+    assert version_a_extraire(perimee) is None
 
 
 # --- Découpe des annexes du RIPAM ------------------------------------------

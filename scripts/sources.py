@@ -501,7 +501,7 @@ def choisir_identifiant(reponse: dict, numero: str) -> str | None:
     sous son identifiant, en MODIFIE ou en MODIFIE_MORT_NE, et L6323-6 du
     code du travail a ainsi rendu sa version de 2016 au lieu de celle de
     2026. On prend la version VIGUEUR ; à défaut, la première qui n'est pas
-    morte, que `version_en_vigueur` corrigera : la recherche est paginée et
+    morte, que `version_a_extraire` corrigera : la recherche est paginée et
     ne rend pas toujours la version en vigueur."""
     repli = None
     for resultat in reponse.get("results") or []:
@@ -517,12 +517,13 @@ def choisir_identifiant(reponse: dict, numero: str) -> str | None:
     return repli
 
 
-def version_en_vigueur(article: dict) -> str | None:
+def version_a_extraire(article: dict) -> str | None:
     """L'identifiant de la version en vigueur d'un article rendu par
-    `/consult/getArticle`, lu dans `articleVersions` ; None si l'article
-    rendu est déjà celle-là ou si aucune ne l'est."""
+    `/consult/getArticle` : le sien s'il l'est, sinon celui que donne
+    `articleVersions`. None si aucune version n'est en vigueur : la commande
+    le signale au lieu d'écrire une rédaction périmée."""
     if (article.get("etat") or "").upper() == "VIGUEUR":
-        return None
+        return article.get("id")
     for version in article.get("articleVersions") or []:
         if (version.get("etat") or "").upper() == "VIGUEUR":
             return version.get("id")
@@ -550,7 +551,15 @@ def commande_code(args) -> int:
             continue
         donnees = appeler("/consult/getArticle", {"id": identifiant}, acces, api)
         article = donnees.get("article") or donnees
-        if vigueur := version_en_vigueur(article):
+        vigueur = version_a_extraire(article)
+        if vigueur is None:
+            print(
+                f"{numero} : aucune version en vigueur parmi celles de l'article, rien n'est écrit",
+                file=sys.stderr,
+            )
+            manquants.append(numero)
+            continue
+        if vigueur != identifiant:
             identifiant = vigueur
             donnees = appeler("/consult/getArticle", {"id": identifiant}, acces, api)
             article = donnees.get("article") or donnees

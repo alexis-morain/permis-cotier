@@ -91,10 +91,21 @@ export const GUIDE: readonly PageGuide[] = [
     court: 'Où le passer',
     question: 'Où passe-t-on l’examen du permis côtier ?',
     reponse:
-      'Sur un site d’examen dont le responsable est indépendant de ceux qui vendent la formation. C’est le bateau-école qui monte le dossier, et lui seul qui valide la formation pratique.',
+      'Dans le centre d’un des quatre organismes retenus par l’État. L’école fournit le numéro de candidat et valide la pratique, le candidat réserve sa session.',
     sources: [
       { texte: 'Arrêté du 28 septembre 2007, article 18.2', ref: 'arrete-2007-09-28', fichier: 'article-18' },
       { texte: 'Arrêté du 28 septembre 2007, article 6', ref: 'arrete-2007-09-28', fichier: 'article-6' },
+      { texte: 'Arrêté du 28 septembre 2007, article 1er', ref: 'arrete-2007-09-28', fichier: 'article-1' },
+      {
+        texte: 'Formulaire cerfa n° 14681*03, demande d’inscription à une option de base',
+        ref: 'service-public',
+        url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/R21199',
+      },
+      {
+        texte: 'Ministère de la Mer, « Le permis plaisance », page mise à jour le 17 avril 2026',
+        ref: 'mer-gouv',
+        url: 'https://www.mer.gouv.fr/le-permis-plaisance-permis-de-conduire-les-bateaux-de-plaisance-moteur',
+      },
     ],
   },
   {
@@ -103,19 +114,19 @@ export const GUIDE: readonly PageGuide[] = [
     court: 'En candidat libre',
     question: 'Peut-on passer le permis côtier en candidat libre ?',
     reponse:
-      'À moitié. Vous réservez seul votre place à l’épreuve théorique, mais après cinq heures de cours en salle, et seul un établissement agréé valide la pratique.',
+      'Non, pas pour une première option : cinq heures en salle et pratique en bateau-école. La voie libre sert à la seconde option, la carte mer et l’hauturière.',
     sources: [
+      {
+        texte: 'Ministère de la Mer, « Le permis plaisance », page mise à jour le 17 avril 2026',
+        ref: 'mer-gouv',
+        url: 'https://www.mer.gouv.fr/le-permis-plaisance-permis-de-conduire-les-bateaux-de-plaisance-moteur',
+      },
       { texte: 'Décret n° 2007-1167 du 2 août 2007, article 4', ref: 'decret-2007-1167', fichier: 'article-4' },
       { texte: 'Arrêté du 28 septembre 2007, article 1er', ref: 'arrete-2007-09-28', fichier: 'article-1' },
       { texte: 'Arrêté du 28 septembre 2007, article 3', ref: 'arrete-2007-09-28', fichier: 'article-3' },
       { texte: 'Arrêté du 28 septembre 2007, article 4', ref: 'arrete-2007-09-28', fichier: 'article-4' },
+      { texte: 'Arrêté du 28 septembre 2007, article 18.1', ref: 'arrete-2007-09-28', fichier: 'article-18' },
       { texte: 'Décret n° 2007-1167 du 2 août 2007, article 13', ref: 'decret-2007-1167', fichier: 'article-13' },
-      { texte: 'Décret n° 2007-1167 du 2 août 2007, article 26', ref: 'decret-2007-1167', fichier: 'article-26' },
-      {
-        texte: 'Ministère de la Mer, « L’examen théorique du permis plaisance évolue », 1er juin 2022',
-        ref: 'mer-gouv',
-        url: 'https://www.mer.gouv.fr/lexamen-theorique-du-permis-plaisance-evolue',
-      },
       {
         texte: 'Formulaire cerfa n° 14681*03, demande d’inscription à une option de base',
         ref: 'service-public',
