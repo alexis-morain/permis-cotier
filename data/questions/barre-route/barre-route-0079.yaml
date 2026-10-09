@@ -1,0 +1,30 @@
+id: barre-route-0079
+option: cotier
+theme: barre-route
+notion: barre-chenal-etroit
+famille: barre-depassement-chenal
+statut: publie
+difficulte: 2
+enonce: >-
+  Dans un chenal étroit, un navire qui te suit veut te dépasser, et il ne peut le faire en
+  sécurité que si tu manœuvres. Tu es d'accord. Que te demande la règle 9 e) i) ?
+propositions:
+  - id: a
+    texte: Maintenir ton cap et ta vitesse, c'est à lui seul de manœuvrer puisqu'il te rattrape.
+  - id: b
+    texte: Manœuvrer de manière à lui permettre de te dépasser en toute sécurité.
+reponses:
+  - b
+explication: >-
+  La règle 9 e) i) vise le dépassement, dans un chenal étroit ou une voie d'accès, qui ne
+  peut se faire que si le navire rattrapé manœuvre. Le navire rattrapé, s'il est d'accord,
+  fait entendre le signal prévu et manœuvre de manière à permettre un dépassement en toute
+  sécurité. Garder ton cap et ta vitesse irait contre l'accord que tu as donné.
+sources:
+  - texte: RIPAM, règle 9 e) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

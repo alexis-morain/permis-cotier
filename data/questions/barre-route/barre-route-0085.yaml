@@ -1,0 +1,31 @@
+id: barre-route-0085
+option: cotier
+theme: barre-route
+notion: barre-risque-abordage
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu utilises ton radar pour déceler un risque d'abordage. À côté du balayage à longue
+  portée, quelle méthode la règle 7 b) cite-t-elle ?
+propositions:
+  - id: a
+    texte: Le « plotting » radar, ou une observation systématique équivalente des échos.
+  - id: b
+    texte: Le passage sur la plus courte échelle de portée, pour grossir les échos.
+  - id: c
+    texte: Le relevé ponctuel de l'écho le plus proche, au moment où il apparaît.
+reponses:
+  - a
+explication: >-
+  La règle 7 b) demande d'utiliser un radar en état de marche de façon appropriée, en
+  recourant en particulier au balayage à longue portée et au « plotting » radar ou à toute
+  autre observation systématique équivalente des objets détectés. Le mot qui compte est
+  « systématique » : un relevé isolé n'en est pas une.
+sources:
+  - texte: RIPAM, règle 7 b)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

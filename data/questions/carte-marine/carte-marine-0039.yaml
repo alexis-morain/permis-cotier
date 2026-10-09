@@ -1,0 +1,32 @@
+id: carte-marine-0039
+option: cotier
+theme: carte-marine
+notion: carte-dangers-amers
+statut: publie
+difficulte: 2
+enonce: >-
+  Sur la carte, tu repères une croix entourée de quatre points. Que signale ce symbole ?
+propositions:
+  - id: a
+    texte: Une roche qui couvre et découvre
+  - id: b
+    texte: Une roche toujours submergée, de profondeur inconnue
+  - id: c
+    texte: Une épave
+  - id: d
+    texte: Une roche à fleur d'eau, au niveau du zéro des cartes
+reponses:
+  - d
+explication: >-
+  Dans l'ouvrage 1D du SHOM, la croix entourée de quatre points (K 12) marque une roche à
+  fleur d'eau, au niveau du zéro des cartes. La croix seule est une roche toujours
+  submergée dont on ignore la profondeur (K 13), et l'épave se dessine en fuseau. La roche
+  qui couvre et découvre a son propre symbole.
+sources:
+  - texte: Fiche lecture de carte marine, SHOM ouvrage 1D, « Quelques symboles élémentaires »
+    ref: fiche-carte-marine
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

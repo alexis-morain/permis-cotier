@@ -1,0 +1,32 @@
+id: vhf-0068
+option: cotier
+theme: vhf
+notion: vhf-licence-mmsi
+statut: publie
+difficulte: 2
+enonce: >-
+  Ta VHF est programmée avec un MMSI. Que signifie ce sigle ?
+propositions:
+  - id: a
+    texte: Marine Mobile Safety Indicator
+  - id: b
+    texte: Maritime Mobile Service Identity
+  - id: c
+    texte: Maritime Message Signal Identifier
+reponses:
+  - b
+explication: >-
+  MMSI veut dire Maritime Mobile Service Identity : le numéro qui identifie la station
+  dans le service mobile maritime. L'article 240-2.20 de la
+  division 240 l'écrit avec les deux premiers mots inversés, Mobile Maritime Service
+  Identity, sans que le sens change.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+  - texte: Division 240, article 240-2.20, III
+    ref: division-240
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

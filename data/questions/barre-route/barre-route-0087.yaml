@@ -1,0 +1,33 @@
+id: barre-route-0087
+option: cotier
+theme: barre-route
+notion: barre-hierarchie-privileges
+statut: publie
+difficulte: 2
+enonce: >-
+  Un navire en train d'effectuer des opérations d'hydrographie ne peut pas s'écarter de ta
+  route. Au sens du RIPAM, comment le désigne-t-on ?
+propositions:
+  - id: a
+    texte: Un navire qui n'est pas maître de sa manœuvre.
+  - id: b
+    texte: Un navire handicapé par son tirant d'eau.
+  - id: c
+    texte: Un navire en train de pêcher.
+  - id: d
+    texte: Un navire à capacité de manœuvre restreinte.
+reponses:
+  - d
+explication: >-
+  La règle 3 g) appelle navire à capacité de manœuvre restreinte celui dont la capacité à
+  manœuvrer est limitée par la nature de ses travaux, et qui ne peut donc pas s'écarter de
+  la route d'un autre navire. Son alinéa ii) y range les navires en train d'effectuer des
+  opérations de dragage, d'hydrographie ou d'océanographie, ou des travaux sous-marins.
+sources:
+  - texte: RIPAM, règle 3 g) ii)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

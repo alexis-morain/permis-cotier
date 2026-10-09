@@ -1,0 +1,32 @@
+id: carburant-0010
+option: cotier
+theme: carburant
+notion: carburant-regle-tiers
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu vas à une île à 20 milles en filant 10 nœuds, avec un moteur qui consomme 12 litres
+  par heure. Selon la règle des tiers, de combien de carburant utilisable dois-tu disposer
+  au départ ?
+propositions:
+  - id: a
+    texte: 24 litres
+  - id: b
+    texte: 48 litres
+  - id: c
+    texte: 72 litres
+reponses:
+  - c
+explication: >-
+  L'aller dure 20 / 10 = 2 heures et brûle 2 × 12 = 24 litres. La règle des tiers veut que
+  l'aller ne prenne qu'un tiers du carburant, le retour un autre, et que le dernier reste en
+  réserve : il faut donc 3 × 24 = 72 litres réellement utilisables. Avec 48 litres, tu fais
+  l'aller et le retour sans aucune réserve.
+sources:
+  - texte: Fiche autonomie en carburant, « La règle des tiers »
+    ref: fiche-carburant
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

@@ -1,0 +1,32 @@
+id: barre-route-0088
+option: cotier
+theme: barre-route
+notion: barre-chenal-etroit
+statut: publie
+difficulte: 1
+enonce: >-
+  Tu décides d'emprunter un dispositif de séparation du trafic. Il compte deux voies de
+  circulation, de sens opposés. Laquelle suis-tu, selon la règle 10 b) ?
+propositions:
+  - id: a
+    texte: La voie la plus proche de toi, dans le sens où elle est dégagée.
+  - id: b
+    texte: La voie dont la direction générale du trafic est celle de ta route.
+  - id: c
+    texte: La voie de ton choix, tant que tu restes hors de la zone de séparation.
+reponses:
+  - b
+explication: >-
+  La règle 10 b) i) demande aux navires qui naviguent à l'intérieur d'un dispositif de
+  séparation du trafic de suivre la voie de circulation appropriée, dans la direction
+  générale du trafic pour cette voie. Une voie se parcourt donc dans un seul sens : rester
+  hors de la zone de séparation ne suffit pas, et une voie dégagée ne se remonte pas à
+  contresens.
+sources:
+  - texte: RIPAM, règle 10 b) i)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

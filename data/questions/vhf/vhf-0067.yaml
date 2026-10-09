@@ -1,0 +1,29 @@
+id: vhf-0067
+option: cotier
+theme: vhf
+notion: vhf-alphabet
+statut: publie
+difficulte: 2
+enonce: >-
+  Un sémaphore te demande d'épeler le nom de ton bateau, POLLY. Que réponds-tu ?
+propositions:
+  - id: a
+    texte: Peter Oscar Lima Lima Yankee
+  - id: b
+    texte: Papa Oscar Lima Lima Yankee
+  - id: c
+    texte: Papa Oscar Lima Lima Yellow
+reponses:
+  - b
+explication: >-
+  L'alphabet phonétique international dit Papa pour P, Oscar pour O, Lima pour L et
+  Yankee pour Y. Peter et Yellow n'appartiennent pas à cet alphabet, même s'ils
+  commencent par la bonne lettre.
+sources:
+  - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
+    ref: fiche-vhf
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

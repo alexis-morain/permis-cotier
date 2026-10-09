@@ -1,0 +1,36 @@
+id: barre-route-0080
+option: cotier
+theme: barre-route
+notion: barre-rattrapant
+famille: barre-depassement-chenal
+statut: publie
+difficulte: 3
+enonce: >-
+  Dans un chenal étroit, tu rattrapes un navire plus lent. Il a donné son accord et
+  manœuvre pour te laisser passer. Pendant le dépassement, qui doit s'écarter de la route
+  de l'autre ?
+propositions:
+  - id: a
+    texte: Toi, tu restes le navire qui rattrape.
+  - id: b
+    texte: Lui, puisqu'il a accepté de manœuvrer pour toi.
+  - id: c
+    texte: Aucun des deux, son accord remplace les règles de barre.
+reponses:
+  - a
+explication: >-
+  La règle 9 e) ii) précise que les dispositions sur le dépassement en chenal étroit ne
+  dispensent pas le navire qui rattrape de se conformer à la règle 13, selon laquelle tout
+  navire qui en rattrape un autre doit s'écarter de sa route. Même quand le navire rattrapé
+  manœuvre pour faciliter le passage, c'est toi qui dois t'écarter. Son accord ne renverse
+  pas les rôles.
+sources:
+  - texte: RIPAM, règle 9 e) ii)
+    ref: decret-77-733
+  - texte: RIPAM, règle 13 a)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

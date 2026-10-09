@@ -1,0 +1,35 @@
+id: balisage-0073
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 2
+enonce: >-
+  Le service responsable estime qu'un danger nouveau est particulièrement grave. Que prévoit
+  l'arrêté pour son balisage ?
+propositions:
+  - id: a
+    texte: Au moins une des marques est doublée, aussitôt que possible
+  - id: b
+    texte: Une marque spéciale jaune s'ajoute aux marques en place
+  - id: c
+    texte: Les marques en place sont remplacées par une bouée d'épave
+reponses:
+  - a
+explication: >-
+  Le paragraphe 7.2.1 dit que si le service responsable estime le danger particulièrement
+  grave, au moins une des marques est doublée aussitôt que possible. La marque mise en double
+  est en tous points identique à celle avec laquelle elle est couplée (7.2.3). La marque
+  spéciale n'est pas au nombre des marques prévues pour un danger nouveau, et la bouée
+  d'épave en cas d'urgence est l'un des moyens de le signaler, pas un remplacement imposé
+  par la gravité.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.3
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

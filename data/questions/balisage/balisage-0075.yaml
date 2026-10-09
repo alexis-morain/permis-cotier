@@ -1,0 +1,33 @@
+id: balisage-0075
+option: cotier
+theme: balisage
+notion: balisage-feux
+statut: publie
+difficulte: 2
+enonce: >-
+  Un feu à secteurs est employé pour marquer la limite d'un chenal. Quelle règle suit la
+  couleur de son feu ?
+propositions:
+  - id: a
+    texte: Aucune, l'autorité choisit librement
+  - id: b
+    texte: La convention de couleur des latérales de la région
+  - id: c
+    texte: Le jaune des marques spéciales, dans toutes les régions
+reponses:
+  - b
+explication: >-
+  Le paragraphe 8.2.2 dit qu'un feu à secteurs employé pour marquer la limite d'un chenal suit
+  la convention de couleur de la région AISM indiquée à la section 2, celle des marques
+  latérales. En région A, c'est le rouge pour bâbord et le vert pour tribord (2.3.1 et 2.3.2).
+  Le jaune est la couleur du feu des marques spéciales (6.2).
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 8.2.2
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.1 et 2.3.2
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

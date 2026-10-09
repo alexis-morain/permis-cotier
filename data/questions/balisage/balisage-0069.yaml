@@ -1,0 +1,34 @@
+id: balisage-0069
+option: cotier
+theme: balisage
+notion: balisage-cardinal
+statut: publie
+difficulte: 3
+enonce: >-
+  Les quadrants qui donnent leur nom aux marques cardinales ont pour origine le point à
+  marquer. Entre quels relèvements vrais s'étend le quadrant Est ?
+propositions:
+  - id: a
+    texte: Entre le nord et l'est
+  - id: b
+    texte: Entre l'est et le sud
+  - id: c
+    texte: Entre le nord-est et le sud-est
+  - id: d
+    texte: Entre le sud-est et le sud-ouest
+reponses:
+  - c
+explication: >-
+  Le paragraphe 3.1.1 limite les quatre quadrants par les relèvements vrais NO-NE, NE-SE,
+  SE-SO et SO-NO, dont l'origine est le point à marquer. Le quadrant Est s'étend donc du
+  nord-est au sud-est, de part et d'autre de l'est. Le piège est de le prendre pour le quart
+  compris entre deux points cardinaux, du nord à l'est ou de l'est au sud ; entre le sud-est
+  et le sud-ouest, c'est le quadrant Sud.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 3.1.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

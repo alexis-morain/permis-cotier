@@ -1,0 +1,33 @@
+id: titre-conduite-0026
+option: cotier
+theme: titre-conduite
+notion: titre-options
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu détiens une carte mer, délivrée avant le permis actuel, et pas la carte mer dite
+  « spéciale ». Que t'autorise-t-elle à conduire en mer ?
+propositions:
+  - id: a
+    texte: De jour comme de nuit, un bateau à moteur de 37 kilowatts au plus
+  - id: b
+    texte: De jour, un bateau à moteur de toute puissance
+  - id: c
+    texte: De jour, un bateau à moteur de 37 kilowatts au plus
+  - id: d
+    texte: Plus aucun bateau, ce titre a cessé d'être valable en 2008
+reponses:
+  - c
+explication: >-
+  L'article 13 du décret garde valables les titres de conduite en mer délivrés avant lui.
+  La carte mer permet de piloter en eaux maritimes, de jour, un bateau de plaisance à moteur
+  d'une puissance inférieure ou égale à 37 kilowatts. Seule la carte mer dite « spéciale »
+  autorise aussi la conduite de nuit : c'est le piège de la première proposition.
+sources:
+  - texte: Décret n° 2007-1167 du 2 août 2007, article 13, I
+    ref: decret-2007-1167
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

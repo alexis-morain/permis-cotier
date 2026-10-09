@@ -1,0 +1,39 @@
+id: balisage-0072
+option: cotier
+theme: balisage
+notion: balisage-danger-nouveau
+statut: publie
+difficulte: 2
+enonce: >-
+  Un danger nouveau vient d'être découvert. Parmi ces marques, que peut-on employer pour le
+  signaler ?
+propositions:
+  - id: a
+    texte: Une marque cardinale
+  - id: b
+    texte: Une marque spéciale
+  - id: c
+    texte: Une marque de danger isolé
+  - id: d
+    texte: Une marque d'eaux saines
+reponses:
+  - a
+  - c
+explication: >-
+  Le paragraphe 7.2.1 veut que les dangers nouveaux soient signalés par des marques
+  latérales, cardinales, de danger isolé, ou par la bouée spécifique de marquage des épaves
+  en cas d'urgence. La marque spéciale n'en fait pas partie : elle n'a pas pour but principal
+  d'aider la navigation (6.1). La marque d'eaux saines dit au contraire que les eaux sont
+  saines tout autour d'elle (5.1).
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 5.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

@@ -1,0 +1,38 @@
+id: balisage-region-b-0010
+option: cotier
+theme: balisage-region-b
+notion: region-b-lateral
+famille: balisage-chenal-prefere-bande
+statut: publie
+difficulte: 3
+enonce: >-
+  Tu navigues en Martinique, en région de balisage B. Là où le chenal se divise, tu relèves
+  une bouée cylindrique verte portant une large bande horizontale rouge. Que t'indique-t-elle ?
+propositions:
+  - id: a
+    texte: Le chenal à emprunter de préférence est à bâbord
+  - id: b
+    texte: Le chenal à emprunter de préférence est à tribord
+  - id: c
+    texte: Une simple limite de bâbord du chenal, sans préférence
+  - id: d
+    texte: Une simple limite de tribord du chenal, sans préférence
+reponses:
+  - b
+explication: >-
+  En région B, la marque de chenal préféré à tribord est verte avec une large bande
+  horizontale rouge, de forme cylindrique, avec un voyant cylindrique vert (2.4.3.1). La large
+  bande signale une bifurcation, pas une simple limite de chenal. Le piège est le réflexe de
+  la région A, où le vert à bande rouge désigne le chenal préféré à bâbord : en région B, les
+  couleurs sont inversées, et la forme cylindrique, celle des marques de bâbord (2.4.1),
+  confirme la lecture.
+sources:
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.3.1
+    ref: arrete-2017-11-30
+  - texte: Arrêté du 30 novembre 2017, annexe I, 2.4.1
+    ref: arrete-2017-11-30
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'

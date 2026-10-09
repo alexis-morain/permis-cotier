@@ -1,0 +1,35 @@
+id: barre-route-0082
+option: cotier
+theme: barre-route
+notion: barre-chenal-etroit
+statut: publie
+difficulte: 2
+enonce: >-
+  Tu suis la voie de circulation d'un dispositif de séparation du trafic. Qu'est-ce qui
+  peut te permettre d'entrer dans la zone de séparation, selon la règle 10 e) ?
+propositions:
+  - id: a
+    texte: Une urgence, pour éviter un danger immédiat.
+  - id: b
+    texte: Le besoin de doubler un navire plus lent de ta voie.
+  - id: c
+    texte: Le besoin de mouiller à l'écart du trafic.
+  - id: d
+    texte: Le besoin de pêcher dans la zone de séparation.
+reponses:
+  - a
+  - d
+explication: >-
+  La règle 10 e) interdit normalement au navire qui ne coupe pas le dispositif, ni ne
+  s'engage dans une voie ou n'en sort, de pénétrer dans une zone de séparation ou de
+  franchir une ligne de séparation. Elle n'admet que deux exceptions : l'urgence, pour
+  éviter un danger immédiat, et la pêche dans la zone de séparation. Doubler un navire ou
+  mouiller n'en font pas partie.
+sources:
+  - texte: RIPAM, règle 10 e)
+    ref: decret-77-733
+meta:
+  cree_le: '2026-10-09'
+  genere_par: claude
+  relu_par: claude
+  relu_le: '2026-10-09'
