@@ -18,7 +18,7 @@ propositions:
   - id: c
     texte: Le danger s'étend loin autour d'elle, il faut passer au large
   - id: d
-    texte: Le danger vient d'être découvert et ne figure pas encore sur tes cartes
+    texte: Elle se laisse à bâbord en entrant au port, comme une latérale
 reponses:
   - a
   - b
@@ -40,5 +40,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-10-09'
