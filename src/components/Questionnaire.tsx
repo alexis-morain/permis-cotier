@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { aujourdhui, charger, enregistrerProfil, sauvegarder } from '../lib/progression';
+import { annoncerDateExamen, aujourdhui, charger, enregistrerProfil, sauvegarder } from '../lib/progression';
 import type { Profil } from '../lib/progression';
 import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, pointFinal, rappel } from '../lib/profil';
 import { evenement } from '../lib/mesure';
@@ -217,6 +217,10 @@ export default function Questionnaire({ totalQuestions }: Props) {
               setDateExamen(e.target.value);
               ecrire(p, e.target.value);
               if (e.target.value) evenement('date-examen-renseignee');
+              // Dans l'app, la coquille arme sur cette annonce les rappels
+              // avant l'épreuve, et demande la permission ici, où l'on voit
+              // à quoi elle sert.
+              annoncerDateExamen(e.target.value || null);
             }}
           />
           {jours !== null && (
