@@ -332,10 +332,24 @@ describe('les notions faibles', () => {
 });
 
 describe('le changement de comptage', () => {
+  // L'avis s'éteint seul le 10 octobre 2026 (FIN_AVIS_COMPTAGE) : sans date
+  // figée, ce test est tombé ce jour-là.
+  afterEach(() => vi.useRealTimers());
+
   it('le dit une fois à qui révisait déjà, sans en faire un événement', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-10-01T10:00:00Z'));
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, '2026-09-05'));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     expect(screen.getByText(/on compte autrement/)).toBeTruthy();
+  });
+
+  it('se tait à partir du 10 octobre, jour parisien', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-10-09T22:30:00Z'));
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, '2026-09-05'));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(screen.queryByText(/on compte autrement/)).toBeNull();
   });
 
   it('ne dit rien à qui commence aujourd’hui', () => {

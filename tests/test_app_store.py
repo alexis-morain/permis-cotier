@@ -11,9 +11,12 @@ from app_store import (  # noqa: E402
     Build,
     Version,
     cle_version,
+    LIMITE_A_TESTER,
     commit_du_texte,
     decider,
+    lire_a_tester,
     patch_suivant,
+    texte_a_tester,
 )
 
 SHA = "0123456789abcdef0123456789abcdef01234567"
@@ -36,6 +39,46 @@ def test_commit_lu_dans_a_tester():
     assert commit_du_texte("main 0123456") == "0123456"
     assert commit_du_texte("Rien à voir") is None
     assert commit_du_texte(None) is None
+
+
+def test_commit_lu_dans_la_reference_du_texte_redige():
+    texte = "Essaie un examen blanc complet.\n\nRéférence\u00a0: 0123456"
+    assert commit_du_texte(texte) == "0123456"
+
+
+def test_a_tester_porte_le_texte_redige_puis_la_reference():
+    texte = texte_a_tester(SHA, "Essaie un examen blanc complet.")
+    assert texte.startswith("Essaie un examen blanc complet.")
+    assert "main " not in texte
+    assert texte.endswith("0123456")
+    assert commit_du_texte(texte) == "0123456"
+
+
+def test_a_tester_vide_ou_absent_arrete_le_pipeline(tmp_path):
+    vide = tmp_path / "a-tester.txt"
+    vide.write_text("  \n", encoding="utf-8")
+    for chemin in (vide, tmp_path / "absent.txt"):
+        try:
+            lire_a_tester(chemin)
+        except SystemExit as arret:
+            assert "À tester" in str(arret)
+        else:
+            raise AssertionError(f"{chemin.name} aurait dû arrêter le pipeline")
+
+
+def test_a_tester_trop_long_arrete_le_pipeline(tmp_path):
+    long = tmp_path / "a-tester.txt"
+    long.write_text("x" * LIMITE_A_TESTER, encoding="utf-8")
+    try:
+        lire_a_tester(long)
+    except SystemExit as arret:
+        assert "caractères" in str(arret)
+    else:
+        raise AssertionError("un texte au-delà de la limite aurait dû arrêter le pipeline")
+
+
+def test_le_fichier_du_depot_est_lisible():
+    assert lire_a_tester()
 
 
 def test_la_version_la_plus_haute_est_celle_du_tri_numerique():

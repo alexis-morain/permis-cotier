@@ -27,6 +27,10 @@ La direction artistique et les règles écran par écran sont dans `docs/app-da.
   rejeté ne se resoumet jamais seul. Numéro de build : le plus haut connu + 1.
 - **`ios/nouveautes.txt`** devient les « Nouveautés » fr-FR de chaque version
   soumise (sauf la 1.0) ; vide, la soumission échoue.
+- **`ios/a-tester.txt`** devient le « À tester » de chaque build TestFlight,
+  suivi d'une ligne « Référence : <sha> » que `commit_du_texte()` relit pour
+  savoir quel commit porte quel build (l'ancien « main <sha> » se lit encore).
+  Vide ou au-delà de 3 900 caractères, `preparer` échoue avant l'archive.
 - **La branche `app-ios` n'a plus de raison d'être** : tout le code de l'app
   est sur `main`.
 
@@ -34,6 +38,8 @@ La direction artistique et les règles écran par écran sont dans `docs/app-da.
 
 - Poser les trois secrets dans l'environnement `app-store`.
 - Tenir `ios/nouveautes.txt` à jour avant un changement visible.
+- Réécrire `ios/a-tester.txt` à chaque push qui touche l'app : ce qui change
+  et quoi essayer, pour les testeurs, en tutoyant comme l'app.
 - Une revue rejetée : la corriger, puis un nouveau commit la renvoie, ou la
   renvoyer depuis App Store Connect si seules les métadonnées étaient en cause.
 
