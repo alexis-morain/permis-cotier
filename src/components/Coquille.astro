@@ -12,6 +12,7 @@
  * - Les liens vers un autre site s'ouvrent dans Safari intégré.
  * - La barre d'état suit le fond de la page.
  * - Une racine d'onglet se recharge quand la progression a changé ailleurs.
+ * - La date d'examen annoncée par un écran arme les rappels locaux.
  *
  * D'où le greffon de `astro.config.mjs` : hors de la cible « app », il
  * remplace ce fichier par un composant vide, et ni le routeur ni les
@@ -23,7 +24,7 @@ import { ClientRouter } from 'astro:transitions';
 <ClientRouter />
 
 <script>
-  import { ouvrirDehors } from '../lib/natif';
+  import { armerLesRappelsSurLaDate, ouvrirDehors } from '../lib/natif';
   import { accorderBarreEtatALaPage } from '../lib/apparence';
   import { rafraichirSiLaProgressionAChange } from '../lib/page';
 
@@ -76,6 +77,10 @@ import { ClientRouter } from 'astro:transitions';
 
   // Un onglet qui revient à l'écran relit la progression écrite ailleurs.
   rafraichirSiLaProgressionAChange();
+
+  // La date d'examen posée dans la Fiche ou le questionnaire arme les
+  // rappels J-7, J-3, J-1 et le jour J ; effacée, elle les tait.
+  armerLesRappelsSurLaDate();
 
   void accorderBarreEtatALaPage();
   window

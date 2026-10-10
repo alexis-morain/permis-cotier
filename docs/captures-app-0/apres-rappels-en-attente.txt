@@ -1,0 +1,21 @@
+Simulateur iPhone 17 Pro (iOS 26.5), 10 octobre 2026, 13 h 07 : date d'examen posée au 30 octobre depuis la Fiche.
+Magasin usernotificationsd : data/Library/UserNotifications/<app>/PendingNotifications.plist, extrait (plutil -p) :
+
+    76 => "1707"
+    78 => "Ton examen est dans une semaine"
+    79 => "Ton examen est dans une semaine"
+    88 => "Un examen blanc de quarante questions prend dix minutes."
+    90 => "Un examen blanc de quarante questions prend dix minutes."
+    95 => "1703"
+    97 => "Plus que trois jours"
+    98 => "Plus que trois jours"
+    105 => "C’est le moment de revoir tes erreurs, pas d’en découvrir."
+    106 => "C’est le moment de revoir tes erreurs, pas d’en découvrir."
+    110 => "1701"
+    112 => "C’est demain"
+    113 => "C’est demain"
+    120 => "Un dernier examen blanc ce soir, et au lit."
+    121 => "Un dernier examen blanc ce soir, et au lit."
+    126 => "1700"
+    128 => "C’est aujourd’hui"
+    129 => "C’est aujourd’hui"

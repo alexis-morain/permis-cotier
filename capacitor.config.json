@@ -5,12 +5,11 @@
   "ios": {
     "contentInset": "never"
   },
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 600,
-      "launchAutoHide": true,
-      "backgroundColor": "#f3f6fb",
-      "showSpinner": false
+  "experimental": {
+    "ios": {
+      "spm": {
+        "swiftToolsVersion": "6.0"
+      }
     }
   }
 }

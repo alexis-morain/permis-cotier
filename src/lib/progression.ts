@@ -370,6 +370,20 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
   }
 }
 
+/**
+ * La date d'examen vient d'être posée, changée ou effacée : les écrans le
+ * disent par cet événement, sur `window`, avec la date en `detail` (`null`
+ * pour effacée). Personne n'écoute sur le site ; dans l'app, la coquille
+ * arme ou tait les rappels (`armerLesRappelsSurLaDate` de `natif.ts`).
+ * L'écran n'importe rien de natif : le site ne paie pas un octet pour l'app.
+ */
+export const EVENEMENT_DATE_EXAMEN = 'permis-cotier:date-examen';
+
+export function annoncerDateExamen(date: string | null): void {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent<string | null>(EVENEMENT_DATE_EXAMEN, { detail: date }));
+}
+
 export function sauvegarder(etat: Etat, stockage: Stockage | null = stockageParDefaut()): void {
   if (!stockage) return;
   try {

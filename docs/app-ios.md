@@ -5,6 +5,63 @@ resterait à faire. Il existe pour qu'on puisse reprendre le chantier sans
 relire les commits.
 La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
 
+## 10 octobre 2026 — les rappels s'arment, lot 0 du plan « app solide »
+
+### Ce qui a changé
+
+- **Les rappels d'examen n'avaient jamais été armés depuis l'app.**
+  `programmerRappels()` n'avait qu'un appelant, le script de la page `/` du
+  site, que l'app ne sert pas ; la Fiche et le questionnaire de départ
+  posaient la date sans rien programmer. Prouvé au simulateur avant la
+  correction (date posée, aucune demande de permission :
+  `docs/captures-app-0/avant-date-sans-permission.png`), puis après (la
+  demande apparaît dès la date posée, `apres-date-permission-demandee.png`).
+  Les écrans n'importent rien de natif : la Fiche, le questionnaire et
+  l'accueil du site **annoncent** la date par `annoncerDateExamen()`
+  (`progression.ts`, un `CustomEvent` sur `window`, `null` pour effacée), et
+  c'est `Coquille.astro`, présent dans l'app seule, qui écoute par
+  `armerLesRappelsSurLaDate()` de `natif.ts`. Première version essayée :
+  importer `natif` depuis les deux îlots ; sur le site, le module devenait un
+  morceau de 87 octets de fonctions vides, un aller-retour de plus avant
+  l'hydratation de `/examen`. `rappels.test.tsx` garde l'annonce des trois
+  écrans ; `natif.rappels.test.ts` prouve ce que la coquille en fait : quatre
+  rappels à neuf heures, J-7, J-3, J-1, le jour J, jamais un passé, les
+  précédents effacés d'abord, rien sans permission, et plus rien une fois
+  débranchée.
+- **Cible iOS 18** (décision 4 du plan) : `IPHONEOS_DEPLOYMENT_TARGET`
+  passe de 15 à 18, et le greffon `Ecran` perd son chemin d'avant iOS 18,
+  qui n'avait jamais tourné sur un vrai runtime. iOS 18 tourne sur le même
+  matériel que 17 (XS/XR et après). `cap sync` écrit alors
+  `.iOS(.v18)` dans `CapApp-SPM/Package.swift`, que `swift-tools-version
+  5.9` ne connaît pas : `capacitor.config.json` demande `6.0` par
+  `experimental.ios.spm.swiftToolsVersion`.
+- **Plus de storyboard principal.** `Info.plist` déclarait `Main`, et UIKit
+  instanciait une sixième `EcranWeb` avant que `SceneDelegate` ne pose la
+  barre d'onglets, pour la jeter. Le storyboard est retiré du projet, les
+  deux clés aussi ; le commentaire de `SceneDelegate` dit désormais le vrai.
+  `LaunchScreen` reste l'écran de lancement.
+- **`@capacitor/splash-screen` retiré** : aucun import JS, et la coquille ne
+  l'appelait pas ; l'écran de lancement est le storyboard `LaunchScreen`,
+  clair et sombre. Le greffon ne figure plus dans `packageClassList`.
+- **Le survol : rien ne bouge, et le plan se trompait.** Le recensement du
+  10 octobre lisait `app-jeu.css:107-114` comme une réapplication du survol
+  sous `html[data-app]` ; ces règles sont sa neutralisation (elles ramènent
+  `.proposition:hover` de `quiz.css` à l'état de repos). Retirées une heure,
+  rendues par la revue avant la PR. Le lot 1 remplacera la neutralisation
+  par la garde `@media (hover: hover)` sur les 55 `:hover` du site.
+- **Le site ne paie rien** : `dist/` ne diffère de `main` que par les
+  empreintes des morceaux touchés, même découpe, mêmes poids. (Le réglage
+  Rollup `experimentalMinChunkSize`, essayé d'abord, refondait d'autres
+  morceaux et gardait celui de `natif` : écarté.)
+
+### Ce qui reste
+
+- Voir les rappels **arriver** sur un vrai iPhone (la date au lendemain, le
+  rappel J-1 à neuf heures) : le simulateur montre la permission et le
+  greffon est prouvé par test, pas la livraison.
+- La suite du plan `app-solide` : lot 1 (ressenti natif), lot 2 (le geste de
+  l'examen), lot 5 (la CI de l'app garde), lot 4, lot 3, lot 6.
+
 ## 4 octobre 2026 — l'app suit main
 
 ### Ce qui a changé
@@ -108,10 +165,11 @@ La direction artistique et les règles écran par écran sont dans `docs/app-da.
 - Les captures App Store sur iPhone 17 Pro Max, avec une progression posée.
 - À l'oreille sur un vrai iPhone : le bouton silencieux et la musique qui
   continue (session `.ambient`), VoiceOver sur l'annonce du verdict.
-- Cosmétique : l'écran de démarrage de Capacitor reste clair en sombre ; en
-  taille de texte XXXL le texte des propositions se cale à droite du disque.
-- Aucun runtime iOS 15 à 17 n'est installé : le chemin d'avant iOS 18 du greffon
-  `Ecran` n'a tourné que forcé sur iOS 26.
+- Cosmétique : en taille de texte XXXL le texte des propositions se cale à
+  droite du disque. (L'écran de démarrage de Capacitor, clair en sombre, est
+  parti avec le greffon le 10 octobre.)
+- ~~Aucun runtime iOS 15 à 17 n'est installé~~ : la cible est iOS 18 depuis le
+  10 octobre, et le chemin d'avant est supprimé.
 - **Le compte développeur Apple** reste le seul verrou pour TestFlight et la
   soumission.
 - [ ] H2, le son des signaux à l'oreille (lot H, avec la recette du lot D,

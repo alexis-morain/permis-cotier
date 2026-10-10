@@ -36,35 +36,10 @@ public class EcranPlugin: CAPPlugin, CAPBridgedPlugin {
     /// une page quittée en pleine série ne doit jamais laisser la barre cachée.
     static func basculer(dans ecran: UIViewController, cachee: Bool) {
         guard let barre = ecran.tabBarController else { return }
-        if #available(iOS 18.0, *) {
-            guard barre.isTabBarHidden != cachee else { return }
-            // UIKit anime la barre et recalcule lui-même la zone sûre.
-            barre.setTabBarHidden(cachee, animated: true)
-        } else {
-            guard barre.tabBar.isHidden != cachee else { return }
-            basculerAvantIOS18(barre: barre, ecran: ecran, cachee: cachee)
-        }
-    }
-
-    /// Avant iOS 18, cacher la barre ne rend pas toujours la place à l'écran :
-    /// l'encart du bas peut garder la hauteur de la barre. On mesure l'écart
-    /// avec la zone sûre de la fenêtre et on le retire par un encart négatif.
-    /// Barre rendue, l'encart revient à zéro.
-    private static func basculerAvantIOS18(barre: UITabBarController,
-                                           ecran: UIViewController,
-                                           cachee: Bool) {
-        UIView.transition(with: barre.tabBar, duration: 0.25,
-                          options: .transitionCrossDissolve) {
-            barre.tabBar.isHidden = cachee
-        }
-        ecran.additionalSafeAreaInsets = .zero
-        barre.view.setNeedsLayout()
-        barre.view.layoutIfNeeded()
-        if cachee {
-            let enTrop = ecran.view.safeAreaInsets.bottom - barre.view.safeAreaInsets.bottom
-            if enTrop > 0 {
-                ecran.additionalSafeAreaInsets.bottom = -enTrop
-            }
-        }
+        guard barre.isTabBarHidden != cachee else { return }
+        // UIKit anime la barre et recalcule lui-même la zone sûre. La cible
+        // est iOS 18 : le chemin d'avant, qui mesurait l'encart à la main,
+        // n'a jamais tourné sur un vrai runtime, et il est parti avec elle.
+        barre.setTabBarHidden(cachee, animated: true)
     }
 }

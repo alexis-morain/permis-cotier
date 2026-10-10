@@ -1,9 +1,12 @@
-36 nouvelles questions, sur la barre et la route, le balisage, la VHF, le titre de conduite, le carburant et la carte marine.
+Les rappels avant l’examen fonctionnent enfin : jusqu’ici, poser ta date dans l’app ne programmait rien. Désormais, une semaine avant, trois jours avant, la veille et le matin même, à neuf heures, l’app te le rappelle.
 
 À essayer :
-• Un examen blanc complet : les nouvelles questions apparaissent et se corrigent normalement.
-• L'entraînement par thème sur le balisage, puis sur la VHF, avec les explications.
-• La leçon « Déroulement de l'examen » du titre de conduite : la section sur le timbre a un nouveau titre.
-• Le mode avion après un premier lancement : tout reste utilisable.
+• Fiche → Date de l’examen : pose une date à plus d’une semaine. L’app demande l’autorisation d’envoyer des notifications, une seule fois ; accepte.
+• Si tu avais déjà posé ta date avec un build précédent, repose-la : rien n’avait été programmé.
+• Efface la date : les rappels se taisent, aucune notification ne doit arriver.
+• Le questionnaire de départ (Fiche → Répondre) : la date posée là arme aussi les rappels.
+• Un examen blanc complet : la barre d’onglets se cache pendant l’épreuve et revient au résultat.
+
+Cette version exige iOS 18 : un iPhone resté sur iOS 17 ne la verra pas.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, nous l’envoie.
