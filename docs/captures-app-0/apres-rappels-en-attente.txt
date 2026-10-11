@@ -19,3 +19,7 @@ Magasin usernotificationsd : data/Library/UserNotifications/<app>/PendingNotific
     126 => "1700"
     128 => "C’est aujourd’hui"
     129 => "C’est aujourd’hui"
+
+Rejoué le 11 octobre à 15 h 25 sur le build final (annonce par événement, écouteur de Coquille.astro), app réinstallée à vide :
+même demande de permission à la date posée, mêmes quatre identifiants dans un nouveau PendingNotifications.plist (7 734 octets) ;
+« Effacer la date » le ramène à 252 octets, aucun identifiant 17xx restant.
