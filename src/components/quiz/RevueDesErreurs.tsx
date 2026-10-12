@@ -1,0 +1,86 @@
+import type { QuestionAffichable } from '../../lib/banque';
+import type { Session } from '../../lib/session';
+import { lettreAffichee, melangerPropositions } from '../../lib/melange';
+import { nomDuTheme } from '../../lib/themes-client';
+import BoutonSignal from '../BoutonSignal';
+import { LienLecon, Signaler, Sources } from './Morceaux';
+
+interface Props {
+  session: Session;
+  parId: ReadonlyMap<string, QuestionAffichable>;
+  /** Les seules ratées, ou toutes les questions jouées. */
+  quoi: 'erreurs' | 'toutes';
+  /** Où ramène la leçon ouverte depuis une question ratée. */
+  retourLecon: string;
+}
+
+/**
+ * La revue dépliée au résultat : chaque question jouée, la réponse donnée, la
+ * bonne, l'explication et la source. Les propositions y gardent l'ordre du
+ * jeu : la revue montre l'écran que le candidat a eu sous les yeux.
+ */
+export default function RevueDesErreurs({ session, parId, quoi, retourLecon }: Props) {
+  const r = session.resultat;
+  if (!r) return null;
+  const ratees = new Set(r.ratees);
+  const jouees = session.questions.slice(0, r.total);
+  return (
+    <div className="revue">
+      {jouees.map((q, i) => {
+        const d = parId.get(q.id);
+        if (!d) return null;
+        const donnee = session.selections[i] ?? [];
+        const rate = ratees.has(q.id);
+        // Le bouton des erreurs les promet : la revue les tient seules.
+        if (quoi === 'erreurs' && !rate) return null;
+        // Une seule case cochée quand il en fallait deux : le candidat
+        // ne voyait pas qu'il manquait une réponse, seulement laquelle.
+        const incomplete = rate && q.reponses.length === 2 && donnee.length === 1;
+        return (
+          <article className="revue__item" key={q.id}>
+            <p className="revue__rang">
+              Question {i + 1} sur {jouees.length}, {nomDuTheme(q.theme)}
+              {rate ? ', ratée' : ''}
+            </p>
+            <h2 className="revue__enonce">{d.enonce}</h2>
+            {incomplete && (
+              <p className="discret">Il fallait deux réponses, tu en as coché une.</p>
+            )}
+            {d.visuel && (
+              <img className="jeu__visuel" src={`/visuels/${d.visuel.fichier}`} alt={d.visuel.alt} loading="lazy" />
+            )}
+            {d.visuel?.fichier.startsWith('sons/') && <BoutonSignal fichier={d.visuel.fichier} />}
+            <ul className="propositions">
+              {melangerPropositions(d.propositions, session.graine, d.id).map((p, rang) => {
+                const bonne = q.reponses.includes(p.id);
+                const cochee = donnee.includes(p.id);
+                const classe = bonne ? ' proposition--juste' : cochee ? ' proposition--fausse' : '';
+                return (
+                  <li key={p.id}>
+                    <div className={`proposition${classe}`}>
+                      <span className="proposition__lettre">{lettreAffichee(rang)}</span>
+                      <span>{p.texte}</span>
+                      {(bonne || cochee) && (
+                        <span className="proposition__marque">
+                          {cochee
+                            ? bonne ? 'ta réponse, juste' : 'ta réponse'
+                            : rate && donnee.length > 0 ? 'bonne réponse, oubliée' : 'bonne réponse'}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className={`verdict verdict--${rate ? 'fausse' : 'juste'}`} style={{ marginTop: '0.9rem' }}>
+              <p>{d.explication}</p>
+              <Sources sources={d.sources} />
+              {rate && <LienLecon question={d} retour={retourLecon} />}
+            </div>
+            <p style={{ marginTop: '0.6rem' }}><Signaler id={q.id} /></p>
+          </article>
+        );
+      })}
+    </div>
+  );
+}

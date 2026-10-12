@@ -1,5 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { aRevoir, depuisLe, nombreDErreurs, dernierExamen, echeance, joursDeSuite, reprise, type LeconAccueil } from './accueil';
+import {
+  aRevoir,
+  depuisLe,
+  nombreDErreurs,
+  dernierExamen,
+  echeance,
+  echeanceDe,
+  joursDeSuite,
+  phraseDeLEcheance,
+  reprise,
+  type LeconAccueil,
+} from './accueil';
 import { enregistrerExamen, enregistrerReponse, etatInitial, terminerLecon } from './progression';
 
 const JOUR = '2026-09-25';
@@ -121,5 +132,27 @@ describe('le nombre d’erreurs de /profil/erreurs', () => {
   it('ignore une question qui n’est plus publiée', () => {
     const e = enregistrerReponse(etatInitial(), 'retiree', false, JOUR);
     expect(nombreDErreurs(e, ids, JOUR)).toBe(0);
+  });
+});
+
+describe('phraseDeLEcheance, sous la date de l’accueil du site', () => {
+  const jour = '2026-10-12';
+  it('se tait sans date', () => {
+    expect(phraseDeLEcheance(echeanceDe(null, jour), 10)).toBeNull();
+  });
+  it('dit le rythme qui reste, et passe aux examens blancs quand tout est vu', () => {
+    expect(phraseDeLEcheance(echeanceDe('2026-10-22', jour), 95)).toBe(
+      'Dans 10 jours. Environ 10 questions par jour pour voir les 95 qui restent.',
+    );
+    expect(phraseDeLEcheance(echeanceDe('2026-10-22', jour), 0)).toBe(
+      'Dans 10 jours. Tu as tout vu une fois : place aux examens blancs.',
+    );
+  });
+  it('nomme la veille, le jour même et la date passée', () => {
+    expect(phraseDeLEcheance(echeanceDe('2026-10-13', jour), 5)).toBe('Demain. Fais deux examens blancs ce soir.');
+    expect(phraseDeLEcheance(echeanceDe('2026-10-12', jour), 5)).toBe('Aujourd’hui. Bon vent.');
+    expect(phraseDeLEcheance(echeanceDe('2026-10-01', jour), 5)).toBe(
+      'C’est passé. Efface la date au-dessus, ou pose la prochaine.',
+    );
   });
 });

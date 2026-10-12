@@ -3,14 +3,16 @@ name: App iOS
 # L'app suit `main` : chaque changement part sur TestFlight, puis en revue
 # dès qu'aucune revue n'est en cours. La décision est dans
 # `scripts/app_store.py`, testée ; ce fichier ne fait qu'enchaîner.
+#
+# Rien n'archive sans une CI verte sur le même commit. Le push sur `main`
+# ne déclenche plus l'app : c'est la fin de `ci.yml` qui le fait, par
+# `workflow_run`, et un seul endroit dit ce qu'est « vert ». Le filtre de
+# chemins qui écartait la documentation est repris par `commit_effectif()`.
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
-    # Un changement de documentation ne change pas l'app.
-    paths-ignore:
-      - 'docs/**'
-      - 'plans/**'
-      - '**/*.md'
   # Une version sortie dans la nuit libère la soumission de la suivante sans
   # attendre un nouveau push.
   schedule:
@@ -19,6 +21,9 @@ on:
 
 permissions:
   contents: read
+  # Lire les passages de `ci.yml`, pour le garde de `schedule` et de
+  # `workflow_dispatch`.
+  actions: read
 
 # Jamais deux passages à la fois : ils prendraient le même numéro de build.
 # Et pas d'annulation, on ne coupe pas un téléversement en cours.
@@ -27,17 +32,70 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Sous `workflow_run`, `github.sha` est la tête de `main` au moment où
+  # l'évènement arrive, pas le commit que la CI a vérifié : seul `head_sha`
+  # dit lequel. Une CI rouge, un passage de pull request (une branche de
+  # fork peut s'appeler `main`) ou un autre dépôt n'ouvrent rien.
+  garde:
+    if: >-
+      github.event_name != 'workflow_run'
+      || (github.event.workflow_run.conclusion == 'success'
+          && github.event.workflow_run.event == 'push'
+          && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      commit: ${{ steps.commit.outputs.commit }}
+      verte: ${{ steps.ci.outputs.verte }}
+    steps:
+      - name: Commit vérifié
+        id: commit
+        env:
+          COMMIT: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
+
+      # `schedule` et `workflow_dispatch` partent de la tête de `main` sans
+      # qu'aucune CI ne l'ait vue passer : on cherche la sienne. Pas encore
+      # finie, ou rouge, on s'arrête ; le `workflow_run` de sa fin prendra
+      # la suite s'il y a lieu.
+      - name: CI verte sur ce commit
+        id: ci
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT: ${{ steps.commit.outputs.commit }}
+          EVENEMENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENEMENT" = workflow_run ]; then
+            echo "verte=oui" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          n=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$COMMIT&event=push&status=success" --jq '.total_count')
+          if [ "$n" -gt 0 ]; then
+            echo "verte=oui" >> "$GITHUB_OUTPUT"
+          else
+            echo "Aucune CI verte sur ${COMMIT:0:7} : l'app attend."
+            echo "verte=non" >> "$GITHUB_OUTPUT"
+          fi
+
   preparer:
+    needs: garde
+    if: needs.garde.outputs.verte == 'oui'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # L'environnement porte la clé d'API, et n'est ouvert qu'à `main`.
     environment: app-store
     outputs:
+      commit: ${{ steps.decision.outputs.commit }}
       action: ${{ steps.decision.outputs.action }}
       version: ${{ steps.decision.outputs.version }}
       build: ${{ steps.decision.outputs.build }}
     steps:
+      # Tout l'historique : `commit_effectif()` compare au commit du dernier
+      # build pour reconnaître un changement de documentation seule.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.garde.outputs.commit }}
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -50,7 +108,7 @@ jobs:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
-          COMMIT: ${{ github.sha }}
+          COMMIT: ${{ needs.garde.outputs.commit }}
         run: python scripts/app_store.py preparer --commit "$COMMIT"
 
   construire:
@@ -61,6 +119,8 @@ jobs:
     environment: app-store
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preparer.outputs.commit }}
 
       - uses: actions/setup-node@v4
         with:
@@ -144,6 +204,8 @@ jobs:
     environment: app-store
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preparer.outputs.commit }}
 
       - uses: actions/setup-python@v5
         with:
@@ -159,7 +221,7 @@ jobs:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
           VERSION: ${{ needs.preparer.outputs.version }}
           BUILD: ${{ needs.preparer.outputs.build }}
-          COMMIT: ${{ github.sha }}
+          COMMIT: ${{ needs.preparer.outputs.commit }}
         run: >-
           python scripts/app_store.py soumettre
           --version "$VERSION" --build "$BUILD" --commit "$COMMIT"

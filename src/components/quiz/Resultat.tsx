@@ -1,0 +1,317 @@
+import { useState } from 'react';
+import type React from 'react';
+import type { QuestionAffichable } from '../../lib/banque';
+import type { Etat } from '../../lib/progression';
+import { lenteurs, type Mode, type Session } from '../../lib/session';
+import { ERREURS_ADMISES } from '../../lib/quiz';
+import { nomDuTheme } from '../../lib/themes-client';
+import { pointFinal, rappel } from '../../lib/profil';
+import { POUR_APP } from '../../lib/cible';
+import { partager } from '../../lib/natif';
+import RevueDesErreurs from './RevueDesErreurs';
+
+interface Props {
+  mode: Mode;
+  session: Session;
+  titre: string;
+  /** L'état lu au montage : l'examen d'avant, la raison dite au départ. */
+  depart: Etat;
+  parId: ReadonlyMap<string, QuestionAffichable>;
+  /** Ce que « recommencer » vise. */
+  retour: string;
+  /** Où ramène la leçon ouverte depuis une question ratée. */
+  retourLecon: string;
+}
+
+type Revue = 'erreurs' | 'toutes' | null;
+
+/**
+ * L'écran de résultat : le score, le verdict, le temps, la raison quand ça
+ * coince, la note par thème, puis le geste suivant et la revue.
+ */
+export default function Resultat({ mode, session, titre, depart, parId, retour, retourLecon }: Props) {
+  // La revue dépliée : les seules ratées, ou toutes les questions.
+  const [revue, setRevue] = useState<Revue>(null);
+  const basculerRevue = (quoi: 'erreurs' | 'toutes') => setRevue((v) => (v === quoi ? null : quoi));
+
+  const r = session.resultat;
+  if (!r) return null;
+  const erreurs = new Set(r.ratees).size;
+  // Le coup de mou : un examen recalé, ou un entraînement sous la moitié.
+  // C'est là qu'on rappelle la raison dite au départ, pas ailleurs.
+  const coupDeMou = r.total > 0 && (mode === 'examen'
+    ? !session.interrompu && !r.reussi
+    : r.bonnes * 2 < r.total);
+  const raison = coupDeMou ? rappel(depart.profil) : null;
+  const actions = { mode, session, retour, revue, basculerRevue, ratees: erreurs };
+
+  return (
+    <div className="jeu">
+      <h1 className="visuellement-cache">{titre}, résultat</h1>
+      <Score mode={mode} session={session} titre={titre} depart={depart} />
+      <Temps session={session} />
+
+      {raison && (
+        <>
+          <p className="rappel resultat__rappel">Tu passes ce permis pour <q>{raison}</q>{pointFinal(raison)}</p>
+          <p className="discret">
+            {mode !== 'examen' ? (
+              'Chaque question ratée revient jusqu’à ce que tu la tiennes. C’est le principe.'
+            ) : POUR_APP ? (
+              'Les questions ratées sont dans la revue, et elles reviennent en entraînement jusqu’à ce que tu les tiennes.'
+            ) : (
+              <>
+                {r.erreurs > 1 ? `Tes ${r.erreurs} erreurs sont` : 'Ton erreur est'} dans{' '}
+                <a href="/profil/erreurs">ce que tu as raté</a>, et {r.erreurs > 1 ? 'elles reviennent' : 'elle revient'} dans
+                ta série du jour jusqu’à ce que tu {r.erreurs > 1 ? 'les tiennes' : 'la tiennes'}.
+              </>
+            )}
+          </p>
+        </>
+      )}
+
+      {r.total > 0 && <ParTheme parTheme={r.parTheme} />}
+
+      {POUR_APP ? <ActionsApp {...actions} /> : <ActionsSite {...actions} />}
+
+      {revue && <RevueDesErreurs session={session} parId={parId} quoi={revue} retourLecon={retourLecon} />}
+    </div>
+  );
+}
+
+/** Le score, le verdict, le pavillon d'un examen reçu, et l'écart avec le précédent. */
+function Score({ mode, session, titre, depart }: Pick<Props, 'mode' | 'session' | 'titre' | 'depart'>) {
+  const r = session.resultat!;
+  // L'examen d'avant, lu au montage : celui-ci n'y est pas encore.
+  const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
+  const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
+  // Le second moment écrit du site : un examen blanc reçu hisse le pavillon
+  // Q, jaune uni, le long d'un mât qui longe le score et le verdict. Il est
+  // dessiné en CSS sur ce bloc, rien de plus ici. Recalé, interrompu,
+  // entraînement : le bloc n'a pas de classe, et rien ne se hisse.
+  const recu = mode === 'examen' && !session.interrompu && r.total > 0 && r.reussi;
+  return (
+    <div>
+      <p className="resultat__titre">
+        {mode === 'examen'
+          ? session.interrompu ? 'Examen blanc interrompu' : 'Examen blanc terminé'
+          : titre}
+      </p>
+
+      {r.total === 0 ? (
+        <p className="resultat__verdict">
+          Examen arrêté avant la première réponse. Rien à noter, rien de perdu.
+        </p>
+      ) : (
+        <>
+          <div className={recu ? 'resultat--recu' : undefined}>
+            <p className="resultat__score">
+              {r.bonnes}<small> / {r.total}</small>
+            </p>
+            {mode === 'examen' && (
+              session.interrompu ? (
+                <p className="resultat__verdict">
+                  Examen interrompu, {r.total} question{r.total > 1 ? 's' : ''} jouée{r.total > 1 ? 's' : ''} sur{' '}
+                  {session.questions.length}, dont {r.erreurs} ratée{r.erreurs > 1 ? 's' : ''}.
+                  Une note sur un examen entier demande d’aller au bout.
+                </p>
+              ) : (
+                <p className={`resultat__verdict resultat__verdict--${r.reussi ? 'reussi' : 'echoue'}`}>
+                  {r.reussi
+                    ? `Reçu. ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
+                    : `Recalé. ${r.erreurs} erreurs, l’épreuve en admet ${ERREURS_ADMISES}.`}
+                </p>
+              )
+            )}
+            {recu && (
+              <p className="resultat__pavillon">
+                Pavillon Q hissé : libre pratique.
+                <span className="discret">
+                  Au Code international des signaux, le pavillon jaune seul demande l’entrée au port.
+                  Tu peux y aller.
+                </span>
+              </p>
+            )}
+          </div>
+          {precedent && (
+            <p className="resultat__ecart">
+              Ton examen d’avant : {precedent.bonnes} sur {precedent.total}.{' '}
+              {ecart > 0 && `${ecart} de plus que la dernière fois.`}
+              {ecart < 0 && `${-ecart} de moins que la dernière fois.`}
+              {ecart === 0 && 'Le même score.'}
+            </p>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Le temps, que le score ne dit pas. Vingt secondes par question, et l'échec
+ * par lenteur est le mode d'échec propre à cette épreuve. Au buzzer,
+ * l'épreuve relève ce qui est coché : des cases vides font une erreur, des
+ * cases cochées comptent pour ce qu'elles valent. Une réponse arrachée à la
+ * dernière seconde ne tiendra pas dans une salle.
+ */
+function Temps({ session }: { session: Session }) {
+  const lent = lenteurs(session);
+  if (lent.sansReponse.length === 0 && lent.cocheesAuBuzzer.length === 0 && lent.aLaLimite.length === 0) return null;
+  return (
+    <p className="resultat__temps">
+      {lent.sansReponse.length > 0 && (
+        <>
+          <b>
+            {lent.sansReponse.length} question{lent.sansReponse.length > 1 ? 's' : ''} sans réponse
+          </b>
+          {' : les vingt secondes sont passées avant toi. '}
+        </>
+      )}
+      {lent.cocheesAuBuzzer.length > 0 && (
+        <>
+          <b>
+            {lent.cocheesAuBuzzer.length > 1
+              ? `${lent.cocheesAuBuzzer.length} questions retenues telles que tu les avais cochées`
+              : '1 question retenue telle que tu l’avais cochée'}
+          </b>
+          {' : les vingt secondes sont passées avant ton clic. À l’épreuve aussi, c’est ce qui est coché à ce moment-là qui compte. '}
+        </>
+      )}
+      {lent.aLaLimite.length > 0 && (
+        <>
+          {lent.aLaLimite.length} répondue{lent.aLaLimite.length > 1 ? 's' : ''} dans la
+          dernière seconde.{' '}
+        </>
+      )}
+      <span className="discret">Le chrono compte autant que la réponse.</span>
+    </p>
+  );
+}
+
+/** La note par thème, du plus faible au plus solide. */
+function ParTheme({ parTheme }: { parTheme: Record<string, { bonnes: number; total: number }> }) {
+  return (
+    <ul className="parTheme">
+      {Object.entries(parTheme)
+        .sort(([, a], [, b]) => a.bonnes / a.total - b.bonnes / b.total)
+        .map(([code, note], rang) => (
+          <li key={code} style={{ '--part': note.bonnes / note.total, '--rang': rang } as React.CSSProperties}>
+            {/* Sur le site, le nom mène à l'entraînement du thème. Dans
+                l'app, chaque onglet est sa propre webview : un lien
+                ouvrirait l'entraînement sous l'onglet Examen. */}
+            <b>{POUR_APP ? nomDuTheme(code) : <a href={`/entrainement/${code}`}>{nomDuTheme(code)}</a>}</b>
+            <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
+              {note.bonnes} / {note.total}
+            </span>
+            {/* Dans l'app, la jauge est un élément : elle se remplit en
+                `scaleX`, là où le site peint un dégradé de fond. */}
+            {POUR_APP && (
+              <span className="parTheme__jauge" aria-hidden="true"><span /></span>
+            )}
+          </li>
+        ))}
+    </ul>
+  );
+}
+
+interface PropsActions {
+  mode: Mode;
+  session: Session;
+  retour: string;
+  revue: Revue;
+  basculerRevue: (quoi: 'erreurs' | 'toutes') => void;
+  /** Combien de questions ont été ratées. */
+  ratees: number;
+}
+
+/**
+ * Le geste suivant dans l'app : ce qui a été raté, puis refaire. La barre
+ * d'onglets est revenue, un lien « Accueil » la doublerait.
+ */
+function ActionsApp({ mode, session, retour, revue, basculerRevue, ratees }: PropsActions) {
+  const r = session.resultat!;
+  return (
+    <>
+      <div className="jeu__actions resultat__actions">
+        {ratees > 0 && (
+          <button
+            className="bouton bouton--principal"
+            type="button"
+            aria-expanded={revue === 'erreurs'}
+            onClick={() => basculerRevue('erreurs')}
+          >
+            {revue === 'erreurs' ? 'Masquer mes erreurs' : 'Revoir mes erreurs'}
+          </button>
+        )}
+        <a
+          className={`bouton ${ratees > 0 ? 'bouton--discret' : 'bouton--principal'}`}
+          href={retour}
+        >
+          {mode === 'examen' ? 'Refaire un examen' : 'Refaire la série'}
+        </a>
+      </div>
+      {/* Un examen interrompu ne se partage pas : le score ne veut rien
+          dire, et personne n'a envie de l'annoncer. */}
+      {mode === 'examen' && !session.interrompu && r.total > 0 && (
+        <p className="resultat__partage">
+          <button
+            className="bouton bouton--discret"
+            type="button"
+            onClick={() =>
+              void partager(
+                'Mon examen blanc du permis côtier',
+                r.reussi
+                  ? `Reçu à l’examen blanc : ${r.bonnes} sur ${r.total}, ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
+                  : `${r.bonnes} sur ${r.total} à l’examen blanc, ${r.erreurs} erreurs. L’épreuve en admet ${ERREURS_ADMISES}. On y retourne.`,
+                'https://lepermiscotier.fr',
+              )
+            }
+          >
+            Partager
+          </button>
+        </p>
+      )}
+    </>
+  );
+}
+
+/** Comme dans l'app : ce qui a été raté d'abord, puis refaire, puis l'accueil. */
+function ActionsSite({ mode, session, retour, revue, basculerRevue, ratees }: PropsActions) {
+  const r = session.resultat!;
+  return (
+    <div className="jeu__actions">
+      {ratees > 0 && (
+        <button
+          className="bouton bouton--principal"
+          type="button"
+          aria-expanded={revue === 'erreurs'}
+          onClick={() => basculerRevue('erreurs')}
+        >
+          {revue === 'erreurs'
+            ? 'Masquer mes erreurs'
+            : ratees > 1 ? `Revoir mes ${ratees} erreurs` : 'Revoir mon erreur'}
+        </button>
+      )}
+      {r.total > 0 && (
+        <button
+          className={`bouton${ratees > 0 ? ' bouton--discret' : ''}`}
+          type="button"
+          aria-expanded={revue === 'toutes'}
+          onClick={() => basculerRevue('toutes')}
+        >
+          {revue === 'toutes'
+            ? 'Masquer la revue'
+            : ratees === 0
+              ? 'Revoir les questions'
+              : r.total > 1 ? `Revoir les ${r.total} questions` : 'Revoir la question'}
+        </button>
+      )}
+      <a className={`bouton${ratees > 0 ? '' : ' bouton--principal'}`} href={retour}>
+        {mode === 'examen' ? 'Refaire un examen' : 'Recommencer'}
+      </a>
+      {/* Pas de partage dessiné sur le site : le bouton de partage du
+          navigateur est déjà là, un doublon en HTML n'ajoute rien. */}
+      <a className="bouton bouton--discret" href="/">Accueil</a>
+    </div>
+  );
+}

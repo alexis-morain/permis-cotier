@@ -18,13 +18,12 @@
  * questions sérialisées dans un attribut d'îlot faisaient 85 Ko de HTML.
  */
 import { annoncerDateExamen, aujourdhui, charger, sauvegarder, type Etat } from '../lib/progression';
-import { estDue } from '../lib/quiz';
+import { aRevoir, dernierExamen, echeanceDe, phraseDeLEcheance } from '../lib/accueil';
 import { evenement } from '../lib/mesure';
 import { ID_DONNEES } from '../lib/bande-rendu';
 import {
   PALIERS,
   indice,
-  joursAvant,
   objectifDuJour,
   pointFinal,
   profilRempli,
@@ -76,12 +75,11 @@ export function lireDonnees(doc: Document): DonneesAccueil | null {
 export function monterReprise(racine: HTMLElement, banque: readonly QuestionConnue[], etat: Etat, jour: string): void {
   racine.replaceChildren();
 
-  const publiees = new Set(banque.map((q) => q.id));
-  const vues = Object.entries(etat.questions).filter(([id]) => publiees.has(id));
-  // Le même filtre que la série de `/revoir` : le chiffre annoncé et la série
-  // jouée ne doivent pas diverger.
-  const aRevoir = vues.filter(([, e]) => estDue(e, jour)).length;
-  const rien = vues.length === 0 && etat.examens.length === 0;
+  // Le même filtre que la série de `/revoir` et que l'accueil de l'app : le
+  // chiffre annoncé et la série jouée ne doivent pas diverger.
+  const revoir = aRevoir(etat, banque.map((q) => q.id), jour);
+  const dues = revoir.etat === 'du' ? revoir.nombre : 0;
+  const rien = revoir.etat === 'jamais' && etat.examens.length === 0;
   const raison = rappel(etat.profil);
 
   if (rien && !profilRempli(etat.profil)) {
@@ -104,7 +102,7 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   // Le dernier examen blanc terminé. La bande d'ouverture le dit déjà, en
   // tête de page, dans tous ses états : il ne sert plus ici qu'à savoir si
   // la raison doit revenir.
-  const dernier = etat.examens.find((x) => x.total > 0) ?? null;
+  const dernier = dernierExamen(etat, jour);
 
   // Sans prénom, la phrase commence à « Indice » : une minuscule en tête de
   // ligne fait cassé.
@@ -121,10 +119,10 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   }
   if (serie.jours > 0) ligne.append(', ', b(serie.jours), ` jour${serie.jours > 1 ? 's' : ''} de suite`);
   ligne.append('.');
-  if (aRevoir > 0) {
+  if (dues > 0) {
     ligne.append(
       ' ',
-      el('a', { href: '/revoir', 'data-mesure': 'accueil-revoir' }, b(aRevoir), ` question${aRevoir > 1 ? 's' : ''} à revoir`),
+      el('a', { href: '/revoir', 'data-mesure': 'accueil-revoir' }, b(dues), ` question${dues > 1 ? 's' : ''} à revoir`),
       '.',
     );
   }
@@ -137,20 +135,6 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
     bloc.append(el('p', { class: 'reprise__raison' }, 'Tu passes ce permis pour ', el('q', {}, raison), pointFinal(raison)));
   }
   racine.append(bloc);
-}
-
-/** La phrase sous la date, ou `null` sans date. */
-function compteARebours(date: string, restantes: number, jour: string): string | null {
-  const jours = date ? joursAvant(date, jour) : null;
-  if (jours === null) return null;
-  if (jours > 1) {
-    return restantes > 0
-      ? `Dans ${jours} jours. Environ ${Math.max(1, Math.ceil(restantes / jours))} questions par jour pour voir les ${restantes} qui restent.`
-      : `Dans ${jours} jours. Tu as tout vu une fois : place aux examens blancs.`;
-  }
-  if (jours === 1) return 'Demain. Fais deux examens blancs ce soir.';
-  if (jours === 0) return 'Aujourd’hui. Bon vent.';
-  return 'C’est passé. Efface la date au-dessus, ou pose la prochaine.';
 }
 
 /**
@@ -174,7 +158,7 @@ export function monterDateExamen(racine: HTMLElement, ids: readonly string[], et
 
   function poserCompte(date: string): void {
     bloc.querySelector('.dateExamen__compte')?.remove();
-    const phrase = compteARebours(date, restantes, jour);
+    const phrase = phraseDeLEcheance(echeanceDe(date || null, jour), restantes);
     if (phrase) note.before(el('p', { class: 'discret dateExamen__compte' }, phrase));
   }
 

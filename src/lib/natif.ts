@@ -1,4 +1,5 @@
 import { POUR_APP } from './cible';
+import { avecGreffon } from './greffons';
 import { jouer } from './son';
 import type { Son } from './son';
 import { EVENEMENT_DATE_EXAMEN } from './progression';
@@ -209,9 +210,7 @@ export function modeConcentration(actif: boolean): Promise<void> | undefined {
 
 async function concentrerDansLApp(actif: boolean): Promise<void> {
   try {
-    const { registerPlugin } = await import('@capacitor/core');
-    const Ecran = registerPlugin<{ pleinEcran(options: { actif: boolean }): Promise<void> }>('Ecran');
-    await Ecran.pleinEcran({ actif });
+    await avecGreffon('Ecran', (g) => g.pleinEcran({ actif }));
   } catch {
     // Greffon absent, ou coquille d'une autre version : la barre reste.
   }

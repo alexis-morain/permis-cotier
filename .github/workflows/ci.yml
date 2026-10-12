@@ -107,9 +107,21 @@ jobs:
       - name: Audit SEO du build
         run: node scripts/audit-seo.mjs
 
+      # Les bornes de `docs/budgets.md` : 600 lignes par fichier de
+      # composant, 40 mentions de `POUR_APP`, le code de `/examen` à sa
+      # référence plus 1 Kio brotli. Un dépassement se discute dans la PR.
+      - name: Budgets du code
+        run: node scripts/verifier-budgets.mjs
+
       # La coquille iOS sert `dist-app/`. Sans ce build, une page élaguée ou un
       # lien mort dans l'app ne cassait personne, et se voyait au simulateur
       # seulement. `elaguer-app.mjs` refuse le bundle si un lien pointe hors de
       # lui ou compte sur une redirection.
       - name: Build de la cible app
         run: npm run build:app
+
+      # Ce que VoiceOver trouvera dans l'app, lisible sans écran : noms des
+      # boutons et des liens, `alt`, étiquettes, ordre de lecture, références
+      # ARIA. Zéro défaut aujourd'hui : le premier qui entre est une régression.
+      - name: Accessibilité de la cible app
+        run: node scripts/verifier-accessibilite.mjs dist-app

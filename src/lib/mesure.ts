@@ -10,6 +10,7 @@
  * est absent — en développement, hors ligne, ou derrière un bloqueur — et
  * l'interrupteur des réglages.
  */
+import { ecrire, lire } from './stockage';
 
 /**
  * Ce que la page écrit dans le HTML. L'identifiant du site n'est pas un
@@ -50,12 +51,8 @@ export function evenement(nom: string, donnees?: Record<string, unknown>): void 
 
 /** Ce navigateur est-il exclu du compte ? */
 export function mesureCoupee(): boolean {
-  try {
-    return localStorage.getItem(CLE_ARRET) === '1';
-  } catch {
-    // Stockage verrouillé (Safari en navigation privée) : rien n'est coupé.
-    return false;
-  }
+  // Stockage verrouillé (Safari en navigation privée) : rien n'est coupé.
+  return lire(CLE_ARRET) === '1';
 }
 
 /**
@@ -67,12 +64,8 @@ export function mesureCoupee(): boolean {
  * page vue attend le prochain chargement.
  */
 export function couperMesure(coupee: boolean): void {
-  try {
-    if (coupee) localStorage.setItem(CLE_ARRET, '1');
-    else localStorage.removeItem(CLE_ARRET);
-  } catch {
-    /* Pas de stockage, pas d'interrupteur : l'appelant n'a rien à en faire. */
-  }
+  // Pas de stockage, pas d'interrupteur : l'appelant n'a rien à en faire.
+  ecrire(CLE_ARRET, coupee ? '1' : null);
 }
 
 /**

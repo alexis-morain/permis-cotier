@@ -97,11 +97,35 @@ export type Echeance =
 
 /** Le compte à rebours vers la date posée sur la fiche. */
 export function echeance(etat: Etat, jour: string): Echeance {
-  const jours = etat.dateExamen ? joursAvant(etat.dateExamen, jour) : null;
+  return echeanceDe(etat.dateExamen, jour);
+}
+
+/**
+ * Le même compte, pour une date qui n'est pas encore rangée : celle qu'on
+ * tape dans le champ de l'accueil du site.
+ */
+export function echeanceDe(date: string | null, jour: string): Echeance {
+  const jours = date ? joursAvant(date, jour) : null;
   if (jours === null) return { etat: 'sansDate' };
   if (jours > 0) return { etat: 'avenir', jours };
   if (jours === 0) return { etat: 'aujourdhui' };
   return { etat: 'passe', jours: -jours };
+}
+
+/**
+ * La phrase sous la date, sur l'accueil du site, ou `null` sans date.
+ * `restantes` : les questions publiées jamais rencontrées.
+ */
+export function phraseDeLEcheance(e: Echeance, restantes: number): string | null {
+  if (e.etat === 'sansDate') return null;
+  if (e.etat === 'avenir' && e.jours > 1) {
+    return restantes > 0
+      ? `Dans ${e.jours} jours. Environ ${Math.max(1, Math.ceil(restantes / e.jours))} questions par jour pour voir les ${restantes} qui restent.`
+      : `Dans ${e.jours} jours. Tu as tout vu une fois : place aux examens blancs.`;
+  }
+  if (e.etat === 'avenir') return 'Demain. Fais deux examens blancs ce soir.';
+  if (e.etat === 'aujourdhui') return 'Aujourd’hui. Bon vent.';
+  return 'C’est passé. Efface la date au-dessus, ou pose la prochaine.';
 }
 
 /** Les jours de suite avec au moins une réponse, pour la ligne sous le compte à rebours. */

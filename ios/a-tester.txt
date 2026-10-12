@@ -1,11 +1,11 @@
-Les rappels avant l’examen fonctionnent enfin : jusqu’ici, poser ta date dans l’app ne programmait rien. Désormais, une semaine avant, trois jours avant, la veille et le matin même, à neuf heures, l’app te le rappelle.
+Rien de neuf à voir dans ce build : l’écran de jeu et la fiche ont été réorganisés dans le code, sans rien changer à ce qu’ils montrent. C’est justement ce qu’il faut vérifier, écran par écran.
 
 À essayer :
-• Fiche → Date de l’examen : pose une date à plus d’une semaine. L’app demande l’autorisation d’envoyer des notifications, une seule fois ; accepte.
-• Si tu avais déjà posé ta date avec un build précédent, repose-la : rien n’avait été programmé.
-• Efface la date : les rappels se taisent, aucune notification ne doit arriver.
-• Le questionnaire de départ (Fiche → Répondre) : la date posée là arme aussi les rappels.
-• Un examen blanc complet : la barre d’onglets se cache pendant l’épreuve et revient au résultat.
+• Un examen blanc complet : la barre d’onglets se cache pendant l’épreuve, le chrono passe au rouge sous cinq secondes, et le résultat dit le score, le verdict, le temps et la note par thème.
+• Un examen arrêté en route : « Arrêter », puis « Arrêter et voir le résultat ». « Revoir mes erreurs » déplie la revue, avec la bonne réponse et la leçon.
+• Une série d’entraînement : « Juste » ou « Faux » monte du bas avec l’explication, « Continuer » passe à la suivante.
+• Quitte une série en cours pour une leçon, puis reviens : l’app propose de reprendre là où tu étais.
+• Fiche → Tes réglages : prénom, questions par jour, date de l’examen, apparence, puis « Effacer ma progression et ma fiche » jusqu’au bout.
 
 Cette version exige iOS 18 : un iPhone resté sur iOS 17 ne la verra pas.
 
