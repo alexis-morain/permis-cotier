@@ -1,5 +1,5 @@
 import { POUR_APP } from './cible';
-import type { Stockage } from './progression';
+import { ecrire, lire, stockageParDefaut, type Stockage } from './stockage';
 
 /**
  * Clair, sombre, ou comme le système. Le choix vit sous sa propre clé, hors
@@ -20,30 +20,14 @@ export const APPARENCES: readonly { code: Apparence; nom: string }[] = [
   { code: 'sombre', nom: 'Sombre' },
 ];
 
-function stockageParDefaut(): Stockage | null {
-  try {
-    return typeof localStorage === 'undefined' ? null : localStorage;
-  } catch {
-    return null;
-  }
-}
-
 export function lireApparence(stockage: Stockage | null = stockageParDefaut()): Apparence {
-  try {
-    const v = stockage?.getItem(CLE_APPARENCE);
-    return v === 'clair' || v === 'sombre' ? v : 'auto';
-  } catch {
-    return 'auto';
-  }
+  const v = lire(CLE_APPARENCE, stockage);
+  return v === 'clair' || v === 'sombre' ? v : 'auto';
 }
 
 export function choisirApparence(apparence: Apparence, stockage: Stockage | null = stockageParDefaut()): void {
-  try {
-    if (apparence === 'auto') stockage?.removeItem(CLE_APPARENCE);
-    else stockage?.setItem(CLE_APPARENCE, apparence);
-  } catch {
-    /* Pas de stockage : le choix vaut pour la page ouverte, pas plus. */
-  }
+  // Pas de stockage : le choix vaut pour la page ouverte, pas plus.
+  ecrire(CLE_APPARENCE, apparence === 'auto' ? null : apparence, stockage);
 }
 
 interface Racine {

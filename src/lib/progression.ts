@@ -5,6 +5,7 @@ import { aujourdhui as jourCourant, jourPlus } from './jour';
 // l'appelle en même temps que `charger` : une seule origine, deux portes.
 export { aujourdhui } from './jour';
 import type { SessionSauvegardee } from './session';
+import { ecrire, lire, stockageParDefaut, type Stockage } from './stockage';
 
 /**
  * Progression locale, dans le navigateur. Aucun compte, aucune donnée
@@ -139,12 +140,7 @@ export interface LeconSuivie {
   total: number;
 }
 
-/** Le sous-ensemble de localStorage qu'on utilise, pour pouvoir le remplacer en test. */
-export interface Stockage {
-  getItem(cle: string): string | null;
-  setItem(cle: string, valeur: string): void;
-  removeItem(cle: string): void;
-}
+export type { Stockage } from './stockage';
 
 export function etatInitial(): Etat {
   return {
@@ -338,20 +334,10 @@ export function migrerQuestions(brut: unknown): Progression {
   return propre;
 }
 
-function stockageParDefaut(): Stockage | null {
-  try {
-    return typeof localStorage === 'undefined' ? null : localStorage;
-  } catch {
-    // Navigation privée ou cookies bloqués : on tourne sans mémoire.
-    return null;
-  }
-}
-
 export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
-  if (!stockage) return etatInitial();
+  const brut = lire(CLE_STOCKAGE, stockage);
+  if (!brut) return etatInitial();
   try {
-    const brut = stockage.getItem(CLE_STOCKAGE);
-    if (!brut) return etatInitial();
     const lu = JSON.parse(brut) as Partial<Etat>;
     if (lu?.version !== VERSION_STOCKAGE) return etatInitial();
     return {
@@ -385,19 +371,10 @@ export function annoncerDateExamen(date: string | null): void {
 }
 
 export function sauvegarder(etat: Etat, stockage: Stockage | null = stockageParDefaut()): void {
-  if (!stockage) return;
-  try {
-    stockage.setItem(CLE_STOCKAGE, JSON.stringify(etat));
-  } catch {
-    // Quota plein ou écriture refusée : la session continue, sans mémoire.
-  }
+  // Quota plein ou écriture refusée : la session continue, sans mémoire.
+  ecrire(CLE_STOCKAGE, JSON.stringify(etat), stockage);
 }
 
 export function effacer(stockage: Stockage | null = stockageParDefaut()): void {
-  if (!stockage) return;
-  try {
-    stockage.removeItem(CLE_STOCKAGE);
-  } catch {
-    /* rien à faire */
-  }
+  ecrire(CLE_STOCKAGE, null, stockage);
 }

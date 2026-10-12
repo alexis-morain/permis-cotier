@@ -1,5 +1,6 @@
 import { POUR_APP } from './cible';
 import { cheminServi } from './seo';
+import { PREFIXE_STOCKAGE } from './stockage';
 
 /**
  * Quand la page est prête à recevoir ses écouteurs.
@@ -62,8 +63,6 @@ export function pageCourante(chemin: string, ...sections: string[]): 'page' | un
   return sections.some((s) => servi === s || servi.startsWith(`${s}/`)) ? 'page' : undefined;
 }
 
-/** Le préfixe de tout ce que l'app garde dans `localStorage`. */
-const PREFIXE_STOCKAGE = 'permis-cotier:';
 
 /**
  * Les racines qu'on recharge quand la progression a bougé ailleurs. Toutes,
