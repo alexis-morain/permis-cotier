@@ -21,6 +21,7 @@
     "audit:seo": "node scripts/audit-seo.mjs",
     "verifier:prod": "node scripts/verifier-prod.mjs",
     "verifier:app": "node scripts/verifier-app.mjs",
+    "verifier:accessibilite": "node scripts/verifier-accessibilite.mjs",
     "poids": "node scripts/poids.mjs",
     "credits": "python3 scripts/credits.py",
     "longueur": "python3 scripts/longueur.py",

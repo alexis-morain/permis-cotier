@@ -113,3 +113,9 @@ jobs:
       # lui ou compte sur une redirection.
       - name: Build de la cible app
         run: npm run build:app
+
+      # Ce que VoiceOver trouvera dans l'app, lisible sans écran : noms des
+      # boutons et des liens, `alt`, étiquettes, ordre de lecture, références
+      # ARIA. Zéro défaut aujourd'hui : le premier qui entre est une régression.
+      - name: Accessibilité de la cible app
+        run: node scripts/verifier-accessibilite.mjs dist-app
