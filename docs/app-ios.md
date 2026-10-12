@@ -5,6 +5,105 @@ resterait à faire. Il existe pour qu'on puisse reprendre le chantier sans
 relire les commits.
 La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
 
+## 12 octobre 2026 — la CI garde l'app, et le code se lit en morceaux (lots 5 et 4)
+
+### Ce qui a changé
+
+- **Plus d'archive sans CI verte** (lot 5). `app-ios.yml` ne part plus sur
+  le push : il attend la fin de `ci.yml` par `workflow_run` et ne retient
+  qu'un passage vert, issu d'un push sur ce dépôt (une branche de fork peut
+  s'appeler `main`). Le commit construit est `head_sha`, jamais
+  `github.sha`. `schedule` et `workflow_dispatch` restent, derrière un garde
+  qui cherche une CI verte sur la tête de `main` ; pas encore finie, l'app
+  attend le `workflow_run` qui suivra. Comptez dix minutes de plus entre un
+  push et TestFlight.
+- **La documentation seule ne reconstruit pas l'app.** `paths-ignore` ne vaut
+  pas pour `workflow_run` ; `commit_effectif()` de `app_store.py` le reprend :
+  quand rien depuis le commit du dernier build ne touche l'app (hors
+  `docs/`, `plans/`, `*.md`), la décision se prend pour le commit du build,
+  ce qui soumet un build en attente au lieu de l'oublier. `preparer` extrait
+  tout l'historique pour comparer.
+- **`npm run verifier:app`** pose à la production les questions de l'app,
+  avec l'origine `capacitor://localhost` : version annoncée par
+  `banque/derniere.json` égale à `data/VERSION`, compte des questions,
+  CORS sur le pointeur et la banque, fichier au bon numéro. La veille du
+  matin le lance après `verifier:prod`.
+- **`verifier-accessibilite.mjs`** relit en CI les 390 pages de
+  `dist-app/` : nom de chaque bouton et lien, `alt`, étiquettes, aucun
+  `tabindex` positif, références ARIA, identifiants uniques, langue. Zéro
+  défaut à ce jour : le premier qui entre casse la CI.
+- **Le code se lit en morceaux** (lot 4). `Quiz.tsx` : 1 394 lignes à 477,
+  les écrans dans `src/components/quiz/`, les effets dans
+  `quiz/effets.ts`. `ProfilCandidat.tsx` : 661 à 513, ses réglages dans
+  `profil/Reglages.tsx`. Un seul `lib/stockage.ts`, un seul
+  `lib/greffons.ts`, un seul accueil logique (`lib/accueil.ts`).
+  `docs/budgets.md` écrit les bornes que `verifier-budgets.mjs` refuse de
+  dépasser en CI.
+
+### Ce qui reste
+
+- **Le test UI iOS** (`AppUITests` : l'app se lance, cinq onglets, un `h1`
+  par webview, la barre cachée au départ d'un examen), au simulateur en CI
+  par `xcodebuild test`. Il demande une cible de test dans le projet Xcode :
+  à écrire et à voir passer sur le Mac, pas depuis une session cloud.
+- **Les builds de branche Cloudflare.** Un build de branche peut téléverser
+  une version sans secrets dont hérite `main` : le réglage est au tableau de
+  bord (Workers, `permis-cotier`, Builds), pas dans le dépôt.
+- **Le poids n'est pas resté à zéro.** Contre `main` : `/examen` +0,8 Ko de
+  JS (dans la marge du budget), l'accueil +0,6 Ko, cours et leçon +0,2 Ko.
+  `stockage` est un morceau partagé de 148 octets, `lib/accueil` un de
+  568 octets que l'accueil du site charge désormais.
+
+## Architecture de la couche app
+
+Où vit quoi, dans quel ordre un écran se charge, et ce que fait `app:onglet`.
+Les règles de chaque écran sont dans `docs/app-da.md`.
+
+### Où vit quoi
+
+| Quoi | Où |
+|---|---|
+| Ce qui distingue la cible | `src/lib/cible.ts` : `POUR_APP`, lu au build depuis `CIBLE=app` |
+| Le bundle | `npm run build:app` → `dist-app/`, élagué par `scripts/elaguer-app.mjs` |
+| La coquille Swift | `ios/App/App/` : `BarreOnglets`, `EcranWeb` (une webview par onglet), `RouteurDuSite`, greffons `Ecran` et `Son` |
+| Ce que la page ne porte que dans l'app | `src/components/Coquille.astro`, rendu par `Base.astro` sous `POUR_APP`, vidé hors cible par `siteSansApp()` d'`astro.config.mjs` |
+| Les appels natifs | `src/lib/natif.ts`, chacun derrière un `import()` ; les greffons maison par `avecGreffon()` de `src/lib/greffons.ts` |
+| Le stockage | `src/lib/stockage.ts` : `lire()`, `ecrire()`, préfixe `permis-cotier:` |
+| La banque hors revue | `src/lib/banque-locale.ts` (IndexedDB), `src/lib/banque-distante.ts` (l'adresse par version) |
+| L'écran de jeu | `src/components/Quiz.tsx` (la session) et `src/components/quiz/` (les écrans, les effets) |
+| Les budgets | `docs/budgets.md`, `scripts/verifier-budgets.mjs` |
+
+Une branche d'app dans un composant se fait à la frontière : un composant
+d'app, un composant de site, un parent qui choisit (`EnteteApp` /
+`EnteteSite`, `ActionsApp` / `ActionsSite`). `POUR_APP` se lit au rendu,
+jamais dans une constante de module : les tests le basculent par un
+accesseur.
+
+### Dans quel ordre un écran se charge
+
+1. L'onglet touché montre sa webview, chargée une fois au premier affichage.
+   `RouteurDuSite` sert le fichier de `dist-app/` du chemin demandé (le
+   routeur de Capacitor rendait l'accueil pour tout chemin sans extension).
+2. La page arrive avec `html[data-app]` ; `Coquille.astro` pose
+   `<ClientRouter />` et ses écouteurs une seule fois pour la vie de
+   l'onglet. Les navigations suivantes remplacent le corps sans recharger.
+3. Les scripts de page se rattachent par `quandLaPageEstPrete()` de
+   `src/lib/page.ts`, sur `astro:page-load`.
+4. Un écran de jeu (`client:only`) montre sa silhouette, lit la banque
+   embarquée, la compare à celle gardée en IndexedDB et joue la plus récente ;
+   puis `chercherMiseAJour()` demande au site s'il y a mieux, pour la série
+   suivante, sans rien afficher.
+
+### Ce que fait `app:onglet`
+
+Chaque fois qu'un onglet revient à l'écran, `EcranWeb.swift` émet
+`app:onglet` sur `window`. `rafraichirSiLaProgressionAChange()` (posé par
+`Coquille.astro`) compare alors les clés `permis-cotier:` du stockage à la
+photo prise au dernier rendu. Si elles ont bougé et que l'écran est une
+racine d'onglet, la page se recharge et ses îlots relisent la progression ;
+`/examen` est exclu, pour ne pas effacer un résultat. Une page profonde (une
+leçon, une série) n'est jamais rechargée : on y perdrait sa place.
+
 ## 10 octobre 2026 — les rappels s'arment, lot 0 du plan « app solide »
 
 ### Ce qui a changé

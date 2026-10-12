@@ -27,7 +27,8 @@ par étape : toute étape ajoutée à la CI s'ajoute à `check.sh` au même rang
 c'est un défaut à signaler, pas un vert.
 
 **Un push sur `main` publie.** Cloudflare construit et déploie le site, et
-`app-ios.yml` part vers TestFlight. Fusionner, c'est mettre en ligne.
+`app-ios.yml` part vers TestFlight dès que `ci.yml` est vert sur ce commit
+(`workflow_run`). Fusionner, c'est mettre en ligne.
 
 ## Le trou
 
@@ -73,10 +74,12 @@ questions de la banque.
 ## État
 
 Banque 1.20.1, 658 questions, 149 en `relu_par: claude` à relire par Alexis.
-En cours : le plan « app solide », sept lots, lot 0 sur la branche
-`app-solide-lot0` (rappels d'examen, vérifiés au simulateur). Les lots 1 à 3 et
-6 exigent le simulateur ; la découpe de `Quiz.tsx` (lot 4) attend une CI qui
-garde l'app (lot 5).
+Plan « app solide » : lot 0 fusionné (rappels d'examen). Lots 5 et 4 faits
+depuis une session cloud, hors le test UI Xcode du lot 5 (Mac seulement) :
+l'app attend une CI verte, `dist-app/` est relu pour l'accessibilité, et
+`docs/budgets.md` borne la taille des composants, les `POUR_APP` et le poids
+d'`/examen`. Restent les lots 1, 2, 3 et 6, qui exigent le simulateur.
+L'architecture de la couche app est dans `docs/app-ios.md`.
 
 ## Comment on travaille
 
@@ -146,6 +149,11 @@ sources.
 
 ## Pièges de code
 
+- **L'écran de jeu est en morceaux** : `Quiz.tsx` tient la session,
+  `src/components/quiz/` les écrans, `quiz/effets.ts` les effets, appelés
+  dans l'ordre d'origine (React lance les effets dans l'ordre de leur
+  déclaration). Recopier un texte de composant à la main perd ses espaces
+  insécables : `Quiz.test.tsx` les attend avant « : ».
 - **La couleur ne suffit jamais à dire une bonne réponse** : `/question/[id]`
   l'écrit sous un titre « Réponse », l'accueil la nomme. Un cadre vert seul viole
   WCAG 1.4.1.

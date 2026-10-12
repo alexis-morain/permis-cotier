@@ -102,6 +102,9 @@ npm run dev
 | `npm run navires` | redessine les navires vus sous un relèvement, feux de nuit et marques de jour, depuis `data/visuels/navires.yaml` |
 | `npm run build:app` | construit `dist-app/`, ce que la coquille iOS embarque |
 | `npm run build:pages` | build sans le validateur Python, celui de Cloudflare |
+| `npm run budgets` | taille des composants, `POUR_APP` et poids d'`/examen`, contre `docs/budgets.md` |
+| `npm run verifier:app` | ce que l'app trouve en ligne : version de la banque, CORS |
+| `npm run verifier:accessibilite` | noms, `alt`, étiquettes et ARIA des pages de `dist-app/` |
 | `npm run poids` | ce que pèsent l'accueil, un cours et une leçon en brotli, actifs compris ; `-- --reference <dist de main>` dit l'écart |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
 | `python3 scripts/police.py` | retaille Archivo à ce que le site emploie et repointe `global.css` ; fonttools dans un venv à part, `--verifier` en relecture |
@@ -157,8 +160,8 @@ La banque se met à jour sans passer par l'App Store : l'app interroge
 d'écran repasse par la revue d'Apple.
 
 Le compte développeur Apple est ouvert depuis le 3 octobre 2026. Chaque push sur
-`main` construit l'app et l'envoie sur TestFlight, puis en revue quand Apple le
-permet (`.github/workflows/app-ios.yml`). L'état du chantier et ce qui reste à
+`main` construit l'app une fois la CI verte, l'envoie sur TestFlight, puis en
+revue quand Apple le permet (`.github/workflows/app-ios.yml`). L'état du chantier et ce qui reste à
 faire sont dans [`docs/app-ios.md`](docs/app-ios.md).
 
 ## Le cours
