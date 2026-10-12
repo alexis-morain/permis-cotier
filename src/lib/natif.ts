@@ -1,6 +1,7 @@
 import { POUR_APP } from './cible';
 import { jouer } from './son';
 import type { Son } from './son';
+import { EVENEMENT_DATE_EXAMEN } from './progression';
 
 /**
  * Ce que l'app sait faire et que le site ne sait pas.
@@ -70,8 +71,9 @@ export async function partager(titre: string, texte: string, url?: string): Prom
  * Les rappels avant l'épreuve, la seule fonction que le web ne rend pas sur
  * iOS et celle qui justifie honnêtement l'existence de l'app.
  *
- * Quatre rappels, adossés à la date que l'écran d'accueil collecte déjà :
- * J-7, J-3, J-1 et le matin même. Chacun à neuf heures — un rappel de révision
+ * Quatre rappels, adossés à la date que le candidat pose dans la Fiche ou le
+ * questionnaire de départ : J-7, J-3, J-1 et le matin même. (L'accueil du
+ * site l'annonce aussi, mais personne n'écoute hors de la coquille.) Chacun à neuf heures — un rappel de révision
  * qui tombe à trois heures du matin se fait couper les notifications.
  *
  * Les identifiants sont fixes : reprogrammer efface les précédents plutôt que
@@ -87,6 +89,27 @@ const RAPPELS = [
 export function programmerRappels(dateExamen: string | null): Promise<void> | undefined {
   if (!POUR_APP) return;
   return programmerDansLApp(dateExamen);
+}
+
+/**
+ * La coquille écoute la date : la Fiche, le questionnaire de départ et
+ * l'accueil du site l'annoncent par `annoncerDateExamen()` (`progression.ts`)
+ * sans rien importer d'ici, et ce seul écouteur, posé une fois par webview
+ * depuis `Coquille.astro`, arme ou tait les rappels. Rend de quoi débrancher.
+ */
+export function armerLesRappelsSurLaDate(): () => void {
+  if (!POUR_APP) return () => {};
+  // Les annonces se suivent dans l'ordre : le sélecteur de date d'iOS en
+  // envoie une par cran, et une date posée puis effacée aussitôt ne doit pas
+  // laisser le `schedule` de la première arriver après le `cancel` de la
+  // seconde. Chaque programmation attend la précédente.
+  let file: Promise<void> = Promise.resolve();
+  const ecouter = (evenement: Event) => {
+    const date = (evenement as CustomEvent<string | null>).detail ?? null;
+    file = file.then(() => programmerDansLApp(date));
+  };
+  window.addEventListener(EVENEMENT_DATE_EXAMEN, ecouter);
+  return () => window.removeEventListener(EVENEMENT_DATE_EXAMEN, ecouter);
 }
 
 async function programmerDansLApp(dateExamen: string | null): Promise<void> {

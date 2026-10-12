@@ -1,5 +1,3 @@
-Une interface retravaillée : des écrans plus lisibles et un mouvement plus sobre.
+Les rappels avant l’examen : pose ta date sur ta fiche, et l’app te prévient une semaine avant, trois jours avant, la veille et le matin même. Rien ne part de ton téléphone.
 
-Les signaux sonores des règles de barre s'écoutent : un bouton « Écouter le signal » sous chacun des seize signaux te le fait entendre.
-
-Sur ta fiche, ton niveau se lit sur tes derniers examens blancs : prêt avec deux reçus sur les trois derniers.
+L’app demande maintenant iOS 18.

@@ -17,10 +17,9 @@
  * publiée) sont lues dans un `<script type="application/json">` : 570
  * questions sérialisées dans un attribut d'îlot faisaient 85 Ko de HTML.
  */
-import { aujourdhui, charger, sauvegarder, type Etat } from '../lib/progression';
+import { annoncerDateExamen, aujourdhui, charger, sauvegarder, type Etat } from '../lib/progression';
 import { estDue } from '../lib/quiz';
 import { evenement } from '../lib/mesure';
-import { programmerRappels } from '../lib/natif';
 import { ID_DONNEES } from '../lib/bande-rendu';
 import {
   PALIERS,
@@ -185,10 +184,12 @@ export function monterDateExamen(racine: HTMLElement, ids: readonly string[], et
     // Une date posée est la meilleure intention que le site puisse lire :
     // elle dit qu'il reste des jours à réviser, pas qu'on passe en visiteur.
     if (valeur) evenement('date-examen-renseignee');
-    // Dans l'app, la date arme les rappels J-7, J-3, J-1 et le matin même.
-    // C'est le seul moment où la permission se demande : le candidat vient de
-    // poser sa date, il voit à quoi elle sert. Sur le site, sans effet.
-    void programmerRappels(valeur || null);
+    // Dans l'app, la coquille arme sur cette annonce les rappels J-7, J-3,
+    // J-1 et le matin même, et c'est là que la permission se demande : le
+    // candidat vient de poser sa date, il voit à quoi elle sert. L'app ne
+    // sert pas cette page ; l'annonce y reste pour que les trois écrans qui
+    // posent la date fassent le même geste.
+    annoncerDateExamen(valeur || null);
     poserCompte(valeur);
   });
 

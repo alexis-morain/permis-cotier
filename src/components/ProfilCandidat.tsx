@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
-import { aujourdhui, charger, effacer, enregistrerProfil, sauvegarder } from '../lib/progression';
+import { annoncerDateExamen, aujourdhui, charger, effacer, enregistrerProfil, sauvegarder } from '../lib/progression';
 import { ERREURS_ADMISES, estDue } from '../lib/quiz';
 import { depuisLe } from '../lib/accueil';
 import type { Etat } from '../lib/progression';
@@ -578,12 +578,24 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
               type="date"
               value={etat.dateExamen ?? ''}
               onChange={(e) => {
-                ecrire({ ...etat, dateExamen: e.target.value || null });
-                if (e.target.value) evenement('date-examen-renseignee');
+                const valeur = e.target.value || null;
+                ecrire({ ...etat, dateExamen: valeur });
+                if (valeur) evenement('date-examen-renseignee');
+                // Dans l'app, la coquille arme sur cette annonce les rappels
+                // J-7, J-3, J-1 et le matin même, et demande la permission
+                // ici, où le candidat voit à quoi elle sert.
+                annoncerDateExamen(valeur);
               }}
             />
             {etat.dateExamen && (
-              <button className="signaler" type="button" onClick={() => ecrire({ ...etat, dateExamen: null })}>
+              <button
+                className="signaler"
+                type="button"
+                onClick={() => {
+                  ecrire({ ...etat, dateExamen: null });
+                  annoncerDateExamen(null);
+                }}
+              >
                 Effacer la date
               </button>
             )}

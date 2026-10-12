@@ -8,9 +8,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         window = UIWindow(windowScene: windowScene)
-        // La racine est la barre d'onglets, pas une webview seule : Capacitor
-        // pose ici `CAPBridgeViewController()` en dur, et Main.storyboard n'est
-        // jamais lu. C'est donc le seul endroit où l'écran de départ se change.
+        // La racine est la barre d'onglets, pas une webview seule. Aucun
+        // storyboard principal : `Info.plist` n'en déclare plus, sans quoi UIKit
+        // instanciait une sixième `EcranWeb` depuis `Main.storyboard` avant
+        // d'arriver ici, pour la jeter. C'est le seul endroit où l'écran de
+        // départ se pose. L'écran de lancement, lui, reste `LaunchScreen`.
         window?.rootViewController = BarreOnglets()
         window?.makeKeyAndVisible()
 

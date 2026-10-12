@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { POUR_APP } from './cible';
-import { modeConcentration, ouvrirDehors, partager, programmerRappels, surRetourAuPremierPlan, vibrer } from './natif';
+import { armerLesRappelsSurLaDate, modeConcentration, ouvrirDehors, partager, programmerRappels, surRetourAuPremierPlan, vibrer } from './natif';
 
 /**
  * La couche native, vue du site.
@@ -39,6 +39,12 @@ describe('la couche native, hors de la coquille', () => {
     expect(programmerRappels(null)).toBeUndefined();
   });
 
+  it('n’écoute pas la date, et rend de quoi débrancher', () => {
+    const debrancher = armerLesRappelsSurLaDate();
+    expect(typeof debrancher).toBe('function');
+    expect(() => debrancher()).not.toThrow();
+  });
+
   it('ne cache pas la barre d’onglets', () => {
     expect(modeConcentration(true)).toBeUndefined();
     expect(modeConcentration(false)).toBeUndefined();
@@ -63,6 +69,7 @@ describe('la couche native, hors de la coquille', () => {
     const module = await import('./natif');
     expect(Object.keys(module).sort()).toEqual(
       [
+        'armerLesRappelsSurLaDate',
         'modeConcentration',
         'ouvrirDehors',
         'partager',
