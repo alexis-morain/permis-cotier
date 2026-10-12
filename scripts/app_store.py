@@ -20,6 +20,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import urllib.error
@@ -133,6 +134,29 @@ def lire_a_tester(chemin: Path = A_TESTER) -> str:
 
 def meme_commit(court: str | None, commit: str) -> bool:
     return bool(court) and len(court) >= 7 and commit.startswith(court)
+
+
+# Ce qui ne change pas l'app. Sous `push`, `paths-ignore` l'écartait ; sous
+# `workflow_run`, l'app part après chaque CI verte de `main`, documentation
+# comprise, et c'est ici que le filtre se reprend.
+HORS_APP_DOSSIERS = ("docs/", "plans/")
+
+
+def hors_app(chemin: str) -> bool:
+    return chemin.startswith(HORS_APP_DOSSIERS) or chemin.endswith(".md")
+
+
+def commit_effectif(commit: str, dernier: str | None, fichiers: list[str] | None) -> str:
+    """Le commit dont l'app a besoin.
+
+    Quand rien depuis le commit du dernier build ne touche l'app, c'est lui :
+    la décision le retrouve alors déjà construit, et soumet ou ne fait rien au
+    lieu de reconstruire la même app. `fichiers` vaut `None` quand la
+    comparaison est impossible ; on garde alors le nouveau commit, comme avant.
+    """
+    if dernier and fichiers is not None and all(hors_app(f) for f in fichiers):
+        return dernier
+    return commit
 
 
 def viser(versions: list[Version]) -> tuple[str, bool, str]:
@@ -332,13 +356,37 @@ def ecrire_sorties(sorties: dict[str, str]) -> None:
                 f.write(f"{cle}={valeur}\n")
 
 
+def fichiers_changes(depuis: str, jusqua: str) -> list[str] | None:
+    """Les chemins qui diffèrent entre deux commits, ou `None` si git ne sait pas."""
+    try:
+        sortie = subprocess.run(
+            ["git", "diff", "--name-only", depuis, jusqua],
+            cwd=RACINE, capture_output=True, text=True, check=True,
+        ).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return [ligne for ligne in sortie.splitlines() if ligne]
+
+
 def preparer(commit: str) -> int:
     # Avant les trois minutes d'archive : un « À tester » vide ou trop long
     # arrêterait `soumettre` après le téléversement.
     lire_a_tester()
     versions, _ = lire_versions()
-    decision = decider(versions, lire_builds(), commit)
+    builds = lire_builds()
+    dernier = max(builds, key=lambda b: b.numero).commit if builds else None
+    fichiers = fichiers_changes(dernier, commit) if dernier else None
+    effectif = commit_effectif(commit, dernier, fichiers)
+    if effectif != commit:
+        print(f"{commit[:7]} ne touche pas l'app depuis {effectif} : on décide pour {effectif}.")
+        # Le SHA lu dans « À tester » est court ; `checkout` veut le SHA entier.
+        effectif = subprocess.run(
+            ["git", "rev-parse", "--verify", f"{effectif}^{{commit}}"],
+            cwd=RACINE, capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    decision = decider(versions, builds, effectif)
     ecrire_sorties({
+        "commit": effectif,
         "action": decision.action,
         "version": decision.version,
         "build": str(decision.build),

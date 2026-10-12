@@ -33,3 +33,10 @@ jobs:
 
       - name: Interroger le site en ligne
         run: node scripts/verifier-prod.mjs
+
+      # Ce que l'app iPhone trouve quand elle cherche une banque plus récente :
+      # la version de `main`, ouverte à `capacitor://localhost`. Tout échec y
+      # est muet côté téléphone. Tourne même si le contrôle du site a échoué.
+      - name: Interroger la banque comme l'app
+        if: success() || failure()
+        run: node scripts/verifier-app.mjs

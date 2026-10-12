@@ -13,7 +13,9 @@ from app_store import (  # noqa: E402
     cle_version,
     LIMITE_A_TESTER,
     commit_du_texte,
+    commit_effectif,
     decider,
+    hors_app,
     lire_a_tester,
     patch_suivant,
     texte_a_tester,
@@ -257,3 +259,51 @@ def test_lecture_des_builds_et_versions_depuis_le_json_api(monkeypatch):
     versions, brutes = app_store.lire_versions()
     assert versions == [Version("1.0", "WAITING_FOR_REVIEW", build=1)]
     assert brutes["1.0"]["id"] == "v1"
+
+
+# --- La documentation seule ne fait pas de build -----------------------------
+#
+# Sous `workflow_run`, l'app part après chaque CI verte de `main`, et la CI
+# tourne aussi pour un commit qui ne touche que la documentation. Le filtre de
+# chemins de `push` ne s'applique plus : c'est la décision qui le reprend.
+
+
+def test_documentation_et_plans_sont_hors_app():
+    for chemin in ["docs/app-ios.md", "docs/captures-app-0/x.png", "plans/a.md", "README.md", "src/lib/LISEZMOI.md"]:
+        assert hors_app(chemin), chemin
+
+
+def test_le_reste_est_dans_l_app():
+    for chemin in ["ios/a-tester.txt", "src/lib/natif.ts", "data/VERSION", "docs.ts", "scripts/check.sh"]:
+        assert not hors_app(chemin), chemin
+
+
+def test_commit_de_documentation_seule_reprend_le_commit_du_dernier_build():
+    assert commit_effectif(SHA, AUTRE[:7], ["docs/journal.md", "README.md"]) == AUTRE[:7]
+
+
+def test_un_fichier_de_l_app_garde_le_nouveau_commit():
+    assert commit_effectif(SHA, AUTRE[:7], ["README.md", "src/lib/natif.ts"]) == SHA
+
+
+def test_sans_comparaison_possible_on_garde_le_nouveau_commit():
+    # Pas de build connu, ou `git diff` impossible : on construit, comme avant.
+    assert commit_effectif(SHA, None, None) == SHA
+    assert commit_effectif(SHA, AUTRE[:7], None) == SHA
+
+
+def test_documentation_seule_pendant_une_revue_ne_fait_rien():
+    versions = [Version("1.0", "WAITING_FOR_REVIEW", build=3)]
+    builds = [Build(3, "1.0", AUTRE[:7])]
+    effectif = commit_effectif(SHA, AUTRE[:7], ["docs/journal.md"])
+    assert decider(versions, builds, effectif).action == "rien"
+
+
+def test_documentation_seule_apres_une_sortie_soumet_le_build_en_attente():
+    # La 1.0 est sortie ; le build 4 attend en 1.0.1 sur TestFlight. Un commit
+    # de documentation ne doit ni reconstruire ni oublier de soumettre le 4.
+    versions = [Version("1.0", "READY_FOR_SALE", build=3)]
+    builds = [Build(3, "1.0", None), Build(4, "1.0.1", AUTRE[:7])]
+    effectif = commit_effectif(SHA, AUTRE[:7], ["plans/x.md"])
+    d = decider(versions, builds, effectif)
+    assert (d.action, d.version, d.build, d.soumission) == ("soumettre", "1.0.1", 4, True)
