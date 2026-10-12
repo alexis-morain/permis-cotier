@@ -107,6 +107,12 @@ jobs:
       - name: Audit SEO du build
         run: node scripts/audit-seo.mjs
 
+      # Les bornes de `docs/budgets.md` : 600 lignes par fichier de
+      # composant, 40 mentions de `POUR_APP`, le code de `/examen` à sa
+      # référence plus 1 Kio brotli. Un dépassement se discute dans la PR.
+      - name: Budgets du code
+        run: node scripts/verifier-budgets.mjs
+
       # La coquille iOS sert `dist-app/`. Sans ce build, une page élaguée ou un
       # lien mort dans l'app ne cassait personne, et se voyait au simulateur
       # seulement. `elaguer-app.mjs` refuse le bundle si un lien pointe hors de

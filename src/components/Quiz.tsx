@@ -1,48 +1,31 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import type React from 'react';
-import {
-  creerSession,
-  extraireSauvegarde,
-  lenteurs,
-  questionCourante,
-  reduire,
-  restaurerSession,
-} from '../lib/session';
+import { creerSession, questionCourante, reduire, restaurerSession } from '../lib/session';
 import type { Action, Mode, Session } from '../lib/session';
-import {
-  SECONDES_PAR_QUESTION,
-  ERREURS_ADMISES,
-  aleaSeme,
-  estDue,
-  ordonnerEntrainement,
-  serieDuJour,
-  tirerExamen,
-} from '../lib/quiz';
-import { LETTRES_AFFICHEES, lettreAffichee, melangerPropositions, rangDeLaTouche } from '../lib/melange';
-import {
-  charger,
-  sauvegarder,
-  enregistrerReponse,
-  enregistrerExamen,
-  enregistrerEnCours,
-  effacerEnCours,
-  enregistrerEnCoursSerie,
-  effacerEnCoursSerie,
-  aujourdhui,
-  rienRevise,
-  CLE_STOCKAGE,
-} from '../lib/progression';
+import { aleaSeme, estDue, ordonnerEntrainement, serieDuJour, tirerExamen } from '../lib/quiz';
+import { melangerPropositions } from '../lib/melange';
+import { charger, aujourdhui, CLE_STOCKAGE } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
 import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
-import { evenement } from '../lib/mesure';
-import { douceur } from '../lib/douceur';
-import { lienLecon } from '../lib/retour';
-import { pointFinal, rappel } from '../lib/profil';
 import { POUR_APP } from '../lib/cible';
-import { modeConcentration, partager, surRetourAuPremierPlan, vibrer } from '../lib/natif';
+import { vibrer } from '../lib/natif';
 import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
 import BoutonSignal from './BoutonSignal';
+import Depart from './quiz/Depart';
+import { EnteteApp, EnteteSite } from './quiz/Entete';
+import { Panne, SerieVide, Silhouette } from './quiz/Morceaux';
+import PanneauVerdict from './quiz/PanneauVerdict';
+import Proposition from './quiz/Proposition';
+import Resultat from './quiz/Resultat';
+import {
+  useClavier,
+  useEcritureDeLaSerie,
+  useFinEtMesureDeLaSerie,
+  useHorlogeExamen,
+  useModeConcentration,
+  useVerdictEnVue,
+  type ContexteClavier,
+} from './quiz/effets';
 import './quiz.css';
 
 interface Props {
@@ -75,6 +58,7 @@ interface Props {
   premiereLecon?: { chemin: string; nom: string };
 }
 
+
 /** Action propre à l'écran, que le modèle de session n'a pas à connaître. */
 type ActionEcran = Action | { type: 'restaurer'; session: Session };
 
@@ -82,71 +66,14 @@ function reduireEcran(s: Session, action: ActionEcran): Session {
   return action.type === 'restaurer' ? action.session : reduire(s, action);
 }
 
-function Sources({ sources }: { sources: QuestionAffichable['sources'] }) {
-  return (
-    <div className="sources">
-      <span>Source :</span>
-      <ul>
-        {sources.map((s) => (
-          <li key={`${s.ref}-${s.texte}`}>
-            {s.url ? (
-              <a
-                href={s.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                data-mesure="source-ouverte"
-                data-mesure-ref={s.ref}
-              >
-                {s.texte}
-              </a>
-            ) : (
-              s.texte
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function Signaler({ id }: { id: string }) {
-  return (
-    <a className="signaler" href={`/signaler?question=${encodeURIComponent(id)}`}>
-      Signaler une erreur sur cette question
-    </a>
-  );
-}
-
-/**
- * Sous un verdict raté : la leçon de la notion, et le chemin du retour.
- *
- * C'était le manque le plus cher de l'écran de jeu. L'explication et la
- * source disent pourquoi la réponse est fausse ; elles ne disent pas où
- * apprendre la règle. Les 516 questions publiées portent une notion, donc une
- * leçon : elle est à un clic, et le retour ramène à la série.
- *
- * Une question sans notion n'affiche rien plutôt qu'un lien mort.
- */
-function LienLecon({ question, retour }: { question: QuestionAffichable; retour: string }) {
-  if (!question.notion) return null;
-  return (
-    <p className="verdict__lecon">
-      <a
-        href={lienLecon(question.theme, question.notion, retour)}
-        data-mesure="verdict-lecon"
-        data-mesure-notion={question.notion}
-      >
-        La leçon qui l’explique
-      </a>
-    </p>
-  );
-}
-
 /**
  * L'écran de jeu proprement dit. Il reçoit une banque déjà là : tous ses états
  * se calculent au montage — le tirage, la reprise, la progression lue une
  * fois — et un tableau qui arriverait après coup les prendrait à froid. C'est
  * `Quiz`, en dessous, qui attend le téléchargement avant de le monter.
+ *
+ * `Partie` tient la session et l'orchestration ; chaque écran est un morceau
+ * nommé de `quiz/`, et chaque effet un hook de `quiz/effets.ts`.
  */
 function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon }: Props & { questions: QuestionAffichable[] }) {
   // La progression est lue au montage, puis relue seulement tant que l'examen
@@ -192,9 +119,6 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
   // avant la première visite. Une image cassée et son `alt` nu ne disent pas
   // ce qui s'est passé ; la description, elle, permet encore de répondre.
   const [visuelAbsent, setVisuelAbsent] = useState<string | null>(null);
-  // La revue dépliée au résultat : les seules ratées, ou toutes les questions.
-  const [revue, setRevue] = useState<'erreurs' | 'toutes' | null>(null);
-  const basculerRevue = (quoi: 'erreurs' | 'toutes') => setRevue((v) => (v === quoi ? null : quoi));
   const [arretDemande, setArretDemande] = useState(false);
   const journalEcrit = useRef(0);
   const verdict = useRef<HTMLDivElement>(null);
@@ -260,211 +184,15 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
   // chaque chiffre illisible.
   const nomSerie = mode === 'examen' ? 'examen' : revoir ? 'revoir' : 'entrainement';
 
-  // Horloge de l'examen. Une seconde, pas plus précis : le chrono est une
-  // contrainte de l'épreuve, pas un instrument de mesure.
-  useEffect(() => {
-    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const h = window.setInterval(() => envoyer({ type: 'tic', maintenant: Date.now() }), 1000);
-    return () => window.clearInterval(h);
-  }, [session.mode, session.phase]);
-
-  // Un onglet caché voit son intervalle étranglé par le navigateur. Le chrono
-  // est une horloge murale, il ne se fige donc pas, mais l'affichage peut
-  // retarder : au retour, on recale sans attendre le prochain battement.
-  //
-  // Une app suspendue fait pire qu'un onglet caché : elle gèle l'intervalle
-  // tout net. `appStateChange` est le seul signal qui arrive à coup sûr au
-  // retour — `visibilitychange` ne part pas toujours dans une WKWebView
-  // rendue au premier plan. Les deux sont branchés, un `tic` de trop ne
-  // coûte rien puisqu'il ne fait que relire l'heure.
-  useEffect(() => {
-    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const recaler = () => envoyer({ type: 'tic', maintenant: Date.now() });
-    const surRetour = () => {
-      if (!document.hidden) recaler();
-    };
-    document.addEventListener('visibilitychange', surRetour);
-    const debrancher = surRetourAuPremierPlan(recaler);
-    return () => {
-      document.removeEventListener('visibilitychange', surRetour);
-      debrancher();
-    };
-  }, [session.mode, session.phase]);
-
-  /**
-   * Le plein écran de la série, dans l'app : la barre d'onglets se cache dès
-   * que la série court — premier clic, reprise d'un examen, entraînement
-   * ouvert — et revient au résultat, à l'arrêt, ou quand l'écran s'en va.
-   *
-   * `pagehide` couvre le lien qu'on suit en pleine série (la leçon d'un
-   * verdict raté, « Changer de thème ») : un chargement de page complet ne
-   * démonte pas React, et la barre resterait cachée sur l'écran suivant. Sur
-   * le site, `modeConcentration` ne fait rien.
-   */
-  const enJeu = session.phase === 'en-cours';
-  useEffect(() => {
-    if (!enJeu) return;
-    void modeConcentration(true);
-    const rendre = () => void modeConcentration(false);
-    window.addEventListener('pagehide', rendre);
-    return () => {
-      window.removeEventListener('pagehide', rendre);
-      rendre();
-    };
-  }, [enJeu]);
-
-  // Écriture de la progression locale, au fil des réponses.
-  useEffect(() => {
-    if (session.journal.length === journalEcrit.current) return;
-    let etat = charger();
-    for (const ligne of session.journal.slice(journalEcrit.current)) {
-      etat = enregistrerReponse(etat, ligne.id, ligne.juste, aujourdhui());
-    }
-    sauvegarder(etat);
-    journalEcrit.current = session.journal.length;
-  }, [session.journal]);
-
-  // L'examen en cours survit au rafraîchissement et à l'écran verrouillé. On
-  // écrit à chaque question et à chaque case cochée, pas à chaque seconde.
-  useEffect(() => {
-    if (mode !== 'examen') return;
-    const sauvegarde = extraireSauvegarde(session, theme);
-    const etat = charger();
-    sauvegarder(sauvegarde ? enregistrerEnCours(etat, sauvegarde) : effacerEnCours(etat));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, theme, session.phase, session.index, session.selections]);
-
-  /**
-   * La série d'entraînement survit à la page, elle aussi.
-   *
-   * Elle ne s'écrit qu'une fois commencée : tant qu'on est à la première
-   * question sans avoir répondu, la série d'avant reste offerte à la reprise
-   * plutôt que d'être écrasée par celle qu'on vient d'ouvrir. Finie, la fente
-   * se vide : rien à reprendre d'une série qu'on a menée au bout.
-   */
-  useEffect(() => {
-    if (mode !== 'entrainement') return;
-    const commencee = session.index > 0 || session.journal.length > 0;
-    if (!commencee && session.phase !== 'resultat') return;
-    const sauvegarde = session.phase === 'resultat' ? null : extraireSauvegarde(session, retourSerie);
-    const etat = charger();
-    sauvegarder(sauvegarde ? enregistrerEnCoursSerie(etat, sauvegarde) : effacerEnCoursSerie(etat));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, retourSerie, session.phase, session.index, session.selections, session.journal]);
-
-  // Un abandon déjà compté pour la série en cours, et pas encore suivi d'un
-  // retour. Partagé entre l'effet qui l'envoie et celui qui annonce la fin.
-  const abandonEnvoye = useRef(false);
-
-  useEffect(() => {
-    if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
-    const r = session.resultat;
-    if (mode === 'examen') {
-      // Un examen arrêté en route n'entre pas dans l'historique : trois
-      // questions sur quarante s'afficheraient « reçu » sur l'accueil, ce qui
-      // serait faux. Il compte dans la progression par question, pas comme
-      // épreuve passée.
-      if (!session.interrompu) {
-        sauvegarder(
-          enregistrerExamen(charger(), { date: aujourdhui(), bonnes: r.bonnes, total: r.total, reussi: r.reussi }),
-        );
-        // Le verdict d'examen se sent, comme celui de chaque question en
-        // entraînement. Un examen interrompu n'a pas de verdict à faire sentir.
-        void vibrer(r.reussi ? 'reussi' : 'echoue');
-      }
-      evenement('examen-termine', {
-        bonnes: r.bonnes,
-        erreurs: r.erreurs,
-        total: r.total,
-        // Le résultat juge les seules questions jouées : trois justes sur
-        // quatre y sont « reçu ». Un examen arrêté n'a pas de verdict, ni à
-        // l'écran ni dans la mesure.
-        reussi: r.reussi && !session.interrompu,
-        interrompu: session.interrompu,
-        absent: abandonEnvoye.current,
-      });
-    } else {
-      evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
-      if (!session.interrompu) void vibrer('fin-serie');
-    }
-  }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
-
-  useEffect(() => {
-    if (session.phase !== 'en-cours') return;
-    evenement(`${nomSerie}-commence`, { theme, notion: notion?.code });
-    // Une seule fois, au vrai départ de la série.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.phase === 'en-cours']);
-
-  // Une série quittée en route ne dit rien d'elle-même. Sans ce signal, les
-  // départs et les arrivées ne se recoupent pas : on saurait que la moitié des
-  // examens ne finit pas, jamais à quelle question ils s'arrêtent.
-  const enCours = useRef({ index: 0, total: 0, phase: session.phase });
-  enCours.current = { index: session.index, total: session.questions.length, phase: session.phase };
-
-  useEffect(() => {
-    if (session.phase !== 'en-cours') return;
-    abandonEnvoye.current = false;
-    const partir = () => {
-      const s = enCours.current;
-      if (abandonEnvoye.current || s.phase !== 'en-cours') return;
-      abandonEnvoye.current = true;
-      evenement(`${nomSerie}-abandonne`, { rang: s.index + 1, total: s.total, theme });
-    };
-    // `pagehide` couvre la fermeture et la navigation, là où `unload` ne part
-    // plus. Il manque pourtant sur mobile : téléphone verrouillé, autre app,
-    // onglet tué depuis le sélecteur. Huit examens sur vingt-neuf finissaient
-    // ainsi sans un mot, en septembre 2026. La page cachée compte donc comme
-    // un abandon ; si elle revient, `-revenu` le dit, et les abandons nets
-    // se lisent par soustraction dans Umami. Un examen qui finit page cachée,
-    // mené au bout par le chrono sans personne, reste un abandon : son
-    // `examen-termine` porte `absent: true`, à retirer des examens terminés.
-    const surVisibilite = () => {
-      if (document.hidden) {
-        partir();
-        return;
-      }
-      const s = enCours.current;
-      if (!abandonEnvoye.current || s.phase !== 'en-cours') return;
-      abandonEnvoye.current = false;
-      evenement(`${nomSerie}-revenu`, { rang: s.index + 1, total: s.total, theme });
-    };
-    window.addEventListener('pagehide', partir);
-    document.addEventListener('visibilitychange', surVisibilite);
-    return () => {
-      window.removeEventListener('pagehide', partir);
-      document.removeEventListener('visibilitychange', surVisibilite);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.phase === 'en-cours', nomSerie, theme]);
-
-  // La correction tombait sous la ligne de flottaison sur mobile : valider
-  // n'avait l'air de rien faire. On la remonte dans le champ de vision, et
-  // dans l'app le verdict se sent avant de se lire : le pouce est encore sur
-  // le bouton quand la réponse tombe. Sur le site, `vibrer` ne fait rien.
-  useEffect(() => {
-    if (!session.corrigee) return;
-    // Dans l'app, le verdict monte en panneau collé au bas de l'écran : il
-    // est déjà dans le champ, et le défilement ferait sauter la question.
-    if (!POUR_APP) verdict.current?.scrollIntoView({ block: 'nearest', behavior: douceur() });
-    void vibrer(session.juste ? 'juste' : 'faux');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.corrigee, session.index]);
-
-  // Même chose au passage au résultat : le score est en haut de l'écran.
-  useEffect(() => {
-    if (session.phase !== 'resultat') return;
-    window.scrollTo({ top: 0, behavior: douceur() });
-  }, [session.phase]);
+  useHorlogeExamen(session, envoyer);
+  useModeConcentration(session.phase === 'en-cours');
+  useEcritureDeLaSerie(session, mode, theme, retourSerie, journalEcrit);
+  useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir });
+  useVerdictEnVue(session, verdict);
 
   useEffect(() => {
     if (arretDemande) continuer.current?.focus();
   }, [arretDemande]);
-
-  // Le chrono ne s'arrête pas pendant qu'on hésite, sinon la confirmation
-  // deviendrait un bouton pause. Mais elle survit au passage de la question :
-  // la refermer sous le pouce du candidat annulait son geste, et elle se
-  // relit à chaque rendu, donc le nombre de questions restantes suit.
 
   // Le focus sur l'énoncé, au montage de chaque question et à ce moment-là
   // seulement. Une fonction de référence recréée à chaque rendu était
@@ -474,66 +202,9 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
     if (!contexte.current.arretDemande) noeud?.focus();
   }, []);
 
-  // Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
-  // le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
-  const contexte = useRef({ session, ordre, mode, arretDemande });
+  const contexte = useRef<ContexteClavier>({ session, ordre, mode, arretDemande });
   contexte.current = { session, ordre, mode, arretDemande };
-
-  useEffect(() => {
-    function surTouche(evenementClavier: KeyboardEvent) {
-      if (evenementClavier.metaKey || evenementClavier.ctrlKey || evenementClavier.altKey) return;
-      // La cible n'est pas toujours un élément : une touche pressée sans focus
-      // arrive avec `document` pour cible.
-      const cible = evenementClavier.target instanceof HTMLElement ? evenementClavier.target : null;
-      if (cible?.closest('input, textarea, select, [contenteditable="true"]')) return;
-      // Un bouton d'action qui a le focus s'active tout seul : ne pas doubler.
-      // Une proposition est un bouton elle aussi, mais Chromium lui laisse le
-      // focus après un clic souris : sans cette exception, Entrée décochait la
-      // réponse au lieu de valider, alors que l'écran de départ le promet. Même
-      // chose pour « Écouter le signal » : Entrée y relançait le son, et
-      // l'examen perdait ses secondes. L'espace, elle, l'active toujours.
-      const activable =
-        (cible?.tagName === 'BUTTON' || cible?.tagName === 'A') &&
-        !cible.classList.contains('proposition') &&
-        !cible.classList.contains('signal-ecoute');
-
-      const { session: s, ordre: o, mode: m, arretDemande: arret } = contexte.current;
-
-      if (s.phase === 'depart') {
-        if (evenementClavier.key === 'Enter' && !activable) {
-          evenementClavier.preventDefault();
-          envoyer({ type: 'commencer', maintenant: Date.now() });
-        }
-        return;
-      }
-      if (s.phase !== 'en-cours' || arret) return;
-
-      // La touche vise une ligne de l'écran, pas un identifiant de fichier :
-      // « B » coche ce que l'écran appelle B, quel que soit l'id derrière.
-      const rang = rangDeLaTouche(evenementClavier.key);
-      if (rang !== undefined && !s.corrigee) {
-        const visee = o[rang];
-        if (!visee) return;
-        evenementClavier.preventDefault();
-        envoyer({ type: 'basculer', proposition: visee.id });
-        return;
-      }
-
-      if (evenementClavier.key === 'Enter' && !activable) {
-        const choix = s.selections[s.index] ?? [];
-        if (s.corrigee) {
-          evenementClavier.preventDefault();
-          envoyer({ type: 'suivante', maintenant: Date.now() });
-        } else if (!(m === 'entrainement' && choix.length === 0)) {
-          evenementClavier.preventDefault();
-          envoyer({ type: 'valider', maintenant: Date.now() });
-        }
-      }
-    }
-
-    document.addEventListener('keydown', surTouche);
-    return () => document.removeEventListener('keydown', surTouche);
-  }, []);
+  useClavier(contexte, envoyer);
 
   const reprendreDepuis = useCallback((reprise: Session) => {
     // Les réponses du journal repris ont déjà été comptées dans la progression
@@ -542,443 +213,39 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
     envoyer({ type: 'restaurer', session: reprise });
   }, []);
 
-  const reprendre = useCallback(() => {
-    if (reprise) reprendreDepuis(reprise);
-  }, [reprise, reprendreDepuis]);
-
-  if (serie.length === 0) {
-    return revoir ? (
-      <div className="encadre">
-        <h1 className="encadre__titre">Rien à revoir aujourd’hui.</h1>
-        <p className="discret">
-          Chaque question réussie revient un jour plus tard, puis trois, puis sept, puis vingt et un.
-          Rien n’est dû aujourd’hui. <a href="/entrainement">S’entraîner par thème</a>.
-        </p>
-      </div>
-    ) : (
-      <div className="encadre">
-        <h1 className="encadre__titre">Aucune question publiée pour l’instant.</h1>
-        <p className="discret">
-          La banque se remplit thème par thème, chaque question citant le texte dont elle est tirée.
-          Reviens dans quelques jours.
-        </p>
-      </div>
-    );
-  }
+  if (serie.length === 0) return <SerieVide revoir={revoir} />;
 
   if (session.phase === 'depart') {
     return (
-      <div className="jeu depart">
-        {/* Dans l'app, le titre est celui de l'onglet : l'écran se comprend en
-            le regardant, les cinq règles dessous disent le reste. */}
-        <h1 className="depart__titre">
-          {POUR_APP ? 'Examen blanc' : 'Quarante questions, dans les conditions de l’épreuve.'}
-        </h1>
-
-        {/* Un premier examen sans rien avoir lu : on tourne autour de vingt
-            sur quarante, et on part avant la dixième question. Huit premiers
-            essais mesurés en septembre 2026 : de 14 à 25, médiane 19,5. Le
-            chiffre se revoit quand la mesure en aura davantage. Sous le titre,
-            pas sous les règles : sur un téléphone, le bouton collant est déjà
-            là et l'encart, plus bas, ne se verrait pas. */}
-        {/* Qui a déjà navigué, ou repasse l'épreuve, vient d'entendre le
-            questionnaire lui dire de faire un examen blanc tout de suite :
-            l'encart le contredirait. */}
-        {mode === 'examen' && premiereLecon && !reprise && rienRevise(depart) &&
-          depart.profil.depart !== 'navigue' && depart.profil.depart !== 'repasse' && (
-          <div className="encadre depart__novice">
-            <p>
-              <strong>Tu n’as encore rien révisé.</strong> Au premier essai, on tourne autour de 20 sur 40,
-              et il en faut 35.
-            </p>
-            <p>
-              Commence plutôt par la première leçon :{' '}
-              <a href={premiereLecon.chemin} data-mesure="examen-premiere-lecon">{premiereLecon.nom}</a>.
-            </p>
-          </div>
-        )}
-
-        <ul className="depart__format">
-          <li>
-            <b>{serie.length} question{serie.length > 1 ? 's' : ''}</b> tirées au sort dans les quatorze
-            thèmes du programme.
-          </li>
-          <li><b>{SECONDES_PAR_QUESTION} secondes</b> par question. Passé ce délai, on passe à la suivante.</li>
-          <li>
-            <b>Une ou deux bonnes réponses.</b> La réponse doit être exacte : une bonne case seule
-            ne suffit pas quand il en faut deux.
-          </li>
-          <li><b>{ERREURS_ADMISES} erreurs admises.</b> Une question sans réponse compte comme une erreur.</li>
-          <li>Aucune correction avant la fin. Tout arrive d’un coup, sur l’écran de résultat.</li>
-        </ul>
-
-        {/* L'aide clavier n'a rien à faire sur un téléphone, et la note sur
-            l'arrêté est un texte de site : l'app ouvre sur l'action. */}
-        {!POUR_APP && (
-          <>
-            <p className="discret">
-              Au clavier : <b>A</b>, <b>B</b>, <b>C</b>, <b>D</b> pour cocher, <b>Entrée</b> pour valider et passer.
-            </p>
-            <p className="discret">
-              L’arrêté du 28 septembre 2007 fixe les quarante questions et les cinq erreurs admises.
-              Les vingt secondes et la règle des une ou deux bonnes réponses n’y sont pas : elles
-              viennent de la description de l’épreuve par les opérateurs agréés.
-            </p>
-          </>
-        )}
-
-        {reprise && (
-          <div className="encadre depart__reprise">
-            <p>
-              <strong>Tu avais un examen en cours</strong>, arrêté à la question {reprise.index + 1} sur{' '}
-              {reprise.questions.length}.
-            </p>
-            <p className="discret">
-              Le commencer à neuf tire quarante autres questions et abandonne celui-là.
-            </p>
-          </div>
-        )}
-
-        {/* Dans l'app, la barre d'onglets est encore là avant le départ. */}
-        {!POUR_APP && (
-          <p className="depart__retour">
-            <a className="signaler" href="/">Retour à l’accueil</a>
-          </p>
-        )}
-
-        <div className="jeu__actions jeu__actions--collant">
-          {reprise ? (
-            <>
-              <button className="bouton bouton--principal" type="button" onClick={reprendre}>
-                Reprendre à la question {reprise.index + 1}
-              </button>
-              <button
-                className="bouton"
-                type="button"
-                onClick={() => envoyer({ type: 'commencer', maintenant: Date.now() })}
-              >
-                Commencer un nouvel examen
-              </button>
-            </>
-          ) : (
-            <button
-              className="bouton bouton--principal"
-              type="button"
-              onClick={() => envoyer({ type: 'commencer', maintenant: Date.now() })}
-            >
-              Commencer l’examen
-            </button>
-          )}
-        </div>
-      </div>
+      <Depart
+        mode={mode}
+        taille={serie.length}
+        depart={depart}
+        premiereLecon={premiereLecon}
+        reprise={reprise}
+        commencer={() => envoyer({ type: 'commencer', maintenant: Date.now() })}
+        reprendre={() => reprise && reprendreDepuis(reprise)}
+      />
     );
   }
 
   if (session.phase === 'resultat' && session.resultat) {
-    const r = session.resultat;
-    const ratees = new Set(r.ratees);
-    const jouees = session.questions.slice(0, r.total);
-    // Le coup de mou : un examen recalé, ou un entraînement sous la moitié.
-    // C'est là qu'on rappelle la raison dite au départ, pas ailleurs.
-    const coupDeMou = r.total > 0 && (mode === 'examen'
-      ? !session.interrompu && !r.reussi
-      : r.bonnes * 2 < r.total);
-    const raison = coupDeMou ? rappel(depart.profil) : null;
-    // L'examen d'avant, lu au montage : celui-ci n'y est pas encore.
-    const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
-    const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
-    // Le temps, que le score ne dit pas. Vingt secondes par question, et
-    // l'échec par lenteur est le mode d'échec propre à cette épreuve. Au
-    // buzzer, l'épreuve relève ce qui est coché : des cases vides font une
-    // erreur, des cases cochées comptent pour ce qu'elles valent. Une réponse
-    // arrachée à la dernière seconde ne tiendra pas dans une salle.
-    const lent = lenteurs(session);
-    // Le second moment écrit du site : un examen blanc reçu hisse le pavillon
-    // Q, jaune uni, le long d'un mât qui longe le score et le verdict. Il est
-    // dessiné en CSS sur ce bloc, rien de plus ici. Recalé, interrompu,
-    // entraînement : le bloc n'a pas de classe, et rien ne se hisse.
-    const recu = mode === 'examen' && !session.interrompu && r.total > 0 && r.reussi;
     return (
-      <div className="jeu">
-        <h1 className="visuellement-cache">{titre}, résultat</h1>
-        <div>
-          <p className="resultat__titre">
-            {mode === 'examen'
-              ? session.interrompu ? 'Examen blanc interrompu' : 'Examen blanc terminé'
-              : titre}
-          </p>
-
-          {r.total === 0 ? (
-            <p className="resultat__verdict">
-              Examen arrêté avant la première réponse. Rien à noter, rien de perdu.
-            </p>
-          ) : (
-            <>
-              <div className={recu ? 'resultat--recu' : undefined}>
-                <p className="resultat__score">
-                  {r.bonnes}<small> / {r.total}</small>
-                </p>
-                {mode === 'examen' && (
-                  session.interrompu ? (
-                    <p className="resultat__verdict">
-                      Examen interrompu, {r.total} question{r.total > 1 ? 's' : ''} jouée{r.total > 1 ? 's' : ''} sur{' '}
-                      {session.questions.length}, dont {r.erreurs} ratée{r.erreurs > 1 ? 's' : ''}.
-                      Une note sur un examen entier demande d’aller au bout.
-                    </p>
-                  ) : (
-                    <p className={`resultat__verdict resultat__verdict--${r.reussi ? 'reussi' : 'echoue'}`}>
-                      {r.reussi
-                        ? `Reçu. ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
-                        : `Recalé. ${r.erreurs} erreurs, l’épreuve en admet ${ERREURS_ADMISES}.`}
-                    </p>
-                  )
-                )}
-                {recu && (
-                  <p className="resultat__pavillon">
-                    Pavillon Q hissé : libre pratique.
-                    <span className="discret">
-                      Au Code international des signaux, le pavillon jaune seul demande l’entrée au port.
-                      Tu peux y aller.
-                    </span>
-                  </p>
-                )}
-              </div>
-              {precedent && (
-                <p className="resultat__ecart">
-                  Ton examen d’avant : {precedent.bonnes} sur {precedent.total}.{' '}
-                  {ecart > 0 && `${ecart} de plus que la dernière fois.`}
-                  {ecart < 0 && `${-ecart} de moins que la dernière fois.`}
-                  {ecart === 0 && 'Le même score.'}
-                </p>
-              )}
-            </>
-          )}
-        </div>
-
-        {(lent.sansReponse.length > 0 || lent.cocheesAuBuzzer.length > 0 || lent.aLaLimite.length > 0) && (
-          <p className="resultat__temps">
-            {lent.sansReponse.length > 0 && (
-              <>
-                <b>
-                  {lent.sansReponse.length} question{lent.sansReponse.length > 1 ? 's' : ''} sans réponse
-                </b>
-                {' : les vingt secondes sont passées avant toi. '}
-              </>
-            )}
-            {lent.cocheesAuBuzzer.length > 0 && (
-              <>
-                <b>
-                  {lent.cocheesAuBuzzer.length > 1
-                    ? `${lent.cocheesAuBuzzer.length} questions retenues telles que tu les avais cochées`
-                    : '1 question retenue telle que tu l’avais cochée'}
-                </b>
-                {' : les vingt secondes sont passées avant ton clic. À l’épreuve aussi, c’est ce qui est coché à ce moment-là qui compte. '}
-              </>
-            )}
-            {lent.aLaLimite.length > 0 && (
-              <>
-                {lent.aLaLimite.length} répondue{lent.aLaLimite.length > 1 ? 's' : ''} dans la
-                dernière seconde.{' '}
-              </>
-            )}
-            <span className="discret">Le chrono compte autant que la réponse.</span>
-          </p>
-        )}
-
-        {raison && (
-          <>
-            <p className="rappel resultat__rappel">Tu passes ce permis pour <q>{raison}</q>{pointFinal(raison)}</p>
-            <p className="discret">
-              {mode !== 'examen' ? (
-                'Chaque question ratée revient jusqu’à ce que tu la tiennes. C’est le principe.'
-              ) : POUR_APP ? (
-                'Les questions ratées sont dans la revue, et elles reviennent en entraînement jusqu’à ce que tu les tiennes.'
-              ) : (
-                <>
-                  {r.erreurs > 1 ? `Tes ${r.erreurs} erreurs sont` : 'Ton erreur est'} dans{' '}
-                  <a href="/profil/erreurs">ce que tu as raté</a>, et {r.erreurs > 1 ? 'elles reviennent' : 'elle revient'} dans
-                  ta série du jour jusqu’à ce que tu {r.erreurs > 1 ? 'les tiennes' : 'la tiennes'}.
-                </>
-              )}
-            </p>
-          </>
-        )}
-
-        {r.total > 0 && (
-          <ul className="parTheme">
-            {Object.entries(r.parTheme)
-              .sort(([, a], [, b]) => a.bonnes / a.total - b.bonnes / b.total)
-              .map(([code, note], rang) => (
-                <li key={code} style={{ '--part': note.bonnes / note.total, '--rang': rang } as React.CSSProperties}>
-                  {/* Sur le site, le nom mène à l'entraînement du thème. Dans
-                      l'app, chaque onglet est sa propre webview : un lien
-                      ouvrirait l'entraînement sous l'onglet Examen. */}
-                  <b>{POUR_APP ? nomDuTheme(code) : <a href={`/entrainement/${code}`}>{nomDuTheme(code)}</a>}</b>
-                  <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
-                    {note.bonnes} / {note.total}
-                  </span>
-                  {/* Dans l'app, la jauge est un élément : elle se remplit en
-                      `scaleX`, là où le site peint un dégradé de fond. */}
-                  {POUR_APP && (
-                    <span className="parTheme__jauge" aria-hidden="true"><span /></span>
-                  )}
-                </li>
-              ))}
-          </ul>
-        )}
-
-        {POUR_APP ? (
-          <>
-            {/* Le geste suivant d'abord : ce qui a été raté, puis refaire. La
-                barre d'onglets est revenue, un lien « Accueil » la doublerait. */}
-            <div className="jeu__actions resultat__actions">
-              {ratees.size > 0 && (
-                <button
-                  className="bouton bouton--principal"
-                  type="button"
-                  aria-expanded={revue === 'erreurs'}
-                  onClick={() => basculerRevue('erreurs')}
-                >
-                  {revue === 'erreurs' ? 'Masquer mes erreurs' : 'Revoir mes erreurs'}
-                </button>
-              )}
-              <a
-                className={`bouton ${ratees.size > 0 ? 'bouton--discret' : 'bouton--principal'}`}
-                href={retour}
-              >
-                {mode === 'examen' ? 'Refaire un examen' : 'Refaire la série'}
-              </a>
-            </div>
-            {/* Un examen interrompu ne se partage pas : le score ne veut rien
-                dire, et personne n'a envie de l'annoncer. */}
-            {mode === 'examen' && !session.interrompu && r.total > 0 && (
-              <p className="resultat__partage">
-                <button
-                  className="bouton bouton--discret"
-                  type="button"
-                  onClick={() =>
-                    void partager(
-                      'Mon examen blanc du permis côtier',
-                      r.reussi
-                        ? `Reçu à l’examen blanc : ${r.bonnes} sur ${r.total}, ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
-                        : `${r.bonnes} sur ${r.total} à l’examen blanc, ${r.erreurs} erreurs. L’épreuve en admet ${ERREURS_ADMISES}. On y retourne.`,
-                      'https://lepermiscotier.fr',
-                    )
-                  }
-                >
-                  Partager
-                </button>
-              </p>
-            )}
-          </>
-        ) : (
-          <div className="jeu__actions">
-            {/* Comme dans l'app : ce qui a été raté d'abord, puis refaire. */}
-            {ratees.size > 0 && (
-              <button
-                className="bouton bouton--principal"
-                type="button"
-                aria-expanded={revue === 'erreurs'}
-                onClick={() => basculerRevue('erreurs')}
-              >
-                {revue === 'erreurs'
-                  ? 'Masquer mes erreurs'
-                  : ratees.size > 1 ? `Revoir mes ${ratees.size} erreurs` : 'Revoir mon erreur'}
-              </button>
-            )}
-            {r.total > 0 && (
-              <button
-                className={`bouton${ratees.size > 0 ? ' bouton--discret' : ''}`}
-                type="button"
-                aria-expanded={revue === 'toutes'}
-                onClick={() => basculerRevue('toutes')}
-              >
-                {revue === 'toutes'
-                  ? 'Masquer la revue'
-                  : ratees.size === 0
-                    ? 'Revoir les questions'
-                    : r.total > 1 ? `Revoir les ${r.total} questions` : 'Revoir la question'}
-              </button>
-            )}
-            <a className={`bouton${ratees.size > 0 ? '' : ' bouton--principal'}`} href={retour}>
-              {mode === 'examen' ? 'Refaire un examen' : 'Recommencer'}
-            </a>
-            {/* Pas de partage dessiné sur le site : le bouton de partage du
-                navigateur est déjà là, un doublon en HTML n'ajoute rien. */}
-            <a className="bouton bouton--discret" href="/">Accueil</a>
-          </div>
-        )}
-
-        {revue && (
-          <div className="revue">
-            {jouees.map((q, i) => {
-              const d = parId.get(q.id);
-              if (!d) return null;
-              const donnee = session.selections[i] ?? [];
-              const rate = ratees.has(q.id);
-              // Le bouton des erreurs les promet : la revue les tient seules.
-              if (revue === 'erreurs' && !rate) return null;
-              // Une seule case cochée quand il en fallait deux : le candidat
-              // ne voyait pas qu'il manquait une réponse, seulement laquelle.
-              const incomplete = rate && q.reponses.length === 2 && donnee.length === 1;
-              return (
-                <article className="revue__item" key={q.id}>
-                  <p className="revue__rang">
-                    Question {i + 1} sur {jouees.length}, {nomDuTheme(q.theme)}
-                    {rate ? ', ratée' : ''}
-                  </p>
-                  <h2 className="revue__enonce">{d.enonce}</h2>
-                  {incomplete && (
-                    <p className="discret">Il fallait deux réponses, tu en as coché une.</p>
-                  )}
-                  {d.visuel && (
-                    <img className="jeu__visuel" src={`/visuels/${d.visuel.fichier}`} alt={d.visuel.alt} loading="lazy" />
-                  )}
-                  {d.visuel?.fichier.startsWith('sons/') && <BoutonSignal fichier={d.visuel.fichier} />}
-                  <ul className="propositions">
-                    {/* Le même ordre qu'en jeu : la revue doit montrer l'écran
-                        que le candidat a eu sous les yeux. */}
-                    {melangerPropositions(d.propositions, session.graine, d.id).map((p, rang) => {
-                      const bonne = q.reponses.includes(p.id);
-                      const cochee = donnee.includes(p.id);
-                      const classe = bonne ? ' proposition--juste' : cochee ? ' proposition--fausse' : '';
-                      return (
-                        <li key={p.id}>
-                          <div className={`proposition${classe}`}>
-                            <span className="proposition__lettre">{lettreAffichee(rang)}</span>
-                            <span>{p.texte}</span>
-                            {(bonne || cochee) && (
-                              <span className="proposition__marque">
-                                {cochee
-                                  ? bonne ? 'ta réponse, juste' : 'ta réponse'
-                                  : rate && donnee.length > 0 ? 'bonne réponse, oubliée' : 'bonne réponse'}
-                              </span>
-                            )}
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <div className={`verdict verdict--${rate ? 'fausse' : 'juste'}`} style={{ marginTop: '0.9rem' }}>
-                    <p>{d.explication}</p>
-                    <Sources sources={d.sources} />
-                    {rate && <LienLecon question={d} retour={retourLecon} />}
-                  </div>
-                  <p style={{ marginTop: '0.6rem' }}><Signaler id={q.id} /></p>
-                </article>
-              );
-            })}
-          </div>
-        )}
-      </div>
+      <Resultat
+        mode={mode}
+        session={session}
+        titre={titre}
+        depart={depart}
+        parId={parId}
+        retour={retour}
+        retourLecon={retourLecon}
+      />
     );
   }
 
   if (!question || !affichee) return null;
 
-  const urgent = session.restant !== null && session.restant <= 5;
-  const plein = session.selections[session.index]?.length === 2;
-  const restantes = session.questions.length - session.index;
+  const plein = selection.length === 2;
 
   // Reprendre n'a de sens qu'avant d'avoir joué : une série entamée ici a
   // déjà remplacé celle d'avant.
@@ -990,86 +257,18 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
     session.journal.length === 0 &&
     !session.corrigee;
 
-  // Le verdict, puis la barre d'action (ou la confirmation d'arrêt). Dans
-  // l'app ils forment un seul bloc collé au bas de l'écran : le panneau de
-  // correction monte au-dessus du bouton « Continuer », sur le même fond.
   const pied = (
-    <>
-      {session.corrigee && (
-        <div
-          className={`verdict verdict--${session.juste ? 'juste' : 'fausse'}`}
-          ref={verdict}
-          role="status"
-        >
-          <p className="verdict__titre">
-            {session.juste ? (POUR_APP ? 'Juste' : 'Bonne réponse') : POUR_APP ? 'Faux' : 'Raté'}
-          </p>
-          <p>{affichee.explication}</p>
-          <Sources sources={affichee.sources} />
-          {!session.juste && <LienLecon question={affichee} retour={retourLecon} />}
-        </div>
-      )}
-
-      {arretDemande ? (
-        <div className="arret" role="group" aria-label="Arrêter l’examen">
-          <p className="arret__question">Arrêter l’examen maintenant ?</p>
-          <p className="discret">
-            {session.index === 0
-              ? 'Aucune question n’a encore été validée : tu n’auras pas de résultat.'
-              : `Il te reste ${restantes} question${restantes > 1 ? 's' : ''}. Ton résultat portera ${
-                  session.index === 1
-                    ? 'sur la seule que tu as jouée'
-                    : `sur les ${session.index} que tu as jouées`
-                }, pas sur ${session.questions.length}.`}
-          </p>
-          <div className="jeu__actions">
-            <button
-              className="bouton bouton--principal"
-              type="button"
-              ref={continuer}
-              onClick={() => setArretDemande(false)}
-            >
-              Continuer l’examen
-            </button>
-            <button className="bouton" type="button" onClick={() => envoyer({ type: 'terminer' })}>
-              Arrêter et voir le résultat
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div
-          className={`jeu__actions jeu__actions--collant${
-            session.corrigee ? (session.juste ? ' jeu__actions--juste' : ' jeu__actions--fausse') : ''
-          }`}
-        >
-          {session.corrigee ? (
-            <button
-              className="bouton bouton--principal"
-              type="button"
-              onClick={() => envoyer({ type: 'suivante', maintenant: Date.now() })}
-            >
-              {POUR_APP ? 'Continuer' : 'Question suivante'}
-            </button>
-          ) : (
-            <button
-              className="bouton bouton--principal"
-              type="button"
-              disabled={mode === 'entrainement' && selection.length === 0}
-              onClick={() => envoyer({ type: 'valider', maintenant: Date.now() })}
-            >
-              {mode === 'examen' ? 'Valider et passer' : 'Valider'}
-            </button>
-          )}
-          {mode === 'examen' ? (
-            <button className="bouton bouton--discret" type="button" onClick={() => setArretDemande(true)}>
-              Arrêter
-            </button>
-          ) : (
-            <Signaler id={question.id} />
-          )}
-        </div>
-      )}
-    </>
+    <PanneauVerdict
+      mode={mode}
+      session={session}
+      question={affichee}
+      retourLecon={retourLecon}
+      arretDemande={arretDemande}
+      demanderArret={setArretDemande}
+      envoyer={envoyer}
+      verdict={verdict}
+      continuer={continuer}
+    />
   );
 
   return (
@@ -1101,62 +300,7 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
         </div>
       )}
 
-      {POUR_APP ? (
-        /* La ligne d'avancement de l'app : une jauge fine pleine largeur, le
-           chrono en grand, le compteur en petit à droite. Pas de « Question
-           12 » écrit : le compteur est muet pour VoiceOver, qui entend déjà
-           « Question 12 sur 40 » en tête de l'énoncé, juste dessous. */
-        <div className="jeu__entete">
-          <div className="jeu__avancement" aria-hidden="true">
-            <span style={{ transform: `scaleX(${session.index / session.questions.length})` }} />
-          </div>
-          {session.restant !== null ? (
-            <span className={`jeu__chrono display${urgent ? ' jeu__chrono--urgent' : ''}`} aria-live="off">
-              {session.restant}<span className="discret"> s</span>
-              <span className="visuellement-cache">secondes restantes</span>
-            </span>
-          ) : (
-            <a className="signaler" href="/entrainement">Changer de thème</a>
-          )}
-          <span className="jeu__compteur" aria-hidden="true">
-            {session.index + 1} / {session.questions.length}
-          </span>
-          {session.restant !== null && (
-            <div className={`jeu__barre${urgent ? ' jeu__barre--urgent' : ''}`} aria-hidden="true">
-              <span style={{ transform: `scaleX(${session.restant / SECONDES_PAR_QUESTION})` }} />
-            </div>
-          )}
-        </div>
-      ) : (
-        <>
-          <div className="jeu__entete">
-            <span className="jeu__compteur">
-              Question {session.index + 1} <span className="discret">sur {session.questions.length}</span>
-            </span>
-            {session.restant !== null ? (
-              <span className={`jeu__chrono${urgent ? ' jeu__chrono--urgent' : ''}`} aria-live="off">
-                {session.restant}<span className="discret"> s</span>
-                <span className="visuellement-cache">secondes restantes</span>
-              </span>
-            ) : (
-              <a className="signaler" href={revoir ? '/entrainement' : '/entrainement'}>Changer de thème</a>
-            )}
-          </div>
-
-          {session.restant !== null && (
-            <div className="jeu__jauges" aria-hidden="true">
-              <div className={`jeu__barre${urgent ? ' jeu__barre--urgent' : ''}`}>
-                <span style={{ transform: `scaleX(${session.restant / SECONDES_PAR_QUESTION})` }} />
-              </div>
-              {/* Avancement dans l'examen, distinct du chrono : treize minutes sans
-                  aucune correction, il faut au moins savoir où on en est. */}
-              <div className="jeu__avancement">
-                <span style={{ transform: `scaleX(${session.index / session.questions.length})` }} />
-              </div>
-            </div>
-          )}
-        </>
-      )}
+      {POUR_APP ? <EnteteApp session={session} /> : <EnteteSite session={session} />}
 
       {rienDu && session.index === 0 && (
         <p className="discret">
@@ -1186,8 +330,8 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
 
           Le titre n'est ni un bouton ni un lien : le raccourci Entrée continue
           donc de valider, là où un élément activable se serait déclenché tout
-          seul (voir `activable` plus haut). Le `key` le remonte à chaque
-          question, ce qui suffit à rejouer le geste. */}
+          seul (voir `activable` dans `useClavier`). Le `key` le remonte à
+          chaque question, ce qui suffit à rejouer le geste. */}
       <h2
         className="jeu__enonce"
         key={`enonce-${question.id}`}
@@ -1225,25 +369,20 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
         {ordre.map((p, rang) => {
           const cochee = selection.includes(p.id);
           const bonne = question.reponses.includes(p.id);
-          let classe = cochee ? ' proposition--cochee' : '';
-          if (session.corrigee) classe = bonne ? ' proposition--juste' : cochee ? ' proposition--fausse' : '';
           return (
-            <li key={p.id}>
-              <button
-                type="button"
-                className={`proposition${classe}`}
-                aria-pressed={cochee}
-                aria-keyshortcuts={LETTRES_AFFICHEES[rang]}
-                disabled={session.corrigee || (plein && !cochee)}
-                onClick={() => {
-                  void vibrer('choix');
-                  envoyer({ type: 'basculer', proposition: p.id });
-                }}
-              >
-                <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
-                <span>{p.texte}</span>
-              </button>
-            </li>
+            <Proposition
+              key={p.id}
+              texte={p.texte}
+              rang={rang}
+              cochee={cochee}
+              etat={bonne ? 'juste' : cochee ? 'fausse' : null}
+              corrigee={session.corrigee}
+              desactivee={session.corrigee || (plein && !cochee)}
+              basculer={() => {
+                void vibrer('choix');
+                envoyer({ type: 'basculer', proposition: p.id });
+              }}
+            />
           );
         })}
       </ul>
@@ -1253,62 +392,6 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
       )}
 
       {POUR_APP ? <div className="jeu__pied">{pied}</div> : pied}
-    </div>
-  );
-}
-
-/**
- * L'attente.
- *
- * L'îlot est en `client:only` : rien n'est rendu au serveur, donc le
- * téléchargement ajoute un vide visible là où la page était déjà pleine. Une
- * silhouette de question tient la place — même gouttière, mêmes hauteurs de
- * carte — plutôt qu'un tourniquet, qui n'annonce rien de ce qui vient.
- *
- * `aria-busy` et le texte hors écran disent au lecteur d'écran ce que l'œil
- * comprend tout seul.
- */
-function Silhouette({ propositions }: { propositions: number }) {
-  return (
-    <div className="jeu silhouette" aria-busy="true" aria-live="polite">
-      <p className="visuellement-cache">Chargement des questions.</p>
-      <div className="silhouette__enonce">
-        <span className="silhouette__ligne" />
-        <span className="silhouette__ligne silhouette__ligne--courte" />
-      </div>
-      <ul className="propositions">
-        {Array.from({ length: propositions }, (_, rang) => (
-          <li key={rang}>
-            <span className="proposition silhouette__proposition">
-              <span className="silhouette__pastille" />
-              <span className="silhouette__ligne" />
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-/**
- * La banque n'est pas venue. Sur le site, c'est une coupure de réseau au
- * premier chargement : le service worker garde le JSON, donc ça ne se produit
- * qu'avant la première visite hors ligne. Dans la coquille iOS, le fichier est
- * dans le bundle et ce cas n'existe pas.
- */
-function Panne({ reessayer }: { reessayer: () => void }) {
-  return (
-    <div className="encadre">
-      <h1 className="encadre__titre">Les questions ne sont pas arrivées.</h1>
-      <p className="discret">
-        La connexion a lâché pendant le téléchargement de la banque. Rien n’est perdu : ta
-        progression est sur cet appareil.
-      </p>
-      <p>
-        <button className="bouton bouton--principal" type="button" onClick={reessayer}>
-          Réessayer
-        </button>
-      </p>
     </div>
   );
 }

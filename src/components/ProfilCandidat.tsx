@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
-import { annoncerDateExamen, aujourdhui, charger, effacer, enregistrerProfil, sauvegarder } from '../lib/progression';
+import { aujourdhui, charger, sauvegarder } from '../lib/progression';
 import { ERREURS_ADMISES, estDue } from '../lib/quiz';
 import { depuisLe } from '../lib/accueil';
 import type { Etat } from '../lib/progression';
 import {
   PALIERS,
   phraseDuPalier,
-  RYTHMES,
   indice,
   jalons,
   joursAvant,
@@ -15,7 +14,6 @@ import {
   notionsLesPlusFaibles,
   objectifDuJour,
   pointFinal,
-  profilRempli,
   quatorzeJours,
   rappel,
   serieDeJours,
@@ -23,9 +21,9 @@ import {
 import type { QuestionConnue } from '../lib/profil';
 import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
-import { evenement } from '../lib/mesure';
 import { POUR_APP } from '../lib/cible';
-import Apparence from './Apparence';
+import Reglages from './profil/Reglages';
+import { accorde } from './profil/accorde';
 import './profil.css';
 
 interface Props {
@@ -51,13 +49,8 @@ const JOURS_COURTS = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 const CHANGEMENT_COMPTAGE = '2026-09-10';
 const FIN_AVIS_COMPTAGE = '2026-10-10';
 
-/** « 1 vue », « 2 vues » : zéro et un au singulier, comme on le dit. */
 /** La première lettre en capitale : « hier » ouvre une phrase. */
 const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
-
-function accorde(n: number, mot: string): string {
-  return `${n} ${mot}${n > 1 ? 's' : ''}`;
-}
 
 /**
  * Le compte d'une ligne de thème ou de notion. Le rouge dit une faute, jamais
@@ -73,13 +66,6 @@ function Compte({ vues, retenues, ratees, total }: { vues: number; retenues: num
       <span className="discret">{` ${mot}${nombre > 1 ? 's' : ''} sur ${accorde(vues, 'vue')}, ${total} en banque`}</span>
     </>
   );
-}
-
-/** « 2 questions, 1 examen blanc, ta raison et ta date. », sans ce qui vaut zéro. */
-function ceQuiPart(parts: string[]): string {
-  if (parts.length === 0) return '';
-  const phrase = parts.length === 1 ? parts[0]! : `${parts.slice(0, -1).join(', ')} et ${parts[parts.length - 1]}`;
-  return `${phrase.charAt(0).toUpperCase()}${phrase.slice(1)}.`;
 }
 
 function Coche() {
@@ -98,7 +84,6 @@ function Coche() {
  */
 export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const [etat, setEtat] = useState<Etat | null>(null);
-  const [confirme, setConfirme] = useState(false);
   const [efface, setEfface] = useState(false);
   const [jour] = useState(() => aujourdhui());
   const titre = useRef<HTMLHeadingElement>(null);
@@ -193,16 +178,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
     </div>
   );
 
-  // Ce qui part avec l'effacement, compté, sans ce qui vaut zéro.
-  const nbQuestions = Object.keys(etat.questions).length;
-  const nbLecons = Object.keys(etat.lecons).length;
-  const partira = ceQuiPart([
-    ...(nbQuestions > 0 ? [accorde(nbQuestions, 'question')] : []),
-    ...(etat.examens.length > 0 ? [`${etat.examens.length} examen${etat.examens.length > 1 ? 's blancs' : ' blanc'}`] : []),
-    ...(nbLecons > 0 ? [accorde(nbLecons, 'leçon')] : []),
-    ...(raison ? ['ta raison'] : []),
-    ...(etat.dateExamen ? ['ta date'] : []),
-  ]);
 
   const blocIndice = (
     <section className="fiche__indice" aria-labelledby="indice-titre">
@@ -523,139 +498,16 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
         </>
       )}
 
-      <section className="fiche__reglages" aria-labelledby="reglages-titre">
-        <h2 id="reglages-titre">Tes réglages</h2>
-        <p className="discret">
-          {POUR_APP
-            ? 'Tout reste sur ton téléphone. Supprimer l’app efface la fiche.'
-            : 'Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.'}
-        </p>
-
-        <div className="reglage">
-          <label htmlFor="reglage-prenom">Prénom</label>
-          <input
-            id="reglage-prenom"
-            className="champ"
-            type="text"
-            autoComplete="given-name"
-            maxLength={40}
-            value={p.prenom}
-            onChange={(e) => ecrire(enregistrerProfil(etat, { ...p, prenom: e.target.value }))}
-          />
-        </div>
-
-        <div className="reglage">
-          <p className="reglage__titre">Pourquoi tu passes le permis</p>
-          <p className="reglage__valeur">
-            {raison ? <q>{raison}</q> : <span className="discret">Pas encore dit.</span>}{' '}
-            <a href="/profil/depart">{profilRempli(p) ? 'Modifier mes réponses' : 'Répondre'}</a>
-          </p>
-        </div>
-
-        <div className="reglage">
-          <p className="reglage__titre" id="reglage-rythme">Questions par jour</p>
-          <div className="segmente" role="group" aria-labelledby="reglage-rythme">
-            {RYTHMES.map((r) => (
-              <button
-                key={r.questions}
-                type="button"
-                className="segmente__option"
-                aria-pressed={(p.rythme ?? RYTHMES[1]!.questions) === r.questions}
-                onClick={() => ecrire(enregistrerProfil(etat, { ...p, rythme: r.questions }))}
-              >
-                {r.questions} <span className="discret">{r.nom}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="reglage">
-          <label htmlFor="reglage-date">Date de l’examen</label>
-          <div className="reglage__ligne">
-            <input
-              id="reglage-date"
-              className="champ"
-              type="date"
-              value={etat.dateExamen ?? ''}
-              onChange={(e) => {
-                const valeur = e.target.value || null;
-                ecrire({ ...etat, dateExamen: valeur });
-                if (valeur) evenement('date-examen-renseignee');
-                // Dans l'app, la coquille arme sur cette annonce les rappels
-                // J-7, J-3, J-1 et le matin même, et demande la permission
-                // ici, où le candidat voit à quoi elle sert.
-                annoncerDateExamen(valeur);
-              }}
-            />
-            {etat.dateExamen && (
-              <button
-                className="signaler"
-                type="button"
-                onClick={() => {
-                  ecrire({ ...etat, dateExamen: null });
-                  annoncerDateExamen(null);
-                }}
-              >
-                Effacer la date
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="reglage">
-          <p className="reglage__titre" id="reglage-apparence">Apparence</p>
-          <Apparence idTitre="reglage-apparence" />
-        </div>
-
-        {/* Dans l'app, la section « L'app » de la page porte tout cela. */}
-        {!POUR_APP && (
-          <div className="reglage">
-            <p className="reglage__titre">Vie privée et licences</p>
-            <p className="reglage__valeur">
-              La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
-              <a href="/parametres">réglages du site</a>.
-            </p>
-          </div>
-        )}
-
-        <div className="reglage reglage--danger">
-          <p className="reglage__titre">Effacer</p>
-          {confirme ? (
-            <>
-              {partira && <p className="reglage__valeur">{partira}</p>}
-              <div className="jeu__actions">
-                {/* Le bouton qui ouvrait la confirmation vient de disparaître :
-                    sans ceci, le focus tombait sur `body`. */}
-                <button className="bouton" type="button" onClick={() => setConfirme(false)} autoFocus>
-                  Annuler
-                </button>
-                <button
-                  className="bouton bouton--danger"
-                  type="button"
-                  onClick={() => {
-                    effacer();
-                    setConfirme(false);
-                    setEtat(charger());
-                    setEfface(true);
-                  }}
-                >
-                  Oui, tout effacer
-                </button>
-              </div>
-            </>
-          ) : efface && rien && !profilRempli(p) ? (
-            <p className="reglage__valeur" role="status">Fiche effacée.</p>
-          ) : rien && !profilRempli(p) ? (
-            <p className="reglage__valeur discret">Rien à effacer pour l’instant.</p>
-          ) : (
-            <p className="reglage__valeur">
-              <button className="bouton" type="button" onClick={() => setConfirme(true)}>
-                Effacer ma progression et ma fiche
-              </button>
-            </p>
-          )}
-        </div>
-      </section>
+      <Reglages
+        etat={etat}
+        rien={rien}
+        efface={efface}
+        ecrire={ecrire}
+        surEffacement={() => {
+          setEtat(charger());
+          setEfface(true);
+        }}
+      />
     </div>
   );
 }

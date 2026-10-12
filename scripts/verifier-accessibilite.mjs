@@ -18,7 +18,7 @@
  * l'élément.
  */
 import { readFile, readdir } from 'node:fs/promises';
-import { join, relative } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 
@@ -114,7 +114,7 @@ async function pages(dossier) {
 }
 
 async function principal() {
-  const dossier = join(RACINE, process.argv[2] ?? 'dist-app');
+  const dossier = resolve(RACINE, process.argv[2] ?? 'dist-app');
   const liste = await pages(dossier);
   if (liste.length === 0) {
     console.error(`Aucune page dans ${relative(RACINE, dossier)} : lancer \`npm run build:app\` d’abord.`);
