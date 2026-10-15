@@ -166,7 +166,7 @@ describe('le pire cas', () => {
   });
 
   it('garde la description d’un visuel qui n’est pas venu', () => {
-    const q = { ...question('ecluses-0001'), visuel: { fichier: 'absent.svg', alt: 'Une écluse vue de haut.' } };
+    const q = { ...question('ecluses-0001'), visuel: { fichier: 'absent.svg', alt: 'Une écluse vue de haut.', credit: '' } };
     render(<Quiz mode="examen" questions={[q]} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     fireEvent.error(screen.getByRole('img'));
