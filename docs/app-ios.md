@@ -32,6 +32,102 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 14 octobre 2026 — le geste de l'examen (lot 2)
+
+### Ce qui a changé
+
+- **Le chrono ne refait plus l'écran.** `quiz/Chrono.tsx` (`useChrono`)
+  tient l'horloge dans l'en-tête : son intervalle, la relecture au retour
+  (`visibilitychange` et `appStateChange`), les secondes lues sur
+  `echeance`. La session n'a plus de `restant` ; le réducteur ne reçoit plus
+  `tic` chaque seconde, mais `echu` une fois, quand l'échéance est passée
+  (un `echu` en avance rend la même session, donc aucun rendu). Mesuré en
+  test (`quiz/Chrono.test.tsx`) : 19 rendus de `Partie` sur 19 secondes
+  avant, 0 après, et 1 au buzzer.
+- **Répondre.** `.proposition:active` passe à `scale(0.97)` en 100 ms sur
+  `--courbe` (une ease-out sans dépassement), dans la section du mouvement
+  d'`app-jeu.css`. `:active` part au toucher grâce à l'écouteur `touchstart`
+  de `Coquille.astro`. L'haptique `choix` reste en renfort.
+- **Passer à la suite.** Plus d'entrée de question dans l'app : énoncé,
+  visuel et propositions changent d'un coup, quarante fois par examen.
+  La jauge d'avancement garde son `transform 1s linear`. Le site garde
+  son entrée de 180 ms.
+- **Le panneau de verdict** était déjà aux jetons : 220 ms, `transform` et
+  `opacity`, `--courbe`, aucun rebond. « Continuer » marche pendant la
+  montée ; un test le garde.
+- **Le résultat.** Le score entre avec `app-entree` (et non plus son
+  propre `app-score`). La vibration `reussi` / `echoue` part dans un
+  `requestAnimationFrame` : l'effet tournait avant la peinture, la
+  vibration devançait le verdict écrit.
+- **Pire cas.** Une proposition de 90 signes sans espace poussait la page à
+  791 px pour 390 : `.proposition__texte` se coupe (`overflow-wrap:
+  anywhere`). Énoncé de 400 signes, visuel absent, « 0 erreur »,
+  « 1 erreur », « 40 / 40 » tenaient déjà, et sont testés. Captures dans
+  `docs/captures-app-2/`.
+
+### Ce qui reste
+
+- Au vrai iPhone : l'enfoncement à l'appui, la vibration du verdict sur la
+  même frame, et l'absence de clignotement pendant le chrono. Le simulateur
+  ne sait ni toucher ni vibrer.
+- Fusionné avec le lot 1 : la règle `.proposition:active` de la section des
+  propositions ne garde que l'effacement du bord ; l'enfoncement et sa durée
+  vivent dans la section du mouvement.
+
+## 14 octobre 2026 — l'app au doigt (lot 1 du plan « app solide »)
+
+### Ce qui a changé
+
+- **Le survol ne vaut qu'au pointeur fin.** Les 36 règles `:hover` du site
+  passent sous `@media (hover: hover) and (pointer: fine)`, en place pour
+  garder l'ordre de la cascade (`:active` après `:hover`). Au doigt, iOS posait
+  le survol au premier appui et le laissait collé : un bouton touché restait
+  plus clair, un choix du questionnaire prenait le bord foncé d'une case
+  cochée. La neutralisation d'`app-jeu.css`, qui ramenait
+  `.proposition:hover` au repos sous `html[data-app]`, est retirée : la garde
+  suffit. Mesuré en Chromium headless sous `hover: none`, survol forcé par
+  CDP : avant, `.bouton`, `.segmente__option` et `.choix__option` changeaient ;
+  après, plus rien.
+- **Chaque contrôle répond au premier appui** : `touch-action: manipulation`
+  sur `a`, `button`, `[role=button]`, et dans la règle de `.bouton`,
+  `.proposition`, `.jeu__actions`, `.segmente__option`, `.choix__option`,
+  `.etape`, `.retour__lien`, `.chapitres__cellule`, `.cellules__ligne`.
+  Jamais `none` : une liste touchée en son milieu doit défiler.
+- **Les contrôles ne se sélectionnent plus** : `user-select: none` et
+  `-webkit-touch-callout: none`, déjà posés sur les propositions, s'étendent
+  aux boutons, aux cellules de liste, aux choix du questionnaire et au faux
+  champ de recherche. Jamais sur `body` : le texte des leçons se copie.
+- **Un champ ne fait plus zoomer.** `rem` suit Dynamic Type dans l'app
+  (`-apple-system-body`) : au plus petit réglage (14 px), la recherche tombait
+  à 14,7 px et les champs de la Fiche et du questionnaire à 14 px, sous le
+  seuil de 16 px où WebKit zoome au focus. `app.css` pose un plancher,
+  `max(16px, 1em)` sur `.champ`, `max(16px, 1.05rem)` sur la recherche :
+  16 px au plus petit, 17 et 17,85 px au réglage par défaut, comme avant.
+- **`scripts/verifier-css-mobile.mjs`**, en CI et dans `check.sh` après
+  `build:app` : refuse un `:hover` hors garde et un contrôle connu sans
+  `touch-action: manipulation` dans le CSS de `dist-app/` (feuilles et
+  `<style>` des pages). Sur `main` d'avant, il relevait 47 défauts.
+
+Le site change par les mêmes règles, et par elles seules (diff des règles
+CSS de `dist/` contre `main`) : +0,1 Ko brotli de CSS sur les pages témoins.
+
+### Ce qui a été vérifié sans changer
+
+- **Clavier.** La coquille n'a pas `@capacitor/keyboard` : WebKit garde le
+  champ focalisé visible, sans redimensionner la webview. La recherche des
+  onglets Cours et Entraînement s'ouvre en fenêtre plein écran, le champ en
+  haut : il reste au-dessus du clavier. Reste à voir sur iPhone si les derniers
+  résultats restent cachés sous le clavier ; si oui, c'est le greffon
+  Keyboard (`resize: native`) qu'il faudra, avec un `cap sync` au Mac.
+- **`100vh`** : aucun. `app-jeu.css` est en `100svh` ; les autres `vh` sont
+  des fractions, et dans une webview sans barre d'adresse `vh` vaut `svh`.
+
+### Ce qui reste
+
+- L'essai sur iPhone : survol collé, double toucher, zoom des champs, clavier.
+  Ni Chromium ni le simulateur ne savent le toucher (captures
+  `docs/captures-app-1/`, en Chromium à 390 px, et leurs mesures).
+
 ## 12 octobre 2026 — la CI garde l'app, et le code se lit en morceaux (lots 5 et 4)
 
 ### Ce qui a changé
@@ -97,7 +193,7 @@ Les règles de chaque écran sont dans `docs/app-da.md`.
 | Les appels natifs | `src/lib/natif.ts`, chacun derrière un `import()` ; les greffons maison par `avecGreffon()` de `src/lib/greffons.ts` |
 | Le stockage | `src/lib/stockage.ts` : `lire()`, `ecrire()`, préfixe `permis-cotier:` |
 | La banque hors revue | `src/lib/banque-locale.ts` (IndexedDB), `src/lib/banque-distante.ts` (l'adresse par version) |
-| L'écran de jeu | `src/components/Quiz.tsx` (la session) et `src/components/quiz/` (les écrans, les effets) |
+| L'écran de jeu | `src/components/Quiz.tsx` (la session) et `src/components/quiz/` (les écrans, les effets, le chrono dans `Chrono.tsx`) |
 | Les budgets | `docs/budgets.md`, `scripts/verifier-budgets.mjs` |
 
 Une branche d'app dans un composant se fait à la frontière : un composant

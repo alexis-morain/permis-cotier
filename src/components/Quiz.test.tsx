@@ -1375,19 +1375,20 @@ describe('l’écran de jeu dans l’app', () => {
     expect(screen.queryByRole('link', { name: nomDuTheme('ecluses') })).toBeNull();
   });
 
-  it('fait sentir un examen reçu', () => {
+  it('fait sentir un examen reçu', async () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    // Trois erreurs, sous les cinq admises : reçu.
-    expect(vibrer).toHaveBeenCalledWith('reussi');
+    // Trois erreurs, sous les cinq admises : reçu. L'haptique attend la
+    // frame qui peint le verdict.
+    await waitFor(() => expect(vibrer).toHaveBeenCalledWith('reussi'));
     // Pendant l'épreuve, aucun verdict question par question, pas même au son.
     expect(vibrer).not.toHaveBeenCalledWith('juste');
     expect(vibrer).not.toHaveBeenCalledWith('faux');
   });
 
-  it('fait sentir un examen recalé', () => {
+  it('fait sentir un examen recalé', async () => {
     const six = Array.from({ length: 6 }, (_, i) => question(`ecluses-000${i + 1}`));
     render(<Quiz mode="examen" questions={six} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
@@ -1396,13 +1397,14 @@ describe('l’écran de jeu dans l’app', () => {
     }
     // Six sans réponse : une de trop.
     expect(screen.getByText(/Recalé/)).toBeTruthy();
-    expect(vibrer).toHaveBeenCalledWith('echoue');
+    await waitFor(() => expect(vibrer).toHaveBeenCalledWith('echoue'));
   });
 
-  it('ne fait rien sentir d’un examen interrompu', () => {
+  it('ne fait rien sentir d’un examen interrompu', async () => {
     lancerExamen();
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
+    await new Promise((fini) => requestAnimationFrame(fini));
     expect(vibrer).not.toHaveBeenCalledWith('echoue');
     expect(vibrer).not.toHaveBeenCalledWith('reussi');
   });

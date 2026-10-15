@@ -61,7 +61,7 @@ etape "Tests du validateur"               "$PY" -m pytest tests -q
 etape "Tests du moteur"                   npm test
 
 if [[ $RAPIDE == 1 ]]; then
-  printf '\nSAUTÉ (--rapide) : types, build du site, cible, audit SEO, budgets, build et accessibilité de l app.\n'
+  printf '\nSAUTÉ (--rapide) : types, build du site, cible, audit SEO, budgets, build, CSS tactile et accessibilité de l app.\n'
   printf 'Ce vert-là ne vaut pas celui de la CI.\n'
   exit 0
 fi
@@ -72,6 +72,7 @@ etape "Rien de l'app dans le site"        node scripts/verifier-cible.mjs
 etape "Audit SEO du build"                node scripts/audit-seo.mjs
 etape "Budgets du code"                   node scripts/verifier-budgets.mjs
 etape "Build de la cible app"             npm run build:app
+etape "CSS tactile de la cible app"        node scripts/verifier-css-mobile.mjs dist-app
 etape "Accessibilité de la cible app"     node scripts/verifier-accessibilite.mjs dist-app
 
 # --- Le trou ----------------------------------------------------------------

@@ -59,7 +59,7 @@ export default function RevueDesErreurs({ session, parId, quoi, retourLecon }: P
                   <li key={p.id}>
                     <div className={`proposition${classe}`}>
                       <span className="proposition__lettre">{lettreAffichee(rang)}</span>
-                      <span>{p.texte}</span>
+                      <span className="proposition__texte">{p.texte}</span>
                       {(bonne || cochee) && (
                         <span className="proposition__marque">
                           {cochee

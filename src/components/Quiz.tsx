@@ -21,7 +21,6 @@ import {
   useClavier,
   useEcritureDeLaSerie,
   useFinEtMesureDeLaSerie,
-  useHorlogeExamen,
   useModeConcentration,
   useVerdictEnVue,
   type ContexteClavier,
@@ -184,7 +183,6 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
   // chaque chiffre illisible.
   const nomSerie = mode === 'examen' ? 'examen' : revoir ? 'revoir' : 'entrainement';
 
-  useHorlogeExamen(session, envoyer);
   useModeConcentration(session.phase === 'en-cours');
   useEcritureDeLaSerie(session, mode, theme, retourSerie, journalEcrit);
   useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir });
@@ -205,6 +203,11 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
   const contexte = useRef<ContexteClavier>({ session, ordre, mode, arretDemande });
   contexte.current = { session, ordre, mode, arretDemande };
   useClavier(contexte, envoyer);
+
+  // Le chrono vit dans l'en-tête et ne parle à la session qu'une fois par
+  // question, quand l'échéance est passée : l'écran ne se refait pas à la
+  // seconde.
+  const echoir = useCallback(() => envoyer({ type: 'echu', maintenant: Date.now() }), []);
 
   const reprendreDepuis = useCallback((reprise: Session) => {
     // Les réponses du journal repris ont déjà été comptées dans la progression
@@ -300,7 +303,7 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
         </div>
       )}
 
-      {POUR_APP ? <EnteteApp session={session} /> : <EnteteSite session={session} />}
+      {POUR_APP ? <EnteteApp session={session} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} />}
 
       {rienDu && session.index === 0 && (
         <p className="discret">

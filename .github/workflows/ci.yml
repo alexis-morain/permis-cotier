@@ -125,6 +125,13 @@ jobs:
       - name: Build de la cible app
         run: npm run build:app
 
+      # Ce qu'un doigt trouvera dans l'app : un `:hover` hors de
+      # `@media (hover: hover)` reste collé sur iOS après un appui, et un
+      # contrôle sans `touch-action: manipulation` peut attendre un second
+      # toucher. Les deux se voient dans le CSS du bundle, pas aux tests.
+      - name: CSS tactile de la cible app
+        run: node scripts/verifier-css-mobile.mjs dist-app
+
       # Ce que VoiceOver trouvera dans l'app, lisible sans écran : noms des
       # boutons et des liens, `alt`, étiquettes, ordre de lecture, références
       # ARIA. Zéro défaut aujourd'hui : le premier qui entre est une régression.

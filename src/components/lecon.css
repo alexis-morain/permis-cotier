@@ -9,7 +9,9 @@
 .lecon__entete { margin-bottom: 1.5rem; }
 .lecon__chapitre { margin: 0 0 0.6rem; font-size: 0.9rem; font-weight: 600; }
 .lecon__chapitre a { text-decoration: none; }
-.lecon__chapitre a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+@media (hover: hover) and (pointer: fine) {
+  .lecon__chapitre a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+}
 
 /* Le retour vers la série d'où l'on vient, quand la leçon a été ouverte
    depuis une question ratée. Cible tactile de 44 px. */

@@ -242,7 +242,9 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
   .questions { padding-left: 1.2rem; margin: 0; }
   .questions li { margin-bottom: 0.6rem; }
   .questions a { text-decoration: none; }
-  .questions a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  @media (hover: hover) and (pointer: fine) {
+    .questions a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  }
 
   .voisines {
     list-style: none;
@@ -255,9 +257,11 @@ const autres = notionsDuTheme(notion.theme).filter((n) => n.code !== notion.code
     border-top: 2px solid var(--filet);
   }
   .voisines a { display: block; text-decoration: none; }
-  .voisines a:hover span:last-child {
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
+  @media (hover: hover) and (pointer: fine) {
+    .voisines a:hover span:last-child {
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+    }
   }
   .voisines span { display: block; }
   .voisines__suivante { text-align: right; margin-left: auto; }

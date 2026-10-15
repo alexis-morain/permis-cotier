@@ -315,7 +315,9 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     border-top: 2px solid var(--filet);
   }
   .voisins a { display: block; text-decoration: none; }
-  .voisins a:hover span:last-child { text-decoration: underline; text-decoration-color: var(--accent); }
+  @media (hover: hover) and (pointer: fine) {
+    .voisins a:hover span:last-child { text-decoration: underline; text-decoration-color: var(--accent); }
+  }
   .voisins span { display: block; }
   .voisins__suivant { text-align: right; margin-left: auto; }
 </style>

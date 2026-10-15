@@ -163,7 +163,9 @@ sources.
 - **Le jour est parisien**, `src/lib/jour.ts` : aucune date ne se lit ailleurs
   que par ce module (`toISOString()` rendait la veille entre minuit et 1 h).
 - Le chrono est une horloge murale (`echeance` en ms) : l'intervalle d'un onglet
-  caché est étranglé, celui d'une app suspendue gèle. Deux onglets partagent un
+  caché est étranglé, celui d'une app suspendue gèle. Il bat dans l'en-tête
+  (`quiz/Chrono.tsx`) et n'envoie `echu` qu'à l'échéance : un `tic` par
+  seconde au réducteur refaisait tout l'écran. Deux onglets partagent un
   `enCours`, et **un examen laissé ouvert avance tout seul** : 20 s par question.
 - **Astro empaquette CSS et îlots de tout composant importé, rendu ou non** :
   d'où `siteSansApp()`. `astro preview` sert l'ancien build par son service

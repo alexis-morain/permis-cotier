@@ -74,6 +74,8 @@ const base = Astro.site ?? new URL(SITE.domaine);
      de 1,1 les colle, 1,3 les sépare. */
   .entrees h2 { font-size: 1.25rem; line-height: 1.3; margin: 0 0 0.5rem; }
   .entrees h2 a { text-decoration: none; }
-  .entrees h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  @media (hover: hover) and (pointer: fine) {
+    .entrees h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  }
   .entrees p { margin: 0; max-width: var(--mesure); }
 </style>
