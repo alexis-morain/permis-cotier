@@ -31,6 +31,7 @@ import { cheminRetour, libelleRetour } from '../lib/retour';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import { POUR_APP } from '../lib/cible';
 import { vibrer } from '../lib/natif';
+import { ANNONCES_MONTREES, gagnerAuGeste, type BadgeAnnonce } from '../lib/badges-geste';
 
 /** Ce qui vient après la leçon : la suivante du cours, ou le cours d'après. */
 export type Suite =
@@ -72,6 +73,14 @@ export interface DonneesLecon {
   suite?: Suite;
   /** Vide quand la notion n'a pas encore de question. */
   questions: QuestionAffichable[];
+  /**
+   * Le thème de la leçon et les identifiants de ses questions publiées : ce
+   * que les badges comptent à la fin de la leçon. Le thème seul suffit, la
+   * leçon ne touche à aucun autre ; la banque entière pèserait sur les 105
+   * pages.
+   */
+  theme?: string;
+  banque?: string[];
 }
 
 /** L'identifiant du bloc JSON que la page écrit. */
@@ -292,6 +301,26 @@ function monterVerification(
   };
 }
 
+/**
+ * Les badges gagnés, dans la région `status` de la fin de leçon : le même bloc
+ * que l'écran de jeu (`quiz/AnnonceBadges.tsx`), sans son ajouté, la leçon
+ * finie sonne déjà.
+ */
+function annoncerBadges(region: Element, badges: readonly BadgeAnnonce[]): void {
+  region.replaceChildren(
+    el('div', { class: 'badges-gagnes__corps' },
+      el('p', { class: 'badges-gagnes__titre' }, badges.length > 1 ? 'Paliers gagnés' : 'Palier gagné'),
+      el('ul', {},
+        ...badges.slice(0, ANNONCES_MONTREES).map((b) => el('li', {},
+          el('b', {}, b.palier), ' ', el('span', { class: 'badges-gagnes__theme' }, b.theme),
+          el('span', { class: 'badges-gagnes__fait' }, b.fait),
+        )),
+      ),
+      badges.length > ANNONCES_MONTREES && el('p', { class: 'discret' }, 'Les autres sont sur ta fiche.'),
+    ),
+  );
+}
+
 /** Les écrans déjà montés, pour qu'un second appel n'empile pas les écouteurs. */
 const montees = new WeakSet<Element>();
 
@@ -316,7 +345,7 @@ export function monterLecon(doc: Document = document): void {
   if (!entete || !barre || !annonce || !mode || !boutonMode) return;
   montees.add(racine);
 
-  const { code, cours, suite, questions } = donnees as DonneesLecon;
+  const { code, cours, suite, questions, theme, banque } = donnees as DonneesLecon;
   const types: TypeEcran[] = [...(rendus as TypeEcran[]), 'fin'];
   const derniere = types.length - 1;
 
@@ -363,6 +392,13 @@ export function monterLecon(doc: Document = document): void {
     sauvegarder(terminerLecon(charger(), code, resultat, aujourdhui()));
     evenement('lecon-terminee', { notion: code, cours: cours.code, ...resultat });
     void vibrer('lecon');
+    // `parcouru` se gagne ici, `retenu` aussi par les réponses de la
+    // vérification. L'annonce va dans la fin si elle est encore là.
+    if (!theme || !Array.isArray(banque)) return;
+    gagnerAuGeste(banque.map((id) => ({ id, theme }))).then((badges) => {
+      const region = fin?.querySelector('.badges-gagnes');
+      if (badges.length > 0 && region) annoncerBadges(region, badges);
+    }, () => {});
   };
 
   const verificationIndex = types.indexOf('verification');
@@ -414,6 +450,7 @@ export function monterLecon(doc: Document = document): void {
                 ? '. Tout est juste, tu peux passer à la suite.'
                 : '. Les questions ratées repasseront dans ta révision.')
           : el('p', { class: 'fin__score' }, 'Cette notion n’a pas encore de question dans la banque. Elle est marquée faite.'),
+        el('div', { class: 'badges-gagnes', role: 'status' }),
         // Dans l'app, le geste suivant sort de la liste et colle en bas de
         // l'écran, au-dessus de la barre d'onglets.
         POUR_APP && el('div', { class: 'lecon__suite' }, retour ? lienRetour() : lienSuite()),

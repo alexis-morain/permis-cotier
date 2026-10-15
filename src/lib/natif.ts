@@ -217,6 +217,44 @@ async function concentrerDansLApp(actif: boolean): Promise<void> {
 }
 
 /**
+ * Les adresses de départ des cinq onglets de la coquille, dans l'ordre de
+ * `BarreOnglets.swift`. Un test du dépôt tient les deux listes ensemble.
+ */
+export const RACINES_DES_ONGLETS = ['/accueil', '/cours', '/examen', '/entrainement', '/profil'] as const;
+
+/**
+ * La racine d'onglet que vise un lien, ou `null`. Seule la racine nue compte :
+ * `/profil/erreurs` ou `/examen?…` restent dans l'onglet où on les ouvre.
+ */
+export function ongletVise(url: URL): string | null {
+  if (url.search || url.hash) return null;
+  const chemin = url.pathname.replace(/\/(index\.html)?$/, '');
+  return (RACINES_DES_ONGLETS as readonly string[]).includes(chemin) ? chemin : null;
+}
+
+/**
+ * Un lien vers la racine d'un autre onglet : la coquille bascule d'onglet,
+ * au lieu d'ouvrir l'écran sous l'onglet courant. « Faire un examen blanc »
+ * depuis l'Accueil ouvre donc l'onglet Examen, et la barre dit où l'on est
+ * (audit du 14 octobre, P2-1).
+ *
+ * Rend `false` quand rien n'a basculé — site, greffon absent, ou lien vers
+ * l'onglet courant — pour que l'appelant navigue comme avant.
+ */
+export async function basculerVersLOnglet(chemin: string): Promise<boolean> {
+  if (!POUR_APP) return false;
+  let bascule = false;
+  try {
+    await avecGreffon('Ecran', async (g) => {
+      bascule = (await g.onglet({ chemin })).bascule === true;
+    });
+  } catch {
+    return false;
+  }
+  return bascule;
+}
+
+/**
  * Un lien vers un autre site : Légifrance, GitHub, Wikimedia, une licence.
  *
  * Dans l'app, il s'ouvre dans Safari intégré, par-dessus l'écran, et un geste

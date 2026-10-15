@@ -10,7 +10,7 @@
  */
 import { statistiques, type Etat } from './progression';
 import { joursAvant, serieDeJours } from './profil';
-import { estDue } from './quiz';
+import { estDue, TAILLE_SERIE_PAR_DEFAUT } from './quiz';
 
 /** Une leçon telle que la page la passe : dans l'ordre du parcours. */
 export interface LeconAccueil {
@@ -56,14 +56,19 @@ export function reprise(lecons: readonly LeconAccueil[], etat: Etat): Reprise {
 export type ARevoir = { etat: 'jamais' } | { etat: 'rien' } | { etat: 'du'; nombre: number };
 
 /**
- * Les questions dues aujourd'hui, bornées aux questions publiées. « Jamais »
- * tant qu'aucune question n'a été jouée : dire « rien à revoir » à qui n'a
- * encore rien fait serait vrai et inutile.
+ * Les questions dues que `/revoir` joue aujourd'hui, bornées aux questions
+ * publiées. « Jamais » tant qu'aucune question n'a été jouée : dire « rien à
+ * revoir » à qui n'a encore rien fait serait vrai et inutile.
+ *
+ * Le nombre est celui que la série joue, pas tout le stock dû : `serieDuJour`
+ * s'arrête au rythme choisi (vingt sans rythme). Vingt-cinq dues pour une
+ * série de dix, l'accueil disait vingt-cinq et la série en jouait dix.
  */
 export function aRevoir(etat: Etat, ids: readonly string[], jour: string): ARevoir {
   const s = statistiques(etat, ids, jour);
   if (s.vues === 0) return { etat: 'jamais' };
-  return s.aRevoir > 0 ? { etat: 'du', nombre: s.aRevoir } : { etat: 'rien' };
+  const nombre = Math.min(s.aRevoir, etat.profil.rythme ?? TAILLE_SERIE_PAR_DEFAUT);
+  return nombre > 0 ? { etat: 'du', nombre } : { etat: 'rien' };
 }
 
 export interface DernierExamen {

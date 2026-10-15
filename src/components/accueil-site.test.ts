@@ -8,6 +8,7 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { monterAccueil } from './accueil-site';
+import { jourPlus } from '../lib/jour';
 import {
   aujourdhui,
   charger,
@@ -124,6 +125,16 @@ describe('la reprise sur l’accueil', () => {
     expect(document.querySelector('.reprise p:not(.reprise__raison)')!.textContent).toContain('Objectif du jour fait, 10 questions');
   });
 
+  it('dit la série dès deux jours, sans plus', () => {
+    let e = enregistrerProfil(etatInitial(), { ...profilVide(), prenom: 'Léa', rempliLe: '2026-09-01' });
+    e = enregistrerReponse(e, 'vhf-0', true, jourPlus(aujourdhui(), -1));
+    e = enregistrerReponse(e, 'vhf-1', true, aujourdhui());
+    sauvegarder(e);
+    page({ lecons, banque });
+    monterAccueil(document);
+    expect(document.querySelector('.reprise p')!.textContent).toContain(', 2 jours de suite.');
+  });
+
   it('résume l’indice, le jour, les erreurs et la raison', () => {
     let e = enregistrerProfil(etatInitial(), { ...profilVide(), prenom: 'Léa', motivations: ['peche'], rempliLe: '2026-09-01' });
     e = enregistrerReponse(e, 'vhf-0', false, aujourdhui());
@@ -136,7 +147,9 @@ describe('la reprise sur l’accueil', () => {
     const texte = document.querySelector('.reprise p:not(.reprise__raison)')!.textContent!;
     expect(texte).toMatch(/^Léa, indice de préparation \d+ sur 100, /);
     expect(texte).toContain('sur 100');
-    expect(texte).toMatch(/Aujourd’hui 2 questions sur \d+, 1 jour de suite\./);
+    // Un seul jour n'est pas une série : elle se tait jusqu'à deux.
+    expect(texte).toMatch(/Aujourd’hui 2 questions sur \d+\./);
+    expect(texte).not.toContain('de suite');
     const revoir = lien(/1 question à revoir/);
     expect(revoir.getAttribute('href')).toBe('/revoir');
     expect(revoir.getAttribute('data-mesure')).toBe('accueil-revoir');
