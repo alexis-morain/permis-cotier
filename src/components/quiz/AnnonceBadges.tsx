@@ -37,19 +37,18 @@ export default function AnnonceBadges({ badges, delaiSon }: Props) {
   return (
     <div className="badges-gagnes" role="status">
       {gagne && (
-        <>
+        <div className="badges-gagnes__corps">
           <p className="badges-gagnes__titre">{badges.length > 1 ? 'Paliers gagnés' : 'Palier gagné'}</p>
           <ul>
             {badges.slice(0, ANNONCES_MONTREES).map((b) => (
               <li key={b.cle}>
-                <b>{b.palier}</b>
-                <span className="badges-gagnes__theme">{b.theme}</span>
+                <b>{b.palier}</b> <span className="badges-gagnes__theme">{b.theme}</span>
                 <span className="badges-gagnes__fait">{b.fait}</span>
               </li>
             ))}
           </ul>
           {badges.length > ANNONCES_MONTREES && <p className="discret">Les autres sont sur ta fiche.</p>}
-        </>
+        </div>
       )}
     </div>
   );
