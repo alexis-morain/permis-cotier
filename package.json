@@ -22,6 +22,7 @@
     "verifier:prod": "node scripts/verifier-prod.mjs",
     "verifier:app": "node scripts/verifier-app.mjs",
     "verifier:accessibilite": "node scripts/verifier-accessibilite.mjs",
+    "verifier:css-mobile": "node scripts/verifier-css-mobile.mjs",
     "poids": "node scripts/poids.mjs",
     "budgets": "node scripts/verifier-budgets.mjs",
     "credits": "python3 scripts/credits.py",

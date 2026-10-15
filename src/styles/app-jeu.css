@@ -89,10 +89,10 @@ html[data-app] .jeu__entete .jeu__barre {
 
 /* ------------------------------------------------ Propositions
 
-   56 pt au moins, la lettre dans un disque. Le survol n'existe pas au doigt :
-   iOS le laisse collé sur la dernière carte touchée, qui prendrait l'air
-   d'une case cochée. On le neutralise, et l'appui (bord plein qui s'efface)
-   passe après pour garder la main. */
+   56 pt au moins, la lettre dans un disque. Pas de survol : celui de
+   `quiz.css` ne vaut qu'au pointeur fin, puisqu'iOS le laisserait collé sur
+   la dernière carte touchée, qui prendrait l'air d'une case cochée. L'appui,
+   lui, est un bord plein qui s'efface. */
 html[data-app] .proposition {
   min-height: 3.5rem;
   align-items: center;
@@ -104,18 +104,10 @@ html[data-app] .proposition__lettre {
   margin-top: 0;
 }
 
-html[data-app] .proposition:hover:not(:disabled) {
-  border-color: var(--filet-fort);
-  box-shadow: 0 var(--bord) 0 var(--filet-fort);
-}
-html[data-app] .proposition--cochee:hover:not(:disabled) {
-  border-color: var(--texte);
-  box-shadow: 0 var(--bord) 0 var(--texte);
-}
+/* Le bord plein s'efface à l'appui ; l'enfoncement et sa durée sont plus bas,
+   avec le mouvement du jeu. */
 html[data-app] .proposition:active:not(:disabled) {
-  transform: translateY(var(--bord));
   box-shadow: 0 0 0 transparent;
-  transition-duration: 80ms;
 }
 
 /* ------------------------------------------------ Le mouvement du jeu

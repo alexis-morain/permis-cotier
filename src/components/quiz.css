@@ -148,6 +148,7 @@
 /* La proposition : une carte à bord plein, comme un bouton. La lettre dans un
    cercle, qui se remplit quand on coche. */
 .proposition {
+  touch-action: manipulation;
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
@@ -166,7 +167,9 @@
   transition: border-color var(--transition), background var(--transition),
     box-shadow var(--transition), transform var(--transition), opacity var(--transition);
 }
-.proposition:hover:not(:disabled) { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+@media (hover: hover) and (pointer: fine) {
+  .proposition:hover:not(:disabled) { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+}
 .proposition:active:not(:disabled) { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet-fort); }
 .proposition:disabled { cursor: default; }
 
@@ -235,6 +238,7 @@
 }
 
 .jeu__actions {
+  touch-action: manipulation;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -295,7 +299,9 @@
   text-underline-offset: 0.16em;
   cursor: pointer;
 }
-.signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+@media (hover: hover) and (pointer: fine) {
+  .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+}
 
 /* Écran de départ de l'examen. Le chrono ne tourne pas encore. */
 .depart { gap: 1.1rem; }

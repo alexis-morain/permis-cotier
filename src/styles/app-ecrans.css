@@ -56,6 +56,7 @@ html[data-app] .chapitres li { max-width: none; }
 html[data-app] .chapitres li + li { border-top: 2px solid var(--filet); }
 
 html[data-app] .chapitres__cellule {
+  touch-action: manipulation;
   display: flex;
   align-items: center;
   gap: 0.875rem;
@@ -297,6 +298,7 @@ html[data-app] .cellules {
 html[data-app] .cellules li { max-width: none; }
 html[data-app] .cellules li + li { border-top: 2px solid var(--filet); }
 html[data-app] .cellules__ligne {
+  touch-action: manipulation;
   display: flex;
   align-items: center;
   justify-content: space-between;

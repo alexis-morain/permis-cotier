@@ -159,6 +159,7 @@ html[data-app] .retour {
 }
 
 html[data-app] .retour__lien {
+  touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -206,18 +207,36 @@ html[data-app] main li > a:only-child {
 
    Un appui long sur une proposition ouvre le menu « Copier / Rechercher » de
    Safari. Au milieu d'un examen à vingt secondes par question, c'est une
-   question perdue. Les propositions, les boutons et les barres du jeu ne se
-   sélectionnent donc pas ; le texte des leçons, des explications et des
-   sources reste sélectionnable, parce qu'on peut vouloir en copier un
-   extrait. */
+   question perdue. Les contrôles (propositions, boutons, barres du jeu,
+   cellules de liste, choix du questionnaire) ne se sélectionnent donc pas ;
+   le texte des leçons, des explications et des sources reste
+   sélectionnable, parce qu'on peut vouloir en copier un extrait. */
 html[data-app] .proposition,
 html[data-app] .bouton,
+html[data-app] button,
 html[data-app] .retour__lien,
 html[data-app] .jeu__entete,
-html[data-app] .jeu__actions {
+html[data-app] .jeu__actions,
+html[data-app] .choix__option,
+html[data-app] .choix a,
+html[data-app] .chapitres__cellule,
+html[data-app] .etape,
+html[data-app] a.cellules__ligne,
+html[data-app] .champ-recherche {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+/* Un champ sous 16 px fait zoomer WebKit au focus, sans dézoomer à la
+   sortie. Le corps suit Dynamic Type (17 px par défaut, 14 au plus petit
+   réglage) : le plancher tient à toutes les tailles, et un réglage plus grand
+   grandit encore le champ. */
+html[data-app] .champ {
+  font-size: max(16px, 1em);
+}
+html[data-app] .recherche__champ {
+  font-size: max(16px, 1.05rem);
 }
 
 /* Le rebond de fin de page et le glissement horizontal disent « page web ».
@@ -236,8 +255,7 @@ html[data-app] button {
 /* ------------------------------------------------------------- L'appui
 
    Le bouton s'enfonce vite, en 80 ms, et remonte en 160 : la transition qui
-   joue est celle de l'état d'arrivée. Pas de survol dans l'app, il reste
-   collé sur la dernière cible touchée. */
+   joue est celle de l'état d'arrivée. */
 html[data-app] .bouton {
   transition: transform var(--duree-courte) var(--courbe), box-shadow var(--duree-courte) var(--courbe);
 }

@@ -1,12 +1,18 @@
-Ce build retouche le geste de l’examen : répondre, passer à la suite, lire le résultat. Les changements se sentent au doigt plus qu’ils ne se voient, donc à essayer sur un vrai iPhone.
+Ce build rend l’app plus nette au doigt, et retouche le geste de l’examen : répondre, passer à la suite, lire le résultat. Les changements se sentent plus qu’ils ne se voient, donc à essayer sur un vrai iPhone.
 
-À essayer :
-• Pose le doigt sur une réponse sans le lever : la carte s’enfonce tout de suite, avant même que tu lâches. Lâche : elle se coche, avec une petite vibration.
-• Enchaîne quelques questions d’un examen blanc : la question suivante apparaît d’un coup, sans glisser ni fondre. Le compteur, le chrono remis à 20 et la jauge du haut disent qu’elle a changé.
-• Laisse tourner le chrono sur une question : les secondes défilent, passent au rouge sous cinq, et la question passe seule au bout de vingt. Rien d’autre ne doit bouger ni clignoter à l’écran pendant ce temps.
+À essayer, partout :
+• Une série d’entraînement : touche une proposition, puis une autre, puis décoche la première. Celle que tu as quittée revient à son état de repos, sans garder un bord foncé qui la ferait passer pour cochée.
+• « Valider », « Continuer », les choix du questionnaire de départ, les réglages de la Fiche : chaque appui répond tout de suite, sans double toucher.
+• Un appui long sur un bouton ou une cellule de liste : rien ne se sélectionne. Le texte des leçons, lui, se sélectionne toujours.
+• Réglages iOS → Luminosité et affichage → Taille du texte, au plus petit : la recherche, le prénom et la date de la Fiche ne font plus zoomer l’écran.
+• Dans la recherche, tape un mot. Dis-nous si les derniers résultats restent cachés sous le clavier.
+
+À essayer, à l’examen :
+• Pose le doigt sur une réponse sans le lever : la carte s’enfonce tout de suite. Lâche : elle se coche, avec une petite vibration.
+• Enchaîne quelques questions : la suivante apparaît d’un coup, sans glisser. Pendant que le chrono tourne, rien d’autre ne bouge ni ne clignote.
 • Verrouille le téléphone au milieu d’une question, attends trente secondes, reviens : la question a été passée, la suivante repart à 20.
-• En entraînement, valide puis tape « Continuer » aussitôt, pendant que « Juste » ou « Faux » monte encore : la question suivante doit venir sans attendre la fin du panneau.
-• Finis un examen blanc : le score entre en montant, et la vibration du verdict tombe au moment où « Reçu » ou « Recalé » s’écrit, pas avant.
-• Avec Réglages → Accessibilité → Mouvement → « Réduire les animations » activé : plus rien ne monte ni ne glisse, le score est là d’emblée.
+• En entraînement, valide puis tape « Continuer » aussitôt, pendant que « Juste » ou « Faux » monte encore : la question suivante vient sans attendre.
+• Finis un examen blanc : la vibration du verdict tombe au moment où « Reçu » ou « Recalé » s’écrit, pas avant.
+• Avec « Réduire les animations » activé : plus rien ne monte ni ne glisse.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, nous l’envoie.
