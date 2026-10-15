@@ -15,4 +15,11 @@ Ce build rend l’app plus nette au doigt, et retouche le geste de l’examen : 
 • Finis un examen blanc : la vibration du verdict tombe au moment où « Reçu » ou « Recalé » s’écrit, pas avant.
 • Avec « Réduire les animations » activé : plus rien ne monte ni ne glisse.
 
+À essayer, les badges :
+• Finis une leçon, une série d’entraînement ou un examen blanc. Quand un palier tombe, il s’annonce une fois sous le résultat, avec le fait qui l’a gagné (« Les 3 leçons des écluses suivies, le 15 octobre. ») et une petite vibration. Rien ne bloque la suite.
+• Trois paliers par thème : Parcouru (toutes les leçons du thème), Retenu (quatre questions sur cinq retenues), Sûr à l’examen (trois examens blancs de suite sans faute sur le thème). Une faute plus tard ne les reprend pas.
+• Fiche → « Thème par thème » : les paliers gagnés, datés, et ce qui mène au suivant.
+• Accueil → « Faire un examen blanc » → « Commencer l’examen » : deux touches jusqu’à la première question, rien entre les deux.
+• « À revoir aujourd’hui » annonce le nombre de questions que ta série du jour va jouer : compare avec ce que joue « Faire ma série du jour ».
+
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
