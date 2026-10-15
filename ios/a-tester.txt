@@ -1,6 +1,6 @@
-Ce build ouvre l’app aux iPhone restés sous iOS 15, 16 ou 17. Rien ne change à l’écran : ce qui compte, c’est qu’elle tourne pareil sur un téléphone plus ancien.
+Ce build ouvre l’app aux iPhone restés sous iOS 16 ou 17. Rien ne change à l’écran : ce qui compte, c’est qu’elle tourne pareil sur un téléphone plus ancien.
 
-À essayer sur un iPhone sous iOS 15, 16 ou 17 :
+À essayer sur un iPhone sous iOS 16 ou 17 :
 • L’app s’ouvre sur l’accueil, et les cinq onglets se chargent.
 • Accueil → « Faire un examen blanc », puis « Commencer l’examen » : la barre du bas disparaît pendant l’épreuve, et « Valider et passer » reste collé au bas de l’écran, sans vide dessous.
 • « Arrêter », puis « Arrêter et voir le résultat » : la barre du bas revient, et rien ne reste caché derrière.

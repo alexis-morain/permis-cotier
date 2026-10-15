@@ -32,33 +32,32 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
-## 15 octobre 2026 — l'app descend à iOS 15.4
+## 15 octobre 2026 — l'app descend à iOS 16
 
 ### Ce qui a changé
 
-- **Cible iOS 15.4**, au lieu de 18 (la décision 4 du plan « app solide » est
+- **Cible iOS 16.0**, au lieu de 18 (la décision 4 du plan « app solide » est
   revue). La 1.0.1 restait invisible sur l'App Store à qui n'avait qu'iOS 17.
-  15.4 est le plancher du web embarqué, pas de la coquille : Capacitor 8 et ses
-  greffons tiennent dès 15.0, mais `.at()`, `findLastIndex`, `<dialog>`,
-  `:has()` et `svh` n'existent qu'à partir de Safari 15.4. Tout iPhone qui fait
-  tourner iOS 15 peut monter à 15.8 : le matériel admis va de l'iPhone 6s et du
-  SE de première génération à aujourd'hui.
-- Le reste du CSS récent a son repli ou se dégrade seul : `color-mix` (16.2) a
-  sa couleur pleine avant lui, `@property` (16.4) ne sert qu'au fondu de la
-  barre de navigation sous `@supports (animation-timeline…)`, `light-dark()`
-  n'est qu'en commentaire, `overscroll-behavior` (16) rend le rebond sous 15,
-  `text-wrap` est cosmétique, les transitions d'Astro ont leur repli.
+  Le matériel admis va de l'iPhone 8, du X et du SE de deuxième génération à
+  aujourd'hui. Une première PR (#37) visait 15.4, plancher du web embarqué
+  (`.at()`, `findLastIndex`, `<dialog>`, `:has()`, `svh`) ; Alexis a tranché
+  pour 16 le jour même, faute de pouvoir prouver iOS 15 (voir plus bas).
+- Le CSS récent a son repli ou se dégrade seul : `color-mix` (16.2) a sa
+  couleur pleine avant lui, `@property` (16.4) ne sert qu'au fondu de la barre
+  de navigation sous `@supports (animation-timeline…)`, `light-dark()` n'est
+  qu'en commentaire, `text-wrap` est cosmétique, les transitions d'Astro ont
+  leur repli.
 - **Le greffon `Ecran` retrouve son chemin d'avant iOS 18**
   (`basculerAvantIOS18`, sous `#available`) : cacher la barre sans
   `setTabBarHidden`, et retirer l'encart du bas qui garderait sa hauteur.
 - **Garde-fou de build** : `elaguer-app.mjs` refuse un bundle qui appelle du
-  JavaScript plus récent que Safari 15.4 (`toSorted`, `groupBy`, méthodes de
-  `Set`, regard arrière dans une regex, bloc `static`…), chaque motif avec sa
-  version. Le CSS n'y est pas : il se dégrade, le JavaScript arrête l'écran.
+  JavaScript plus récent que Safari 16.0 (`groupBy`, méthodes de `Set`, regard
+  arrière dans une regex, bloc `static`…), chaque motif avec sa version. Le CSS
+  n'y est pas : il se dégrade, le JavaScript arrête l'écran.
 
 ### Ce qui a été vérifié
 
-- Compilation à la cible 15.4, `MinimumOSVersion` 15.4 dans le `.app`.
+- Compilation à la cible 16.0, aucune API iOS 17 ou 18 hors `#available`.
 - **Les 388 pages du bundle**, ouvertes une à une dans le Safari du simulateur
   (même WebKit que la webview), un capteur d'erreurs injecté : iOS 26.5, 17.5
   et 16.4, zéro erreur JavaScript, zéro promesse rejetée. Une seule alerte en
@@ -72,9 +71,12 @@ de la copie se reporte en ligne, et inversement.
 
 ### Ce qui reste
 
-- **iOS 15 n'a pas tourné.** Xcode 26 ne propose ni 15.0 ni 15.4 en
-  téléchargement, et 15.2 comme 15.5 s'arrêtent sur « Unable to connect to
-  simulator ». La preuve viendra d'un vrai iPhone sous iOS 15, par TestFlight.
+- **16.0 à 16.3 n'ont pas tourné**, 16.4 seul est installé. Ce qui les sépare
+  de 16.4 (`@property`, `color-mix`, regard arrière) a son repli ou est gardé
+  par `elaguer-app.mjs`.
+- **Pourquoi pas iOS 15** : Xcode 26 ne propose ni 15.0 ni 15.4, et 15.2 comme
+  15.5 s'arrêtent sur « Unable to connect to simulator ». Descendre à 15.4
+  demanderait une preuve sur un vrai iPhone sous iOS 15.
 - La version qui porte ce changement est la 1.0.3 : la 1.0.2 en revue garde la
   cible 18.
 
@@ -531,7 +533,7 @@ mise à jour, daté de ce jour.
   droite du disque. (L'écran de démarrage de Capacitor, clair en sombre, est
   parti avec le greffon le 10 octobre.)
 - ~~Aucun runtime iOS 15 à 17 n'est installé~~ : la cible est iOS 18 depuis le
-  10 octobre, et le chemin d'avant est supprimé. (Redescendue à 15.4 le
+  10 octobre, et le chemin d'avant est supprimé. (Redescendue à 16 le
   15 octobre, chemin rendu : voir plus haut.)
 - **Le compte développeur Apple** reste le seul verrou pour TestFlight et la
   soumission.
