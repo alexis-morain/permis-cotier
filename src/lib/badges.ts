@@ -210,12 +210,19 @@ function enPhrase(theme: string): string {
   return THEME_EN_PHRASE[theme] ?? `le thème « ${themeParCode(theme)?.nom ?? theme} »`;
 }
 
-/** « de » plus l'article : des, du, de la, de l’. */
+/**
+ * « de » plus l'article : des, du, de la, de l’. Chaque membre d'un thème
+ * double prend le sien : « de la VHF et du SMDSM ». Un membre sans article
+ * (« feux et marques », « de barre et de route ») reste tel quel.
+ */
 function complement(theme: string): string {
-  const p = enPhrase(theme);
-  if (p.startsWith('les ')) return `des ${p.slice(4)}`;
-  if (p.startsWith('le ')) return `du ${p.slice(3)}`;
-  return `de ${p}`;
+  const de = (p: string): string | null => {
+    if (p.startsWith('les ')) return `des ${p.slice(4)}`;
+    if (p.startsWith('le ')) return `du ${p.slice(3)}`;
+    return /^(la |l’)/.test(p) ? `de ${p}` : null;
+  };
+  const [premier = '', ...autres] = enPhrase(theme).split(' et ');
+  return [de(premier) ?? `de ${premier}`, ...autres.map((p) => de(p) ?? p)].join(' et ');
 }
 
 /** « 12 octobre », « 1er octobre ». */

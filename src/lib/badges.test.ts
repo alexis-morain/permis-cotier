@@ -274,6 +274,15 @@ describe('faitDuBadge', () => {
     );
   });
 
+  it('accorde chaque article d’un thème double, pas seulement le premier', () => {
+    const lecons = (theme: string) => faitDuBadge(theme, 'parcouru', { date: '2026-10-12', lecons: 4 });
+    expect(lecons('vhf')).toBe('Les 4 leçons de la VHF et du SMDSM suivies, le 12 octobre.');
+    expect(lecons('securite')).toBe('Les 4 leçons de la navigation et de la sécurité suivies, le 12 octobre.');
+    expect(lecons('ski-responsabilites')).toBe('Les 4 leçons du ski nautique et des responsabilités suivies, le 12 octobre.');
+    expect(lecons('carte-marine')).toBe('Les 4 leçons de la carte marine et des marées suivies, le 12 octobre.');
+    expect(lecons('barre-route')).toBe('Les 4 leçons des règles de barre et de route suivies, le 12 octobre.');
+  });
+
   it('accorde une leçon seule', () => {
     expect(faitDuBadge('meteo', 'parcouru', { date: '2026-10-12', lecons: 1 })).toBe(
       'La leçon de la météorologie suivie, le 12 octobre.',
