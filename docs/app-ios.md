@@ -32,6 +32,50 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 14 octobre 2026 — la boucle de retour (lot 3b)
+
+### Ce qui a changé
+
+- **Les badges sont branchés** (section « Les badges » plus bas). Gagnés au
+  geste, gardés, annoncés une fois à l'écran qui les a fait gagner : fin de
+  leçon, fin de série d'entraînement ou de `/revoir`, résultat d'examen. La
+  Fiche les montre sous la jauge de chaque thème, avec le palier suivant dit
+  comme un fait. Captures dans `docs/captures-app-3/`.
+- **L'examen blanc garde son détail par thème** (`examenPasse(resultat,
+  date)`), ce que `sur` relit. Les examens d'avant n'en ont pas et ne
+  comptent pas pour ce palier.
+- **Le premier examen part en deux touches depuis l'Accueil**, et plus rien
+  entre « Commencer l'examen » et la première question : l'encart « commence
+  plutôt par la première leçon » ne sort plus dans l'app (`examen.astro`
+  ne lui passe plus `premiereLecon`). Mesuré en Chromium 390 px, état vierge :
+  avant, l'écran de départ portait trois blocs, 103 mots et un lien qui
+  déconseille l'examen ; après, deux blocs, 74 mots, aucun lien. Le bouton est
+  dans l'écran sans défiler dans les deux cas.
+- **« À revoir aujourd'hui » dit le nombre que `/revoir` joue** : borné au
+  rythme de la série. Avant, 25 dues pour une série de 10 s'affichaient 25.
+- **La série de jours se dit dès deux jours**, au texte neutre : la Fiche ne
+  dit plus « Une question avant ce soir, et la série tient. »
+- **Les boutons de l'Accueil disent un verbe et ce qu'ils ouvrent**, avec les
+  mots de la Fiche : « Continuer le cours », « Faire ma série du jour »,
+  « Faire un examen blanc ». Audit des cinq onglets :
+  `docs/audit-ux-app-2026-10-14.md`.
+- **`/examen` allégé de 11,9 Ko brotli** : le résultat lisait `rappel` et
+  `pointFinal` dans `profil.ts`, qui tirait la fiche entière et la table des
+  notions. Ils vivent dans `lib/raison.ts`. La référence du budget descend à
+  86 194 octets (`docs/budgets.md`).
+
+### Ce qui reste
+
+- Au vrai iPhone : le son `lecon` de l'annonce, qui part 1,2 s après la
+  cloche d'un examen reçu et 0,6 s après l'arpège de fin de série. Le délai
+  se règle à l'oreille.
+- L'écart des P2 de l'audit : un lien vers la racine d'un autre onglet
+  s'ouvre dans l'onglet courant (Swift, `RouteurDuSite`), le jalon « Sept
+  jours de suite », « Ton examen » sur l'Accueil.
+- L'objectif Umami « premier examen » (`examen-commence` sans
+  `examen-termine` préalable) se pose dans la console d'Umami, pas dans le
+  dépôt.
+
 ## 14 octobre 2026 — le geste de l'examen (lot 2)
 
 ### Ce qui a changé
@@ -230,9 +274,10 @@ leçon, une série) n'est jamais rechargée : on y perdrait sa place.
 ### Les badges
 
 Trois paliers par thème (`parcouru`, `retenu`, `sur`), décidés le 14 octobre
-(plan « app solide », lot 3). La logique est livrée seule (lot 3a), sans
-écran : tout est dans `src/lib/badges.ts`, pur et testé
-(`badges.test.ts`).
+(plan « app solide », lot 3). La règle, côté écran : `docs/app-da.md`, « Les
+badges ». La logique (lot 3a) est dans `src/lib/badges.ts`, pure et testée
+(`badges.test.ts`) ; les écrans (lot 3b) l'appellent par
+`src/lib/badges-geste.ts`.
 
 - **État** : `Etat.badges` (`progression.ts`), le jour du gain par thème et
   par palier. Champ facultatif, sans changer `VERSION_STOCKAGE` ; `charger`
@@ -252,22 +297,29 @@ Trois paliers par thème (`parcouru`, `retenu`, `sur`), décidés le 14 octobre
   11 leçons des feux et marques suivies, le 12 octobre. ») ; passer un
   `BadgeNouveau` en contexte donne les nombres du jour du gain, l'état seul
   (la date) une phrase qui reste vraie. `prochainPalier` dit le fait qui mène
-  au palier suivant, pour la page du thème.
+  au palier suivant. `annoncesDesBadges` met les nouveaux en phrases pour
+  l'annonce.
 
-**Ce que le lot 3b branche**, trois appels, chacun suivi de `sauvegarder`
-et de l'annonce des `nouveaux` à l'écran qui les a fait gagner :
+**Le geste** : `gagnerAuGeste(banque)` charge `badges.ts` par `import()` (il
+tire la table des notions, que ni le jeu ni la leçon ne chargent), relit
+l'état, attribue, sauvegarde s'il y a du neuf et rend les annonces. Trois
+appelants :
 
-1. **Fin de leçon** (`finir()` de `src/components/lecon-site.ts`) :
-   `attribuerBadges(terminerLecon(...), banque, jour)`.
-2. **Réponse et fin de série** (`src/components/quiz/effets.ts`) : après
-   `enregistrerReponse`, pour `retenu` ; l'annonce attend la fin de série.
-3. **Examen enregistré** (`useFinEtMesureDeLaSerie`, même fichier) :
-   `enregistrerExamen(charger(), examenPasse(r, aujourdhui()))` à la place
-   de l'objet écrit à la main, puis `attribuerBadges`.
+1. **Fin de leçon** (`finir()` de `src/components/lecon-site.ts`). La page
+   passe `theme` et `banque`, les identifiants publiés du seul thème de la
+   leçon (+0,1 Ko brotli de HTML par leçon). L'annonce remplit la région
+   `status` de la fin ; pas de son de plus, la leçon finie sonne déjà.
+2. **Chaque réponse écrite** (`useEcritureDeLaSerie`, `quiz/effets.ts`), pour
+   `retenu`, en entraînement, `/revoir` et examen.
+3. **Examen enregistré** (`useFinEtMesureDeLaSerie`) :
+   `enregistrerExamen(charger(), examenPasse(r, aujourdhui()))`, puis le geste.
 
-`banque` est la liste `{ id, theme }` des questions publiées
-(`QuestionConnue` de `profil.ts`) ; l'écran de leçon ne l'a pas encore. Un
-candidat qui remplit déjà un palier le gagne à son premier geste après la
+`Partie` (`Quiz.tsx`) range les annonces et les passe au résultat
+(`quiz/AnnonceBadges.tsx`), qui les montre une fois, joue `vibrer('lecon')`
+dans l'app après le son du verdict, et renvoie à la Fiche au-delà de trois.
+`banque` est la banque entière, pas la part de la série : un geste compte pour
+tous les thèmes. La Fiche lit sans attribuer (`profil/PaliersDuTheme.tsx`).
+Un candidat qui remplit déjà un palier le gagne à son premier geste après la
 mise à jour, daté de ce jour.
 
 ## 10 octobre 2026 — les rappels s'arment, lot 0 du plan « app solide »
