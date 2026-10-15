@@ -240,6 +240,45 @@ describe('les lignes de thème', () => {
   });
 });
 
+describe('les paliers de chaque thème', () => {
+  /** Retenue : réussie deux jours différents. */
+  const retenir = (e: ReturnType<typeof etatInitial>, id: string) =>
+    enregistrerReponse(enregistrerReponse(e, id, true, '2026-09-01'), id, true, '2026-09-02');
+  const ligne = (nom: RegExp) => screen.getByRole('link', { name: nom }).closest('li')!;
+
+  it('montre les paliers gagnés avec leur fait daté, puis le prochain comme un fait', () => {
+    sauvegarder({ ...retenir(etatInitial(), 'vhf-0'), badges: { vhf: { parcouru: '2026-10-12' } } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const vhf = ligne(/VHF/);
+    const gagnes = [...vhf.querySelectorAll('.paliers li')].map((li) => li.textContent);
+    expect(gagnes).toEqual(['Parcouru Toutes les leçons de la VHF et du SMDSM suivies, le 12 octobre.']);
+    expect(vhf.querySelector('.paliers__prochain')!.textContent).toBe('1 retenue sur 10\u00a0; à 8, le palier Retenu.');
+  });
+
+  it('garde un palier gagné même quand le compte du jour est retombé', () => {
+    sauvegarder({ ...enregistrerReponse(etatInitial(), 'feux-0', false, aujourdhui()), badges: { 'feux-marques': { retenu: '2026-10-01' } } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(ligne(/Feux/).querySelector('.paliers li')!.textContent).toBe(
+      'Retenu Au moins quatre questions sur cinq retenues, le 1er octobre.',
+    );
+  });
+
+  it('ne dit rien d’un thème jamais ouvert', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(ligne(/Feux/).querySelector('.paliers')).toBeNull();
+  });
+
+  it('ne compte jamais les badges ni ne fait de compte à rebours', () => {
+    sauvegarder({ ...retenir(etatInitial(), 'vhf-0'), badges: { vhf: { parcouru: '2026-10-12', retenu: '2026-10-13' } } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const texte = document.body.textContent!;
+    expect(texte).not.toMatch(/\d+ (badges?|paliers?)\b/i);
+    expect(texte).not.toMatch(/badge/i);
+    expect(texte).not.toMatch(/plus que|encore \d+ (question|leçon|examen)/i);
+  });
+});
+
 describe('ce que lit un lecteur d’écran', () => {
   it('dit les maxima de chaque part de l’indice', () => {
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));

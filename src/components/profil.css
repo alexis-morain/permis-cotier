@@ -284,6 +284,15 @@
 .maitrise__vues { width: calc(var(--vues, 0) * 100%); background: var(--filet-fort); }
 .maitrise__retenues { width: calc(var(--retenues, 0) * 100%); background: var(--texte); }
 
+/* Les paliers d'un thème, sous sa jauge : ce qui est gagné, en texte, puis le
+   prochain dit comme un fait. Le nom du palier en gras, rien d'autre. */
+.paliers { padding: 0 0 0.85rem; font-size: 0.9rem; }
+.paliers ul { list-style: none; margin: 0; padding: 0; }
+.paliers li { max-width: none; }
+.paliers li + li { margin-top: 0.3rem; }
+.paliers__prochain { margin: 0.3rem 0 0; }
+.paliers ul + .paliers__prochain { margin-top: 0.45rem; }
+
 /* Les examens : une ligne par examen, la barre du score, le trait à 35. */
 .examens { list-style: none; margin: 1rem 0 0.5rem; padding: 0; max-width: 34rem; }
 .examens li {

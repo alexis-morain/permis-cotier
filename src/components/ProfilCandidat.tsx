@@ -23,6 +23,7 @@ import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
 import Reglages from './profil/Reglages';
+import PaliersDuTheme from './profil/PaliersDuTheme';
 import { accorde } from './profil/accorde';
 import './profil.css';
 
@@ -472,6 +473,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                       <span className="maitrise__retenues" />
                     </span>
                   </a>
+                  <PaliersDuTheme etat={etat} banque={banque} theme={t.code} vues={t.vues} />
                 </li>
               ))}
             </ul>
