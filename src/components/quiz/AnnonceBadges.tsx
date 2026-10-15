@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import type { BadgeAnnonce } from '../../lib/badges-geste';
+import { ANNONCES_MONTREES, type BadgeAnnonce } from '../../lib/badges-geste';
 import { vibrer } from '../../lib/natif';
-
-/** Au-delà, la liste renvoie à la fiche : une annonce se lit d'un coup d'œil. */
-export const ANNONCES_MONTREES = 3;
 
 interface Props {
   badges: readonly BadgeAnnonce[];
@@ -21,7 +18,8 @@ interface Props {
  * La région `status` est là avant son contenu : les badges arrivent après
  * le résultat (leur module se charge à la demande), et un lecteur d'écran
  * n'annonce que ce qui change dans une région déjà présente. Vide, elle ne
- * se voit pas.
+ * se voit pas. La fin de leçon, sans React, rend le même bloc
+ * (`annoncerBadges` de `lecon-site.ts`).
  */
 export default function AnnonceBadges({ badges, delaiSon }: Props) {
   const gagne = badges.length > 0;

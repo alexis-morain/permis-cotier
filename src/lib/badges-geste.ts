@@ -5,6 +5,9 @@ import { stockageParDefaut, type Stockage } from './stockage';
 
 export type { BadgeAnnonce } from './badges';
 
+/** Au-delà, l'annonce renvoie à la fiche : elle se lit d'un coup d'œil. */
+export const ANNONCES_MONTREES = 3;
+
 /**
  * Le geste qui peut faire gagner un badge vient d'être enregistré : une
  * leçon finie, une réponse, un examen blanc. On attribue, on garde l'état
