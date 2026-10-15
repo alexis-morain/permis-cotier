@@ -5,6 +5,11 @@ import { NOTIONS, notionParCode } from './notions';
 import { cheminLecon } from './parcours';
 import { THEMES } from './themes';
 
+// La raison et ses phrases vivent à part : le résultat d'examen les montre,
+// et `/examen` n'a pas à charger la fiche entière, notions comprises.
+export { MOTIVATIONS, pointFinal, rappel } from './raison';
+export type { Motivation } from './raison';
+
 /**
  * Le moteur de la fiche du candidat : tout ce qui se déduit de la progression
  * locale sans rien lui ajouter. Fonctions pures, le composant ne fait que
@@ -23,29 +28,6 @@ export interface QuestionConnue {
   /** Code de notion, quand la question en porte un. */
   readonly notion?: string;
 }
-
-export interface Motivation {
-  readonly code: string;
-  /** La case, à la première personne. */
-  readonly libelle: string;
-  /**
-   * Ce qu'on rappelle au candidat, à la deuxième personne : un groupe qui
-   * complète « Tu passes ce permis pour … », minuscule initiale, sans point.
-   */
-  readonly rappel: string;
-}
-
-export const MOTIVATIONS: readonly Motivation[] = [
-  { code: 'famille', libelle: 'Emmener ma famille ou mes amis en mer', rappel: 'emmener les tiens en mer, toi à la barre' },
-  { code: 'location', libelle: 'Louer un bateau en vacances', rappel: 'louer un bateau cet été, sans demander à personne' },
-  { code: 'bateau', libelle: 'Avoir mon propre bateau', rappel: 'avoir ton bateau à toi, et la mer devant' },
-  { code: 'peche', libelle: 'Aller pêcher au large', rappel: 'aller pêcher là où la côte ne se voit plus' },
-  { code: 'glisse', libelle: 'Tracter du ski, du wake, ou piloter un jet', rappel: 'tracter, glisser, piloter' },
-  { code: 'plongee', libelle: 'Plonger ou pêcher sous l’eau loin de la plage', rappel: 'mouiller au-dessus du bon tombant, par tes propres moyens' },
-  { code: 'travail', libelle: 'J’en ai besoin pour mon travail', rappel: 'ton travail, qui l’attend' },
-  { code: 'hauturier', libelle: 'C’est la première marche vers le hauturier', rappel: 'passer ensuite le hauturier, celui-ci d’abord' },
-  { code: 'defi', libelle: 'Un vieux rêve, ou un défi que je me suis lancé', rappel: 'tenir un vieux rêve, ou le défi que tu t’es lancé' },
-];
 
 export interface Depart {
   readonly code: string;
@@ -447,28 +429,7 @@ export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecon
 }
 
 /* ------------------------------------------------------------------------ */
-/* Le rappel                                                                 */
-
-/** La raison à rappeler : la phrase du candidat, sinon sa première case, sinon rien. */
-export function rappel(profil: Profil): string | null {
-  const phrase = profil.phrase.trim();
-  if (phrase) return phrase;
-  for (const code of profil.motivations) {
-    const m = MOTIVATIONS.find((x) => x.code === code);
-    if (m) return m.rappel;
-  }
-  return null;
-}
-
-/**
- * Ce qui ferme « Tu passes ce permis pour « … » » : un point, sauf si la
- * raison du candidat en porte déjà un (les rappels de `MOTIVATIONS` n'en ont
- * jamais). Partagé par le résultat, la fiche, l'accueil et le questionnaire,
- * pour que « …pêcher.». » ne se voie nulle part.
- */
-export function pointFinal(raison: string): string {
-  return /[.!?…]$/.test(raison.trim()) ? '' : '.';
-}
+/* Le profil rempli                                                         */
 
 /** Le profil a-t-il été rempli, ne serait-ce qu'en partie ? */
 export function profilRempli(profil: Profil): boolean {

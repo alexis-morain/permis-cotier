@@ -5,7 +5,7 @@ import type { Etat } from '../../lib/progression';
 import { lenteurs, type Mode, type Session } from '../../lib/session';
 import { ERREURS_ADMISES } from '../../lib/quiz';
 import { nomDuTheme } from '../../lib/themes-client';
-import { pointFinal, rappel } from '../../lib/profil';
+import { pointFinal, rappel } from '../../lib/raison';
 import { POUR_APP } from '../../lib/cible';
 import { partager } from '../../lib/natif';
 import RevueDesErreurs from './RevueDesErreurs';
