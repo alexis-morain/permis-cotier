@@ -18,6 +18,8 @@ export interface GreffonSon {
 
 export interface GreffonEcran {
   pleinEcran(options: { actif: boolean }): Promise<void>;
+  /** Bascule vers l'onglet dont l'adresse de départ est `chemin` ; `false` si c'est déjà lui. */
+  onglet(options: { chemin: string }): Promise<{ bascule: boolean }>;
 }
 
 interface Greffons {

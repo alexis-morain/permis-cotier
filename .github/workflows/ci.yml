@@ -84,6 +84,11 @@ jobs:
       - name: Vérifier les sons de l'app
         run: python scripts/sons_app.py --verifier
 
+      # La fiche App Store dit le vrai nombre de questions (2.3). Sans secret :
+      # `preparer` refait le même contrôle, mais seulement après fusion.
+      - name: Vérifier le compte de la fiche App Store
+        run: python scripts/app_store.py verifier-fiche
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 

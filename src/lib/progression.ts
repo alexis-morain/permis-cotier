@@ -1,4 +1,4 @@
-import type { EtatQuestion, Progression } from './quiz';
+import type { EtatQuestion, Progression, Resultat } from './quiz';
 import { estDue, intervalle } from './quiz';
 import { aujourdhui as jourCourant, jourPlus } from './jour';
 // Le jour se lit dans `jour.ts`. Réexporté ici parce que la moitié du site
@@ -27,7 +27,24 @@ export interface ExamenPasse {
   bonnes: number;
   total: number;
   reussi: boolean;
+  /**
+   * Justes et posées par thème, ce que `sur` (badges) relit. Champ facultatif,
+   * ajouté sans changer la version : un examen d'avant lui n'en a pas, et ne
+   * compte pas pour ce palier ; un détail illisible non plus (`badges.ts`).
+   */
+  parTheme?: Record<string, ScoreTheme>;
 }
+
+export interface ScoreTheme {
+  bonnes: number;
+  total: number;
+}
+
+/** Les trois paliers d'un thème, dans l'ordre où on les gagne. */
+export type PalierBadge = 'parcouru' | 'retenu' | 'sur';
+
+/** Les badges d'un thème : le jour où chaque palier a été gagné, `AAAA-MM-JJ`. */
+export type BadgesTheme = Partial<Record<PalierBadge, string>>;
 
 export interface Etat {
   version: number;
@@ -70,6 +87,13 @@ export interface Etat {
    * jours les plus récents.
    */
   activite: Record<string, number>;
+  /**
+   * Les badges gagnés, par code de thème. Ils se gardent : seul l'effacement
+   * complet les retire. Même statut que `lecons` : facultatif, sans
+   * changement de version. Relus tels quels, triés par `badgesLisibles`
+   * (`badges.ts`) avant tout usage.
+   */
+  badges: Record<string, BadgesTheme>;
 }
 
 export interface Profil {
@@ -153,6 +177,7 @@ export function etatInitial(): Etat {
     lecons: {},
     profil: profilVide(),
     activite: {},
+    badges: {},
   };
 }
 
@@ -245,6 +270,17 @@ export function rienRevise(etat: Etat): boolean {
     Object.keys(etat.lecons).length === 0 &&
     etat.examens.length === 0
   );
+}
+
+/**
+ * L'examen terminé tel que l'historique le garde, avec son détail par thème :
+ * `calculerResultat` le donne déjà, on le recopie.
+ */
+export function examenPasse(resultat: Resultat, date: string): ExamenPasse {
+  const parTheme = Object.fromEntries(
+    Object.entries(resultat.parTheme).map(([theme, s]) => [theme, { bonnes: s.bonnes, total: s.total }]),
+  );
+  return { date, bonnes: resultat.bonnes, total: resultat.total, reussi: resultat.reussi, parTheme };
 }
 
 export function enregistrerExamen(etat: Etat, examen: ExamenPasse): Etat {
@@ -350,6 +386,9 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
       lecons: lu.lecons && typeof lu.lecons === 'object' ? lu.lecons : {},
       profil: lireProfil(lu.profil),
       activite: lireActivite(lu.activite),
+      // Forme seule : le détail se trie dans `badges.ts`, qui seul le lit.
+      // Le script en ligne de l'accueil embarque `charger`, il n'en paie rien.
+      badges: lu.badges && typeof lu.badges === 'object' && !Array.isArray(lu.badges) ? lu.badges : {},
     };
   } catch {
     return etatInitial();

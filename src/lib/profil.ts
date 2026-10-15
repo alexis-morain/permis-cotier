@@ -5,6 +5,11 @@ import { NOTIONS, notionParCode } from './notions';
 import { cheminLecon } from './parcours';
 import { THEMES } from './themes';
 
+// La raison et ses phrases vivent à part : le résultat d'examen les montre,
+// et `/examen` n'a pas à charger la fiche entière, notions comprises.
+export { MOTIVATIONS, pointFinal, rappel } from './raison';
+export type { Motivation } from './raison';
+
 /**
  * Le moteur de la fiche du candidat : tout ce qui se déduit de la progression
  * locale sans rien lui ajouter. Fonctions pures, le composant ne fait que
@@ -23,29 +28,6 @@ export interface QuestionConnue {
   /** Code de notion, quand la question en porte un. */
   readonly notion?: string;
 }
-
-export interface Motivation {
-  readonly code: string;
-  /** La case, à la première personne. */
-  readonly libelle: string;
-  /**
-   * Ce qu'on rappelle au candidat, à la deuxième personne : un groupe qui
-   * complète « Tu passes ce permis pour … », minuscule initiale, sans point.
-   */
-  readonly rappel: string;
-}
-
-export const MOTIVATIONS: readonly Motivation[] = [
-  { code: 'famille', libelle: 'Emmener ma famille ou mes amis en mer', rappel: 'emmener les tiens en mer, toi à la barre' },
-  { code: 'location', libelle: 'Louer un bateau en vacances', rappel: 'louer un bateau cet été, sans demander à personne' },
-  { code: 'bateau', libelle: 'Avoir mon propre bateau', rappel: 'avoir ton bateau à toi, et la mer devant' },
-  { code: 'peche', libelle: 'Aller pêcher au large', rappel: 'aller pêcher là où la côte ne se voit plus' },
-  { code: 'glisse', libelle: 'Tracter du ski, du wake, ou piloter un jet', rappel: 'tracter, glisser, piloter' },
-  { code: 'plongee', libelle: 'Plonger ou pêcher sous l’eau loin de la plage', rappel: 'mouiller au-dessus du bon tombant, par tes propres moyens' },
-  { code: 'travail', libelle: 'J’en ai besoin pour mon travail', rappel: 'ton travail, qui l’attend' },
-  { code: 'hauturier', libelle: 'C’est la première marche vers le hauturier', rappel: 'passer ensuite le hauturier, celui-ci d’abord' },
-  { code: 'defi', libelle: 'Un vieux rêve, ou un défi que je me suis lancé', rappel: 'tenir un vieux rêve, ou le défi que tu t’es lancé' },
-];
 
 export interface Depart {
   readonly code: string;
@@ -186,20 +168,6 @@ export function serieDeJours(etat: Etat, aujourdhui: string): { jours: number; a
     curseur = jourPlus(curseur, -1);
   }
   return { jours, aujourdhui: ceJour };
-}
-
-/** La plus longue suite de jours avec activité, pour le jalon des sept jours. */
-function plusLongueSerie(etat: Etat): number {
-  const jours = Object.keys(etat.activite).filter((j) => (etat.activite[j] ?? 0) > 0).sort();
-  let record = 0;
-  let courante = 0;
-  let precedent: string | null = null;
-  for (const j of jours) {
-    courante = precedent !== null && jourPlus(precedent, 1) === j ? courante + 1 : 1;
-    record = Math.max(record, courante);
-    precedent = j;
-  }
-  return record;
 }
 
 export interface Objectif {
@@ -379,6 +347,10 @@ export interface Jalon {
  * Des jalons qu'on atteint et qu'on garde : rien ne se perd, rien ne se
  * retire. Ils se calculent depuis la progression, pas depuis une liste
  * cochée, pour rester justes si la banque change.
+ *
+ * Chacun dit un travail fait, jamais la présence seule : le jalon « Sept
+ * jours de suite » est parti le 14 octobre avec la règle des badges (plan
+ * « app solide », décision 1). La série de jours reste affichée, sans prix.
  */
 export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecons: number): Jalon[] {
   const publiees = new Set(banque.map((q) => q.id));
@@ -391,7 +363,6 @@ export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecon
   const recus = complets.filter((x) => x.reussi).length;
   const troisRecus = complets.length >= 3 && complets.slice(0, 3).every((x) => x.reussi);
   const lecons = Object.keys(etat.lecons).length;
-  const serie = plusLongueSerie(etat);
   const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`;
 
   return [
@@ -426,12 +397,6 @@ export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecon
       atteint: themesBanque.size > 0 && themesTouches.size === themesBanque.size,
     },
     {
-      code: 'sept-jours',
-      titre: 'Sept jours de suite',
-      detail: serie >= 7 ? 'Fait.' : `Ta plus longue série : ${pluriel(serie, 'jour')}.`,
-      atteint: serie >= 7,
-    },
-    {
       code: 'trois-recus',
       titre: 'Trois examens reçus d’affilée',
       detail: troisRecus ? 'Fait. C’est le signal qu’on attend avant le jour J.' : 'Les trois derniers, tous reçus.',
@@ -447,28 +412,7 @@ export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecon
 }
 
 /* ------------------------------------------------------------------------ */
-/* Le rappel                                                                 */
-
-/** La raison à rappeler : la phrase du candidat, sinon sa première case, sinon rien. */
-export function rappel(profil: Profil): string | null {
-  const phrase = profil.phrase.trim();
-  if (phrase) return phrase;
-  for (const code of profil.motivations) {
-    const m = MOTIVATIONS.find((x) => x.code === code);
-    if (m) return m.rappel;
-  }
-  return null;
-}
-
-/**
- * Ce qui ferme « Tu passes ce permis pour « … » » : un point, sauf si la
- * raison du candidat en porte déjà un (les rappels de `MOTIVATIONS` n'en ont
- * jamais). Partagé par le résultat, la fiche, l'accueil et le questionnaire,
- * pour que « …pêcher.». » ne se voie nulle part.
- */
-export function pointFinal(raison: string): string {
-  return /[.!?…]$/.test(raison.trim()) ? '' : '.';
-}
+/* Le profil rempli                                                         */
 
 /** Le profil a-t-il été rempli, ne serait-ce qu'en partie ? */
 export function profilRempli(profil: Profil): boolean {

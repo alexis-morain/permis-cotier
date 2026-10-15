@@ -307,3 +307,122 @@ def test_documentation_seule_apres_une_sortie_soumet_le_build_en_attente():
     effectif = commit_effectif(SHA, AUTRE[:7], ["plans/x.md"])
     d = decider(versions, builds, effectif)
     assert (d.action, d.version, d.build, d.soumission) == ("soumettre", "1.0.1", 4, True)
+
+
+# --- La fiche dit le vrai nombre de questions (2.3) ---------------------------
+
+
+def test_la_banque_du_depot_se_compte_sans_yaml_comme_le_validateur():
+    import yaml
+    from app_store import compte_banque
+
+    racine = Path(__file__).resolve().parents[1]
+    attendu = 0
+    for f in (racine / "data" / "questions").glob("*/*.yaml"):
+        if f.parent.name.startswith("_"):
+            continue
+        q = yaml.safe_load(f.read_text(encoding="utf-8"))
+        attendu += isinstance(q, dict) and q.get("statut") == "publie"
+    assert compte_banque() == attendu > 0
+
+
+def test_compte_banque_ignore_brouillons_et_inbox(tmp_path):
+    from app_store import compte_banque
+
+    (tmp_path / "data" / "questions" / "vhf").mkdir(parents=True)
+    (tmp_path / "data" / "questions" / "_inbox").mkdir()
+    (tmp_path / "data" / "questions" / "vhf" / "a.yaml").write_text("id: a\nstatut: publie\n", encoding="utf-8")
+    (tmp_path / "data" / "questions" / "vhf" / "b.yaml").write_text("id: b\nstatut: brouillon\n", encoding="utf-8")
+    (tmp_path / "data" / "questions" / "_inbox" / "c.yaml").write_text("statut: publie\n", encoding="utf-8")
+    assert compte_banque(tmp_path) == 1
+
+
+def test_un_nombre_exact_et_juste_passe():
+    from app_store import ecarts_de_compte
+
+    assert ecarts_de_compte("Les 658 questions de la banque.", 658) == []
+    assert ecarts_de_compte("All 658 questions ship in the bundle.", 658) == []
+
+
+def test_un_nombre_exact_et_faux_est_refuse():
+    from app_store import ecarts_de_compte
+
+    assert ecarts_de_compte("all 622 questions, 105 lessons", 658) == ["622 questions"]
+
+
+def test_plus_de_n_passe_tant_que_n_est_dans_la_centaine_sous_le_compte():
+    from app_store import ecarts_de_compte
+
+    assert ecarts_de_compte("Plus de 600 questions.", 658) == []
+    assert ecarts_de_compte("more than 650 questions", 658) == []
+    assert ecarts_de_compte("Plus de 600 questions.", 699) == []
+    assert ecarts_de_compte("Plus de 600 questions.", 700) == ["Plus de 600 questions"]
+    assert ecarts_de_compte("plus de 700 questions", 658) == ["plus de 700 questions"]
+
+
+def test_le_format_de_l_examen_n_est_pas_un_compte_de_banque():
+    from app_store import ecarts_de_compte
+
+    assert ecarts_de_compte("Quarante questions, 40 questions tirées au sort.", 658) == []
+
+
+def test_espaces_insecables_et_milliers():
+    from app_store import ecarts_de_compte
+
+    assert ecarts_de_compte("plus de 600 questions", 658) == []
+    assert ecarts_de_compte("1 200 questions", 658) == ["1 200 questions"]
+
+
+def test_verifier_fiche_nomme_le_fichier_et_dit_la_regle(tmp_path):
+    from app_store import verifier_fiche
+
+    juste = tmp_path / "description.txt"
+    juste.write_text("Plus de 600 questions.", encoding="utf-8")
+    faux = tmp_path / "notes-revue.txt"
+    faux.write_text("all 622 questions", encoding="utf-8")
+    verifier_fiche([juste], 658)
+    try:
+        verifier_fiche([juste, faux], 658)
+    except SystemExit as arret:
+        message = str(arret)
+        assert "notes-revue.txt" in message and "622 questions" in message
+        assert "658" in message and "plus de 600" in message
+        assert "description.txt" not in message
+    else:
+        raise AssertionError("une fiche au compte faux aurait dû arrêter le pipeline")
+
+
+def test_la_fiche_du_depot_dit_le_vrai_compte():
+    from app_store import FICHE, compte_banque, verifier_fiche
+
+    assert FICHE, "aucun texte de fiche lu"
+    verifier_fiche(FICHE, compte_banque())
+
+
+def test_le_texte_de_fiche_ne_reconstruit_pas_l_app():
+    from app_store import FICHE, RACINE
+
+    for chemin in FICHE:
+        relatif = chemin.relative_to(RACINE).as_posix()
+        if relatif.startswith("docs/"):
+            assert hors_app(relatif)
+
+
+def test_preparer_refuse_une_fiche_fausse_avant_tout_appel(monkeypatch, tmp_path):
+    import app_store
+
+    faux = tmp_path / "description.txt"
+    faux.write_text("all 622 questions", encoding="utf-8")
+    monkeypatch.setattr(app_store, "FICHE", [faux])
+    monkeypatch.setattr(app_store, "compte_banque", lambda: 658)
+
+    def interdit():
+        raise AssertionError("preparer a interrogé App Store Connect avec une fiche fausse")
+
+    monkeypatch.setattr(app_store, "lire_versions", interdit)
+    try:
+        app_store.preparer(SHA)
+    except SystemExit as arret:
+        assert "622 questions" in str(arret)
+    else:
+        raise AssertionError("preparer aurait dû refuser la fiche")

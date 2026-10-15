@@ -5,6 +5,76 @@ resterait à faire. Il existe pour qu'on puisse reprendre le chantier sans
 relire les commits.
 La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
 
+## Avant chaque version
+
+`app-ios.yml` soumet seul dès qu'une CI est verte sur `main`. Le rituel se fait
+donc **avant la fusion** qui ouvre une version, pas après.
+
+1. **Preflight.** `capacitor-apple-review-preflight`, puis `app-store-review`
+   pour ce qu'il ne couvre pas (required-reason API, label de confidentialité,
+   ATT), en lecture locale. La réponse 4.2 de `docs/app-da.md` (« Ce qu'Apple
+   regarde ») se relit contre le code et se tient à jour.
+2. **Sortie** dans `docs/preflight-<version>.md` : bloquants d'un côté, ménage
+   de l'autre, chaque point avec son fichier et sa ligne. Un bloquant ferme la
+   version ; le ménage va au journal.
+3. **Le compte de la fiche.** `python scripts/app_store.py verifier-fiche`
+   (en CI, et refait par `preparer`) compte les questions publiées de
+   `data/questions/` et relit `ios/nouveautes.txt`, `ios/a-tester.txt` et
+   `docs/fiche-app-store/*.txt`. Règle : un nombre de cent ou plus suivi de
+   « questions » est **exact**, ou **arrondi par en dessous** à la centaine
+   près, « plus de N » avec N ≤ compte < N + 100 (658 : « plus de 600 »). Un
+   bump de banque qui franchit la centaine rend la CI rouge jusqu'à ce que la
+   fiche suive. Sous cent, le nombre parle d'un examen ou d'une série.
+
+`docs/fiche-app-store/` est la copie de ce qu'App Store Connect affiche
+(description, sous-titre, mots-clés, notes au relecteur) : ces champs se posent
+à la main, le script ne pousse que les nouveautés et « À tester ». Sous `docs/`,
+une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
+de la copie se reporte en ligne, et inversement.
+
+## 14 octobre 2026 — la boucle de retour (lot 3b)
+
+### Ce qui a changé
+
+- **Les badges sont branchés** (section « Les badges » plus bas). Gagnés au
+  geste, gardés, annoncés une fois à l'écran qui les a fait gagner : fin de
+  leçon, fin de série d'entraînement ou de `/revoir`, résultat d'examen. La
+  Fiche les montre sous la jauge de chaque thème, avec le palier suivant dit
+  comme un fait. Captures dans `docs/captures-app-3/`.
+- **L'examen blanc garde son détail par thème** (`examenPasse(resultat,
+  date)`), ce que `sur` relit. Les examens d'avant n'en ont pas et ne
+  comptent pas pour ce palier.
+- **Le premier examen part en deux touches depuis l'Accueil**, et plus rien
+  entre « Commencer l'examen » et la première question : l'encart « commence
+  plutôt par la première leçon » ne sort plus dans l'app (`examen.astro`
+  ne lui passe plus `premiereLecon`). Mesuré en Chromium 390 px, état vierge :
+  avant, l'écran de départ portait trois blocs, 103 mots et un lien qui
+  déconseille l'examen ; après, deux blocs, 74 mots, aucun lien. Le bouton est
+  dans l'écran sans défiler dans les deux cas.
+- **« À revoir aujourd'hui » dit le nombre que `/revoir` joue** : borné au
+  rythme de la série. Avant, 25 dues pour une série de 10 s'affichaient 25.
+- **La série de jours se dit dès deux jours**, au texte neutre : la Fiche ne
+  dit plus « Une question avant ce soir, et la série tient. »
+- **Les boutons de l'Accueil disent un verbe et ce qu'ils ouvrent**, avec les
+  mots de la Fiche : « Continuer le cours », « Faire ma série du jour »,
+  « Faire un examen blanc ». Audit des cinq onglets :
+  `docs/audit-ux-app-2026-10-14.md`.
+- **`/examen` allégé de 11,9 Ko brotli** : le résultat lisait `rappel` et
+  `pointFinal` dans `profil.ts`, qui tirait la fiche entière et la table des
+  notions. Ils vivent dans `lib/raison.ts`. La référence du budget descend à
+  86 194 octets (`docs/budgets.md`).
+
+### Ce qui reste
+
+- Au vrai iPhone : le son `lecon` de l'annonce, qui part 1,2 s après la
+  cloche d'un examen reçu et 0,6 s après l'arpège de fin de série. Le délai
+  se règle à l'oreille.
+- L'écart des P2 de l'audit : un lien vers la racine d'un autre onglet
+  s'ouvre dans l'onglet courant (Swift, `RouteurDuSite`), le jalon « Sept
+  jours de suite », « Ton examen » sur l'Accueil.
+- L'objectif Umami « premier examen », que le plan demande pour mesurer dans
+  un mois, se pose dans la console d'Umami, pas dans le dépôt : non fait.
+
 ## 14 octobre 2026 — le geste de l'examen (lot 2)
 
 ### Ce qui a changé
@@ -199,6 +269,57 @@ photo prise au dernier rendu. Si elles ont bougé et que l'écran est une
 racine d'onglet, la page se recharge et ses îlots relisent la progression ;
 `/examen` est exclu, pour ne pas effacer un résultat. Une page profonde (une
 leçon, une série) n'est jamais rechargée : on y perdrait sa place.
+
+### Les badges
+
+Trois paliers par thème (`parcouru`, `retenu`, `sur`), décidés le 14 octobre
+(plan « app solide », lot 3). La règle, côté écran : `docs/app-da.md`, « Les
+badges ». La logique (lot 3a) est dans `src/lib/badges.ts`, pure et testée
+(`badges.test.ts`) ; les écrans (lot 3b) l'appellent par
+`src/lib/badges-geste.ts`.
+
+- **État** : `Etat.badges` (`progression.ts`), le jour du gain par thème et
+  par palier. Champ facultatif, sans changer `VERSION_STOCKAGE` ; `charger`
+  n'en vérifie que la forme, `badgesLisibles` jette les entrées illisibles à
+  l'usage (le script en ligne de l'accueil embarque `charger`, et son budget
+  est de 9 000 octets). Un badge ne se retire jamais, sauf par `effacer()`.
+- **Examens** : `ExamenPasse.parTheme`, facultatif. `examenPasse(resultat,
+  date)` le recopie du `Resultat` de `calculerResultat`. Seuls les examens qui
+  le portent comptent pour `sur` ; ceux d'avant non.
+- **Les règles** : `parcouru`, toutes les leçons (notions) du thème suivies ;
+  `retenu`, `Math.ceil(80 %)` des questions publiées du thème retenues
+  (`estRetenue`) ; `sur`, sans faute sur le thème aux trois derniers examens
+  où il est tombé (un examen sans question du thème ne casse ni ne compte).
+  Un thème sans question publiée ne gagne rien, un thème sans leçon pas
+  `parcouru`.
+- **Les phrases** : `faitDuBadge(theme, palier, contexte)` dit le fait (« Les
+  11 leçons des feux et marques suivies, le 12 octobre. ») ; passer un
+  `BadgeNouveau` en contexte donne les nombres du jour du gain, l'état seul
+  (la date) une phrase qui reste vraie. `prochainPalier` dit le fait qui mène
+  au palier suivant. `annoncesDesBadges` met les nouveaux en phrases pour
+  l'annonce.
+
+**Le geste** : `gagnerAuGeste(banque)` charge `badges.ts` par `import()` (il
+tire la table des notions, que ni le jeu ni la leçon ne chargent), relit
+l'état, attribue, sauvegarde s'il y a du neuf et rend les annonces. Trois
+appelants :
+
+1. **Fin de leçon** (`finir()` de `src/components/lecon-site.ts`). La page
+   passe `theme` et `banque`, les identifiants publiés du seul thème de la
+   leçon (+0,1 Ko brotli de HTML par leçon). L'annonce remplit la région
+   `status` de la fin ; pas de son de plus, la leçon finie sonne déjà.
+2. **Chaque réponse écrite** (`useEcritureDeLaSerie`, `quiz/effets.ts`), pour
+   `retenu`, en entraînement, `/revoir` et examen.
+3. **Examen enregistré** (`useFinEtMesureDeLaSerie`) :
+   `enregistrerExamen(charger(), examenPasse(r, aujourdhui()))`, puis le geste.
+
+`Partie` (`Quiz.tsx`) range les annonces et les passe au résultat
+(`quiz/AnnonceBadges.tsx`), qui les montre une fois, joue `vibrer('lecon')`
+dans l'app après le son du verdict, et renvoie à la Fiche au-delà de trois.
+`banque` est la banque entière, pas la part de la série : un geste compte pour
+tous les thèmes. La Fiche lit sans attribuer (`profil/PaliersDuTheme.tsx`).
+Un candidat qui remplit déjà un palier le gagne à son premier geste après la
+mise à jour, daté de ce jour.
 
 ## 10 octobre 2026 — les rappels s'arment, lot 0 du plan « app solide »
 
