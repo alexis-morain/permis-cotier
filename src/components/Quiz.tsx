@@ -5,6 +5,7 @@ import { aleaSeme, estDue, ordonnerEntrainement, serieDuJour, tirerExamen } from
 import { melangerPropositions } from '../lib/melange';
 import { charger, aujourdhui, CLE_STOCKAGE } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
+import type { BadgeAnnonce } from '../lib/badges-geste';
 import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
@@ -74,7 +75,15 @@ function reduireEcran(s: Session, action: ActionEcran): Session {
  * `Partie` tient la session et l'orchestration ; chaque écran est un morceau
  * nommé de `quiz/`, et chaque effet un hook de `quiz/effets.ts`.
  */
-function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon }: Props & { questions: QuestionAffichable[] }) {
+function Partie({
+  mode,
+  questions,
+  banque,
+  theme,
+  notion,
+  revoir = false,
+  premiereLecon,
+}: Props & { questions: QuestionAffichable[]; banque: QuestionAffichable[] }) {
   // La progression est lue au montage, puis relue seulement tant que l'examen
   // n'est pas lancé (voir l'effet `storage` plus bas) : le tirage et la reprise
   // partent du même état, pas d'un état qui bouge sous eux.
@@ -183,9 +192,16 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
   // chaque chiffre illisible.
   const nomSerie = mode === 'examen' ? 'examen' : revoir ? 'revoir' : 'entrainement';
 
+  // Les badges que la série fait gagner, gardés au geste, annoncés au résultat.
+  const [gagnes, setGagnes] = useState<BadgeAnnonce[]>([]);
+  const badges = useMemo(
+    () => ({ banque, gagnes: (annonces: BadgeAnnonce[]) => setGagnes((g) => [...g, ...annonces]) }),
+    [banque],
+  );
+
   useModeConcentration(session.phase === 'en-cours');
-  useEcritureDeLaSerie(session, mode, theme, retourSerie, journalEcrit);
-  useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir });
+  useEcritureDeLaSerie(session, mode, theme, retourSerie, journalEcrit, badges);
+  useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir, badges });
   useVerdictEnVue(session, verdict);
 
   useEffect(() => {
@@ -242,6 +258,7 @@ function Partie({ mode, questions, theme, notion, revoir = false, premiereLecon 
         parId={parId}
         retour={retour}
         retourLecon={retourLecon}
+        badges={gagnes}
       />
     );
   }
@@ -476,5 +493,5 @@ export default function Quiz({ source, questions, ...reste }: Props) {
   // Quatre propositions : c'est le format visé par la banque, et une silhouette
   // qui se trompe d'une ligne ne se remarque pas ; une qui saute, si.
   if (!servies) return <Silhouette propositions={4} />;
-  return <Partie {...reste} questions={servies} />;
+  return <Partie {...reste} questions={servies} banque={chargees!} />;
 }
