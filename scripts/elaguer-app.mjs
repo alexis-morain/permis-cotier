@@ -193,3 +193,34 @@ if (inconnus.size > 0) {
   process.exit(1);
 }
 console.log('  Aucun lien interne ne pointe hors du bundle.');
+
+/**
+ * Le bundle n'a pas de serveur derrière lui. Un `fetch('/api/…')` y part vers
+ * `capacitor://localhost`, où le routeur rend l'accueil en 200 : l'écran croit
+ * l'envoi réussi et rien n'est parti. Le Worker n'existe que sur le site.
+ */
+async function appelsAuWorker(dossier) {
+  const trouves = [];
+  for (const entree of await readdir(dossier, { withFileTypes: true })) {
+    const chemin = join(dossier, entree.name);
+    if (entree.isDirectory()) {
+      trouves.push(...(await appelsAuWorker(chemin)));
+      continue;
+    }
+    if (!/\.(html|js)$/.test(entree.name)) continue;
+    if (/["'`]\/api\//.test(await readFile(chemin, 'utf-8'))) trouves.push(relative(racine, chemin));
+  }
+  return trouves;
+}
+
+const appels = await appelsAuWorker(racine);
+if (appels.length > 0) {
+  console.error(`\nAppels au Worker dans le bundle (${appels.length}) :`);
+  for (const fichier of appels.slice(0, 20)) console.error(`  · ${fichier}`);
+  console.error(
+    '\nLa coquille n’a pas de serveur : `/api/…` y rend l’accueil en 200.' +
+      '\nCouper l’appel sous `POUR_APP`, ou viser le domaine du site.',
+  );
+  process.exit(1);
+}
+console.log('  Aucun appel au Worker dans le bundle.');

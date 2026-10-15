@@ -21,9 +21,10 @@ if (!script) throw new Error('script en ligne introuvable dans signaler.astro');
 /** L'attente au-delà de laquelle le formulaire renonce au Worker, lue dans la page. */
 const ATTENTE = Number(/ATTENTE_WORKER = (\d+)/.exec(script)?.[1]);
 
-function monter(avecTurnstile: boolean) {
+/** `envoi` absent : la page telle que l'app la construit, sans adresse de Worker. */
+function monter(avecTurnstile: boolean, envoi: string | null = avecTurnstile ? '/api/signaler' : null) {
   document.body.innerHTML = `
-    <form id="signalement" data-adresse="contact@lepermiscotier.fr" data-turnstile="${avecTurnstile ? 'cle' : ''}">
+    <form id="signalement" data-adresse="contact@lepermiscotier.fr" data-turnstile="${avecTurnstile ? 'cle' : ''}"${envoi === null ? '' : ` data-envoi="${envoi}"`}>
       <input id="question" value="balisage-0001" />
       <select id="motif"><option value="reponse" selected>r</option><option value="autre">a</option></select>
       <textarea id="details">La règle 26.</textarea>
@@ -74,6 +75,27 @@ describe('le signalement hors du laboratoire', () => {
     expect(fetch).not.toHaveBeenCalled();
     expect(courrier()).toBe(true);
     expect(document.getElementById('confirmation-id')?.textContent).toBe('balisage-0001');
+  });
+
+  it('sans adresse de Worker, comme dans l’app, retombe sur le courrier même avec un jeton', () => {
+    monter(true, null);
+    (window as { turnstile?: unknown }).turnstile = { getResponse: () => 'jeton', reset: vi.fn() };
+    const fetch = vi.fn();
+    vi.stubGlobal('fetch', fetch);
+    soumettre();
+    expect(fetch).not.toHaveBeenCalled();
+    expect(courrier()).toBe(true);
+    expect(envoye()).toBe(false);
+  });
+
+  it('poste à l’adresse que la page lui donne', async () => {
+    monter(true);
+    (window as { turnstile?: unknown }).turnstile = { getResponse: () => 'jeton', reset: vi.fn() };
+    const fetch = vi.fn(async () => ({ ok: false, status: 503, json: async () => ({}) }));
+    vi.stubGlobal('fetch', fetch);
+    soumettre();
+    await attendre();
+    expect(fetch).toHaveBeenCalledWith('/api/signaler', expect.anything());
   });
 
   it('retombe sur le courrier quand le Worker rend 503, et rend le bouton', async () => {

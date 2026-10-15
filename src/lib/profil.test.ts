@@ -336,13 +336,20 @@ describe('jalons', () => {
     expect(j['premier-recu']).toBe(true);
   });
 
-  it('compte les thèmes touchés et la série de sept jours', () => {
+  it('compte les thèmes touchés', () => {
     let e = etatInitial();
-    for (let d = 1; d <= 7; d++) e = enregistrerReponse(e, 'vhf-0', true, `2026-09-0${d}`);
+    e = enregistrerReponse(e, 'vhf-0', true, '2026-09-01');
     e = enregistrerReponse(e, 'feux-0', true, '2026-09-07');
     const j = Object.fromEntries(jalons(e, banque, 105).map((x) => [x.code, x.atteint]));
-    expect(j['sept-jours']).toBe(true);
     expect(j['tous-les-themes']).toBe(true);
+  });
+
+  it('ne récompense jamais la présence seule : sept jours de suite ne font aucun jalon', () => {
+    let e = etatInitial();
+    for (let d = 1; d <= 9; d++) e = enregistrerReponse(e, 'vhf-0', true, `2026-09-0${d}`);
+    const j = jalons(e, banque, 105);
+    expect(j.map((x) => x.code)).not.toContain('sept-jours');
+    expect(j.filter((x) => x.atteint).map((x) => x.code)).toEqual([]);
   });
 
   it('marque le cours entier', () => {

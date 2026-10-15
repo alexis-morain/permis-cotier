@@ -10,6 +10,7 @@ import {
   type Lecon as LeconDuParcours,
 } from '../../../lib/parcours';
 import { leconDeLaNotion } from '../../../lib/lecons';
+import { questionsDuTheme } from '../../../lib/banque';
 import { themeParCode } from '../../../lib/themes';
 import { SITE, ressource } from '../../../lib/seo';
 import MarqueSource from '../../../components/MarqueSource.astro';
@@ -52,11 +53,15 @@ const coursDeLaLecon = { code: cours.code, titre: cours.titre, chemin: cheminCou
 // Ce que le script de la leçon lit : le texte est déjà dans la page, il ne
 // lui faut que les questions et ce qui vient après. `<` échappé, pour qu'aucun
 // texte ne ferme le bloc.
+// Et, pour les badges de fin de leçon, les identifiants publiés du thème :
+// le thème seul, la leçon ne touche à aucun autre.
 const donneesLecon: DonneesLecon = {
   code: affichable.code,
   cours: coursDeLaLecon,
   ...(suite ? { suite } : {}),
   questions: affichable.questions,
+  theme: notion.theme,
+  banque: (await questionsDuTheme(notion.theme)).map((q) => q.id),
 };
 const blocLecon = JSON.stringify(donneesLecon).replaceAll('<', '\\u003c');
 ---

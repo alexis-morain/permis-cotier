@@ -117,7 +117,8 @@ export function monterReprise(racine: HTMLElement, banque: readonly QuestionConn
   } else {
     ligne.append('Aujourd’hui ', b(objectif.faites), ` question${objectif.faites > 1 ? 's' : ''} sur ${objectif.cible}`);
   }
-  if (serie.jours > 0) ligne.append(', ', b(serie.jours), ` jour${serie.jours > 1 ? 's' : ''} de suite`);
+  // Un jour n'est pas une série : elle se dit dès deux, et rien de plus.
+  if (serie.jours > 1) ligne.append(', ', b(serie.jours), ' jours de suite');
   ligne.append('.');
   if (dues > 0) {
     ligne.append(

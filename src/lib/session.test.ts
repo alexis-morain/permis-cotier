@@ -8,6 +8,7 @@ import {
   restaurerSession,
   SAUVEGARDE_PERIMEE_MS,
   lenteurs,
+  secondesRestantes,
 } from './session';
 import type { Session } from './session';
 import type { QuestionJouable } from './quiz';
@@ -39,8 +40,8 @@ describe('création de session', () => {
   });
 
   it('arme le chrono en examen une fois commencé, jamais en entraînement', () => {
-    expect(examen().restant).toBe(20);
-    expect(entrainement().restant).toBeNull();
+    expect(examen().echeance).toBe(T0 + 20_000);
+    expect(entrainement().echeance).toBeNull();
   });
 
   it('n’affiche jamais la correction avant validation en examen', () => {
@@ -97,15 +98,14 @@ describe('examen blanc', () => {
 
   it('remet le chrono à vingt secondes à chaque question', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 2_000 });
-    expect(s.restant).toBe(18);
     s = reduire(s, { type: 'valider', maintenant: T0 + 2_000 });
-    expect(s.restant).toBe(20);
+    expect(s.echeance).toBe(T0 + 22_000);
+    expect(secondesRestantes(s.echeance!, T0 + 2_000)).toBe(20);
   });
 
   it('valide tout seul quand le chrono tombe à zéro', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 20_000 });
     expect(s.index).toBe(1);
     expect(s.selections[0]).toEqual([]);
   });
@@ -115,30 +115,39 @@ describe('examen blanc', () => {
     // secondes tombent : le bouton ne fait qu'avancer plus tôt.
     let s = examen();
     s = reduire(s, { type: 'basculer', proposition: 'a' });
-    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 20_000 });
     expect(s.journal[0]).toEqual({ id: 'vhf-0001', juste: true, ms: 20_000 });
   });
 
+  it('ignore une échéance annoncée trop tôt, sans rien changer', () => {
+    // Le retour au premier plan annonce l'échéance sans savoir si elle est
+    // passée : en avance, la session rendue est la même, et l'écran ne se
+    // refait pas.
+    const s = examen();
+    expect(reduire(s, { type: 'echu', maintenant: T0 + 7_000 })).toBe(s);
+    expect(reduire(s, { type: 'echu', maintenant: T0 + 19_999 })).toBe(s);
+  });
+
   it('compte le temps réel, pas les battements reçus', () => {
-    // Un onglet en arrière-plan reçoit un tic toutes les minutes au lieu d'un
-    // par seconde : le compte à rebours doit avoir couru quand même.
-    let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 7_000 });
-    expect(s.restant).toBe(13);
+    // Les secondes se lisent sur l'heure : un onglet étranglé ou une app
+    // gelée n'a raté aucun battement, puisqu'il n'y en a pas à compter.
+    expect(secondesRestantes(T0 + 20_000, T0 + 7_000)).toBe(13);
+    expect(secondesRestantes(T0 + 20_000, T0 + 7_001)).toBe(13);
+    expect(secondesRestantes(T0 + 20_000, T0 + 30_000)).toBe(0);
   });
 
   it('ne brûle qu’une question par retour, même après une longue absence', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 600_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 600_000 });
     expect(s.index).toBe(1);
-    expect(s.restant).toBe(20);
+    expect(s.echeance).toBe(T0 + 620_000);
   });
 
   it('finit sur l’écran de résultat après la dernière question', () => {
     let s = examen();
     for (let i = 0; i < 3; i++) s = reduire(s, { type: 'valider' });
     expect(s.phase).toBe('resultat');
-    expect(s.restant).toBeNull();
+    expect(s.echeance).toBeNull();
   });
 
   it('calcule le résultat à l’arrivée', () => {
@@ -190,8 +199,8 @@ describe('entraînement', () => {
   });
 
   it('n’a pas de chrono qui court', () => {
-    const s = reduire(entrainement(), { type: 'tic' });
-    expect(s.restant).toBeNull();
+    const s = reduire(entrainement(), { type: 'echu' });
+    expect(s.echeance).toBeNull();
     expect(s.index).toBe(0);
   });
 
@@ -245,7 +254,7 @@ describe('journal des réponses', () => {
 
   it('inscrit les vingt secondes pleines à la question passée au buzzer', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 20_000 });
     expect(s.journal[0]).toEqual({ id: 'vhf-0001', juste: false, ms: 20_000 });
   });
 });
@@ -274,10 +283,10 @@ describe('lenteur, le mode d’échec de cette épreuve', () => {
 
   it('sépare le buzzer sur une case vide du buzzer sur des cases cochées', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 20_000 });
     s = reduire(s, { type: 'basculer', proposition: 'b' });
     s = reduire(s, { type: 'basculer', proposition: 'c' });
-    s = reduire(s, { type: 'tic', maintenant: T0 + 40_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 40_000 });
     s = reduire(s, { type: 'basculer', proposition: 'd' });
     s = reduire(s, { type: 'valider', maintenant: T0 + 43_000 });
     expect(s.resultat).toMatchObject({ bonnes: 2, total: 3 });
@@ -294,7 +303,7 @@ describe('lenteur, le mode d’échec de cette épreuve', () => {
     // rien de « sans réponse ».
     let s = examen();
     s = reduire(s, { type: 'basculer', proposition: 'a' });
-    s = reduire(s, { type: 'tic', maintenant: T0 + 20_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 20_000 });
     s = reduire(s, { type: 'basculer', proposition: 'b' });
     s = reduire(s, { type: 'basculer', proposition: 'c' });
     s = reduire(s, { type: 'valider', maintenant: T0 + 25_000 });
@@ -337,13 +346,13 @@ describe('écran de départ de l’examen', () => {
   it('attend le clic avant de lancer le chrono', () => {
     const s = creerSession('examen', trois);
     expect(s.phase).toBe('depart');
-    expect(s.restant).toBeNull();
+    expect(s.echeance).toBeNull();
   });
 
   it('ne laisse rien faire tant que l’examen n’a pas commencé', () => {
     let s = creerSession('examen', trois);
     s = reduire(s, { type: 'basculer', proposition: 'a' });
-    s = reduire(s, { type: 'tic' });
+    s = reduire(s, { type: 'echu' });
     s = reduire(s, { type: 'valider' });
     expect(s.phase).toBe('depart');
     expect(s.selections[0]).toEqual([]);
@@ -353,7 +362,6 @@ describe('écran de départ de l’examen', () => {
   it('arme le chrono au démarrage, et pas avant', () => {
     const s = reduire(creerSession('examen', trois), { type: 'commencer', maintenant: T0 });
     expect(s.phase).toBe('en-cours');
-    expect(s.restant).toBe(20);
     expect(s.echeance).toBe(T0 + 20_000);
   });
 
@@ -363,9 +371,9 @@ describe('écran de départ de l’examen', () => {
 
   it('ne redémarre pas un examen déjà en cours', () => {
     let s = examen();
-    s = reduire(s, { type: 'tic', maintenant: T0 + 5_000 });
+    s = reduire(s, { type: 'echu', maintenant: T0 + 5_000 });
     s = reduire(s, { type: 'commencer', maintenant: T0 + 5_000 });
-    expect(s.restant).toBe(15);
+    expect(s.echeance).toBe(T0 + 20_000);
   });
 });
 
@@ -450,13 +458,13 @@ describe('reprise d’une session interrompue', () => {
   it('ne rend pas les secondes déjà passées à qui rafraîchit', () => {
     const sauvegarde = extraireSauvegarde(enCours(), undefined, maintenant);
     const apres = restaurerSession(sauvegarde, trois, 'examen', undefined, maintenant + 8_000);
-    expect(apres!.restant).toBe(12);
+    expect(secondesRestantes(apres!.echeance!, maintenant + 8_000)).toBe(12);
   });
 
   it('redonne la question entière quand son temps est passé pendant l’absence', () => {
     const sauvegarde = extraireSauvegarde(enCours(), undefined, maintenant);
     const apres = restaurerSession(sauvegarde, trois, 'examen', undefined, maintenant + 120_000);
-    expect(apres!.restant).toBe(20);
+    expect(apres!.echeance).toBe(maintenant + 140_000);
     expect(apres!.index).toBe(1);
   });
 

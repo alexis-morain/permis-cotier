@@ -31,7 +31,7 @@ export default function Proposition({ texte, rang, cochee, etat, corrigee, desac
         onClick={basculer}
       >
         <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
-        <span>{texte}</span>
+        <span className="proposition__texte">{texte}</span>
       </button>
     </li>
   );

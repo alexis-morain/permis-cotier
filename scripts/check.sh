@@ -56,6 +56,7 @@ etape "Rythmes de feux"                   "$PY" scripts/rythmes.py --verifier
 etape "Situations de rencontre"           "$PY" scripts/situations.py --verifier
 etape "Signaux sonores"                   "$PY" scripts/sons.py --verifier
 etape "Sons de l'app"                     "$PY" scripts/sons_app.py --verifier
+etape "Compte de la fiche App Store"      "$PY" scripts/app_store.py verifier-fiche
 etape "Tests du validateur"               "$PY" -m pytest tests -q
 etape "Tests du moteur"                   npm test
 

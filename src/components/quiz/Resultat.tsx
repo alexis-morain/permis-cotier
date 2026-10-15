@@ -5,10 +5,12 @@ import type { Etat } from '../../lib/progression';
 import { lenteurs, type Mode, type Session } from '../../lib/session';
 import { ERREURS_ADMISES } from '../../lib/quiz';
 import { nomDuTheme } from '../../lib/themes-client';
-import { pointFinal, rappel } from '../../lib/profil';
+import { pointFinal, rappel } from '../../lib/raison';
 import { POUR_APP } from '../../lib/cible';
 import { partager } from '../../lib/natif';
 import RevueDesErreurs from './RevueDesErreurs';
+import AnnonceBadges from './AnnonceBadges';
+import type { BadgeAnnonce } from '../../lib/badges-geste';
 
 interface Props {
   mode: Mode;
@@ -21,6 +23,8 @@ interface Props {
   retour: string;
   /** Où ramène la leçon ouverte depuis une question ratée. */
   retourLecon: string;
+  /** Les badges que cette série a fait gagner. */
+  badges: readonly BadgeAnnonce[];
 }
 
 type Revue = 'erreurs' | 'toutes' | null;
@@ -29,7 +33,7 @@ type Revue = 'erreurs' | 'toutes' | null;
  * L'écran de résultat : le score, le verdict, le temps, la raison quand ça
  * coince, la note par thème, puis le geste suivant et la revue.
  */
-export default function Resultat({ mode, session, titre, depart, parId, retour, retourLecon }: Props) {
+export default function Resultat({ mode, session, titre, depart, parId, retour, retourLecon, badges }: Props) {
   // La revue dépliée : les seules ratées, ou toutes les questions.
   const [revue, setRevue] = useState<Revue>(null);
   const basculerRevue = (quoi: 'erreurs' | 'toutes') => setRevue((v) => (v === quoi ? null : quoi));
@@ -49,6 +53,9 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
     <div className="jeu">
       <h1 className="visuellement-cache">{titre}, résultat</h1>
       <Score mode={mode} session={session} titre={titre} depart={depart} />
+      {/* Le son de leçon attend la fin de celui du verdict : la cloche d'un
+          examen dure 1,15 s, l'arpège de fin de série 0,5 s. */}
+      <AnnonceBadges badges={badges} delaiSon={mode === 'examen' ? 1200 : 600} />
       <Temps session={session} />
 
       {raison && (

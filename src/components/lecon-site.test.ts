@@ -11,7 +11,8 @@ import { fireEvent, screen } from '@testing-library/dom';
 import { ecransDe, libelleSuite, monterLecon, ID_LECON, type Suite } from './lecon-site';
 import type { LeconAffichable } from '../lib/cours';
 import type { QuestionAffichable } from '../lib/affichable';
-import { charger } from '../lib/progression';
+import { aujourdhui, charger, etatInitial, sauvegarder, terminerLecon } from '../lib/progression';
+import { notionsDuTheme } from '../lib/notions';
 import { vibrer } from '../lib/natif';
 import { evenement } from '../lib/mesure';
 
@@ -71,7 +72,7 @@ const cours = { code: 'balisage', titre: 'Lire le balisage', chemin: '/cours/bal
 const chenal: Suite = { type: 'lecon', chemin: '/cours/balisage/balisage-chenal-prefere', nom: 'Chenal préféré' };
 
 /** La page telle que `Lecon.astro` et `[notion].astro` la rendent avant le script. */
-function pageServeur(lecon: LeconAffichable, suite: Suite | null = chenal): string {
+function pageServeur(lecon: LeconAffichable, suite: Suite | null = chenal, autres: object = {}): string {
   const ecrans = ecransDe(lecon);
   const types = ecrans.map((e) => e.type);
   const n = lecon.questions.length;
@@ -92,7 +93,7 @@ function pageServeur(lecon: LeconAffichable, suite: Suite | null = chenal): stri
     if (i === 0) corps += `<div class="lecon__suite"><button class="bouton bouton--principal" type="button">${libelleSuite(types, 0)}</button></div>`;
     return `<section class="ecran ecran--${e.type}${i === 0 ? ' ecran--courant' : ''}"${i === 0 ? ' tabindex="-1"' : ''}>${corps}</section>`;
   });
-  const bloc = { code: lecon.code, cours, ...(suite ? { suite } : {}), questions: lecon.questions };
+  const bloc = { code: lecon.code, cours, ...(suite ? { suite } : {}), questions: lecon.questions, ...autres };
   return `
     <article>
       <div class="lecon lecon--pas-a-pas">
@@ -532,5 +533,56 @@ describe('le son des signaux', () => {
     allerALaVerification();
     await vi.dynamicImportSettled();
     expect(document.querySelector('.signal-ecoute-lieu')).toBeNull();
+  });
+});
+
+describe('le badge gagné en fin de leçon', () => {
+  // La banque du thème, telle que la page la passe : les identifiants seuls.
+  const banque = { theme: 'signaux', banque: ['signaux-0001', 'signaux-0002'] };
+
+  /** Toutes les leçons du thème suivies, sauf celle qu'on va finir. */
+  function presqueTout() {
+    const autres = notionsDuTheme('signaux').filter((n) => n.code !== 'signaux-portuaires');
+    sauvegarder(autres.reduce((e, n) => terminerLecon(e, n.code, { bonnes: 0, total: 0 }, '2026-10-01'), etatInitial()));
+  }
+
+  const region = () => document.querySelector('.ecran--fin .badges-gagnes');
+
+  beforeEach(() => vi.useRealTimers());
+
+  it('« Parcouru » à la dernière leçon du thème, annoncé sous « Leçon faite » et gardé', async () => {
+    presqueTout();
+    document.body.innerHTML = pageServeur(courte, null, banque);
+    monterLecon();
+    cliquer('Terminer la leçon');
+    expect(region()?.getAttribute('role')).toBe('status');
+    await vi.waitFor(() => expect(region()?.textContent).toContain('Palier gagné'), { timeout: 3000 });
+    const n = notionsDuTheme('signaux').length;
+    expect(region()!.textContent).toContain('Parcouru');
+    expect(region()!.textContent).toContain(`Les ${n} leçons des signaux suivies`);
+    expect(charger().badges).toEqual({ signaux: { parcouru: aujourdhui() } });
+    // La leçon sonne déjà : le badge ne rajoute pas un second son.
+    expect(vi.mocked(vibrer).mock.calls).toEqual([['lecon']]);
+  });
+
+  it('ne s’annonce qu’une fois : la leçon refaite ne redit rien', async () => {
+    presqueTout();
+    document.body.innerHTML = pageServeur(courte, null, banque);
+    monterLecon();
+    cliquer('Terminer la leçon');
+    await vi.waitFor(() => expect(region()?.textContent).toContain('Palier gagné'), { timeout: 3000 });
+    cliquer('Revoir la leçon');
+    cliquer('Terminer la leçon');
+    await new Promise((r) => setTimeout(r, 50));
+    expect(region()?.textContent ?? '').toBe('');
+  });
+
+  it('rien sans la banque du thème : la page d’avant ne casse pas', async () => {
+    presqueTout();
+    monter(courte, null);
+    cliquer('Terminer la leçon');
+    await new Promise((r) => setTimeout(r, 50));
+    expect(region()?.textContent ?? '').toBe('');
+    expect(charger().badges).toEqual({});
   });
 });
