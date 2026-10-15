@@ -22,47 +22,11 @@ import {
 import { evenement } from '../../lib/mesure';
 import { douceur } from '../../lib/douceur';
 import { POUR_APP } from '../../lib/cible';
-import { modeConcentration, surRetourAuPremierPlan, vibrer } from '../../lib/natif';
+import { modeConcentration, vibrer } from '../../lib/natif';
 import { rangDeLaTouche } from '../../lib/melange';
 import type { QuestionAffichable } from '../../lib/banque';
 
 type Envoyer = (action: Action) => void;
-
-/**
- * Horloge de l'examen. Une seconde, pas plus précis : le chrono est une
- * contrainte de l'épreuve, pas un instrument de mesure.
- *
- * Un onglet caché voit son intervalle étranglé par le navigateur. Le chrono
- * est une horloge murale, il ne se fige donc pas, mais l'affichage peut
- * retarder : au retour, on recale sans attendre le prochain battement.
- *
- * Une app suspendue fait pire qu'un onglet caché : elle gèle l'intervalle
- * tout net. `appStateChange` est le seul signal qui arrive à coup sûr au
- * retour — `visibilitychange` ne part pas toujours dans une WKWebView
- * rendue au premier plan. Les deux sont branchés, un `tic` de trop ne coûte
- * rien puisqu'il ne fait que relire l'heure.
- */
-export function useHorlogeExamen(session: Session, envoyer: Envoyer): void {
-  useEffect(() => {
-    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const h = window.setInterval(() => envoyer({ type: 'tic', maintenant: Date.now() }), 1000);
-    return () => window.clearInterval(h);
-  }, [session.mode, session.phase, envoyer]);
-
-  useEffect(() => {
-    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const recaler = () => envoyer({ type: 'tic', maintenant: Date.now() });
-    const surRetour = () => {
-      if (!document.hidden) recaler();
-    };
-    document.addEventListener('visibilitychange', surRetour);
-    const debrancher = surRetourAuPremierPlan(recaler);
-    return () => {
-      document.removeEventListener('visibilitychange', surRetour);
-      debrancher();
-    };
-  }, [session.mode, session.phase, envoyer]);
-}
 
 /**
  * Le plein écran de la série, dans l'app : la barre d'onglets se cache dès
@@ -268,7 +232,7 @@ export function useVerdictEnVue(session: Session, verdict: MutableRefObject<HTML
   }, [session.phase]);
 }
 
-/** Ce que le clavier lit à chaque touche, sans réabonner l'écouteur à chaque seconde. */
+/** Ce que le clavier lit à chaque touche, sans réabonner l'écouteur à chaque case. */
 export interface ContexteClavier {
   session: Session;
   ordre: QuestionAffichable['propositions'];
@@ -278,7 +242,7 @@ export interface ContexteClavier {
 
 /**
  * Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
- * le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
+ * il change à chaque case cochée, on ne réabonne pas l'écouteur pour ça.
  */
 export function useClavier(contexte: MutableRefObject<ContexteClavier>, envoyer: Envoyer): void {
   useEffect(() => {
