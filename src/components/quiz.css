@@ -184,6 +184,14 @@
   transition: background var(--transition), border-color var(--transition), color var(--transition);
 }
 
+/* Un mot plus large que la carte (une proposition de 90 signes sans espace)
+   se coupe où il peut : sans ça, il poussait la page à deux fois la largeur
+   de l'écran. */
+.proposition__texte {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .proposition--cochee {
   border-color: var(--texte);
   background: var(--jaune-pale);

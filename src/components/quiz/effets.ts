@@ -128,6 +128,7 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
   useEffect(() => {
     if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
     const r = session.resultat;
+    let frame = 0;
     if (mode === 'examen') {
       // Un examen arrêté en route n'entre pas dans l'historique : trois
       // questions sur quarante s'afficheraient « reçu » sur l'accueil, ce qui
@@ -139,7 +140,10 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
         );
         // Le verdict d'examen se sent, comme celui de chaque question en
         // entraînement. Un examen interrompu n'a pas de verdict à faire sentir.
-        void vibrer(r.reussi ? 'reussi' : 'echoue');
+        // Après un clic, cet effet part avant que le navigateur peigne : la
+        // vibration aurait devancé le verdict écrit. La frame suivante est
+        // celle qui le peint.
+        frame = requestAnimationFrame(() => void vibrer(r.reussi ? 'reussi' : 'echoue'));
       }
       evenement('examen-termine', {
         bonnes: r.bonnes,
@@ -156,6 +160,7 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
       evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
       if (!session.interrompu) void vibrer('fin-serie');
     }
+    return () => cancelAnimationFrame(frame);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
 
