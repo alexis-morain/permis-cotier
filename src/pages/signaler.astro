@@ -19,11 +19,20 @@ const ADRESSE = 'contact@lepermiscotier.fr';
 // repli, comme l'identifiant Umami dans `mesure.ts`. Le secret qui va avec,
 // `TURNSTILE_SECRET_KEY`, ne sort pas du Worker. Une clé vide éteint l'envoi
 // en ligne et rend le formulaire au courrier.
-const CLE_TURNSTILE =
-  import.meta.env.TURNSTILE_SITE_KEY ??
-  process.env.TURNSTILE_SITE_KEY ??
-  '0x4AAAAAAFMTO43R4l4TgTgm';
+//
+// Dans la coquille, la clé est toujours vide. L'app n'a pas de Worker derrière
+// elle : `/api/signaler` y vise `capacitor://localhost`, où le routeur rend
+// l'accueil en 200, et l'écran dirait « C'est parti » sans que rien ne parte.
+// Le Worker refuserait d'ailleurs un jeton relevé ailleurs que sur le domaine.
+// L'app passe donc par le courrier, sans charger Turnstile : rien ne quitte le
+// téléphone qu'un message que le candidat envoie lui-même.
+const CLE_TURNSTILE = POUR_APP
+  ? ''
+  : (import.meta.env.TURNSTILE_SITE_KEY ?? process.env.TURNSTILE_SITE_KEY ?? '0x4AAAAAAFMTO43R4l4TgTgm');
 const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
+// L'adresse du Worker n'est écrite dans la page que si l'envoi en ligne existe :
+// `elaguer-app.mjs` refuse tout `/api/` dans le bundle de l'app.
+const ENVOI = ENVOI_EN_LIGNE ? '/api/signaler' : undefined;
 
 // L'adresse de la question dans le courrier. Sur le site, celle de la page
 // (`location.origin`, qui suit aussi une préversion). Dans la coquille, elle
@@ -55,7 +64,7 @@ const RAISONS = JSON.stringify({
     </p>
 
     <form class="signalement" id="signalement" method="post" enctype="text/plain"
-      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-origine={ORIGINE_APP} data-raisons={RAISONS}>
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-envoi={ENVOI} data-origine={ORIGINE_APP} data-raisons={RAISONS}>
       <p>
         <label for="question">Identifiant de la question</label>
         <input id="question" name="question" class="champ" required readonly />
@@ -237,7 +246,8 @@ const RAISONS = JSON.stringify({
       // Pas de clé publique au build, pas de widget chargé, pas de jeton :
       // l'endpoint refuserait de toute façon. Droit au courrier.
       const jeton = cleTurnstile ? (window.turnstile?.getResponse() ?? '') : '';
-      if (!cleTurnstile || !jeton) {
+      const envoi = formulaire?.dataset.envoi ?? '';
+      if (!cleTurnstile || !jeton || !envoi) {
         replierSurCourrier(question, motif, details, cleTurnstile ? raisons.sansJeton : '');
         return;
       }
@@ -250,7 +260,7 @@ const RAISONS = JSON.stringify({
       const controleur = new AbortController();
       const echeance = setTimeout(() => controleur.abort(), ATTENTE_WORKER);
       try {
-        const reponse = await fetch('/api/signaler', {
+        const reponse = await fetch(envoi, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ question, motif, details, turnstile: jeton }),
