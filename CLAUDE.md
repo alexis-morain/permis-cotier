@@ -205,8 +205,10 @@ sources.
   suit pas Dynamic Type : `font: -apple-system-body`.
 - **Un îlot qui importe `natif`** fait naître sur le site un morceau de fonctions
   vides : les écrans annoncent (`annoncerDateExamen`, `progression.ts`),
-  `Coquille.astro` écoute. Cible iOS 18 : `cap sync` écrit `.iOS(.v18)`, qui
-  exige `swiftToolsVersion: "6.0"` dans `capacitor.config.json`.
+  `Coquille.astro` écoute.
+- **Cible iOS 15.4**, plancher du web embarqué (`.at()`, `findLastIndex`,
+  `<dialog>`, `:has()`, `svh`) : rien au-dessus de Safari 15.4 sans repli. Le
+  greffon `Ecran` garde un chemin d'avant iOS 18 (`basculerAvantIOS18`).
 - Rappels au simulateur : la preuve est
   `data/Library/UserNotifications/<uuid>/PendingNotifications.plist` (`plutil -p`),
   `log show` ne garde rien.
