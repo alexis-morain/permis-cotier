@@ -84,6 +84,11 @@ jobs:
       - name: Vérifier les sons de l'app
         run: python scripts/sons_app.py --verifier
 
+      # La fiche App Store dit le vrai nombre de questions (2.3). Sans secret :
+      # `preparer` refait le même contrôle, mais seulement après fusion.
+      - name: Vérifier le compte de la fiche App Store
+        run: python scripts/app_store.py verifier-fiche
+
       - name: Tests du validateur
         run: python -m pytest tests -q
 
@@ -119,6 +124,13 @@ jobs:
       # lui ou compte sur une redirection.
       - name: Build de la cible app
         run: npm run build:app
+
+      # Ce qu'un doigt trouvera dans l'app : un `:hover` hors de
+      # `@media (hover: hover)` reste collé sur iOS après un appui, et un
+      # contrôle sans `touch-action: manipulation` peut attendre un second
+      # toucher. Les deux se voient dans le CSS du bundle, pas aux tests.
+      - name: CSS tactile de la cible app
+        run: node scripts/verifier-css-mobile.mjs dist-app
 
       # Ce que VoiceOver trouvera dans l'app, lisible sans écran : noms des
       # boutons et des liens, `alt`, étiquettes, ordre de lecture, références

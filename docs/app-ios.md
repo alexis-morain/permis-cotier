@@ -5,6 +5,172 @@ resterait à faire. Il existe pour qu'on puisse reprendre le chantier sans
 relire les commits.
 La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
 
+## Avant chaque version
+
+`app-ios.yml` soumet seul dès qu'une CI est verte sur `main`. Le rituel se fait
+donc **avant la fusion** qui ouvre une version, pas après.
+
+1. **Preflight.** `capacitor-apple-review-preflight`, puis `app-store-review`
+   pour ce qu'il ne couvre pas (required-reason API, label de confidentialité,
+   ATT), en lecture locale. La réponse 4.2 de `docs/app-da.md` (« Ce qu'Apple
+   regarde ») se relit contre le code et se tient à jour.
+2. **Sortie** dans `docs/preflight-<version>.md` : bloquants d'un côté, ménage
+   de l'autre, chaque point avec son fichier et sa ligne. Un bloquant ferme la
+   version ; le ménage va au journal.
+3. **Le compte de la fiche.** `python scripts/app_store.py verifier-fiche`
+   (en CI, et refait par `preparer`) compte les questions publiées de
+   `data/questions/` et relit `ios/nouveautes.txt`, `ios/a-tester.txt` et
+   `docs/fiche-app-store/*.txt`. Règle : un nombre de cent ou plus suivi de
+   « questions » est **exact**, ou **arrondi par en dessous** à la centaine
+   près, « plus de N » avec N ≤ compte < N + 100 (658 : « plus de 600 »). Un
+   bump de banque qui franchit la centaine rend la CI rouge jusqu'à ce que la
+   fiche suive. Sous cent, le nombre parle d'un examen ou d'une série.
+
+`docs/fiche-app-store/` est la copie de ce qu'App Store Connect affiche
+(description, sous-titre, mots-clés, notes au relecteur) : ces champs se posent
+à la main, le script ne pousse que les nouveautés et « À tester ». Sous `docs/`,
+une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
+de la copie se reporte en ligne, et inversement.
+
+## 14 octobre 2026 — la boucle de retour (lot 3b)
+
+### Ce qui a changé
+
+- **Les badges sont branchés** (section « Les badges » plus bas). Gagnés au
+  geste, gardés, annoncés une fois à l'écran qui les a fait gagner : fin de
+  leçon, fin de série d'entraînement ou de `/revoir`, résultat d'examen. La
+  Fiche les montre sous la jauge de chaque thème, avec le palier suivant dit
+  comme un fait. Captures dans `docs/captures-app-3/`.
+- **L'examen blanc garde son détail par thème** (`examenPasse(resultat,
+  date)`), ce que `sur` relit. Les examens d'avant n'en ont pas et ne
+  comptent pas pour ce palier.
+- **Le premier examen part en deux touches depuis l'Accueil**, et plus rien
+  entre « Commencer l'examen » et la première question : l'encart « commence
+  plutôt par la première leçon » ne sort plus dans l'app (`examen.astro`
+  ne lui passe plus `premiereLecon`). Mesuré en Chromium 390 px, état vierge :
+  avant, l'écran de départ portait trois blocs, 103 mots et un lien qui
+  déconseille l'examen ; après, deux blocs, 74 mots, aucun lien. Le bouton est
+  dans l'écran sans défiler dans les deux cas.
+- **« À revoir aujourd'hui » dit le nombre que `/revoir` joue** : borné au
+  rythme de la série. Avant, 25 dues pour une série de 10 s'affichaient 25.
+- **La série de jours se dit dès deux jours**, au texte neutre : la Fiche ne
+  dit plus « Une question avant ce soir, et la série tient. »
+- **Les boutons de l'Accueil disent un verbe et ce qu'ils ouvrent**, avec les
+  mots de la Fiche : « Continuer le cours », « Faire ma série du jour »,
+  « Faire un examen blanc ». Audit des cinq onglets :
+  `docs/audit-ux-app-2026-10-14.md`.
+- **`/examen` allégé de 11,9 Ko brotli** : le résultat lisait `rappel` et
+  `pointFinal` dans `profil.ts`, qui tirait la fiche entière et la table des
+  notions. Ils vivent dans `lib/raison.ts`. La référence du budget descend à
+  86 194 octets (`docs/budgets.md`).
+
+### Ce qui reste
+
+- Au vrai iPhone : le son `lecon` de l'annonce, qui part 1,2 s après la
+  cloche d'un examen reçu et 0,6 s après l'arpège de fin de série. Le délai
+  se règle à l'oreille.
+- L'écart des P2 de l'audit : un lien vers la racine d'un autre onglet
+  s'ouvre dans l'onglet courant (Swift, `RouteurDuSite`), le jalon « Sept
+  jours de suite », « Ton examen » sur l'Accueil.
+- L'objectif Umami « premier examen », que le plan demande pour mesurer dans
+  un mois, se pose dans la console d'Umami, pas dans le dépôt : non fait.
+
+## 14 octobre 2026 — le geste de l'examen (lot 2)
+
+### Ce qui a changé
+
+- **Le chrono ne refait plus l'écran.** `quiz/Chrono.tsx` (`useChrono`)
+  tient l'horloge dans l'en-tête : son intervalle, la relecture au retour
+  (`visibilitychange` et `appStateChange`), les secondes lues sur
+  `echeance`. La session n'a plus de `restant` ; le réducteur ne reçoit plus
+  `tic` chaque seconde, mais `echu` une fois, quand l'échéance est passée
+  (un `echu` en avance rend la même session, donc aucun rendu). Mesuré en
+  test (`quiz/Chrono.test.tsx`) : 19 rendus de `Partie` sur 19 secondes
+  avant, 0 après, et 1 au buzzer.
+- **Répondre.** `.proposition:active` passe à `scale(0.97)` en 100 ms sur
+  `--courbe` (une ease-out sans dépassement), dans la section du mouvement
+  d'`app-jeu.css`. `:active` part au toucher grâce à l'écouteur `touchstart`
+  de `Coquille.astro`. L'haptique `choix` reste en renfort.
+- **Passer à la suite.** Plus d'entrée de question dans l'app : énoncé,
+  visuel et propositions changent d'un coup, quarante fois par examen.
+  La jauge d'avancement garde son `transform 1s linear`. Le site garde
+  son entrée de 180 ms.
+- **Le panneau de verdict** était déjà aux jetons : 220 ms, `transform` et
+  `opacity`, `--courbe`, aucun rebond. « Continuer » marche pendant la
+  montée ; un test le garde.
+- **Le résultat.** Le score entre avec `app-entree` (et non plus son
+  propre `app-score`). La vibration `reussi` / `echoue` part dans un
+  `requestAnimationFrame` : l'effet tournait avant la peinture, la
+  vibration devançait le verdict écrit.
+- **Pire cas.** Une proposition de 90 signes sans espace poussait la page à
+  791 px pour 390 : `.proposition__texte` se coupe (`overflow-wrap:
+  anywhere`). Énoncé de 400 signes, visuel absent, « 0 erreur »,
+  « 1 erreur », « 40 / 40 » tenaient déjà, et sont testés. Captures dans
+  `docs/captures-app-2/`.
+
+### Ce qui reste
+
+- Au vrai iPhone : l'enfoncement à l'appui, la vibration du verdict sur la
+  même frame, et l'absence de clignotement pendant le chrono. Le simulateur
+  ne sait ni toucher ni vibrer.
+- Fusionné avec le lot 1 : la règle `.proposition:active` de la section des
+  propositions ne garde que l'effacement du bord ; l'enfoncement et sa durée
+  vivent dans la section du mouvement.
+
+## 14 octobre 2026 — l'app au doigt (lot 1 du plan « app solide »)
+
+### Ce qui a changé
+
+- **Le survol ne vaut qu'au pointeur fin.** Les 36 règles `:hover` du site
+  passent sous `@media (hover: hover) and (pointer: fine)`, en place pour
+  garder l'ordre de la cascade (`:active` après `:hover`). Au doigt, iOS posait
+  le survol au premier appui et le laissait collé : un bouton touché restait
+  plus clair, un choix du questionnaire prenait le bord foncé d'une case
+  cochée. La neutralisation d'`app-jeu.css`, qui ramenait
+  `.proposition:hover` au repos sous `html[data-app]`, est retirée : la garde
+  suffit. Mesuré en Chromium headless sous `hover: none`, survol forcé par
+  CDP : avant, `.bouton`, `.segmente__option` et `.choix__option` changeaient ;
+  après, plus rien.
+- **Chaque contrôle répond au premier appui** : `touch-action: manipulation`
+  sur `a`, `button`, `[role=button]`, et dans la règle de `.bouton`,
+  `.proposition`, `.jeu__actions`, `.segmente__option`, `.choix__option`,
+  `.etape`, `.retour__lien`, `.chapitres__cellule`, `.cellules__ligne`.
+  Jamais `none` : une liste touchée en son milieu doit défiler.
+- **Les contrôles ne se sélectionnent plus** : `user-select: none` et
+  `-webkit-touch-callout: none`, déjà posés sur les propositions, s'étendent
+  aux boutons, aux cellules de liste, aux choix du questionnaire et au faux
+  champ de recherche. Jamais sur `body` : le texte des leçons se copie.
+- **Un champ ne fait plus zoomer.** `rem` suit Dynamic Type dans l'app
+  (`-apple-system-body`) : au plus petit réglage (14 px), la recherche tombait
+  à 14,7 px et les champs de la Fiche et du questionnaire à 14 px, sous le
+  seuil de 16 px où WebKit zoome au focus. `app.css` pose un plancher,
+  `max(16px, 1em)` sur `.champ`, `max(16px, 1.05rem)` sur la recherche :
+  16 px au plus petit, 17 et 17,85 px au réglage par défaut, comme avant.
+- **`scripts/verifier-css-mobile.mjs`**, en CI et dans `check.sh` après
+  `build:app` : refuse un `:hover` hors garde et un contrôle connu sans
+  `touch-action: manipulation` dans le CSS de `dist-app/` (feuilles et
+  `<style>` des pages). Sur `main` d'avant, il relevait 47 défauts.
+
+Le site change par les mêmes règles, et par elles seules (diff des règles
+CSS de `dist/` contre `main`) : +0,1 Ko brotli de CSS sur les pages témoins.
+
+### Ce qui a été vérifié sans changer
+
+- **Clavier.** La coquille n'a pas `@capacitor/keyboard` : WebKit garde le
+  champ focalisé visible, sans redimensionner la webview. La recherche des
+  onglets Cours et Entraînement s'ouvre en fenêtre plein écran, le champ en
+  haut : il reste au-dessus du clavier. Reste à voir sur iPhone si les derniers
+  résultats restent cachés sous le clavier ; si oui, c'est le greffon
+  Keyboard (`resize: native`) qu'il faudra, avec un `cap sync` au Mac.
+- **`100vh`** : aucun. `app-jeu.css` est en `100svh` ; les autres `vh` sont
+  des fractions, et dans une webview sans barre d'adresse `vh` vaut `svh`.
+
+### Ce qui reste
+
+- L'essai sur iPhone : survol collé, double toucher, zoom des champs, clavier.
+  Ni Chromium ni le simulateur ne savent le toucher (captures
+  `docs/captures-app-1/`, en Chromium à 390 px, et leurs mesures).
+
 ## 12 octobre 2026 — la CI garde l'app, et le code se lit en morceaux (lots 5 et 4)
 
 ### Ce qui a changé
@@ -70,7 +236,7 @@ Les règles de chaque écran sont dans `docs/app-da.md`.
 | Les appels natifs | `src/lib/natif.ts`, chacun derrière un `import()` ; les greffons maison par `avecGreffon()` de `src/lib/greffons.ts` |
 | Le stockage | `src/lib/stockage.ts` : `lire()`, `ecrire()`, préfixe `permis-cotier:` |
 | La banque hors revue | `src/lib/banque-locale.ts` (IndexedDB), `src/lib/banque-distante.ts` (l'adresse par version) |
-| L'écran de jeu | `src/components/Quiz.tsx` (la session) et `src/components/quiz/` (les écrans, les effets) |
+| L'écran de jeu | `src/components/Quiz.tsx` (la session) et `src/components/quiz/` (les écrans, les effets, le chrono dans `Chrono.tsx`) |
 | Les budgets | `docs/budgets.md`, `scripts/verifier-budgets.mjs` |
 
 Une branche d'app dans un composant se fait à la frontière : un composant
@@ -107,9 +273,10 @@ leçon, une série) n'est jamais rechargée : on y perdrait sa place.
 ### Les badges
 
 Trois paliers par thème (`parcouru`, `retenu`, `sur`), décidés le 14 octobre
-(plan « app solide », lot 3). La logique est livrée seule (lot 3a), sans
-écran : tout est dans `src/lib/badges.ts`, pur et testé
-(`badges.test.ts`).
+(plan « app solide », lot 3). La règle, côté écran : `docs/app-da.md`, « Les
+badges ». La logique (lot 3a) est dans `src/lib/badges.ts`, pure et testée
+(`badges.test.ts`) ; les écrans (lot 3b) l'appellent par
+`src/lib/badges-geste.ts`.
 
 - **État** : `Etat.badges` (`progression.ts`), le jour du gain par thème et
   par palier. Champ facultatif, sans changer `VERSION_STOCKAGE` ; `charger`
@@ -129,22 +296,29 @@ Trois paliers par thème (`parcouru`, `retenu`, `sur`), décidés le 14 octobre
   11 leçons des feux et marques suivies, le 12 octobre. ») ; passer un
   `BadgeNouveau` en contexte donne les nombres du jour du gain, l'état seul
   (la date) une phrase qui reste vraie. `prochainPalier` dit le fait qui mène
-  au palier suivant, pour la page du thème.
+  au palier suivant. `annoncesDesBadges` met les nouveaux en phrases pour
+  l'annonce.
 
-**Ce que le lot 3b branche**, trois appels, chacun suivi de `sauvegarder`
-et de l'annonce des `nouveaux` à l'écran qui les a fait gagner :
+**Le geste** : `gagnerAuGeste(banque)` charge `badges.ts` par `import()` (il
+tire la table des notions, que ni le jeu ni la leçon ne chargent), relit
+l'état, attribue, sauvegarde s'il y a du neuf et rend les annonces. Trois
+appelants :
 
-1. **Fin de leçon** (`finir()` de `src/components/lecon-site.ts`) :
-   `attribuerBadges(terminerLecon(...), banque, jour)`.
-2. **Réponse et fin de série** (`src/components/quiz/effets.ts`) : après
-   `enregistrerReponse`, pour `retenu` ; l'annonce attend la fin de série.
-3. **Examen enregistré** (`useFinEtMesureDeLaSerie`, même fichier) :
-   `enregistrerExamen(charger(), examenPasse(r, aujourdhui()))` à la place
-   de l'objet écrit à la main, puis `attribuerBadges`.
+1. **Fin de leçon** (`finir()` de `src/components/lecon-site.ts`). La page
+   passe `theme` et `banque`, les identifiants publiés du seul thème de la
+   leçon (+0,1 Ko brotli de HTML par leçon). L'annonce remplit la région
+   `status` de la fin ; pas de son de plus, la leçon finie sonne déjà.
+2. **Chaque réponse écrite** (`useEcritureDeLaSerie`, `quiz/effets.ts`), pour
+   `retenu`, en entraînement, `/revoir` et examen.
+3. **Examen enregistré** (`useFinEtMesureDeLaSerie`) :
+   `enregistrerExamen(charger(), examenPasse(r, aujourdhui()))`, puis le geste.
 
-`banque` est la liste `{ id, theme }` des questions publiées
-(`QuestionConnue` de `profil.ts`) ; l'écran de leçon ne l'a pas encore. Un
-candidat qui remplit déjà un palier le gagne à son premier geste après la
+`Partie` (`Quiz.tsx`) range les annonces et les passe au résultat
+(`quiz/AnnonceBadges.tsx`), qui les montre une fois, joue `vibrer('lecon')`
+dans l'app après le son du verdict, et renvoie à la Fiche au-delà de trois.
+`banque` est la banque entière, pas la part de la série : un geste compte pour
+tous les thèmes. La Fiche lit sans attribuer (`profil/PaliersDuTheme.tsx`).
+Un candidat qui remplit déjà un palier le gagne à son premier geste après la
 mise à jour, daté de ce jour.
 
 ## 10 octobre 2026 — les rappels s'arment, lot 0 du plan « app solide »

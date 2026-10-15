@@ -28,9 +28,11 @@
   transition: background var(--transition), color var(--transition), transform var(--transition),
     box-shadow var(--transition);
 }
-.ouvrir-recherche:hover {
-  background: var(--fond-2);
-  color: var(--texte);
+@media (hover: hover) and (pointer: fine) {
+  .ouvrir-recherche:hover {
+    background: var(--fond-2);
+    color: var(--texte);
+  }
 }
 .ouvrir-recherche:active {
   transform: translateY(var(--bord));
@@ -164,8 +166,10 @@ kbd.touche {
   background: var(--fond-carte);
   transition: border-color var(--transition);
 }
-[data-recherche-mode='page'] .recherche__barre:hover {
-  border-color: var(--filet-fort);
+@media (hover: hover) and (pointer: fine) {
+  [data-recherche-mode='page'] .recherche__barre:hover {
+    border-color: var(--filet-fort);
+  }
 }
 [data-recherche-mode='page'] .recherche__barre:focus-within {
   border-color: var(--anneau);
@@ -190,9 +194,11 @@ kbd.touche {
   font-weight: 700;
   cursor: pointer;
 }
-.recherche__fermer:hover {
-  background: var(--fond-2);
-  color: var(--texte);
+@media (hover: hover) and (pointer: fine) {
+  .recherche__fermer:hover {
+    background: var(--fond-2);
+    color: var(--texte);
+  }
 }
 .recherche__fermer-croix {
   display: none;
@@ -372,7 +378,9 @@ kbd.touche {
   text-underline-offset: 0.16em;
   cursor: pointer;
 }
-.recherche__exemple:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) {
+  .recherche__exemple:hover { text-decoration-color: currentColor; }
+}
 .recherche__legende {
   margin: 0 0 0.4rem;
   font-size: 0.8rem;
@@ -398,9 +406,11 @@ kbd.touche {
   font-weight: 700;
   text-decoration: none;
 }
-.recherche__depart a:hover {
-  background: var(--fond-2);
-  border-color: var(--filet-fort);
+@media (hover: hover) and (pointer: fine) {
+  .recherche__depart a:hover {
+    background: var(--fond-2);
+    border-color: var(--filet-fort);
+  }
 }
 
 .recherche__aide {

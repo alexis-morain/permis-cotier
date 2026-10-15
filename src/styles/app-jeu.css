@@ -89,10 +89,10 @@ html[data-app] .jeu__entete .jeu__barre {
 
 /* ------------------------------------------------ Propositions
 
-   56 pt au moins, la lettre dans un disque. Le survol n'existe pas au doigt :
-   iOS le laisse collé sur la dernière carte touchée, qui prendrait l'air
-   d'une case cochée. On le neutralise, et l'appui (bord plein qui s'efface)
-   passe après pour garder la main. */
+   56 pt au moins, la lettre dans un disque. Pas de survol : celui de
+   `quiz.css` ne vaut qu'au pointeur fin, puisqu'iOS le laisserait collé sur
+   la dernière carte touchée, qui prendrait l'air d'une case cochée. L'appui,
+   lui, est un bord plein qui s'efface. */
 html[data-app] .proposition {
   min-height: 3.5rem;
   align-items: center;
@@ -104,52 +104,39 @@ html[data-app] .proposition__lettre {
   margin-top: 0;
 }
 
-html[data-app] .proposition:hover:not(:disabled) {
-  border-color: var(--filet-fort);
-  box-shadow: 0 var(--bord) 0 var(--filet-fort);
-}
-html[data-app] .proposition--cochee:hover:not(:disabled) {
-  border-color: var(--texte);
-  box-shadow: 0 var(--bord) 0 var(--texte);
-}
+/* Le bord plein s'efface à l'appui ; l'enfoncement et sa durée sont plus bas,
+   avec le mouvement du jeu. */
 html[data-app] .proposition:active:not(:disabled) {
-  transform: translateY(var(--bord));
   box-shadow: 0 0 0 transparent;
-  transition-duration: 80ms;
 }
 
 /* ------------------------------------------------ Le mouvement du jeu
 
-   Question à question : l'énoncé, le visuel, puis chaque proposition, en
-   fondu et montée de huit points, quarante millisecondes l'une après
-   l'autre. Le `key` de Quiz.tsx remonte ces éléments à chaque question, au
-   clic comme au buzzer, ce qui rejoue l'entrée. La liste elle-même ne bouge
-   plus : ce sont ses lignes qui arrivent. */
+   Question à question, rien n'entre : quarante fois par examen, une entrée
+   ralentit la lecture plus qu'elle ne l'aide. La question change d'un coup,
+   le compteur et le chrono remis à vingt disent qu'elle a changé, et la
+   jauge d'avancement glisse. Le `key` de Quiz.tsx remonte encore ces
+   éléments (focus sur l'énoncé, son coupé), il ne rejoue plus rien. Les
+   règles du site, elles, gardent leur entrée. */
 html[data-app] .jeu > .jeu__enonce,
 html[data-app] .jeu > .jeu__visuel,
-html[data-app] .jeu > .propositions > li {
-  animation: app-entree 200ms var(--courbe) backwards;
+html[data-app] .jeu > .propositions {
+  animation: none;
 }
-/* Le bord plein de la proposition déborde de 3 pt sous sa ligne. Pendant
-   l'entrée, la ligne a son propre calque : au simulateur, ce débord restait
-   parfois peint après le changement de question. On le loge dans la ligne,
-   l'écart entre deux propositions reste le même. */
-html[data-app] .jeu > .propositions { gap: calc(0.7rem - var(--bord)); }
-html[data-app] .jeu > .propositions > li { padding-bottom: var(--bord); }
-html[data-app] .jeu > .jeu__visuel { animation-delay: 40ms; }
-html[data-app] .jeu > .propositions { animation: none; }
-html[data-app] .jeu > .propositions > li:nth-child(1) { animation-delay: 60ms; }
-html[data-app] .jeu > .propositions > li:nth-child(2) { animation-delay: 100ms; }
-html[data-app] .jeu > .propositions > li:nth-child(3) { animation-delay: 140ms; }
-html[data-app] .jeu > .propositions > li:nth-child(4) { animation-delay: 180ms; }
-html[data-app] .jeu > .propositions > li:nth-child(n + 5) { animation-delay: 220ms; }
 
-/* La proposition s'enfonce en 80 ms et remonte en 160. Cochée, la lettre
-   se remplit et son disque se pose d'un léger resserrement. */
+/* La proposition s'enfonce à l'appui, en 100 ms, et remonte en 160. `:active`
+   part au toucher grâce à l'écouteur `touchstart` de Coquille.astro.
+   L'haptique `choix` vient en renfort, jamais seule. Cochée, la lettre se
+   remplit et son disque se pose d'un léger resserrement. */
 html[data-app] .proposition {
   transition: border-color var(--duree-courte) var(--courbe), background-color var(--duree-courte) var(--courbe),
     box-shadow var(--duree-courte) var(--courbe), transform var(--duree-courte) var(--courbe),
     opacity var(--duree-courte) var(--courbe);
+}
+html[data-app] .proposition:active:not(:disabled) {
+  transform: scale(0.97);
+  transition-duration: 100ms;
+  transition-timing-function: var(--courbe);
 }
 
 @keyframes app-lettre-cochee {
@@ -241,12 +228,7 @@ html[data-app] .jeu__pied .arret {
    geste suivant en boutons pleine largeur, le partage discret dessous. */
 html[data-app] .resultat__score {
   font-size: clamp(5rem, 30vw, 8rem);
-  transform-origin: left bottom;
-  animation: app-score var(--duree) var(--courbe) both;
-}
-@keyframes app-score {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: none; }
+  animation: app-entree var(--duree) var(--courbe) both;
 }
 
 /* Les jauges par thème : un élément à part dans l'app, pour se remplir en
@@ -285,9 +267,6 @@ html[data-app] .resultat__partage .bouton { min-height: 2.75rem; }
 
 /* ------------------------------------------------ Sans mouvement */
 @media (prefers-reduced-motion: reduce) {
-  html[data-app] .jeu > .jeu__enonce,
-  html[data-app] .jeu > .jeu__visuel,
-  html[data-app] .jeu > .propositions > li,
   html[data-app] .jeu > .propositions .proposition--cochee .proposition__lettre,
   html[data-app] .jeu__pied .verdict,
   html[data-app] .jeu__pied .verdict__titre,

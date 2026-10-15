@@ -116,14 +116,21 @@ Le tableau de bord, quatre blocs de haut en bas, aucun texte de présentation :
 
 1. **Reprendre** — grand bloc marine, le titre de la prochaine leçon, le
    chapitre, une jauge de progression du cours (leçons faites / 105), un bouton
-   jaune « Continuer ». Si rien n'est commencé : « Commencer : Marques
-   latérales », première leçon. Réutilise la logique de `ReprendreCours.tsx`.
-2. **À revoir aujourd'hui** — le nombre de questions dues au rappel espacé, et
-   « Revoir » vers `/revoir`. Zéro question due : le bloc dit « Rien à revoir
-   aujourd'hui » sans bouton. Réutilise `Reprise.tsx` / `progression.ts`.
+   jaune « Continuer le cours ». Si rien n'est commencé : la première leçon,
+   et « Commencer le cours ». Réutilise la logique de `ReprendreCours.tsx`.
+2. **À revoir aujourd'hui** — le nombre de questions dues que `/revoir` jouera
+   (borné au rythme de la série, comme `serieDuJour`), et « Faire ma série du
+   jour » vers `/revoir`. Zéro question due : le bloc dit « Rien à revoir
+   aujourd'hui » sans bouton.
 3. **Examen blanc** — le dernier score (x/40, réussi ou non, il y a n jours) et
-   un bouton « Nouvel examen blanc ». Jamais passé : le bouton seul.
-4. **Ton examen** — le compte à rebours vers la date posée (« dans 12 jours »),
+   un bouton « Faire un examen blanc ». Jamais passé : le bouton seul. De là,
+   deux touches jusqu'à la première question, et rien entre les deux : l'écran
+   de départ de l'app n'a pas l'encart « commence plutôt par la leçon » du
+   site.
+
+Chaque bouton dit un verbe et ce qu'il ouvre, avec les mots de la Fiche pour
+les mêmes destinations (audit du 14 octobre, `docs/audit-ux-app-2026-10-14.md`).
+4. **Ton épreuve** — le compte à rebours vers la date posée (« dans 12 jours »),
    ou « Pose la date de ton examen » vers `/profil`. Réutilise `DateExamen`.
 
 Deux gros chiffres au plus sur l'écran (leçons faites, jours restants), pas de
@@ -198,22 +205,57 @@ blanc ne faisait que 1,39:1.
 
 | Ligne directrice | Ce qui la satisfait |
 |---|---|
-| 4.2 Fonctionnalités minimales | Barre d'onglets native, plein écran d'examen natif, rappels locaux, haptique, feuille de partage, Safari intégré, hors ligne complet |
+| 4.2 Fonctionnalités minimales | Barre d'onglets native, plein écran d'examen natif, rappels locaux armés depuis la Fiche, haptique, sons en session `.ambient`, feuille de partage, Safari intégré, hors ligne complet. Relu au preflight de chaque version (`docs/preflight-<version>.md`) |
 | 4.0 Design (HIG) | Zones sûres, 44 pt, Dynamic Type suivi par `font: -apple-system-body` sur `html[data-app]` (les `rem` suivent ; `rem` seul ne suit pas dans WKWebView), sombre suivant le système, portrait |
 | 5.1.1 Confidentialité | Aucune donnée collectée, `PrivacyInfo.xcprivacy`, URL de politique `/a-propos`, aucun compte |
 | 5.1.2 Suivi | Aucun traceur dans le bundle, `verifier-cible.mjs` le refuse |
 | 2.1 Complétude | Aucun lien mort (`elaguer-app.mjs`), aucun « bêta », pas de placeholder |
-| 2.3 Métadonnées | La fiche dit le vrai nombre de questions ; captures prises dans l'app réelle |
+| 2.3 Métadonnées | La fiche dit le vrai nombre de questions (`app_store.py verifier-fiche`, en CI) ; captures prises dans l'app réelle |
 | 2.5.1 API | Que des API publiques, pas de code chargé à distance : la banque téléchargée est du **JSON de contenu**, pas du code |
 | 1.5 Assistance | URL d'assistance qui répond, formulaire de signalement dans l'app |
+
+## Les badges
+
+Décidés le 10 octobre (décision 1 du plan `app-solide`, contre la première
+version de ce fichier, qui disait « pas de badges »), tranchés le 14. La règle :
+
+- **Trois paliers par thème**, et rien d'autre : **Parcouru** (toutes les
+  leçons du thème suivies), **Retenu** (quatre questions publiées du thème sur
+  cinq retenues, au supérieur), **Sûr à l'examen** (le thème sans faute sur
+  trois examens blancs complets de suite).
+- **Un fait daté, jamais une promesse.** La récompense dit « maintenant que »
+  (« Les 9 leçons des feux et marques suivies, le 12 octobre. »), jamais « si…
+  alors ». Le palier suivant se lit comme un fait sur la Fiche (« 61 retenues
+  sur 108 ; à 87, le palier Retenu. »), jamais en compte à rebours.
+- **Conservés.** Une faute plus tard, une question retirée de la banque ne les
+  reprennent pas ; seul « Effacer ma progression » les retire.
+- **Rien pour la présence** : ni série, ni jours, ni ouvertures de l'app.
+  Aucun badge transversal, aucun total de badges, aucun score qui monte seul.
+- **Annoncés une fois, à l'écran qui les a fait gagner** (fin de leçon, fin de
+  série, résultat d'examen) : un bloc sous le résultat, « Palier gagné » sur le
+  jaune, puis le palier, le thème et le fait. Le texte d'abord ; dans l'app,
+  le son `lecon` en renfort, après celui du verdict. Rien de modal : la suite
+  reste à un doigt. Plusieurs d'un coup : trois lignes au plus, puis « Les
+  autres sont sur ta fiche. », sans cascade d'animations. Une entrée de 200 ms
+  en `opacity` et `transform`, coupée sous `prefers-reduced-motion`.
+- **Gardés sur la Fiche**, sous la jauge de chaque thème ouvert : les paliers
+  gagnés avec leur fait daté, puis le prochain.
+
+Le pourquoi, les seuils et les phrases : `plans/2026-10-10-app-solide.md` du
+dossier de gestion, lot 3 (« Les badges, tranchés le 14 octobre ») ; le code :
+`src/lib/badges.ts` et `docs/app-ios.md`, section « Les badges ».
 
 ## Ce qu'on ne fait pas
 
 - Pas de compte, pas de synchronisation, pas d'achat intégré. La fiche dit
   « gratuit », et la 3.1 ne s'applique pas.
-- Pas de gamification qui ment : pas de streak inventé, pas de badges. Un
-  compte de jours de suite existe déjà (`jour.ts`) ; on le montre s'il est
-  supérieur à un, on n'insiste pas.
+- Pas de gamification qui ment : pas d'XP, pas de ligue, pas de classement,
+  pas de score global qui monte seul. Les badges sont des faits par thème,
+  bornés par la section ci-dessus ; rien d'autre ne se gagne.
+- La série de jours (`serieDeJours`) se montre dès deux jours, au texte neutre
+  (« 3 jours de suite »), sans rien qui pousse à la tenir, et aucune
+  notification ne la sert. Les seuls envois restent les rappels J-7, J-3, J-1
+  et le jour J de l'examen (décision 2 du plan).
 
 ## Le son
 

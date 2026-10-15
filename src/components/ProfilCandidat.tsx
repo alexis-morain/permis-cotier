@@ -23,6 +23,7 @@ import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
 import Reglages from './profil/Reglages';
+import PaliersDuTheme from './profil/PaliersDuTheme';
 import { accorde } from './profil/accorde';
 import './profil.css';
 
@@ -308,10 +309,15 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                 </p>
               </div>
               <div className="jour__serie">
-                <p className="jour__chiffre">
-                  <span className="display">{serie.jours}</span>
-                  <span className="discret"> jour{serie.jours > 1 ? 's' : ''} de suite</span>
-                </p>
+                {/* Un jour n'est pas une série : elle se dit dès deux, au
+                    texte neutre, sans pousser à la tenir (décision 2 du
+                    plan « app solide »). Les quatorze cases restent. */}
+                {serie.jours > 1 && (
+                  <p className="jour__chiffre">
+                    <span className="display">{serie.jours}</span>
+                    <span className="discret"> jours de suite</span>
+                  </p>
+                )}
                 <ol className="jours" aria-label="Les quatorze derniers jours">
                   {cases.map((c, i) => {
                     const actif = c.reponses > 0;
@@ -328,13 +334,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                     );
                   })}
                 </ol>
-                <p className="discret jour__note">
-                  {serie.jours === 0
-                    ? 'Une question aujourd’hui, et la série démarre.'
-                    : serie.aujourdhui
-                      ? 'La série tient.'
-                      : 'Une question avant ce soir, et la série tient.'}
-                </p>
               </div>
             </div>
 
@@ -472,6 +471,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                       <span className="maitrise__retenues" />
                     </span>
                   </a>
+                  <PaliersDuTheme etat={etat} banque={banque} theme={t.code} vues={t.vues} />
                 </li>
               ))}
             </ul>

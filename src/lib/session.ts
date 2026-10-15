@@ -56,9 +56,11 @@ export interface Session {
   graine: number;
   index: number;
   selections: string[][];
-  /** Secondes restantes sur la question courante, `null` hors examen. */
-  restant: number | null;
-  /** Instant limite de la question courante, en millisecondes. */
+  /**
+   * Instant limite de la question courante, en millisecondes, `null` hors
+   * examen. Les secondes qui restent ne sont pas dans la session : le chrono
+   * les lit sur l'heure (`secondesRestantes`), sans refaire l'écran.
+   */
   echeance: number | null;
   /** Vrai en entraînement une fois la réponse validée. */
   corrigee: boolean;
@@ -86,7 +88,8 @@ export type Action =
   | { type: 'basculer'; proposition: string }
   | { type: 'valider'; maintenant?: number }
   | { type: 'suivante'; maintenant?: number }
-  | { type: 'tic'; maintenant?: number }
+  /** Le chrono annonce l'échéance passée ; sans effet si elle ne l'est pas. */
+  | { type: 'echu'; maintenant?: number }
   | { type: 'terminer' };
 
 export function creerSession(
@@ -104,7 +107,6 @@ export function creerSession(
     selections: questions.map(() => []),
     // Le chrono ne s'arme qu'au « commencer » : aucune seconde ne se perd
     // pendant qu'on lit le format de l'épreuve.
-    restant: null,
     echeance: null,
     corrigee: false,
     juste: null,
@@ -123,7 +125,7 @@ export function questionCourante(s: Session): QuestionJouable | undefined {
 }
 
 /** Secondes restantes jusqu'à `echeance`, jamais négatives. */
-function secondesRestantes(echeance: number, maintenant: number): number {
+export function secondesRestantes(echeance: number, maintenant: number): number {
   return Math.max(0, Math.ceil((echeance - maintenant) / 1000));
 }
 
@@ -132,10 +134,9 @@ function secondesRestantes(echeance: number, maintenant: number): number {
  * l'instant où elle apparaît, qui sert à mesurer le temps de réponse.
  */
 function armer(s: Session, maintenant: number): Session {
-  if (s.mode !== 'examen') return { ...s, restant: null, echeance: null, montreeLe: maintenant };
+  if (s.mode !== 'examen') return { ...s, echeance: null, montreeLe: maintenant };
   return {
     ...s,
-    restant: SECONDES_PAR_QUESTION,
     echeance: maintenant + MS_PAR_QUESTION,
     montreeLe: maintenant,
   };
@@ -151,7 +152,6 @@ function terminer(s: Session, jouees: number = s.questions.length): Session {
   return {
     ...s,
     phase: 'resultat',
-    restant: null,
     echeance: null,
     corrigee: false,
     interrompu: n < s.questions.length,
@@ -243,11 +243,13 @@ export function reduire(s: Session, action: Action): Session {
       return avancer(s, action.maintenant ?? Date.now());
     }
 
-    case 'tic': {
+    case 'echu': {
       if (s.mode !== 'examen' || s.echeance === null || !question) return s;
       const maintenant = action.maintenant ?? Date.now();
-      const restant = secondesRestantes(s.echeance, maintenant);
-      if (restant > 0) return restant === s.restant ? s : { ...s, restant };
+      // Un `echu` en avance ne change rien, et rend la même session : React
+      // ne refait pas l'écran. Le retour au premier plan l'envoie sans
+      // savoir si l'échéance est passée.
+      if (maintenant < s.echeance) return s;
       // Le temps de la question est passé, même si l'onglet dormait. On n'en
       // consomme qu'une par retour : une absence de dix minutes ne brûle pas
       // trente questions d'un coup. Ce qui est coché est retenu tel quel : à
@@ -255,7 +257,7 @@ export function reduire(s: Session, action: Action): Session {
       // cochées à la fin des vingt secondes (README, « Le format de l'épreuve »).
       const juste = corriger(question, s.selections[s.index] ?? []);
       // Au buzzer, la question a coûté ses vingt secondes pleines, quel que
-      // soit le retard du tic : c'est ce que l'épreuve lui accordait.
+      // soit le retard de l'annonce : c'est ce que l'épreuve lui accordait.
       return avancer(
         { ...s, journal: inscrire(s.journal, question.id, juste, s.montreeLe, (s.echeance ?? maintenant)) },
         maintenant,
@@ -356,7 +358,6 @@ export function restaurerSession(
     graine: typeof sauvegarde.graine === 'number' ? sauvegarde.graine : graineDeSession(),
     index,
     selections: questions.map((_, i) => [...(sauvegarde.selections[i] ?? [])]),
-    restant: echeance === null ? null : secondesRestantes(echeance, maintenant),
     echeance,
     corrigee: false,
     juste: null,

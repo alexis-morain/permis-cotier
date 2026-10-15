@@ -148,6 +148,7 @@
 /* La proposition : une carte à bord plein, comme un bouton. La lettre dans un
    cercle, qui se remplit quand on coche. */
 .proposition {
+  touch-action: manipulation;
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
@@ -166,7 +167,9 @@
   transition: border-color var(--transition), background var(--transition),
     box-shadow var(--transition), transform var(--transition), opacity var(--transition);
 }
-.proposition:hover:not(:disabled) { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+@media (hover: hover) and (pointer: fine) {
+  .proposition:hover:not(:disabled) { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+}
 .proposition:active:not(:disabled) { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet-fort); }
 .proposition:disabled { cursor: default; }
 
@@ -182,6 +185,14 @@
   font-weight: 800;
   text-transform: uppercase;
   transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+/* Un mot plus large que la carte (une proposition de 90 signes sans espace)
+   se coupe où il peut : sans ça, il poussait la page à deux fois la largeur
+   de l'écran. */
+.proposition__texte {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .proposition--cochee {
@@ -227,6 +238,7 @@
 }
 
 .jeu__actions {
+  touch-action: manipulation;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -287,7 +299,9 @@
   text-underline-offset: 0.16em;
   cursor: pointer;
 }
-.signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+@media (hover: hover) and (pointer: fine) {
+  .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+}
 
 /* Écran de départ de l'examen. Le chrono ne tourne pas encore. */
 .depart { gap: 1.1rem; }
@@ -397,6 +411,43 @@
 }
 .resultat__pavillon { margin: -0.75rem 0 1.25rem; font-weight: 600; }
 .resultat__pavillon .discret { display: block; margin-top: 0.15rem; font-weight: 400; }
+
+/* Un badge gagné, annoncé une fois à l'écran qui l'a fait gagner : fin de
+   leçon, fin de série, résultat d'examen. Le texte d'abord, le mot « Palier »
+   sur le jaune de l'action. Il entre d'un bloc, sans cascade : plusieurs
+   badges d'un coup font une liste, pas une suite d'effets. La région
+   `status` reste vide tant que rien n'est gagné, et ne se voit pas. Ici et
+   non dans global.css : la leçon charge cette feuille, les autres pages non. */
+.badges-gagnes__corps {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--fond-carte);
+  border: 2px solid var(--texte);
+  border-radius: var(--rayon);
+  animation: badges-entree 200ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+@keyframes badges-entree {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.badges-gagnes__titre {
+  display: inline-block;
+  margin: 0 0 0.6rem;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  background: var(--jaune);
+  color: var(--marine);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.badges-gagnes__corps ul { margin: 0; padding: 0; list-style: none; }
+.badges-gagnes__corps li + li { margin-top: 0.6rem; }
+.badges-gagnes__theme { color: var(--texte-doux); font-weight: 600; }
+.badges-gagnes__fait { display: block; }
+.badges-gagnes__corps > .discret { margin: 0.6rem 0 0; }
+@media (prefers-reduced-motion: reduce) {
+  .badges-gagnes__corps { animation: none; }
+}
 
 /* Le temps, sous le score : ce que le nombre de bonnes réponses ne dit pas. */
 .resultat__temps { margin: 0 0 1.25rem; max-width: 46ch; }

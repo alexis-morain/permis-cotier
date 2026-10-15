@@ -334,7 +334,9 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
       .ariane ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
       .ariane li + li::before { content: "›"; margin-right: 0.4rem; color: var(--filet-fort); }
       .ariane a { color: inherit; text-decoration: none; }
-      .ariane a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      @media (hover: hover) and (pointer: fine) {
+        .ariane a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+      }
       .ariane [aria-current="page"] { color: var(--texte); }
 
       .pied__plan {
@@ -452,7 +454,9 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
         box-shadow: inset 0 -3px 0 transparent;
         transition: box-shadow var(--transition), background var(--transition);
       }
-      .entete nav a:hover { background: var(--fond-2); }
+      @media (hover: hover) and (pointer: fine) {
+        .entete nav a:hover { background: var(--fond-2); }
+      }
       .entete nav a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--jaune); }
 
       .pied {

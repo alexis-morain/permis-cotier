@@ -1,0 +1,16 @@
+Thank you for the review. A screen recording of the submitted build is attached.
+
+1. Screen recording. Attached. It was captured on the iOS Simulator (iPhone 17 Pro Max, iOS 26.5) running build 1.0 (1), installed fresh, starting from the Home Screen. If you need a recording from a physical device, let us know and we will provide one. The app has no account, no login, no in-app purchase and no user-generated content, so none of those flows exist.
+
+2. Purpose and audience. Le Permis Côtier helps people in France prepare the theory test of the French recreational boating licence, coastal option ("permis plaisance option côtière"). The audience is adult learners preparing that exam, usually alongside a boating school. The app offers a structured course (14 chapters of short lessons), full mock exams in the official 2022 format (40 questions, 20 seconds each, pass with 5 mistakes or fewer), practice by topic, a review of past mistakes, and local reminders before the learner's exam date. Every question cites the legal text it comes from, so learners can check the rule themselves. It works fully offline.
+
+3. How to access the features. No login, no credentials, no sample files. Open the app and use the five tabs: Home, Course, Exam, Practice, Profile. Progress is stored on the device only.
+
+4. External services.
+- lepermiscotier.fr, our own website hosted on Cloudflare: the app downloads updated question banks from it (a public JSON file, no personal data).
+- "Report an error" form on a question: the message goes to our own endpoint on Cloudflare, protected by Cloudflare Turnstile against spam, which opens a ticket in our GitHub repository and sends us an email through Resend. Nothing is published to other users.
+- Nothing else: no analytics, no advertising, no authentication service, no payment processor, no AI service. Reminders are local notifications.
+
+5. Regional differences. None. The app works the same in every region. Its content is in French and covers French maritime regulation, as stated on the product page.
+
+6. Regulated industry and third-party material. The app is an independent study aid. It is not affiliated with the French administration, does not issue any licence, and says so inside the app. The questions are written by us from public French legal texts published by the government on Légifrance (the international collision regulations as applied in France, the "division 240" safety rules, the buoyage rules), which are freely reusable. No question is copied from a publisher or from the official exam. All illustrations are drawn by us. The content is published as open source under CC BY-SA 4.0.

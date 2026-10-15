@@ -1,12 +1,25 @@
-Rien de neuf à voir dans ce build : l’écran de jeu et la fiche ont été réorganisés dans le code, sans rien changer à ce qu’ils montrent. C’est justement ce qu’il faut vérifier, écran par écran.
+Ce build rend l’app plus nette au doigt, et retouche le geste de l’examen : répondre, passer à la suite, lire le résultat. Les changements se sentent plus qu’ils ne se voient, donc à essayer sur un vrai iPhone.
 
-À essayer :
-• Un examen blanc complet : la barre d’onglets se cache pendant l’épreuve, le chrono passe au rouge sous cinq secondes, et le résultat dit le score, le verdict, le temps et la note par thème.
-• Un examen arrêté en route : « Arrêter », puis « Arrêter et voir le résultat ». « Revoir mes erreurs » déplie la revue, avec la bonne réponse et la leçon.
-• Une série d’entraînement : « Juste » ou « Faux » monte du bas avec l’explication, « Continuer » passe à la suivante.
-• Quitte une série en cours pour une leçon, puis reviens : l’app propose de reprendre là où tu étais.
-• Fiche → Tes réglages : prénom, questions par jour, date de l’examen, apparence, puis « Effacer ma progression et ma fiche » jusqu’au bout.
+À essayer, partout :
+• Une série d’entraînement : touche une proposition, puis une autre, puis décoche la première. Celle que tu as quittée revient à son état de repos, sans garder un bord foncé qui la ferait passer pour cochée.
+• « Valider », « Continuer », les choix du questionnaire de départ, les réglages de la Fiche : chaque appui répond tout de suite, sans double toucher.
+• Un appui long sur un bouton ou une cellule de liste : rien ne se sélectionne. Le texte des leçons, lui, se sélectionne toujours.
+• Réglages iOS → Luminosité et affichage → Taille du texte, au plus petit : la recherche, le prénom et la date de la Fiche ne font plus zoomer l’écran.
+• Dans la recherche, tape un mot. Dis-nous si les derniers résultats restent cachés sous le clavier.
 
-Cette version exige iOS 18 : un iPhone resté sur iOS 17 ne la verra pas.
+À essayer, à l’examen :
+• Pose le doigt sur une réponse sans le lever : la carte s’enfonce tout de suite. Lâche : elle se coche, avec une petite vibration.
+• Enchaîne quelques questions : la suivante apparaît d’un coup, sans glisser. Pendant que le chrono tourne, rien d’autre ne bouge ni ne clignote.
+• Verrouille le téléphone au milieu d’une question, attends trente secondes, reviens : la question a été passée, la suivante repart à 20.
+• En entraînement, valide puis tape « Continuer » aussitôt, pendant que « Juste » ou « Faux » monte encore : la question suivante vient sans attendre.
+• Finis un examen blanc : la vibration du verdict tombe au moment où « Reçu » ou « Recalé » s’écrit, pas avant.
+• Avec « Réduire les animations » activé : plus rien ne monte ni ne glisse.
 
-Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, nous l’envoie.
+À essayer, les badges :
+• Finis une leçon, une série d’entraînement ou un examen blanc. Quand un palier tombe, il s’annonce une fois sous le résultat, avec le fait qui l’a gagné (« Les 3 leçons des écluses suivies, le 15 octobre. ») et une petite vibration. Rien ne bloque la suite.
+• Trois paliers par thème : Parcouru (toutes les leçons du thème), Retenu (quatre questions sur cinq retenues), Sûr à l’examen (trois examens blancs de suite sans faute sur le thème). Une faute plus tard ne les reprend pas.
+• Fiche → « Thème par thème » : les paliers gagnés, datés, et ce qui mène au suivant.
+• Accueil → « Faire un examen blanc » : l’app passe sur l’onglet Examen, et la barre du bas le dit. Puis « Commencer l’examen » : deux touches jusqu’à la première question, rien entre les deux. Un examen laissé en cours dans l’onglet Examen t’y attend toujours.
+• « À revoir aujourd’hui » annonce le nombre de questions que ta série du jour va jouer : compare avec ce que joue « Faire ma série du jour ».
+
+Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.

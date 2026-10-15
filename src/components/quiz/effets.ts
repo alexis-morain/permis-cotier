@@ -13,6 +13,7 @@ import {
   sauvegarder,
   enregistrerReponse,
   enregistrerExamen,
+  examenPasse,
   enregistrerEnCours,
   effacerEnCours,
   enregistrerEnCoursSerie,
@@ -22,46 +23,28 @@ import {
 import { evenement } from '../../lib/mesure';
 import { douceur } from '../../lib/douceur';
 import { POUR_APP } from '../../lib/cible';
-import { modeConcentration, surRetourAuPremierPlan, vibrer } from '../../lib/natif';
+import { modeConcentration, vibrer } from '../../lib/natif';
 import { rangDeLaTouche } from '../../lib/melange';
 import type { QuestionAffichable } from '../../lib/banque';
+import { gagnerAuGeste, type BadgeAnnonce } from '../../lib/badges-geste';
+import type { QuestionConnue } from '../../lib/profil';
 
 type Envoyer = (action: Action) => void;
 
-/**
- * Horloge de l'examen. Une seconde, pas plus précis : le chrono est une
- * contrainte de l'épreuve, pas un instrument de mesure.
- *
- * Un onglet caché voit son intervalle étranglé par le navigateur. Le chrono
- * est une horloge murale, il ne se fige donc pas, mais l'affichage peut
- * retarder : au retour, on recale sans attendre le prochain battement.
- *
- * Une app suspendue fait pire qu'un onglet caché : elle gèle l'intervalle
- * tout net. `appStateChange` est le seul signal qui arrive à coup sûr au
- * retour — `visibilitychange` ne part pas toujours dans une WKWebView
- * rendue au premier plan. Les deux sont branchés, un `tic` de trop ne coûte
- * rien puisqu'il ne fait que relire l'heure.
- */
-export function useHorlogeExamen(session: Session, envoyer: Envoyer): void {
-  useEffect(() => {
-    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const h = window.setInterval(() => envoyer({ type: 'tic', maintenant: Date.now() }), 1000);
-    return () => window.clearInterval(h);
-  }, [session.mode, session.phase, envoyer]);
+/** Les badges gagnés par un geste de la série, à annoncer au résultat. */
+export interface Badges {
+  /** Toute la banque publiée, pas la part de la série : un geste compte pour tous les thèmes. */
+  banque: readonly QuestionConnue[];
+  gagnes: (annonces: BadgeAnnonce[]) => void;
+}
 
-  useEffect(() => {
-    if (session.mode !== 'examen' || session.phase !== 'en-cours') return;
-    const recaler = () => envoyer({ type: 'tic', maintenant: Date.now() });
-    const surRetour = () => {
-      if (!document.hidden) recaler();
-    };
-    document.addEventListener('visibilitychange', surRetour);
-    const debrancher = surRetourAuPremierPlan(recaler);
-    return () => {
-      document.removeEventListener('visibilitychange', surRetour);
-      debrancher();
-    };
-  }, [session.mode, session.phase, envoyer]);
+/**
+ * Le geste vient d'être écrit : ce qu'il fait gagner est gardé tout de suite,
+ * et rangé pour le résultat. Un module qui ne vient pas (hors ligne sur le
+ * site) ne casse rien : le geste suivant attribuera.
+ */
+function attribuer({ banque, gagnes }: Badges): void {
+  gagnerAuGeste(banque).then((annonces) => annonces.length > 0 && gagnes(annonces), () => {});
 }
 
 /**
@@ -101,6 +84,7 @@ export function useEcritureDeLaSerie(
   theme: string | undefined,
   retourSerie: string | undefined,
   journalEcrit: MutableRefObject<number>,
+  badges: Badges,
 ): void {
   // Écriture de la progression locale, au fil des réponses.
   useEffect(() => {
@@ -111,6 +95,9 @@ export function useEcritureDeLaSerie(
     }
     sauvegarder(etat);
     journalEcrit.current = session.journal.length;
+    // `retenu` se gagne à la réponse ; l'annonce attend le résultat.
+    attribuer(badges);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.journal, journalEcrit]);
 
   // L'examen en cours survit au rafraîchissement et à l'écran verrouillé. On
@@ -150,13 +137,14 @@ interface Serie {
   theme?: string;
   notion?: { code: string };
   revoir: boolean;
+  badges: Badges;
 }
 
 /**
  * La fin d'une série, son départ, et son abandon : l'historique des examens,
  * le verdict qui se sent, et ce que la mesure en apprend.
  */
-export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir }: Serie): void {
+export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir, badges }: Serie): void {
   // Un abandon déjà compté pour la série en cours, et pas encore suivi d'un
   // retour. Partagé entre l'effet qui l'envoie et celui qui annonce la fin.
   const abandonEnvoye = useRef(false);
@@ -164,18 +152,22 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
   useEffect(() => {
     if (session.phase !== 'resultat' || !session.resultat || session.resultat.total === 0) return;
     const r = session.resultat;
+    let frame = 0;
     if (mode === 'examen') {
       // Un examen arrêté en route n'entre pas dans l'historique : trois
       // questions sur quarante s'afficheraient « reçu » sur l'accueil, ce qui
       // serait faux. Il compte dans la progression par question, pas comme
       // épreuve passée.
       if (!session.interrompu) {
-        sauvegarder(
-          enregistrerExamen(charger(), { date: aujourdhui(), bonnes: r.bonnes, total: r.total, reussi: r.reussi }),
-        );
+        // Avec son détail par thème, que `sur` relit aux examens suivants.
+        sauvegarder(enregistrerExamen(charger(), examenPasse(r, aujourdhui())));
+        attribuer(badges);
         // Le verdict d'examen se sent, comme celui de chaque question en
         // entraînement. Un examen interrompu n'a pas de verdict à faire sentir.
-        void vibrer(r.reussi ? 'reussi' : 'echoue');
+        // Après un clic, cet effet part avant que le navigateur peigne : la
+        // vibration aurait devancé le verdict écrit. La frame suivante est
+        // celle qui le peint.
+        frame = requestAnimationFrame(() => void vibrer(r.reussi ? 'reussi' : 'echoue'));
       }
       evenement('examen-termine', {
         bonnes: r.bonnes,
@@ -192,6 +184,7 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
       evenement(`${nomSerie}-termine`, { theme, notion: notion?.code, bonnes: r.bonnes, erreurs: r.erreurs, total: r.total });
       if (!session.interrompu) void vibrer('fin-serie');
     }
+    return () => cancelAnimationFrame(frame);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.phase, session.resultat, session.interrompu, mode, theme, revoir]);
 
@@ -268,7 +261,7 @@ export function useVerdictEnVue(session: Session, verdict: MutableRefObject<HTML
   }, [session.phase]);
 }
 
-/** Ce que le clavier lit à chaque touche, sans réabonner l'écouteur à chaque seconde. */
+/** Ce que le clavier lit à chaque touche, sans réabonner l'écouteur à chaque case. */
 export interface ContexteClavier {
   session: Session;
   ordre: QuestionAffichable['propositions'];
@@ -278,7 +271,7 @@ export interface ContexteClavier {
 
 /**
  * Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
- * le chrono change l'état à la seconde, on ne réabonne pas l'écouteur pour ça.
+ * il change à chaque case cochée, on ne réabonne pas l'écouteur pour ça.
  */
 export function useClavier(contexte: MutableRefObject<ContexteClavier>, envoyer: Envoyer): void {
   useEffect(() => {

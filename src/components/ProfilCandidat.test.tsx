@@ -2,6 +2,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import ProfilCandidat from './ProfilCandidat';
+import { jourPlus } from '../lib/jour';
 import {
   aujourdhui,
   enregistrerExamen,
@@ -99,7 +100,20 @@ describe('la fiche', () => {
     const themes = screen.getAllByRole('link', { name: / en banque|jamais ouvert/ });
     expect(themes[0]!.getAttribute('href')).toBe('/entrainement/vhf');
     expect(screen.getByText('36 / 40')).toBeTruthy();
-    expect(document.querySelector('.jour__serie .jour__chiffre')?.textContent).toBe('1 jour de suite');
+    // Un seul jour n'est pas une série : rien ne la nomme encore.
+    expect(document.querySelector('.jour__serie .jour__chiffre')).toBeNull();
+  });
+
+  it('dit la série dès deux jours, au texte neutre, sans pousser à la tenir', () => {
+    const hier = jourPlus(aujourdhui(), -1);
+    // Hier et avant-hier, rien aujourd'hui : c'est là qu'une app insisterait.
+    let e = enregistrerReponse(etatInitial(), 'vhf-0', true, jourPlus(hier, -1));
+    e = enregistrerReponse(e, 'vhf-1', true, hier);
+    sauvegarder(e);
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.jour__serie .jour__chiffre')?.textContent).toBe('2 jours de suite');
+    const serie = document.querySelector('.jour__serie')!.textContent!;
+    expect(serie).not.toMatch(/tient|démarre|avant ce soir|perdre|manque/);
   });
 
   it('mène à la relecture des erreurs, sans les rejouer', () => {
@@ -237,6 +251,45 @@ describe('les lignes de thème', () => {
     const themes = document.querySelector('.fiche__themes > .discret')!;
     expect(themes.textContent).toBe('Les plus fragiles d’abord.');
     expect(document.querySelector('.fiche__details')!.textContent).toMatch(/un jour plus tard,\s+puis trois, puis sept, puis vingt et un/);
+  });
+});
+
+describe('les paliers de chaque thème', () => {
+  /** Retenue : réussie deux jours différents. */
+  const retenir = (e: ReturnType<typeof etatInitial>, id: string) =>
+    enregistrerReponse(enregistrerReponse(e, id, true, '2026-09-01'), id, true, '2026-09-02');
+  const ligne = (nom: RegExp) => screen.getByRole('link', { name: nom }).closest('li')!;
+
+  it('montre les paliers gagnés avec leur fait daté, puis le prochain comme un fait', () => {
+    sauvegarder({ ...retenir(etatInitial(), 'vhf-0'), badges: { vhf: { parcouru: '2026-10-12' } } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const vhf = ligne(/VHF/);
+    const gagnes = [...vhf.querySelectorAll('.paliers li')].map((li) => li.textContent);
+    expect(gagnes).toEqual(['Parcouru Toutes les leçons de la VHF et du SMDSM suivies, le 12 octobre.']);
+    expect(vhf.querySelector('.paliers__prochain')!.textContent).toBe('1 retenue sur 10\u00a0; à 8, le palier Retenu.');
+  });
+
+  it('garde un palier gagné même quand le compte du jour est retombé', () => {
+    sauvegarder({ ...enregistrerReponse(etatInitial(), 'feux-0', false, aujourdhui()), badges: { 'feux-marques': { retenu: '2026-10-01' } } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(ligne(/Feux/).querySelector('.paliers li')!.textContent).toBe(
+      'Retenu Au moins quatre questions sur cinq retenues, le 1er octobre.',
+    );
+  });
+
+  it('ne dit rien d’un thème jamais ouvert', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(ligne(/Feux/).querySelector('.paliers')).toBeNull();
+  });
+
+  it('ne compte jamais les badges ni ne fait de compte à rebours', () => {
+    sauvegarder({ ...retenir(etatInitial(), 'vhf-0'), badges: { vhf: { parcouru: '2026-10-12', retenu: '2026-10-13' } } });
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const texte = document.body.textContent!;
+    expect(texte).not.toMatch(/\d+ (badges?|paliers?)\b/i);
+    expect(texte).not.toMatch(/badge/i);
+    expect(texte).not.toMatch(/plus que|encore \d+ (question|leçon|examen)/i);
   });
 });
 

@@ -70,6 +70,9 @@ describe('la couche native, hors de la coquille', () => {
     expect(Object.keys(module).sort()).toEqual(
       [
         'armerLesRappelsSurLaDate',
+        'basculerVersLOnglet',
+        'RACINES_DES_ONGLETS',
+        'ongletVise',
         'modeConcentration',
         'ouvrirDehors',
         'partager',
