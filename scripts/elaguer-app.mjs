@@ -224,3 +224,44 @@ if (appels.length > 0) {
   process.exit(1);
 }
 console.log('  Aucun appel au Worker dans le bundle.');
+
+/**
+ * La coquille vise iOS 15.4 pour ne laisser dehors aucun iPhone qui fait
+ * tourner iOS 15. Sa webview est le Safari du téléphone : une API plus récente
+ * n'y existe pas, et l'appel lève une erreur qui arrête l'écran entier. Le CSS
+ * se dégrade seul, le JavaScript non. Chaque motif porte la version de Safari
+ * qui l'a apporté ; en ajouter un, c'est choisir un repli ou monter la cible.
+ */
+const JS_TROP_RECENT = [
+  [/\.(toSorted|toReversed|toSpliced)\(/, '16.0'],
+  [/AbortSignal\.timeout\(/, '16.0'],
+  [/\(\?<[=!]/, '16.4 (regard arrière : erreur de syntaxe, tout le fichier tombe)'],
+  [/\bstatic\s*\{/, '16.4 (bloc statique : erreur de syntaxe, tout le fichier tombe)'],
+  [/Array\.fromAsync\(/, '16.4'],
+  [/\.isWellFormed\(/, '16.4'],
+  [/URL\.canParse\(/, '17.0'],
+  [/\.(union|intersection|symmetricDifference|isSubsetOf|isSupersetOf|isDisjointFrom)\(/, '17.0'],
+  [/\.showPopover\(/, '17.0'],
+  [/(Object|Map)\.groupBy\(/, '17.4'],
+  [/Promise\.withResolvers\(/, '17.4'],
+  [/AbortSignal\.any\(/, '17.4'],
+  [/Iterator\.from\(/, '18.4'],
+];
+
+const tropRecents = [];
+for (const fichier of tousLesFichiers.filter((f) => /\.(html|js)$/.test(f))) {
+  const texte = await readFile(fichier, 'utf-8');
+  for (const [motif, version] of JS_TROP_RECENT) {
+    if (motif.test(texte)) tropRecents.push(`${relative(racine, fichier)} : ${motif.source}, Safari ${version}`);
+  }
+}
+if (tropRecents.length > 0) {
+  console.error(`\nJavaScript plus récent que Safari 15.4 (${tropRecents.length}) :`);
+  for (const ligne of tropRecents.slice(0, 20)) console.error(`  · ${ligne}`);
+  console.error(
+    '\nLa coquille vise iOS 15.4 : sur un iPhone plus ancien, l’appel arrête l’écran.' +
+      '\nÉcrire l’équivalent d’avant, ou monter IPHONEOS_DEPLOYMENT_TARGET en le disant.',
+  );
+  process.exit(1);
+}
+console.log('  Aucun JavaScript plus récent que Safari 15.4.');
