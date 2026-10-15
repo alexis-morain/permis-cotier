@@ -214,7 +214,24 @@ a {
   text-decoration-thickness: 2px;
   text-underline-offset: 0.16em;
 }
-a:hover { text-decoration-color: currentColor; }
+/* Le survol n'existe qu'au pointeur fin : au doigt, iOS le pose au premier
+   appui et le laisse collé sur la dernière cible touchée. Chaque `:hover` du
+   site vit sous cette garde ; `scripts/verifier-css-mobile.mjs` refuse le
+   bundle de l'app qui en aurait un dehors. */
+@media (hover: hover) and (pointer: fine) {
+  a:hover { text-decoration-color: currentColor; }
+}
+
+/* Un contrôle répond au premier appui. Sans `manipulation`, WebKit peut
+   attendre un second toucher, le double-tap qui zoome, avant le clic. Le
+   défilement et le pincement restent permis ; jamais `none`, qui bloquerait
+   le défilement d'une liste touchée en son milieu. Les contrôles nommés
+   (`.bouton`, `.proposition`, les cellules) le redisent dans leur règle. */
+a,
+button,
+[role='button'] {
+  touch-action: manipulation;
+}
 
 :focus-visible {
   outline: 3px solid var(--anneau);
@@ -249,6 +266,7 @@ img { max-width: 100%; height: auto; }
 /* Boutons. Le bord plein de trois pixels est la seule profondeur du site ;
    il s'efface quand on appuie, et le bouton descend d'autant. */
 .bouton {
+  touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -267,7 +285,9 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 var(--bord) 0 var(--filet-fort);
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.bouton:hover { background: var(--fond-2); }
+@media (hover: hover) and (pointer: fine) {
+  .bouton:hover { background: var(--fond-2); }
+}
 .bouton:active {
   transform: translateY(var(--bord));
   box-shadow: 0 0 0 var(--filet-fort);
@@ -293,7 +313,9 @@ img { max-width: 100%; height: auto; }
   padding: 0.85rem 1.6rem;
   box-shadow: 0 var(--bord) 0 var(--jaune-sombre);
 }
-.bouton--principal:hover { background: var(--jaune-vif); border-color: var(--jaune-vif); }
+@media (hover: hover) and (pointer: fine) {
+  .bouton--principal:hover { background: var(--jaune-vif); border-color: var(--jaune-vif); }
+}
 .bouton--principal:active { box-shadow: 0 0 0 var(--jaune-sombre); }
 .bouton--principal[disabled] {
   background: var(--jaune-pale);
@@ -315,7 +337,9 @@ img { max-width: 100%; height: auto; }
   text-decoration-thickness: 2px;
   text-underline-offset: 0.16em;
 }
-.bouton--discret:hover { background: transparent; text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) {
+  .bouton--discret:hover { background: transparent; text-decoration-color: currentColor; }
+}
 .bouton--discret:active { transform: none; box-shadow: none; }
 
 /* Encadré de contenu : surface blanche, filet de deux pixels, pas d'ombre. */
@@ -373,6 +397,7 @@ img { max-width: 100%; height: auto; }
   background: var(--fond-carte);
 }
 .segmente__option {
+  touch-action: manipulation;
   min-height: 2.75rem;
   padding: 0.4rem 0.9rem;
   border: 0;
@@ -384,7 +409,9 @@ img { max-width: 100%; height: auto; }
   transition: background var(--transition), color var(--transition);
 }
 .segmente__option + .segmente__option { border-left: 2px solid var(--filet-fort); }
-.segmente__option:hover { background: var(--fond-2); }
+@media (hover: hover) and (pointer: fine) {
+  .segmente__option:hover { background: var(--fond-2); }
+}
 .segmente__option[aria-pressed='true'] { background: var(--texte); color: var(--fond-carte); --anneau: var(--jaune); }
 .segmente__option[aria-pressed='true'] .discret { color: inherit; opacity: 0.8; }
 .segmente__option:focus-visible { outline-offset: -3px; }
@@ -404,7 +431,9 @@ img { max-width: 100%; height: auto; }
   color: inherit;
   transition: border-color var(--transition);
 }
-.champ:hover { border-color: var(--texte); }
+@media (hover: hover) and (pointer: fine) {
+  .champ:hover { border-color: var(--texte); }
+}
 .champ:focus-visible { border-color: var(--anneau); outline-offset: 0; }
 .champ::placeholder { color: var(--texte-doux); opacity: 1; }
 

@@ -3,12 +3,15 @@
 
     python scripts/app_store.py preparer --commit <sha>
     python scripts/app_store.py soumettre --version 1.0.1 --build 3 --commit <sha>
+    python scripts/app_store.py verifier-fiche
 
 `preparer` lit les versions App Store et les builds, et dit s'il faut
 construire, seulement soumettre un build déjà téléversé, ou ne rien faire.
 `soumettre` attend la fin du traitement d'un build, pose dans « À tester » de
 TestFlight le texte de `ios/a-tester.txt` suivi de la référence du commit, puis
 l'envoie en revue si aucune revue n'est en cours.
+`verifier-fiche`, sans secret, refuse une fiche qui ne dit pas le vrai nombre
+de questions de la banque ; `preparer` le refait avant toute décision.
 
 Authentification par une clé d'API : `ASC_KEY_ID`, `ASC_ISSUER_ID`, et la clé
 privée dans `ASC_KEY_P8` (contenu) ou `ASC_KEY_PATH` (chemin). Ni la clé ni le
@@ -130,6 +133,76 @@ def lire_a_tester(chemin: Path = A_TESTER) -> str:
             f"{chemin.name} fait {len(texte)} caractères, « À tester » en prend moins de {LIMITE_A_TESTER}."
         )
     return texte
+
+
+# --- La fiche dit le vrai nombre de questions (2.3) ---------------------------
+
+# Tout texte de la fiche où un compte de questions peut apparaître. Les
+# nouveautés et « À tester » partent par ce script ; description, sous-titre,
+# mots-clés et notes au relecteur se posent à la main, et leur copie vit dans
+# `docs/` pour qu'une retouche ne reconstruise pas l'app.
+FICHE_DOSSIER = RACINE / "docs" / "fiche-app-store"
+FICHE = [NOUVEAUTES, A_TESTER, *sorted(FICHE_DOSSIER.glob("*.txt"))]
+
+# Au-dessous de cent, un nombre de questions parle d'un examen (40) ou d'une
+# série, jamais de la banque.
+SEUIL_BANQUE = 100
+ESPACE = r"[   ]"
+NOMBRE_DE_QUESTIONS = re.compile(
+    rf"(?:(?P<plus>plus{ESPACE}+de|more{ESPACE}+than|over){ESPACE}+)?"
+    rf"(?P<n>\d{{1,3}}(?:{ESPACE}\d{{3}})+|\d+){ESPACE}+questions\b",
+    re.IGNORECASE,
+)
+
+
+def compte_banque(racine: Path = RACINE) -> int:
+    """Les questions publiées, comptées comme `banqueDuDepot()` de `verifier-app.mjs`.
+
+    Sans YAML : le job `preparer` n'installe que `requirements-app.txt`.
+    """
+    compte = 0
+    for f in (racine / "data" / "questions").glob("*/*.yaml"):
+        if f.parent.name.startswith("_"):
+            continue
+        if re.search(r"^statut:\s*publie\s*$", f.read_text(encoding="utf-8"), re.MULTILINE):
+            compte += 1
+    return compte
+
+
+def ecarts_de_compte(texte: str, compte: int) -> list[str]:
+    """Les mentions d'un nombre de questions de la banque qui ne disent pas `compte`.
+
+    La règle : un nombre de cent ou plus suivi de « questions » est exact, ou
+    arrondi par en dessous à la centaine près, « plus de N » avec
+    N ≤ compte < N + 100. Un arrondi qui a pris du retard est faux aussi.
+    """
+    ecarts = []
+    for trouve in NOMBRE_DE_QUESTIONS.finditer(texte):
+        n = int(re.sub(ESPACE, "", trouve["n"]))
+        if n < SEUIL_BANQUE:
+            continue
+        juste = n <= compte < n + 100 if trouve["plus"] else n == compte
+        if not juste:
+            ecarts.append(trouve.group(0))
+    return ecarts
+
+
+def verifier_fiche(chemins: list[Path], compte: int) -> None:
+    """Arrête le pipeline sur une fiche qui ne dit pas le vrai compte."""
+    fautes = []
+    for chemin in chemins:
+        if not chemin.is_file():
+            continue
+        for ecart in ecarts_de_compte(chemin.read_text(encoding="utf-8"), compte):
+            nom = chemin.relative_to(RACINE) if chemin.is_relative_to(RACINE) else chemin.name
+            fautes.append(f"  {nom} : « {ecart} »")
+    if fautes:
+        raise SystemExit(
+            f"La fiche ne dit pas le vrai nombre de questions ({compte} publiées) :\n"
+            + "\n".join(fautes)
+            + f"\nUn nombre de questions s'écrit exact ({compte}), ou « plus de N » avec"
+            f" N ≤ {compte} < N + 100 (aujourd'hui : plus de {compte // 100 * 100})."
+        )
 
 
 def meme_commit(court: str | None, commit: str) -> bool:
@@ -372,6 +445,7 @@ def preparer(commit: str) -> int:
     # Avant les trois minutes d'archive : un « À tester » vide ou trop long
     # arrêterait `soumettre` après le téléversement.
     lire_a_tester()
+    verifier_fiche(FICHE, compte_banque())
     versions, _ = lire_versions()
     builds = lire_builds()
     dernier = max(builds, key=lambda b: b.numero).commit if builds else None
@@ -543,7 +617,14 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--commit", required=True, help="SHA du commit de main")
     s.add_argument("--sans-revue", action="store_true", help="TestFlight seul")
 
+    sous.add_parser("verifier-fiche", help="la fiche dit-elle le vrai nombre de questions ? sans secret")
+
     args = parseur.parse_args(argv)
+    if args.commande == "verifier-fiche":
+        compte = compte_banque()
+        verifier_fiche(FICHE, compte)
+        print(f"La fiche dit le vrai nombre de questions ({compte} publiées).")
+        return 0
     try:
         if args.commande == "preparer":
             return preparer(args.commit)
