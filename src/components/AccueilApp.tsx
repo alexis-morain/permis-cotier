@@ -16,7 +16,8 @@ interface Props {
 
 /**
  * L'accueil de l'app : quatre blocs, de ce qu'on fait maintenant à ce qui
- * attend plus loin. Rendu côté client seulement (`client:only`), la
+ * attend plus loin. Chaque bouton dit un verbe et ce qu'il ouvre, avec les
+ * mots de la fiche pour les mêmes destinations (audit du 14 octobre). Rendu côté client seulement (`client:only`), la
  * progression se lit donc au premier rendu, sans état intermédiaire.
  */
 export default function AccueilApp({ lecons, ids }: Props) {
@@ -49,7 +50,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
             <h2 id="accueil-reprendre" className="accueilApp__lecon">{cours.prochaine.nom}</h2>
             <Jauge part={part} faites={cours.faites} total={cours.total} />
             <a className="bouton bouton--principal accueilApp__action" href={cours.prochaine.chemin}>
-              {cours.etat === 'vide' ? 'Commencer' : 'Continuer'}
+              {cours.etat === 'vide' ? 'Commencer le cours' : 'Continuer le cours'}
             </a>
           </>
         )}
@@ -65,7 +66,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
               <b className="display accueilApp__nombre">{revoir.nombre}</b>{' '}
               question{revoir.nombre > 1 ? 's' : ''} à revoir
             </p>
-            <a className="bouton accueilApp__action" href="/revoir">Revoir</a>
+            <a className="bouton accueilApp__action" href="/revoir">Faire ma série du jour</a>
           </>
         )}
       </section>
@@ -77,7 +78,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
             ? `${examen.bonnes} sur ${examen.total}, ${examen.reussi ? 'réussi' : 'recalé'}, ${depuisLe(examen.depuis)}.`
             : 'Quarante questions, vingt secondes chacune.'}
         </p>
-        <a className="bouton accueilApp__action" href="/examen">Nouvel examen blanc</a>
+        <a className="bouton accueilApp__action" href="/examen">Faire un examen blanc</a>
       </section>
 
       <section className="accueilApp__bloc" aria-labelledby="accueil-date">

@@ -46,13 +46,21 @@ describe('accueil de l’app, premier lancement', () => {
     expect(screen.getByRole('heading', { name: 'Marques latérales' })).toBeTruthy();
     expect(screen.getByText('Lire le balisage, leçon 1 sur 2')).toBeTruthy();
     expect(screen.getByText('0 leçon sur 2')).toBeTruthy();
-    expect(lien('Commencer')).toBe('/cours/balisage/a');
+    expect(lien('Commencer le cours')).toBe('/cours/balisage/a');
     expect(screen.getByText('Tes erreurs reviendront ici.')).toBeTruthy();
-    expect(screen.queryByRole('link', { name: 'Revoir' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Faire ma série du jour' })).toBeNull();
     expect(screen.getByText('Quarante questions, vingt secondes chacune.')).toBeTruthy();
-    expect(lien('Nouvel examen blanc')).toBe('/examen');
+    expect(lien('Faire un examen blanc')).toBe('/examen');
     expect(lien('Pose la date de ton examen')).toBe('/profil');
     expect(screen.queryByText(/jours de suite/)).toBeNull();
+  });
+});
+
+describe('les libellés de l’accueil', () => {
+  it('disent un verbe et ce qu’ils ouvrent, comme la fiche pour les mêmes destinations', () => {
+    afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
+    const libelles = [...document.querySelectorAll('.accueilApp a.bouton')].map((a) => a.textContent);
+    expect(libelles).toEqual(['Commencer le cours', 'Faire ma série du jour', 'Faire un examen blanc']);
   });
 });
 
@@ -64,9 +72,9 @@ describe('accueil de l’app, en cours de route', () => {
     afficher(e);
     expect(screen.getByRole('heading', { name: 'Cardinales' })).toBeTruthy();
     expect(screen.getByText('1 leçon sur 2')).toBeTruthy();
-    expect(lien('Continuer')).toBe('/cours/balisage/b');
+    expect(lien('Continuer le cours')).toBe('/cours/balisage/b');
     expect(screen.getByText(/questions à revoir/).textContent).toBe('2 questions à revoir');
-    expect(lien('Revoir')).toBe('/revoir');
+    expect(lien('Faire ma série du jour')).toBe('/revoir');
     expect(screen.getByText('2 jours de suite')).toBeTruthy();
   });
 
@@ -77,13 +85,13 @@ describe('accueil de l’app, en cours de route', () => {
     sauvegarder(e);
     render(<AccueilApp lecons={lecons} ids={douze} />);
     expect(screen.getByText(/questions à revoir/).textContent).toBe('10 questions à revoir');
-    expect(lien('Revoir')).toBe('/revoir');
+    expect(lien('Faire ma série du jour')).toBe('/revoir');
   });
 
   it('rien de dû : le dit, sans bouton', () => {
     afficher(enregistrerReponse(etatInitial(), 'q1', true, '2026-09-25'));
     expect(screen.getByText('Rien à revoir aujourd’hui.')).toBeTruthy();
-    expect(screen.queryByRole('link', { name: 'Revoir' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Faire ma série du jour' })).toBeNull();
     expect(screen.queryByText(/jours de suite/)).toBeNull();
   });
 
@@ -95,7 +103,7 @@ describe('accueil de l’app, en cours de route', () => {
     e = enregistrerExamen(e, { date: '2026-09-25', bonnes: 33, total: 40, reussi: false });
     afficher(e);
     expect(screen.getByText('33 sur 40, recalé, aujourd’hui.')).toBeTruthy();
-    expect(lien('Nouvel examen blanc')).toBe('/examen');
+    expect(lien('Faire un examen blanc')).toBe('/examen');
   });
 });
 
