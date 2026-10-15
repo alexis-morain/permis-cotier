@@ -15,4 +15,4 @@ Ce build rend l’app plus nette au doigt, et retouche le geste de l’examen : 
 • Finis un examen blanc : la vibration du verdict tombe au moment où « Reçu » ou « Recalé » s’écrit, pas avant.
 • Avec « Réduire les animations » activé : plus rien ne monte ni ne glisse.
 
-Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, nous l’envoie.
+Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
