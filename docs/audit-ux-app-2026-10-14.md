@@ -103,7 +103,11 @@ lien qui mène à la racine d'un autre onglet s'ouvre dans l'onglet courant
    visible dès deux jours, texte neutre. Corrigé sur la Fiche et l'accueil du
    site ; l'Accueil de l'app le faisait déjà.
 
-## P2, listés
+## P2, corrigés le 14 au soir (« corrige tout », Alexis)
+
+Les quatre sont corrigés dans la PR #36 : la bascule d'onglet (`onglet({ chemin })` du greffon `Ecran`, `basculerVersLOnglet()` de `natif.ts`, écouteur en capture dans `Coquille.astro`, retour exclu), le jalon des sept jours retiré, « Ton épreuve » sur l'Accueil, « énoncé de question » dans `titre-examen`. La bascule compile pour le simulateur ; le geste reste à essayer sur l'iPhone.
+
+Le constat d'origine :
 
 1. **Un lien vers la racine d'un autre onglet s'ouvre dans l'onglet courant.**
    « Faire un examen blanc » depuis l'Accueil ou la Fiche joue l'examen sous

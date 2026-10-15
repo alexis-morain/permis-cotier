@@ -24,7 +24,8 @@ import { ClientRouter } from 'astro:transitions';
 <ClientRouter />
 
 <script>
-  import { armerLesRappelsSurLaDate, ouvrirDehors } from '../lib/natif';
+  import { navigate } from 'astro:transitions/client';
+  import { armerLesRappelsSurLaDate, basculerVersLOnglet, ongletVise, ouvrirDehors } from '../lib/natif';
   import { accorderBarreEtatALaPage } from '../lib/apparence';
   import { rafraichirSiLaProgressionAChange } from '../lib/page';
 
@@ -51,6 +52,33 @@ import { ClientRouter } from 'astro:transitions';
       if (!ouvert) window.open(url.href, '_blank', 'noopener');
     });
   });
+
+  // Un lien vers la racine d'un autre onglet bascule d'onglet : « Faire un
+  // examen blanc » depuis l'Accueil ouvre l'onglet Examen, et la barre dit où
+  // l'on est. En capture, pour passer avant le routeur, qui suivrait le lien
+  // dans l'onglet courant. Le bouton Retour, lui, reste dans son onglet.
+  document.addEventListener(
+    'click',
+    (clic) => {
+      if (clic.defaultPrevented || clic.button !== 0) return;
+      if (clic.metaKey || clic.ctrlKey || clic.shiftKey || clic.altKey) return;
+      const cible = clic.target;
+      if (!(cible instanceof Element)) return;
+      const lien = cible.closest('a[href]');
+      if (!(lien instanceof HTMLAnchorElement) || lien.closest('.retour__lien')) return;
+      const url = new URL(lien.href, location.href);
+      if (url.origin !== location.origin) return;
+      const onglet = ongletVise(url);
+      if (onglet === null) return;
+
+      clic.preventDefault();
+      clic.stopPropagation();
+      void basculerVersLOnglet(onglet).then((bascule) => {
+        if (!bascule) void navigate(url.href);
+      });
+    },
+    true,
+  );
 
   // Le bouton Retour remonte d'un échelon : l'écran doit glisser vers la
   // droite, comme le retour d'iOS. Pour le routeur c'est un lien suivi, donc
