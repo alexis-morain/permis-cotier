@@ -227,6 +227,49 @@ racine d'onglet, la page se recharge et ses îlots relisent la progression ;
 `/examen` est exclu, pour ne pas effacer un résultat. Une page profonde (une
 leçon, une série) n'est jamais rechargée : on y perdrait sa place.
 
+### Les badges
+
+Trois paliers par thème (`parcouru`, `retenu`, `sur`), décidés le 14 octobre
+(plan « app solide », lot 3). La logique est livrée seule (lot 3a), sans
+écran : tout est dans `src/lib/badges.ts`, pur et testé
+(`badges.test.ts`).
+
+- **État** : `Etat.badges` (`progression.ts`), le jour du gain par thème et
+  par palier. Champ facultatif, sans changer `VERSION_STOCKAGE` ; `charger`
+  n'en vérifie que la forme, `badgesLisibles` jette les entrées illisibles à
+  l'usage (le script en ligne de l'accueil embarque `charger`, et son budget
+  est de 9 000 octets). Un badge ne se retire jamais, sauf par `effacer()`.
+- **Examens** : `ExamenPasse.parTheme`, facultatif. `examenPasse(resultat,
+  date)` le recopie du `Resultat` de `calculerResultat`. Seuls les examens qui
+  le portent comptent pour `sur` ; ceux d'avant non.
+- **Les règles** : `parcouru`, toutes les leçons (notions) du thème suivies ;
+  `retenu`, `Math.ceil(80 %)` des questions publiées du thème retenues
+  (`estRetenue`) ; `sur`, sans faute sur le thème aux trois derniers examens
+  où il est tombé (un examen sans question du thème ne casse ni ne compte).
+  Un thème sans question publiée ne gagne rien, un thème sans leçon pas
+  `parcouru`.
+- **Les phrases** : `faitDuBadge(theme, palier, contexte)` dit le fait (« Les
+  11 leçons des feux et marques suivies, le 12 octobre. ») ; passer un
+  `BadgeNouveau` en contexte donne les nombres du jour du gain, l'état seul
+  (la date) une phrase qui reste vraie. `prochainPalier` dit le fait qui mène
+  au palier suivant, pour la page du thème.
+
+**Ce que le lot 3b branche**, trois appels, chacun suivi de `sauvegarder`
+et de l'annonce des `nouveaux` à l'écran qui les a fait gagner :
+
+1. **Fin de leçon** (`finir()` de `src/components/lecon-site.ts`) :
+   `attribuerBadges(terminerLecon(...), banque, jour)`.
+2. **Réponse et fin de série** (`src/components/quiz/effets.ts`) : après
+   `enregistrerReponse`, pour `retenu` ; l'annonce attend la fin de série.
+3. **Examen enregistré** (`useFinEtMesureDeLaSerie`, même fichier) :
+   `enregistrerExamen(charger(), examenPasse(r, aujourdhui()))` à la place
+   de l'objet écrit à la main, puis `attribuerBadges`.
+
+`banque` est la liste `{ id, theme }` des questions publiées
+(`QuestionConnue` de `profil.ts`) ; l'écran de leçon ne l'a pas encore. Un
+candidat qui remplit déjà un palier le gagne à son premier geste après la
+mise à jour, daté de ce jour.
+
 ## 10 octobre 2026 — les rappels s'arment, lot 0 du plan « app solide »
 
 ### Ce qui a changé
