@@ -246,8 +246,8 @@
 
 /* Thème par thème : deux jauges superposées, le vu en filet, le retenu en marine. */
 .maitrise { list-style: none; margin: 0; padding: 0; max-width: 40rem; }
-.maitrise li { max-width: none; border-top: 2px solid var(--filet); }
-.maitrise li:last-child { border-bottom: 2px solid var(--filet); }
+.maitrise > li { max-width: none; border-top: 2px solid var(--filet); }
+.maitrise > li:last-child { border-bottom: 2px solid var(--filet); }
 .maitrise a {
   display: grid;
   grid-template-columns: 1fr auto;
