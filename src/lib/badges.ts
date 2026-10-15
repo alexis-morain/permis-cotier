@@ -241,6 +241,25 @@ export function faitDuBadge(theme: string, palier: PalierBadge, ctx: ContexteFai
   return `Trois examens blancs de suite sans faute sur ${enPhrase(theme)}, ${le}.`;
 }
 
+/** Un badge gagné tel que l'écran l'annonce : tout est déjà écrit. */
+export interface BadgeAnnonce {
+  /** `<thème>:<palier>`, unique : la clé de la ligne. */
+  cle: string;
+  palier: string;
+  theme: string;
+  fait: string;
+}
+
+/** Les badges que le geste vient de faire gagner, en phrases, dans l'ordre reçu. */
+export function annoncesDesBadges(nouveaux: readonly BadgeNouveau[]): BadgeAnnonce[] {
+  return nouveaux.map((n) => ({
+    cle: `${n.theme}:${n.palier}`,
+    palier: PALIERS_BADGE.find((p) => p.code === n.palier)?.nom ?? n.palier,
+    theme: themeParCode(n.theme)?.nom ?? n.theme,
+    fait: faitDuBadge(n.theme, n.palier, n),
+  }));
+}
+
 /**
  * Ce qui mène au prochain palier du thème, dit comme un fait : jamais un
  * compte à rebours. Les paliers se prennent dans l'ordre, un palier
