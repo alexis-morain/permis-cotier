@@ -82,10 +82,10 @@ export default function AccueilApp({ lecons, ids }: Props) {
       </section>
 
       <section className="accueilApp__bloc" aria-labelledby="accueil-date">
-        <h2 id="accueil-date" className="accueilApp__titre">Ton examen</h2>
+        <h2 id="accueil-date" className="accueilApp__titre">Ton épreuve</h2>
         {date.etat === 'sansDate' && (
           <p className="accueilApp__texte">
-            <a className="accueilApp__lien" href="/profil">Pose la date de ton examen</a>
+            <a className="accueilApp__lien" href="/profil">Pose la date de ton épreuve</a>
           </p>
         )}
         {date.etat === 'avenir' && (

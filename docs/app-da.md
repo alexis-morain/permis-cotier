@@ -130,7 +130,7 @@ Le tableau de bord, quatre blocs de haut en bas, aucun texte de présentation :
 
 Chaque bouton dit un verbe et ce qu'il ouvre, avec les mots de la Fiche pour
 les mêmes destinations (audit du 14 octobre, `docs/audit-ux-app-2026-10-14.md`).
-4. **Ton examen** — le compte à rebours vers la date posée (« dans 12 jours »),
+4. **Ton épreuve** — le compte à rebours vers la date posée (« dans 12 jours »),
    ou « Pose la date de ton examen » vers `/profil`. Réutilise `DateExamen`.
 
 Deux gros chiffres au plus sur l'écran (leçons faites, jours restants), pas de

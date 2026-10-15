@@ -51,7 +51,7 @@ describe('accueil de l’app, premier lancement', () => {
     expect(screen.queryByRole('link', { name: 'Faire ma série du jour' })).toBeNull();
     expect(screen.getByText('Quarante questions, vingt secondes chacune.')).toBeTruthy();
     expect(lien('Faire un examen blanc')).toBe('/examen');
-    expect(lien('Pose la date de ton examen')).toBe('/profil');
+    expect(lien('Pose la date de ton épreuve')).toBe('/profil');
     expect(screen.queryByText(/jours de suite/)).toBeNull();
   });
 });
@@ -140,6 +140,6 @@ describe('accueil de l’app, la date de l’examen', () => {
   it('passée', () => {
     avec('2026-09-21');
     expect(screen.getByText('C’était il y a 4 jours')).toBeTruthy();
-    expect(screen.queryByRole('link', { name: 'Pose la date de ton examen' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Pose la date de ton épreuve' })).toBeNull();
   });
 });

@@ -170,20 +170,6 @@ export function serieDeJours(etat: Etat, aujourdhui: string): { jours: number; a
   return { jours, aujourdhui: ceJour };
 }
 
-/** La plus longue suite de jours avec activité, pour le jalon des sept jours. */
-function plusLongueSerie(etat: Etat): number {
-  const jours = Object.keys(etat.activite).filter((j) => (etat.activite[j] ?? 0) > 0).sort();
-  let record = 0;
-  let courante = 0;
-  let precedent: string | null = null;
-  for (const j of jours) {
-    courante = precedent !== null && jourPlus(precedent, 1) === j ? courante + 1 : 1;
-    record = Math.max(record, courante);
-    precedent = j;
-  }
-  return record;
-}
-
 export interface Objectif {
   cible: number;
   faites: number;
@@ -361,6 +347,10 @@ export interface Jalon {
  * Des jalons qu'on atteint et qu'on garde : rien ne se perd, rien ne se
  * retire. Ils se calculent depuis la progression, pas depuis une liste
  * cochée, pour rester justes si la banque change.
+ *
+ * Chacun dit un travail fait, jamais la présence seule : le jalon « Sept
+ * jours de suite » est parti le 14 octobre avec la règle des badges (plan
+ * « app solide », décision 1). La série de jours reste affichée, sans prix.
  */
 export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecons: number): Jalon[] {
   const publiees = new Set(banque.map((q) => q.id));
@@ -373,7 +363,6 @@ export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecon
   const recus = complets.filter((x) => x.reussi).length;
   const troisRecus = complets.length >= 3 && complets.slice(0, 3).every((x) => x.reussi);
   const lecons = Object.keys(etat.lecons).length;
-  const serie = plusLongueSerie(etat);
   const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`;
 
   return [
@@ -406,12 +395,6 @@ export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecon
       titre: 'Tous les thèmes ouverts',
       detail: `${themesTouches.size} thème${themesTouches.size > 1 ? 's' : ''} sur ${themesBanque.size}.`,
       atteint: themesBanque.size > 0 && themesTouches.size === themesBanque.size,
-    },
-    {
-      code: 'sept-jours',
-      titre: 'Sept jours de suite',
-      detail: serie >= 7 ? 'Fait.' : `Ta plus longue série : ${pluriel(serie, 'jour')}.`,
-      atteint: serie >= 7,
     },
     {
       code: 'trois-recus',
