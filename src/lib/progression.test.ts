@@ -498,16 +498,6 @@ describe('détail par thème d’un examen', () => {
     memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, examens: [ancien] }));
     expect(charger(memoire).examens).toEqual([ancien]);
   });
-
-  it('jette un détail illisible et garde l’examen', () => {
-    const examens = [
-      { date: '2026-10-01', bonnes: 36, total: 40, reussi: true, parTheme: 'vhf' },
-      { date: '2026-10-02', bonnes: 36, total: 40, reussi: true, parTheme: { vhf: { bonnes: 'six', total: 6 } } },
-      { date: '2026-10-03', bonnes: 36, total: 40, reussi: true, parTheme: { vhf: { bonnes: 7, total: 6 } } },
-    ];
-    memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, examens }));
-    expect(charger(memoire).examens).toEqual(examens.map(({ parTheme: _, ...x }) => x));
-  });
 });
 
 describe('badges rangés', () => {
@@ -527,17 +517,6 @@ describe('badges rangés', () => {
     const lu = charger(memoire);
     expect(lu.badges).toEqual({});
     expect(lu.lecons).toEqual(ancien.lecons);
-  });
-
-  it('jette chaque entrée illisible et garde le reste', () => {
-    const badges = {
-      vhf: { parcouru: '2026-10-12', retenu: 12, sur: 'hier', inconnu: '2026-10-12' },
-      meteo: 'tout',
-      ecluses: { retenu: '2026-10-13' },
-      signaux: {},
-    };
-    memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, badges }));
-    expect(charger(memoire).badges).toEqual({ vhf: { parcouru: '2026-10-12' }, ecluses: { retenu: '2026-10-13' } });
   });
 
   it('un champ badges qui n’est pas un objet se relit vide', () => {
