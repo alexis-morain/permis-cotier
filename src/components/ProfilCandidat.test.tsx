@@ -2,6 +2,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import ProfilCandidat from './ProfilCandidat';
+import { jourPlus } from '../lib/jour';
 import {
   aujourdhui,
   enregistrerExamen,
@@ -99,7 +100,20 @@ describe('la fiche', () => {
     const themes = screen.getAllByRole('link', { name: / en banque|jamais ouvert/ });
     expect(themes[0]!.getAttribute('href')).toBe('/entrainement/vhf');
     expect(screen.getByText('36 / 40')).toBeTruthy();
-    expect(document.querySelector('.jour__serie .jour__chiffre')?.textContent).toBe('1 jour de suite');
+    // Un seul jour n'est pas une série : rien ne la nomme encore.
+    expect(document.querySelector('.jour__serie .jour__chiffre')).toBeNull();
+  });
+
+  it('dit la série dès deux jours, au texte neutre, sans pousser à la tenir', () => {
+    const hier = jourPlus(aujourdhui(), -1);
+    // Hier et avant-hier, rien aujourd'hui : c'est là qu'une app insisterait.
+    let e = enregistrerReponse(etatInitial(), 'vhf-0', true, jourPlus(hier, -1));
+    e = enregistrerReponse(e, 'vhf-1', true, hier);
+    sauvegarder(e);
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.jour__serie .jour__chiffre')?.textContent).toBe('2 jours de suite');
+    const serie = document.querySelector('.jour__serie')!.textContent!;
+    expect(serie).not.toMatch(/tient|démarre|avant ce soir|perdre|manque/);
   });
 
   it('mène à la relecture des erreurs, sans les rejouer', () => {
