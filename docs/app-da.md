@@ -198,12 +198,12 @@ blanc ne faisait que 1,39:1.
 
 | Ligne directrice | Ce qui la satisfait |
 |---|---|
-| 4.2 Fonctionnalités minimales | Barre d'onglets native, plein écran d'examen natif, rappels locaux, haptique, feuille de partage, Safari intégré, hors ligne complet |
+| 4.2 Fonctionnalités minimales | Barre d'onglets native, plein écran d'examen natif, rappels locaux armés depuis la Fiche, haptique, sons en session `.ambient`, feuille de partage, Safari intégré, hors ligne complet. Relu au preflight de chaque version (`docs/preflight-<version>.md`) |
 | 4.0 Design (HIG) | Zones sûres, 44 pt, Dynamic Type suivi par `font: -apple-system-body` sur `html[data-app]` (les `rem` suivent ; `rem` seul ne suit pas dans WKWebView), sombre suivant le système, portrait |
 | 5.1.1 Confidentialité | Aucune donnée collectée, `PrivacyInfo.xcprivacy`, URL de politique `/a-propos`, aucun compte |
 | 5.1.2 Suivi | Aucun traceur dans le bundle, `verifier-cible.mjs` le refuse |
 | 2.1 Complétude | Aucun lien mort (`elaguer-app.mjs`), aucun « bêta », pas de placeholder |
-| 2.3 Métadonnées | La fiche dit le vrai nombre de questions ; captures prises dans l'app réelle |
+| 2.3 Métadonnées | La fiche dit le vrai nombre de questions (`app_store.py verifier-fiche`, en CI) ; captures prises dans l'app réelle |
 | 2.5.1 API | Que des API publiques, pas de code chargé à distance : la banque téléchargée est du **JSON de contenu**, pas du code |
 | 1.5 Assistance | URL d'assistance qui répond, formulaire de signalement dans l'app |
 

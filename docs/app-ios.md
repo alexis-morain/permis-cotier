@@ -5,6 +5,33 @@ resterait à faire. Il existe pour qu'on puisse reprendre le chantier sans
 relire les commits.
 La direction artistique et les règles écran par écran sont dans `docs/app-da.md`.
 
+## Avant chaque version
+
+`app-ios.yml` soumet seul dès qu'une CI est verte sur `main`. Le rituel se fait
+donc **avant la fusion** qui ouvre une version, pas après.
+
+1. **Preflight.** `capacitor-apple-review-preflight`, puis `app-store-review`
+   pour ce qu'il ne couvre pas (required-reason API, label de confidentialité,
+   ATT), en lecture locale. La réponse 4.2 de `docs/app-da.md` (« Ce qu'Apple
+   regarde ») se relit contre le code et se tient à jour.
+2. **Sortie** dans `docs/preflight-<version>.md` : bloquants d'un côté, ménage
+   de l'autre, chaque point avec son fichier et sa ligne. Un bloquant ferme la
+   version ; le ménage va au journal.
+3. **Le compte de la fiche.** `python scripts/app_store.py verifier-fiche`
+   (en CI, et refait par `preparer`) compte les questions publiées de
+   `data/questions/` et relit `ios/nouveautes.txt`, `ios/a-tester.txt` et
+   `docs/fiche-app-store/*.txt`. Règle : un nombre de cent ou plus suivi de
+   « questions » est **exact**, ou **arrondi par en dessous** à la centaine
+   près, « plus de N » avec N ≤ compte < N + 100 (658 : « plus de 600 »). Un
+   bump de banque qui franchit la centaine rend la CI rouge jusqu'à ce que la
+   fiche suive. Sous cent, le nombre parle d'un examen ou d'une série.
+
+`docs/fiche-app-store/` est la copie de ce qu'App Store Connect affiche
+(description, sous-titre, mots-clés, notes au relecteur) : ces champs se posent
+à la main, le script ne pousse que les nouveautés et « À tester ». Sous `docs/`,
+une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
+de la copie se reporte en ligne, et inversement.
+
 ## 12 octobre 2026 — la CI garde l'app, et le code se lit en morceaux (lots 5 et 4)
 
 ### Ce qui a changé
