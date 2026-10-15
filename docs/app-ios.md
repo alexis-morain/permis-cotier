@@ -72,9 +72,8 @@ de la copie se reporte en ligne, et inversement.
 - L'écart des P2 de l'audit : un lien vers la racine d'un autre onglet
   s'ouvre dans l'onglet courant (Swift, `RouteurDuSite`), le jalon « Sept
   jours de suite », « Ton examen » sur l'Accueil.
-- L'objectif Umami « premier examen » (`examen-commence` sans
-  `examen-termine` préalable) se pose dans la console d'Umami, pas dans le
-  dépôt.
+- L'objectif Umami « premier examen », que le plan demande pour mesurer dans
+  un mois, se pose dans la console d'Umami, pas dans le dépôt : non fait.
 
 ## 14 octobre 2026 — le geste de l'examen (lot 2)
 
