@@ -44,7 +44,9 @@ const themes = await themesAvecComptes();
   .grilleThemes li { border-top: 2px solid var(--filet); padding: 1.75rem 0; max-width: none; }
   .grilleThemes h2 { font-size: 1.4rem; margin-bottom: 0.15rem; }
   .grilleThemes h2 a { text-decoration: none; }
-  .grilleThemes h2 a:hover { text-decoration: underline; }
+  @media (hover: hover) and (pointer: fine) {
+    .grilleThemes h2 a:hover { text-decoration: underline; }
+  }
   .grilleThemes__intitule { margin-bottom: 0.75rem; }
   .grilleThemes__compte { display: flex; align-items: center; gap: 0.6rem; margin: 0; }
   @media (min-width: 60rem) {

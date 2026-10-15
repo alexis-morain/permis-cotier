@@ -51,6 +51,7 @@
 }
 .choix li { max-width: none; }
 .choix__option {
+  touch-action: manipulation;
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -69,7 +70,9 @@
   box-shadow: 0 var(--bord) 0 var(--filet-fort);
   transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
 }
-.choix__option:hover { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+@media (hover: hover) and (pointer: fine) {
+  .choix__option:hover { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+}
 .choix__option:active { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet-fort); }
 .choix__option--coche {
   border-color: var(--texte);
@@ -253,7 +256,9 @@
   padding: 0.75rem 0 0.85rem;
   text-decoration: none;
 }
-.maitrise a:hover b { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+@media (hover: hover) and (pointer: fine) {
+  .maitrise a:hover b { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+}
 .maitrise__note { font-size: 0.9rem; font-weight: 700; text-align: right; }
 /* Sous 30 rem, le compte passe sous le nom : « 9 retenues sur 12 vues, 56 en
    banque » ne tient pas à côté de « Règles de barre et de route ». */
@@ -361,7 +366,9 @@
   text-underline-offset: 0.16em;
   cursor: pointer;
 }
-.reglage__ligne .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+@media (hover: hover) and (pointer: fine) {
+  .reglage__ligne .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+}
 /* Le seul bouton rouge : celui qui efface. Plein, pour qu'on le lise avant
    de l'enfoncer ; « Annuler » reste un bouton ordinaire, sans couleur. */
 .bouton--danger {
@@ -370,7 +377,9 @@
   color: var(--blanc);
   box-shadow: 0 var(--bord) 0 var(--rouge-texte);
 }
-.bouton--danger:hover { background: var(--rouge-texte); border-color: var(--rouge-texte); }
+@media (hover: hover) and (pointer: fine) {
+  .bouton--danger:hover { background: var(--rouge-texte); border-color: var(--rouge-texte); }
+}
 .bouton--danger:active { box-shadow: 0 0 0 var(--rouge-texte); }
 
 @media (min-width: 40rem) {

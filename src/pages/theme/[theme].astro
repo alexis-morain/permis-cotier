@@ -143,12 +143,16 @@ const cours = coursParCode(theme.code);
     vertical-align: 0.1em;
   }
   .notion h3 a { text-decoration: none; }
-  .notion h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  @media (hover: hover) and (pointer: fine) {
+    .notion h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  }
   .resume { margin: 0 0 0.6rem; }
   .aucune { margin: 0; font-style: italic; }
 
   .questions { padding-left: 1.2rem; margin: 0; }
   .questions li { margin-bottom: 0.45rem; }
   .questions a { text-decoration: none; }
-  .questions a:hover { text-decoration: underline; }
+  @media (hover: hover) and (pointer: fine) {
+    .questions a:hover { text-decoration: underline; }
+  }
 </style>
