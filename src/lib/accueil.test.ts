@@ -11,7 +11,8 @@ import {
   reprise,
   type LeconAccueil,
 } from './accueil';
-import { enregistrerExamen, enregistrerReponse, etatInitial, terminerLecon } from './progression';
+import { enregistrerExamen, enregistrerProfil, enregistrerReponse, etatInitial, profilVide, terminerLecon } from './progression';
+import { estDue, serieDuJour, TAILLE_SERIE_PAR_DEFAUT } from './quiz';
 
 const JOUR = '2026-09-25';
 
@@ -69,6 +70,37 @@ describe('à revoir aujourd’hui', () => {
   it('une question retirée de la banque ne compte pas', () => {
     const e = enregistrerReponse(etatInitial(), 'retiree', false, JOUR);
     expect(aRevoir(e, ids, JOUR)).toEqual({ etat: 'jamais' });
+  });
+
+  describe('le même nombre que /revoir joue', () => {
+    /** `n` questions ratées aujourd'hui : toutes dues. */
+    function ratees(n: number, rythme: number | null) {
+      const banque = Array.from({ length: n + 5 }, (_, k) => ({ id: `q${k}`, theme: 'vhf' }));
+      let e = enregistrerProfil(etatInitial(), { ...profilVide(), rythme });
+      for (const q of banque.slice(0, n)) e = enregistrerReponse(e, q.id, false, JOUR);
+      return { e, banque, ids: banque.map((q) => q.id) };
+    }
+    /** Ce que la page `/revoir` met en série parmi les dues : le chemin de `Quiz.tsx`. */
+    const duesJouees = (e: ReturnType<typeof etatInitial>, banque: { id: string; theme: string }[]) =>
+      serieDuJour(banque, e.questions, JOUR, e.profil.rythme ?? undefined).filter((q) => estDue(e.questions[q.id], JOUR)).length;
+
+    it('borné au rythme choisi : 25 dues, une série de 10 en joue 10', () => {
+      const { e, banque, ids } = ratees(25, 10);
+      expect(duesJouees(e, banque)).toBe(10);
+      expect(aRevoir(e, ids, JOUR)).toEqual({ etat: 'du', nombre: 10 });
+    });
+
+    it('borné à la série par défaut sans rythme', () => {
+      const { e, banque, ids } = ratees(25, null);
+      expect(duesJouees(e, banque)).toBe(TAILLE_SERIE_PAR_DEFAUT);
+      expect(aRevoir(e, ids, JOUR)).toEqual({ etat: 'du', nombre: TAILLE_SERIE_PAR_DEFAUT });
+    });
+
+    it('toutes, quand elles tiennent dans la série', () => {
+      const { e, banque, ids } = ratees(4, 10);
+      expect(duesJouees(e, banque)).toBe(4);
+      expect(aRevoir(e, ids, JOUR)).toEqual({ etat: 'du', nombre: 4 });
+    });
   });
 });
 

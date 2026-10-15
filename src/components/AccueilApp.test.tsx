@@ -2,7 +2,16 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import AccueilApp from './AccueilApp';
-import { enregistrerExamen, enregistrerReponse, etatInitial, sauvegarder, terminerLecon, type Etat } from '../lib/progression';
+import {
+  enregistrerExamen,
+  enregistrerProfil,
+  enregistrerReponse,
+  etatInitial,
+  profilVide,
+  sauvegarder,
+  terminerLecon,
+  type Etat,
+} from '../lib/progression';
 import type { LeconAccueil } from '../lib/accueil';
 
 const lecons: LeconAccueil[] = [
@@ -59,6 +68,16 @@ describe('accueil de l’app, en cours de route', () => {
     expect(screen.getByText(/questions à revoir/).textContent).toBe('2 questions à revoir');
     expect(lien('Revoir')).toBe('/revoir');
     expect(screen.getByText('2 jours de suite')).toBeTruthy();
+  });
+
+  it('dit le nombre que /revoir joue, borné au rythme, et y mène en une touche', () => {
+    const douze = Array.from({ length: 12 }, (_, k) => `q${k}`);
+    let e = enregistrerProfil(etatInitial(), { ...profilVide(), rythme: 10 });
+    for (const id of douze) e = enregistrerReponse(e, id, false, '2026-09-25');
+    sauvegarder(e);
+    render(<AccueilApp lecons={lecons} ids={douze} />);
+    expect(screen.getByText(/questions à revoir/).textContent).toBe('10 questions à revoir');
+    expect(lien('Revoir')).toBe('/revoir');
   });
 
   it('rien de dû : le dit, sans bouton', () => {
