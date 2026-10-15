@@ -13,6 +13,7 @@ import {
   sauvegarder,
   enregistrerReponse,
   enregistrerExamen,
+  examenPasse,
   enregistrerEnCours,
   effacerEnCours,
   enregistrerEnCoursSerie,
@@ -25,8 +26,26 @@ import { POUR_APP } from '../../lib/cible';
 import { modeConcentration, vibrer } from '../../lib/natif';
 import { rangDeLaTouche } from '../../lib/melange';
 import type { QuestionAffichable } from '../../lib/banque';
+import { gagnerAuGeste, type BadgeAnnonce } from '../../lib/badges-geste';
+import type { QuestionConnue } from '../../lib/profil';
 
 type Envoyer = (action: Action) => void;
+
+/** Les badges gagnés par un geste de la série, à annoncer au résultat. */
+export interface Badges {
+  /** Toute la banque publiée, pas la part de la série : un geste compte pour tous les thèmes. */
+  banque: readonly QuestionConnue[];
+  gagnes: (annonces: BadgeAnnonce[]) => void;
+}
+
+/**
+ * Le geste vient d'être écrit : ce qu'il fait gagner est gardé tout de suite,
+ * et rangé pour le résultat. Un module qui ne vient pas (hors ligne sur le
+ * site) ne casse rien : le geste suivant attribuera.
+ */
+function attribuer({ banque, gagnes }: Badges): void {
+  gagnerAuGeste(banque).then((annonces) => annonces.length > 0 && gagnes(annonces), () => {});
+}
 
 /**
  * Le plein écran de la série, dans l'app : la barre d'onglets se cache dès
@@ -65,6 +84,7 @@ export function useEcritureDeLaSerie(
   theme: string | undefined,
   retourSerie: string | undefined,
   journalEcrit: MutableRefObject<number>,
+  badges: Badges,
 ): void {
   // Écriture de la progression locale, au fil des réponses.
   useEffect(() => {
@@ -75,6 +95,9 @@ export function useEcritureDeLaSerie(
     }
     sauvegarder(etat);
     journalEcrit.current = session.journal.length;
+    // `retenu` se gagne à la réponse ; l'annonce attend le résultat.
+    attribuer(badges);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.journal, journalEcrit]);
 
   // L'examen en cours survit au rafraîchissement et à l'écran verrouillé. On
@@ -114,13 +137,14 @@ interface Serie {
   theme?: string;
   notion?: { code: string };
   revoir: boolean;
+  badges: Badges;
 }
 
 /**
  * La fin d'une série, son départ, et son abandon : l'historique des examens,
  * le verdict qui se sent, et ce que la mesure en apprend.
  */
-export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir }: Serie): void {
+export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir, badges }: Serie): void {
   // Un abandon déjà compté pour la série en cours, et pas encore suivi d'un
   // retour. Partagé entre l'effet qui l'envoie et celui qui annonce la fin.
   const abandonEnvoye = useRef(false);
@@ -135,9 +159,9 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
       // serait faux. Il compte dans la progression par question, pas comme
       // épreuve passée.
       if (!session.interrompu) {
-        sauvegarder(
-          enregistrerExamen(charger(), { date: aujourdhui(), bonnes: r.bonnes, total: r.total, reussi: r.reussi }),
-        );
+        // Avec son détail par thème, que `sur` relit aux examens suivants.
+        sauvegarder(enregistrerExamen(charger(), examenPasse(r, aujourdhui())));
+        attribuer(badges);
         // Le verdict d'examen se sent, comme celui de chaque question en
         // entraînement. Un examen interrompu n'a pas de verdict à faire sentir.
         // Après un clic, cet effet part avant que le navigateur peigne : la

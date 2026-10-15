@@ -13,7 +13,7 @@ Décidées le 10 octobre 2026 (plan « app solide », décision 5), posées au l
 {
   "lignesParFichier": 600,
   "pourAppDansLesComposants": 40,
-  "examen": { "reference": 96310, "marge": 1024 }
+  "examen": { "reference": 86194, "marge": 1024 }
 }
 ```
 
@@ -34,9 +34,15 @@ comptent : ils disent une branche, et une branche de plus se paie.
 HTML, CSS et JavaScript compris, mesuré par `scripts/poids.mjs`. La police
 (fixe) et la banque JSON (qui grossit à chaque question publiée) n'y entrent
 pas : ce budget garde le code, pas le contenu. `reference` est la mesure de
-`main` au 12 octobre 2026 ; la page peut prendre `marge` octets de plus. Une
-PR qui l'allège abaisse `reference` du même coup, pour que la marge ne
-s'accumule pas.
+la branche du lot 3b au 14 octobre 2026 ; la page peut prendre `marge` octets
+de plus. Une PR qui l'allège abaisse `reference` du même coup, pour que la
+marge ne s'accumule pas.
+
+Historique : 96 310 au 12 octobre (`main`). Les lots 1, 2 et le signalement
+avaient pris 1 013 octets des 1 024 de marge. Le lot 3b sort la raison du
+candidat de `profil.ts` (`lib/raison.ts`) : le résultat d'examen ne charge plus
+la fiche entière ni la table des notions, −11,9 Ko ; les badges en reprennent
+0,8. Référence abaissée à 86 194.
 
 ## Relancer
 

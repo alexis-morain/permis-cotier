@@ -4,4 +4,6 @@ L’examen répond mieux au doigt : la réponse s’enfonce dès que tu la touch
 
 Plus nette au doigt : les boutons répondent au premier appui, plus rien ne reste surligné après un toucher, et les champs ne font plus zoomer l’écran, quelle que soit la taille du texte.
 
+Des paliers par thème : Parcouru, Retenu, Sûr à l’examen. Ils se gagnent sur ce que tu as fait, s’annoncent une fois et restent sur ta fiche.
+
 L’app demande maintenant iOS 18.

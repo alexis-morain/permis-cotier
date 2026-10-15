@@ -210,12 +210,19 @@ function enPhrase(theme: string): string {
   return THEME_EN_PHRASE[theme] ?? `le thème « ${themeParCode(theme)?.nom ?? theme} »`;
 }
 
-/** « de » plus l'article : des, du, de la, de l’. */
+/**
+ * « de » plus l'article : des, du, de la, de l’. Chaque membre d'un thème
+ * double prend le sien : « de la VHF et du SMDSM ». Un membre sans article
+ * (« feux et marques », « de barre et de route ») reste tel quel.
+ */
 function complement(theme: string): string {
-  const p = enPhrase(theme);
-  if (p.startsWith('les ')) return `des ${p.slice(4)}`;
-  if (p.startsWith('le ')) return `du ${p.slice(3)}`;
-  return `de ${p}`;
+  const de = (p: string): string | null => {
+    if (p.startsWith('les ')) return `des ${p.slice(4)}`;
+    if (p.startsWith('le ')) return `du ${p.slice(3)}`;
+    return /^(la |l’)/.test(p) ? `de ${p}` : null;
+  };
+  const [premier = '', ...autres] = enPhrase(theme).split(' et ');
+  return [de(premier) ?? `de ${premier}`, ...autres.map((p) => de(p) ?? p)].join(' et ');
 }
 
 /** « 12 octobre », « 1er octobre ». */
@@ -239,6 +246,25 @@ export function faitDuBadge(theme: string, palier: PalierBadge, ctx: ContexteFai
     return `${ctx.retenues} question${s} sur ${ctx.total} retenue${s}, ${le}.`;
   }
   return `Trois examens blancs de suite sans faute sur ${enPhrase(theme)}, ${le}.`;
+}
+
+/** Un badge gagné tel que l'écran l'annonce : tout est déjà écrit. */
+export interface BadgeAnnonce {
+  /** `<thème>:<palier>`, unique : la clé de la ligne. */
+  cle: string;
+  palier: string;
+  theme: string;
+  fait: string;
+}
+
+/** Les badges que le geste vient de faire gagner, en phrases, dans l'ordre reçu. */
+export function annoncesDesBadges(nouveaux: readonly BadgeNouveau[]): BadgeAnnonce[] {
+  return nouveaux.map((n) => ({
+    cle: `${n.theme}:${n.palier}`,
+    palier: PALIERS_BADGE.find((p) => p.code === n.palier)?.nom ?? n.palier,
+    theme: themeParCode(n.theme)?.nom ?? n.theme,
+    fait: faitDuBadge(n.theme, n.palier, n),
+  }));
 }
 
 /**
