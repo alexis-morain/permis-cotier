@@ -1,4 +1,4 @@
-import type { EtatQuestion, Progression } from './quiz';
+import type { EtatQuestion, Progression, Resultat } from './quiz';
 import { estDue, intervalle } from './quiz';
 import { aujourdhui as jourCourant, jourPlus } from './jour';
 // Le jour se lit dans `jour.ts`. Réexporté ici parce que la moitié du site
@@ -27,7 +27,24 @@ export interface ExamenPasse {
   bonnes: number;
   total: number;
   reussi: boolean;
+  /**
+   * Justes et posées par thème, ce que `sur` (badges) relit. Champ facultatif,
+   * ajouté sans changer la version : un examen d'avant lui n'en a pas, et ne
+   * compte pas pour ce palier.
+   */
+  parTheme?: Record<string, ScoreTheme>;
 }
+
+export interface ScoreTheme {
+  bonnes: number;
+  total: number;
+}
+
+/** Les trois paliers d'un thème, dans l'ordre où on les gagne. */
+export type PalierBadge = 'parcouru' | 'retenu' | 'sur';
+
+/** Les badges d'un thème : le jour où chaque palier a été gagné, `AAAA-MM-JJ`. */
+export type BadgesTheme = Partial<Record<PalierBadge, string>>;
 
 export interface Etat {
   version: number;
@@ -70,6 +87,12 @@ export interface Etat {
    * jours les plus récents.
    */
   activite: Record<string, number>;
+  /**
+   * Les badges gagnés, par code de thème. Ils se gardent : seul l'effacement
+   * complet les retire (voir `badges.ts`). Même statut que `lecons` :
+   * facultatif, sans changement de version.
+   */
+  badges: Record<string, BadgesTheme>;
 }
 
 export interface Profil {
@@ -153,6 +176,7 @@ export function etatInitial(): Etat {
     lecons: {},
     profil: profilVide(),
     activite: {},
+    badges: {},
   };
 }
 
@@ -247,6 +271,17 @@ export function rienRevise(etat: Etat): boolean {
   );
 }
 
+/**
+ * L'examen terminé tel que l'historique le garde, avec son détail par thème :
+ * `calculerResultat` le donne déjà, on le recopie.
+ */
+export function examenPasse(resultat: Resultat, date: string): ExamenPasse {
+  const parTheme = Object.fromEntries(
+    Object.entries(resultat.parTheme).map(([theme, s]) => [theme, { bonnes: s.bonnes, total: s.total }]),
+  );
+  return { date, bonnes: resultat.bonnes, total: resultat.total, reussi: resultat.reussi, parTheme };
+}
+
 export function enregistrerExamen(etat: Etat, examen: ExamenPasse): Etat {
   return { ...etat, examens: [examen, ...etat.examens].slice(0, MAX_EXAMENS) };
 }
@@ -334,6 +369,49 @@ export function migrerQuestions(brut: unknown): Progression {
   return propre;
 }
 
+function estScoreTheme(v: unknown): v is ScoreTheme {
+  if (!v || typeof v !== 'object') return false;
+  const { bonnes, total } = v as Record<string, unknown>;
+  return (
+    Number.isInteger(bonnes) && Number.isInteger(total) &&
+    (bonnes as number) >= 0 && (bonnes as number) <= (total as number)
+  );
+}
+
+/**
+ * Un examen relu : le reste passe tel quel, comme avant ; un `parTheme` dont
+ * une seule entrée est illisible est jeté en entier. L'examen ne compte alors
+ * plus pour `sur`, ce qui vaut mieux qu'un « sans faute » inventé.
+ */
+function lireExamen(brut: unknown): ExamenPasse {
+  if (!brut || typeof brut !== 'object' || !('parTheme' in brut)) return brut as ExamenPasse;
+  const { parTheme, ...reste } = brut as ExamenPasse & { parTheme: unknown };
+  const lisible =
+    parTheme !== null && typeof parTheme === 'object' && !Array.isArray(parTheme) &&
+    Object.values(parTheme).every(estScoreTheme);
+  return lisible ? { ...reste, parTheme: parTheme as Record<string, ScoreTheme> } : reste;
+}
+
+const PALIERS_RANGES: readonly PalierBadge[] = ['parcouru', 'retenu', 'sur'];
+const JOUR_RANGE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Les badges relus : un palier inconnu ou sans date lisible est jeté, un thème vide aussi. */
+function lireBadges(brut: unknown): Record<string, BadgesTheme> {
+  if (!brut || typeof brut !== 'object' || Array.isArray(brut)) return {};
+  const propre: Record<string, BadgesTheme> = {};
+  for (const [theme, valeur] of Object.entries(brut as Record<string, unknown>)) {
+    if (!valeur || typeof valeur !== 'object') continue;
+    const dates = valeur as Record<string, unknown>;
+    const gardes: BadgesTheme = {};
+    for (const palier of PALIERS_RANGES) {
+      const d = dates[palier];
+      if (typeof d === 'string' && JOUR_RANGE.test(d)) gardes[palier] = d;
+    }
+    if (Object.keys(gardes).length > 0) propre[theme] = gardes;
+  }
+  return propre;
+}
+
 export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
   const brut = lire(CLE_STOCKAGE, stockage);
   if (!brut) return etatInitial();
@@ -343,13 +421,14 @@ export function charger(stockage: Stockage | null = stockageParDefaut()): Etat {
     return {
       version: VERSION_STOCKAGE,
       questions: migrerQuestions(lu.questions),
-      examens: Array.isArray(lu.examens) ? lu.examens : [],
+      examens: Array.isArray(lu.examens) ? lu.examens.map(lireExamen) : [],
       dateExamen: lu.dateExamen ?? null,
       enCours: lu.enCours ?? null,
       enCoursSerie: lu.enCoursSerie ?? null,
       lecons: lu.lecons && typeof lu.lecons === 'object' ? lu.lecons : {},
       profil: lireProfil(lu.profil),
       activite: lireActivite(lu.activite),
+      badges: lireBadges(lu.badges),
     };
   } catch {
     return etatInitial();

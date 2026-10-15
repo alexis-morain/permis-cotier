@@ -18,6 +18,7 @@ import {
   enregistrerProfil,
   migrerQuestions,
   rienRevise,
+  examenPasse,
 } from './progression';
 import type { Stockage } from './progression';
 
@@ -465,5 +466,88 @@ describe('rien révisé encore', () => {
   it('ne tient pas compte du seul questionnaire de départ', () => {
     const profil = { ...profilVide(), motivations: ['louer'], rempliLe: '2026-10-03' };
     expect(rienRevise(enregistrerProfil(etatInitial(), profil))).toBe(true);
+  });
+});
+
+describe('détail par thème d’un examen', () => {
+  const resultat = {
+    bonnes: 38, erreurs: 2, total: 40, reussi: true, ratees: ['vhf-1', 'feux-2'],
+    parTheme: { vhf: { bonnes: 5, total: 6 }, 'feux-marques': { bonnes: 8, total: 9 } },
+  };
+
+  it('passe du résultat à l’historique avec son détail par thème', () => {
+    expect(examenPasse(resultat, '2026-10-14')).toEqual({
+      date: '2026-10-14', bonnes: 38, total: 40, reussi: true,
+      parTheme: { vhf: { bonnes: 5, total: 6 }, 'feux-marques': { bonnes: 8, total: 9 } },
+    });
+  });
+
+  it('copie le détail plutôt que de le partager avec le résultat', () => {
+    const x = examenPasse(resultat, '2026-10-14');
+    x.parTheme!.vhf!.bonnes = 0;
+    expect(resultat.parTheme.vhf.bonnes).toBe(5);
+  });
+
+  it('se garde et se relit', () => {
+    sauvegarder(enregistrerExamen(etatInitial(), examenPasse(resultat, '2026-10-14')), memoire);
+    expect(charger(memoire).examens[0]!.parTheme).toEqual(resultat.parTheme);
+  });
+
+  it('relit sans perte un examen d’avant, qui n’en a pas', () => {
+    const ancien = { date: '2026-09-10', bonnes: 36, total: 40, reussi: true };
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, examens: [ancien] }));
+    expect(charger(memoire).examens).toEqual([ancien]);
+  });
+
+  it('jette un détail illisible et garde l’examen', () => {
+    const examens = [
+      { date: '2026-10-01', bonnes: 36, total: 40, reussi: true, parTheme: 'vhf' },
+      { date: '2026-10-02', bonnes: 36, total: 40, reussi: true, parTheme: { vhf: { bonnes: 'six', total: 6 } } },
+      { date: '2026-10-03', bonnes: 36, total: 40, reussi: true, parTheme: { vhf: { bonnes: 7, total: 6 } } },
+    ];
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, examens }));
+    expect(charger(memoire).examens).toEqual(examens.map(({ parTheme: _, ...x }) => x));
+  });
+});
+
+describe('badges rangés', () => {
+  it('n’en a aucun au départ', () => {
+    expect(etatInitial().badges).toEqual({});
+  });
+
+  it('se gardent et se relisent', () => {
+    const e = { ...etatInitial(), badges: { vhf: { parcouru: '2026-10-12', sur: '2026-10-14' } } };
+    sauvegarder(e, memoire);
+    expect(charger(memoire).badges).toEqual(e.badges);
+  });
+
+  it('un état écrit avant eux se relit sans rien perdre', () => {
+    const ancien = { version: VERSION_STOCKAGE, questions: {}, examens: [], lecons: { a: { faiteLe: '2026-09-01', bonnes: 1, total: 1 } } };
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify(ancien));
+    const lu = charger(memoire);
+    expect(lu.badges).toEqual({});
+    expect(lu.lecons).toEqual(ancien.lecons);
+  });
+
+  it('jette chaque entrée illisible et garde le reste', () => {
+    const badges = {
+      vhf: { parcouru: '2026-10-12', retenu: 12, sur: 'hier', inconnu: '2026-10-12' },
+      meteo: 'tout',
+      ecluses: { retenu: '2026-10-13' },
+      signaux: {},
+    };
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, badges }));
+    expect(charger(memoire).badges).toEqual({ vhf: { parcouru: '2026-10-12' }, ecluses: { retenu: '2026-10-13' } });
+  });
+
+  it('un champ badges qui n’est pas un objet se relit vide', () => {
+    memoire.setItem(CLE_STOCKAGE, JSON.stringify({ version: VERSION_STOCKAGE, badges: ['vhf'] }));
+    expect(charger(memoire).badges).toEqual({});
+  });
+
+  it('partent avec l’effacement complet', () => {
+    sauvegarder({ ...etatInitial(), badges: { vhf: { parcouru: '2026-10-12' } } }, memoire);
+    effacer(memoire);
+    expect(charger(memoire).badges).toEqual({});
   });
 });
