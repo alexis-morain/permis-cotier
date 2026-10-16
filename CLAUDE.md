@@ -206,8 +206,8 @@ sources.
 - **Un îlot qui importe `natif`** fait naître sur le site un morceau de fonctions
   vides : les écrans annoncent (`annoncerDateExamen`, `progression.ts`),
   `Coquille.astro` écoute.
-- **Cible iOS 15.4**, plancher du web embarqué (`.at()`, `findLastIndex`,
-  `<dialog>`, `:has()`, `svh`) : rien au-dessus de Safari 15.4 sans repli. Le
+- **Cible iOS 16.0** (iPhone 8 et après) : rien au-dessus de Safari 16.0 sans
+  repli, `elaguer-app.mjs` refuse le JavaScript plus récent. Le
   greffon `Ecran` garde un chemin d'avant iOS 18 (`basculerAvantIOS18`).
 - Rappels au simulateur : la preuve est
   `data/Library/UserNotifications/<uuid>/PendingNotifications.plist` (`plutil -p`),

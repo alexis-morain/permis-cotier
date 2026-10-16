@@ -73,9 +73,8 @@ public class EcranPlugin: CAPPlugin, CAPBridgedPlugin {
     /// Avant iOS 18, cacher la barre ne rend pas toujours la place à l'écran :
     /// l'encart du bas peut garder la hauteur de la barre. On mesure l'écart
     /// avec la zone sûre de la fenêtre et on le retire par un encart négatif.
-    /// Barre rendue, l'encart revient à zéro. La cible est iOS 15.4, plancher
-    /// du web embarqué (`.at()`, `<dialog>`, `:has()`) : tout iPhone qui fait
-    /// tourner iOS 15 peut y monter, personne n'est laissé dehors.
+    /// Barre rendue, l'encart revient à zéro. La cible est iOS 16 : ce chemin
+    /// sert aux iPhone restés en 16 ou 17, vérifié au simulateur dans les deux.
     private static func basculerAvantIOS18(barre: UITabBarController,
                                            ecran: UIViewController,
                                            cachee: Bool) {

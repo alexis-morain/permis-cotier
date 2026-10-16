@@ -226,15 +226,12 @@ if (appels.length > 0) {
 console.log('  Aucun appel au Worker dans le bundle.');
 
 /**
- * La coquille vise iOS 15.4 pour ne laisser dehors aucun iPhone qui fait
- * tourner iOS 15. Sa webview est le Safari du téléphone : une API plus récente
- * n'y existe pas, et l'appel lève une erreur qui arrête l'écran entier. Le CSS
+ * La coquille vise iOS 16 : de l'iPhone 8 à aujourd'hui. Sa webview est le
+ * Safari du téléphone : une API plus récente n'y existe pas, et l'appel lève une erreur qui arrête l'écran entier. Le CSS
  * se dégrade seul, le JavaScript non. Chaque motif porte la version de Safari
  * qui l'a apporté ; en ajouter un, c'est choisir un repli ou monter la cible.
  */
 const JS_TROP_RECENT = [
-  [/\.(toSorted|toReversed|toSpliced)\(/, '16.0'],
-  [/AbortSignal\.timeout\(/, '16.0'],
   [/\(\?<[=!]/, '16.4 (regard arrière : erreur de syntaxe, tout le fichier tombe)'],
   [/\bstatic\s*\{/, '16.4 (bloc statique : erreur de syntaxe, tout le fichier tombe)'],
   [/Array\.fromAsync\(/, '16.4'],
@@ -256,12 +253,12 @@ for (const fichier of tousLesFichiers.filter((f) => /\.(html|js)$/.test(f))) {
   }
 }
 if (tropRecents.length > 0) {
-  console.error(`\nJavaScript plus récent que Safari 15.4 (${tropRecents.length}) :`);
+  console.error(`\nJavaScript plus récent que Safari 16.0 (${tropRecents.length}) :`);
   for (const ligne of tropRecents.slice(0, 20)) console.error(`  · ${ligne}`);
   console.error(
-    '\nLa coquille vise iOS 15.4 : sur un iPhone plus ancien, l’appel arrête l’écran.' +
+    '\nLa coquille vise iOS 16 : sur un iPhone en 16.0, l’appel arrête l’écran.' +
       '\nÉcrire l’équivalent d’avant, ou monter IPHONEOS_DEPLOYMENT_TARGET en le disant.',
   );
   process.exit(1);
 }
-console.log('  Aucun JavaScript plus récent que Safari 15.4.');
+console.log('  Aucun JavaScript plus récent que Safari 16.0.');
