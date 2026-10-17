@@ -559,7 +559,7 @@ const CAPTURE = { width: 640, height: 1391 };
     color: var(--bande-texte);
     overflow: hidden;
   }
-  .app__grille { display: grid; gap: 2.5rem; padding-top: 3.5rem; }
+  .app__grille { display: grid; gap: 2.5rem; padding-block: 3.5rem; }
   .app h2 { font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.02; margin-bottom: 1rem; }
   .app__chapo { font-size: 1.15rem; color: var(--bande-doux); max-width: 40ch; }
   .app__plus { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 34rem; }
@@ -592,12 +592,12 @@ const CAPTURE = { width: 640, height: 1391 };
   @media (hover: hover) and (pointer: fine) {
     .app__qr { display: flex; }
   }
-  .app__android { margin: 1.75rem 0 3rem; font-size: 0.92rem; color: var(--bande-doux); max-width: 46ch; }
+  .app__android { margin: 1.75rem 0 0; font-size: 0.92rem; color: var(--bande-doux); max-width: 46ch; }
+  /* L'écran se montre entier : la bande coupe ce qui dépasse. */
   .app__telephone {
     justify-self: center;
-    align-self: end;
+    align-self: center;
     width: min(100%, 17rem);
-    margin-bottom: -9rem;
     outline-color: var(--bande-filet);
   }
 
@@ -662,9 +662,8 @@ const CAPTURE = { width: 640, height: 1391 };
     .duo { width: min(100%, 28rem); }
     .reprendre { padding-block: 1rem 6rem; }
     .reprendre__grille { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 3rem; }
-    .app__grille { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; padding-top: 5rem; }
-    .app__telephone { width: min(100%, 18.5rem); margin-bottom: -11rem; }
-    .app__android { margin-bottom: 5rem; }
+    .app__grille { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; padding-block: 5rem; }
+    .app__telephone { width: min(100%, 18.5rem); }
     .listeCours { column-count: 2; column-gap: 3rem; }
     .listeCours li { break-inside: avoid; }
   }
