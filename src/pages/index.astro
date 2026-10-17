@@ -1,17 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+import EssaiQuestion from '../components/EssaiQuestion.astro';
 import { themesAvecComptes, questionsPubliees } from '../lib/banque';
 import { GUIDE } from '../lib/guide';
 import { POUR_APP } from '../lib/cible';
 import { COURS, cheminCours, leconsDuCours, leconsDuParcours } from '../lib/parcours';
 import { codesLeconsEcrites, compteLeconsEcrites } from '../lib/lecons';
-import { SITE, absolue } from '../lib/seo';
+import { SITE, APP_STORE, absolue } from '../lib/seo';
 import SCRIPT_BANDE from 'virtual:bande-avant-rendu';
 
 const themes = await themesAvecComptes();
 const questions = await questionsPubliees();
 const total = questions.length;
-const couverts = themes.filter((t) => t.publiees > 0).length;
 const lecons = leconsDuParcours().map((l) => ({ code: l.notion.code, nom: l.notion.nom, chemin: l.chemin }));
 const premiere = lecons[0];
 const cours = await compteLeconsEcrites();
@@ -31,15 +31,16 @@ const parcours = COURS.map((c) => ({
 }));
 
 /**
- * La question montrée en exemple. Depuis que la page ne signe plus d'un nom,
- * la preuve doit venir du produit : une vraie question, sa bonne réponse, son
- * explication et l'article dessous. Celle-ci est choisie pour son visuel, une
- * cardinale disant le sujet sans un mot. Si elle sortait de la banque, on
- * retombe sur la première question illustrée plutôt que de casser le build.
+ * La question qu'on essaie dans la bande d'ouverture. Depuis que la page ne
+ * signe plus d'un nom, la preuve doit venir du produit : une vraie question,
+ * qu'on coche et qu'on valide comme à l'épreuve. Celle-ci est choisie pour
+ * son visuel, qui dit la situation sans un mot, et pour ses deux bonnes
+ * réponses, qui apprennent la règle du format avant le premier examen. Si
+ * elle sortait de la banque, on retombe sur la première question illustrée
+ * plutôt que de casser le build.
  */
 const MONTREE = 'barre-route-0029';
 const demo = questions.find((q) => q.id === MONTREE) ?? questions.find((q) => q.visuel);
-const lettres: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E' };
 
 /**
  * Ce que lisent la bande d'ouverture (`bande-rendu.ts`) et les blocs qui
@@ -69,6 +70,10 @@ const liste = {
     url: absolue(c.chemin, base),
   })),
 };
+
+// Les captures de l'app, 640 px de large, servies hors précache
+// (`hors-ligne.ts`). Leur texte alternatif dit ce que l'écran montre.
+const CAPTURE = { width: 640, height: 1391 };
 ---
 
 <Base
@@ -82,16 +87,15 @@ const liste = {
       {/* Avant la colonne du nouveau venu, pour tourner avant la première
           peinture : chez qui a déjà une trace, il pose devant la colonne de
           la suite logique, et `data-bande` sur la section cache celle-ci ;
-          chez qui a un examen terminé, ses derniers examens remplacent le
-          panneau des comptes (`data-panneau`). Sans JavaScript, rien ne
+          chez qui a un examen terminé, ses derniers examens remplacent la
+          question à essayer (`data-panneau`). Sans JavaScript, rien ne
           change. Voir `bande-rendu.ts`. */}
       <script is:inline set:html={SCRIPT_BANDE} />
       <div class="ouverture__texte ouverture__texte--nouveau">
-        <h1>Révise le permis côtier au format de l’épreuve.</h1>
+        <h1>Le permis côtier, trois minutes à la fois.</h1>
         <p class="ouverture__promesse">
-          Gratuit, sans compte. Le cours en {cours.ecrites} leçons de trois minutes, puis
-          l’examen blanc au format du jour J : quarante questions, vingt secondes chacune, cinq
-          erreurs admises. Chaque réponse cite l’article dont elle sort.
+          Des leçons courtes écrites depuis les textes, {total} questions qui citent leur
+          article, et l’examen blanc au format du jour J. Gratuit, sans compte, sans publicité.
         </p>
 
         <div class="ouverture__actions">
@@ -104,133 +108,142 @@ const liste = {
         <p class="ouverture__deja">
           Tu veux juste te situer ? L’examen blanc est aussi
           <a href="/test-permis-cotier" data-mesure="accueil-test">le test gratuit du permis côtier</a>,
-          le même, en dix minutes. Déjà en bateau-école ?
+          en dix minutes. Déjà en bateau-école ?
           <a href="/entrainement" data-mesure="accueil-entrainement">Entraîne-toi thème par thème</a>,
           sans chrono.
         </p>
       </div>
 
-      <aside class="ouverture__cote">
-        <p class="compteur">
-          <b class="display">{total}</b>
-          <span>
-            {couverts === themes.length
-              ? 'questions publiées, et les quatorze thèmes du programme couverts'
-              : `questions publiées, sur ${couverts} des quatorze thèmes du programme`}
-          </span>
-        </p>
-        <p class="compteur">
-          <b class="display">{cours.ecrites}</b>
-          <span>leçons écrites depuis les textes, pas depuis un manuel</span>
-        </p>
-        <hr />
-        <p class="discret ouverture__tracabilite">
-          Sous chaque réponse, l’article et son numéro.
-          <a href="/a-propos" data-mesure="accueil-a-propos">Comment ces questions sont écrites</a>.
-        </p>
-      </aside>
+      {demo && (
+        <div class="ouverture__cote">
+          <EssaiQuestion question={demo} />
+          <p class="ouverture__legende">
+            Une question de la banque, telle quelle. Il y en a {total - 1} autres,
+            <a href="/themes" data-mesure="accueil-themes">rangées par thème</a>.
+          </p>
+        </div>
+      )}
     </div>
   </section>
 
-  <section class="page trois">
-    <h2>Le cours apprend, l’entraînement corrige, l’examen blanc mesure</h2>
-    <p class="trois__chapo">
-      Rien n’oblige à les prendre dans cet ordre, mais c’est dans cet ordre qu’ils se
-      répondent : une leçon se termine sur les questions de la banque quand le thème en a,
-      et ce que tu rates à l’entraînement revient en premier la fois suivante.
-    </p>
-    <ol class="trois__liste">
-      <li>
-        <h3><a href="/cours" data-mesure="accueil-trois-cours">Le cours</a></h3>
-        <p class="pastille">{cours.ecrites} leçons</p>
-        <p>
-          Quatorze cours, un par thème, rangés dans l’ordre où on l’apprend et non dans celui
-          de l’arrêté : le balisage d’abord, parce qu’il se voit, puis se croiser sans se
-          toucher, puis les feux. Le reste suit. Trois minutes par leçon, la source sous
-          chaque affirmation.
-        </p>
-      </li>
-      <li>
-        <h3><a href="/entrainement" data-mesure="accueil-trois-entrainement">L’entraînement</a></h3>
-        <p class="pastille">{couverts} thèmes ouverts</p>
-        <p>
-          Un thème à la fois, sans chrono. La correction tombe après chaque réponse, avec
-          l’explication et le texte dont elle vient. Ta
-          <a href="/revoir" data-mesure="accueil-trois-revoir">série du jour</a> pose ce qu’il est
-          temps de revoir, tous thèmes mêlés.
-        </p>
-      </li>
-      <li>
-        <h3><a href="/examen" data-mesure="accueil-trois-examen">L’examen blanc</a></h3>
-        <p class="pastille">40 questions</p>
-        <p>
-          Quarante questions tirées dans les quatorze thèmes, cinq erreurs admises, le chrono
-          qui tourne. Vingt secondes par question : la durée n’est pas dans l’arrêté, elle
-          vient des opérateurs agréés, et on la reprend pour que le rythme ne surprenne pas.
-        </p>
-      </li>
-    </ol>
+  <section class="rang page" aria-labelledby="rang-cours">
+    <div class="rang__texte">
+      <h2 id="rang-cours">Une leçon, une idée, trois minutes</h2>
+      <p class="chiffre">
+        <b class="display">{cours.ecrites}</b>
+        <span>leçons en quatorze cours, écrites depuis les textes et non depuis un manuel</span>
+      </p>
+      <p>
+        Le cours suit l’ordre où on apprend, pas celui de l’arrêté : le balisage d’abord,
+        parce qu’il se voit, puis se croiser sans se toucher, puis les feux. Chaque leçon
+        tient sur un écran de téléphone, cite sa source sous chaque affirmation, et se termine
+        sur les questions de la banque quand le thème en a.
+      </p>
+      <p class="rang__liens">
+        {premiere && (
+          <a href={premiere.chemin} data-mesure="accueil-rang-cours" data-mesure-notion={premiere.code}>Commencer par «&nbsp;{premiere.nom}&nbsp;»</a>
+        )}
+        <a href="#cours" data-mesure="accueil-rang-plan">Voir les quatorze cours</a>
+      </p>
+    </div>
+    {/* Les captures restent hors du bundle de l'app (`elaguer-app.mjs`). */}
+    {!POUR_APP && (
+      <figure class="telephone rang__image">
+        <img
+          src="/vitrine/cours.webp"
+          alt="L’écran du cours dans l’app : la leçon à reprendre, puis les chapitres du parcours avec leur avancement."
+          {...CAPTURE}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    )}
   </section>
 
-  {demo && (
-    <section class="page preuve">
-      <h2>À quoi ressemble une question</h2>
-      <p class="preuve__chapo">
-        Celle-ci sort de la banque telle quelle. Ce qui compte est en bas : le texte dont la
-        réponse est tirée, avec son numéro.
-      </p>
-
-      <div class="preuve__cadre encadre">
-        {demo.visuel && (
-          <figure class="preuve__figure">
-            <img
-              src={`/visuels/${demo.visuel.fichier}`}
-              alt={demo.visuel.alt}
-              width="240"
-              height="200"
-              loading="lazy"
-            />
-          </figure>
-        )}
-
-        <div class="preuve__corps">
-          <p class="preuve__enonce">{demo.enonce}</p>
-          <ol class="propositionsListe">
-            {demo.propositions.map((p) => (
-              <li class={demo.reponses.includes(p.id) ? 'bonne' : ''}>
-                <span class="lettre">{lettres[p.id] ?? p.id}</span>
-                <span>{p.texte}</span>
-                {demo.reponses.includes(p.id) && <span class="preuve__juste">bonne réponse</span>}
-              </li>
-            ))}
-          </ol>
-          <p class="preuve__explication">{demo.explication}</p>
-          <p class="preuve__source">
-            <span class="preuve__etiquette">Source</span>
-            {demo.sources.map((s) => s.texte).join(' ; ')}
-          </p>
-          <p class="discret preuve__lien">
-            {/* Les pages `question/` sont du pur référencement et ne sont pas
-                construites dans la coquille : le lien y serait mort. */}
-            {!POUR_APP && (
-              <Fragment>
-                <a href={`/question/${demo.id}`} data-mesure="accueil-question">Voir cette question sur sa page</a>,
-                ou{' '}
-              </Fragment>
-            )}
-            <a href="/themes" data-mesure="accueil-themes">parcourir les {total - 1} autres</a>.
-          </p>
-        </div>
+  <section class="bandeau" aria-labelledby="rang-examen">
+    <div class="rang rang--inverse page">
+      <div class="rang__texte">
+        <h2 id="rang-examen">L’examen blanc tourne comme le vrai</h2>
+        <p>
+          Quarante questions tirées dans les quatorze thèmes, une ou deux bonnes réponses
+          chacune, vingt secondes pour répondre, cinq erreurs admises. À la fin, tu vois où
+          partent tes points, thème par thème, et ce que tu rates revient en premier la fois
+          suivante.
+        </p>
+        <p class="discret">
+          Les vingt secondes ne sont pas dans l’arrêté : elles viennent des opérateurs agréés,
+          et on les reprend pour que le rythme ne te surprenne pas le jour J.
+        </p>
+        <p class="rang__liens">
+          <a class="bouton" href="/examen" data-mesure="accueil-rang-examen">Passer un examen blanc</a>
+        </p>
       </div>
-    </section>
-  )}
+      {!POUR_APP && (
+      <div class="duo rang__image">
+        <figure class="telephone duo__avant">
+          <img
+            src="/vitrine/examen.webp"
+            alt="Une question d’examen blanc : le chrono à vingt secondes, la troisième question sur quarante, trois propositions et le bouton « Valider et passer »."
+            {...CAPTURE}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <figure class="telephone duo__arriere">
+          <img
+            src="/vitrine/resultat.webp"
+            alt="Le résultat d’un examen blanc : 36 sur 40, reçu avec quatre erreurs sur les cinq admises, puis le score de chaque thème."
+            {...CAPTURE}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+      )}
+    </div>
+  </section>
 
-  <section class="page reprendre">
-    <h2>Sans compte, et rien qui sorte de ton navigateur</h2>
+  <section class="rang page" aria-labelledby="rang-source">
+    <div class="rang__texte">
+      <h2 id="rang-source">Chaque réponse dit d’où elle vient</h2>
+      <p class="chiffre">
+        <b class="display">{total}</b>
+        <span>questions, écrites article par article, jamais recopiées d’un éditeur</span>
+      </p>
+      <p>
+        On lit le texte, on écrit la question, on relit : le RIPAM pour les feux, les marques
+        et les règles de barre, l’arrêté du 28 septembre 2007 pour le programme, la division
+        240 pour l’armement. Sous chaque correction, l’article et son numéro.
+      </p>
+      <p>
+        Une question te paraît fausse ? Le bouton de signalement est dessous, et la
+        correction arrive dans la semaine.
+      </p>
+      <p class="rang__liens">
+        <a href="/a-propos" data-mesure="accueil-a-propos">Comment ces questions sont écrites</a>
+      </p>
+    </div>
+    {/* Les captures restent hors du bundle de l'app (`elaguer-app.mjs`). */}
+    {!POUR_APP && (
+      <figure class="telephone rang__image">
+        <img
+          src="/vitrine/correction.webp"
+          alt="Une correction dans l’app : « Juste », l’explication de la bouée d’épave, puis les trois articles de l’arrêté du 30 novembre 2017 qui la fondent."
+          {...CAPTURE}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    )}
+  </section>
+
+  <section class="page reprendre" aria-labelledby="reprendre">
+    <h2 id="reprendre">Tes erreurs reviennent jusqu’à ce que tu les tiennes</h2>
     <p class="reprendre__chapo">
-      Pas d’inscription, pas de mot de passe, pas de paiement. Ce que tu fais reste chez toi :
-      les leçons faites, les questions ratées, la date de ton examen. Le site marche hors ligne
-      une fois visité, et tout se relit ou s’efface depuis <a href="/profil">ta fiche</a>.
+      Ce que tu rates revient dans ta série du jour, les plus anciennes d’abord. Pose la
+      date de ton examen, le site compte les jours. Pas de compte, pas de mot de passe : ce
+      que tu fais reste dans ton navigateur, le site marche hors ligne une fois visité, et
+      tout se relit ou s’efface depuis <a href="/profil">ta fiche</a>.
     </p>
     <div class="reprendre__grille">
       {/* Vides jusqu'au script, comme les îlots `client:only` qu'ils remplacent. */}
@@ -239,8 +252,50 @@ const liste = {
     </div>
   </section>
 
-  <section class="page cours">
-    <h2>Les quatorze cours</h2>
+  {/* L'app n'a pas à se vendre à elle-même : rien de ceci dans la coquille. */}
+  {!POUR_APP && (
+    <section class="app" aria-labelledby="app">
+      <div class="page app__grille">
+        <div class="app__texte">
+          <h2 id="app">Aussi sur iPhone</h2>
+          <p class="app__chapo">
+            Le même cours et la même banque, dans une app gratuite qui marche hors ligne, en
+            mer comme dans le métro.
+          </p>
+          <ul class="app__plus">
+            <li>Un rappel avant la date de ton examen.</li>
+            <li>Les signaux sonores s’entendent, et la correction se sent sous le doigt.</li>
+            <li>Ta progression reste sur ton téléphone : ni compte, ni traceur.</li>
+          </ul>
+          <div class="app__liens">
+            <a class="app__badge" href={APP_STORE.url} data-mesure="accueil-app-store">
+              <img src="/vitrine/app-store.svg" alt="Télécharger dans l’App Store" width="190" height="60" loading="lazy" />
+            </a>
+            <figure class="app__qr">
+              <img src="/vitrine/qr-app-store.svg" alt="" width="88" height="88" loading="lazy" />
+              <figcaption>Sur ordinateur, vise ce code avec l’appareil photo de ton iPhone.</figcaption>
+            </figure>
+          </div>
+          <p class="app__android">
+            Pas d’app Android pour l’instant : le site fait tout ce que fait l’app, et
+            s’installe sur l’écran d’accueil depuis le menu du navigateur.
+          </p>
+        </div>
+        <figure class="telephone app__telephone">
+          <img
+            src="/vitrine/accueil.webp"
+            alt="L’accueil de l’app : la leçon à continuer, quatorze questions à revoir aujourd’hui, le dernier examen blanc et les jours qui restent avant l’examen."
+            {...CAPTURE}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+    </section>
+  )}
+
+  <section class="page cours" id="cours" aria-labelledby="cours-titre">
+    <h2 id="cours-titre">Les quatorze cours</h2>
     <p class="discret cours__note">
       Un cours par thème du programme, dans l’ordre de l’apprentissage. Pour l’ordre de
       l’arrêté, thème par thème, va au <a href="/themes">programme</a>.
@@ -286,15 +341,8 @@ const liste = {
       aucune.
     </p>
     <p>
-      Chaque question part d’un article : le RIPAM pour les feux, les marques et les règles de
-      barre, l’arrêté du 28 septembre 2007 pour le programme et le barème, la division 240 pour
-      l’armement. On lit l’article, on écrit la question, on relit. Jamais l’inverse, et jamais
-      en recopiant un éditeur.
-    </p>
-    <p>
-      Le code et la banque sont publics, sous licence libre. Si une question te paraît fausse,
-      le bouton de signalement est sous chaque question et la correction arrive dans la semaine.
-      Le détail de la fabrication est sur la page <a href="/a-propos">qui écrit ces questions</a>.
+      Le code et la banque sont publics, sous licence libre. Le détail de la fabrication est
+      sur la page <a href="/a-propos">qui écrit ces questions</a>.
     </p>
   </section>
 
@@ -389,22 +437,27 @@ const liste = {
   .ouverture__grille {
     display: grid;
     gap: 2.5rem;
-    padding-block: 3rem 3.5rem;
+    padding-block: 2.75rem 3.25rem;
   }
   /* La colonne de qui revient est rendue par le script en ligne, sans
      l'attribut de portée : ses classes se visent en `:global`, sous la
      section qui, elle, le porte. Posée, elle cache celle du nouveau venu. */
   .ouverture[data-bande] .ouverture__texte--nouveau { display: none; }
-  /* Sur téléphone, le panneau des comptes est la preuve faite au nouveau
-     venu : chez qui revient, il remplissait le bas du premier écran sous la
-     suite logique. Sur grand écran, il tient la seconde colonne. */
+  /* Sur téléphone, qui revient a sa suite logique en entier sous les yeux ;
+     la question à essayer est pour le nouveau venu. Sur grand écran, elle
+     tient la seconde colonne. */
   @media (max-width: 51.99rem) {
     .ouverture[data-bande] .ouverture__cote { display: none; }
   }
-  /* Qui a terminé un examen blanc voit ses derniers à la place des comptes. */
+  /* Qui a terminé un examen blanc voit ses derniers à la place de la question. */
   .ouverture[data-panneau] .ouverture__cote { display: none; }
-  .ouverture :global(h1) { max-width: 16ch; }
-  .ouverture :global(.ouverture__promesse) { font-size: 1.15rem; max-width: 46ch; color: var(--bande-doux); }
+  .ouverture :global(h1) {
+    max-width: 14ch;
+    font-size: clamp(2.1rem, 6.4vw, 3.6rem);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .ouverture :global(.ouverture__promesse) { font-size: 1.15rem; max-width: 44ch; color: var(--bande-doux); margin-top: 1.25rem; }
   .ouverture :global(.ouverture__actions) {
     display: flex;
     flex-wrap: wrap;
@@ -412,137 +465,143 @@ const liste = {
     gap: 0.85rem 1rem;
     margin-top: 2rem;
   }
-  .ouverture :global(.ouverture__deja) { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 48ch; }
+  .ouverture :global(.ouverture__deja) { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 46ch; }
   .ouverture :global(.ouverture__deja a) { color: var(--bande-texte); }
 
-  /* Le panneau blanc posé sur la bande. */
-  .ouverture__cote {
-    /* Le panneau est clair : l'anneau jaune de la bande ne s'y verrait pas. */
-    --anneau: var(--texte);
-    align-self: start;
-    /* En sombre, la surface a la couleur de la bande : le panneau se détache
-       par le fond de page et un filet. Les deux jetons sont dans global.css. */
-    background: var(--panneau);
-    color: var(--texte);
-    border: 2px solid var(--panneau-filet);
-    border-radius: var(--rayon);
-    padding: 1.5rem;
-  }
-  .compteur { display: flex; flex-direction: column; gap: 0.15rem; margin: 0 0 1rem; }
-  .compteur:last-of-type { margin-bottom: 0; }
-  .compteur .display { font-size: 3.2rem; line-height: 1; }
-  .compteur span { font-weight: 600; font-size: 0.95rem; }
-  .ouverture__cote hr { margin: 1.25rem 0; }
-  .ouverture__tracabilite { margin: 0; }
+  .ouverture__cote { align-self: start; min-width: 0; }
+  .ouverture__legende { margin: 0.9rem 0 0; color: var(--bande-doux); font-size: 0.92rem; }
+  .ouverture__legende a { color: var(--bande-texte); }
 
-  /* Les trois façons de réviser. Trois colonnes séparées par un filet, comme
-     les listes du site, et non trois cartes : rien n'y est encadré. */
-  .trois { padding-block: 3.5rem 0; }
-  .trois__chapo { max-width: var(--mesure); margin-bottom: 2rem; }
-  .trois__liste {
-    list-style: none;
+  /* Les rangs : un écran de l'app à côté de ce qu'il fait. Le texte et
+     l'image alternent de côté, et le rang de l'examen passe sur la surface
+     blanche, en pleine largeur : trois rangs, trois rythmes. */
+  .rang {
     display: grid;
-    gap: 0 3rem;
-    margin: 0;
-    padding: 0;
+    gap: 2.25rem;
+    align-items: center;
+    padding-block: 4rem;
   }
-  .trois__liste li {
-    border-top: 2px solid var(--filet);
-    padding-top: 1rem;
-    padding-bottom: 1.4rem;
-    max-width: none;
-  }
-  .trois__liste h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
-  .trois__liste h3 a { text-decoration: none; }
-  @media (hover: hover) and (pointer: fine) {
-    .trois__liste h3 a:hover { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
-  }
-  .trois__liste .pastille { margin-bottom: 0.75rem; }
-  .trois__liste p { max-width: 42ch; margin-bottom: 0; }
-  .trois__liste p + p { margin-top: 0.75rem; }
-
-  /* La question montrée : le seul endroit de la page où le contenu est encadré. */
-  .preuve { padding-block: 3.5rem 0; }
-  .preuve__chapo { max-width: var(--mesure); margin-bottom: 1.75rem; }
-  .preuve__cadre {
-    display: grid;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    max-width: 60rem;
-  }
-  .preuve__figure { margin: 0; }
-  .preuve__figure img {
-    width: min(100%, 13rem);
-    height: auto;
-    border: 2px solid var(--filet);
-    border-radius: var(--rayon);
-    background: var(--fond-carte);
-  }
-  .preuve__corps > :last-child { margin-bottom: 0; }
-  .preuve__enonce { font-size: 1.15rem; font-weight: 700; line-height: 1.3; max-width: 46ch; }
-  .preuve .propositionsListe { list-style: none; margin: 1.25rem 0 1.5rem; padding: 0; }
-  .preuve .propositionsListe li {
+  .rang__texte { min-width: 0; }
+  .rang__texte h2 { font-size: clamp(1.6rem, 4.2vw, 2.4rem); line-height: 1.05; max-width: 16ch; text-wrap: balance; margin-bottom: 1.25rem; }
+  .rang__texte p { max-width: 50ch; }
+  .rang__liens {
     display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-    padding: 0.7rem 0.9rem;
-    border: 2px solid var(--filet);
-    border-radius: var(--rayon);
-    background: var(--fond-carte);
-    margin-bottom: 0.5rem;
-    max-width: none;
-  }
-  .preuve .propositionsListe .bonne { border-color: var(--vert); background: var(--vert-pale); }
-  .preuve .lettre {
-    flex: 0 0 1.85rem; height: 1.85rem;
-    display: grid; place-items: center;
-    border: 2px solid var(--filet-fort);
-    border-radius: 999px;
-    font-size: 0.85rem; font-weight: 800;
-  }
-  .preuve .bonne .lettre { background: var(--vert); border-color: var(--vert); color: var(--blanc); }
-  /* La couleur ne suffit pas : la bonne réponse se lit aussi en toutes lettres,
-     au lecteur d'écran comme à qui ne distingue pas le vert. */
-  .preuve__juste {
-    margin-left: auto;
-    align-self: center;
-    color: var(--vert-texte);
-    font-size: 0.8rem;
-    font-weight: 800;
-    white-space: nowrap;
-  }
-  .preuve__explication { max-width: var(--mesure); }
-  .preuve__source {
-    margin-top: 1rem;
-    padding-top: 0.9rem;
-    border-top: 2px solid var(--filet);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin: 1.5rem 0 0;
     font-weight: 600;
-    max-width: var(--mesure);
   }
-  .preuve__etiquette {
-    display: inline-block;
-    margin-right: 0.6rem;
-    padding: 0.1em 0.55em;
-    border-radius: var(--rayon-petit);
-    background: var(--jaune);
-    color: var(--marine);
-    font-size: 0.8rem;
-    font-weight: 800;
-    font-stretch: var(--large);
+  .rang__image { justify-self: center; }
+
+  /* Un chiffre qui compte, pris dans le récit du rang, et non une rangée de stats. */
+  .chiffre {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.85rem;
+    margin: 0 0 1.25rem;
   }
-  .preuve__lien { margin-top: 1rem; }
+  .chiffre .display {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    line-height: 0.9;
+    font-variant-numeric: tabular-nums;
+    text-decoration: underline;
+    text-decoration-color: var(--jaune);
+    text-decoration-thickness: 0.12em;
+    text-underline-offset: 0.08em;
+    text-decoration-skip-ink: none;
+  }
+  .chiffre span { font-weight: 600; max-width: 24ch; line-height: 1.3; }
+
+  /* Le téléphone : l'écran de l'app dans un cadre marine. La capture porte
+     déjà la barre d'état et l'île ; le cadre ne dessine que le boîtier. */
+  .telephone {
+    margin: 0;
+    width: min(100%, 15rem);
+    border: 0.55rem solid var(--marine);
+    border-radius: 2.6rem;
+    overflow: hidden;
+    background: var(--brume);
+    outline: 2px solid var(--filet-fort);
+    outline-offset: 0;
+  }
+  .telephone img { display: block; width: 100%; height: auto; aspect-ratio: 640 / 1391; }
+
+  .bandeau { background: var(--fond-carte); border-block: 2px solid var(--filet); }
+
+  /* Deux écrans de l'examen, l'un devant l'autre : la question, puis le score. */
+  .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 26rem); }
+  .duo .telephone { width: 100%; grid-row: 1; }
+  .duo { gap: 0 1.25rem; }
+  .duo__avant { grid-column: 1; margin-top: 3.5rem; }
+  .duo__arriere { grid-column: 2; }
 
   /* L'absence de compte, dite puis montrée : où on en est, et la date qu'on
      peut poser. Hors du premier écran, parce qu'elle ne parle qu'à celui qui
      a déjà commencé. */
-  .reprendre { padding-block: 3.5rem 0; }
+  .reprendre { padding-block: 1rem 4rem; }
+  .reprendre h2 { font-size: clamp(1.6rem, 4.2vw, 2.4rem); line-height: 1.05; max-width: 20ch; text-wrap: balance; margin-bottom: 1.25rem; }
   .reprendre__chapo { max-width: var(--mesure); margin-bottom: 1.75rem; }
   .reprendre__grille { display: grid; gap: 1.5rem; align-items: start; }
   .reprendre__etat { min-width: 0; }
   .reprendre__date { max-width: 26rem; }
   .reprendre :global(.reprise) { border-top: 0; padding-top: 0; margin-top: 0; }
 
-  .cours { padding-block: 3.5rem 0; }
+  /* L'app : la seconde bande marine de la page, sans ligne de flottaison,
+     le téléphone posé sur son bord bas comme sur un quai. */
+  .app {
+    --anneau: var(--jaune);
+    /* Le filet de la bande : un voile clair, lisible en clair comme en
+       sombre, où la bande prend déjà la teinte de la surface. */
+    --bande-filet: rgb(255 255 255 / 0.2);
+    background: var(--bande);
+    color: var(--bande-texte);
+    overflow: hidden;
+  }
+  .app__grille { display: grid; gap: 2.5rem; padding-top: 3.5rem; }
+  .app h2 { font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.02; margin-bottom: 1rem; }
+  .app__chapo { font-size: 1.15rem; color: var(--bande-doux); max-width: 40ch; }
+  .app__plus { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 34rem; }
+  .app__plus li {
+    border-top: 2px solid var(--bande-filet);
+    padding: 0.75rem 0;
+    font-weight: 600;
+    max-width: none;
+  }
+  .app__plus li:last-child { border-bottom: 2px solid var(--bande-filet); }
+  .app__liens {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    margin-top: 2rem;
+  }
+  .app__badge { display: inline-block; line-height: 0; border-radius: 0.6rem; }
+  .app__badge img { width: 11.875rem; height: auto; }
+  .app__qr { display: none; margin: 0; align-items: center; gap: 1rem; }
+  .app__qr img {
+    width: 5.5rem;
+    height: 5.5rem;
+    padding: 0.45rem;
+    background: var(--blanc);
+    border-radius: var(--rayon-petit);
+  }
+  .app__qr figcaption { max-width: 15ch; font-size: 0.9rem; color: var(--bande-doux); line-height: 1.35; }
+  /* Le code ne sert qu'à qui lit sur un ordinateur : au doigt, le badge suffit. */
+  @media (hover: hover) and (pointer: fine) {
+    .app__qr { display: flex; }
+  }
+  .app__android { margin: 1.75rem 0 3rem; font-size: 0.92rem; color: var(--bande-doux); max-width: 46ch; }
+  .app__telephone {
+    justify-self: center;
+    align-self: end;
+    width: min(100%, 17rem);
+    margin-bottom: -9rem;
+    outline-color: var(--bande-filet);
+  }
+
+  .cours { padding-block: 4rem 0; }
   .cours__note { margin-bottom: 1.5rem; max-width: var(--mesure); }
   .listeCours { list-style: none; margin: 0; padding: 0; }
   .listeCours li {
@@ -579,23 +638,33 @@ const liste = {
   .quoi { padding-block: 3.5rem 0; }
 
   /* Le téléphone couché : à 844 × 390, deux colonnes font courir le texte sur
-     une fois et demie l'écran pendant que le panneau tient dans un ; l'ouverture
-     repasse en une colonne, et chaque bloc se lit entier en défilant. */
+     une fois et demie l'écran ; l'ouverture repasse en une colonne, et chaque
+     bloc se lit entier en défilant. */
   @media (max-height: 31.25rem) {
     .ouverture .ouverture__grille { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding-block: 2.5rem 3rem; }
   }
 
   @media (min-width: 52rem) {
     .ouverture__grille {
-      grid-template-columns: minmax(0, 1.6fr) minmax(17rem, 0.85fr);
+      grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
       gap: 4rem;
-      padding-block: 5rem 5.5rem;
+      align-items: center;
+      padding-block: 4.5rem 5rem;
     }
-    .trois__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .preuve__cadre:has(.preuve__figure) { grid-template-columns: auto minmax(0, 1fr); }
-    .preuve__cadre { gap: 2rem; padding: 2rem; }
-    .preuve__figure img { width: 13rem; }
+    .rang {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 4rem;
+      padding-block: 6rem;
+    }
+    .rang--inverse { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+    .rang--inverse .rang__texte { order: 2; }
+    .telephone { width: min(100%, 16.5rem); }
+    .duo { width: min(100%, 28rem); }
+    .reprendre { padding-block: 1rem 6rem; }
     .reprendre__grille { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 3rem; }
+    .app__grille { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; padding-top: 5rem; }
+    .app__telephone { width: min(100%, 18.5rem); margin-bottom: -11rem; }
+    .app__android { margin-bottom: 5rem; }
     .listeCours { column-count: 2; column-gap: 3rem; }
     .listeCours li { break-inside: avoid; }
   }

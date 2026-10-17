@@ -26,6 +26,16 @@ export const SITE = {
 } as const;
 
 /**
+ * L'app iOS sur l'App Store. L'identifiant est celui d'App Store Connect
+ * (`scripts/app_store.py`) ; il nourrit aussi la bannière que Safari pose en
+ * haut de page sur iPhone.
+ */
+export const APP_STORE = {
+  id: '6818903859',
+  url: 'https://apps.apple.com/fr/app/le-permis-c%C3%B4tier/id6818903859',
+} as const;
+
+/**
  * Au-delà, Google coupe le titre dans la liste de résultats. La marque est
  * ajoutée seulement si l'ensemble tient : un titre tranché au milieu du nom du
  * site est pire qu'un titre sans nom du site.
