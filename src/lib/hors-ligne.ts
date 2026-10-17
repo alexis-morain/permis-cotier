@@ -72,9 +72,12 @@ export const PAGES_A_LA_DEMANDE = [...CONTENU_A_LA_DEMANDE, ...JEU_A_LA_DEMANDE]
 
 /**
  * Servi, mais jamais gardé : l'image de partage n'est lue que par les robots
- * des réseaux sociaux, qui ne passent pas par le service worker.
+ * des réseaux sociaux, qui ne passent pas par le service worker. Les captures
+ * de l'app que montre l'accueil non plus : 250 Ko qu'on ferait télécharger à
+ * chaque installation pour une page qui se lit en ligne, et dont le texte se
+ * passe d'elles.
  */
-const DOSSIERS_AU_RESEAU = ['partage'] as const;
+const DOSSIERS_AU_RESEAU = ['partage', 'vitrine'] as const;
 
 /**
  * Le pointeur vers la version en ligne de la banque. Il est le seul fichier

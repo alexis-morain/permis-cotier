@@ -35,6 +35,7 @@ const racine = process.argv[2] ?? 'dist-app';
 const A_RETIRER = [
   ['question', 'les 483 pages de référencement, une par question'],
   ['partage', 'les images de partage social'],
+  ['vitrine', 'les captures et le badge App Store de l’accueil du site'],
   ['sitemap-index.xml', 'sitemap'],
   ['sitemap-0.xml', 'sitemap'],
   ['robots.txt', 'consigne aux robots'],

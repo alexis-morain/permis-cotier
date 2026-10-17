@@ -50,6 +50,23 @@ Une famille, Archivo variable, sur deux largeurs.
   ailleurs.
 - Une bande marine pleine largeur ouvre l'accueil, soulignée d'une ligne jaune
   de 6 px, la « ligne de flottaison ». C'est le seul endroit où elle apparaît.
+  Une seconde bande marine, sans ligne, porte le bloc de l'app iPhone ; le
+  téléphone y est posé sur le bord bas, rogné par la section.
+
+## L'accueil, vitrine (refonte du 17 octobre 2026)
+
+Inspirée des grands de l'edtech (Babbel) : montrer le produit au lieu de le
+décrire. La bande d'ouverture porte une vraie question de la banque, jouable
+(`EssaiQuestion.astro`, DOM nu, sans React) : on coche, on valide, la
+correction tombe avec l'article. Suivent trois rangs où un écran de l'app
+(captures App Store en WebP, `public/vitrine/`, hors précache) répond au
+texte, côté alterné, le rang de l'examen en pleine largeur sur la surface
+blanche avec deux écrans. Les captures sont dans un **cadre de téléphone**
+marine (bord 0,55 rem, rayon 2,6 rem, contour en filet) : la seule forme
+arrondie au-delà du rayon unique, parce qu'elle dessine un objet.
+Deux grands chiffres (leçons, questions) sont pris dans le récit de leur rang,
+soulignés de jaune, jamais en rangée de stats. Le badge App Store est
+l'officiel d'Apple ; le QR code ne s'affiche qu'au pointeur fin.
 - Les liens sont soulignés d'un trait jaune de 2 px, comme un surligneur.
 - Un chapeau, un résumé, une réponse courte se distinguent par la largeur
   125 % et la graisse 600, rien d'autre : ni trait de côté, ni label au-dessus.

@@ -17,6 +17,7 @@ import { lienRetour, pageCourante } from '../lib/page';
 import { POLICE } from '../lib/police';
 import {
   SITE,
+  APP_STORE,
   titrePage,
   descriptionPage,
   cheminServi,
@@ -156,6 +157,9 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     <!-- L'apparence choisie sur la fiche, posée avant le premier rendu. -->
     <script is:inline set:html={SCRIPT_APPARENCE} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/* La bannière de Safari sur iPhone : « Ouvrir » si l'app est installée,
+        « Obtenir » sinon. Rien dans la coquille, qui est l'app. */}
+    {!POUR_APP && <meta name="apple-itunes-app" content={`app-id=${APP_STORE.id}`} />}
 
     {/*
       Le manifeste et l'enregistrement du service worker. `@vite-pwa/astro`
@@ -312,6 +316,7 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
           <a href="/themes">Le programme, thème par thème</a>
           <a href="/guide">Guide du permis côtier</a>
           <a href="/profil">Ta fiche</a>
+          <a href={APP_STORE.url} data-mesure="pied-app-store">L’app iPhone</a>
           <a href="/a-propos">Qui écrit ces questions</a>
           <a href="/credits">Crédits</a>
           <a href="/parametres">Réglages</a>

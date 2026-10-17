@@ -87,7 +87,7 @@ describe('politique', () => {
   });
 
   it('laisse au réseau ce qui ne sert pas l’écran', () => {
-    for (const chemin of ['/robots.txt', '/sitemap-index.xml', '/partage/le-permis-cotier.png']) {
+    for (const chemin of ['/robots.txt', '/sitemap-index.xml', '/partage/le-permis-cotier.png', '/vitrine/examen.webp']) {
       expect(politique(chemin), chemin).toBe('reseau');
     }
   });

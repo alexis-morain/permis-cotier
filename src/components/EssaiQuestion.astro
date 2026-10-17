@@ -1,0 +1,315 @@
+---
+/**
+ * Une vraie question de la banque, jouable sur l'accueil.
+ *
+ * La preuve ne se raconte plus, elle se fait : on coche comme à l'épreuve,
+ * on valide, et la correction tombe avec l'explication et l'article. Pas
+ * d'îlot React : le runtime pesait un tiers de l'accueil quand il en avait
+ * un. Quelques lignes de DOM nu suffisent à une question.
+ *
+ * Sans JavaScript, les propositions restent lisibles et la réponse se déplie
+ * sous « Voir la réponse et sa source ». Avec, le dépliant devient la
+ * correction et ne s'ouvre qu'au verdict.
+ */
+import type { QuestionAffichable } from '../lib/banque';
+
+interface Props {
+  question: QuestionAffichable;
+}
+
+const { question: q } = Astro.props;
+const lettre = (id: string) => id.toUpperCase();
+const bonnes = q.reponses.map(lettre);
+const bonnesEnMots =
+  bonnes.length > 1 ? `${bonnes.slice(0, -1).join(', ')} et ${bonnes.at(-1)}` : bonnes[0];
+const consigne =
+  'Une ou deux bonnes réponses. La réponse doit être exacte : une bonne case seule ne suffit pas quand il en faut deux.';
+---
+
+<div class="essai" data-essai data-reponses={q.reponses.join(',')} data-theme={q.theme}>
+  <div class="essai__tete">
+    {q.visuel && (
+      <img
+        class="essai__visuel"
+        src={`/visuels/${q.visuel.fichier}`}
+        alt={q.visuel.alt}
+        width="240"
+        height="200"
+        fetchpriority="low"
+      />
+    )}
+    <p class="essai__enonce" id="essai-enonce">{q.enonce}</p>
+  </div>
+
+  <p class="essai__consigne">{consigne}</p>
+
+  <ul class="essai__propositions" aria-labelledby="essai-enonce">
+    {q.propositions.map((p) => (
+      <li>
+        <button type="button" class="essai__proposition" aria-pressed="false" data-id={p.id}>
+          <span class="essai__lettre" aria-hidden="true">{lettre(p.id)}</span>
+          <span class="essai__texte">{p.texte}</span>
+          <span class="essai__etat" data-essai-etat></span>
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <div class="essai__barre" data-essai-barre hidden>
+    <button type="button" class="bouton bouton--principal" data-essai-valider disabled>Valider</button>
+    <p class="essai__verdict" data-essai-verdict aria-live="polite"></p>
+  </div>
+
+  <details class="essai__reponse" data-essai-reponse>
+    <summary>Voir la réponse et sa source</summary>
+    <div class="essai__correction">
+      <p class="essai__bonnes">
+        {bonnes.length > 1 ? `Les bonnes réponses : ${bonnesEnMots}.` : `La bonne réponse : ${bonnesEnMots}.`}
+      </p>
+      <p class="essai__explication">{q.explication}</p>
+      <p class="essai__source">
+        <span class="essai__etiquette">Source</span>
+        {q.sources.map((s) => s.texte).join(' ; ')}
+      </p>
+      <p class="essai__suite">
+        <a class="bouton" href="/examen" data-mesure="accueil-essai-examen">Passer un examen blanc</a>
+        <a href={`/entrainement/${q.theme}`} data-mesure="accueil-essai-theme">Ou continuer sur ce thème</a>
+      </p>
+    </div>
+  </details>
+</div>
+
+<script>
+  import { corriger } from '../lib/essai';
+  import { evenement } from '../lib/mesure';
+  import { quandLaPageEstPrete } from '../lib/page';
+
+  const LIBELLES = { bonne: 'bonne réponse', oubliee: 'oubliée', fausse: 'pas celle-ci' } as const;
+
+  function monter(racine: HTMLElement) {
+    if (racine.dataset.vivant !== undefined) return;
+    const reponses = (racine.dataset.reponses ?? '').split(',').filter(Boolean);
+    const propositions = [...racine.querySelectorAll<HTMLButtonElement>('.essai__proposition')];
+    const barre = racine.querySelector<HTMLElement>('[data-essai-barre]');
+    const valider = racine.querySelector<HTMLButtonElement>('[data-essai-valider]');
+    const verdict = racine.querySelector<HTMLElement>('[data-essai-verdict]');
+    const reponse = racine.querySelector<HTMLDetailsElement>('[data-essai-reponse]');
+    if (!barre || !valider || !verdict || !reponse || reponses.length === 0) return;
+
+    racine.dataset.vivant = '';
+    barre.hidden = false;
+    reponse.open = false;
+
+    const cochees = () => propositions.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.id ?? '');
+
+    for (const bouton of propositions) {
+      bouton.addEventListener('click', () => {
+        if (racine.dataset.corrige !== undefined) return;
+        bouton.setAttribute('aria-pressed', bouton.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        valider.disabled = cochees().length === 0;
+      });
+    }
+
+    valider.addEventListener('click', () => {
+      const c = corriger(cochees(), reponses);
+      racine.dataset.corrige = c.juste ? 'juste' : 'faux';
+      for (const bouton of propositions) {
+        const etat = c.etats[bouton.dataset.id ?? ''];
+        bouton.setAttribute('aria-disabled', 'true');
+        if (!etat) continue;
+        bouton.dataset.etat = etat;
+        const libelle = bouton.querySelector('[data-essai-etat]');
+        if (libelle) libelle.textContent = LIBELLES[etat];
+      }
+      verdict.textContent = c.juste
+        ? 'Juste.'
+        : reponses.length > 1 && c.oubliees > 0 && Object.values(c.etats).every((e) => e !== 'fausse')
+          ? 'Pas tout à fait : il en fallait deux.'
+          : 'Pas tout à fait.';
+      valider.hidden = true;
+      reponse.open = true;
+      evenement('accueil-essai', { juste: c.juste });
+    });
+  }
+
+  quandLaPageEstPrete(() => {
+    for (const racine of document.querySelectorAll<HTMLElement>('[data-essai]')) monter(racine);
+  });
+</script>
+
+<style>
+  /* Le panneau clair posé sur la bande : la question telle que l'écran de jeu
+     la montre, propositions à bord plein et lettre dans un cercle. */
+  .essai {
+    --anneau: var(--texte);
+    background: var(--panneau);
+    color: var(--texte);
+    border: 2px solid var(--panneau-filet);
+    border-radius: var(--rayon);
+    padding: 1.25rem;
+  }
+  .essai__tete {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0.85rem;
+    align-items: start;
+  }
+  .essai__tete:not(:has(img)) { grid-template-columns: minmax(0, 1fr); }
+  .essai__visuel {
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--filet);
+    border-radius: var(--rayon-petit);
+    background: var(--fond-carte);
+  }
+  .essai__enonce { margin: 0; font-weight: 700; font-size: 1.02rem; line-height: 1.35; }
+  .essai__consigne {
+    margin: 1rem 0 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--rayon-petit);
+    background: var(--jaune-pale);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: none;
+  }
+
+  .essai__propositions { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+  .essai__propositions li { max-width: none; }
+  .essai__proposition {
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.55rem 0.8rem;
+    border: 2px solid var(--filet-fort);
+    border-radius: var(--rayon);
+    background: var(--fond-carte);
+    color: var(--texte);
+    font: inherit;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    text-align: left;
+    box-shadow: 0 var(--bord) 0 var(--filet-fort);
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  }
+  /* Sans script, les propositions ne réagissent pas : elles n'en ont pas l'air. */
+  .essai:not([data-vivant]) .essai__proposition { box-shadow: none; cursor: default; }
+  .essai[data-vivant]:not([data-corrige]) .essai__proposition { cursor: pointer; }
+  @media (hover: hover) and (pointer: fine) {
+    .essai[data-vivant]:not([data-corrige]) .essai__proposition:hover { background: var(--fond-2); }
+  }
+  .essai[data-vivant]:not([data-corrige]) .essai__proposition:active {
+    transform: translateY(var(--bord));
+    box-shadow: 0 0 0 var(--filet-fort);
+  }
+  .essai__proposition[aria-pressed='true'] {
+    background: var(--jaune-pale);
+    border-color: var(--texte);
+    box-shadow: 0 var(--bord) 0 var(--texte);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .essai[data-vivant]:not([data-corrige]) .essai__proposition[aria-pressed='true']:hover { background: var(--jaune-pale); }
+  }
+  .essai__lettre {
+    flex: 0 0 1.85rem;
+    height: 1.85rem;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--filet-fort);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+  }
+  .essai__proposition[aria-pressed='true'] .essai__lettre { background: var(--texte); border-color: var(--texte); color: var(--panneau); }
+  .essai__texte { flex: 1; }
+  .essai__etat { font-size: 0.78rem; font-weight: 800; white-space: nowrap; }
+  .essai__etat:empty { display: none; }
+
+  /* Le verdict : tout se colore d'un coup, la lettre dit l'état, le mot aussi. */
+  .essai[data-corrige] .essai__proposition { box-shadow: none; transform: none; }
+  .essai__proposition[data-etat='bonne'],
+  .essai__proposition[data-etat='oubliee'] { border-color: var(--vert); background: var(--vert-pale); }
+  .essai__proposition[data-etat='oubliee'] { border-style: dashed; }
+  .essai__proposition[data-etat='fausse'] { border-color: var(--rouge); background: var(--rouge-pale); }
+  .essai__proposition[data-etat='bonne'] .essai__lettre,
+  .essai__proposition[data-etat='oubliee'] .essai__lettre { background: var(--vert); border-color: var(--vert); color: var(--blanc); }
+  .essai__proposition[data-etat='fausse'] .essai__lettre { background: var(--rouge); border-color: var(--rouge); color: var(--blanc); }
+  .essai__proposition[data-etat='bonne'] .essai__etat,
+  .essai__proposition[data-etat='oubliee'] .essai__etat { color: var(--vert-texte); }
+  .essai__proposition[data-etat='fausse'] .essai__etat { color: var(--rouge-texte); }
+
+  .essai__barre {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-top: 1rem;
+  }
+  .essai__barre[hidden] { display: none; }
+  .essai__barre .bouton { min-width: 9rem; }
+  .essai__barre .bouton[hidden] { display: none; }
+  .essai__verdict {
+    margin: 0;
+    font-stretch: var(--large);
+    font-weight: 800;
+    font-size: 1.3rem;
+  }
+  .essai__verdict:empty { display: none; }
+  .essai[data-corrige='juste'] .essai__verdict { color: var(--vert-texte); }
+  .essai[data-corrige='faux'] .essai__verdict { color: var(--rouge-texte); }
+
+  .essai__reponse { margin-top: 1rem; }
+  .essai__reponse summary {
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--jaune);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.16em;
+  }
+  /* Avec le script, le dépliant n'a plus de poignée : il s'ouvre au verdict. */
+  .essai[data-vivant] .essai__reponse summary { display: none; }
+  .essai[data-vivant] .essai__reponse { margin-top: 0; }
+  .essai[data-vivant] .essai__correction { padding-top: 0.75rem; animation: essai-monte 180ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @keyframes essai-monte {
+    from { opacity: 0; transform: translateY(0.5rem); }
+    to { opacity: 1; transform: none; }
+  }
+  .essai__correction > * { max-width: none; }
+  .essai__bonnes { font-weight: 700; margin: 0.75rem 0 0.4rem; }
+  .essai[data-vivant] .essai__bonnes { margin-top: 0; }
+  .essai__explication { font-size: 0.95rem; line-height: 1.45; margin-bottom: 0.75rem; }
+  .essai__source {
+    padding-top: 0.75rem;
+    border-top: 2px solid var(--filet);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .essai__etiquette {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.1em 0.55em;
+    border-radius: var(--rayon-petit);
+    background: var(--jaune);
+    color: var(--marine);
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-stretch: var(--large);
+  }
+  .essai__suite {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin: 1rem 0 0;
+  }
+  .essai__suite a:not(.bouton) { font-weight: 600; }
+
+  @media (min-width: 30rem) {
+    .essai { padding: 1.5rem; }
+    .essai__tete { grid-template-columns: 8rem minmax(0, 1fr); }
+  }
+</style>
