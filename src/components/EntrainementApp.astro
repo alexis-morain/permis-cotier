@@ -44,15 +44,19 @@ const ids = (await questionsPubliees()).map((q) => q.id).join(' ');
   import { quandLaPageEstPrete } from '../lib/page';
   import { aujourdhui, charger } from '../lib/progression';
   import { nombreDErreurs } from '../lib/accueil';
+  import { surProgressionChangee } from '../lib/vivant';
 
-  quandLaPageEstPrete(() => {
+  function poserLesErreurs() {
     const ligne = document.querySelector<HTMLLIElement>('.choix__erreurs');
     if (!ligne) return;
     const n = nombreDErreurs(charger(), (ligne.dataset.ids ?? '').split(' '), aujourdhui());
-    if (n === 0) return;
-    ligne.querySelector('.pastille')!.textContent = `${n} question${n > 1 ? 's' : ''}`;
-    ligne.hidden = false;
-  });
+    ligne.hidden = n === 0;
+    if (n > 0) ligne.querySelector('.pastille')!.textContent = `${n} question${n > 1 ? 's' : ''}`;
+  }
+
+  quandLaPageEstPrete(poserLesErreurs);
+  // Des erreurs faites dans un autre onglet : le compte se relit sans recharger.
+  surProgressionChangee(poserLesErreurs);
 </script>
 
 <style>

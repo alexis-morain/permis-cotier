@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import AccueilApp from './AccueilApp';
 import {
   enregistrerExamen,
@@ -141,5 +141,32 @@ describe('accueil de l’app, la date de l’examen', () => {
     avec('2026-09-21');
     expect(screen.getByText('C’était il y a 4 jours')).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Pose la date de ton épreuve' })).toBeNull();
+  });
+});
+
+describe('quand un autre onglet écrit la progression', () => {
+  it('relit le stockage sur app:progression, sans rendre l’écran à nouveau de zéro', () => {
+    afficher();
+    const titre = screen.getByRole('heading', { name: 'Marques latérales' });
+    expect(lien('Commencer le cours')).toBe('/cours/balisage/a');
+
+    // Une leçon faite dans l'onglet Cours, puis l'onglet Accueil revient.
+    sauvegarder(terminerLecon(etatInitial(), 'a', { bonnes: 2, total: 2 }, '2026-09-24'));
+    act(() => {
+      window.dispatchEvent(new Event('app:progression'));
+    });
+
+    expect(screen.getByRole('heading', { name: 'Cardinales' })).toBeTruthy();
+    expect(lien('Continuer le cours')).toBe('/cours/balisage/b');
+    expect(screen.getByText('1 leçon sur 2')).toBeTruthy();
+    // Le nœud du titre a été mis à jour, pas l'arbre jeté : rien n'a rechargé.
+    expect(document.body.contains(titre)).toBe(true);
+  });
+
+  it('cesse d’écouter une fois démonté', () => {
+    const retrait = vi.spyOn(window, 'removeEventListener');
+    afficher();
+    cleanup();
+    expect(retrait).toHaveBeenCalledWith('app:progression', expect.any(Function));
   });
 });

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { aujourdhui, charger } from '../lib/progression';
+import { surProgressionChangee } from '../lib/vivant';
 import { aRevoir, depuisLe, dernierExamen, echeance, joursDeSuite, reprise, type LeconAccueil } from '../lib/accueil';
 // Lue en texte et posée par le composant, pas importée comme feuille : Astro
 // attache la feuille d'un îlot `client:only` à toute page qui l'importe, et
@@ -21,7 +22,9 @@ interface Props {
  * progression se lit donc au premier rendu, sans état intermédiaire.
  */
 export default function AccueilApp({ lecons, ids }: Props) {
-  const [etat] = useState(() => charger());
+  const [etat, setEtat] = useState(() => charger());
+  // Une leçon faite dans un autre onglet : l'accueil la relit sans se recharger.
+  useEffect(() => surProgressionChangee(() => setEtat(charger())), []);
   const jour = aujourdhui();
 
   const cours = reprise(lecons, etat);

@@ -22,6 +22,7 @@ import type { QuestionConnue } from '../lib/profil';
 import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
+import { surProgressionChangee } from '../lib/vivant';
 import Reglages from './profil/Reglages';
 import PaliersDuTheme from './profil/PaliersDuTheme';
 import { accorde } from './profil/accorde';
@@ -90,6 +91,14 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const titre = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => setEtat(charger()), []);
+
+  // Une leçon faite ou une date posée dans un autre onglet : la fiche la relit.
+  // `POUR_APP` est une constante de build, le rang des hooks ne change jamais
+  // d'un rendu à l'autre ; sur le site, la branche part au minificateur.
+  if (POUR_APP) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => surProgressionChangee(() => setEtat(charger())), []);
+  }
 
   // Après l'effacement, on repart du haut : la page a changé sous le bouton.
   useEffect(() => {

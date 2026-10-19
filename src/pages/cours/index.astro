@@ -190,8 +190,13 @@ const liste = {
   <script>
     import { monterCours } from '../../components/cours-site';
     import { quandLaPageEstPrete } from '../../lib/page';
+    import { POUR_APP } from '../../lib/cible';
+    import { surProgressionChangee } from '../../lib/vivant';
 
     quandLaPageEstPrete(() => monterCours());
+    // Une leçon faite dans un autre onglet : la liste la relit sans se recharger.
+    // `monterCours()` ne fait rien hors d'un écran qui porte une liste.
+    if (POUR_APP) surProgressionChangee(() => monterCours());
   </script>
 </Base>
 

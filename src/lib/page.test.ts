@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { lienRetour, pageCourante, rafraichirSiLaProgressionAChange } from './page';
+import { annoncerSiLaProgressionAChange, lienRetour, pageCourante } from './page';
+import { surProgressionChangee } from './vivant';
 
 /**
  * Le contrat entre les scripts de page et la navigation de la coquille.
@@ -134,99 +135,122 @@ function monterPage(chemin: string, stockage: unknown) {
   const fenetre = new EventTarget();
   const document = Object.assign(new EventTarget(), { visibilityState: 'visible' });
   const location = { pathname: chemin, reload: vi.fn() };
+  const relue = vi.fn();
+  fenetre.addEventListener('app:progression', relue);
   vi.stubGlobal('window', fenetre);
   vi.stubGlobal('document', document);
   vi.stubGlobal('location', location);
   vi.stubGlobal('localStorage', stockage);
-  return { fenetre, document, location };
+  return { fenetre, document, location, relue };
 }
 
-describe('rafraichirSiLaProgressionAChange', () => {
-  it('ne recharge pas quand rien n’a changé', () => {
+describe('annoncerSiLaProgressionAChange', () => {
+  it('ne dit rien quand rien n’a changé', () => {
     const stockage = faireStockage({ 'permis-cotier:progression': '{"lecons":{}}' });
-    const { fenetre, document, location } = monterPage('/accueil', stockage);
-    rafraichirSiLaProgressionAChange();
+    const { fenetre, document, relue } = monterPage('/accueil', stockage);
+    annoncerSiLaProgressionAChange();
 
     fenetre.dispatchEvent(new Event('app:onglet'));
     document.dispatchEvent(new Event('visibilitychange'));
-    expect(location.reload).not.toHaveBeenCalled();
+    expect(relue).not.toHaveBeenCalled();
   });
 
-  it('recharge une racine d’onglet quand une clé a changé ailleurs', () => {
+  it('annonce, sans jamais recharger, quand une clé a changé ailleurs', () => {
     const stockage = faireStockage({ 'permis-cotier:progression': '{"lecons":{}}' });
-    const { fenetre, location } = monterPage('/accueil', stockage);
-    rafraichirSiLaProgressionAChange();
+    const { fenetre, location, relue } = monterPage('/accueil', stockage);
+    annoncerSiLaProgressionAChange();
 
     stockage.setItem('permis-cotier:progression', '{"lecons":{"marques-laterales":"2026-09-25"}}');
     fenetre.dispatchEvent(new Event('app:onglet'));
-    expect(location.reload).toHaveBeenCalledTimes(1);
+    expect(relue).toHaveBeenCalledTimes(1);
+    expect(location.reload).not.toHaveBeenCalled();
+  });
+
+  it('ne répète pas l’annonce tant que le stockage ne bouge plus', () => {
+    const stockage = faireStockage({ 'permis-cotier:progression': 'a' });
+    const { fenetre, relue } = monterPage('/cours', stockage);
+    annoncerSiLaProgressionAChange();
+
+    stockage.setItem('permis-cotier:progression', 'b');
+    fenetre.dispatchEvent(new Event('app:onglet'));
+    fenetre.dispatchEvent(new Event('app:onglet'));
+    expect(relue).toHaveBeenCalledTimes(1);
+
+    stockage.setItem('permis-cotier:progression', 'c');
+    fenetre.dispatchEvent(new Event('app:onglet'));
+    expect(relue).toHaveBeenCalledTimes(2);
   });
 
   it('voit une clé qui apparaît, et reste sourde aux clés d’un autre préfixe', () => {
     const stockage = faireStockage();
-    const { fenetre, location } = monterPage('/profil', stockage);
-    rafraichirSiLaProgressionAChange();
+    const { fenetre, relue } = monterPage('/profil', stockage);
+    annoncerSiLaProgressionAChange();
 
     stockage.setItem('autre:chose', '1');
     fenetre.dispatchEvent(new Event('app:onglet'));
-    expect(location.reload).not.toHaveBeenCalled();
+    expect(relue).not.toHaveBeenCalled();
 
     stockage.setItem('permis-cotier:son', 'non');
     fenetre.dispatchEvent(new Event('app:onglet'));
-    expect(location.reload).toHaveBeenCalledTimes(1);
+    expect(relue).toHaveBeenCalledTimes(1);
   });
 
-  it('recharge aussi au retour du cache de pages et quand la page redevient visible', () => {
+  it('annonce aussi sur l’événement storage, au retour du cache de pages et quand la page redevient visible', () => {
     const stockage = faireStockage({ 'permis-cotier:progression': 'a' });
-    const { fenetre, document, location } = monterPage('/cours', stockage);
-    rafraichirSiLaProgressionAChange();
-    stockage.setItem('permis-cotier:progression', 'b');
+    const { fenetre, document, relue } = monterPage('/cours', stockage);
+    annoncerSiLaProgressionAChange();
 
+    stockage.setItem('permis-cotier:progression', 'b');
+    fenetre.dispatchEvent(new Event('storage'));
+    expect(relue).toHaveBeenCalledTimes(1);
+
+    stockage.setItem('permis-cotier:progression', 'c');
     fenetre.dispatchEvent(Object.assign(new Event('pageshow'), { persisted: false }));
-    expect(location.reload).not.toHaveBeenCalled();
+    expect(relue).toHaveBeenCalledTimes(1);
     fenetre.dispatchEvent(Object.assign(new Event('pageshow'), { persisted: true }));
-    expect(location.reload).toHaveBeenCalledTimes(1);
+    expect(relue).toHaveBeenCalledTimes(2);
 
+    stockage.setItem('permis-cotier:progression', 'd');
     document.dispatchEvent(new Event('visibilitychange'));
-    expect(location.reload).toHaveBeenCalledTimes(2);
+    expect(relue).toHaveBeenCalledTimes(3);
   });
 
-  it('ne recharge pas hors d’une racine d’onglet : une leçon, une série restent où elles sont', () => {
+  it('ne dit rien hors d’une racine d’onglet : une leçon, une série restent où elles sont', () => {
     const stockage = faireStockage({ 'permis-cotier:progression': 'a' });
-    const { fenetre, location } = monterPage('/cours/balisage/marques-laterales', stockage);
-    rafraichirSiLaProgressionAChange();
+    const { fenetre, relue } = monterPage('/cours/balisage/marques-laterales', stockage);
+    annoncerSiLaProgressionAChange();
 
     stockage.setItem('permis-cotier:progression', 'b');
     fenetre.dispatchEvent(new Event('app:onglet'));
-    expect(location.reload).not.toHaveBeenCalled();
+    expect(relue).not.toHaveBeenCalled();
   });
 
-  it('ne recharge pas l’examen : son écran de résultat se perdrait', () => {
+  it('ne dit rien sur l’examen : son écran de résultat se perdrait', () => {
     const stockage = faireStockage({ 'permis-cotier:progression': 'a' });
-    const { fenetre, location } = monterPage('/examen', stockage);
-    rafraichirSiLaProgressionAChange();
+    const { fenetre, relue } = monterPage('/examen', stockage);
+    annoncerSiLaProgressionAChange();
 
     stockage.setItem('permis-cotier:progression', 'b');
     fenetre.dispatchEvent(new Event('app:onglet'));
-    expect(location.reload).not.toHaveBeenCalled();
+    expect(relue).not.toHaveBeenCalled();
   });
 
   it('reprend sa photo à chaque écran que le routeur affiche', () => {
     const stockage = faireStockage({ 'permis-cotier:progression': 'a' });
-    const { fenetre, document, location } = monterPage('/cours', stockage);
-    rafraichirSiLaProgressionAChange();
+    const { fenetre, document, relue } = monterPage('/cours', stockage);
+    annoncerSiLaProgressionAChange();
 
     // Une leçon faite dans ce même onglet, puis retour à la liste : l'écran
-    // est rendu depuis le stockage à jour, il n'y a rien à recharger.
+    // est rendu depuis le stockage à jour, il n'y a rien à relire.
     stockage.setItem('permis-cotier:progression', 'b');
     document.dispatchEvent(new Event('astro:page-load'));
     fenetre.dispatchEvent(new Event('app:onglet'));
-    expect(location.reload).not.toHaveBeenCalled();
+    expect(relue).not.toHaveBeenCalled();
   });
 
   it('tient sans stockage, ou quand le lire jette', () => {
-    const { fenetre, location } = monterPage('/accueil', undefined);
-    expect(() => rafraichirSiLaProgressionAChange()).not.toThrow();
+    const { fenetre, relue } = monterPage('/accueil', undefined);
+    expect(() => annoncerSiLaProgressionAChange()).not.toThrow();
     expect(() => fenetre.dispatchEvent(new Event('app:onglet'))).not.toThrow();
 
     const jette = {
@@ -235,9 +259,23 @@ describe('rafraichirSiLaProgressionAChange', () => {
       },
     };
     const page = monterPage('/accueil', jette);
-    expect(() => rafraichirSiLaProgressionAChange()).not.toThrow();
+    expect(() => annoncerSiLaProgressionAChange()).not.toThrow();
     expect(() => page.fenetre.dispatchEvent(new Event('app:onglet'))).not.toThrow();
-    expect(location.reload).not.toHaveBeenCalled();
-    expect(page.location.reload).not.toHaveBeenCalled();
+    expect(relue).not.toHaveBeenCalled();
+    expect(page.relue).not.toHaveBeenCalled();
+  });
+});
+
+describe('surProgressionChangee', () => {
+  it('rappelle à chaque annonce, et cesse une fois détaché', () => {
+    const { fenetre } = monterPage('/accueil', faireStockage());
+    const relire = vi.fn();
+    const detacher = surProgressionChangee(relire);
+
+    fenetre.dispatchEvent(new Event('app:progression'));
+    expect(relire).toHaveBeenCalledTimes(1);
+    detacher();
+    fenetre.dispatchEvent(new Event('app:progression'));
+    expect(relire).toHaveBeenCalledTimes(1);
   });
 });
