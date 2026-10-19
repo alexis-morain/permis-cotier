@@ -303,6 +303,38 @@ export function ordonnerEntrainement<T extends { id: string }>(
     .map((x) => x.q);
 }
 
+/**
+ * La série de l'entraînement par thème : dix questions, assez courtes pour
+ * qu'on les finisse, et c'est la fin qui donne le son, le palier et le
+ * sentiment d'avoir fini.
+ */
+export const TAILLE_SERIE_COURTE = 10;
+
+/**
+ * Une série de l'entraînement : dix questions du thème, les ratées d'abord,
+ * puis les jamais vues, puis le reste, par `ordonnerEntrainement`. Le mélange
+ * départage les égalités du choix : sans lui, un thème neuf redonnerait
+ * toujours les mêmes dix premières du fichier. Une fois choisies, les dix se
+ * jouent dans l'ordre d'entraînement, et à rang égal dans celui du fichier,
+ * qui range les questions d'une notion les unes à côté des autres.
+ */
+export function serieCourte<T extends { id: string }>(
+  questions: readonly T[],
+  progression: Progression,
+  alea: Alea = Math.random,
+  taille: number = TAILLE_SERIE_COURTE,
+): T[] {
+  const choisies = new Set(
+    ordonnerEntrainement(melanger(questions, alea), progression)
+      .slice(0, Math.max(0, taille))
+      .map((q) => q.id),
+  );
+  return ordonnerEntrainement(
+    questions.filter((q) => choisies.has(q.id)),
+    progression,
+  );
+}
+
 /** Ce que la série du jour a besoin de savoir d'une question. */
 export interface QuestionRangeable {
   readonly id: string;

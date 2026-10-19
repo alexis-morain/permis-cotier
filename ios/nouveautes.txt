@@ -3,3 +3,4 @@ L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deux
 L’app change d’écran plus vite : un fondu court remplace le glissement, et l’Accueil se met à jour sans se recharger quand tu reviens d’une leçon.
 La fiche montre tes dix derniers examens blancs en un graphique, avec la ligne des 35 sur 40, et chaque thème en pourcentage, les plus fragiles d’abord.
 Chaque chapitre a sa fiche « à relire la veille » : l’essentiel de ses leçons sur un écran ou deux, avec les schémas et les sources.
+L’entraînement par thème se joue maintenant par séries de 10 questions, avec un vrai point final : ton score, la liste de tes réponses (juste ou faux, touchables pour revoir l’explication), puis « Encore 10 » pour enchaîner. L’examen blanc gagne la même liste de réponses à la fin.

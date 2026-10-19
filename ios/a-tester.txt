@@ -28,3 +28,11 @@ Fiche : les derniers examens blancs et les thèmes.
 • Cours → un chapitre → « À relire la veille » : une carte par leçon, avec son schéma quand elle en a un, ses lignes à retenir et sa source.
 • À la fin de la dernière leçon d’un chapitre, le même bouton ouvre la fiche.
 • Mode avion : la fiche s’ouvre, et ses schémas s’affichent.
+Séries de 10 par thème :
+• Entraînement → un thème : le compteur dit « 1 / 10 », pas « 1 / 78 ». Dix questions, les jamais vues et les ratées d’abord.
+• À la dixième : le score (« 8 sur 10 »), le son de fin de série, le palier s’il y en a un, puis la liste des dix questions. Chaque ligne dit « Juste » ou « Faux » en toutes lettres.
+• Touche une ligne : la question s’ouvre avec ta réponse, la bonne et l’explication. Touche-la encore : elle se referme.
+• « Encore 10 » (bouton jaune) lance dix autres questions du même thème, d’autres que les premières. « Changer de thème » (lien) ramène à la liste.
+• Un thème de moins de dix questions : la série les prend toutes, et le bouton dit « Encore 7 », par exemple.
+• Examen blanc → à la fin, le même récapitulatif remplace « Revoir mes erreurs » : touche une ligne « Faux » pour revoir l’erreur. « Refaire un examen » est inchangé.
+• Ta série du jour (Accueil → Reprendre) garde sa taille et son bouton « Refaire la série ».
