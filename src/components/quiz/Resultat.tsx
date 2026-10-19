@@ -9,6 +9,7 @@ import { pointFinal, rappel } from '../../lib/raison';
 import { POUR_APP } from '../../lib/cible';
 import { partager } from '../../lib/natif';
 import RevueDesErreurs from './RevueDesErreurs';
+import Recap from './Recap';
 import AnnonceBadges from './AnnonceBadges';
 import type { BadgeAnnonce } from '../../lib/badges-geste';
 
@@ -25,6 +26,11 @@ interface Props {
   retourLecon: string;
   /** Les badges que cette série a fait gagner. */
   badges: readonly BadgeAnnonce[];
+  /**
+   * Présent pour une série courte de l'entraînement : combien de questions
+   * donnerait « Encore », et de quoi la relancer sans quitter l'écran.
+   */
+  serie?: { encore: number; relancer: () => void };
 }
 
 type Revue = 'erreurs' | 'toutes' | null;
@@ -33,7 +39,7 @@ type Revue = 'erreurs' | 'toutes' | null;
  * L'écran de résultat : le score, le verdict, le temps, la raison quand ça
  * coince, la note par thème, puis le geste suivant et la revue.
  */
-export default function Resultat({ mode, session, titre, depart, parId, retour, retourLecon, badges }: Props) {
+export default function Resultat({ mode, session, titre, depart, parId, retour, retourLecon, badges, serie }: Props) {
   // La revue dépliée : les seules ratées, ou toutes les questions.
   const [revue, setRevue] = useState<Revue>(null);
   const basculerRevue = (quoi: 'erreurs' | 'toutes') => setRevue((v) => (v === quoi ? null : quoi));
@@ -52,7 +58,7 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
   return (
     <div className="jeu">
       <h1 className="visuellement-cache">{titre}, résultat</h1>
-      <Score mode={mode} session={session} titre={titre} depart={depart} />
+      <Score mode={mode} session={session} titre={titre} depart={depart} enSerie={serie !== undefined} />
       {/* Le son de leçon attend la fin de celui du verdict : la cloche d'un
           examen dure 1,15 s, l'arpège de fin de série 0,5 s. */}
       <AnnonceBadges badges={badges} delaiSon={mode === 'examen' ? 1200 : 600} />
@@ -77,17 +83,36 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
         </>
       )}
 
-      {r.total > 0 && <ParTheme parTheme={r.parTheme} />}
+      {serie ? (
+        // Une série d'un seul thème : la note par thème redirait le score.
+        <>
+          <Recap session={session} parId={parId} retourLecon={retourLecon} />
+          <ActionsSerie encore={serie.encore} relancer={serie.relancer} />
+        </>
+      ) : (
+        <>
+          {r.total > 0 && <ParTheme parTheme={r.parTheme} />}
 
-      {POUR_APP ? <ActionsApp {...actions} /> : <ActionsSite {...actions} />}
+          {POUR_APP ? <ActionsApp {...actions} /> : <ActionsSite {...actions} />}
 
-      {revue && <RevueDesErreurs session={session} parId={parId} quoi={revue} retourLecon={retourLecon} />}
+          {/* Dans l'app, le récapitulatif tient la place de « Revoir mes
+              erreurs » : chaque ligne s'ouvre, et les erreurs y sont. */}
+          {POUR_APP && <Recap session={session} parId={parId} retourLecon={retourLecon} />}
+          {revue && <RevueDesErreurs session={session} parId={parId} quoi={revue} retourLecon={retourLecon} />}
+        </>
+      )}
     </div>
   );
 }
 
 /** Le score, le verdict, le pavillon d'un examen reçu, et l'écart avec le précédent. */
-function Score({ mode, session, titre, depart }: Pick<Props, 'mode' | 'session' | 'titre' | 'depart'>) {
+function Score({
+  mode,
+  session,
+  titre,
+  depart,
+  enSerie,
+}: Pick<Props, 'mode' | 'session' | 'titre' | 'depart'> & { enSerie: boolean }) {
   const r = session.resultat!;
   // L'examen d'avant, lu au montage : celui-ci n'y est pas encore.
   const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
@@ -113,7 +138,7 @@ function Score({ mode, session, titre, depart }: Pick<Props, 'mode' | 'session' 
         <>
           <div className={recu ? 'resultat--recu' : undefined}>
             <p className="resultat__score">
-              {r.bonnes}<small> / {r.total}</small>
+              {r.bonnes}<small> {enSerie ? 'sur' : '/'} {r.total}</small>
             </p>
             {mode === 'examen' && (
               session.interrompu ? (
@@ -221,6 +246,21 @@ function ParTheme({ parTheme }: { parTheme: Record<string, { bonnes: number; tot
   );
 }
 
+/**
+ * La fin d'une série courte : « Encore » en action principale, le changement
+ * de thème en lien discret. Le palier et le son sont déjà venus avec le score.
+ */
+function ActionsSerie({ encore, relancer }: { encore: number; relancer: () => void }) {
+  return (
+    <div className="jeu__actions resultat__actions">
+      <button className="bouton bouton--principal" type="button" onClick={relancer}>
+        Encore {encore}
+      </button>
+      <a className="signaler" href="/entrainement">Changer de thème</a>
+    </div>
+  );
+}
+
 interface PropsActions {
   mode: Mode;
   session: Session;
@@ -232,28 +272,16 @@ interface PropsActions {
 }
 
 /**
- * Le geste suivant dans l'app : ce qui a été raté, puis refaire. La barre
- * d'onglets est revenue, un lien « Accueil » la doublerait.
+ * Le geste suivant dans l'app : refaire. Les erreurs se revoient dans le
+ * récapitulatif dessous, et la barre d'onglets est revenue : un lien
+ * « Accueil » la doublerait.
  */
-function ActionsApp({ mode, session, retour, revue, basculerRevue, ratees }: PropsActions) {
+function ActionsApp({ mode, session, retour }: PropsActions) {
   const r = session.resultat!;
   return (
     <>
       <div className="jeu__actions resultat__actions">
-        {ratees > 0 && (
-          <button
-            className="bouton bouton--principal"
-            type="button"
-            aria-expanded={revue === 'erreurs'}
-            onClick={() => basculerRevue('erreurs')}
-          >
-            {revue === 'erreurs' ? 'Masquer mes erreurs' : 'Revoir mes erreurs'}
-          </button>
-        )}
-        <a
-          className={`bouton ${ratees > 0 ? 'bouton--discret' : 'bouton--principal'}`}
-          href={retour}
-        >
+        <a className="bouton bouton--principal" href={retour}>
           {mode === 'examen' ? 'Refaire un examen' : 'Refaire la série'}
         </a>
       </div>
