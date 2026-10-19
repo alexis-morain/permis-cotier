@@ -320,7 +320,7 @@ function Partie({
         </div>
       )}
 
-      {POUR_APP ? <EnteteApp session={session} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} />}
+      {POUR_APP ? <EnteteApp session={session} mode={mode} demanderArret={setArretDemande} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} />}
 
       {rienDu && session.index === 0 && (
         <p className="discret">
@@ -331,8 +331,9 @@ function Partie({
 
       {mode === 'entrainement' && session.index === 0 && (
         <p className="jeu__consigne">
-          Une ou deux bonnes réponses. La réponse doit être exacte, une bonne case seule ne suffit pas
-          quand il en faut deux.
+          {POUR_APP
+            ? 'Une ou deux bonnes réponses : il faut toutes les bonnes cases.'
+            : 'Une ou deux bonnes réponses. La réponse doit être exacte, une bonne case seule ne suffit pas quand il en faut deux.'}
         </p>
       )}
 

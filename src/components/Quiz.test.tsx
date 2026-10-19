@@ -1305,6 +1305,9 @@ describe('le plein écran de la série, dans l’app', () => {
   });
 });
 
+/** Dans l'app, « Valider et passer » reste grisé tant que rien n'est coché. */
+const repondreFaux = () => fireEvent.click(screen.getByRole('button', { name: /Deuxième proposition/ }));
+
 describe('l’écran de jeu dans l’app', () => {
   beforeEach(() => {
     cible.app = true;
@@ -1358,6 +1361,7 @@ describe('l’écran de jeu dans l’app', () => {
   it('donne au résultat le geste suivant : les erreurs, puis refaire, puis partager', () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
     const revoir = screen.getByRole('button', { name: 'Revoir mes erreurs' });
@@ -1368,7 +1372,7 @@ describe('l’écran de jeu dans l’app', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Partager' }));
     expect(partager).toHaveBeenCalledTimes(1);
 
-    // Trois questions sans réponse : trois erreurs, et la revue ne montre qu'elles.
+    // Trois fausses : trois erreurs, et la revue ne montre qu'elles.
     fireEvent.click(revoir);
     expect(document.querySelectorAll('.revue__item')).toHaveLength(3);
     // Les onglets portent la navigation : le thème reste un nom, pas un lien.
@@ -1378,6 +1382,7 @@ describe('l’écran de jeu dans l’app', () => {
   it('fait sentir un examen reçu', async () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
     // Trois erreurs, sous les cinq admises : reçu. L'haptique attend la
@@ -1393,9 +1398,10 @@ describe('l’écran de jeu dans l’app', () => {
     render(<Quiz mode="examen" questions={six} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     for (let i = 0; i < 6; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    // Six sans réponse : une de trop.
+    // Six fausses : une de trop.
     expect(screen.getByText(/Recalé/)).toBeTruthy();
     await waitFor(() => expect(vibrer).toHaveBeenCalledWith('echoue'));
   });
