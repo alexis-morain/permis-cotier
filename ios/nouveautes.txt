@@ -1,1 +1,3 @@
 L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deuxième génération suffit.
+
+L’entraînement par thème se joue maintenant par séries de 10 questions, avec un vrai point final : ton score, la liste de tes réponses (juste ou faux, touchables pour revoir l’explication), puis « Encore 10 » pour enchaîner. L’examen blanc gagne la même liste de réponses à la fin.

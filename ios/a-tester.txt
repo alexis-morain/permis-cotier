@@ -11,3 +11,12 @@ Ce build ouvre l’app aux iPhone restés sous iOS 16 ou 17. Rien ne change à l
 Sur un iPhone récent, rien ne doit avoir bougé.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
+
+Séries de 10 par thème :
+• Entraînement → un thème : le compteur dit « 1 / 10 », pas « 1 / 78 ». Dix questions, les jamais vues et les ratées d’abord.
+• À la dixième : le score (« 8 sur 10 »), le son de fin de série, le palier s’il y en a un, puis la liste des dix questions. Chaque ligne dit « Juste » ou « Faux » en toutes lettres.
+• Touche une ligne : la question s’ouvre avec ta réponse, la bonne et l’explication. Touche-la encore : elle se referme.
+• « Encore 10 » (bouton jaune) lance dix autres questions du même thème, d’autres que les premières. « Changer de thème » (lien) ramène à la liste.
+• Un thème de moins de dix questions : la série les prend toutes, et le bouton dit « Encore 7 », par exemple.
+• Examen blanc → à la fin, le même récapitulatif remplace « Revoir mes erreurs » : touche une ligne « Faux » pour revoir l’erreur. « Refaire un examen » est inchangé.
+• Ta série du jour (Accueil → Reprendre) garde sa taille et son bouton « Refaire la série ».
