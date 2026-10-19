@@ -24,3 +24,7 @@ Fiche : les derniers examens blancs et les thèmes.
 • Sans examen passé : une ligne et un lien « Faire un examen blanc ».
 • « Thème par thème » : une ligne par thème, le nom, un pourcentage et une barre, les plus fragiles en haut. Les thèmes jamais ouverts sont regroupés en bas, sous « Pas encore ouverts ».
 • Un thème avec un palier gagné : une ligne avec son nom (touche-la pour voir le fait daté), et le prochain palier en petit dessous.
+À essayer : les fiches « à relire la veille ».
+• Cours → un chapitre → « À relire la veille » : une carte par leçon, avec son schéma quand elle en a un, ses lignes à retenir et sa source.
+• À la fin de la dernière leçon d’un chapitre, le même bouton ouvre la fiche.
+• Mode avion : la fiche s’ouvre, et ses schémas s’affichent.

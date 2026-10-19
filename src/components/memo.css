@@ -1,0 +1,39 @@
+/*
+ * La fiche-mémo d'un cours : une carte par leçon, sur le fond de la page. Un
+ * seul objet lourd par carte, le visuel ; les lignes et la source restent
+ * légères. Rien que les variables du site, pour suivre le thème clair et le
+ * thème sombre, et la DA de l'app quand elle les change.
+ */
+
+.memo__blocs { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1rem; }
+
+.memo__bloc {
+  background: var(--fond-carte);
+  border: 2px solid var(--filet);
+  border-radius: var(--rayon);
+  padding: 1.1rem 1.25rem 1rem;
+  scroll-margin-top: 1rem;
+}
+.memo__bloc h2 { font-size: 1.2rem; margin: 0 0 0.8rem; }
+
+.memo__visuel {
+  margin: 0 0 0.9rem;
+  display: grid;
+  place-items: center;
+  background: var(--fond-carte);
+}
+.memo__visuel img { width: auto; max-width: 100%; max-height: 18rem; }
+
+.memo__lignes { margin: 0 0 0.9rem; padding-left: 1.2rem; }
+.memo__lignes li { margin-bottom: 0.4rem; max-width: var(--mesure); }
+.memo__lignes li:last-child { margin-bottom: 0; }
+
+.memo__source { margin: 0; font-size: 0.85rem; color: var(--texte-doux); }
+.memo__source ul { list-style: none; padding: 0; margin: 0.15rem 0 0; }
+.memo__source li { margin-bottom: 0.15rem; }
+.memo__source a { color: inherit; }
+
+/* Cible de 44 pt : le lien vers la leçon complète. */
+.memo__lecon { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; }
+
+.memo__fin { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; max-width: none; }

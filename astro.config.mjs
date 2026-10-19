@@ -115,7 +115,8 @@ function bandeAvantRendu() {
 
 const leconIndexable = (page) => {
   const code = /\/cours\/[a-z0-9-]+\/([a-z0-9-]+)(?:\.html)?$/.exec(new URL(page).pathname)?.[1];
-  return !code || existsSync(new URL(`./data/cours/${code}.yaml`, import.meta.url));
+  // `/cours/<thème>/memo` est la fiche-mémo du cours, pas une leçon.
+  return !code || code === 'memo' || existsSync(new URL(`./data/cours/${code}.yaml`, import.meta.url));
 };
 
 export default defineConfig({

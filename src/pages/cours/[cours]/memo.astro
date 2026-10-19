@@ -1,0 +1,101 @@
+---
+import Base from '../../../layouts/Base.astro';
+import MarqueSource from '../../../components/MarqueSource.astro';
+import '../../../components/memo.css';
+import { COURS, leconsDuCours, cheminCours, type Cours } from '../../../lib/parcours';
+import { leconDeLaNotion } from '../../../lib/lecons';
+import { assemblerMemo, cheminMemo } from '../../../lib/memo';
+import { themeParCode } from '../../../lib/themes';
+import { SITE, ressource } from '../../../lib/seo';
+import { POUR_APP } from '../../../lib/cible';
+
+export async function getStaticPaths() {
+  return COURS.map((cours) => ({ params: { cours: cours.code }, props: { cours } }));
+}
+
+const { cours } = Astro.props as { cours: Cours };
+const theme = themeParCode(cours.code);
+const chemin = cheminMemo(cours.code);
+const base = Astro.site ?? SITE.domaine;
+
+const blocs = assemblerMemo(
+  await Promise.all(
+    leconsDuCours(cours.code).map(async (l) => ({ lecon: await leconDeLaNotion(l.notion), chemin: l.chemin })),
+  ),
+);
+
+const description = `L’essentiel du cours « ${cours.titre} » à relire la veille de l’examen : ${blocs.length} notions, leurs schémas et leurs sources.`;
+---
+
+<Base
+  titre={`${cours.titre} : à relire la veille`}
+  description={description}
+  miettes={[
+    { nom: 'Cours', chemin: '/cours' },
+    { nom: cours.titre, chemin: cheminCours(cours.code) },
+    { nom: 'À relire la veille', chemin },
+  ]}
+  jsonLd={[
+    ressource(
+      {
+        nom: `${cours.titre} : à relire la veille`,
+        resume: description,
+        chemin,
+        theme: theme?.nom ?? cours.code,
+        nombreQuestions: 0,
+        type: 'Fiche de révision',
+      },
+      base,
+    ),
+  ]}
+>
+  <article class="page page--etroite memo" style={POUR_APP ? undefined : 'padding-block:2.5rem 0'}>
+    {!POUR_APP && <p class="chapitre"><a href={cheminCours(cours.code)}>{cours.titre}</a></p>}
+    <h1>À relire la veille</h1>
+    <p class="discret">
+      {cours.titre}. Les lignes « à retenir » de chaque leçon, avec le texte dont elles viennent.
+    </p>
+
+    <ol class="memo__blocs">
+      {blocs.map((b) => (
+        <li class="memo__bloc" id={b.code}>
+          <h2>{b.nom}</h2>
+          {b.visuel && (
+            <figure class="memo__visuel">
+              <img src={`/visuels/${b.visuel}`} alt={b.alt ?? ''} loading="lazy" />
+            </figure>
+          )}
+          <ul class="memo__lignes">{b.lignes.map((l) => <li>{l}</li>)}</ul>
+          <div class="memo__source">
+            <span>{b.sources.length > 1 ? 'Sources' : 'Source'}</span>
+            <ul>
+              {b.sources.map((s) => (
+                <li>
+                  {s.url ? (
+                    <a
+                      href={s.url}
+                      rel={s.provenance === 'officiel' ? 'noreferrer noopener' : undefined}
+                      data-mesure="source-ouverte"
+                      data-mesure-ref={s.ref}
+                    >
+                      {s.texte}
+                    </a>
+                  ) : (
+                    s.texte
+                  )}
+                  {/* Sept textes officiels à la suite : la pastille ne dit quelque chose que pour la fiche maison. */}
+                  {s.provenance === 'fiche' && <MarqueSource provenance={s.provenance} />}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a class="memo__lecon" href={b.chemin}>La leçon complète</a>
+        </li>
+      ))}
+    </ol>
+
+    <p class="memo__fin">
+      <a class="bouton" href={cheminCours(cours.code)}>Retour au cours</a>
+    </p>
+  </article>
+</Base>
