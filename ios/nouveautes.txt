@@ -1,1 +1,3 @@
 L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deuxième génération suffit.
+
+Chaque chapitre a sa fiche « à relire la veille » : l’essentiel de ses leçons sur un écran ou deux, avec les schémas et les sources.

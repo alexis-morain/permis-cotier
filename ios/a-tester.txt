@@ -11,3 +11,8 @@ Ce build ouvre l’app aux iPhone restés sous iOS 16 ou 17. Rien ne change à l
 Sur un iPhone récent, rien ne doit avoir bougé.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
+
+À essayer : les fiches « à relire la veille ».
+• Cours → un chapitre → « À relire la veille » : une carte par leçon, avec son schéma quand elle en a un, ses lignes à retenir et sa source.
+• À la fin de la dernière leçon d’un chapitre, le même bouton ouvre la fiche.
+• Mode avion : la fiche s’ouvre, et ses schémas s’affichent.

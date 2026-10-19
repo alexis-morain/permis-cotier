@@ -10,6 +10,7 @@ import { SITE, cours as coursJsonLd } from '../../lib/seo';
 import MarqueSource from '../../components/MarqueSource.astro';
 import type { SourceAffichee } from '../../lib/sources';
 import { POUR_APP } from '../../lib/cible';
+import { cheminMemo } from '../../lib/memo';
 
 export async function getStaticPaths() {
   return COURS.map((cours) => ({ params: { cours: cours.code }, props: { cours } }));
@@ -97,6 +98,7 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
       <section class="lecons-app" id="lecons">
         <h2>Les leçons</h2>
         <Parcours cours={parcours} />
+        <p><a class="bouton" href={cheminMemo(cours.code)} data-mesure="cours-memo" data-mesure-theme={cours.code}>À relire la veille</a></p>
       </section>
     )}
 
@@ -165,6 +167,7 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
           S’entraîner sur {theme.nom.toLowerCase()}
         </a>
       )}
+      <a class="bouton" href={cheminMemo(cours.code)} data-mesure="cours-memo" data-mesure-theme={cours.code}>À relire la veille</a>
       <a class="bouton" href={`/theme/${cours.code}`}>La fiche du thème</a>
     </p>
   </section>
