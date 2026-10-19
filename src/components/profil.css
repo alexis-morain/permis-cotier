@@ -244,7 +244,8 @@
 .faible__actions { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 0; font-weight: 700; }
 .faible__actions a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 
-/* Thème par thème : deux jauges superposées, le vu en filet, le retenu en marine. */
+/* Thème par thème : une ligne par thème, le nom, le pourcentage retenu, une
+   barre. Le pourcentage est ce que la barre remplit, rien d'autre. */
 .maitrise { list-style: none; margin: 0; padding: 0; max-width: 40rem; }
 .maitrise > li { max-width: none; border-top: 2px solid var(--filet); }
 .maitrise > li:last-child { border-bottom: 2px solid var(--filet); }
@@ -253,21 +254,13 @@
   grid-template-columns: 1fr auto;
   gap: 0.3rem 1rem;
   align-items: baseline;
-  padding: 0.75rem 0 0.85rem;
+  padding: 0.75rem 0 0.6rem;
   text-decoration: none;
 }
 @media (hover: hover) and (pointer: fine) {
   .maitrise a:hover b { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
 }
-.maitrise__note { font-size: 0.9rem; font-weight: 700; text-align: right; }
-/* Sous 30 rem, le compte passe sous le nom : « 9 retenues sur 12 vues, 56 en
-   banque » ne tient pas à côté de « Règles de barre et de route ». */
-@media (max-width: 29.999rem) {
-  .maitrise a { grid-template-columns: 1fr; gap: 0.15rem; }
-  .maitrise__note { text-align: left; }
-}
-.maitrise__note .discret { font-weight: 600; }
-.maitrise__faible { color: var(--rouge-texte); }
+.maitrise__pourcent { font-weight: 800; font-variant-numeric: tabular-nums; }
 .maitrise__jauge {
   grid-column: 1 / -1;
   position: relative;
@@ -276,57 +269,112 @@
   background: var(--fond-2);
   overflow: hidden;
 }
-.maitrise__vues, .maitrise__retenues {
+.maitrise__retenues {
   position: absolute;
-  inset: 0 auto 0 0;
+  inset: 0;
   border-radius: inherit;
+  background: var(--texte);
+  transform-origin: left;
+  transform: scaleX(var(--pourcent, 0));
 }
-.maitrise__vues { width: calc(var(--vues, 0) * 100%); background: var(--filet-fort); }
-.maitrise__retenues { width: calc(var(--retenues, 0) * 100%); background: var(--texte); }
+/* Les thèmes jamais ouverts, groupés en bas : le nom et le nombre de questions, sans barre. */
+.maitrise__titre { margin: 1.5rem 0 0.4rem; font-size: 1rem; }
+.maitrise--neufs a { padding: 0.6rem 0; min-height: 2.75rem; align-items: center; }
+.maitrise--neufs .discret { font-size: 0.9rem; }
 
-/* Les paliers d'un thème, sous sa jauge : ce qui est gagné, en texte, puis le
-   prochain dit comme un fait. Le nom du palier en gras, rien d'autre. */
+/* Les paliers d'un thème, sous sa jauge : une ligne avec le nom de ce qui est
+   gagné, le fait daté replié, puis le prochain en petit. */
 .paliers { padding: 0 0 0.85rem; font-size: 0.9rem; }
+.paliers summary { cursor: pointer; font-weight: 700; display: flex; align-items: center; min-height: 2.75rem; }
+.paliers summary::after { content: '›'; margin-left: 0.4rem; color: var(--texte-doux); transition: transform 0.15s; }
+.paliers details[open] summary::after { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .paliers summary::after { transition: none; } }
+.paliers summary::-webkit-details-marker { display: none; }
 .paliers ul { list-style: none; margin: 0; padding: 0; }
 .paliers li { max-width: none; }
 .paliers li + li { margin-top: 0.3rem; }
-.paliers__prochain { margin: 0.3rem 0 0; }
-.paliers ul + .paliers__prochain { margin-top: 0.45rem; }
+.paliers__prochain { margin: 0.2rem 0 0; font-size: 0.8rem; }
+.paliers details + .paliers__prochain { margin-top: 0; }
 
-/* Les examens : une ligne par examen, la barre du score, le trait à 35. */
-.examens { list-style: none; margin: 1rem 0 0.5rem; padding: 0; max-width: 34rem; }
-.examens li {
+/* Les derniers examens blancs : un histogramme en HTML, une barre par examen,
+   le plus récent à droite. La hauteur est `--part` (score sur 40). La ligne
+   pointillée est le seuil, à 35 sur 40. Recalé = barre creuse. */
+.barres__cadre {
+  position: relative;
   display: grid;
-  grid-template-columns: 6.5rem 1fr auto auto;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
-  max-width: none;
-  font-size: 0.95rem;
+  grid-template-columns: 1fr 3.6rem;
+  align-items: stretch;
+  max-width: 34rem;
+  margin: 1.25rem 0 0.75rem;
+  height: 10.5rem;
+  padding-top: 1.1rem;
 }
-.examens li::before {
+.barres {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 0.3rem;
+  border-bottom: 2px solid var(--filet-fort);
+}
+.barres__barre { position: relative; flex: 1 1 0; max-width: none; min-width: 0; }
+.barres__barre::before {
   content: '';
-  grid-column: 2;
-  grid-row: 1;
-  height: 8px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--texte) calc(var(--part, 0) * 100%), var(--fond-2) 0);
+  position: absolute;
+  inset: auto 0 0 0;
+  height: calc(var(--part, 0) * 100%);
+  background: var(--texte);
+  border-radius: 4px 4px 0 0;
 }
-.examens li::after {
-  content: '';
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: start;
-  width: 2px;
-  height: 16px;
-  margin-left: calc(35 / 40 * 100%);
-  background: var(--jaune-sombre);
+.barres__barre--recale::before {
+  background: var(--fond-carte);
+  box-shadow: inset 0 0 0 2px var(--texte);
 }
-.examens__date { color: var(--texte-doux); font-weight: 600; }
-.examens__score { font-weight: 800; font-variant-numeric: tabular-nums; }
-.examens__score--recu { color: var(--vert-texte); }
-.examens__score--recale { color: var(--rouge-texte); }
-.examens__verdict { font-size: 0.8rem; font-weight: 700; color: var(--texte-doux); }
+/* Le score au pied de la barre, dedans : la ligne du seuil ne le croise jamais. */
+.barres__score {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.3rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--fond-carte);
+}
+.barres__barre--recale .barres__score { color: var(--texte); }
+/* 35 sur 40 : la ligne est à 87,5 % de la hauteur utile (le cadre moins son
+   bandeau du haut), le bas du graphique est le zéro. */
+.barres__ligne {
+  position: absolute;
+  left: 0;
+  right: 3.6rem;
+  bottom: calc((100% - 1.1rem) * 35 / 40);
+  border-top: 2px dashed var(--jaune-sombre);
+  pointer-events: none;
+}
+.barres__seuil {
+  position: absolute;
+  right: 0;
+  bottom: calc((100% - 1.1rem) * 35 / 40);
+  transform: translateY(50%);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+  white-space: nowrap;
+}
+.examens-chiffres {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem 1rem;
+  max-width: 34rem;
+}
+.examens-chiffres > div { display: flex; flex-direction: column; gap: 0.1rem; max-width: none; }
+.examens-chiffres b { font-size: 1.35rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.examens-chiffres .discret { font-size: 0.85rem; }
+.examens-vide { margin: 0; }
+.examens-vide a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; }
 
 /* Les jalons : une liste, un cercle qui passe jaune. Pas de médaille. */
 .jalons { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem 2rem; }

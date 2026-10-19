@@ -1,5 +1,5 @@
 import { jourPlus } from './jour';
-import type { Etat, Profil } from './progression';
+import type { Etat, ExamenPasse, Profil } from './progression';
 import { estRetenue } from './quiz';
 import { NOTIONS, notionParCode } from './notions';
 import { cheminLecon } from './parcours';
@@ -150,6 +150,49 @@ export function indice(etat: Etat, banque: readonly QuestionConnue[]): Indice {
 }
 
 /* ------------------------------------------------------------------------ */
+/* Les derniers examens blancs                                               */
+
+const EXAMENS_AU_GRAPHIQUE = 10;
+const EXAMENS_AU_RESUME = 5;
+
+/** Les examens que l'indice prend lui aussi pour terminés, le plus récent d'abord. */
+function examensTermines(etat: Etat): ExamenPasse[] {
+  return etat.examens.filter((x) => x.total > 0 && x.bonnes <= x.total);
+}
+
+/**
+ * Les dix derniers examens blancs, le plus récent en dernier : c'est l'ordre
+ * du graphique, qui se lit de gauche à droite. L'historique est déjà gardé
+ * avec sa date à la fin de chaque examen (`enregistrerExamen`), rien à ajouter.
+ */
+export function derniersExamens(etat: Etat): ExamenPasse[] {
+  return examensTermines(etat).slice(0, EXAMENS_AU_GRAPHIQUE).reverse();
+}
+
+export interface ResumeExamens {
+  /** Tous les examens terminés, pas seulement ceux du graphique. */
+  passes: number;
+  /** Score moyen des cinq derniers, sur 40, ou `null` sans examen. */
+  moyenne: number | null;
+  /** Combien des cinq derniers sont reçus. */
+  recus: number;
+  /** Combien d'examens ces cinq-là sont en réalité (moins de cinq au début). */
+  sur: number;
+}
+
+export function resumeExamens(etat: Etat): ResumeExamens {
+  const tous = examensTermines(etat);
+  const derniers = tous.slice(0, EXAMENS_AU_RESUME);
+  const somme = derniers.reduce((a, x) => a + x.bonnes, 0);
+  return {
+    passes: tous.length,
+    moyenne: derniers.length > 0 ? Math.round((somme / derniers.length) * 10) / 10 : null,
+    recus: derniers.filter((x) => x.reussi).length,
+    sur: derniers.length,
+  };
+}
+
+/* ------------------------------------------------------------------------ */
 /* Les jours                                                                 */
 
 /**
@@ -254,6 +297,31 @@ export function maitriseParTheme(etat: Etat, banque: readonly QuestionConnue[]):
   return [...parTheme.values()].sort(
     (a, b) => cleFaiblesse(a) - cleFaiblesse(b) || (rangProgramme.get(a.code) ?? 99) - (rangProgramme.get(b.code) ?? 99),
   );
+}
+
+export interface JaugeTheme extends MaitriseTheme {
+  /** Retenues sur les questions du thème en banque, arrondi : la barre de la fiche. */
+  pourcent: number;
+}
+
+/**
+ * Les thèmes en jauges. Le pourcentage garde le sens de la barre d'avant :
+ * les questions retenues (réussies deux jours différents) sur celles du thème
+ * en banque. Les plus fragiles d'abord (pourcentage croissant, ratées devant à égalité),
+ * les thèmes jamais ouverts à part, pour tomber en bas.
+ */
+export function jaugesParTheme(
+  etat: Etat,
+  banque: readonly QuestionConnue[],
+): { travailles: JaugeTheme[]; neufs: JaugeTheme[] } {
+  const jauges = maitriseParTheme(etat, banque).map((t) => ({
+    ...t,
+    pourcent: t.total > 0 ? Math.round((100 * t.retenues) / t.total) : 0,
+  }));
+  // Le tri stable garde l'ordre des ratées à pourcentage égal (le premier jour,
+  // tout vaut zéro) : la liste descend sans qu'une barre plus courte suive une plus longue.
+  const travailles = jauges.filter((t) => t.vues > 0).sort((a, b) => a.pourcent - b.pourcent);
+  return { travailles, neufs: jauges.filter((t) => t.vues === 0) };
 }
 
 /* ------------------------------------------------------------------------ */

@@ -24,6 +24,9 @@ import {
   pointFinal,
   quatorzeJours,
   joursAvant,
+  derniersExamens,
+  resumeExamens,
+  jaugesParTheme,
 } from './profil';
 
 /**
@@ -405,5 +408,66 @@ describe('pointFinal', () => {
     expect(pointFinal('Emmener mon père pêcher.')).toBe('');
     expect(pointFinal('Enfin !')).toBe('');
     expect(pointFinal('On verra…')).toBe('');
+  });
+});
+
+describe('les derniers examens blancs', () => {
+  it('rend les dix derniers, le plus récent à droite, avec leur verdict', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 12; k++) e = examen(e, 30 + (k % 8), `2026-10-${String(k + 1).padStart(2, '0')}`);
+    const d = derniersExamens(e);
+    expect(d).toHaveLength(10);
+    // `examens` range le plus récent d'abord ; le graphique le veut en dernier.
+    expect(d[9]!.date).toBe('2026-10-12');
+    expect(d[0]!.date).toBe('2026-10-03');
+    expect(d[9]).toMatchObject({ bonnes: 33, total: 40, reussi: false });
+  });
+
+  it('écarte un examen sans question ou incohérent, comme l’indice', () => {
+    let e = examen(etatInitial(), 38, '2026-10-01');
+    e = enregistrerExamen(e, { date: '2026-10-02', bonnes: 0, total: 0, reussi: false });
+    e = enregistrerExamen(e, { date: '2026-10-03', bonnes: 41, total: 40, reussi: true });
+    expect(derniersExamens(e).map((x) => x.date)).toEqual(['2026-10-01']);
+  });
+
+  it('résume : passés, moyenne et reçus des cinq derniers', () => {
+    let e = etatInitial();
+    [28, 30, 36, 37, 33, 39, 35].forEach((b, k) => { e = examen(e, b, `2026-10-0${k + 1}`); });
+    // Les cinq derniers : 36, 37, 33, 39, 35 (moyenne 36 ; 35 est reçu, 33 non).
+    expect(resumeExamens(e)).toEqual({ passes: 7, moyenne: 36, recus: 4, sur: 5 });
+  });
+
+  it('résume peu d’examens sur ce qu’il y a', () => {
+    const e = examen(examen(etatInitial(), 36, '2026-10-01'), 31, '2026-10-02');
+    expect(resumeExamens(e)).toEqual({ passes: 2, moyenne: 33.5, recus: 1, sur: 2 });
+  });
+
+  it('résume nul sans examen', () => {
+    expect(resumeExamens(etatInitial())).toEqual({ passes: 0, moyenne: null, recus: 0, sur: 0 });
+  });
+
+  it('compte tous les examens passés, pas les dix du graphique', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 14; k++) e = examen(e, 36, '2026-10-01');
+    expect(resumeExamens(e).passes).toBe(14);
+  });
+});
+
+describe('les jauges par thème', () => {
+  it('donne le pourcentage de retenues en banque, les plus fragiles d’abord', () => {
+    let e = etatInitial();
+    for (let k = 0; k < 5; k++) e = retenir(e, `feux-${k}`);
+    for (let k = 0; k < 10; k++) e = enregistrerReponse(e, `vhf-${k}`, false, '2026-09-01');
+    const j = jaugesParTheme(e, banque);
+    expect(j.travailles.map((t) => [t.code, t.pourcent])).toEqual([['vhf', 0], ['feux-marques', 50]]);
+    expect(j.neufs).toEqual([]);
+  });
+
+  it('range les thèmes jamais ouverts à part', () => {
+    const e = retenir(etatInitial(), 'vhf-0');
+    const j = jaugesParTheme(e, banque);
+    expect(j.travailles.map((t) => t.code)).toEqual(['vhf']);
+    expect(j.travailles[0]!.pourcent).toBe(10);
+    expect(j.neufs.map((t) => t.code)).toEqual(['feux-marques']);
   });
 });
