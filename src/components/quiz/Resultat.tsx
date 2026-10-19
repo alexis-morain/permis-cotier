@@ -93,11 +93,16 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
         <>
           {r.total > 0 && <ParTheme parTheme={r.parTheme} />}
 
-          {POUR_APP ? <ActionsApp {...actions} /> : <ActionsSite {...actions} />}
-
           {/* Dans l'app, le récapitulatif tient la place de « Revoir mes
               erreurs » : chaque ligne s'ouvre, et les erreurs y sont. */}
-          {POUR_APP && <Recap session={session} parId={parId} retourLecon={retourLecon} />}
+          {POUR_APP ? (
+            <>
+              <ActionsApp {...actions} />
+              <Recap session={session} parId={parId} retourLecon={retourLecon} />
+            </>
+          ) : (
+            <ActionsSite {...actions} />
+          )}
           {revue && <RevueDesErreurs session={session} parId={parId} quoi={revue} retourLecon={retourLecon} />}
         </>
       )}

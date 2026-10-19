@@ -101,12 +101,8 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   useEffect(() => setEtat(charger()), []);
 
   // Une leçon faite ou une date posée dans un autre onglet : la fiche la relit.
-  // `POUR_APP` est une constante de build, le rang des hooks ne change jamais
-  // d'un rendu à l'autre ; sur le site, la branche part au minificateur.
-  if (POUR_APP) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => surProgressionChangee(() => setEtat(charger())), []);
-  }
+  // Sur le site, l'événement ne part jamais ; l'écouteur coûte quelques octets.
+  useEffect(() => surProgressionChangee(() => setEtat(charger())), []);
 
   // Après l'effacement, on repart du haut : la page a changé sous le bouton.
   useEffect(() => {
