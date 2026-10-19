@@ -36,3 +36,8 @@ Séries de 10 par thème :
 • Un thème de moins de dix questions : la série les prend toutes, et le bouton dit « Encore 7 », par exemple.
 • Examen blanc → à la fin, le même récapitulatif remplace « Revoir mes erreurs » : touche une ligne « Faux » pour revoir l’erreur. « Refaire un examen » est inchangé.
 • Ta série du jour (Accueil → Reprendre) garde sa taille et son bouton « Refaire la série ».
+Nouvelle allure, plus sobre : des cartes blanches sur un fond gris-bleu, un seul gros bouton jaune par écran, la police de l’iPhone pour le texte.
+• Accueil : chaque carte se touche entière, pas seulement le texte.
+• Examen blanc : la croix en haut à gauche arrête l’épreuve (avec la confirmation) ; « Valider et passer » reste grisé tant que rien n’est coché.
+• Entraînement : après « Valider », la correction monte du bas et laisse voir la question ; le mot « Juste » ou « Faux », l’explication et « Continuer » tiennent sans défiler. Touche « Source » : elle se déplie.
+• Passe en mode sombre, et mets la taille du texte au plus grand dans Réglages : rien ne doit sortir de l’écran.

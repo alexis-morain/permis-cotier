@@ -59,8 +59,8 @@ describe('accueil de l’app, premier lancement', () => {
 describe('les libellés de l’accueil', () => {
   it('disent un verbe et ce qu’ils ouvrent, comme la fiche pour les mêmes destinations', () => {
     afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
-    const libelles = [...document.querySelectorAll('.accueilApp a.bouton')].map((a) => a.textContent);
-    expect(libelles).toEqual(['Commencer le cours', 'Faire ma série du jour', 'Faire un examen blanc']);
+    const libelles = [...document.querySelectorAll('.accueilApp a.bouton, .accueilApp a.accueilApp__action')].map((a) => a.firstChild?.textContent);
+    expect(libelles).toEqual(['Commencer le cours', 'Faire ma série du jour', 'Faire un examen blanc', 'Pose la date de ton épreuve']);
   });
 });
 

@@ -2,10 +2,10 @@
  * L'accueil de l'app. Ces règles ne touchent que `.accueilApp`, rendu dans la
  * seule coquille : le site n'en voit rien.
  *
- * Le bloc « Reprendre » est la bande marine de l'accueil web ramenée à un
- * bloc : c'est l'action du jour. Les trois autres ne sont pas des cartes mais
- * des rangées séparées d'un filet, comme les listes du site. Un seul bouton
- * jaune sur l'écran, celui de la leçon.
+ * Quatre cartes. « Reprendre » est la carte marine, avec le seul bouton
+ * jaune de l'écran : c'est l'action du jour. Les trois autres sont des cartes
+ * blanches entièrement touchables : un titre, une ligne, parfois un chiffre,
+ * et un lien dont le `::after` couvre toute la carte.
  */
 /* Pas de rembourrage en haut : `<main>` pose déjà la zone sûre plus 1 rem,
    la marge de tous les écrans de l'app. Les côtés en points, comme `.page` :
@@ -13,6 +13,7 @@
 .accueilApp {
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
   padding: 0 16px 1rem;
 }
 
@@ -25,21 +26,19 @@
 .accueilApp > section:nth-of-type(4) { animation-delay: 180ms; }
 
 .accueilApp__bloc {
-  padding: 1.25rem 0;
-  border-top: 2px solid var(--filet);
+  position: relative;
+  padding: 1.25rem;
+  border: 1px solid var(--carte-filet);
+  border-radius: var(--rayon);
+  background: var(--fond-carte);
 }
 
 .accueilApp__reprendre {
   --anneau: var(--jaune);
-  margin-bottom: 0.5rem;
-  padding: 20px;
-  border: 2px solid var(--panneau-filet);
-  border-radius: var(--rayon);
+  border-color: var(--bande);
   background: var(--bande);
   color: var(--bande-texte);
 }
-
-.accueilApp__reprendre + .accueilApp__bloc { border-top: 0; }
 
 .accueilApp__chapitre {
   margin: 0 0 0.4rem;
@@ -50,8 +49,8 @@
 
 .accueilApp__lecon {
   margin: 0 0 1.25rem;
-  font-size: 1.9rem;
-  line-height: 1.05;
+  font-size: 1.5rem;
+  line-height: 1.15;
   overflow-wrap: break-word;
   hyphens: auto;
 }
@@ -88,24 +87,50 @@
 
 .accueilApp__titre {
   margin: 0 0 0.35rem;
-  font-size: 1.15rem;
+  font-size: 1.0625rem;
 }
 
-.accueilApp__texte { margin: 0; }
-.accueilApp__fort { font-weight: 700; font-size: 1.15rem; }
+.accueilApp__texte { margin: 0; color: var(--texte-doux); }
+.accueilApp__fort { font-weight: 700; font-size: 1.15rem; color: var(--texte); }
 
 .accueilApp__nombre {
+  margin-inline-end: 0.15em;
+  color: var(--texte);
   font-size: 2.6rem;
   line-height: 1;
 }
 
-/* Les boutons prennent toute la largeur : une cible au pouce, 48 pt de haut. */
-.accueilApp__action {
+/* Le bouton jaune de la carte marine : pleine largeur, une cible au pouce. */
+.accueilApp__bouton {
   display: flex;
   width: 100%;
-  margin-top: 1rem;
 }
-.accueilApp__reprendre .accueilApp__action { margin-top: 0; }
+
+/* Le lien d'une carte blanche : une ligne de texte et un chevron. Son
+   `::after` s'étend sur la carte (`position: relative` plus haut), si bien
+   que toute la carte est la cible. Sans cadre, sans socle. */
+.accueilApp__action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.accueilApp__action::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--rayon);
+}
+.accueilApp__bloc:has(.accueilApp__action:active) { background: var(--fond-2); }
+.accueilApp__chevron {
+  color: var(--texte-doux);
+  font-size: 1.5rem;
+  line-height: 1;
+}
 
 /* Un lien seul est une cible : il tient les 44 pt. */
 .accueilApp__lien {
@@ -119,4 +144,5 @@
 .accueilApp__serie {
   margin: 0;
   padding-top: 0.25rem;
+  text-align: center;
 }

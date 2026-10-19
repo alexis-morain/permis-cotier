@@ -1304,6 +1304,9 @@ describe('le plein écran de la série, dans l’app', () => {
   });
 });
 
+/** Dans l'app, « Valider et passer » reste grisé tant que rien n'est coché. */
+const repondreFaux = () => fireEvent.click(screen.getByRole('button', { name: /Deuxième proposition/ }));
+
 describe('l’écran de jeu dans l’app', () => {
   beforeEach(() => {
     cible.app = true;
@@ -1357,6 +1360,7 @@ describe('l’écran de jeu dans l’app', () => {
   it('donne au résultat le geste suivant : les erreurs, puis refaire, puis partager', () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
     expect(screen.getByRole('link', { name: 'Refaire un examen' }).getAttribute('href')).toBe('/examen');
@@ -1365,7 +1369,7 @@ describe('l’écran de jeu dans l’app', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Partager' }));
     expect(partager).toHaveBeenCalledTimes(1);
 
-    // Trois questions sans réponse : trois lignes « Faux » au récapitulatif, et
+    // Trois fausses : trois lignes « Faux » au récapitulatif, et
     // chacune s'ouvre sur sa revue.
     const lignes = document.querySelectorAll<HTMLButtonElement>('.recap__ligne');
     expect(lignes).toHaveLength(3);
@@ -1379,6 +1383,7 @@ describe('l’écran de jeu dans l’app', () => {
   it('fait sentir un examen reçu', async () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
     // Trois erreurs, sous les cinq admises : reçu. L'haptique attend la
@@ -1394,9 +1399,10 @@ describe('l’écran de jeu dans l’app', () => {
     render(<Quiz mode="examen" questions={six} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     for (let i = 0; i < 6; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    // Six sans réponse : une de trop.
+    // Six fausses : une de trop.
     expect(screen.getByText(/Recalé/)).toBeTruthy();
     await waitFor(() => expect(vibrer).toHaveBeenCalledWith('echoue'));
   });

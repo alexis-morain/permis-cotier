@@ -1,30 +1,46 @@
 import type { QuestionAffichable } from '../../lib/banque';
+import { POUR_APP } from '../../lib/cible';
 import { lienLecon } from '../../lib/retour';
 
 /** Les textes cités sous une explication, avec leur lien quand ils en ont un. */
+function ListeSources({ sources }: { sources: QuestionAffichable['sources'] }) {
+  return (
+    <ul>
+      {sources.map((s) => (
+        <li key={`${s.ref}-${s.texte}`}>
+          {s.url ? (
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-mesure="source-ouverte"
+              data-mesure-ref={s.ref}
+            >
+              {s.texte}
+            </a>
+          ) : (
+            s.texte
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Sur le site, la source est écrite sous l'explication ; dans l'app, elle se déplie. */
 export function Sources({ sources }: { sources: QuestionAffichable['sources'] }) {
+  if (POUR_APP) {
+    return (
+      <details className="sources sources--repli">
+        <summary>Source</summary>
+        <ListeSources sources={sources} />
+      </details>
+    );
+  }
   return (
     <div className="sources">
       <span>Source :</span>
-      <ul>
-        {sources.map((s) => (
-          <li key={`${s.ref}-${s.texte}`}>
-            {s.url ? (
-              <a
-                href={s.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                data-mesure="source-ouverte"
-                data-mesure-ref={s.ref}
-              >
-                {s.texte}
-              </a>
-            ) : (
-              s.texte
-            )}
-          </li>
-        ))}
-      </ul>
+      <ListeSources sources={sources} />
     </div>
   );
 }

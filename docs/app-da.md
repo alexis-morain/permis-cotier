@@ -37,11 +37,36 @@ enchaîne d'un pouce, un examen joué plein écran, un résultat qui donne le ge
 suivant. Zéro texte d'explication de la page elle-même : l'app se comprend en
 la regardant.
 
-La DA du site reste la nôtre, elle est déjà celle d'une app : deux couleurs,
-Archivo sur deux largeurs, un rayon et un seul, le bord plein sous les boutons.
-On ne change pas la marque, on change **ce que l'écran montre** et **comment il
-bouge**. Pas de beige, pas de serif, pas de dégradé, pas de bordure colorée de
-côté, pas d'ombre douce.
+La marque reste la nôtre : le marine, le jaune, Archivo, un rayon et un seul.
+On ne change pas la marque, on change **ce que l'écran montre**, **comment il
+bouge** et **combien il en montre** : voir « La retenue » plus bas. Pas de
+beige, pas de serif, pas de dégradé, pas de bordure colorée de côté, pas
+d'ombre douce.
+
+## La retenue (19 octobre 2026)
+
+La première version de la couche app gardait tout le vocabulaire du site : bord
+plein sous chaque proposition, chaque bouton, chaque bloc, Archivo large
+partout. Sur un téléphone, tout pesait autant, et l'œil ne savait pas où aller.
+La grammaire de l'app est maintenant celle-ci, et chaque écran la suit :
+
+- **Un fond, des cartes.** Le fond est un gris-bleu très clair (`--fond`
+  `#eaf0f8` ; `#0a1730` en sombre). Les contenus sont regroupés en cartes
+  blanches au rayon unique, sans ombre et sans bordure épaisse : un filet d'un
+  pixel (`--carte-filet`) au plus. En sombre, la carte est la surface un cran
+  au-dessus du fond (`--fond-carte`). Jamais de carte dans une carte.
+- **Un seul objet lourd par écran : le bouton jaune**, avec son socle. Les
+  autres boutons sont un contour fin ou du texte, sans socle. Désactivé, le
+  bouton principal devient un aplat gris, sans relief.
+- **Les propositions sont des cartes blanches** ; la lettre est dans un petit
+  carré teinté (`--teinte`). Cochée : bord marine net, fond légèrement teinté,
+  lettre pleine. Après correction : bord et fond vert ou rouge pâles, un ✓ ou
+  un ✕ dans le carré. La couleur ne dit jamais seule juste ou faux.
+- **Archivo large n'est que pour le titre d'écran et les grands chiffres.** Le
+  corps, les énoncés, les propositions et les boutons sont en police système
+  (`--corps`, `-apple-system`) ; les titres de bloc (`h2`, `h3`) aussi, en 700.
+  Les jetons `--fond`, `--fond-2`, `--carte-filet`, `--teinte` et `--corps` sont
+  posés sous `html[data-app]` dans `app.css` ; le site ne les voit pas.
 
 ## La structure : cinq onglets
 
@@ -118,16 +143,19 @@ Tout ce qui suit vit sous `html[data-app]` (CSS) ou derrière `POUR_APP`
   la webview de l'onglet. `natif.ts` expose `ouvrirDehors(url)`, et un écouteur
   global sous `POUR_APP` intercepte les `<a>` dont l'hôte n'est pas le nôtre.
 - **Cibles de 44 pt minimum** sur tout ce qui se touche. Marges latérales
-  16 pt. Listes en cellules pleine largeur, séparées par un filet, pas en cartes
-  empilées avec marge tout autour.
+  16 pt. Une liste est une carte blanche ; ses cellules sont séparées d'un
+  filet léger, à l'intérieur de la carte (voir « La retenue »).
 - **Retour haptique** déjà présent à la correction ; on l'ajoute au passage
   d'une leçon à la suivante (léger) et au verdict d'examen (succès/erreur).
 
 ### Accueil (nouvel écran, `src/components/AccueilApp.tsx`)
 
-Le tableau de bord, quatre blocs de haut en bas, aucun texte de présentation :
+Le tableau de bord, quatre cartes de haut en bas, aucun texte de présentation.
+Chaque carte blanche se touche entièrement (le `::after` de son lien la couvre) :
+un titre, une ligne, parfois un grand chiffre, un lien à chevron. Le bouton
+jaune est celui de la carte Reprendre, et il est seul :
 
-1. **Reprendre** — grand bloc marine, le titre de la prochaine leçon, le
+1. **Reprendre** — grande carte marine, le titre de la prochaine leçon, le
    chapitre, une jauge de progression du cours (leçons faites / 105), un bouton
    jaune « Continuer le cours ». Si rien n'est commencé : la première leçon,
    et « Commencer le cours ». Réutilise la logique de `ReprendreCours.tsx`.
@@ -155,7 +183,7 @@ dans `localStorage`, comme le reste du site.
 La liste des quatorze chapitres en **parcours vertical** : un numéro dans un
 disque, le titre, « n / m leçons », une jauge fine. Chapitre terminé : disque
 plein marine avec coche. Chapitre en cours : disque jaune. Une cellule par
-chapitre, pleine largeur, 64 pt de haut minimum. Le bloc « Reprendre » du haut
+chapitre dans une seule carte blanche, 64 pt de haut minimum. Le bloc « Reprendre » du haut
 reste (il existe). Dans une leçon : la barre « leçon n / m du chapitre » colle
 sous la zone sûre, le bouton « Leçon suivante » colle en bas au-dessus de la
 barre d'onglets.
@@ -167,19 +195,25 @@ barre d'onglets.
   `natif.ts` → `modeConcentration`). Elle revient au résultat ou à l'arrêt.
   La barre d'action colle alors au bord bas, `env(safe-area-inset-bottom)`
   seulement.
-- La ligne d'avancement en haut : jauge fine pleine largeur sous la zone sûre,
-  le compteur « 12 / 40 » à droite en petit, le chrono en grand chiffre
-  tabulaire. Pas de titre « Question 12 ».
-- Propositions : 56 pt de haut minimum, la lettre dans un disque, le bord plein
-  qui s'enfonce au toucher. Une proposition cochée : fond jaune pâle, bord
-  marine.
-- Correction immédiate (entraînement) : le verdict monte du bas en panneau
-  (vert pâle ou rouge pâle, texte en `--vert-texte` / `--rouge-texte`, jamais
-  la couleur seule : le mot « Juste » ou « Faux » est écrit), avec
-  l'explication, la source, et le bouton « Continuer » dans le panneau. Le
-  panneau anime `transform` et `opacity`, 220 ms, easing sobre.
-- Résultat : le score en très grand, le verdict écrit, la jauge par thème, puis
-  deux boutons : « Revoir mes erreurs » (jaune) et « Refaire un examen »
+- La barre du haut : la croix à gauche (« Arrêter » en examen, avec la
+  confirmation ; « Quitter » vers le choix du thème en entraînement), « 2 / 10 »
+  au centre, le chrono à droite en examen, et dessous une jauge fine pleine
+  largeur. Pas de jauge de chrono dans l'app : le nombre dit tout et passe au
+  rouge sur les cinq dernières secondes. Pas de titre « Question 12 ».
+- L'ordre : le visuel, l'énoncé (police système, corps normal), les
+  propositions. Un seul bouton en bas, pleine largeur, grisé tant que rien
+  n'est coché, y compris en examen.
+- Propositions : cartes blanches, 56 pt de haut minimum, la lettre dans un
+  carré teinté. Cochée : bord marine net et fond teinté. Pas de socle ; l'appui
+  est un enfoncement à 0,97.
+- Correction immédiate (entraînement) : le verdict monte du bas en feuille
+  blanche et laisse voir la question derrière. Le mot « Juste » ou « Faux »
+  (avec ✓ ou ✕, en pastille verte ou rouge pâle) et l'explication se lisent
+  sans défiler ; la source est un `<details>` « Source », le signalement un lien
+  discret, le bouton « Continuer » reste dans la feuille. Le panneau anime
+  `transform` et `opacity`, 220 ms, easing sobre.
+- Résultat : le score en très grand (Archivo, c'est un grand chiffre), le
+  verdict écrit, les notes par thème dans une carte, puis deux boutons : « Revoir mes erreurs » (jaune) et « Refaire un examen »
   (discret). Partage natif en dessous.
 
 ### Fiche (`/profil`)

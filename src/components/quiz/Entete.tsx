@@ -1,4 +1,4 @@
-import type { Session } from '../../lib/session';
+import type { Mode, Session } from '../../lib/session';
 import { SECONDES_PAR_QUESTION } from '../../lib/quiz';
 import { useChrono } from './Chrono';
 
@@ -12,35 +12,41 @@ interface Props {
 const urgent = (restant: number | null) => restant !== null && restant <= 5;
 
 /**
- * La ligne d'avancement de l'app : une jauge fine pleine largeur, le chrono
- * en grand, le compteur en petit à droite. Pas de « Question 12 » écrit : le
- * compteur est muet pour VoiceOver, qui entend déjà « Question 12 sur 40 » en
- * tête de l'énoncé, juste dessous.
+ * La barre du haut de l'app : la croix à gauche, « 2 / 10 » au centre, le
+ * chrono à droite en examen, et dessous une jauge fine pleine largeur. La
+ * croix arrête l'examen (avec la confirmation) ou ramène au choix du thème.
+ * Le compteur est muet pour VoiceOver, qui entend déjà « Question 12 sur 40 »
+ * en tête de l'énoncé. Pas de jauge de chrono : le nombre dit tout, et passe
+ * au rouge sur les cinq dernières secondes.
  */
-export function EnteteApp({ session, echoir }: Props) {
+export function EnteteApp({ session, mode, demanderArret, echoir }: Props & { mode: Mode; demanderArret: (oui: boolean) => void }) {
   const restant = useChrono(session.echeance, echoir);
   const presse = urgent(restant);
   return (
     <div className="jeu__entete">
-      <div className="jeu__avancement" aria-hidden="true">
-        <span style={{ transform: `scaleX(${session.index / session.questions.length})` }} />
-      </div>
+      {mode === 'examen' ? (
+        <button className="jeu__croix" type="button" aria-label="Arrêter" onClick={() => demanderArret(true)}>
+          <span aria-hidden="true">✕</span>
+        </button>
+      ) : (
+        <a className="jeu__croix" href="/entrainement" aria-label="Quitter">
+          <span aria-hidden="true">✕</span>
+        </a>
+      )}
+      <span className="jeu__compteur" aria-hidden="true">
+        {session.index + 1} / {session.questions.length}
+      </span>
       {restant !== null ? (
         <span className={`jeu__chrono display${presse ? ' jeu__chrono--urgent' : ''}`} aria-live="off">
           {restant}<span className="discret"> s</span>
           <span className="visuellement-cache">secondes restantes</span>
         </span>
       ) : (
-        <a className="signaler" href="/entrainement">Changer de thème</a>
+        <span />
       )}
-      <span className="jeu__compteur" aria-hidden="true">
-        {session.index + 1} / {session.questions.length}
-      </span>
-      {restant !== null && (
-        <div className={`jeu__barre${presse ? ' jeu__barre--urgent' : ''}`} aria-hidden="true">
-          <span style={{ transform: `scaleX(${restant / SECONDES_PAR_QUESTION})` }} />
-        </div>
-      )}
+      <div className="jeu__avancement" aria-hidden="true">
+        <span style={{ transform: `scaleX(${session.index / session.questions.length})` }} />
+      </div>
     </div>
   );
 }

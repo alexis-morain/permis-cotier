@@ -22,6 +22,58 @@ html[data-app] {
   --courbe: cubic-bezier(0.2, 0, 0, 1);
 }
 
+/* ------------------------------------------------------------ La retenue
+
+   La grammaire de l'app : un fond gris-bleu très clair, des contenus en
+   cartes blanches au rayon unique, un seul objet lourd par écran (le bouton
+   jaune). Quatre jetons de plus que le site, posés ici seulement : `--teinte`
+   pour ce qui est choisi, `--carte-filet` pour le contour à peine visible
+   d'une carte. En sombre, la carte est la surface un cran au-dessus du fond.
+   Le même bloc trois fois, comme `global.css` : le système, puis le réglage
+   de la fiche dans un sens et dans l'autre. */
+html[data-app] {
+  --fond: #eaf0f8;
+  --fond-2: #d9e2ef;
+  --carte-filet: #dfe7f1;
+  --teinte: #e4ecf7;
+  --corps: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  html[data-app]:not([data-apparence="clair"]) {
+    --fond: #0a1730;
+    --fond-2: #1a2e55;
+    --carte-filet: #1d3157;
+    --teinte: #1b3059;
+  }
+}
+html[data-app][data-apparence="sombre"] {
+  --fond: #0a1730;
+  --fond-2: #1a2e55;
+  --carte-filet: #1d3157;
+  --teinte: #1b3059;
+}
+
+/* Archivo large garde le titre d'écran et les grands chiffres. Le reste du
+   texte passe à la police du système : celle que le doigt connaît. */
+html[data-app] body,
+html[data-app] button,
+html[data-app] input,
+html[data-app] textarea {
+  font-family: var(--corps);
+}
+html[data-app] h1,
+html[data-app] .display {
+  font-family: var(--sans);
+}
+html[data-app] h2,
+html[data-app] h3 {
+  font-stretch: 100%;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+html[data-app] h2 { font-size: 1.25rem; }
+
 /* L'entrée commune : un fondu et une montée de huit points. */
 @keyframes app-entree {
   from { opacity: 0; transform: translateY(8px); }
@@ -70,7 +122,7 @@ html[data-app] body::before {
 @supports (font: -apple-system-body) {
   html[data-app] {
     font: -apple-system-body;
-    font-family: var(--sans);
+    font-family: var(--corps);
     line-height: 1.5;
   }
 
@@ -250,6 +302,45 @@ html[data-app] body {
 html[data-app] a,
 html[data-app] button {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Les encadrés : la même carte que partout, un filet fin au lieu de deux
+   pixels. */
+html[data-app] .encadre { border: 1px solid var(--carte-filet); }
+
+/* ------------------------------------------------------------ Les boutons
+
+   Le bouton principal garde son socle jaune : c'est le seul objet lourd. Les
+   autres sont un contour fin ou du texte, sans socle. Désactivé, le principal
+   devient un aplat gris, sans relief : il ne promet rien. */
+html[data-app] .bouton {
+  font-family: var(--corps);
+  border-width: 1.5px;
+  box-shadow: none;
+}
+html[data-app] .bouton:not(.bouton--principal):not(.bouton--discret) {
+  background: transparent;
+  border-color: var(--filet-fort);
+}
+html[data-app] .bouton:not(.bouton--principal):active {
+  transform: none;
+  background: var(--fond-2);
+}
+html[data-app] .bouton--principal {
+  border-width: 2px;
+  box-shadow: 0 var(--bord) 0 var(--jaune-sombre);
+}
+html[data-app] .bouton--principal:active {
+  transform: translateY(var(--bord));
+  box-shadow: 0 0 0 var(--jaune-sombre);
+}
+html[data-app] .bouton[disabled],
+html[data-app] .bouton--principal[disabled] {
+  background: var(--fond-2);
+  border-color: var(--fond-2);
+  color: var(--texte-doux);
+  box-shadow: none;
+  transform: none;
 }
 
 /* ------------------------------------------------------------- L'appui
