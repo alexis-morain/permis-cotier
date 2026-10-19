@@ -17,3 +17,10 @@ Fluidité : l’app change d’écran plus vite.
 Sur un iPhone récent, rien d’autre ne doit avoir bougé.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
+
+Fiche : les derniers examens blancs et les thèmes.
+• Fiche, après au moins un examen blanc : en haut, un graphique de tes dix derniers examens, le plus récent à droite, avec une ligne pointillée « Seuil 35 ». Une barre pleine est un examen reçu, une barre creuse un examen recalé. Le score est écrit dans la barre. Dessous : le nombre d’examens passés, ta moyenne et le nombre de reçus sur les cinq derniers.
+• VoiceOver sur une barre : « 37 sur 40, reçu, 12 octobre ».
+• Sans examen passé : une ligne et un lien « Faire un examen blanc ».
+• « Thème par thème » : une ligne par thème, le nom, un pourcentage et une barre, les plus fragiles en haut. Les thèmes jamais ouverts sont regroupés en bas, sous « Pas encore ouverts ».
+• Un thème avec un palier gagné : une ligne avec son nom (touche-la pour voir le fait daté), et le prochain palier en petit dessous.

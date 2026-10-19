@@ -11,10 +11,11 @@ interface Props {
 }
 
 /**
- * Les badges d'un thème sur la fiche, sous sa jauge : les paliers gagnés,
- * chacun avec le fait daté qui l'a fait gagner, puis ce qui mène au suivant,
- * dit comme un fait. Jamais de total, jamais de compte à rebours : la fiche
- * lit, elle n'attribue pas (l'attribution se fait au geste).
+ * Les badges d'un thème sur la fiche, sous sa jauge : une ligne courte avec
+ * le nom des paliers gagnés, le fait daté qui les a fait gagner replié
+ * dessous, puis ce qui mène au suivant, dit comme un fait et en petit. Jamais
+ * de total, jamais de compte à rebours : la fiche lit, elle n'attribue pas
+ * (l'attribution se fait au geste).
  */
 export default function PaliersDuTheme({ etat, banque, theme, vues }: Props) {
   const dates = badgesLisibles(etat.badges)[theme] ?? {};
@@ -24,13 +25,16 @@ export default function PaliersDuTheme({ etat, banque, theme, vues }: Props) {
   return (
     <div className="paliers">
       {gagnes.length > 0 && (
-        <ul>
-          {gagnes.map(({ code, nom }) => (
-            <li key={code}>
-              <b>{nom}</b> {faitDuBadge(theme, code, { date: dates[code]! })}
-            </li>
-          ))}
-        </ul>
+        <details>
+          <summary>{gagnes.map(({ nom }) => nom).join(', ')}</summary>
+          <ul>
+            {gagnes.map(({ code, nom }) => (
+              <li key={code}>
+                <b>{nom}</b> {faitDuBadge(theme, code, { date: dates[code]! })}
+              </li>
+            ))}
+          </ul>
+        </details>
       )}
       {prochain && <p className="paliers__prochain discret">{prochain.fait}</p>}
     </div>
