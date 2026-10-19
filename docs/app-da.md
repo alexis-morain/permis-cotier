@@ -83,9 +83,15 @@ Tout ce qui suit vit sous `html[data-app]` (CSS) ou derrière `POUR_APP`
   l'écran Cours et de l'écran Entraînement, pas dans un en-tête.
 - **Chaque onglet est sa propre webview, chargée une fois.** Une leçon faite
   dans Cours ne se verrait pas dans Accueil : la coquille envoie `app:onglet`
-  quand l'onglet revient, et `rafraichirSiLaProgressionAChange()` recharge la
-  page si une clé `permis-cotier:` de `localStorage` a changé, sur les racines
-  d'onglet seulement (`/examen` exclu, pour ne pas effacer un résultat).
+  quand l'onglet revient, et `annoncerSiLaProgressionAChange()` compare les clés
+  `permis-cotier:` de `localStorage` à la photo du dernier rendu. Si elles ont
+  bougé (racines d'onglet seulement, `/examen` exclu pour ne pas effacer un
+  résultat), `window` reçoit `app:progression` : les îlots de la racine
+  (`AccueilApp`, `ProfilCandidat`, `monterCours`, la liste d'`EntrainementApp`)
+  relisent le stockage et se rendent à nouveau, par `surProgressionChangee()`
+  (`src/lib/vivant.ts`). **La page ne se recharge plus** : plus de flash, ni
+  îlot relancé, ni défilement perdu. Un nouvel îlot qui lit la progression sur
+  une racine d'onglet s'y rattache aussi.
 - **La bande de la zone sûre haute** est un `body::before` fixe au fond du
   thème : le contenu ne défile jamais sous l'heure.
 - **Ce qui ne vaut que pour l'app ne sort pas du site** : le greffon Vite
@@ -95,7 +101,14 @@ Tout ce qui suit vit sous `html[data-app]` (CSS) ou derrière `POUR_APP`
   rendu que dans l'app : sur le site, le `<a>` garde l'attribut de portée de
   sa page.
 - **Navigation sans rechargement** : `<ClientRouter />` d'Astro dans la coquille
-  seulement, animation `slide` sur `<main>`, `prefers-reduced-motion` respecté.
+  seulement. L'écran qui arrive monte en fondu de 140 ms (opacité seule, `fondu`
+  dans `Base.astro`), l'ancien disparaît tout de suite, et `Coquille.astro` coupe
+  le fondu enchaîné de 250 ms que les View Transitions natives ajoutent d'office.
+  Le glissement `slide` d'avant coûtait plus d'une demi-seconde par tap sous
+  Safari 16 et 17, où Astro joue l'ancien écran puis le nouveau
+  (`docs/captures-fluidite/`). Le préchargement des liens part au toucher
+  (`prefetch`, `astro.config.mjs`, app seulement). `prefers-reduced-motion` coupe
+  tout.
   Les cinq scripts inline se rattachent via `astro:page-load` quand le routeur
   est là (helper `quandLaPageEstPrete()` dans `src/lib/page.ts`), en direct
   sinon. Le `<html>` et le `<body>` portent la couleur de fond du thème pour

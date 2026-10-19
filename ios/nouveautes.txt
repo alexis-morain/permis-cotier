@@ -1,1 +1,3 @@
 L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deuxième génération suffit.
+
+L’app change d’écran plus vite : un fondu court remplace le glissement, et l’Accueil se met à jour sans se recharger quand tu reviens d’une leçon.

@@ -8,6 +8,12 @@ Ce build ouvre l’app aux iPhone restés sous iOS 16 ou 17. Rien ne change à l
 • Une leçon de feux ou de signaux sonores : le signal s’écoute.
 • Fiche → pose la date de ton épreuve : la demande d’autorisation des notifications arrive.
 
-Sur un iPhone récent, rien ne doit avoir bougé.
+Fluidité : l’app change d’écran plus vite.
+• Chaque tap sur un lien (Cours, une leçon, la leçon suivante) : le nouvel écran apparaît en fondu très court, sans glisser. Rien ne doit ramer, clignoter ou rester à moitié transparent.
+• Fais une leçon dans Cours, puis touche l’onglet Accueil : « Continuer le cours » montre déjà la leçon suivante, sans flash blanc et sans rechargement visible.
+• Réponds à une question ratée dans Entraînement, puis Accueil : « À revoir aujourd’hui » a son compte à jour. Même chose avec la date d’épreuve posée dans la Fiche.
+• Réglages > Accessibilité > Animations réduites : plus aucun fondu.
+
+Sur un iPhone récent, rien d’autre ne doit avoir bougé.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
