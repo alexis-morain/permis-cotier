@@ -1,1 +1,3 @@
 L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deuxième génération suffit.
+
+La fiche montre tes dix derniers examens blancs en un graphique, avec la ligne des 35 sur 40, et chaque thème en pourcentage, les plus fragiles d’abord.

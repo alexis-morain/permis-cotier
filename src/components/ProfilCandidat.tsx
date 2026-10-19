@@ -10,7 +10,7 @@ import {
   indice,
   jalons,
   joursAvant,
-  maitriseParTheme,
+  jaugesParTheme,
   notionsLesPlusFaibles,
   objectifDuJour,
   pointFinal,
@@ -24,6 +24,7 @@ import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
 import Reglages from './profil/Reglages';
 import PaliersDuTheme from './profil/PaliersDuTheme';
+import DerniersExamens from './profil/DerniersExamens';
 import { accorde } from './profil/accorde';
 import './profil.css';
 
@@ -67,6 +68,13 @@ function Compte({ vues, retenues, ratees, total }: { vues: number; retenues: num
       <span className="discret">{` ${mot}${nombre > 1 ? 's' : ''} sur ${accorde(vues, 'vue')}, ${total} en banque`}</span>
     </>
   );
+}
+
+/** Ce que la jauge d'un thème dit à voix haute : le compte, que la barre ne porte pas. */
+function leCompte(t: { vues: number; retenues: number; ratees: number; total: number }): string {
+  const retenues = `${t.retenues} ${t.retenues > 1 ? 'retenues' : 'retenue'}`;
+  const ratees = t.ratees > 0 ? `, ${t.ratees} ${t.ratees > 1 ? 'ratées' : 'ratée'}` : '';
+  return `${retenues}${ratees} sur ${accorde(t.vues, 'vue')}, ${t.total} en banque`;
 }
 
 function Coche() {
@@ -113,7 +121,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const objectif = objectifDuJour(etat, jour);
   const serie = serieDeJours(etat, jour);
   const cases = quatorzeJours(etat, jour);
-  const themes = maitriseParTheme(etat, banque);
+  const jauges = jaugesParTheme(etat, banque);
   const faibles = notionsLesPlusFaibles(etat, banque, 3);
   const listeJalons = jalons(etat, banque, totalLecons);
   const atteints = listeJalons.filter((j) => j.atteint).length;
@@ -123,8 +131,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   // Ce que compte la pastille est ce que `/revoir` joue : les questions dues.
   const aRevoir = vues.filter(([, e]) => estDue(e, jour)).length;
   const examens = etat.examens.filter((x) => x.total > 0);
-  const recus = examens.filter((x) => x.reussi).length;
-  const meilleur = examens.reduce((m, x) => Math.max(m, x.bonnes), 0);
   const rien = vues.length === 0 && examens.length === 0 && Object.keys(etat.lecons).length === 0;
   // La relecture des erreurs montre les questions ratées au moins une fois :
   // sans elles, le lien mènerait à une page vide.
@@ -280,6 +286,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
         {blocDernier}
       </header>
       {blocSuite}
+      {!rien && <DerniersExamens etat={etat} />}
       {!rien && blocIndice}
 
       {/* Une fiche vide n'a que des zéros à montrer : on n'en montre aucun. */}
@@ -411,70 +418,39 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
             </section>
           )}
 
-          <section className="fiche__examens" aria-labelledby="examens-titre">
-            <h2 id="examens-titre">Examens blancs</h2>
-            {examens.length === 0 ? (
-              <p className="discret">
-                Aucun examen blanc terminé. Quarante questions, vingt secondes chacune : c’est ce qui pèse le plus dans l’indice.
-              </p>
-            ) : (
-              <>
-                <p>
-                  <b>{examens.length}</b> terminé{examens.length > 1 ? 's' : ''}, <b>{recus}</b> reçu{recus > 1 ? 's' : ''}.
-                  Meilleur score : <b>{meilleur} sur 40</b>.
-                  {examens.length >= 2 && (
-                    <>
-                      {' '}Le dernier fait{' '}
-                      {examens[0]!.bonnes === examens[1]!.bonnes
-                        ? 'le même score que l’avant-dernier'
-                        : `${Math.abs(examens[0]!.bonnes - examens[1]!.bonnes)} ${examens[0]!.bonnes > examens[1]!.bonnes ? 'de plus' : 'de moins'} que l’avant-dernier`}
-                      .
-                    </>
-                  )}
-                </p>
-                <ol className="examens" aria-label="Les derniers examens blancs, le plus récent en premier">
-                  {examens.slice(0, 8).map((x, i) => (
-                    <li key={`${x.date}-${i}`} style={{ '--part': x.bonnes / x.total } as React.CSSProperties}>
-                      <span className="examens__date">{dateLisible(x.date)}</span>
-                      <span className={`examens__score${x.reussi ? ' examens__score--recu' : ' examens__score--recale'}`}>
-                        {x.bonnes} / {x.total}
-                      </span>
-                      <span className="examens__verdict">{x.reussi ? 'reçu' : 'recalé'}</span>
-                    </li>
-                  ))}
-                </ol>
-                <p className="discret">Le trait marque 35 sur 40, la barre d’admission.</p>
-              </>
-            )}
-          </section>
-
           <section className="fiche__themes" aria-labelledby="themes-titre">
             <h2 id="themes-titre">Thème par thème</h2>
-            <p className="discret">Les plus fragiles d’abord.</p>
+            <p className="discret">Part des questions retenues, les plus fragiles d’abord.</p>
             <ul className="maitrise">
-              {themes.map((t) => (
-                <li
-                  key={t.code}
-                  style={{ '--vues': t.vues / t.total, '--retenues': t.retenues / t.total } as React.CSSProperties}
-                >
+              {jauges.travailles.map((t) => (
+                <li key={t.code} style={{ '--pourcent': t.pourcent / 100 } as React.CSSProperties}>
                   <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
                     <b>{nomDuTheme(t.code)}</b>
-                    <span className="maitrise__note">
-                      {t.vues === 0 ? (
-                        <span className="pastille">jamais ouvert</span>
-                      ) : (
-                        <Compte {...t} />
-                      )}
-                    </span>
+                    <span className="maitrise__pourcent">{t.pourcent}{'\u00a0'}%</span>
                     <span className="maitrise__jauge" aria-hidden="true">
-                      <span className="maitrise__vues" />
                       <span className="maitrise__retenues" />
                     </span>
+                    <span className="visuellement-cache maitrise__lu">{leCompte(t)}</span>
                   </a>
                   <PaliersDuTheme etat={etat} banque={banque} theme={t.code} vues={t.vues} />
                 </li>
               ))}
             </ul>
+            {jauges.neufs.length > 0 && (
+              <>
+                <h3 className="maitrise__titre">Pas encore ouverts</h3>
+                <ul className="maitrise maitrise--neufs">
+                  {jauges.neufs.map((t) => (
+                    <li key={t.code}>
+                      <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
+                        <b>{nomDuTheme(t.code)}</b>
+                        <span className="discret">{accorde(t.total, 'question')}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </section>
 
           <section className="fiche__jalons" aria-labelledby="jalons-titre">

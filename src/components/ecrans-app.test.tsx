@@ -21,14 +21,14 @@ afterEach(() => cleanup());
 describe('la fiche dans l’app', () => {
   const banque = [{ id: 'vhf-0', theme: 'vhf', notion: 'vhf-canaux' }];
 
-  it('s’appelle « Ta fiche » et ouvre sur l’indice, nommé', () => {
+  it('s’appelle « Ta fiche », ouvre sur les derniers examens, puis l’indice nommé', () => {
     // Une réponse jouée : la fiche vide ne montre plus l'indice, dans l'app
     // comme sur le site, elle dit quoi faire pour le remplir.
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Ta fiche');
     const titres = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
-    expect(titres[0]).toBe('Indice de préparation');
+    expect(titres.slice(0, 2)).toEqual(['Derniers examens blancs', 'Indice de préparation']);
     expect(document.querySelector('#indice-titre')?.className).toBe('indice__mot');
   });
 

@@ -66,13 +66,15 @@ describe('la fiche', () => {
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Léa, rien encore sur ta fiche.');
   });
 
-  it('met le geste du jour juste sous le titre, seul, avant l’indice', () => {
+  it('met le geste du jour juste sous le titre, seul, avant les examens et l’indice', () => {
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', false, '2026-09-20'));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     const tete = document.querySelector('.fiche__tete')!;
     const actions = tete.nextElementSibling!;
     expect(actions.className).toContain('jeu__actions');
-    expect(actions.nextElementSibling!.className).toContain('fiche__indice');
+    // Les derniers examens blancs passent d'abord, l'indice vient dessous.
+    expect(actions.nextElementSibling!.className).toContain('fiche__examens');
+    expect(actions.nextElementSibling!.nextElementSibling!.className).toContain('fiche__indice');
     // Examen blanc et cours sont dans la navigation : ici, un seul bouton.
     expect(actions.querySelectorAll('a')).toHaveLength(1);
     expect(actions.querySelector('a')!.className).toContain('bouton--principal');
@@ -225,12 +227,11 @@ describe('les lignes de thème', () => {
     e = enregistrerReponse(e, 'feux-0', true, aujourdhui());
     sauvegarder(e);
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    const vhf = screen.getByRole('link', { name: /VHF/ }).querySelector('.maitrise__note')!;
-    expect(vhf.textContent).toBe('1 ratée sur 1 vue, 10 en banque');
-    expect(vhf.querySelector('.maitrise__faible')!.textContent).toBe('1');
-    const feux = screen.getByRole('link', { name: /Feux/ }).querySelector('.maitrise__note')!;
-    expect(feux.textContent).toBe('0 retenue sur 1 vue, 10 en banque');
-    expect(feux.querySelector('.maitrise__faible')).toBeNull();
+    const vhf = screen.getByRole('link', { name: /VHF/ });
+    expect(vhf.querySelector('.maitrise__lu')!.textContent).toBe('0 retenue, 1 ratée sur 1 vue, 10 en banque');
+    expect(vhf.querySelector('.maitrise__pourcent')!.textContent).toBe('0\u00a0%');
+    const feux = screen.getByRole('link', { name: /Feux/ });
+    expect(feux.querySelector('.maitrise__lu')!.textContent).toBe('0 retenue sur 1 vue, 10 en banque');
   });
 
   it('accorde au pluriel et garde le compte des retenues quand il y en a', () => {
@@ -239,17 +240,16 @@ describe('les lignes de thème', () => {
     e = enregistrerReponse(e, 'vhf-2', false, '2026-09-02');
     sauvegarder(e);
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    const vhf = screen.getByRole('link', { name: /VHF/ }).querySelector('.maitrise__note')!;
-    expect(vhf.textContent).toBe('2 retenues sur 3 vues, 10 en banque');
-    // Une ratée parmi elles : le nombre passe en rouge.
-    expect(vhf.querySelector('.maitrise__faible')!.textContent).toBe('2');
+    const vhf = screen.getByRole('link', { name: /VHF/ });
+    expect(vhf.querySelector('.maitrise__lu')!.textContent).toBe('2 retenues, 1 ratée sur 3 vues, 10 en banque');
+    expect(vhf.querySelector('.maitrise__pourcent')!.textContent).toBe('20\u00a0%');
   });
 
   it('dit l’ordre en une phrase, et le rappel espacé sous « Comment c’est compté »', () => {
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', false, aujourdhui()));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     const themes = document.querySelector('.fiche__themes > .discret')!;
-    expect(themes.textContent).toBe('Les plus fragiles d’abord.');
+    expect(themes.textContent).toBe('Part des questions retenues, les plus fragiles d’abord.');
     expect(document.querySelector('.fiche__details')!.textContent).toMatch(/un jour plus tard,\s+puis trois, puis sept, puis vingt et un/);
   });
 });
@@ -264,6 +264,8 @@ describe('les paliers de chaque thème', () => {
     sauvegarder({ ...retenir(etatInitial(), 'vhf-0'), badges: { vhf: { parcouru: '2026-10-12' } } });
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     const vhf = ligne(/VHF/);
+    // Une ligne courte : les noms des paliers gagnés, le fait daté replié dessous.
+    expect(vhf.querySelector('.paliers summary')!.textContent).toBe('Parcouru');
     const gagnes = [...vhf.querySelectorAll('.paliers li')].map((li) => li.textContent);
     expect(gagnes).toEqual(['Parcouru Toutes les leçons de la VHF et du SMDSM suivies, le 12 octobre.']);
     expect(vhf.querySelector('.paliers__prochain')!.textContent).toBe('1 retenue sur 10\u00a0; à 8, le palier Retenu.');
@@ -277,10 +279,14 @@ describe('les paliers de chaque thème', () => {
     );
   });
 
-  it('ne dit rien d’un thème jamais ouvert', () => {
+  it('ne dit rien d’un thème jamais ouvert, et le range en bas', () => {
     sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     expect(ligne(/Feux/).querySelector('.paliers')).toBeNull();
+    const neufs = document.querySelector('.maitrise--neufs')!;
+    expect(neufs.previousElementSibling!.textContent).toBe('Pas encore ouverts');
+    expect(neufs.textContent).toContain('Feux');
+    expect(document.querySelector('.maitrise:not(.maitrise--neufs)')!.textContent).not.toContain('Feux');
   });
 
   it('ne compte jamais les badges ni ne fait de compte à rebours', () => {
@@ -509,5 +515,70 @@ describe('la remesure du 4 octobre', () => {
     expect(document.querySelector('.jour__examen')!.textContent).toContain(
       'Il te reste 19 questions jamais vues : ton objectif de 5 par jour suffit pour toutes les voir.',
     );
+  });
+});
+
+describe('les derniers examens blancs', () => {
+  /** Sept examens, trois recalés, du 1er au 7 octobre. */
+  function septExamens() {
+    let e = etatInitial();
+    [28, 36, 37, 33, 39, 35, 31].forEach((b, k) => {
+      e = enregistrerExamen(e, { date: `2026-10-0${k + 1}`, bonnes: b, total: 40, reussi: 40 - b <= 5 });
+    });
+    return e;
+  }
+
+  it('dessine une barre par examen, le plus récent à droite, avec un texte pour chacune', () => {
+    sauvegarder(septExamens());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const barres = [...document.querySelectorAll('.barres > li')];
+    expect(barres).toHaveLength(7);
+    const lus = barres.map((li) => li.querySelector('.visuellement-cache')!.textContent);
+    expect(lus[0]).toBe('28 sur 40, recalé, 1 octobre');
+    expect(lus[2]).toBe('37 sur 40, reçu, 3 octobre');
+    expect(lus[6]).toBe('31 sur 40, recalé, 7 octobre');
+    // Recalé ou reçu ne tient pas à la couleur : la barre recalée est creuse.
+    expect(barres[0]!.className).toContain('barres__barre--recale');
+    expect(barres[1]!.className).not.toContain('barres__barre--recale');
+  });
+
+  it('marque le seuil à 35 sur 40 et le nomme', () => {
+    sauvegarder(septExamens());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelector('.barres__seuil')!.textContent).toBe('Seuil 35');
+  });
+
+  it('donne trois chiffres : passés, moyenne et reçus des cinq derniers', () => {
+    sauvegarder(septExamens());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const chiffres = [...document.querySelectorAll('.examens-chiffres > div')].map((d) => d.textContent);
+    // Les cinq derniers : 37, 33, 39, 35, 31 (moyenne 35 ; 37, 39 et 35 sont reçus).
+    expect(chiffres).toEqual(['7examens passés', '35 / 40moyenne des 5 derniers', '3 sur 5reçus parmi les 5 derniers']);
+  });
+
+  it('se limite aux dix derniers', () => {
+    let e = etatInitial();
+    for (let k = 1; k <= 12; k++) e = enregistrerExamen(e, { date: `2026-10-${String(k).padStart(2, '0')}`, bonnes: 36, total: 40, reussi: true });
+    sauvegarder(e);
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    expect(document.querySelectorAll('.barres > li')).toHaveLength(10);
+    expect(document.querySelector('.examens-chiffres')!.textContent).toContain('12examens passés');
+  });
+
+  it('sans examen passé, tient en une ligne et mène à l’examen blanc', () => {
+    sauvegarder(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()));
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const section = document.querySelector('.fiche__examens')!;
+    expect(section.querySelector('.barres')).toBeNull();
+    expect(section.querySelector('p')!.textContent).toBe('Aucun examen blanc passé pour l’instant. Faire un examen blanc');
+    expect(section.querySelector('a')!.getAttribute('href')).toBe('/examen');
+    expect(section.querySelector('a')!.textContent).toBe('Faire un examen blanc');
+  });
+
+  it('passe avant l’indice, qui le suit', () => {
+    sauvegarder(septExamens());
+    render(<ProfilCandidat banque={banque} totalLecons={105} />);
+    const sections = [...document.querySelectorAll('section')].map((s) => s.className);
+    expect(sections.indexOf('fiche__examens')).toBeLessThan(sections.indexOf('fiche__indice'));
   });
 });
