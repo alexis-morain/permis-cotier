@@ -1,1 +1,3 @@
 L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deuxième génération suffit.
+
+Une allure plus sobre : des cartes blanches, un seul gros bouton par écran, et la police de l’iPhone pour tout le texte.

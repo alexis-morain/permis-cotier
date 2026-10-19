@@ -11,3 +11,9 @@ Ce build ouvre l’app aux iPhone restés sous iOS 16 ou 17. Rien ne change à l
 Sur un iPhone récent, rien ne doit avoir bougé.
 
 Une question te semble fausse ? Le lien « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question déjà citée : relis-le, envoie-le, il nous arrive.
+
+Nouvelle allure, plus sobre : des cartes blanches sur un fond gris-bleu, un seul gros bouton jaune par écran, la police de l’iPhone pour le texte.
+• Accueil : chaque carte se touche entière, pas seulement le texte.
+• Examen blanc : la croix en haut à gauche arrête l’épreuve (avec la confirmation) ; « Valider et passer » reste grisé tant que rien n’est coché.
+• Entraînement : après « Valider », la correction monte du bas et laisse voir la question ; le mot « Juste » ou « Faux », l’explication et « Continuer » tiennent sans défiler. Touche « Source » : elle se déplie.
+• Passe en mode sombre, et mets la taille du texte au plus grand dans Réglages : rien ne doit sortir de l’écran.
