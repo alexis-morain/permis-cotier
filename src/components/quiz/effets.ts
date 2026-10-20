@@ -238,6 +238,19 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
   }, [session.phase === 'en-cours', nomSerie, theme]);
 }
 
+/** Dans l'app, remonte la page pour que le panneau de correction ne couvre pas les réponses. */
+function degagerReponses(): void {
+  const pied = document.querySelector<HTMLElement>('.jeu__pied');
+  const marquees = [...document.querySelectorAll<HTMLElement>('.propositions .proposition--juste, .propositions .proposition--fausse')];
+  if (!pied || pied.offsetHeight === 0 || marquees.length === 0) return;
+  const hautPanneau = window.innerHeight - pied.offsetHeight;
+  const bas = Math.max(...marquees.map((e) => e.getBoundingClientRect().bottom));
+  const haut = Math.min(...marquees.map((e) => e.getBoundingClientRect().top));
+  // L'en-tête collé en haut reste visible : la première réponse s'arrête dessous.
+  const defile = Math.min(bas - hautPanneau + 12, haut - 72);
+  if (defile > 0) window.scrollBy({ top: defile, behavior: douceur() });
+}
+
 /**
  * La correction tombait sous la ligne de flottaison sur mobile : valider
  * n'avait l'air de rien faire. On la remonte dans le champ de vision, et
@@ -249,8 +262,11 @@ export function useVerdictEnVue(session: Session, verdict: MutableRefObject<HTML
   useEffect(() => {
     if (!session.corrigee) return;
     // Dans l'app, le verdict monte en panneau collé au bas de l'écran : il
-    // est déjà dans le champ, et le défilement ferait sauter la question.
+    // est déjà dans le champ. Le panneau peut en revanche couvrir la réponse
+    // cochée et la bonne : la page remonte juste assez pour les dégager, sans
+    // jamais pousser la première hors de l'écran.
     if (!POUR_APP) verdict.current?.scrollIntoView({ block: 'nearest', behavior: douceur() });
+    else degagerReponses();
     void vibrer(session.juste ? 'juste' : 'faux');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.corrigee, session.index]);

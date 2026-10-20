@@ -322,6 +322,17 @@ html[data-app] .bouton:not(.bouton--principal):not(.bouton--discret) {
   background: transparent;
   border-color: var(--filet-fort);
 }
+/* Sur une bande marine (l'ouverture de l'accueil, la section « L'app », le
+   mémo d'une leçon), un contour transparent ne porte plus le texte marine :
+   le bouton reprend son fond de carte, cerné d'un filet clair (le fond de la
+   carte et celui de la bande se confondent en thème sombre). */
+html[data-app] :is(.ouverture, .app, .retenir) .bouton:not(.bouton--principal):not(.bouton--discret) {
+  background: var(--fond-carte);
+  border-color: color-mix(in srgb, var(--bande-texte) 30%, transparent);
+}
+html[data-app] :is(.ouverture, .app, .retenir) .bouton:not(.bouton--principal):active {
+  background: var(--fond-2);
+}
 html[data-app] .bouton:not(.bouton--principal):active {
   transform: none;
   background: var(--fond-2);

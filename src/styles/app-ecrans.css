@@ -346,6 +346,64 @@ html[data-app] .fiche .reglage { border-top-color: var(--carte-filet); }
 /* Les erreurs : la liste prend toute la largeur. */
 html[data-app] .erreurs__liste { max-width: none; }
 
+/* ------------------------------------------------ Le graphique des examens
+
+   Les barres de la fiche sans bord ni socle : un aplat sombre pour un examen
+   reçu, un aplat clair pour un recalé (le score écrit dedans dit le reste).
+   Les barres ont une largeur au plus de 2,2 rem et se serrent quand elles
+   sont nombreuses ; avec un à trois examens elles restent étroites et se
+   rangent à droite, le plus récent contre le seuil. */
+html[data-app] .barres {
+  gap: 0.35rem;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--carte-filet);
+}
+html[data-app] .barres__barre { flex: 0 1 2.2rem; }
+html[data-app] .barres__barre::before { border-radius: var(--rayon-petit) var(--rayon-petit) 0 0; }
+html[data-app] .barres__barre--recale::before {
+  background: color-mix(in srgb, var(--texte) 18%, var(--fond-carte));
+  box-shadow: none;
+}
+html[data-app] .barres__score {
+  bottom: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+html[data-app] .barres__ligne { border-top: 1px dashed var(--jaune-sombre); }
+html[data-app] .barres__seuil { font-weight: 600; }
+html[data-app] .examens-chiffres b { font-size: 1.25rem; font-weight: 600; }
+
+/* ------------------------------------------------ Les fiches-mémo
+
+   Une carte à filet fin par leçon ; le titre de la carte est un titre de
+   section, dans la police du corps ; le visuel prend le rayon unique ; les
+   sources sont une liste régulière, la pastille « Fiche maison » devant le
+   texte plutôt que seule à la ligne dessous. */
+html[data-app] .memo__bloc { border: 1px solid var(--carte-filet); }
+html[data-app] .memo__bloc h2 {
+  font-family: var(--corps);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+html[data-app] .memo__visuel { overflow: hidden; border-radius: var(--rayon); }
+html[data-app] .memo__visuel img { border-radius: var(--rayon); }
+html[data-app] .memo__source ul { margin-top: 0; }
+html[data-app] .memo__source li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin: 0;
+}
+html[data-app] .memo__source li > a:only-child { display: block; min-height: 0; }
+html[data-app] .memo__source .marque {
+  order: -1;
+  flex: none;
+  margin: 0;
+  border-width: 1px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-app] .chapitres__jauge span { transition: none; animation: none; }
   html[data-app] .fiche__details summary::after { transition: none; }

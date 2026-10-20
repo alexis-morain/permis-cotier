@@ -279,7 +279,10 @@ html[data-app] .jeu__pied:has(.arret) .jeu__actions--collant {
 }
 
 html[data-app] .jeu__pied .verdict {
-  max-height: 44svh;
+  /* Le panneau entier (explication plus barre d'action, environ 5 rem) ne
+     passe pas la moitié de la hauteur visible : l'explication défile dedans,
+     et la réponse cochée reste au-dessus (`useVerdictEnVue`). */
+  max-height: calc(50svh - 5rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   margin: 0;
@@ -315,12 +318,27 @@ html[data-app] .sources--repli { margin: 0.25rem 0 0; font-size: 0.875rem; color
 html[data-app] .sources--repli summary {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   min-height: 2.75rem;
+  list-style: none;
   font-weight: 600;
   cursor: pointer;
 }
-html[data-app] .sources--repli ul { margin: 0 0 0.5rem; }
-html[data-app] .jeu__pied .verdict .signaler { font-size: 0.8125rem; font-weight: 500; }
+html[data-app] .sources--repli summary::-webkit-details-marker { display: none; }
+/* Le chevron dit que la ligne se déplie, et pivote quand elle l'est. */
+html[data-app] .sources--repli summary::after {
+  content: '›';
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform var(--duree-courte) var(--courbe);
+}
+html[data-app] .sources--repli[open] summary::after { transform: rotate(90deg); }
+html[data-app] .sources--repli ul { margin: 0 0 0.25rem; }
+html[data-app] .jeu__pied .verdict .signaler { display: inline-block; margin-top: 0; font-size: 0.8125rem; font-weight: 500; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-app] .sources--repli summary::after { transition: none; }
+}
 html[data-app] .jeu__pied .verdict__lecon { margin: 0; }
 
 /* Le mot du verdict arrive juste après le panneau : c'est lui qu'on lit. */
@@ -352,6 +370,8 @@ html[data-app] .jeu__pied .arret {
    geste suivant en boutons pleine largeur, le partage discret dessous. */
 html[data-app] .resultat__score {
   font-size: clamp(5rem, 30vw, 8rem);
+  /* Approche optique : le blanc à gauche d'un grand chiffre le décale du texte. */
+  margin-left: -0.07em;
   animation: app-entree var(--duree) var(--courbe) both;
 }
 
@@ -428,3 +448,63 @@ html[data-app] .arret .jeu__actions .bouton {
   flex: 0 0 auto;
   min-height: 3.25rem;
 }
+
+/* ------------------------------------------------ Le récapitulatif et la revue
+
+   Le récapitulatif de fin de série et d'examen reprend la grammaire de l'app :
+   une carte blanche, un filet fin entre les lignes, le titre de section des
+   autres écrans. Une ligne ouverte déplie la correction à l'intérieur de la
+   même carte, sans répéter la question que la ligne porte déjà : l'énoncé et
+   le rang restent lisibles pour un lecteur d'écran, ils ne se redisent pas à
+   l'œil. */
+html[data-app] .recap__titre {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+html[data-app] .recap__liste {
+  padding: 0 1rem;
+  border: 1px solid var(--carte-filet);
+  border-radius: var(--rayon);
+  background: var(--fond-carte);
+}
+html[data-app] .recap__liste > li { border-top: 0; }
+html[data-app] .recap__liste > li + li { border-top: 1px solid var(--carte-filet); }
+html[data-app] .recap__marque { font-weight: 600; }
+html[data-app] .recap__ligne[aria-expanded='true'] .recap__enonce { font-weight: inherit; }
+html[data-app] .recap .revue__item { padding: 0 0 1rem; }
+html[data-app] .recap .revue__rang,
+html[data-app] .recap .revue__enonce {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* La correction d'une ligne ouverte n'est pas une carte de plus : du texte
+   sur la carte du récapitulatif. */
+html[data-app] .recap .verdict {
+  margin-top: 0.75rem !important;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Dans une revue, la mention « ta réponse » passe sous le texte de la
+   proposition au lieu de le couper en deux mots ; sans pastille. */
+html[data-app] .revue__item .proposition { flex-wrap: wrap; }
+html[data-app] .revue__item .proposition__texte { flex: 1 1 0; }
+html[data-app] .revue__item .proposition__marque {
+  flex: 0 0 100%;
+  margin: 0 0 0 2.85rem;
+  padding: 0;
+  background: none;
+  align-self: auto;
+  color: var(--texte-doux);
+}
+html[data-app] .revue__item { border-top: 1px solid var(--carte-filet); }
+html[data-app] .recap .revue__item { border-top: 0; }
