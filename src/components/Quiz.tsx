@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { creerSession, questionCourante, reduire, restaurerSession } from '../lib/session';
 import type { Action, Mode, Session } from '../lib/session';
-import { aleaSeme, estDue, ordonnerEntrainement, serieDuJour, tirerExamen } from '../lib/quiz';
+import { aleaSeme, estDue, serieCourte, serieDuJour, tirerExamen, TAILLE_SERIE_COURTE } from '../lib/quiz';
 import { melangerPropositions } from '../lib/melange';
 import { charger, aujourdhui, CLE_STOCKAGE } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
@@ -97,7 +97,9 @@ function Partie({
     // La série du jour, bornée par le rythme choisi : ce qui est dû, puis de
     // quoi découvrir. Un seul chemin, celui que la pastille de l'accueil compte.
     if (revoir) return serieDuJour(questions, depart.questions, aujourdhui(), depart.profil.rythme ?? undefined);
-    return ordonnerEntrainement(questions, depart.questions);
+    // L'entraînement : dix questions du thème, les fragiles et les jamais
+    // vues d'abord. « Encore 10 » en tire dix autres de la progression du jour.
+    return serieCourte(questions, depart.questions, aleaSeme(Date.now() >>> 0));
   }, [mode, questions, revoir, depart]);
 
   // Un examen laissé en plan, s'il colle encore à la banque et n'a pas un jour.
@@ -225,6 +227,20 @@ function Partie({
   // seconde.
   const echoir = useCallback(() => envoyer({ type: 'echu', maintenant: Date.now() }), []);
 
+  // « Encore 10 » : une série neuve du même thème, tirée de la progression telle
+  // que la série qui vient de finir l'a laissée. Le journal repart de zéro, et
+  // les badges annoncés avec : ils étaient ceux de la série d'avant.
+  const encore = useCallback(() => {
+    journalEcrit.current = 0;
+    setGagnes([]);
+    setVisuelAbsent(null);
+    envoyer({
+      type: 'restaurer',
+      session: creerSession(mode, serieCourte(questions, charger().questions, aleaSeme(Date.now() >>> 0))),
+    });
+    window.scrollTo({ top: 0 });
+  }, [mode, questions]);
+
   const reprendreDepuis = useCallback((reprise: Session) => {
     // Les réponses du journal repris ont déjà été comptées dans la progression
     // avant l'interruption : sans ce décalage, elles y entreraient deux fois.
@@ -259,6 +275,11 @@ function Partie({
         retour={retour}
         retourLecon={retourLecon}
         badges={gagnes}
+        serie={
+          mode === 'entrainement' && !revoir
+            ? { encore: Math.min(TAILLE_SERIE_COURTE, questions.length), relancer: encore }
+            : undefined
+        }
       />
     );
   }
@@ -320,7 +341,7 @@ function Partie({
         </div>
       )}
 
-      {POUR_APP ? <EnteteApp session={session} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} />}
+      {POUR_APP ? <EnteteApp session={session} mode={mode} demanderArret={setArretDemande} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} />}
 
       {rienDu && session.index === 0 && (
         <p className="discret">
@@ -331,8 +352,9 @@ function Partie({
 
       {mode === 'entrainement' && session.index === 0 && (
         <p className="jeu__consigne">
-          Une ou deux bonnes réponses. La réponse doit être exacte, une bonne case seule ne suffit pas
-          quand il en faut deux.
+          {POUR_APP
+            ? 'Une ou deux bonnes réponses : il faut toutes les bonnes cases.'
+            : 'Une ou deux bonnes réponses. La réponse doit être exacte, une bonne case seule ne suffit pas quand il en faut deux.'}
         </p>
       )}
 

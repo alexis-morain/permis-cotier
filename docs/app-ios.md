@@ -311,12 +311,14 @@ accesseur.
 ### Ce que fait `app:onglet`
 
 Chaque fois qu'un onglet revient à l'écran, `EcranWeb.swift` émet
-`app:onglet` sur `window`. `rafraichirSiLaProgressionAChange()` (posé par
+`app:onglet` sur `window`. `annoncerSiLaProgressionAChange()` (posé par
 `Coquille.astro`) compare alors les clés `permis-cotier:` du stockage à la
-photo prise au dernier rendu. Si elles ont bougé et que l'écran est une
-racine d'onglet, la page se recharge et ses îlots relisent la progression ;
-`/examen` est exclu, pour ne pas effacer un résultat. Une page profonde (une
-leçon, une série) n'est jamais rechargée : on y perdrait sa place.
+photo prise au dernier rendu ; l'événement `storage` fait la même comparaison.
+Si elles ont bougé et que l'écran est une racine d'onglet, `window` reçoit
+`app:progression` et chaque îlot de la racine relit `localStorage` et se rend à
+nouveau (`surProgressionChangee()`, `src/lib/vivant.ts`) : **la page ne se
+recharge pas**. `/examen` est exclu, pour ne pas effacer un résultat. Une page
+profonde (une leçon, une série) n'est jamais touchée : on y perdrait sa place.
 
 ### Les badges
 

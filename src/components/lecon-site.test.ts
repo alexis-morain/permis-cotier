@@ -370,6 +370,26 @@ describe('la mesure', () => {
     const mesures = [...document.querySelectorAll('.ecran--fin [data-mesure]')].map((n) => n.getAttribute('data-mesure'));
     expect(mesures).toEqual(['lecon-suivante', 'lecon-entrainement']);
   });
+
+  it('ouvre la fiche-mémo du cours à la fin de sa dernière leçon, et seulement là', () => {
+    const finir = () => {
+      allerALaVerification();
+      for (let i = 0; i < 2; i += 1) {
+        cliquer(/Première/);
+        cliquer('Valider');
+        cliquer(/Question suivante|Terminer la leçon/);
+      }
+    };
+    monter(ecrite);
+    finir();
+    expect(document.querySelector('.ecran--fin a[data-mesure="lecon-memo"]')).toBeNull();
+
+    monter(ecrite, { type: 'cours', chemin: '/cours/barre-route', titre: 'Se croiser sans se toucher' });
+    finir();
+    const lien = document.querySelector('.ecran--fin a[data-mesure="lecon-memo"]');
+    expect(lien?.getAttribute('href')).toBe('/cours/balisage/memo');
+    expect(lien?.textContent).toBe('À relire la veille');
+  });
 });
 
 describe('le retour de chaque geste', () => {

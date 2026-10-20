@@ -1,4 +1,5 @@
 ---
+import type { TransitionAnimationPair } from 'astro';
 import '../styles/global.css';
 import '../styles/app.css';
 import '../styles/app-jeu.css';
@@ -96,6 +97,16 @@ const chemin = Astro.url.pathname;
 const courant = (...sections: string[]) => pageCourante(chemin, ...sections);
 
 // Dans l'app, le fil d'Ariane se réduit à l'échelon du dessus.
+// Le changement d'écran de l'app : l'ancien disparaît sur-le-champ, le nouveau
+// monte en fondu en 140 ms. Le glissement d'avant durait plus d'une demi-seconde
+// sous Safari 16 et 17 (pas de View Transitions natives : Astro joue l'ancien
+// écran, puis le nouveau, l'un après l'autre) et faisait attendre chaque tap.
+// Seule l'opacité bouge ; `prefers-reduced-motion` coupe tout, par la feuille
+// d'Astro.
+const fondu: TransitionAnimationPair = {
+  old: [],
+  new: { name: 'astroFadeIn', duration: 140, easing: 'ease-out', fillMode: 'both' },
+};
 const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : null;
 ---
 
@@ -268,7 +279,7 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     )}
 
     {POUR_APP ? (
-      <main id="contenu" transition:animate="slide" data-retour={retour ? '' : undefined}>
+      <main id="contenu" transition:animate={{ forwards: fondu, backwards: fondu }} data-retour={retour ? '' : undefined}>
         {/* Le fil d'Ariane réduit à un geste : remonter d'un échelon. */}
         {retour && (
           <div class="page retour">

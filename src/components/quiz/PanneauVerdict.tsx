@@ -26,7 +26,8 @@ export default function PanneauVerdict(props: Props) {
   const { mode, session, question, retourLecon, arretDemande, verdict } = props;
   // Dans l'app, le verdict est un mot qui monte avec le panneau ; sur le
   // site, une phrase au-dessus de l'explication.
-  const mots = POUR_APP
+  const app = POUR_APP;
+  const mots = app
     ? { juste: 'Juste', faux: 'Faux', suivante: 'Continuer' }
     : { juste: 'Bonne réponse', faux: 'Raté', suivante: 'Question suivante' };
   return (
@@ -41,10 +42,11 @@ export default function PanneauVerdict(props: Props) {
           <p>{question.explication}</p>
           <Sources sources={question.sources} />
           {!session.juste && <LienLecon question={question} retour={retourLecon} />}
+          {app && <Signaler id={question.id} />}
         </div>
       )}
 
-      {arretDemande ? <ConfirmationArret {...props} /> : <BarreAction {...props} suivante={mots.suivante} />}
+      {arretDemande ? <ConfirmationArret {...props} /> : <BarreAction {...props} app={app} suivante={mots.suivante} />}
     </>
   );
 }
@@ -86,7 +88,7 @@ function ConfirmationArret({ session, demanderArret, envoyer, continuer }: Props
   );
 }
 
-function BarreAction({ mode, session, question, demanderArret, envoyer, suivante }: Props & { suivante: string }) {
+function BarreAction({ mode, session, question, demanderArret, envoyer, suivante, app }: Props & { suivante: string; app: boolean }) {
   const selection = session.selections[session.index] ?? [];
   return (
     <div
@@ -106,19 +108,20 @@ function BarreAction({ mode, session, question, demanderArret, envoyer, suivante
         <button
           className="bouton bouton--principal"
           type="button"
-          disabled={mode === 'entrainement' && selection.length === 0}
+          disabled={(mode === 'entrainement' || app) && selection.length === 0}
           onClick={() => envoyer({ type: 'valider', maintenant: Date.now() })}
         >
           {mode === 'examen' ? 'Valider et passer' : 'Valider'}
         </button>
       )}
-      {mode === 'examen' ? (
-        <button className="bouton bouton--discret" type="button" onClick={() => demanderArret(true)}>
-          Arrêter
-        </button>
-      ) : (
-        <Signaler id={question.id} />
-      )}
+      {!app &&
+        (mode === 'examen' ? (
+          <button className="bouton bouton--discret" type="button" onClick={() => demanderArret(true)}>
+            Arrêter
+          </button>
+        ) : (
+          <Signaler id={question.id} />
+        ))}
     </div>
   );
 }

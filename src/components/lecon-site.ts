@@ -457,6 +457,13 @@ export function monterLecon(doc: Document = document): void {
         el('div', { class: 'fin__actions' },
           !POUR_APP && lienRetour(),
           (!POUR_APP || retour) && lienSuite(),
+          // La dernière leçon d'un cours ouvre sa fiche-mémo.
+          suite?.type !== 'lecon' && el('a', {
+            class: 'bouton',
+            href: `${cours.chemin}/memo`,
+            'data-mesure': 'lecon-memo',
+            'data-mesure-cours': cours.code,
+          }, 'À relire la veille'),
           // Les questions de cette notion, pas les soixante et une du thème :
           // ce qu'on vient d'apprendre se vérifie sur ce qu'on vient d'apprendre.
           el('a', {

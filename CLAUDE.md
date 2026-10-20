@@ -199,8 +199,13 @@ sources.
 
 ## La coquille iOS (Mac seulement)
 
-- **Chaque onglet Capacitor est sa propre webview, chargée une fois** : l'accueil
-  se recharge sur `app:onglet` si `localStorage` a bougé. Un greffon rendu par
+- **Chaque onglet Capacitor est sa propre webview, chargée une fois** : sur
+  `app:onglet`, si `localStorage` a bougé, la racine reçoit `app:progression` et
+  ses îlots se relisent (`surProgressionChangee`, `vivant.ts`) ; **plus de
+  `location.reload()`**. Tout îlot de racine d'onglet qui lit la progression doit
+  s'y rattacher. L'écran qui arrive monte en fondu de 140 ms, sans glissement :
+  sous Safari 16-17 Astro joue l'ancien écran puis le nouveau, l'un après l'autre.
+  La mesure se refait par `docs/captures-fluidite/mesure.mjs`. Un greffon rendu par
   une fonction `async` est pris pour une promesse et attend sans fin. `rem` ne
   suit pas Dynamic Type : `font: -apple-system-body`.
 - **Un îlot qui importe `natif`** fait naître sur le site un morceau de fonctions

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { aujourdhui, charger } from '../lib/progression';
+import { surProgressionChangee } from '../lib/vivant';
 import { aRevoir, depuisLe, dernierExamen, echeance, joursDeSuite, reprise, type LeconAccueil } from '../lib/accueil';
 // Lue en texte et posée par le composant, pas importée comme feuille : Astro
 // attache la feuille d'un îlot `client:only` à toute page qui l'importe, et
@@ -21,7 +22,9 @@ interface Props {
  * progression se lit donc au premier rendu, sans état intermédiaire.
  */
 export default function AccueilApp({ lecons, ids }: Props) {
-  const [etat] = useState(() => charger());
+  const [etat, setEtat] = useState(() => charger());
+  // Une leçon faite dans un autre onglet : l'accueil la relit sans se recharger.
+  useEffect(() => surProgressionChangee(() => setEtat(charger())), []);
   const jour = aujourdhui();
 
   const cours = reprise(lecons, etat);
@@ -49,7 +52,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
             </p>
             <h2 id="accueil-reprendre" className="accueilApp__lecon">{cours.prochaine.nom}</h2>
             <Jauge part={part} faites={cours.faites} total={cours.total} />
-            <a className="bouton bouton--principal accueilApp__action" href={cours.prochaine.chemin}>
+            <a className="bouton bouton--principal accueilApp__bouton" href={cours.prochaine.chemin}>
               {cours.etat === 'vide' ? 'Commencer le cours' : 'Continuer le cours'}
             </a>
           </>
@@ -66,7 +69,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
               <b className="display accueilApp__nombre">{revoir.nombre}</b>{' '}
               question{revoir.nombre > 1 ? 's' : ''} à revoir
             </p>
-            <a className="bouton accueilApp__action" href="/revoir">Faire ma série du jour</a>
+            <Aller href="/revoir">Faire ma série du jour</Aller>
           </>
         )}
       </section>
@@ -78,14 +81,14 @@ export default function AccueilApp({ lecons, ids }: Props) {
             ? `${examen.bonnes} sur ${examen.total}, ${examen.reussi ? 'réussi' : 'recalé'}, ${depuisLe(examen.depuis)}.`
             : 'Quarante questions, vingt secondes chacune.'}
         </p>
-        <a className="bouton accueilApp__action" href="/examen">Faire un examen blanc</a>
+        <Aller href="/examen">Faire un examen blanc</Aller>
       </section>
 
       <section className="accueilApp__bloc" aria-labelledby="accueil-date">
         <h2 id="accueil-date" className="accueilApp__titre">Ton épreuve</h2>
         {date.etat === 'sansDate' && (
           <p className="accueilApp__texte">
-            <a className="accueilApp__lien" href="/profil">Pose la date de ton épreuve</a>
+            <Aller href="/profil">Pose la date de ton épreuve</Aller>
           </p>
         )}
         {date.etat === 'avenir' && (
@@ -105,11 +108,26 @@ export default function AccueilApp({ lecons, ids }: Props) {
             C’était {depuisLe(date.jours)}
           </p>
         )}
+        {date.etat !== 'sansDate' && <Aller href="/profil">Modifier la date</Aller>}
       </section>
 
       {serie > 1 && <p className="discret accueilApp__serie">{serie} jours de suite</p>}
       <style>{css}</style>
     </div>
+  );
+}
+
+/**
+ * Le lien d'une carte. Son `::after` couvre toute la carte (voir
+ * `accueil-app.css`) : c'est la carte entière qui se touche, le lien porte
+ * le nom pour VoiceOver.
+ */
+function Aller({ href, children }: { href: string; children: string }) {
+  return (
+    <a className="accueilApp__action" href={href}>
+      {children}
+      <span className="accueilApp__chevron" aria-hidden="true">›</span>
+    </a>
   );
 }
 

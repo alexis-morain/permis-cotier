@@ -1,6 +1,7 @@
 import { POUR_APP } from './cible';
 import { cheminServi } from './seo';
 import { PREFIXE_STOCKAGE } from './stockage';
+import { PROGRESSION_CHANGEE } from './vivant';
 
 /**
  * Quand la page est prête à recevoir ses écouteurs.
@@ -65,12 +66,12 @@ export function pageCourante(chemin: string, ...sections: string[]): 'page' | un
 
 
 /**
- * Les racines qu'on recharge quand la progression a bougé ailleurs. Toutes,
+ * Les racines où l'on relit la progression quand elle a bougé ailleurs. Toutes,
  * sauf l'examen : l'épreuve s'y joue et son résultat s'y affiche, et rien de
- * ce qu'un autre onglet écrit ne change son écran de départ. Le recharger
+ * ce qu'un autre onglet écrit ne change son écran de départ. Le toucher
  * effacerait le résultat qu'on vient de quitter des yeux.
  */
-const RACINES_A_RAFRAICHIR = new Set([...RACINES_D_ONGLET].filter((r) => r !== '/examen'));
+const RACINES_A_RELIRE = new Set([...RACINES_D_ONGLET].filter((r) => r !== '/examen'));
 
 /**
  * Tout ce que l'app garde, nom et valeur, en une chaîne comparable. `null`
@@ -93,22 +94,25 @@ function photographierLeStockage(): string | null {
 }
 
 /**
- * Recharger la racine d'un onglet quand la progression a changé dans un autre.
+ * Dire aux îlots d'une racine d'onglet que la progression a changé dans un
+ * autre onglet.
  *
  * Chaque onglet de la coquille est sa propre webview, chargée une fois : une
  * leçon faite dans Cours ou une date posée dans la Fiche ne se voyait dans
  * Accueil qu'après avoir tué l'app. La coquille émet `app:onglet` sur
  * `window` chaque fois qu'un onglet revient à l'écran ; on compare alors le
  * stockage à la photo prise quand l'écran a été rendu. S'il a bougé et que
- * l'écran est une racine d'onglet, on recharge : tous ses îlots relisent la
- * progression. Sinon on ne touche à rien, et le défilement reste.
+ * l'écran est une racine d'onglet, `window` reçoit `app:progression` : chaque
+ * îlot concerné relit `localStorage` et se rend à nouveau (`vivant.ts`).
+ * Rien ne recharge la page, donc ni flash, ni îlot relancé, ni défilement perdu.
  *
  * La photo se reprend à chaque écran que le routeur affiche : un écran rendu
- * après une écriture la montre déjà, il n'a pas à être rechargé pour elle.
- * Une page profonde (une leçon, une série) n'est jamais rechargée : on y
- * perdrait sa place.
+ * après une écriture la montre déjà, il n'a rien à relire pour elle. Une page
+ * profonde (une leçon, une série) n'est jamais touchée : on y perdrait sa place.
+ * L'événement `storage` double `app:onglet` : il ne part pas toujours entre
+ * deux webviews, mais quand il part il évite d'attendre le retour de l'onglet.
  */
-export function rafraichirSiLaProgressionAChange(): void {
+export function annoncerSiLaProgressionAChange(): void {
   let photo = photographierLeStockage();
   document.addEventListener('astro:page-load', () => {
     photo = photographierLeStockage();
@@ -118,11 +122,13 @@ export function rafraichirSiLaProgressionAChange(): void {
     const maintenant = photographierLeStockage();
     if (photo === null || maintenant === null || maintenant === photo) return;
     const nu = location.pathname.length > 1 ? location.pathname.replace(/\/+$/, '') : location.pathname;
-    if (!RACINES_A_RAFRAICHIR.has(nu)) return;
-    location.reload();
+    if (!RACINES_A_RELIRE.has(nu)) return;
+    photo = maintenant;
+    window.dispatchEvent(new Event(PROGRESSION_CHANGEE));
   };
 
   window.addEventListener('app:onglet', comparer);
+  window.addEventListener('storage', comparer);
   window.addEventListener('pageshow', (evenement) => {
     if ((evenement as PageTransitionEvent).persisted) comparer();
   });

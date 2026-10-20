@@ -10,6 +10,8 @@ import {
   calculerResultat,
   ordonnerEntrainement,
   serieDuJour,
+  serieCourte,
+  TAILLE_SERIE_COURTE,
   INTERVALLES,
   intervalle,
   estRetenue,
@@ -319,6 +321,54 @@ describe('ordonnancement de l’entraînement', () => {
   it('ne perd ni ne duplique aucune question', () => {
     const ordre = ordonnerEntrainement(questions, progression);
     expect(new Set(ordre.map((x) => x.id)).size).toBe(questions.length);
+  });
+});
+
+describe('série courte d’un thème', () => {
+  const vingt = Array.from({ length: 20 }, (_, i) => q(`vhf-${String(i + 1).padStart(4, '0')}`, 'vhf'));
+  const vue = (revoirLe: string, ok: boolean) => ({
+    vues: 1, ratees: ok ? 0 : 1, derniereReussie: ok, vueLe: '2026-09-01', succes: ok ? 1 : 0, revoirLe,
+  });
+
+  it('joue dix questions, pas tout le thème', () => {
+    expect(TAILLE_SERIE_COURTE).toBe(10);
+    expect(serieCourte(vingt, {}, aleaSeme(1))).toHaveLength(10);
+  });
+
+  it('prend tout quand le thème a moins de dix questions', () => {
+    expect(serieCourte(vingt.slice(0, 7), {}, aleaSeme(1))).toHaveLength(7);
+  });
+
+  it('prend d’abord les fragiles et les jamais vues, le reste après', () => {
+    const progression: Progression = {};
+    // Dix questions déjà réussies, une ratée, neuf jamais vues.
+    for (const x of vingt.slice(0, 10)) progression[x.id] = vue('2026-09-08', true);
+    progression[vingt[10]!.id] = vue('2026-09-02', false);
+    const ids = serieCourte(vingt, progression, aleaSeme(3)).map((x) => x.id);
+    const reussies = new Set(vingt.slice(0, 10).map((x) => x.id));
+    expect(ids).toContain(vingt[10]!.id);
+    expect(ids.some((id) => reussies.has(id))).toBe(false);
+  });
+
+  it('complète avec les questions déjà réussies quand il manque des neuves', () => {
+    const progression: Progression = {};
+    for (const x of vingt.slice(0, 15)) progression[x.id] = vue('2026-09-08', true);
+    const ids = serieCourte(vingt, progression, aleaSeme(3)).map((x) => x.id);
+    expect(ids).toHaveLength(10);
+    expect(vingt.slice(15).every((x) => ids.includes(x.id))).toBe(true);
+  });
+
+  it('enchaîne : une fois la série jouée, la suivante donne d’autres questions', () => {
+    const premiere = serieCourte(vingt, {}, aleaSeme(5));
+    const progression: Progression = Object.fromEntries(premiere.map((x) => [x.id, vue('2026-09-08', true)]));
+    const suivante = serieCourte(vingt, progression, aleaSeme(6));
+    const deja = new Set(premiere.map((x) => x.id));
+    expect(suivante.every((x) => !deja.has(x.id))).toBe(true);
+  });
+
+  it('ne double aucune question', () => {
+    const ids = serieCourte(vingt, {}, aleaSeme(9)).map((x) => x.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });
 

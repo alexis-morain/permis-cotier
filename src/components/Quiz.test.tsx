@@ -959,7 +959,7 @@ describe('entraînement sur une notion', () => {
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Entraînement, Marques latérales');
   });
 
-  it('renvoie sur la série de la notion au bout de la série', async () => {
+  it('propose, au bout de la série de la notion, d’en jouer une autre', async () => {
     vi.stubGlobal('fetch', servir([laterale]));
     render(
       <Quiz
@@ -975,9 +975,8 @@ describe('entraînement sur une notion', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
     fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
 
-    expect(screen.getByRole('link', { name: 'Recommencer' }).getAttribute('href')).toBe(
-      '/entrainement/notion/balisage-lateral',
-    );
+    expect(screen.getByRole('button', { name: 'Encore 1' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Changer de thème' })).toBeTruthy();
   });
 });
 
@@ -1305,6 +1304,9 @@ describe('le plein écran de la série, dans l’app', () => {
   });
 });
 
+/** Dans l'app, « Valider et passer » reste grisé tant que rien n'est coché. */
+const repondreFaux = () => fireEvent.click(screen.getByRole('button', { name: /Deuxième proposition/ }));
+
 describe('l’écran de jeu dans l’app', () => {
   beforeEach(() => {
     cible.app = true;
@@ -1358,19 +1360,22 @@ describe('l’écran de jeu dans l’app', () => {
   it('donne au résultat le geste suivant : les erreurs, puis refaire, puis partager', () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    const revoir = screen.getByRole('button', { name: 'Revoir mes erreurs' });
-    expect(revoir.className).toContain('bouton--principal');
     expect(screen.getByRole('link', { name: 'Refaire un examen' }).getAttribute('href')).toBe('/examen');
     expect(screen.queryByRole('link', { name: 'Accueil' })).toBeNull();
 
     fireEvent.click(screen.getByRole('button', { name: 'Partager' }));
     expect(partager).toHaveBeenCalledTimes(1);
 
-    // Trois questions sans réponse : trois erreurs, et la revue ne montre qu'elles.
-    fireEvent.click(revoir);
-    expect(document.querySelectorAll('.revue__item')).toHaveLength(3);
+    // Trois fausses : trois lignes « Faux » au récapitulatif, et
+    // chacune s'ouvre sur sa revue.
+    const lignes = document.querySelectorAll<HTMLButtonElement>('.recap__ligne');
+    expect(lignes).toHaveLength(3);
+    expect(document.querySelectorAll('.recap__marque--faux')).toHaveLength(3);
+    fireEvent.click(lignes[0]!);
+    expect(document.querySelectorAll('.revue__item')).toHaveLength(1);
     // Les onglets portent la navigation : le thème reste un nom, pas un lien.
     expect(screen.queryByRole('link', { name: nomDuTheme('ecluses') })).toBeNull();
   });
@@ -1378,6 +1383,7 @@ describe('l’écran de jeu dans l’app', () => {
   it('fait sentir un examen reçu', async () => {
     lancerExamen();
     for (let i = 0; i < 3; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
     // Trois erreurs, sous les cinq admises : reçu. L'haptique attend la
@@ -1393,9 +1399,10 @@ describe('l’écran de jeu dans l’app', () => {
     render(<Quiz mode="examen" questions={six} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     for (let i = 0; i < 6; i++) {
+      repondreFaux();
       fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
     }
-    // Six sans réponse : une de trop.
+    // Six fausses : une de trop.
     expect(screen.getByText(/Recalé/)).toBeTruthy();
     await waitFor(() => expect(vibrer).toHaveBeenCalledWith('echoue'));
   });
@@ -1419,13 +1426,13 @@ describe('l’écran de jeu dans l’app', () => {
     expect(vibrer).toHaveBeenCalledWith('fin-serie');
   });
 
-  it('ne propose pas de revoir des erreurs qui n’existent pas', () => {
+  it('ne propose ni partage ni revue d’erreurs au bout d’une série sans faute', () => {
     render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
     fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continuer' }));
     expect(screen.queryByRole('button', { name: 'Revoir mes erreurs' })).toBeNull();
-    const refaire = screen.getByRole('link', { name: 'Refaire la série' });
+    const refaire = screen.getByRole('button', { name: 'Encore 1' });
     expect(refaire.className).toContain('bouton--principal');
     expect(screen.queryByRole('button', { name: 'Partager' })).toBeNull();
   });

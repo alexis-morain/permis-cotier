@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import AccueilApp from './AccueilApp';
 import {
   enregistrerExamen,
@@ -59,8 +59,8 @@ describe('accueil de l’app, premier lancement', () => {
 describe('les libellés de l’accueil', () => {
   it('disent un verbe et ce qu’ils ouvrent, comme la fiche pour les mêmes destinations', () => {
     afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
-    const libelles = [...document.querySelectorAll('.accueilApp a.bouton')].map((a) => a.textContent);
-    expect(libelles).toEqual(['Commencer le cours', 'Faire ma série du jour', 'Faire un examen blanc']);
+    const libelles = [...document.querySelectorAll('.accueilApp a.bouton, .accueilApp a.accueilApp__action')].map((a) => a.firstChild?.textContent);
+    expect(libelles).toEqual(['Commencer le cours', 'Faire ma série du jour', 'Faire un examen blanc', 'Pose la date de ton épreuve']);
   });
 });
 
@@ -141,5 +141,32 @@ describe('accueil de l’app, la date de l’examen', () => {
     avec('2026-09-21');
     expect(screen.getByText('C’était il y a 4 jours')).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Pose la date de ton épreuve' })).toBeNull();
+  });
+});
+
+describe('quand un autre onglet écrit la progression', () => {
+  it('relit le stockage sur app:progression, sans rendre l’écran à nouveau de zéro', () => {
+    afficher();
+    const titre = screen.getByRole('heading', { name: 'Marques latérales' });
+    expect(lien('Commencer le cours')).toBe('/cours/balisage/a');
+
+    // Une leçon faite dans l'onglet Cours, puis l'onglet Accueil revient.
+    sauvegarder(terminerLecon(etatInitial(), 'a', { bonnes: 2, total: 2 }, '2026-09-24'));
+    act(() => {
+      window.dispatchEvent(new Event('app:progression'));
+    });
+
+    expect(screen.getByRole('heading', { name: 'Cardinales' })).toBeTruthy();
+    expect(lien('Continuer le cours')).toBe('/cours/balisage/b');
+    expect(screen.getByText('1 leçon sur 2')).toBeTruthy();
+    // Le nœud du titre a été mis à jour, pas l'arbre jeté : rien n'a rechargé.
+    expect(document.body.contains(titre)).toBe(true);
+  });
+
+  it('cesse d’écouter une fois démonté', () => {
+    const retrait = vi.spyOn(window, 'removeEventListener');
+    afficher();
+    cleanup();
+    expect(retrait).toHaveBeenCalledWith('app:progression', expect.any(Function));
   });
 });
