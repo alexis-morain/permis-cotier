@@ -70,8 +70,10 @@ etape "Types"                             npx astro check --minimumSeverity erro
 etape "Build"                             npx astro build
 etape "Rien de l'app dans le site"        node scripts/verifier-cible.mjs
 etape "Audit SEO du build"                node scripts/audit-seo.mjs
+etape "Typographie du build"              node scripts/verifier-typographie.mjs dist
 etape "Budgets du code"                   node scripts/verifier-budgets.mjs
 etape "Build de la cible app"             npm run build:app
+etape "Typographie de la cible app"       node scripts/verifier-typographie.mjs dist-app
 etape "CSS tactile de la cible app"        node scripts/verifier-css-mobile.mjs dist-app
 etape "Accessibilité de la cible app"     node scripts/verifier-accessibilite.mjs dist-app
 

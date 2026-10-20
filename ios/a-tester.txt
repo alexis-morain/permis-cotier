@@ -33,3 +33,5 @@ Sous iOS 16 ou 17
 • Les cinq onglets se chargent ; pendant l’examen la barre du bas disparaît et revient à l’arrêt ; la recherche du Cours répond à la frappe ; un signal sonore s’écoute ; poser la date d’épreuve demande l’autorisation des notifications.
 
 Une question te semble fausse ? « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question citée : relis-le, envoie-le, il nous arrive.
+
+Les textes de l’app suivent maintenant la typographie française : espaces insécables avant « ? ! ; : », dans les guillemets et entre un nombre et son unité. Regarde qu’aucune ligne ne se coupe avant un « ? » ou un « : ».

@@ -11,6 +11,7 @@ import {
 } from './src/lib/hors-ligne.ts';
 import { existsSync, readFileSync } from 'node:fs';
 import { construireScriptBande } from './scripts/bande-avant-rendu.mjs';
+import { typographieDesSources, typographieDuHtml } from './scripts/typographie.mjs';
 
 const versionBanque = readFileSync(new URL('./data/VERSION', import.meta.url), 'utf-8').trim();
 
@@ -137,6 +138,9 @@ export default defineConfig({
   build: { format: pourApp ? 'directory' : 'file' },
   integrations: [
     react(),
+    // Avant la PWA : elle calcule la révision de chaque page dans le même
+    // hook, et doit voir les pages déjà typographiées.
+    typographieDuHtml(),
     // Le sitemap et la PWA ne concernent que le site : dans un bundle, le
     // premier n'a pas de lecteur et le second doublerait un cache local.
     ...(pourApp ? [] : [
@@ -219,7 +223,11 @@ export default defineConfig({
     ]),
   ],
   vite: {
-    plugins: pourApp ? [bandeAvantRendu()] : [siteSansApp(), bandeAvantRendu()],
+    plugins: [
+      ...(pourApp ? [] : [siteSansApp()]),
+      bandeAvantRendu(),
+      typographieDesSources(),
+    ],
     define: {
       __VERSION_BANQUE__: JSON.stringify(versionBanque),
       __POUR_APP__: JSON.stringify(pourApp),

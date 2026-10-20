@@ -149,6 +149,10 @@ sources.
 
 ## Pièges de code
 
+- **La typographie française est posée au build** (`scripts/typographie.mjs`, `src/lib/insecables.ts`) :
+  HTML de `dist/`, sources `src/**/*.ts(x)` via un greffon Vite, banque via `versAffichable`. Ne pas
+  recopier d'insécable à la main, ne pas toucher `data/questions/`. Une chaîne de code entière comme
+  `' : '` n'est pas transformée (sinon `split` casse) ; `scripts/verifier-typographie.mjs` garde `dist` et `dist-app`.
 - **L'écran de jeu est en morceaux** : `Quiz.tsx` tient la session,
   `src/components/quiz/` les écrans, `quiz/effets.ts` les effets, appelés
   dans l'ordre d'origine (React lance les effets dans l'ordre de leur

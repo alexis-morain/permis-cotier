@@ -112,6 +112,12 @@ jobs:
       - name: Audit SEO du build
         run: node scripts/audit-seo.mjs
 
+      # La typographie française, relue sur le build : une espace ordinaire
+      # avant « ; : ! ? » ou autour d'un guillemet ne casse aucun test et ne se
+      # voit que dans `dist/`.
+      - name: Typographie du build
+        run: node scripts/verifier-typographie.mjs dist
+
       # Les bornes de `docs/budgets.md` : 600 lignes par fichier de
       # composant, 40 mentions de `POUR_APP`, le code de `/examen` à sa
       # référence plus 1 Kio brotli. Un dépassement se discute dans la PR.
@@ -124,6 +130,9 @@ jobs:
       # lui ou compte sur une redirection.
       - name: Build de la cible app
         run: npm run build:app
+
+      - name: Typographie de la cible app
+        run: node scripts/verifier-typographie.mjs dist-app
 
       # Ce qu'un doigt trouvera dans l'app : un `:hover` hors de
       # `@media (hover: hover)` reste collé sur iOS après un appui, et un
