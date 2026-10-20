@@ -1,5 +1,6 @@
 import type { Question } from './schema';
 import type { QuestionJouable } from './quiz';
+import { insecabiliser } from './insecables';
 
 /**
  * Une question telle que les écrans la reçoivent — et, depuis que la banque
@@ -45,18 +46,23 @@ export const CHAMPS_SOURCE_RETENUS: readonly string[] = [
   'version',
 ];
 
+/**
+ * La typographie française est posée ici, à l'empaquetage : le texte du YAML
+ * (relu par Alexis) n'est jamais réécrit, et ni le navigateur ni l'app n'ont
+ * de fonction de plus à embarquer. Voir `insecables.ts`.
+ */
 export function versAffichable(donnees: Question): QuestionAffichable {
   return {
     id: donnees.id,
     theme: donnees.theme,
     notion: donnees.notion,
     famille: donnees.famille,
-    enonce: donnees.enonce,
-    explication: donnees.explication,
+    enonce: insecabiliser(donnees.enonce),
+    explication: insecabiliser(donnees.explication),
     difficulte: donnees.difficulte,
-    propositions: donnees.propositions.map((p) => ({ id: p.id, texte: p.texte })),
+    propositions: donnees.propositions.map((p) => ({ id: p.id, texte: insecabiliser(p.texte) })),
     reponses: donnees.reponses,
-    sources: donnees.sources.map((s) => ({ texte: s.texte, ref: s.ref, url: s.url })),
+    sources: donnees.sources.map((s) => ({ texte: insecabiliser(s.texte), ref: s.ref, url: s.url })),
     visuel: donnees.visuel,
   };
 }

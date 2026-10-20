@@ -6,6 +6,7 @@ import {
 } from './affichable';
 import { objetQuestion, schemaSource } from './schema';
 import type { Question } from './schema';
+import { insecabiliser } from './insecables';
 
 /**
  * `versAffichable` recopie les champs un à un. Le CLAUDE.md prévient qu'un
@@ -71,18 +72,19 @@ describe('les champs qui atteignent les écrans', () => {
     expect(servis.sort()).toEqual(attendus.sort());
   });
 
-  it('recopie les valeurs sans les altérer', () => {
+  it('recopie les valeurs, à la typographie près', () => {
+    // Seuls les textes affichés passent par la typographie ; le reste est recopié.
     const vue = versAffichable(complete);
     expect(vue).toEqual({
       id: complete.id,
       theme: complete.theme,
       notion: complete.notion,
-      enonce: complete.enonce,
-      explication: complete.explication,
+      enonce: insecabiliser(complete.enonce),
+      explication: insecabiliser(complete.explication),
       difficulte: complete.difficulte,
-      propositions: complete.propositions,
+      propositions: complete.propositions.map((p) => ({ id: p.id, texte: insecabiliser(p.texte) })),
       reponses: complete.reponses,
-      sources: [{ texte: source.texte, ref: source.ref, url: source.url }],
+      sources: [{ texte: insecabiliser(source.texte), ref: source.ref, url: source.url }],
       visuel: complete.visuel,
     });
   });
@@ -98,7 +100,23 @@ describe('les champs qui atteignent les écrans', () => {
     expect(vue.notion).toBeUndefined();
     expect(vue.visuel).toBeUndefined();
     expect(vue.sources[0]?.url).toBeUndefined();
-    expect(vue.enonce).toBe(complete.enonce);
+    expect(vue.enonce).toBe(insecabiliser(complete.enonce));
+  });
+
+  it('pose les espaces insécables sur les textes servis, jamais sur la source', () => {
+    const brute: Question = {
+      ...complete,
+      enonce: 'Quelle est la limite : 300 m ?',
+      explication: 'Voir « art. 3 » ; 12 000 m.',
+      propositions: [{ id: 'a', texte: 'Oui !' }, ...complete.propositions.slice(1)],
+      sources: [{ texte: 'Arrêté : art. 3', ref: 'x' }],
+    };
+    const vue = versAffichable(brute);
+    expect(vue.enonce).toBe('Quelle est la limite\u00A0: 300\u00A0m\u202F?');
+    expect(vue.explication).toBe('Voir «\u00A0art.\u00A03\u00A0»\u202F; 12\u202F000\u00A0m.');
+    expect(vue.propositions[0]?.texte).toBe('Oui\u202F!');
+    expect(vue.sources[0]?.texte).toBe('Arrêté\u00A0: art.\u00A03');
+    expect(brute.enonce).toBe('Quelle est la limite : 300 m ?');
   });
 
   it('passe le schéma : la question d’essai n’est pas une invention', () => {
