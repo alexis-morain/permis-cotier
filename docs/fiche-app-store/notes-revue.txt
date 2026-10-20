@@ -8,7 +8,7 @@ Thank you for the review. A screen recording of the submitted build is attached.
 
 4. External services.
 - lepermiscotier.fr, our own website hosted on Cloudflare: the app downloads updated question banks from it (a public JSON file, no personal data).
-- "Report an error" form on a question: the message goes to our own endpoint on Cloudflare, protected by Cloudflare Turnstile against spam, which opens a ticket in our GitHub repository and sends us an email through Resend. Nothing is published to other users.
+- "Report an error" on a question: the app opens a pre-filled message in the user's own Mail app, addressed to contact@lepermiscotier.fr. The user sends it or not; the app itself sends nothing. Nothing is published to other users.
 - Nothing else: no analytics, no advertising, no authentication service, no payment processor, no AI service. Reminders are local notifications.
 
 5. Regional differences. None. The app works the same in every region. Its content is in French and covers French maritime regulation, as stated on the product page.
