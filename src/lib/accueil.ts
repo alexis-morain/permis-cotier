@@ -172,5 +172,7 @@ export function prochaineAction(etat: Etat, ids: readonly string[], jour: string
 export function dateDuJour(jour: string): string {
   const d = enDate(jour);
   if (!d) return jour;
-  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+  const texte = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+  // Le premier du mois s'écrit « 1er », ce que Intl ne fait pas.
+  return d.getUTCDate() === 1 ? texte.replace(/(^|\s)1(\s)/, '$11er$2') : texte;
 }

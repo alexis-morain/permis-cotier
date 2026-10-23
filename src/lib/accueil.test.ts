@@ -231,6 +231,7 @@ describe('la prochaine chose à faire', () => {
 describe('la date du jour', () => {
   it('en toutes lettres, jour de la semaine compris', () => {
     expect(dateDuJour('2026-10-23')).toBe('vendredi 23 octobre');
-    expect(dateDuJour('2026-09-01')).toBe('mardi 1 septembre');
+    expect(dateDuJour('2026-09-01')).toBe('mardi 1er septembre');
+    expect(dateDuJour('2026-09-02')).toBe('mercredi 2 septembre');
   });
 });
