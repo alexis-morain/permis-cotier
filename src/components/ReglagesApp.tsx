@@ -26,6 +26,12 @@ export default function ReglagesApp({ version, total }: Props) {
   const [alerte, setAlerte] = useState(false);
   const [efface, setEfface] = useState(false);
   const declencheur = useRef<HTMLButtonElement>(null);
+  const message = useRef<HTMLParagraphElement>(null);
+
+  // La cellule d'effacement a disparu : le focus passe au message qui le dit.
+  useEffect(() => {
+    if (efface) message.current?.focus({ preventScroll: true });
+  }, [efface]);
 
   useEffect(() => setEtat(charger()), []);
   useEffect(() => surProgressionChangee(() => setEtat(charger())), []);
@@ -129,7 +135,7 @@ export default function ReglagesApp({ version, total }: Props) {
             </label>
           </li>
           <li>
-            <a className="cellules__ligne" href="/profil/depart">
+            <a className="cellules__ligne" href="/profil/depart?retour=%2Fparametres">
               <span>Pourquoi tu passes le permis</span>
               <span className="reglagesApp__valeur discret">{raison ?? 'Pas encore dit'}</span>
               <span className="cellules__chevron" aria-hidden="true">›</span>
@@ -178,7 +184,7 @@ export default function ReglagesApp({ version, total }: Props) {
 
       <section aria-label="Effacer">
         {rien ? (
-          <p className="reglagesApp__pied" role={efface ? 'status' : undefined}>
+          <p ref={message} className="reglagesApp__pied" role={efface ? 'status' : undefined} tabIndex={efface ? -1 : undefined}>
             {efface ? 'Progression effacée.' : 'Rien à effacer pour l’instant.'}
           </p>
         ) : (

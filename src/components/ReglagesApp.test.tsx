@@ -77,7 +77,7 @@ describe('les réglages de l’app', () => {
   it('mène à la raison, et dit celle qui est écrite', () => {
     rendre();
     const lien = screen.getByRole('link', { name: /Pourquoi tu passes le permis/ });
-    expect(lien.getAttribute('href')).toBe('/profil/depart');
+    expect(lien.getAttribute('href')).toBe('/profil/depart?retour=%2Fparametres');
     expect(lien.textContent).toContain('Pas encore dit');
     cleanup();
     sauvegarder(enregistrerProfil(etatInitial(), { ...profilVide(), phrase: 'Emmener mon père pêcher.', rempliLe: '2026-09-01' }));
@@ -152,5 +152,17 @@ describe('effacer la progression', () => {
     expect(screen.queryByRole('alertdialog')).toBeNull();
     expect(screen.getByRole('status').textContent).toBe('Progression effacée.');
     expect((screen.getByLabelText('Date de l’examen') as HTMLInputElement).value).toBe('');
+  });
+
+  it('pose le focus sur le message une fois la cellule disparue', () => {
+    remplir();
+    rendre();
+    fireEvent.click(screen.getByRole('button', { name: 'Effacer ma progression' }));
+    act(() => {
+      fireEvent.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: 'Effacer' }));
+    });
+    const message = screen.getByRole('status');
+    expect(message.getAttribute('tabindex')).toBe('-1');
+    expect(document.activeElement).toBe(message);
   });
 });
