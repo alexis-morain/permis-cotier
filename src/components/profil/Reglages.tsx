@@ -124,10 +124,13 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
         </div>
       </div>
 
-      <div className="reglage">
-        <p className="reglage__titre" id="reglage-apparence">Apparence</p>
-        <Apparence idTitre="reglage-apparence" />
-      </div>
+      {/* L'app suit le système (`dark-mode.md`) : pas de réglage d'apparence. */}
+      {!POUR_APP && (
+        <div className="reglage">
+          <p className="reglage__titre" id="reglage-apparence">Apparence</p>
+          <Apparence idTitre="reglage-apparence" />
+        </div>
+      )}
 
       {/* Dans l'app, la section « L'app » de la page porte tout cela. */}
       {!POUR_APP && (

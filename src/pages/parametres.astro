@@ -21,12 +21,12 @@ const total = (await questionsPubliees()).length;
     <h2>Ta progression</h2>
     <Parametres client:only="react" />
 
-    <h2 id="apparence">Apparence</h2>
-    <Apparence client:only="react" idTitre="apparence" />
-    {POUR_APP ? (
-      <p class="discret" style="margin-top:0.5rem">Par défaut, l’app suit le réglage du système.</p>
-    ) : (
-      <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
+    {!POUR_APP && (
+      <Fragment>
+        <h2 id="apparence">Apparence</h2>
+        <Apparence client:only="react" idTitre="apparence" />
+        <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
+      </Fragment>
     )}
 
     {POUR_APP && <SonsApp />}
