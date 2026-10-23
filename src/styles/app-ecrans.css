@@ -486,3 +486,7 @@ html[data-app] .alerte__bouton {
 html[data-app] .alerte__bouton + .alerte__bouton { border-left: 1px solid var(--carte-filet); }
 html[data-app] .alerte__bouton--fort { font-weight: 700; }
 html[data-app] .alerte__bouton:active { background: var(--fond-2); }
+
+/* « Tous les thèmes » en bas de la liste : une cellule, comme dans Réglages. */
+html[data-app] .fiche__tous { margin: 0.75rem 0 0; }
+html[data-app] .fiche__tous .cellules__ligne { padding-inline: 0; }

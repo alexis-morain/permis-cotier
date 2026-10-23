@@ -9,7 +9,6 @@ import {
   phraseDuPalier,
   indice,
   joursAvant,
-  jaugesParTheme,
   notionsLesPlusFaibles,
   objectifDuJour,
   pointFinal,
@@ -23,7 +22,7 @@ import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
 import { surProgressionChangee } from '../lib/vivant';
 import Reglages from './profil/Reglages';
-import PaliersDuTheme from './profil/PaliersDuTheme';
+import ListeThemes from './profil/ListeThemes';
 import DerniersExamens from './profil/DerniersExamens';
 import { accorde } from './profil/accorde';
 import './profil.css';
@@ -33,6 +32,9 @@ interface Props {
   banque: QuestionConnue[];
   totalLecons: number;
 }
+
+/** Dans la coquille iOS, la Fiche ne garde que le bilan : les réglages sont dans Réglages. */
+const enApp = POUR_APP;
 
 const JOURS_COURTS = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 
@@ -68,13 +70,6 @@ function Compte({ vues, retenues, ratees, total }: { vues: number; retenues: num
       <span className="discret">{` ${mot}${nombre > 1 ? 's' : ''} sur ${accorde(vues, 'vue')}, ${total} en banque`}</span>
     </>
   );
-}
-
-/** Ce que la jauge d'un thème dit à voix haute : le compte, que la barre ne porte pas. */
-function leCompte(t: { vues: number; retenues: number; ratees: number; total: number }): string {
-  const retenues = `${t.retenues} ${t.retenues > 1 ? 'retenues' : 'retenue'}`;
-  const ratees = t.ratees > 0 ? `, ${t.ratees} ${t.ratees > 1 ? 'ratées' : 'ratée'}` : '';
-  return `${retenues}${ratees} sur ${accorde(t.vues, 'vue')}, ${t.total} en banque`;
 }
 
 /**
@@ -117,7 +112,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const objectif = objectifDuJour(etat, jour);
   const serie = serieDeJours(etat, jour);
   const cases = quatorzeJours(etat, jour);
-  const jauges = jaugesParTheme(etat, banque);
   const faibles = notionsLesPlusFaibles(etat, banque, 3);
   const jours = etat.dateExamen ? joursAvant(etat.dateExamen, jour) : null;
   const publiees = new Set(banque.map((q) => q.id));
@@ -171,6 +165,25 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
     </p>
   ) : null;
 
+  const casesJours = (
+  <ol className="jours" aria-label="Les quatorze derniers jours">
+    {cases.map((c, i) => {
+      const actif = c.reponses > 0;
+      const estAujourdhui = i === cases.length - 1;
+      return (
+        <li
+          key={c.date}
+          className={`jours__case${actif ? ' jours__case--actif' : ''}${estAujourdhui ? ' jours__case--aujourdhui' : ''}`}
+        >
+          {/* Un aria-label sur un li sans rôle, certains lecteurs le taisent. */}
+          <span className="visuellement-cache">{`${dateLisible(c.date)} : ${accorde(c.reponses, 'réponse')}`}</span>
+          <span aria-hidden="true">{JOURS_COURTS[jourDeLaSemaine(c.date) ?? 0]}</span>
+        </li>
+      );
+    })}
+  </ol>
+  );
+
   const blocSuite = (
     <div className="jeu__actions">
       <a className="bouton bouton--principal" href={suite.href} data-mesure="profil-suite" data-mesure-vers={suite.href}>
@@ -182,7 +195,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
 
   const blocIndice = (
     <section className="fiche__indice" aria-labelledby="indice-titre">
-      <h2 id="indice-titre" className={POUR_APP ? 'indice__mot' : 'visuellement-cache'}>
+      <h2 id="indice-titre" className={enApp ? 'indice__mot' : 'visuellement-cache'}>
         Indice de préparation
       </h2>
       {/* Avec un examen, le palier se lit sur lui et passe en tête ; l'indice
@@ -263,7 +276,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           pour lui qu'on ouvre la fiche. */}
       <header className="fiche__tete">
         <h1 ref={titre} tabIndex={-1}>
-          {POUR_APP
+          {enApp
             // Dans l'app, l'écran s'appelle comme son onglet.
             ? 'Ta fiche'
             : rien
@@ -319,22 +332,12 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                     <span className="discret"> jours de suite</span>
                   </p>
                 )}
-                <ol className="jours" aria-label="Les quatorze derniers jours">
-                  {cases.map((c, i) => {
-                    const actif = c.reponses > 0;
-                    const estAujourdhui = i === cases.length - 1;
-                    return (
-                      <li
-                        key={c.date}
-                        className={`jours__case${actif ? ' jours__case--actif' : ''}${estAujourdhui ? ' jours__case--aujourdhui' : ''}`}
-                      >
-                        {/* Un aria-label sur un li sans rôle, certains lecteurs le taisent. */}
-                        <span className="visuellement-cache">{`${dateLisible(c.date)} : ${accorde(c.reponses, 'réponse')}`}</span>
-                        <span aria-hidden="true">{JOURS_COURTS[jourDeLaSemaine(c.date) ?? 0]}</span>
-                      </li>
-                    );
-                  })}
-                </ol>
+                {enApp ? (
+                  <details className="fiche__details">
+                    <summary>Tes quatorze derniers jours</summary>
+                    {casesJours}
+                  </details>
+                ) : casesJours}
               </div>
             </div>
 
@@ -343,7 +346,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                 {jours > 1 && <><b>Examen dans {jours} jours</b>, le {dateLisible(etat.dateExamen!)}.</>}
                 {jours === 1 && <><b>Examen demain.</b> Deux examens blancs ce soir, puis dors.</>}
                 {jours === 0 && <><b>Examen aujourd’hui.</b> Bon vent.</>}
-                {jours < 0 && <>La date d’examen est passée. Tu peux la changer plus bas.</>}
+                {jours < 0 && <>La date d’examen est passée. Tu peux la changer {enApp ? <a href="/parametres">dans les Réglages</a> : 'plus bas'}.</>}
                 {/* Un seul objectif par jour : le rythme qu'exige la date se compare
                     à celui du candidat, au lieu de poser un second nombre à côté. */}
                 {jours > 1 && banque.length > vues.length && (() => {
@@ -353,7 +356,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                     <span className="discret">
                       {' '}Il te reste {restantes} questions jamais vues{'\u00a0'}:{' '}
                       {parJour > objectif.cible
-                        ? `environ ${parJour} par jour pour toutes les voir, plus que ton objectif de ${objectif.cible}. Il se règle plus bas.`
+                        ? <>environ {parJour} par jour pour toutes les voir, plus que ton objectif de {objectif.cible}. Il se règle {enApp ? <a href="/parametres">dans les Réglages</a> : 'plus bas'}.</>
                         : `ton objectif de ${objectif.cible} par jour suffit pour toutes les voir.`}
                     </span>
                   );
@@ -415,50 +418,31 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
           <section className="fiche__themes" aria-labelledby="themes-titre">
             <h2 id="themes-titre">Thème par thème</h2>
             <p className="discret">Part des questions retenues, les plus fragiles d’abord.</p>
-            <ul className="maitrise">
-              {jauges.travailles.map((t) => (
-                <li key={t.code} style={{ '--pourcent': t.pourcent / 100 } as React.CSSProperties}>
-                  <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
-                    <b>{nomDuTheme(t.code)}</b>
-                    <span className="maitrise__pourcent">{t.pourcent}{'\u00a0'}%</span>
-                    <span className="maitrise__jauge" aria-hidden="true">
-                      <span className="maitrise__retenues" />
-                    </span>
-                    <span className="visuellement-cache maitrise__lu">{leCompte(t)}</span>
-                  </a>
-                  <PaliersDuTheme etat={etat} banque={banque} theme={t.code} vues={t.vues} />
-                </li>
-              ))}
-            </ul>
-            {jauges.neufs.length > 0 && (
-              <>
-                <h3 className="maitrise__titre">Pas encore ouverts</h3>
-                <ul className="maitrise maitrise--neufs">
-                  {jauges.neufs.map((t) => (
-                    <li key={t.code}>
-                      <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
-                        <b>{nomDuTheme(t.code)}</b>
-                        <span className="discret">{accorde(t.total, 'question')}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </>
+            <ListeThemes etat={etat} banque={banque} limite={enApp ? 3 : undefined} />
+            {enApp && (
+              <p className="fiche__tous">
+                <a className="cellules__ligne" href="/profil/themes" data-mesure="profil-tous-themes">
+                  <span>Tous les thèmes</span>
+                  <span className="cellules__chevron" aria-hidden="true">›</span>
+                </a>
+              </p>
             )}
           </section>
         </>
       )}
 
-      <Reglages
-        etat={etat}
-        rien={rien}
-        efface={efface}
-        ecrire={ecrire}
-        surEffacement={() => {
-          setEtat(charger());
-          setEfface(true);
-        }}
-      />
+      {!enApp && (
+        <Reglages
+          etat={etat}
+          rien={rien}
+          efface={efface}
+          ecrire={ecrire}
+          surEffacement={() => {
+            setEtat(charger());
+            setEfface(true);
+          }}
+        />
+      )}
     </div>
   );
 }

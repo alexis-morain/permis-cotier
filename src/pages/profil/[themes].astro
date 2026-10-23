@@ -1,0 +1,24 @@
+---
+/**
+ * « Tous les thèmes », poussé depuis la Fiche de l'app, à `/profil/themes`.
+ *
+ * Comme `/accueil`, il n'existe que dans le build « app » : sur le site,
+ * `getStaticPaths` ne rend rien et la Fiche garde sa liste complète.
+ */
+import Base from '../../layouts/Base.astro';
+import ThemesProfil from '../../components/ThemesProfil.tsx';
+import { POUR_APP } from '../../lib/cible';
+import { questionsPubliees } from '../../lib/banque';
+
+export function getStaticPaths() {
+  return POUR_APP ? [{ params: { themes: 'themes' } }] : [];
+}
+
+const banque = (await questionsPubliees()).map((q) => ({ id: q.id, theme: q.theme, notion: q.notion }));
+---
+
+<Base titre="Tous les thèmes" description="Chaque thème, du plus fragile au plus neuf." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
+  <div class="page page--etroite">
+    <ThemesProfil client:only="react" banque={banque} />
+  </div>
+</Base>

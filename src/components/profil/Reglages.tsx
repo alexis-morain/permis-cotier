@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { annoncerDateExamen, effacer, enregistrerProfil, type Etat } from '../../lib/progression';
 import { RYTHMES, profilRempli, rappel } from '../../lib/profil';
 import { evenement } from '../../lib/mesure';
-import { POUR_APP } from '../../lib/cible';
 import Apparence from '../Apparence';
 import { ceQuiPartira } from './partira';
 
@@ -32,9 +31,7 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
     <section className="fiche__reglages" aria-labelledby="reglages-titre">
       <h2 id="reglages-titre">Tes réglages</h2>
       <p className="discret">
-        {POUR_APP
-          ? 'Tout reste sur ton téléphone. Supprimer l’app efface la fiche.'
-          : 'Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.'}
+        Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.
       </p>
 
       <div className="reglage">
@@ -108,24 +105,18 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
         </div>
       </div>
 
-      {/* L'app suit le système (`dark-mode.md`) : pas de réglage d'apparence. */}
-      {!POUR_APP && (
-        <div className="reglage">
-          <p className="reglage__titre" id="reglage-apparence">Apparence</p>
-          <Apparence idTitre="reglage-apparence" />
-        </div>
-      )}
+      <div className="reglage">
+        <p className="reglage__titre" id="reglage-apparence">Apparence</p>
+        <Apparence idTitre="reglage-apparence" />
+      </div>
 
-      {/* Dans l'app, la section « L'app » de la page porte tout cela. */}
-      {!POUR_APP && (
-        <div className="reglage">
-          <p className="reglage__titre">Vie privée et licences</p>
-          <p className="reglage__valeur">
-            La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
-            <a href="/parametres">réglages du site</a>.
-          </p>
-        </div>
-      )}
+      <div className="reglage">
+        <p className="reglage__titre">Vie privée et licences</p>
+        <p className="reglage__valeur">
+          La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
+          <a href="/parametres">réglages du site</a>.
+        </p>
+      </div>
 
       <div className="reglage reglage--danger">
         <p className="reglage__titre">Effacer</p>
