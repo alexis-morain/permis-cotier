@@ -60,7 +60,7 @@ describe('les libellés de l’accueil', () => {
   it('disent un verbe et ce qu’ils ouvrent, comme la fiche pour les mêmes destinations', () => {
     afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
     const libelles = [...document.querySelectorAll('.accueilApp a.bouton, .accueilApp a.accueilApp__action')].map((a) => a.firstChild?.textContent);
-    expect(libelles).toEqual(['Commencer le cours', 'Faire ma série du jour', 'Faire un examen blanc', 'Pose la date de ton épreuve']);
+    expect(libelles).toEqual(['Faire ma série du jour', 'Commencer le cours', 'Faire un examen blanc', 'Pose la date de ton épreuve']);
   });
 });
 
@@ -168,5 +168,62 @@ describe('quand un autre onglet écrit la progression', () => {
     afficher();
     cleanup();
     expect(retrait).toHaveBeenCalledWith('app:progression', expect.any(Function));
+  });
+});
+
+describe('accueil de l’app, la carte mise en avant', () => {
+  const boutons = () => [...document.querySelectorAll('.accueilApp a.bouton--principal')].map((a) => a.firstChild?.textContent);
+  const cartes = () => [...document.querySelectorAll('.accueilApp h2')].map((h) => h.textContent);
+
+  it('rien de dû, pas de date : le cours en tête, seul bouton jaune', () => {
+    afficher();
+    expect(boutons()).toEqual(['Commencer le cours']);
+    expect(cartes()).toEqual(['Marques latérales', 'À revoir aujourd’hui', 'Examen blanc', 'Ton épreuve']);
+  });
+
+  it('des questions dues : la série en tête, le cours redescend en carte simple', () => {
+    afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
+    expect(boutons()).toEqual(['Faire ma série du jour']);
+    expect(cartes()).toEqual(['À revoir aujourd’hui', 'Marques latérales', 'Examen blanc', 'Ton épreuve']);
+    expect(screen.getAllByRole('link', { name: 'Faire ma série du jour' })).toHaveLength(1);
+    expect(lien('Commencer le cours')).toBe('/cours/balisage/a');
+  });
+
+  it('épreuve à sept jours : l’examen blanc en tête, une seule fois', () => {
+    let e = enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25');
+    e = { ...e, dateExamen: '2026-10-02' };
+    afficher(e);
+    expect(boutons()).toEqual(['Faire un examen blanc']);
+    expect(screen.getAllByRole('link', { name: 'Faire un examen blanc' })).toHaveLength(1);
+    expect(cartes()).toEqual(['Examen blanc', 'Marques latérales', 'À revoir aujourd’hui', 'Ton épreuve']);
+    expect(lien('Faire ma série du jour')).toBe('/revoir');
+  });
+
+  it('épreuve à huit jours : le cours ou la série, pas l’examen', () => {
+    afficher({ ...etatInitial(), dateExamen: '2026-10-03' });
+    expect(boutons()).toEqual(['Commencer le cours']);
+  });
+
+  it('cours terminé et rien de dû : le plan du cours reste en tête, sans bouton jaune', () => {
+    let e = etatInitial();
+    for (const l of lecons) e = terminerLecon(e, l.code, { bonnes: 1, total: 1 }, '2026-09-20');
+    afficher(e);
+    expect(boutons()).toEqual([]);
+    expect(lien('Revoir le plan du cours')).toBe('/cours');
+  });
+});
+
+describe('accueil de l’app, le haut de l’écran', () => {
+  it('un grand titre visible, la date du jour parisien au-dessus', () => {
+    afficher();
+    const h1 = screen.getByRole('heading', { level: 1 });
+    expect(h1.className).not.toContain('visuellement-cache');
+    expect(screen.getByText('vendredi 25 septembre')).toBeTruthy();
+    expect(h1.previousElementSibling?.textContent).toBe('vendredi 25 septembre');
+  });
+
+  it('le lien « Pose la date » a le style des autres liens d’action', () => {
+    afficher();
+    expect(screen.getByRole('link', { name: 'Pose la date de ton épreuve' }).className).toBe('accueilApp__action');
   });
 });

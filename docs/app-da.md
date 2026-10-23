@@ -151,28 +151,32 @@ Tout ce qui suit vit sous `html[data-app]` (CSS) ou derrière `POUR_APP`
 ### Accueil (nouvel écran, `src/components/AccueilApp.tsx`)
 
 Le tableau de bord, quatre cartes de haut en bas, aucun texte de présentation.
+En haut, la date du jour en petit (« vendredi 23 octobre »), puis le grand titre
+« Accueil » (`apple-hig`, `layout.md` : même rang que les quatre autres onglets).
 Chaque carte blanche se touche entièrement (le `::after` de son lien la couvre) :
-un titre, une ligne, parfois un grand chiffre, un lien à chevron. Le bouton
-jaune est celui de la carte Reprendre, et il est seul :
+un titre, une ligne, parfois un grand chiffre, un lien à chevron.
 
-1. **Reprendre** — grande carte marine, le titre de la prochaine leçon, le
-   chapitre, une jauge de progression du cours (leçons faites / 105), un bouton
-   jaune « Continuer le cours ». Si rien n'est commencé : la première leçon,
-   et « Commencer le cours ». Réutilise la logique de `ReprendreCours.tsx`.
-2. **À revoir aujourd'hui** — le nombre de questions dues que `/revoir` jouera
-   (borné au rythme de la série, comme `serieDuJour`), et « Faire ma série du
-   jour » vers `/revoir`. Zéro question due : le bloc dit « Rien à revoir
-   aujourd'hui » sans bouton.
-3. **Examen blanc** — le dernier score (x/40, réussi ou non, il y a n jours) et
-   un bouton « Faire un examen blanc ». Jamais passé : le bouton seul. De là,
-   deux touches jusqu'à la première question, et rien entre les deux : l'écran
-   de départ de l'app n'a pas l'encart « commence plutôt par la leçon » du
-   site.
+**La grande carte marine est la prochaine chose à faire**, choisie par
+`prochaineAction` (`src/lib/accueil.ts`) ; son bouton jaune est le seul de
+l'écran, et la carte ne reparaît pas plus bas :
+
+1. épreuve posée à sept jours ou moins, et pas passée → **Examen blanc**,
+   « Faire un examen blanc » (même avec des questions dues : à ce stade se
+   mesurer compte plus que réviser) ;
+2. sinon des questions dues → **À revoir aujourd'hui**, le nombre que `/revoir`
+   jouera (borné au rythme, comme `serieDuJour`), « Faire ma série du jour » ;
+3. sinon → **le cours** : titre de la prochaine leçon, chapitre, jauge,
+   « Continuer le cours » (« Commencer le cours » si rien n'est commencé). Cours
+   terminé : « Revoir le plan du cours », lien sans bouton jaune.
+
+Les trois autres cartes suivent en blanc, dans l'ordre cours, à revoir, examen,
+puis **Ton épreuve** (le compte à rebours, ou « Pose la date de ton épreuve »
+vers `/profil`, au même style que les autres liens). Le dernier score de
+l'examen s'affiche sur sa carte, jamais passé : « Quarante questions, vingt
+secondes chacune ». Pas d'encart « commence plutôt par la leçon » du site.
 
 Chaque bouton dit un verbe et ce qu'il ouvre, avec les mots de la Fiche pour
 les mêmes destinations (audit du 14 octobre, `docs/audit-ux-app-2026-10-14.md`).
-4. **Ton épreuve** — le compte à rebours vers la date posée (« dans 12 jours »),
-   ou « Pose la date de ton examen » vers `/profil`. Réutilise `DateExamen`.
 
 Deux gros chiffres au plus sur l'écran (leçons faites, jours restants), pas de
 rangée de statistiques. Le jour est parisien (`src/lib/jour.ts`). Tout se lit

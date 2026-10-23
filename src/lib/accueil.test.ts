@@ -8,6 +8,8 @@ import {
   echeanceDe,
   joursDeSuite,
   phraseDeLEcheance,
+  prochaineAction,
+  dateDuJour,
   reprise,
   type LeconAccueil,
 } from './accueil';
@@ -186,5 +188,50 @@ describe('phraseDeLEcheance, sous la date de l’accueil du site', () => {
     expect(phraseDeLEcheance(echeanceDe('2026-10-01', jour), 5)).toBe(
       'C’est passé. Efface la date au-dessus, ou pose la prochaine.',
     );
+  });
+});
+
+describe('la prochaine chose à faire', () => {
+  const ids = ['q1', 'q2'];
+  const du = enregistrerReponse(etatInitial(), 'q1', false, JOUR);
+  const avecDate = (e: typeof du, d: string) => ({ ...e, dateExamen: d });
+
+  it('rien de dû, pas de date : la leçon suivante', () => {
+    expect(prochaineAction(etatInitial(), ids, JOUR)).toBe('cours');
+  });
+
+  it('des questions dues : la série du jour', () => {
+    expect(prochaineAction(du, ids, JOUR)).toBe('serie');
+  });
+
+  it('jouées mais rien de dû : le cours', () => {
+    expect(prochaineAction(enregistrerReponse(etatInitial(), 'q1', true, JOUR), ids, JOUR)).toBe('cours');
+  });
+
+  it('épreuve à sept jours : l’examen blanc, même avec des questions dues', () => {
+    expect(prochaineAction(avecDate(du, '2026-10-02'), ids, JOUR)).toBe('examen');
+    expect(prochaineAction(avecDate(etatInitial(), '2026-10-02'), ids, JOUR)).toBe('examen');
+  });
+
+  it('épreuve à huit jours : pas encore', () => {
+    expect(prochaineAction(avecDate(du, '2026-10-03'), ids, JOUR)).toBe('serie');
+  });
+
+  it('épreuve aujourd’hui ou demain : l’examen blanc', () => {
+    expect(prochaineAction(avecDate(etatInitial(), JOUR), ids, JOUR)).toBe('examen');
+    expect(prochaineAction(avecDate(etatInitial(), '2026-09-26'), ids, JOUR)).toBe('examen');
+  });
+
+  it('épreuve passée : on n’y pense plus', () => {
+    expect(prochaineAction(avecDate(du, '2026-09-24'), ids, JOUR)).toBe('serie');
+    expect(prochaineAction(avecDate(etatInitial(), '2026-09-24'), ids, JOUR)).toBe('cours');
+  });
+});
+
+describe('la date du jour', () => {
+  it('en toutes lettres, jour de la semaine compris', () => {
+    expect(dateDuJour('2026-10-23')).toBe('vendredi 23 octobre');
+    expect(dateDuJour('2026-09-01')).toBe('mardi 1er septembre');
+    expect(dateDuJour('2026-09-02')).toBe('mercredi 2 septembre');
   });
 });
