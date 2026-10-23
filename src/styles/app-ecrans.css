@@ -441,7 +441,8 @@ html[data-app] .reglagesApp__libelle { margin: 0; font-weight: 600; }
 html[data-app] .reglagesApp__pile .segmente { display: flex; flex-wrap: nowrap; }
 html[data-app] .reglagesApp__pile .segmente__option { flex: 1 1 0; padding-inline: 0.4rem; }
 html[data-app] .reglagesApp__valeur {
-  min-width: 0;
+  flex-shrink: 0;
+  max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -490,3 +491,5 @@ html[data-app] .alerte__bouton:active { background: var(--fond-2); }
 /* « Tous les thèmes » en bas de la liste : une cellule, comme dans Réglages. */
 html[data-app] .fiche__tous { margin: 0.75rem 0 0; }
 html[data-app] .fiche__tous .cellules__ligne { padding-inline: 0; }
+/* La date garde sa largeur : à 28 px de corps, elle se coupait. */
+html[data-app] .reglagesApp__champ[type="date"] { flex: none; }
