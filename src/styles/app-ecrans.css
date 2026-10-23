@@ -236,6 +236,22 @@ html[data-app] .lecon__suite {
 html[data-app] .lecon__suite .bouton { min-height: 3.25rem; }
 html[data-app] .lecon__suite .bouton--principal { flex: 1 1 auto; }
 
+/* Le texte de la leçon est en police système, à la taille et à la graisse du
+   corps ; Archivo large reste au titre d'écran et aux grands chiffres
+   (docs/app-da.md, « La retenue »). L'accroche, seule sur son écran, passe une
+   taille au-dessus, toujours en système, en `rem` : elle suit Dynamic Type.
+   Les titres d'encadré ne gardent que la graisse. */
+html[data-app] .ecran__accroche {
+  font-stretch: 100%;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  max-width: var(--mesure);
+}
+html[data-app] .piege__titre,
+html[data-app] .retenir__titre,
+html[data-app] .verification__compteur { font-stretch: 100%; }
+
 /* Les visuels prennent toute la largeur de la colonne : sur un téléphone, un
    dessin de feux à 16 rem de haut est illisible. */
 html[data-app] .ecran__visuel { padding: 0.5rem; }
@@ -289,12 +305,16 @@ html[data-app] .fiche__details summary {
 }
 html[data-app] .fiche__details summary::-webkit-details-marker { display: none; }
 html[data-app] .fiche__details summary::after {
-  content: '›';
-  font-size: 1.5rem;
-  line-height: 1;
+  content: '';
+  flex: 0 0 auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-0.15rem) rotate(45deg);
   transition: transform var(--duree-courte) var(--courbe);
 }
-html[data-app] .fiche__details[open] summary::after { transform: rotate(90deg); }
+html[data-app] .fiche__details[open] summary::after { transform: translateY(0.15rem) rotate(225deg); }
 html[data-app] .fiche__details p { margin: 0 0 0.75rem; }
 
 /* La section « L'app » : ce que le pied de page du site disait partout. */

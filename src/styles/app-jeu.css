@@ -326,14 +326,19 @@ html[data-app] .sources--repli summary {
   cursor: pointer;
 }
 html[data-app] .sources--repli summary::-webkit-details-marker { display: none; }
-/* Le chevron dit que la ligne se déplie, et pivote quand elle l'est. */
+/* Le chevron vers le bas dit que la ligne se déplie sur place, et se retourne
+   quand elle l'est (disclosure-controls.md). Un `›` annoncerait un écran. */
 html[data-app] .sources--repli summary::after {
-  content: '›';
-  font-size: 1.5rem;
-  line-height: 1;
+  content: '';
+  flex: 0 0 auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-0.15rem) rotate(45deg);
   transition: transform var(--duree-courte) var(--courbe);
 }
-html[data-app] .sources--repli[open] summary::after { transform: rotate(90deg); }
+html[data-app] .sources--repli[open] summary::after { transform: translateY(0.15rem) rotate(225deg); }
 html[data-app] .sources--repli ul { margin: 0 0 0.25rem; }
 html[data-app] .jeu__pied .verdict .signaler { display: inline-block; margin-top: 0; font-size: 0.8125rem; font-weight: 500; }
 @media (prefers-reduced-motion: reduce) {
