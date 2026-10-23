@@ -16,7 +16,7 @@ export type { Motivation } from './raison';
  * les dessiner.
  *
  * Ce qu'on emprunte aux applications d'apprentissage : un objectif du jour
- * choisi, une série de jours, un indice lisible en un nombre, des jalons, et
+ * choisi, une série de jours, un indice lisible en un nombre, et
  * le rappel de la raison de départ au moment où ça coince. Ce qu'on leur
  * laisse : tout ce qui punit, tout ce qui demande un compte.
  */
@@ -398,85 +398,6 @@ export function notionsLesPlusFaibles(
   combien = 3,
 ): MaitriseNotion[] {
   return maitriseParNotion(etat, banque).slice(0, Math.max(0, combien));
-}
-
-/* ------------------------------------------------------------------------ */
-/* Les jalons                                                                */
-
-export interface Jalon {
-  code: string;
-  titre: string;
-  /** Ce qu'il reste à faire, ou ce qui a été fait. */
-  detail: string;
-  atteint: boolean;
-}
-
-/**
- * Des jalons qu'on atteint et qu'on garde : rien ne se perd, rien ne se
- * retire. Ils se calculent depuis la progression, pas depuis une liste
- * cochée, pour rester justes si la banque change.
- *
- * Chacun dit un travail fait, jamais la présence seule : le jalon « Sept
- * jours de suite » est parti le 14 octobre avec la règle des badges (plan
- * « app solide », décision 1). La série de jours reste affichée, sans prix.
- */
-export function jalons(etat: Etat, banque: readonly QuestionConnue[], totalLecons: number): Jalon[] {
-  const publiees = new Set(banque.map((q) => q.id));
-  const vues = Object.keys(etat.questions).filter((id) => publiees.has(id));
-  const themesBanque = new Set(banque.map((q) => q.theme));
-  const themesTouches = new Set(
-    banque.filter((q) => etat.questions[q.id] !== undefined).map((q) => q.theme),
-  );
-  const complets = etat.examens.filter((x) => x.total > 0);
-  const recus = complets.filter((x) => x.reussi).length;
-  const troisRecus = complets.length >= 3 && complets.slice(0, 3).every((x) => x.reussi);
-  const lecons = Object.keys(etat.lecons).length;
-  const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`;
-
-  return [
-    {
-      code: 'dix-questions',
-      titre: 'Dix questions vues',
-      detail: vues.length >= 10 ? 'Fait.' : `${pluriel(vues.length, 'question')} sur 10.`,
-      atteint: vues.length >= 10,
-    },
-    {
-      code: 'premier-examen',
-      titre: 'Un examen blanc terminé',
-      detail: complets.length > 0 ? `${pluriel(complets.length, 'examen')} au compteur.` : 'Quarante questions, jusqu’au bout.',
-      atteint: complets.length > 0,
-    },
-    {
-      code: 'premier-recu',
-      titre: 'Un examen blanc reçu',
-      detail: recus > 0 ? `${pluriel(recus, 'examen')} reçu${recus > 1 ? 's' : ''}.` : 'Cinq erreurs au plus sur quarante.',
-      atteint: recus > 0,
-    },
-    {
-      code: 'cent-questions',
-      titre: 'Cent questions vues',
-      detail: vues.length >= 100 ? 'Fait.' : `${pluriel(vues.length, 'question')} sur 100.`,
-      atteint: vues.length >= 100,
-    },
-    {
-      code: 'tous-les-themes',
-      titre: 'Tous les thèmes ouverts',
-      detail: `${themesTouches.size} thème${themesTouches.size > 1 ? 's' : ''} sur ${themesBanque.size}.`,
-      atteint: themesBanque.size > 0 && themesTouches.size === themesBanque.size,
-    },
-    {
-      code: 'trois-recus',
-      titre: 'Trois examens reçus d’affilée',
-      detail: troisRecus ? 'Fait. C’est le signal qu’on attend avant le jour J.' : 'Les trois derniers, tous reçus.',
-      atteint: troisRecus,
-    },
-    {
-      code: 'cours-entier',
-      titre: 'Le cours en entier',
-      detail: totalLecons > 0 && lecons >= totalLecons ? 'Fait.' : `${pluriel(lecons, 'leçon')} sur ${totalLecons}.`,
-      atteint: totalLecons > 0 && lecons >= totalLecons,
-    },
-  ];
 }
 
 /* ------------------------------------------------------------------------ */

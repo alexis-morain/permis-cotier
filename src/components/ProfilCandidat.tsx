@@ -8,7 +8,6 @@ import {
   PALIERS,
   phraseDuPalier,
   indice,
-  jalons,
   joursAvant,
   jaugesParTheme,
   notionsLesPlusFaibles,
@@ -78,18 +77,10 @@ function leCompte(t: { vues: number; retenues: number; ratees: number; total: nu
   return `${retenues}${ratees} sur ${accorde(t.vues, 'vue')}, ${t.total} en banque`;
 }
 
-function Coche() {
-  return (
-    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-      <path d="M2.5 8.5 6 12l7.5-8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 /**
  * La fiche du candidat : où il en est, dit en un nombre et expliqué en
  * dessous, puis ce qu'il y a à faire aujourd'hui, ses thèmes faibles, ses
- * examens blancs, ses jalons, et enfin ses réglages. Tout vient du
+ * examens blancs, et enfin ses réglages. Tout vient du
  * navigateur, rien n'est envoyé.
  */
 export default function ProfilCandidat({ banque, totalLecons }: Props) {
@@ -128,8 +119,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   const cases = quatorzeJours(etat, jour);
   const jauges = jaugesParTheme(etat, banque);
   const faibles = notionsLesPlusFaibles(etat, banque, 3);
-  const listeJalons = jalons(etat, banque, totalLecons);
-  const atteints = listeJalons.filter((j) => j.atteint).length;
   const jours = etat.dateExamen ? joursAvant(etat.dateExamen, jour) : null;
   const publiees = new Set(banque.map((q) => q.id));
   const vues = Object.entries(etat.questions).filter(([id]) => publiees.has(id));
@@ -456,25 +445,6 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                 </ul>
               </>
             )}
-          </section>
-
-          <section className="fiche__jalons" aria-labelledby="jalons-titre">
-            <h2 id="jalons-titre">Jalons</h2>
-            <p className="discret">
-              {atteints} sur {listeJalons.length}. Un jalon atteint reste atteint.
-            </p>
-            <ul className="jalons">
-              {listeJalons.map((j) => (
-                <li key={j.code} className={`jalon${j.atteint ? ' jalon--atteint' : ''}`}>
-                  <span className="jalon__marque" aria-hidden="true">{j.atteint && <Coche />}</span>
-                  <span className="jalon__corps">
-                    <b>{j.titre}</b>
-                    <span className="discret">{j.detail}</span>
-                  </span>
-                  <span className="visuellement-cache">{j.atteint ? ', atteint' : ', à atteindre'}</span>
-                </li>
-              ))}
-            </ul>
           </section>
         </>
       )}

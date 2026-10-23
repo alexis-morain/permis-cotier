@@ -220,8 +220,8 @@ jours se rompait toute seule.
 préparation de 0 à 100 (vingt points pour la part de la banque vue, trente-cinq
 pour la part retenue, quarante-cinq pour la moyenne des trois derniers examens
 blancs, et « prêt » seulement avec deux examens reçus sur trois), l'objectif du
-jour, la série de jours, la maîtrise thème par thème, les examens blancs, huit
-jalons, et les réglages : prénom, rythme, date d'examen, apparence.
+jour, la série de jours, la maîtrise thème par thème, les examens blancs, et les
+réglages : prénom, rythme, date d'examen, apparence.
 
 `/profil/depart` est le questionnaire de départ, six écrans, rien d'obligatoire.
 La première question est pourquoi on passe le permis : la réponse revient sur

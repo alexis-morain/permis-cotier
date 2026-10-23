@@ -19,7 +19,6 @@ import {
   maitriseParTheme,
   maitriseParNotion,
   notionsLesPlusFaibles,
-  jalons,
   rappel,
   pointFinal,
   quatorzeJours,
@@ -317,48 +316,6 @@ describe('maîtrise par notion', () => {
     expect(trois[0]!.code).toBe('feux-remorquage');
     expect(trois[0]!.chemin).toBe('/cours/feux-marques/feux-remorquage');
     expect(notionsLesPlusFaibles(e, parNotion, 1)).toHaveLength(1);
-  });
-});
-
-describe('jalons', () => {
-  it('sont tous à atteindre au départ', () => {
-    const j = jalons(etatInitial(), banque, 105);
-    expect(j.length).toBeGreaterThan(5);
-    expect(j.every((x) => !x.atteint)).toBe(true);
-  });
-
-  it('marque le premier examen, le premier reçu et la centième question', () => {
-    let e = etatInitial();
-    e = examen(e, 20, '2026-09-01');
-    let j = Object.fromEntries(jalons(e, banque, 105).map((x) => [x.code, x.atteint]));
-    expect(j['premier-examen']).toBe(true);
-    expect(j['premier-recu']).toBe(false);
-
-    e = examen(e, 36, '2026-09-02');
-    j = Object.fromEntries(jalons(e, banque, 105).map((x) => [x.code, x.atteint]));
-    expect(j['premier-recu']).toBe(true);
-  });
-
-  it('compte les thèmes touchés', () => {
-    let e = etatInitial();
-    e = enregistrerReponse(e, 'vhf-0', true, '2026-09-01');
-    e = enregistrerReponse(e, 'feux-0', true, '2026-09-07');
-    const j = Object.fromEntries(jalons(e, banque, 105).map((x) => [x.code, x.atteint]));
-    expect(j['tous-les-themes']).toBe(true);
-  });
-
-  it('ne récompense jamais la présence seule : sept jours de suite ne font aucun jalon', () => {
-    let e = etatInitial();
-    for (let d = 1; d <= 9; d++) e = enregistrerReponse(e, 'vhf-0', true, `2026-09-0${d}`);
-    const j = jalons(e, banque, 105);
-    expect(j.map((x) => x.code)).not.toContain('sept-jours');
-    expect(j.filter((x) => x.atteint).map((x) => x.code)).toEqual([]);
-  });
-
-  it('marque le cours entier', () => {
-    let e = etatInitial();
-    for (let k = 0; k < 3; k++) e = terminerLecon(e, `notion-${k}`, { bonnes: 1, total: 1 }, '2026-09-01');
-    expect(jalons(e, banque, 3).find((x) => x.code === 'cours-entier')!.atteint).toBe(true);
   });
 });
 

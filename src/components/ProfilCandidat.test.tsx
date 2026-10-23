@@ -40,14 +40,13 @@ describe('la fiche', () => {
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Rien encore sur ta fiche.');
     expect(screen.getByText(/Elle se remplit en jouant/)).toBeTruthy();
-    // Une page de zéros ne dit rien : ni indice, ni thèmes, ni examens, ni jalons.
+    // Une page de zéros ne dit rien : ni indice, ni thèmes, ni examens.
     expect(document.querySelectorAll('.bouton--principal')).toHaveLength(1);
     expect(screen.getByRole('link', { name: 'Faire un examen blanc' }).className).toContain('bouton--principal');
     expect(document.querySelector('.fiche__indice')).toBeNull();
     expect(document.querySelector('.fiche__jour')).toBeNull();
     expect(document.querySelector('.maitrise')).toBeNull();
     expect(document.querySelector('.fiche__examens')).toBeNull();
-    expect(document.querySelector('.jalon')).toBeNull();
     // L'invitation est une phrase avec un lien ; les réglages gardent « Répondre ».
     const invitation = screen.getByRole('link', { name: 'Dis en trente secondes pourquoi tu passes le permis' });
     expect(invitation.getAttribute('href')).toBe('/profil/depart');

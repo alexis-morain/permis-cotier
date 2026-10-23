@@ -46,7 +46,7 @@ une fois visité (PWA).
   2007 : les vingt secondes et la règle des deux réponses viennent des opérateurs
   agréés, et se citent comme tel.
 - Une fiche du candidat (`/profil`) et un questionnaire de départ, tout dans le
-  navigateur : indice de préparation expliqué, objectif du jour, série, jalons,
+  navigateur : indice de préparation expliqué, objectif du jour, série,
   rappel de la raison de passer le permis quand un examen blanc est recalé.
 - Domaine `lepermiscotier.fr`, indexation ouverte. Une préversion referme la
   sienne toute seule : son hôte finit par `.workers.dev` ou `.pages.dev`.
