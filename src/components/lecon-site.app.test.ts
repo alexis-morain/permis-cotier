@@ -42,6 +42,14 @@ afterEach(() => {
 });
 
 describe('la leçon dans l’app', () => {
+  it('compte l’écran où l’on est : la barre n’est pas vide à la première leçon', () => {
+    monter();
+    const barre = document.querySelector<HTMLElement>('.lecon__barre span')!;
+    expect(barre.style.transform).toBe('scaleX(0.5)');
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+    expect(barre.style.transform).toBe('scaleX(1)');
+  });
+
   it('sort la leçon suivante de la liste de fin, pour la coller en bas', () => {
     monter();
     fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));

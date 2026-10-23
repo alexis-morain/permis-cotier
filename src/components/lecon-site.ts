@@ -523,7 +523,11 @@ export function monterLecon(doc: Document = document): void {
     }
 
     boutonMode.textContent = pasAPas ? 'Tout lire d’une traite' : 'Reprendre pas à pas';
-    const avancement = types.length > 1 ? index / (types.length - 1) : 1;
+    // Dans l'app, la barre compte l'écran où l'on est (« Écran 1 sur 9 » est
+    // déjà un neuvième) : vide, elle se lisait comme une leçon pas commencée.
+    const avancement = POUR_APP
+      ? (index + 1) / types.length
+      : types.length > 1 ? index / (types.length - 1) : 1;
     barre.style.transform = `scaleX(${avancement})`;
     const texte = `Écran ${index + 1} sur ${types.length}`;
     if (annonce.textContent !== texte) annonce.textContent = texte;

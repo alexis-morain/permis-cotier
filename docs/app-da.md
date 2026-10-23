@@ -188,7 +188,17 @@ reste (il existe). Dans une leçon : la barre « leçon n / m du chapitre » col
 sous la zone sûre, le bouton « Leçon suivante » colle en bas au-dessus de la
 barre d'onglets.
 
+Le texte d'une leçon est en police système, au corps et à la graisse normaux ;
+l'accroche, seule sur son premier écran, passe à 1,25 rem, toujours en système
+(Archivo reste au titre d'écran et aux grands chiffres). La barre sous « Leçon
+n / m » compte l'écran où l'on est : un neuvième dès le premier, pleine à la fin.
+
 ### Examen et entraînement (`Quiz.tsx`, `quiz.css`)
+
+- **La liste des thèmes** (`/entrainement`) montre où on en est, comme le Cours :
+  sous un thème déjà ouvert, « 61 retenues sur 108 » et une jauge fine ; un thème
+  jamais ouvert garde « 78 questions », sans jauge vide. « Retenue » est celle de
+  la Fiche (`maitriseParTheme`). La liste se relit sur `app:progression`.
 
 - **Plein écran pendant l'épreuve** : dès qu'une série commence, l'app cache la
   barre d'onglets (plugin natif `Ecran.pleinEcran({ actif })`, voir
@@ -209,7 +219,7 @@ barre d'onglets.
 - Correction immédiate (entraînement) : le verdict monte du bas en feuille
   blanche et laisse voir la question derrière. Le mot « Juste » ou « Faux »
   (avec ✓ ou ✕, en pastille verte ou rouge pâle) et l'explication se lisent
-  sans défiler ; la source est un `<details>` « Source », le signalement un lien
+  sans défiler ; la source est un `<details>` « Source » à chevron vers le bas qui se retourne à l'ouverture (comme « Comment c'est compté » de la Fiche), le signalement un lien
   discret, le bouton « Continuer » reste dans la feuille. Le panneau anime
   `transform` et `opacity`, 220 ms, easing sobre.
 - Résultat : le score en très grand (Archivo, c'est un grand chiffre), le
