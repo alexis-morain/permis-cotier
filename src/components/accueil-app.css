@@ -2,10 +2,11 @@
  * L'accueil de l'app. Ces règles ne touchent que `.accueilApp`, rendu dans la
  * seule coquille : le site n'en voit rien.
  *
- * Quatre cartes. « Reprendre » est la carte marine, avec le seul bouton
- * jaune de l'écran : c'est l'action du jour. Les trois autres sont des cartes
- * blanches entièrement touchables : un titre, une ligne, parfois un chiffre,
- * et un lien dont le `::after` couvre toute la carte.
+ * Quatre cartes. La carte marine est la prochaine chose à faire (cours,
+ * série du jour ou examen blanc, selon `prochaineAction`), avec le seul
+ * bouton jaune de l'écran. Les autres sont des cartes blanches entièrement
+ * touchables : un titre, une ligne, parfois un chiffre, et un lien dont le
+ * `::after` couvre toute la carte.
  */
 /* Pas de rembourrage en haut : `<main>` pose déjà la zone sûre plus 1 rem,
    la marge de tous les écrans de l'app. Les côtés en points, comme `.page` :
@@ -17,6 +18,19 @@
   padding: 0 16px 1rem;
 }
 
+/* Le haut de l'écran, comme le résumé des apps d'Apple : la date en petit,
+   puis le grand titre. `<main>` pose déjà la zone sûre haute. */
+.accueilApp__entete { padding-block: 0.25rem 0.25rem; }
+.accueilApp__jour {
+  margin: 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+/* Le jour prend une majuscule, pas le mois. */
+.accueilApp__jour::first-letter { text-transform: uppercase; }
+.accueilApp__h1 { margin: 0; }
+
 /* Les quatre blocs arrivent l'un après l'autre, une fois, au montage. */
 .accueilApp > section {
   animation: app-entree var(--duree) var(--courbe) both;
@@ -24,6 +38,7 @@
 .accueilApp > section:nth-of-type(2) { animation-delay: 60ms; }
 .accueilApp > section:nth-of-type(3) { animation-delay: 120ms; }
 .accueilApp > section:nth-of-type(4) { animation-delay: 180ms; }
+.accueilApp > section:nth-of-type(5) { animation-delay: 240ms; }
 
 .accueilApp__bloc {
   position: relative;
@@ -55,7 +70,17 @@
   hyphens: auto;
 }
 
+/* Série ou examen en tête : le titre, une ligne, le bouton. */
+.accueilApp__chapitre--bas { margin: 0 0 1.25rem; }
+.accueilApp__lecon:has(+ .accueilApp__chapitre--bas) { margin-bottom: 0.4rem; }
+
 .accueilApp__avancement { margin-bottom: 1.25rem; }
+/* Rendue en carte blanche, la jauge change de teinte. */
+.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__avancement { margin: 0.5rem 0 0; }
+.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__jauge { background: var(--fond-2); }
+.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__jauge span { background: var(--texte); }
+.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__compte,
+.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__chapitre { color: var(--texte-doux); }
 
 .accueilApp__jauge {
   height: 0.5rem;
@@ -116,6 +141,7 @@
   gap: 0.5rem;
   min-height: 2.75rem;
   margin-top: 0.5rem;
+  color: var(--texte);
   font-weight: 600;
   text-decoration: none;
 }

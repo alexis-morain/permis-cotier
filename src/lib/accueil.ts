@@ -10,6 +10,7 @@
  */
 import { statistiques, type Etat } from './progression';
 import { joursAvant, serieDeJours } from './profil';
+import { enDate } from './jour';
 import { estDue, TAILLE_SERIE_PAR_DEFAUT } from './quiz';
 
 /** Une leçon telle que la page la passe : dans l'ordre du parcours. */
@@ -148,4 +149,28 @@ export function nombreDErreurs(etat: Etat, ids: readonly string[], jour: string)
     const e = etat.questions[id];
     return e !== undefined && (estDue(e, jour) || e.ratees > 0);
   }).length;
+}
+
+/** Les jours avant l'épreuve à partir desquels l'examen blanc passe devant le reste. */
+export const JOURS_AVANT_EXAMEN_BLANC = 7;
+
+export type ProchaineAction = 'examen' | 'serie' | 'cours';
+
+/**
+ * Ce que la grande carte de l'accueil met en avant. Épreuve posée à sept jours
+ * ou moins, et pas passée : l'examen blanc, même avec des questions dues, parce
+ * qu'à ce stade se mesurer compte plus que réviser. Sinon des questions dues
+ * (le compte borné de `aRevoir`) : la série du jour. Sinon le cours.
+ */
+export function prochaineAction(etat: Etat, ids: readonly string[], jour: string): ProchaineAction {
+  const e = echeance(etat, jour);
+  if (e.etat === 'aujourdhui' || (e.etat === 'avenir' && e.jours <= JOURS_AVANT_EXAMEN_BLANC)) return 'examen';
+  return aRevoir(etat, ids, jour).etat === 'du' ? 'serie' : 'cours';
+}
+
+/** « vendredi 23 octobre », pour le haut de l'accueil. */
+export function dateDuJour(jour: string): string {
+  const d = enDate(jour);
+  if (!d) return jour;
+  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
 }
