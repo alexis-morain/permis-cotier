@@ -62,10 +62,10 @@ const SEULEMENT_APP_CSS = [
 const SEULEMENT_APP_ASTRO = [
   'src/components/Coquille.astro',
   'src/components/EntrainementApp.astro',
-  'src/components/SonsApp.astro',
+  'src/components/ReglagesApp.astro',
   'src/components/OuvrirRecherche.astro',
 ];
-const ECRAN_ACCUEIL_APP = 'src/pages/[accueil].astro';
+const ECRANS_SEULEMENT_APP = ['src/pages/[accueil].astro', 'src/pages/profil/[themes].astro'];
 const IMPORT_CIBLE = /import\s*\{\s*POUR_APP\s*\}\s*from\s*['"][^'"]*\/cible(?:\.ts)?['"];?/g;
 
 function siteSansApp() {
@@ -79,7 +79,7 @@ function siteSansApp() {
       const fichier = chemin(id);
       if (SEULEMENT_APP_CSS.includes(fichier)) return '';
       if (SEULEMENT_APP_ASTRO.includes(fichier)) return '';
-      if (fichier === ECRAN_ACCUEIL_APP) return '---\nexport function getStaticPaths() { return []; }\n---\n';
+      if (ECRANS_SEULEMENT_APP.includes(fichier)) return '---\nexport function getStaticPaths() { return []; }\n---\n';
       return null;
     },
     transform(code, id) {

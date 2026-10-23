@@ -165,8 +165,11 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- L'apparence choisie sur la fiche, posée avant le premier rendu. -->
-    <script is:inline set:html={SCRIPT_APPARENCE} />
+    {/* L'app suit le système et n'a pas de réglage d'apparence : le script
+        ne part que sur le site. */}
+    {!POUR_APP && (
+      <Fragment set:html={`<!-- L'apparence choisie sur la fiche, posée avant le premier rendu. --><script>${SCRIPT_APPARENCE}</script>`} />
+    )}
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {/* La bannière de Safari sur iPhone : « Ouvrir » si l'app est installée,
         « Obtenir » sinon. Rien dans la coquille, qui est l'app. */}

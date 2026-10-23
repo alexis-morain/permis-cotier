@@ -1,5 +1,6 @@
+/** @vitest-environment jsdom */
 import { describe, it, expect } from 'vitest';
-import { cheminRetour, libelleRetour, lienLecon } from './retour';
+import { cheminRetour, libelleRetour, lienLecon, ajusterRetourApp } from './retour';
 
 describe('le retour vers la série', () => {
   it('accepte les seules adresses de jeu du site', () => {
@@ -37,5 +38,33 @@ describe('le retour vers la série', () => {
     expect(lienLecon('balisage', 'balisage-lateral', '/revoir')).toBe(
       '/cours/balisage/balisage-lateral?retour=%2Frevoir',
     );
+  });
+});
+
+describe('le retour vers les réglages', () => {
+  it('accepte /parametres, et le dit', () => {
+    expect(cheminRetour('?retour=%2Fparametres')).toBe('/parametres');
+    expect(cheminRetour('?retour=%2Fparametres%3Fx%3D1')).toBeNull();
+    expect(libelleRetour('/parametres')).toBe('Revenir à tes réglages');
+  });
+});
+
+describe('ajusterRetourApp', () => {
+  function page() {
+    document.body.innerHTML =
+      '<a class="retour__lien" href="/profil"><span aria-hidden="true">‹</span>Retour<span class="visuellement-cache"> : Ta fiche</span></a>';
+  }
+  it('réécrit le lien de retour quand la requête en porte un valable', () => {
+    page();
+    ajusterRetourApp(document, '?retour=%2Fparametres');
+    const a = document.querySelector('a')!;
+    expect(a.getAttribute('href')).toBe('/parametres');
+    expect(a.textContent).toContain('Retour : Réglages');
+  });
+  it('ne touche à rien sans retour valable', () => {
+    page();
+    ajusterRetourApp(document, '?retour=https%3A%2F%2Fexemple.fr');
+    ajusterRetourApp(document, '');
+    expect(document.querySelector('a')!.getAttribute('href')).toBe('/profil');
   });
 });

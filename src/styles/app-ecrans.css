@@ -29,13 +29,6 @@ html[data-app] {
     --disque-encours-texte: var(--texte);
   }
 }
-html[data-app][data-apparence="sombre"] {
-  --disque-fait: var(--accent);
-  --disque-fait-texte: var(--marine);
-  --disque-encours: var(--jaune-pale);
-  --disque-encours-bord: var(--jaune);
-  --disque-encours-texte: var(--texte);
-}
 
 /* ------------------------------------------------------------ Le cours
 
@@ -428,3 +421,124 @@ html[data-app] .memo__source .marque {
   html[data-app] .chapitres__jauge span { transition: none; animation: none; }
   html[data-app] .fiche__details summary::after { transition: none; }
 }
+
+/* ------------------------------------------------------------ Les réglages
+   Groupés comme ceux d'iOS : un petit titre doux, une carte de cellules à
+   filet dessous. Le contrôle segmenté du rythme se partage la largeur. */
+html[data-app] .reglagesApp { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; max-width: none; }
+html[data-app] .reglagesApp > section { min-width: 0; }
+html[data-app] .reglagesApp__titre {
+  margin: 0 0 0.4rem 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texte-doux);
+}
+/* Une ligne qui ne tient pas passe à la ligne : le libellé au-dessus, le champ dessous. */
+html[data-app] .reglagesApp label.cellules__ligne { flex-wrap: wrap; row-gap: 0; }
+html[data-app] .reglagesApp__champ {
+  flex: 1 1 8em;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: max(16px, 1em);
+  font-weight: 400;
+  text-align: right;
+}
+html[data-app] .reglagesApp__bouton {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+html[data-app] .reglagesApp__bouton:active { background: var(--fond-2); }
+html[data-app] .reglagesApp__danger { justify-content: center; color: var(--rouge-texte); }
+html[data-app] .reglagesApp__pile { display: grid; gap: 0.5rem; padding-block: 0.75rem; }
+html[data-app] .reglagesApp__libelle { margin: 0; font-weight: 600; }
+html[data-app] .reglagesApp__pile { container-type: inline-size; }
+html[data-app] .reglagesApp__pile .segmente { display: flex; flex-wrap: nowrap; min-width: 0; }
+/* Trop étroit pour trois options côte à côte : elles s'empilent. Le seuil est
+   en rem, il suit la taille du texte. */
+@container (max-width: 14rem) {
+  html[data-app] .reglagesApp__pile .segmente { flex-direction: column; }
+  html[data-app] .reglagesApp__pile .segmente__option + .segmente__option { border-left: 0; border-top: 2px solid var(--filet-fort); }
+}
+html[data-app] .reglagesApp__pile .segmente__option { flex: 1 1 0; padding-inline: 0.4rem; }
+html[data-app] .reglagesApp__valeur {
+  flex-shrink: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+}
+html[data-app] .reglagesApp__pied {
+  margin: 0.4rem 0.25rem 0;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+/* L'alerte : une carte centrée sur un voile, deux boutons séparés d'un filet. */
+html[data-app] .alerte {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgb(0 0 0 / 0.4);
+}
+html[data-app] .alerte__carte {
+  width: min(100%, 17rem);
+  overflow: hidden;
+  border-radius: 1rem;
+  background: var(--fond-carte);
+  text-align: center;
+}
+html[data-app] .alerte__texte { padding: 1.25rem 1rem 1rem; }
+html[data-app] .alerte__titre { margin: 0 0 0.35rem; font-weight: 700; }
+html[data-app] .alerte__message { margin: 0; font-size: 0.9rem; color: var(--texte-doux); }
+html[data-app] .alerte__boutons { display: flex; border-top: 1px solid var(--carte-filet); }
+html[data-app] .alerte__bouton {
+  flex: 1;
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--texte);
+  font: inherit;
+  cursor: pointer;
+}
+html[data-app] .alerte__bouton + .alerte__bouton { border-left: 1px solid var(--carte-filet); }
+html[data-app] .alerte__bouton--fort { font-weight: 700; }
+html[data-app] .alerte__bouton:active { background: var(--fond-2); }
+
+/* « Tous les thèmes » en bas de la liste : une cellule, comme dans Réglages. */
+html[data-app] .fiche__tous { margin: 0.75rem 0 0; }
+html[data-app] .fiche__tous .cellules__ligne { padding-inline: 0; }
+html[data-app] .reglagesApp__champ[type="date"] { flex: 1 1 10.5em; }
+
+/* La Fiche et ses thèmes à gros corps : ce qui ne tient pas passe à la ligne. */
+html[data-app] .indice__nombre { flex-wrap: wrap; }
+html[data-app] .maitrise--neufs a { flex-wrap: wrap; column-gap: 0.75rem; }
+/* La ligne « Pourquoi tu passes le permis » : le libellé garde une largeur
+   lisible, la valeur et le chevron passent dessous quand il le faut. */
+html[data-app] .reglagesApp a.cellules__ligne { flex-wrap: wrap; row-gap: 0; }
+html[data-app] .reglagesApp a.cellules__ligne > :first-child { flex: 1 1 9em; }
+html[data-app] .reglagesApp a.cellules__ligne .reglagesApp__valeur {
+  flex: 0 1 auto;
+  max-width: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+/* Les thèmes ouverts et les chiffres des examens à gros corps : la colonne du
+   nom peut rétrécir, les chiffres passent à la ligne plutôt que sortir de la carte. */
+html[data-app] .maitrise a { grid-template-columns: minmax(0, 1fr) auto; }
+html[data-app] .maitrise a b { hyphens: auto; overflow-wrap: break-word; }
+html[data-app] .examens-chiffres { grid-template-columns: repeat(auto-fit, minmax(min(100%, 5rem), 1fr)); }
+html[data-app] .reglagesApp a.cellules__ligne .cellules__chevron { margin-left: auto; }

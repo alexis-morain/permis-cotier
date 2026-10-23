@@ -76,7 +76,7 @@ La grammaire de l'app est maintenant celle-ci, et chaque écran la suit :
 | Cours | `/cours` | `text.book.closed` | Les quatorze chapitres comme un parcours, progression visible |
 | Examen | `/examen` | `timer` | L'épreuve, et rien d'autre |
 | Entraînement | `/entrainement` | `target` | Les thèmes, puis les notions, correction immédiate |
-| Fiche | `/profil` | `person.crop.circle` | Indice de préparation, erreurs, date d'examen, réglages |
+| Fiche | `/profil` | `person.crop.circle` | Indice de préparation, derniers examens, thèmes faibles (le bilan seulement) |
 
 L'app ouvre sur **Accueil**. Retoucher l'onglet courant ramène à sa racine puis
 en haut de page. La barre prend la teinte de la marque : marine sur clair, jaune
@@ -239,10 +239,32 @@ n / m » compte l'écran où l'on est : un neuvième dès le premier, pleine à 
 
 ### Fiche (`/profil`)
 
-L'écran existe. Dans l'app il gagne en tête l'indice de préparation en grand
-et, en bas, une section « L'app » : version de banque, « À propos », « Crédits
-et licences », « Réglages » (apparence), « Signaler une erreur ». C'est le seul
+La Fiche de l'app ne garde que le bilan : l'indice de préparation, les derniers
+examens blancs, « À reprendre en premier », l'objectif du jour (la série et les
+quatorze cases sont repliées dans « Tes quatorze derniers jours »), puis les
+trois thèmes les plus faibles avec leurs paliers et une cellule « Tous les
+thèmes › » vers `/profil/themes` (liste complète, Retour vers la Fiche). Le
+prénom, la raison, le rythme, la date d'examen, les sons et l'effacement sont
+dans Réglages (`settings.md` : on règle à un seul endroit, et les réglages ne
+traînent pas dans l'écran de contenu). Les jalons n'existent plus, ni dans l'app
+ni sur le site. En bas, une section « L'app » : version de banque, « À propos »,
+« Crédits et licences », « Réglages », « Signaler une erreur ». C'est le seul
 écran qui porte ce que le pied de page web disait partout.
+
+**Pas de réglage d'apparence** (`dark-mode.md`) : l'app suit le système partout.
+Un « Clair » ou « Sombre » enregistré avant ne s'applique plus ; le site garde
+son réglage.
+
+### Réglages (`/parametres`)
+
+Cartes blanches de cellules à filet, sous un petit titre doux, comme l'app
+Réglages d'iOS : « Ton épreuve » (date d'examen), « Ton rythme » (questions par
+jour, contrôle segmenté), « Toi » (prénom, pourquoi tu passes le permis), « Sons »,
+« Cette version », « Ce que l'app sait de toi », « Licences ». « Effacer ma
+progression » tout en bas, en rouge, ouvre une alerte (`alerts.md`) : titre
+« Effacer ta progression ? », ce qui partira, « Annuler » à gauche (focus initial,
+Échap), « Effacer » à droite. Le bouton de confirmation n'est pas rouge : le
+geste est délibéré.
 
 La jauge de l'indice, en sombre (décidé le 3 octobre 2026) : le « vu » prend
 `--indice-vu`, le jaune mêlé à 60 % au rail (`#9f8433`), le « retenu » reste la

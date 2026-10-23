@@ -1,0 +1,20 @@
+---
+/**
+ * Les Réglages de l'app : tout ce qui se règle, en sections groupées.
+ *
+ * Un composant à part plutôt qu'un `{POUR_APP && …}` dans la page : Astro
+ * empaquette l'îlot de tout composant que la page nomme, rendu ou non. Hors de
+ * la cible « app », `astro.config.mjs` remplace ce fichier par un composant
+ * vide, et ni l'îlot ni l'alerte d'effacement n'entrent dans le site.
+ */
+import ReglagesApp from './ReglagesApp.tsx';
+
+interface Props {
+  version: string;
+  total: number;
+}
+
+const { version, total } = Astro.props;
+---
+
+<ReglagesApp client:only="react" version={version} total={total} />

@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { annoncerDateExamen, effacer, enregistrerProfil, type Etat } from '../../lib/progression';
 import { RYTHMES, profilRempli, rappel } from '../../lib/profil';
 import { evenement } from '../../lib/mesure';
-import { POUR_APP } from '../../lib/cible';
 import Apparence from '../Apparence';
-import { accorde } from './accorde';
+import { ceQuiPartira } from './partira';
 
 interface Props {
   etat: Etat;
@@ -17,13 +16,6 @@ interface Props {
   surEffacement: () => void;
 }
 
-/** « 2 questions, 1 examen blanc, ta raison et ta date. », sans ce qui vaut zéro. */
-function ceQuiPart(parts: string[]): string {
-  if (parts.length === 0) return '';
-  const phrase = parts.length === 1 ? parts[0]! : `${parts.slice(0, -1).join(', ')} et ${parts[parts.length - 1]}`;
-  return `${phrase.charAt(0).toUpperCase()}${phrase.slice(1)}.`;
-}
-
 /**
  * Les réglages de la fiche : prénom, raison, rythme, date d'examen,
  * apparence, et l'effacement, confirmé avant de partir.
@@ -33,24 +25,13 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
   const p = etat.profil;
   const raison = rappel(p);
 
-  // Ce qui part avec l'effacement, compté, sans ce qui vaut zéro.
-  const nbQuestions = Object.keys(etat.questions).length;
-  const nbLecons = Object.keys(etat.lecons).length;
-  const partira = ceQuiPart([
-    ...(nbQuestions > 0 ? [accorde(nbQuestions, 'question')] : []),
-    ...(etat.examens.length > 0 ? [`${etat.examens.length} examen${etat.examens.length > 1 ? 's blancs' : ' blanc'}`] : []),
-    ...(nbLecons > 0 ? [accorde(nbLecons, 'leçon')] : []),
-    ...(raison ? ['ta raison'] : []),
-    ...(etat.dateExamen ? ['ta date'] : []),
-  ]);
+  const partira = ceQuiPartira(etat);
 
   return (
     <section className="fiche__reglages" aria-labelledby="reglages-titre">
       <h2 id="reglages-titre">Tes réglages</h2>
       <p className="discret">
-        {POUR_APP
-          ? 'Tout reste sur ton téléphone. Supprimer l’app efface la fiche.'
-          : 'Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.'}
+        Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.
       </p>
 
       <div className="reglage">
@@ -129,16 +110,13 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
         <Apparence idTitre="reglage-apparence" />
       </div>
 
-      {/* Dans l'app, la section « L'app » de la page porte tout cela. */}
-      {!POUR_APP && (
-        <div className="reglage">
-          <p className="reglage__titre">Vie privée et licences</p>
-          <p className="reglage__valeur">
-            La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
-            <a href="/parametres">réglages du site</a>.
-          </p>
-        </div>
-      )}
+      <div className="reglage">
+        <p className="reglage__titre">Vie privée et licences</p>
+        <p className="reglage__valeur">
+          La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
+          <a href="/parametres">réglages du site</a>.
+        </p>
+      </div>
 
       <div className="reglage reglage--danger">
         <p className="reglage__titre">Effacer</p>

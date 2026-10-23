@@ -13,7 +13,7 @@
  */
 
 /** Les seules adresses vers lesquelles une leçon accepte de renvoyer. */
-const ADRESSES_DE_RETOUR = /^\/(?:revoir|profil\/erreurs|entrainement\/(?:notion\/)?[a-z0-9-]+)$/;
+const ADRESSES_DE_RETOUR = /^\/(?:revoir|parametres|profil\/erreurs|entrainement\/(?:notion\/)?[a-z0-9-]+)$/;
 
 export const PARAMETRE_RETOUR = 'retour';
 
@@ -32,6 +32,7 @@ export function cheminRetour(recherche: string): string | null {
 /** Ce que dit le bouton du retour : le nom de l'écran d'où l'on vient. */
 export function libelleRetour(chemin: string): string {
   if (chemin === '/profil/erreurs') return 'Revenir à mes erreurs';
+  if (chemin === '/parametres') return 'Revenir à tes réglages';
   if (chemin === '/revoir') return 'Revenir à ta série du jour';
   return 'Revenir à ta série';
 }
@@ -46,4 +47,19 @@ export function libelleRetour(chemin: string): string {
 export function lienLecon(theme: string, notion: string, retour: string): string {
   const requete = new URLSearchParams({ [PARAMETRE_RETOUR]: retour });
   return `/cours/${theme}/${notion}?${requete}`;
+}
+
+/**
+ * Dans l'app, le bouton Retour d'une page est un lien posé au build, vers son
+ * échelon du dessus. Quand on y arrive d'ailleurs (le questionnaire de départ,
+ * ouvert depuis Réglages), la requête le dit : le lien est réécrit, avec la
+ * même liste fermée d'adresses que le reste.
+ */
+export function ajusterRetourApp(doc: Document, recherche: string): void {
+  const chemin = cheminRetour(recherche);
+  const lien = doc.querySelector<HTMLAnchorElement>('.retour__lien');
+  if (!chemin || !lien) return;
+  lien.setAttribute('href', chemin);
+  const nom = lien.querySelector('.visuellement-cache');
+  if (nom) nom.textContent = ` : ${chemin === '/parametres' ? 'Réglages' : 'écran précédent'}`;
 }

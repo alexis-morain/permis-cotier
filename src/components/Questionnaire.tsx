@@ -5,6 +5,7 @@ import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, pointFinal, rappel } from '.
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
 import { POUR_APP } from '../lib/cible';
+import { ajusterRetourApp } from '../lib/retour';
 import './profil.css';
 
 /**
@@ -35,6 +36,11 @@ export default function Questionnaire({ totalQuestions }: Props) {
     const etat = charger();
     setProfil(etat.profil);
     setDateExamen(etat.dateExamen ?? '');
+  }, []);
+
+  // Ouvert depuis Réglages, le Retour y ramène plutôt qu'à la Fiche.
+  useEffect(() => {
+    if (POUR_APP) ajusterRetourApp(document, window.location.search);
   }, []);
 
   // Chaque écran commence en haut, le titre prend le focus : au lecteur

@@ -8,6 +8,11 @@ import { ecrire, lire, stockageParDefaut, type Stockage } from './stockage';
  *
  * Le CSS lit l'attribut `data-apparence` sur `<html>` : absent, il suit
  * `prefers-color-scheme` ; `clair` ou `sombre`, il force.
+ *
+ * Le site seulement. Dans l'app, l'apparence est celle du système, sans
+ * réglage (`dark-mode.md` : « Avoid offering an app-specific appearance
+ * setting ») : `lireApparence` y rend toujours `auto`, et `Base.astro` n'y
+ * pose pas le script de tête de page.
  */
 export type Apparence = 'auto' | 'clair' | 'sombre';
 
@@ -21,6 +26,8 @@ export const APPARENCES: readonly { code: Apparence; nom: string }[] = [
 ];
 
 export function lireApparence(stockage: Stockage | null = stockageParDefaut()): Apparence {
+  // Un choix enregistré avant le retrait du réglage ne vaut plus dans l'app.
+  if (POUR_APP) return 'auto';
   const v = lire(CLE_APPARENCE, stockage);
   return v === 'clair' || v === 'sombre' ? v : 'auto';
 }

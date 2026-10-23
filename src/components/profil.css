@@ -376,23 +376,6 @@
 .examens-vide { margin: 0; }
 .examens-vide a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; }
 
-/* Les jalons : une liste, un cercle qui passe jaune. Pas de médaille. */
-.jalons { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem 2rem; }
-.jalon { display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.6rem 0; max-width: none; }
-.jalon__marque {
-  flex: 0 0 2rem;
-  height: 2rem;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  border: 2px solid var(--filet-fort);
-  color: var(--marine);
-  margin-top: 0.1rem;
-}
-.jalon--atteint .jalon__marque { background: var(--jaune); border-color: var(--jaune); }
-.jalon__corps { display: flex; flex-direction: column; gap: 0.1rem; }
-.jalon:not(.jalon--atteint) .jalon__corps b { font-weight: 600; }
-
 /* Les réglages : une ligne par réglage, séparées d'un filet. */
 .reglage { border-top: 2px solid var(--filet); padding: 1rem 0; max-width: 40rem; }
 .reglage:last-child { border-bottom: 2px solid var(--filet); }
@@ -441,7 +424,6 @@
 
 @media (min-width: 40rem) {
   .jour { grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .jalons { grid-template-columns: 1fr 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -51,7 +51,7 @@ describe('accueil de l’app, premier lancement', () => {
     expect(screen.queryByRole('link', { name: 'Faire ma série du jour' })).toBeNull();
     expect(screen.getByText('Quarante questions, vingt secondes chacune.')).toBeTruthy();
     expect(lien('Faire un examen blanc')).toBe('/examen');
-    expect(lien('Pose la date de ton épreuve')).toBe('/profil');
+    expect(lien('Pose la date de ton épreuve')).toBe('/parametres');
     expect(screen.queryByText(/jours de suite/)).toBeNull();
   });
 });
@@ -125,6 +125,8 @@ describe('accueil de l’app, la date de l’examen', () => {
   it('dans n jours', () => {
     avec('2026-10-07');
     expect(screen.getByText(/^Dans/).textContent).toBe('Dans 12 jours');
+    // La date se règle dans Réglages, plus sur la Fiche.
+    expect(lien('Modifier la date')).toBe('/parametres');
   });
 
   it('demain, au jour parisien', () => {
