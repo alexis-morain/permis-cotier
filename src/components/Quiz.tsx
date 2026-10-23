@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { creerSession, questionCourante, reduire, restaurerSession } from '../lib/session';
 import type { Action, Mode, Session } from '../lib/session';
-import { aleaSeme, erreursDuJour, estDue, serieCourte, serieDuJour, tirerExamen, TAILLE_SERIE_COURTE } from '../lib/quiz';
+import { aleaSeme, erreursDeLExamen, estDue, questionsParIds, serieCourte, serieDuJour, tirerExamen, TAILLE_SERIE_COURTE } from '../lib/quiz';
 import { melangerPropositions } from '../lib/melange';
 import { charger, aujourdhui, CLE_STOCKAGE } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
@@ -91,22 +91,25 @@ function Partie({
 
   // Le tirage se fait au montage, côté navigateur : chaque visite est un
   // examen différent, et le HTML servi reste le même pour tout le monde.
+  // Lues une fois : l'adresse ne change pas pendant la série.
+  const [erreursExamen] = useState(() => (revoir ? erreursDeLExamen(window.location.search) : null));
+  const surLesErreurs = useMemo(
+    () => revoir && erreursExamen !== null && questionsParIds(questions, erreursExamen).length > 0,
+    [revoir, erreursExamen, questions],
+  );
   const serie = useMemo(() => {
     if (questions.length === 0) return [];
     if (mode === 'examen') return tirerExamen(questions, aleaSeme(Date.now() >>> 0));
     // La série du jour, bornée par le rythme choisi : ce qui est dû, puis de
     // quoi découvrir. Un seul chemin, celui que la pastille de l'accueil compte.
-    // Depuis un examen recalé (`/revoir?examen`) : ses erreurs d'abord, toutes,
-    // sans le plafond du rythme ni le retard qui les doublerait.
-    if (revoir && new URLSearchParams(window.location.search).has('examen')) {
-      const erreurs = erreursDuJour(questions, depart.questions, aujourdhui());
-      if (erreurs.length > 0) return erreurs;
-    }
+    // Depuis un examen recalé (`/revoir?examen=…`) : ses erreurs, celles du
+    // lien, toutes, sans le plafond du rythme ni le retard qui les doublerait.
+    if (surLesErreurs) return questionsParIds(questions, erreursExamen!);
     if (revoir) return serieDuJour(questions, depart.questions, aujourdhui(), depart.profil.rythme ?? undefined);
     // L'entraînement : dix questions du thème, les fragiles et les jamais
     // vues d'abord. « Encore 10 » en tire dix autres de la progression du jour.
     return serieCourte(questions, depart.questions, aleaSeme(Date.now() >>> 0));
-  }, [mode, questions, revoir, depart]);
+  }, [mode, questions, revoir, depart, erreursExamen, surLesErreurs]);
 
   // Un examen laissé en plan, s'il colle encore à la banque et n'a pas un jour.
   const reprise = useMemo(
@@ -178,19 +181,21 @@ function Partie({
   // plus souvent. Elle est rangée sous l'adresse de sa page : une série de
   // balisage ne se reprend pas sur l'écran des feux.
   const repriseSerie = useMemo(
-    () => (mode === 'entrainement' ? restaurerSession(depart.enCoursSerie, questions, mode, retourSerie) : null),
-    [mode, questions, retourSerie, depart],
+    // Sous `?examen`, la série arrêtée sous la même clé n'est pas celle qu'on
+    // vient chercher : elle attend, et le retour d'une leçon reprendra celle-ci.
+    () => (mode === 'entrainement' && !surLesErreurs ? restaurerSession(depart.enCoursSerie, questions, mode, retourSerie) : null),
+    [mode, questions, retourSerie, depart, surLesErreurs],
   );
   const [repriseEcartee, setRepriseEcartee] = useState(false);
 
   // Une série du jour sans rien de dû : elle n'est faite que de questions
   // jamais vues, et le candidat doit savoir pourquoi elles sont neuves.
-  const rienDu = revoir && !serie.some((q) => estDue(depart.questions[q.id], aujourdhui()));
+  const rienDu = revoir && !surLesErreurs && !serie.some((q) => estDue(depart.questions[q.id], aujourdhui()));
 
   const titre = mode === 'examen'
     ? 'Examen blanc'
     : revoir
-      ? 'Ta série du jour'
+      ? surLesErreurs ? 'Tes erreurs de l’examen' : 'Ta série du jour'
       : notion
         ? `Entraînement, ${notion.nom}`
         : `Entraînement, ${nomDuTheme(theme ?? '')}`;

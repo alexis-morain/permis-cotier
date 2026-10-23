@@ -215,10 +215,13 @@ barre d'onglets.
   discret, le bouton « Continuer » reste dans la feuille. Le panneau anime
   `transform` et `opacity`, 220 ms, easing sobre.
 - Résultat : le score en très grand (Archivo, c'est un grand chiffre), le
-  verdict écrit, les notes par thème dans une carte. Examen recalé : « Revoir mes N erreurs »
-  (jaune, vers `/revoir?examen`, qui joue toutes les erreurs du jour sans le plafond du rythme),
-  « Refaire un examen » (discret), partage natif, puis le récapitulatif **réduit aux erreurs**
-  (« Voir les 40 questions » les déplie). Examen reçu : « Refaire un examen » en jaune et les 40 lignes.
+  verdict écrit, puis **les actions sous le score, avant la carte** (sinon le bouton tombe sous le pli),
+  puis les notes par thème dans une carte, puis le récapitulatif. Examen recalé : « Revoir mes N erreurs »
+  (jaune, vers `/revoir?examen=<ids>` : les ratées de l'examen, par identifiant, N exact ; l'écran s'y
+  titre « Tes erreurs de l'examen », ignore une série ordinaire arrêtée et joue toutes les erreurs sans
+  le plafond du rythme), « Refaire un examen » (discret), partage natif ; le récapitulatif est **réduit
+  aux erreurs** (« Voir les 40 questions » les déplie). Examen reçu : même ordre, « Refaire un examen »
+  en jaune et les 40 lignes.
 
 ### Fiche (`/profil`)
 

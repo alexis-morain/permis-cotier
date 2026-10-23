@@ -10,7 +10,9 @@ import {
   calculerResultat,
   ordonnerEntrainement,
   serieDuJour,
-  erreursDuJour,
+  erreursDeLExamen,
+  lienErreursExamen,
+  questionsParIds,
   serieCourte,
   TAILLE_SERIE_COURTE,
   INTERVALLES,
@@ -471,26 +473,26 @@ describe('série du jour', () => {
   });
 });
 
-describe('les erreurs du jour', () => {
-  const etat = (vueLe: string, derniereReussie: boolean, revoirLe: string) => ({
-    vues: 1, ratees: derniereReussie ? 0 : 1, derniereReussie, vueLe, succes: derniereReussie ? 1 : 0, revoirLe,
-  });
-  const questions = Array.from({ length: 30 }, (_, i) => q(`ecluses-${String(i + 1).padStart(4, '0')}`, 'ecluses'));
+describe('les erreurs d’un examen dans le lien', () => {
+  const questions = Array.from({ length: 40 }, (_, i) => q(`ecluses-${String(i + 1).padStart(4, '0')}`, 'ecluses'));
 
-  it('rend toutes les erreurs d’aujourd’hui, au-delà du rythme', () => {
-    const progression: Progression = {};
-    for (const x of questions.slice(0, 26)) progression[x.id] = etat('2026-10-23', false, '2026-10-23');
-    expect(erreursDuJour(questions, progression, '2026-10-23')).toHaveLength(26);
-    // La série du jour, elle, s'arrête au rythme : c'est ce que ce tri évite.
-    expect(serieDuJour(questions, progression, '2026-10-23')).toHaveLength(TAILLE_SERIE_PAR_DEFAUT);
+  it('fait l’aller-retour', () => {
+    const lien = lienErreursExamen(['ecluses-0003', 'ecluses-0001']);
+    expect(lien).toBe('/revoir?examen=ecluses-0003,ecluses-0001');
+    expect(erreursDeLExamen(lien.slice(lien.indexOf('?')))).toEqual(['ecluses-0003', 'ecluses-0001']);
   });
 
-  it('laisse dehors le retard, les réussites et les erreurs d’un autre jour', () => {
-    const progression: Progression = {
-      'ecluses-0001': etat('2026-10-23', false, '2026-10-23'),
-      'ecluses-0002': etat('2026-10-20', false, '2026-10-20'),
-      'ecluses-0003': etat('2026-10-23', true, '2026-10-24'),
-    };
-    expect(erreursDuJour(questions, progression, '2026-10-23').map((x) => x.id)).toEqual(['ecluses-0001']);
+  it('reste raisonnable à quarante erreurs', () => {
+    expect(lienErreursExamen(questions.map((x) => x.id)).length).toBeLessThan(600);
+  });
+
+  it('rend null sans paramètre', () => {
+    expect(erreursDeLExamen('')).toBeNull();
+    expect(erreursDeLExamen('?retour=%2Frevoir')).toBeNull();
+  });
+
+  it('joue ces questions-là et pas d’autres, en ignorant les inconnues et les doublons', () => {
+    const joues = questionsParIds(questions, ['ecluses-0005', '<b>', 'ecluses-0002', 'ecluses-0005']);
+    expect(joues.map((x) => x.id)).toEqual(['ecluses-0005', 'ecluses-0002']);
   });
 });

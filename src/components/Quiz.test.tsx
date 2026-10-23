@@ -1650,7 +1650,7 @@ describe('le résultat d’un examen recalé, dans l’app', () => {
     jouer(6);
     expect(screen.getByText(/Recalé/)).toBeTruthy();
     const revoir = screen.getByRole('link', { name: 'Revoir mes 6 erreurs' });
-    expect(revoir.getAttribute('href')).toBe('/revoir?examen');
+    expect(revoir.getAttribute('href')).toMatch(/^\/revoir\?examen=ecluses-/);
     expect(revoir.className).toContain('bouton--principal');
     const refaire = screen.getByRole('link', { name: 'Refaire un examen' });
     expect(refaire.className).not.toContain('bouton--principal');
@@ -1678,33 +1678,110 @@ describe('le résultat d’un examen recalé, dans l’app', () => {
     expect(screen.getByRole('button', { name: 'Partager' })).toBeTruthy();
   });
 
+  it('remonte les actions sous le score, avant la carte des thèmes, reçu comme recalé', () => {
+    for (const fausses of [6, 2]) {
+      jouer(fausses);
+      const actions = document.querySelector('.resultat__actions')!;
+      const carte = document.querySelector('.parTheme')!;
+      const recap = document.querySelector('.recap')!;
+      expect(actions.compareDocumentPosition(carte) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(carte.compareDocumentPosition(recap) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      cleanup();
+    }
+  });
+
   it('garde le partage sous un examen recalé', () => {
     jouer(6);
     expect(screen.getByRole('button', { name: 'Partager' })).toBeTruthy();
   });
 });
 
-describe('/revoir?examen joue toutes les erreurs du jour', () => {
+describe('/revoir?examen joue les erreurs de l’examen, et elles seules', () => {
   afterEach(() => window.history.pushState({}, '', '/'));
 
-  it('au-delà du rythme, et avant le retard', () => {
-    const toutes = Array.from({ length: 6 }, (_, i) => question(`ecluses-000${i + 1}`));
-    const aujourd = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
-    const etat: Record<string, unknown> = {};
-    // Un retard ancien sur la 1, des erreurs du jour sur les 2 à 5.
-    etat['ecluses-0001'] = { vues: 1, ratees: 1, derniereReussie: false, vueLe: '2026-01-01', succes: 0, revoirLe: '2026-01-01' };
-    for (const x of toutes.slice(1, 5)) {
-      etat[x.id] = { vues: 1, ratees: 1, derniereReussie: false, vueLe: aujourd, succes: 0, revoirLe: aujourd };
-    }
+  const toutes = Array.from({ length: 6 }, (_, i) => question(`ecluses-000${i + 1}`));
+  const jour = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
+  const ratee = (vueLe: string) => ({ vues: 1, ratees: 1, derniereReussie: false, vueLe, succes: 0, revoirLe: vueLe });
+
+  function semer(etat: Record<string, unknown>, enCoursSerie: unknown = null) {
     localStorage.setItem(
       CLE_STOCKAGE,
       JSON.stringify({
-        version: VERSION_STOCKAGE, questions: etat, examens: [], lecons: {}, activite: {}, dateExamen: null, enCours: null,
+        version: VERSION_STOCKAGE, questions: etat, examens: [], lecons: {}, activite: {}, dateExamen: null,
+        enCours: null, enCoursSerie,
         profil: { prenom: '', motivations: [], phrase: '', depart: null, rythme: 2, rempliLe: null },
       }),
     );
-    window.history.pushState({}, '', '/revoir?examen');
+  }
+
+  it('joue les ids du lien, au-delà du rythme, sans une erreur d’entraînement du même jour', () => {
+    // 0006 est une erreur d'entraînement d'aujourd'hui, 0001 un vieux retard.
+    semer({ 'ecluses-0001': ratee('2026-01-01'), 'ecluses-0006': ratee(jour) });
+    window.history.pushState({}, '', '/revoir?examen=ecluses-0002,ecluses-0003,ecluses-0004,ecluses-0005,inconnue-9');
     render(<Quiz mode="entrainement" questions={toutes} revoir />);
     expect(document.querySelector('.jeu__compteur')?.textContent).toBe('Question 1 sur 4');
+    expect(screen.getByText('Énoncé de ecluses-0002')).toBeTruthy();
+  });
+
+  it('titre l’écran de ce qu’on joue', () => {
+    semer({});
+    window.history.pushState({}, '', '/revoir?examen=ecluses-0002');
+    render(<Quiz mode="entrainement" questions={toutes} revoir />);
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Tes erreurs de l’examen');
+  });
+
+  it('retombe sur la série du jour quand aucun id ne reste', () => {
+    semer({ 'ecluses-0001': ratee('2026-01-01') });
+    window.history.pushState({}, '', '/revoir?examen=inconnue-9');
+    render(<Quiz mode="entrainement" questions={toutes} revoir />);
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Ta série du jour');
+    expect(screen.getByText('Énoncé de ecluses-0001')).toBeTruthy();
+  });
+
+  it('n’offre pas la reprise d’une série ordinaire arrêtée, et part sur les erreurs', () => {
+    const arretee = {
+      mode: 'entrainement', theme: '/revoir', ids: ['ecluses-0001', 'ecluses-0002', 'ecluses-0003'],
+      index: 2, selections: [[], [], []], echeance: null, journal: [], majLe: Date.now(),
+    };
+    semer({ 'ecluses-0001': ratee('2026-01-01') }, arretee);
+    window.history.pushState({}, '', '/revoir?examen=ecluses-0005,ecluses-0006');
+    render(<Quiz mode="entrainement" questions={toutes} revoir />);
+    expect(screen.queryByText(/Tu avais une série en cours/)).toBeNull();
+    expect(screen.getByText('Énoncé de ecluses-0005')).toBeTruthy();
+  });
+
+  it('garde la reprise d’une série ordinaire sur /revoir tout court', () => {
+    const arretee = {
+      mode: 'entrainement', theme: '/revoir', ids: ['ecluses-0001', 'ecluses-0002', 'ecluses-0003'],
+      index: 2, selections: [[], [], []], echeance: null, journal: [], majLe: Date.now(),
+    };
+    semer({ 'ecluses-0001': ratee('2026-01-01') }, arretee);
+    render(<Quiz mode="entrainement" questions={toutes} revoir />);
+    expect(screen.getByText(/Tu avais une série en cours/)).toBeTruthy();
+  });
+
+  it('le N du bouton est le nombre de questions jouées, une erreur d’entraînement du jour mêlée', () => {
+    cible.app = true;
+    try {
+      // Une erreur d'entraînement du jour sur 0008 : elle ne doit pas gonfler la série.
+      const huit = Array.from({ length: 8 }, (_, i) => question(`ecluses-000${i + 1}`));
+      semer({ 'ecluses-0008': ratee(jour) });
+      render(<Quiz mode="examen" questions={huit} />);
+      fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+      for (let i = 0; i < 8; i++) {
+        fireEvent.click(screen.getByRole('button', { name: /Deuxième proposition/ }));
+        fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
+      }
+      const lien = screen.getByRole('link', { name: /^Revoir mes \d+ erreurs$/ });
+      const n = Number(/\d+/.exec(lien.textContent ?? '')![0]);
+      const href = lien.getAttribute('href')!;
+      cleanup();
+      window.history.pushState({}, '', href);
+      cible.app = false;
+      render(<Quiz mode="entrainement" questions={huit} revoir />);
+      expect(document.querySelector('.jeu__compteur')?.textContent).toBe(`Question 1 sur ${n}`);
+    } finally {
+      cible.app = false;
+    }
   });
 });

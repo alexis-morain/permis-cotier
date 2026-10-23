@@ -414,21 +414,21 @@ export function serieDuJour<T extends QuestionRangeable>(
   return [...dues, ...neuves].slice(0, taille);
 }
 
+/** Le lien d'« Revoir mes erreurs » : les ratées de l'examen, par identifiant. */
+export const lienErreursExamen = (ids: readonly string[]): string => `/revoir?examen=${ids.join(',')}`;
+
+/** Les identifiants que porte `?examen=…`, ou `null` sans le paramètre. */
+export const erreursDeLExamen = (recherche: string): string[] | null =>
+  new URLSearchParams(recherche).get('examen')?.split(',') ?? null;
+
 /**
- * Les erreurs du jour, toutes, sans plafond de rythme : ce que « Revoir mes
- * erreurs » joue après un examen blanc. `serieDuJour` range le retard avant
- * elles et la borne au rythme choisi, si bien que vingt-six erreurs
- * fraîches pouvaient en jouer vingt, ou aucune derrière un arriéré. Une
- * erreur d'examen est écrite comme n'importe quelle autre : ratée aujourd'hui,
- * donc due aujourd'hui.
+ * Ce que « Revoir mes erreurs » joue : les ratées de l'examen, toutes, dans
+ * l'ordre du lien, sans le plafond du rythme que `serieDuJour` applique ni le
+ * retard qu'elle range devant. La requête vient de l'extérieur, mais elle ne
+ * fait que désigner des questions de la banque : ce qui n'y est pas, un
+ * doublon, est ignoré.
  */
-export function erreursDuJour<T extends QuestionRangeable>(
-  questions: readonly T[],
-  progression: Progression,
-  jour: string,
-): T[] {
-  return questions.filter((q) => {
-    const e = progression[q.id];
-    return e !== undefined && !e.derniereReussie && e.vueLe === jour && estDue(e, jour);
-  });
+export function questionsParIds<T extends QuestionRangeable>(questions: readonly T[], ids: readonly string[]): T[] {
+  const parId = new Map(questions.map((q) => [q.id, q]));
+  return [...new Set(ids)].flatMap((id) => parId.get(id) ?? []);
 }

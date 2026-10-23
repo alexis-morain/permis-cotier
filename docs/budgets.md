@@ -13,7 +13,7 @@ Décidées le 10 octobre 2026 (plan « app solide », décision 5), posées au l
 {
   "lignesParFichier": 600,
   "pourAppDansLesComposants": 40,
-  "examen": { "reference": 86194, "marge": 1024 }
+  "examen": { "reference": 86240, "marge": 1024 }
 }
 ```
 
@@ -50,3 +50,5 @@ la fiche entière ni la table des notions, −11,9 Ko ; les badges en reprennent
 npm run build                       # dist/ d'abord
 node scripts/verifier-budgets.mjs   # 0 = dans les budgets
 ```
+
+**Relevé le 23 octobre 2026** (86194 → 86240, +46 octets) : le libellé « Passer » et le lien « Revoir mes erreurs » (`lienErreursExamen`, `questionsParIds`) sont dans le composant partagé avec le site.
