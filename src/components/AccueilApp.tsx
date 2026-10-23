@@ -88,7 +88,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
         <h2 id="accueil-date" className="accueilApp__titre">Ton épreuve</h2>
         {date.etat === 'sansDate' && (
           <p className="accueilApp__texte">
-            <Aller href="/profil">Pose la date de ton épreuve</Aller>
+            <Aller href="/parametres">Pose la date de ton épreuve</Aller>
           </p>
         )}
         {date.etat === 'avenir' && (
@@ -108,7 +108,7 @@ export default function AccueilApp({ lecons, ids }: Props) {
             C’était {depuisLe(date.jours)}
           </p>
         )}
-        {date.etat !== 'sansDate' && <Aller href="/profil">Modifier la date</Aller>}
+        {date.etat !== 'sansDate' && <Aller href="/parametres">Modifier la date</Aller>}
       </section>
 
       {serie > 1 && <p className="discret accueilApp__serie">{serie} jours de suite</p>}

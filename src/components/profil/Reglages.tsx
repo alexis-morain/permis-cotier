@@ -4,7 +4,7 @@ import { RYTHMES, profilRempli, rappel } from '../../lib/profil';
 import { evenement } from '../../lib/mesure';
 import { POUR_APP } from '../../lib/cible';
 import Apparence from '../Apparence';
-import { accorde } from './accorde';
+import { ceQuiPartira } from './partira';
 
 interface Props {
   etat: Etat;
@@ -17,13 +17,6 @@ interface Props {
   surEffacement: () => void;
 }
 
-/** « 2 questions, 1 examen blanc, ta raison et ta date. », sans ce qui vaut zéro. */
-function ceQuiPart(parts: string[]): string {
-  if (parts.length === 0) return '';
-  const phrase = parts.length === 1 ? parts[0]! : `${parts.slice(0, -1).join(', ')} et ${parts[parts.length - 1]}`;
-  return `${phrase.charAt(0).toUpperCase()}${phrase.slice(1)}.`;
-}
-
 /**
  * Les réglages de la fiche : prénom, raison, rythme, date d'examen,
  * apparence, et l'effacement, confirmé avant de partir.
@@ -33,16 +26,7 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
   const p = etat.profil;
   const raison = rappel(p);
 
-  // Ce qui part avec l'effacement, compté, sans ce qui vaut zéro.
-  const nbQuestions = Object.keys(etat.questions).length;
-  const nbLecons = Object.keys(etat.lecons).length;
-  const partira = ceQuiPart([
-    ...(nbQuestions > 0 ? [accorde(nbQuestions, 'question')] : []),
-    ...(etat.examens.length > 0 ? [`${etat.examens.length} examen${etat.examens.length > 1 ? 's blancs' : ' blanc'}`] : []),
-    ...(nbLecons > 0 ? [accorde(nbLecons, 'leçon')] : []),
-    ...(raison ? ['ta raison'] : []),
-    ...(etat.dateExamen ? ['ta date'] : []),
-  ]);
+  const partira = ceQuiPartira(etat);
 
   return (
     <section className="fiche__reglages" aria-labelledby="reglages-titre">

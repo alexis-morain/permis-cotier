@@ -29,13 +29,6 @@ html[data-app] {
     --disque-encours-texte: var(--texte);
   }
 }
-html[data-app][data-apparence="sombre"] {
-  --disque-fait: var(--accent);
-  --disque-fait-texte: var(--marine);
-  --disque-encours: var(--jaune-pale);
-  --disque-encours-bord: var(--jaune);
-  --disque-encours-texte: var(--texte);
-}
 
 /* ------------------------------------------------------------ Le cours
 
@@ -408,3 +401,88 @@ html[data-app] .memo__source .marque {
   html[data-app] .chapitres__jauge span { transition: none; animation: none; }
   html[data-app] .fiche__details summary::after { transition: none; }
 }
+
+/* ------------------------------------------------------------ Les réglages
+   Groupés comme ceux d'iOS : un petit titre doux, une carte de cellules à
+   filet dessous. Le contrôle segmenté du rythme se partage la largeur. */
+html[data-app] .reglagesApp { display: grid; gap: 1.5rem; max-width: none; }
+html[data-app] .reglagesApp__titre {
+  margin: 0 0 0.4rem 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texte-doux);
+}
+html[data-app] .reglagesApp__champ {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: max(16px, 1em);
+  font-weight: 400;
+  text-align: right;
+}
+html[data-app] .reglagesApp__bouton {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+html[data-app] .reglagesApp__bouton:active { background: var(--fond-2); }
+html[data-app] .reglagesApp__danger { justify-content: center; color: var(--rouge-texte); }
+html[data-app] .reglagesApp__pile { display: grid; gap: 0.5rem; padding-block: 0.75rem; }
+html[data-app] .reglagesApp__libelle { margin: 0; font-weight: 600; }
+html[data-app] .reglagesApp__pile .segmente { display: flex; flex-wrap: nowrap; }
+html[data-app] .reglagesApp__pile .segmente__option { flex: 1 1 0; padding-inline: 0.4rem; }
+html[data-app] .reglagesApp__valeur {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+}
+html[data-app] .reglagesApp__pied {
+  margin: 0.4rem 0.25rem 0;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+/* L'alerte : une carte centrée sur un voile, deux boutons séparés d'un filet. */
+html[data-app] .alerte {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgb(0 0 0 / 0.4);
+}
+html[data-app] .alerte__carte {
+  width: min(100%, 17rem);
+  overflow: hidden;
+  border-radius: 1rem;
+  background: var(--fond-carte);
+  text-align: center;
+}
+html[data-app] .alerte__texte { padding: 1.25rem 1rem 1rem; }
+html[data-app] .alerte__titre { margin: 0 0 0.35rem; font-weight: 700; }
+html[data-app] .alerte__message { margin: 0; font-size: 0.9rem; color: var(--texte-doux); }
+html[data-app] .alerte__boutons { display: flex; border-top: 1px solid var(--carte-filet); }
+html[data-app] .alerte__bouton {
+  flex: 1;
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--texte);
+  font: inherit;
+  cursor: pointer;
+}
+html[data-app] .alerte__bouton + .alerte__bouton { border-left: 1px solid var(--carte-filet); }
+html[data-app] .alerte__bouton--fort { font-weight: 700; }
+html[data-app] .alerte__bouton:active { background: var(--fond-2); }

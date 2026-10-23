@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Parametres from '../components/Parametres.tsx';
 import MesureReglage from '../components/MesureReglage.tsx';
 import Apparence from '../components/Apparence.tsx';
-import SonsApp from '../components/SonsApp.astro';
+import ReglagesApp from '../components/ReglagesApp.astro';
 import { versionBanque, questionsPubliees } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 
@@ -13,49 +13,27 @@ const total = (await questionsPubliees()).length;
 
 <Base titre={POUR_APP ? 'Réglages' : 'Réglages du site'} description="L’apparence, la mesure d’audience, la version de la banque et les licences." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
-    {/* Des éléments entiers dans chaque branche, jamais une expression au
-        milieu d'une phrase : la compression HTML d'Astro y déplace les
-        espaces, et le site doit rester au caractère près. */}
     <h1>{POUR_APP ? 'Réglages' : 'Réglages du site'}</h1>
 
+    {/* Dans l'app, un seul îlot porte tous les réglages, groupés comme ceux
+        d'iOS ; le reste de la page est celui du site. */}
+    {POUR_APP ? (
+      <ReglagesApp version={version} total={total} />
+    ) : (
+    <Fragment>
     <h2>Ta progression</h2>
     <Parametres client:only="react" />
 
-    {!POUR_APP && (
-      <Fragment>
-        <h2 id="apparence">Apparence</h2>
-        <Apparence client:only="react" idTitre="apparence" />
-        <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
-      </Fragment>
-    )}
-
-    {POUR_APP && <SonsApp />}
+    <h2 id="apparence">Apparence</h2>
+    <Apparence client:only="react" idTitre="apparence" />
+    <p class="discret" style="margin-top:0.5rem">Vaut pour ce navigateur. Par défaut, la page suit le réglage du système.</p>
 
     <h2>Cette version</h2>
-    {POUR_APP ? (
-    <p>
-      Banque <b>{version}</b>, {total} question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}.
-    </p>
-    ) : (
     <p>
       Banque <b>{version}</b>, {total} question{total > 1 ? 's' : ''} publiée{total > 1 ? 's' : ''}.
       Le site fonctionne hors ligne une fois visité, et se met à jour tout seul à la publication suivante.
     </p>
-    )}
 
-    {/* L'app ne mesure rien : `Mesure.astro` n'y est pas rendu. Dire le
-        contraire serait faux, et c'est ce que la revue Apple lit en premier. */}
-    {POUR_APP ? (
-    <Fragment>
-    <h2>Ce que l’app sait de toi</h2>
-    <p>
-      Rien. Aucun compte, aucun traceur, aucune mesure d’audience. Ta progression et ta date
-      d’examen restent sur ton téléphone. Un signalement d’erreur part par courrier, et
-      seulement si tu l’envoies.
-    </p>
-    </Fragment>
-    ) : (
-    <Fragment>
     <h2>Ce que le site sait de toi</h2>
     <p>
       Aucun compte, aucun mot de passe, aucune adresse. La progression et la date d’examen restent
@@ -76,8 +54,6 @@ const total = (await questionsPubliees()).length;
       Deux autres choses partent vers un serveur, et seulement si tu les déclenches : un
       signalement d’erreur, et plus tard le code de synchronisation. Le reste est statique.
     </p>
-    </Fragment>
-    )}
 
     <h2>Licences</h2>
     <p>
@@ -86,5 +62,7 @@ const total = (await questionsPubliees()).length;
       reprendre, à condition de citer et de partager aux mêmes conditions.
       <a href="/credits">Crédits des visuels</a>.
     </p>
+    </Fragment>
+    )}
   </div>
 </Base>

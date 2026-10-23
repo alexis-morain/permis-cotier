@@ -62,7 +62,7 @@ const SEULEMENT_APP_CSS = [
 const SEULEMENT_APP_ASTRO = [
   'src/components/Coquille.astro',
   'src/components/EntrainementApp.astro',
-  'src/components/SonsApp.astro',
+  'src/components/ReglagesApp.astro',
   'src/components/OuvrirRecherche.astro',
 ];
 const ECRAN_ACCUEIL_APP = 'src/pages/[accueil].astro';

@@ -46,12 +46,6 @@ html[data-app] {
     --teinte: #1b3059;
   }
 }
-html[data-app][data-apparence="sombre"] {
-  --fond: #0a1730;
-  --fond-2: #1a2e55;
-  --carte-filet: #1d3157;
-  --teinte: #1b3059;
-}
 
 /* Archivo large garde le titre d'écran et les grands chiffres. Le reste du
    texte passe à la police du système : celle que le doigt connaît. */
