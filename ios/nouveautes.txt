@@ -1,9 +1,7 @@
-Une allure plus sobre : des cartes blanches, un seul gros bouton par écran, et la police de l’iPhone pour le texte. L’app change aussi d’écran plus vite.
+L’accueil te propose la prochaine chose à faire : ta série du jour quand des questions t’attendent, un examen blanc quand l’épreuve approche.
 
-L’entraînement par thème se joue par séries de 10 questions, avec un vrai point final : ton score, la liste de tes réponses à toucher pour revoir l’explication, puis « Encore 10 ». L’examen blanc gagne la même liste à la fin.
+En examen blanc, « Passer » quand tu ne sais pas. Après un examen raté, « Revoir mes erreurs » te fait rejouer tes erreurs de l’examen, et la revue les montre d’abord.
 
-La fiche montre tes dix derniers examens blancs en un graphique, avec la ligne des 35 sur 40, et chaque thème en pourcentage, les plus fragiles d’abord.
+L’entraînement montre où tu en es dans chaque thème, et les leçons se lisent mieux.
 
-Chaque chapitre du cours a sa fiche « à relire la veille » : l’essentiel de ses leçons, avec les schémas et les sources.
-
-L’app s’installe maintenant dès iOS 16 : un iPhone 8, un X ou un SE de deuxième génération suffit.
+La fiche se concentre sur ton bilan, tes réglages ont leur propre écran, et effacer ta progression demande une confirmation. L’app suit l’apparence de ton iPhone.
