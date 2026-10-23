@@ -445,7 +445,7 @@ html[data-app] .reglagesApp__pile { container-type: inline-size; }
 html[data-app] .reglagesApp__pile .segmente { display: flex; flex-wrap: nowrap; min-width: 0; }
 /* Trop étroit pour trois options côte à côte : elles s'empilent. Le seuil est
    en rem, il suit la taille du texte. */
-@container (max-width: 19rem) {
+@container (max-width: 14rem) {
   html[data-app] .reglagesApp__pile .segmente { flex-direction: column; }
   html[data-app] .reglagesApp__pile .segmente__option + .segmente__option { border-left: 0; border-top: 2px solid var(--filet-fort); }
 }
@@ -510,4 +510,15 @@ html[data-app] .maitrise--neufs a { flex-wrap: wrap; column-gap: 0.75rem; }
    lisible, la valeur et le chevron passent dessous quand il le faut. */
 html[data-app] .reglagesApp a.cellules__ligne { flex-wrap: wrap; row-gap: 0; }
 html[data-app] .reglagesApp a.cellules__ligne > :first-child { flex: 1 1 9em; }
+html[data-app] .reglagesApp a.cellules__ligne .reglagesApp__valeur {
+  flex: 0 1 auto;
+  max-width: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+/* Les thèmes ouverts et les chiffres des examens à gros corps : la colonne du
+   nom peut rétrécir, les chiffres passent à la ligne plutôt que sortir de la carte. */
+html[data-app] .maitrise a { grid-template-columns: minmax(0, 1fr) auto; }
+html[data-app] .maitrise a b { hyphens: auto; overflow-wrap: break-word; }
+html[data-app] .examens-chiffres { grid-template-columns: repeat(auto-fit, minmax(min(100%, 5rem), 1fr)); }
 html[data-app] .reglagesApp a.cellules__ligne .cellules__chevron { margin-left: auto; }
