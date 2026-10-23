@@ -64,7 +64,7 @@ export default function Depart({ mode, taille, depart, premiereLecon, reprise, c
           <b>Une ou deux bonnes réponses.</b> La réponse doit être exacte : une bonne case seule
           ne suffit pas quand il en faut deux.
         </li>
-        <li><b>{ERREURS_ADMISES} erreurs admises.</b> Une question sans réponse compte comme une erreur.</li>
+        <li><b>{ERREURS_ADMISES} erreurs admises.</b> Une question sans réponse compte comme une erreur ; « Passer » la saute.</li>
         <li>Aucune correction avant la fin. Tout arrive d’un coup, sur l’écran de résultat.</li>
       </ul>
 

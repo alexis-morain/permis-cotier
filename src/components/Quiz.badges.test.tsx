@@ -83,7 +83,7 @@ function jouerExamen(n: number, juste = true) {
   fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
   for (let i = 0; i < n; i++) {
     if (juste) fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
-    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
   }
 }
 
@@ -165,7 +165,7 @@ describe('le badge gagné à l’examen', () => {
     render(<Quiz mode="examen" questions={trois} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
-    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
     await new Promise((r) => setTimeout(r, 50));

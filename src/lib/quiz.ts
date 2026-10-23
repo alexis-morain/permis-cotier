@@ -413,3 +413,22 @@ export function serieDuJour<T extends QuestionRangeable>(
 
   return [...dues, ...neuves].slice(0, taille);
 }
+
+/** Le lien d'« Revoir mes erreurs » : les ratées de l'examen, par identifiant. */
+export const lienErreursExamen = (ids: readonly string[]): string => `/revoir?examen=${ids.join(',')}`;
+
+/** Les identifiants que porte `?examen=…`, ou `null` sans le paramètre. */
+export const erreursDeLExamen = (recherche: string): string[] | null =>
+  new URLSearchParams(recherche).get('examen')?.split(',') ?? null;
+
+/**
+ * Ce que « Revoir mes erreurs » joue : les ratées de l'examen, toutes, dans
+ * l'ordre du lien, sans le plafond du rythme que `serieDuJour` applique ni le
+ * retard qu'elle range devant. La requête vient de l'extérieur, mais elle ne
+ * fait que désigner des questions de la banque : ce qui n'y est pas, un
+ * doublon, est ignoré.
+ */
+export function questionsParIds<T extends QuestionRangeable>(questions: readonly T[], ids: readonly string[]): T[] {
+  const parId = new Map(questions.map((q) => [q.id, q]));
+  return [...new Set(ids)].flatMap((id) => parId.get(id) ?? []);
+}

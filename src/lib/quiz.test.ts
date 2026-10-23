@@ -10,6 +10,9 @@ import {
   calculerResultat,
   ordonnerEntrainement,
   serieDuJour,
+  erreursDeLExamen,
+  lienErreursExamen,
+  questionsParIds,
   serieCourte,
   TAILLE_SERIE_COURTE,
   INTERVALLES,
@@ -467,5 +470,29 @@ describe('série du jour', () => {
   it('ne perd ni ne duplique aucune question', () => {
     const serie = serieDuJour(questions, progression, '2026-09-03', 10);
     expect(new Set(serie.map((x) => x.id)).size).toBe(serie.length);
+  });
+});
+
+describe('les erreurs d’un examen dans le lien', () => {
+  const questions = Array.from({ length: 40 }, (_, i) => q(`ecluses-${String(i + 1).padStart(4, '0')}`, 'ecluses'));
+
+  it('fait l’aller-retour', () => {
+    const lien = lienErreursExamen(['ecluses-0003', 'ecluses-0001']);
+    expect(lien).toBe('/revoir?examen=ecluses-0003,ecluses-0001');
+    expect(erreursDeLExamen(lien.slice(lien.indexOf('?')))).toEqual(['ecluses-0003', 'ecluses-0001']);
+  });
+
+  it('reste raisonnable à quarante erreurs', () => {
+    expect(lienErreursExamen(questions.map((x) => x.id)).length).toBeLessThan(600);
+  });
+
+  it('rend null sans paramètre', () => {
+    expect(erreursDeLExamen('')).toBeNull();
+    expect(erreursDeLExamen('?retour=%2Frevoir')).toBeNull();
+  });
+
+  it('joue ces questions-là et pas d’autres, en ignorant les inconnues et les doublons', () => {
+    const joues = questionsParIds(questions, ['ecluses-0005', '<b>', 'ecluses-0002', 'ecluses-0005']);
+    expect(joues.map((x) => x.id)).toEqual(['ecluses-0005', 'ecluses-0002']);
   });
 });

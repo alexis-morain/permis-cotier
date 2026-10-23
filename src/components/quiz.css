@@ -493,6 +493,7 @@
 .recap { margin: 1.5rem 0 1.25rem; }
 .recap__titre { font-stretch: 100%; letter-spacing: 0; font-size: 1.05rem; font-weight: 700; margin: 0 0 0.5rem; }
 .recap__liste { list-style: none; margin: 0; padding: 0; }
+.recap__toutes { margin-top: 0.75rem; }
 .recap__liste > li { border-top: 2px solid var(--filet); }
 .recap__ligne {
   touch-action: manipulation;

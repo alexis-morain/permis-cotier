@@ -3,7 +3,7 @@ import type React from 'react';
 import type { QuestionAffichable } from '../../lib/banque';
 import type { Etat } from '../../lib/progression';
 import { lenteurs, type Mode, type Session } from '../../lib/session';
-import { ERREURS_ADMISES } from '../../lib/quiz';
+import { ERREURS_ADMISES, lienErreursExamen } from '../../lib/quiz';
 import { nomDuTheme } from '../../lib/themes-client';
 import { pointFinal, rappel } from '../../lib/raison';
 import { POUR_APP } from '../../lib/cible';
@@ -53,7 +53,9 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
     ? !session.interrompu && !r.reussi
     : r.bonnes * 2 < r.total);
   const raison = coupDeMou ? rappel(depart.profil) : null;
-  const actions = { mode, session, retour, revue, basculerRevue, ratees: erreurs };
+  // Un examen mené au bout et recalé : l'app envoie sur les erreurs.
+  const recale = mode === 'examen' && !session.interrompu && r.total > 0 && !r.reussi;
+  const actions = { mode, session, retour, revue, basculerRevue, ratees: erreurs, recale: recale && erreurs > 0 };
 
   return (
     <div className="jeu">
@@ -91,15 +93,13 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
         </>
       ) : (
         <>
+          {/* Dans l'app, le geste suivant vient sous le score, avant la carte
+              des thèmes : sinon il tombe sous le pli (layout.md). Le
+              récapitulatif reste après, chaque ligne s'ouvre. */}
+          {POUR_APP && <ActionsApp {...actions} />}
           {r.total > 0 && <ParTheme parTheme={r.parTheme} />}
-
-          {/* Dans l'app, le récapitulatif tient la place de « Revoir mes
-              erreurs » : chaque ligne s'ouvre, et les erreurs y sont. */}
           {POUR_APP ? (
-            <>
-              <ActionsApp {...actions} />
-              <Recap session={session} parId={parId} retourLecon={retourLecon} />
-            </>
+            <Recap session={session} parId={parId} retourLecon={retourLecon} erreursSeules={recale} />
           ) : (
             <ActionsSite {...actions} />
           )}
@@ -274,6 +274,8 @@ interface PropsActions {
   basculerRevue: (quoi: 'erreurs' | 'toutes') => void;
   /** Combien de questions ont été ratées. */
   ratees: number;
+  /** Un examen mené au bout et recalé : le geste suivant, ce sont les erreurs. */
+  recale: boolean;
 }
 
 /**
@@ -281,12 +283,19 @@ interface PropsActions {
  * récapitulatif dessous, et la barre d'onglets est revenue : un lien
  * « Accueil » la doublerait.
  */
-function ActionsApp({ mode, session, retour }: PropsActions) {
+function ActionsApp({ mode, session, retour, ratees, recale }: PropsActions) {
   const r = session.resultat!;
+  // Recalé : les erreurs viennent d'entrer dans la file de révision, c'est
+  // là que « Revoir » mène ; refaire un examen attend (feedback.md).
   return (
     <>
       <div className="jeu__actions resultat__actions">
-        <a className="bouton bouton--principal" href={retour}>
+        {recale && (
+          <a className="bouton bouton--principal" href={lienErreursExamen(r.ratees)}>
+            {ratees > 1 ? `Revoir mes ${ratees} erreurs` : 'Revoir mon erreur'}
+          </a>
+        )}
+        <a className={`bouton${recale ? ' bouton--discret' : ' bouton--principal'}`} href={retour}>
           {mode === 'examen' ? 'Refaire un examen' : 'Refaire la série'}
         </a>
       </div>

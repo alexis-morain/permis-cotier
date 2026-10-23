@@ -194,7 +194,7 @@ describe('le récapitulatif ailleurs', () => {
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     for (let i = 0; i < 4; i++) {
       fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
-      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+      fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     }
     expect(document.querySelectorAll('.recap__ligne')).toHaveLength(4);
     expect(screen.queryByRole('button', { name: 'Encore 10' })).toBeNull();

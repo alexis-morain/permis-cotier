@@ -108,10 +108,12 @@ function BarreAction({ mode, session, question, demanderArret, envoyer, suivante
         <button
           className="bouton bouton--principal"
           type="button"
-          disabled={(mode === 'entrainement' || app) && selection.length === 0}
+          disabled={mode === 'entrainement' && selection.length === 0}
           onClick={() => envoyer({ type: 'valider', maintenant: Date.now() })}
         >
-          {mode === 'examen' ? 'Valider et passer' : 'Valider'}
+          {/* En examen, rien de coché : le bouton dit ce qu'il fait, il saute
+              la question, comptée sans réponse comme au buzzer. */}
+          {mode === 'examen' ? (selection.length === 0 ? 'Passer' : 'Valider et passer') : 'Valider'}
         </button>
       )}
       {!app &&
