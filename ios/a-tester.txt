@@ -1,37 +1,28 @@
-Ce build change l’allure de l’app et sa façon de s’entraîner : un écran plus sobre, des séries de 10 par thème, un graphique de tes examens blancs et une fiche « à relire la veille » par chapitre. Il tourne aussi sous iOS 16 et 17.
+Ce build reprend les écrans de l’app selon les règles d’Apple : l’accueil dit quoi faire ensuite, un examen raté envoie revoir ses erreurs, la fiche ne garde que ton bilan et les réglages ont leur écran.
 
-Allure
-• Des cartes blanches sur un fond gris-bleu, un seul gros bouton jaune par écran, la police de l’iPhone pour le texte.
-• Accueil : chaque carte se touche entière, pas seulement son texte.
-• Examen blanc : la croix en haut à gauche arrête l’épreuve, avec la confirmation. « Valider et passer » reste grisé tant que rien n’est coché.
-• Entraînement : après « Valider », la correction monte du bas et laisse voir la question. « Juste » ou « Faux », l’explication et « Continuer » tiennent sans défiler. « Source » se déplie.
-• Mode sombre, puis taille du texte au plus grand dans Réglages : rien ne sort de l’écran.
+Accueil
+• Rien à revoir : la grande carte propose le cours. Après quelques erreurs : « À revoir aujourd’hui » et « Faire ma série du jour ». Épreuve posée à moins de huit jours : « Examen blanc ».
+• Un seul bouton jaune, et la carte du haut ne revient pas plus bas.
+• En haut, le titre « Accueil » et la date du jour, sans passer sous l’encoche.
+• « Pose la date de ton épreuve » ouvre Réglages.
 
-Fluidité
-• Chaque tap sur un lien (Cours, une leçon, la suivante) : le nouvel écran arrive en fondu très court. Rien ne rame, ne clignote ni ne reste à moitié transparent.
-• Une leçon dans Cours, puis l’onglet Accueil : « Continuer le cours » montre déjà la leçon suivante, sans flash blanc ni rechargement.
-• Une question ratée en Entraînement, puis Accueil : « À revoir aujourd’hui » est à jour.
-• Réglages > Accessibilité > Animations réduites : plus aucun fondu.
+Examen blanc
+• Rien de coché : le bouton dit « Passer », il est actif et saute la question, comptée fausse. Une case cochée : « Valider et passer ». Un double appui saute deux questions.
+• VoiceOver sur ce bouton : il lit « Passer », puis « Valider et passer ».
+• En entraînement, le bouton reste grisé tant que rien n’est coché.
+• Examen recalé : juste sous le score, « Revoir mes N erreurs » en jaune et « Refaire un examen » en discret. La série qui s’ouvre a exactement N questions, celles de l’examen. Plus bas, seules tes erreurs ; « Voir les 40 questions » déplie le reste.
+• Examen reçu : les boutons sont aussi sous le score.
 
-Séries de 10
-• Entraînement → un thème : le compteur dit « 1 / 10 ». Les jamais vues et les ratées passent d’abord.
-• À la dixième : le score, le son de fin, le palier s’il y en a un, puis la liste des dix questions, « Juste » ou « Faux » écrit en toutes lettres. Une ligne touchée s’ouvre sur ta réponse, la bonne et l’explication.
-• « Encore 10 » relance dix autres questions du même thème. « Changer de thème » ramène à la liste.
-• Fin d’examen blanc : la même liste remplace « Revoir mes erreurs ».
-• La série du jour (Accueil) garde sa taille.
+Leçons et entraînement
+• Une leçon : l’accroche du premier écran est dans la police de l’iPhone, et la barre du haut est déjà un peu remplie.
+• Entraînement : un thème commencé montre « n retenues sur m » et une jauge fine. Un thème jamais ouvert dit seulement son nombre de questions.
+• Après une réponse, « Source » : le chevron pointe vers le bas et se retourne à l’ouverture.
 
-Fiche
-• Après un examen blanc : en haut, tes dix derniers examens en barres, la ligne pointillée « Seuil 35 ». Barre pleine : reçu ; creuse : recalé. Dessous, examens passés, moyenne et reçus sur les cinq derniers.
-• VoiceOver sur une barre : « 37 sur 40, reçu, 12 octobre ».
-• « Thème par thème » : un pourcentage par thème, les plus fragiles en haut, les jamais ouverts en bas.
+Fiche et Réglages
+• Fiche : ton indice, tes examens, ce qui est à reprendre et tes trois thèmes les plus fragiles. « Tous les thèmes » ouvre la liste, Retour ramène à la Fiche. « Tes quatorze derniers jours » se déplie.
+• Réglages : change la date, le rythme, le prénom. Le clavier ne zoome pas et ne cache pas le champ.
+• « Effacer ma progression », tout en bas : l’alerte s’ouvre, Annuler la ferme, Effacer vide la fiche et l’accueil.
+• Passe l’iPhone en sombre puis en clair : l’app suit, même si tu avais choisi une apparence dans l’ancienne version.
 
-À relire la veille
-• Cours → un chapitre → « À relire la veille » : une carte par leçon, son schéma, ses lignes à retenir, sa source. Le même bouton finit la dernière leçon du chapitre.
-• En mode avion, la fiche s’ouvre avec ses schémas.
-
-Sous iOS 16 ou 17
-• Les cinq onglets se chargent ; pendant l’examen la barre du bas disparaît et revient à l’arrêt ; la recherche du Cours répond à la frappe ; un signal sonore s’écoute ; poser la date d’épreuve demande l’autorisation des notifications.
-
-Une question te semble fausse ? « Signaler une erreur sur cette question », sous la correction, prépare un courrier dans Mail avec la question citée : relis-le, envoie-le, il nous arrive.
-
-Les textes de l’app suivent maintenant la typographie française : espaces insécables avant « ? ! ; : », dans les guillemets et entre un nombre et son unité. Regarde qu’aucune ligne ne se coupe avant un « ? » ou un « : ».
+Grand texte
+• Réglages de l’iPhone > Taille du texte au plus grand : l’accueil, la liste d’entraînement, une leçon et le résultat d’examen se lisent sans rien couper. Regarde le titre « Entraînement », qui peut se couper en deux.
