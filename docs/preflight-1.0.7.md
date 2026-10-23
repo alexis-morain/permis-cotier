@@ -1,7 +1,9 @@
-# Preflight Apple — 1.0.6
+# Preflight Apple — 1.0.7 (build 19, `07dd194`)
 
-Fait le 23 octobre 2026, **avant la fusion**, comme le veut `docs/app-ios.md`
-(« Avant chaque version »). Lecture locale de la 1.0.6 telle qu'elle sortira des
+Fait le 23 octobre 2026, **avant la fusion**, sous le nom de « 1.0.6 » :
+entre-temps le passage planifié avait mis `404ed72` en vente comme 1.0.6, et
+`app-ios.yml` a donc envoyé ce chantier en revue comme **1.0.7 (19)**. Fait comme le veut `docs/app-ios.md`
+(« Avant chaque version »). Lecture locale de la version telle qu'elle sortira des
 quatre PR du chantier UX, fusionnées dans cet ordre au-dessus de `main`
 (`404ed72`) : #48 leçon et entraînement (`7e09591`), #50 après l'examen
 (`696ad85`), #49 accueil (`6b0cd3d`), #51 fiche et réglages (`94bb53e`).
@@ -12,7 +14,7 @@ sans troisième checker. Le diff de
 référence part de la 1.0.5 (build 17, `2ac176e`) et comprend donc aussi la PR
 #47 (typographie française). Sans console ni secret.
 
-Ce qui sépare la 1.0.6 de la 1.0.5, côté Apple : **rien de natif**. Aucun
+Ce qui sépare cette version de la 1.0.5, côté Apple : **rien de natif**. Aucun
 fichier de `ios/` ne bouge hors `a-tester.txt` et `nouveautes.txt` ;
 `Info.plist`, `PrivacyInfo.xcprivacy`, entitlements, `Package.swift`, `pbxproj`,
 `capacitor.config.json`, `package.json` et le verrou sont ceux de la 1.0.5. Le
