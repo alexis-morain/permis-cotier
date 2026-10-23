@@ -53,6 +53,8 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
     ? !session.interrompu && !r.reussi
     : r.bonnes * 2 < r.total);
   const raison = coupDeMou ? rappel(depart.profil) : null;
+  // Un examen mené au bout et recalé : l'app envoie sur les erreurs.
+  const recale = mode === 'examen' && !session.interrompu && r.total > 0 && !r.reussi;
   const actions = { mode, session, retour, revue, basculerRevue, ratees: erreurs };
 
   return (
@@ -98,7 +100,7 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
           {POUR_APP ? (
             <>
               <ActionsApp {...actions} />
-              <Recap session={session} parId={parId} retourLecon={retourLecon} />
+              <Recap session={session} parId={parId} retourLecon={retourLecon} erreursSeules={recale} />
             </>
           ) : (
             <ActionsSite {...actions} />
@@ -281,12 +283,20 @@ interface PropsActions {
  * récapitulatif dessous, et la barre d'onglets est revenue : un lien
  * « Accueil » la doublerait.
  */
-function ActionsApp({ mode, session, retour }: PropsActions) {
+function ActionsApp({ mode, session, retour, ratees }: PropsActions) {
   const r = session.resultat!;
+  // Recalé : les erreurs viennent d'entrer dans la file de révision, c'est
+  // là que « Revoir » mène ; refaire un examen attend (feedback.md).
+  const recale = mode === 'examen' && !session.interrompu && r.total > 0 && !r.reussi && ratees > 0;
   return (
     <>
       <div className="jeu__actions resultat__actions">
-        <a className="bouton bouton--principal" href={retour}>
+        {recale && (
+          <a className="bouton bouton--principal" href="/revoir?examen">
+            {ratees > 1 ? `Revoir mes ${ratees} erreurs` : 'Revoir mon erreur'}
+          </a>
+        )}
+        <a className={`bouton${recale ? ' bouton--discret' : ' bouton--principal'}`} href={retour}>
           {mode === 'examen' ? 'Refaire un examen' : 'Refaire la série'}
         </a>
       </div>

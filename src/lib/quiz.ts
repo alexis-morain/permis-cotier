@@ -413,3 +413,22 @@ export function serieDuJour<T extends QuestionRangeable>(
 
   return [...dues, ...neuves].slice(0, taille);
 }
+
+/**
+ * Les erreurs du jour, toutes, sans plafond de rythme : ce que « Revoir mes
+ * erreurs » joue après un examen blanc. `serieDuJour` range le retard avant
+ * elles et la borne au rythme choisi, si bien que vingt-six erreurs
+ * fraîches pouvaient en jouer vingt, ou aucune derrière un arriéré. Une
+ * erreur d'examen est écrite comme n'importe quelle autre : ratée aujourd'hui,
+ * donc due aujourd'hui.
+ */
+export function erreursDuJour<T extends QuestionRangeable>(
+  questions: readonly T[],
+  progression: Progression,
+  jour: string,
+): T[] {
+  return questions.filter((q) => {
+    const e = progression[q.id];
+    return e !== undefined && !e.derniereReussie && e.vueLe === jour && estDue(e, jour);
+  });
+}

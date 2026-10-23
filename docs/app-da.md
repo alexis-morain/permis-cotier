@@ -201,8 +201,10 @@ barre d'onglets.
   largeur. Pas de jauge de chrono dans l'app : le nombre dit tout et passe au
   rouge sur les cinq dernières secondes. Pas de titre « Question 12 ».
 - L'ordre : le visuel, l'énoncé (police système, corps normal), les
-  propositions. Un seul bouton en bas, pleine largeur, grisé tant que rien
-  n'est coché, y compris en examen.
+  propositions. Un seul bouton en bas, pleine largeur. En entraînement
+  et en révision, grisé tant que rien n'est coché. En examen blanc, jamais
+  grisé : rien de coché, il dit « Passer » et saute la question, comptée sans
+  réponse comme au buzzer ; une case cochée, il redevient « Valider et passer ».
 - Propositions : cartes blanches, 56 pt de haut minimum, la lettre dans un
   carré teinté. Cochée : bord marine net et fond teinté. Pas de socle ; l'appui
   est un enfoncement à 0,97.
@@ -213,8 +215,10 @@ barre d'onglets.
   discret, le bouton « Continuer » reste dans la feuille. Le panneau anime
   `transform` et `opacity`, 220 ms, easing sobre.
 - Résultat : le score en très grand (Archivo, c'est un grand chiffre), le
-  verdict écrit, les notes par thème dans une carte, puis deux boutons : « Revoir mes erreurs » (jaune) et « Refaire un examen »
-  (discret). Partage natif en dessous.
+  verdict écrit, les notes par thème dans une carte. Examen recalé : « Revoir mes N erreurs »
+  (jaune, vers `/revoir?examen`, qui joue toutes les erreurs du jour sans le plafond du rythme),
+  « Refaire un examen » (discret), partage natif, puis le récapitulatif **réduit aux erreurs**
+  (« Voir les 40 questions » les déplie). Examen reçu : « Refaire un examen » en jaune et les 40 lignes.
 
 ### Fiche (`/profil`)
 

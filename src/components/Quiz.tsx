@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { creerSession, questionCourante, reduire, restaurerSession } from '../lib/session';
 import type { Action, Mode, Session } from '../lib/session';
-import { aleaSeme, estDue, serieCourte, serieDuJour, tirerExamen, TAILLE_SERIE_COURTE } from '../lib/quiz';
+import { aleaSeme, erreursDuJour, estDue, serieCourte, serieDuJour, tirerExamen, TAILLE_SERIE_COURTE } from '../lib/quiz';
 import { melangerPropositions } from '../lib/melange';
 import { charger, aujourdhui, CLE_STOCKAGE } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
@@ -96,6 +96,12 @@ function Partie({
     if (mode === 'examen') return tirerExamen(questions, aleaSeme(Date.now() >>> 0));
     // La série du jour, bornée par le rythme choisi : ce qui est dû, puis de
     // quoi découvrir. Un seul chemin, celui que la pastille de l'accueil compte.
+    // Depuis un examen recalé (`/revoir?examen`) : ses erreurs d'abord, toutes,
+    // sans le plafond du rythme ni le retard qui les doublerait.
+    if (revoir && new URLSearchParams(window.location.search).has('examen')) {
+      const erreurs = erreursDuJour(questions, depart.questions, aujourdhui());
+      if (erreurs.length > 0) return erreurs;
+    }
     if (revoir) return serieDuJour(questions, depart.questions, aujourdhui(), depart.profil.rythme ?? undefined);
     // L'entraînement : dix questions du thème, les fragiles et les jamais
     // vues d'abord. « Encore 10 » en tire dix autres de la progression du jour.

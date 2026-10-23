@@ -137,7 +137,7 @@ describe('le retour au premier plan', () => {
 
     for (let i = 0; i < 2; i++) {
       fireEvent.click(screen.getByRole('button', { name: 'Première proposition' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+      fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     }
     expect(document.querySelector('.resultat__score')?.textContent).toBe('3 / 3');
     const temps = document.querySelector('.resultat__temps')?.textContent ?? '';
@@ -149,7 +149,7 @@ describe('le retour au premier plan', () => {
     commencer();
     expect(retours).toHaveLength(1);
     for (let i = 0; i < 3; i++) {
-      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+      fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     }
     expect(screen.getByText(/Examen blanc terminé/)).toBeTruthy();
     expect(retours).toHaveLength(0);

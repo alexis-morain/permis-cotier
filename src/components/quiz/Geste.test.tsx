@@ -123,7 +123,7 @@ describe('lire le résultat', () => {
     render(<Quiz mode="examen" questions={[question('ecluses-0001')]} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
-    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
 
     // Le verdict est écrit, l'haptique attend la frame qui le peint.
     expect(screen.getByText(/Reçu\. 0 erreur sur les 5 admises\./)).toBeTruthy();
@@ -147,7 +147,7 @@ describe('le pire cas', () => {
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     for (let i = 0; i < 40; i++) {
       fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
-      fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+      fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     }
     expect(document.querySelector('.resultat__score')?.textContent).toBe('40 / 40');
     expect(screen.getByText('Reçu. 0 erreur sur les 5 admises.')).toBeTruthy();
@@ -159,8 +159,8 @@ describe('le pire cas', () => {
     render(<Quiz mode="examen" questions={deux} />);
     fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
     fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
-    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Valider et passer' }));
+    fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
+    fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     expect(screen.getByText('Reçu. 1 erreur sur les 5 admises.')).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Revoir mon erreur' })).toBeTruthy();
   });
