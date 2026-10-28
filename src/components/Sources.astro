@@ -76,14 +76,17 @@ if (citeUneFiche(sources)) {
 </aside>
 
 <style>
+  /* La source se lit en légende : encre douce, sur un lavis, le lien reste
+     bleu. */
   .sources {
-    border: 2px solid var(--filet);
     border-radius: var(--rayon);
-    padding: 1.25rem 1.4rem;
+    padding: 1rem 1.25rem 1.25rem;
     margin: 3rem 0 0;
     background: var(--fond-2);
+    color: var(--texte-doux);
+    font-size: 0.875rem;
   }
-  .sources__titre { font-size: 1rem; margin: 0 0 0.6rem; }
+  .sources__titre { font-size: 0.875rem; margin: 0 0 0.6rem; }
   .sources ul { margin: 0 0 0.8rem; padding-left: 1.1rem; }
   .sources li { margin-bottom: 0.4rem; }
   .sources p { margin: 0; max-width: var(--mesure); }

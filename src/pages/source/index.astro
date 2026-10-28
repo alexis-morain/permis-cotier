@@ -60,15 +60,10 @@ const compte = (ref: string) => questions.filter((q) => q.sources.some((s) => s.
 <style>
   h1 { margin-bottom: 1.25rem; }
   .liste { list-style: none; margin: 2.5rem 0 0; padding: 0; }
-  .liste li {
-    border: 2px solid var(--filet);
-    border-radius: var(--rayon);
-    background: var(--fond-carte);
-    padding: 1rem 1.2rem;
-    margin-bottom: 0.8rem;
-    max-width: none;
-  }
-  .liste a { font-weight: 700; }
+  /* Des rangées à filet, pas des cartes : la liste se lit d'un trait. */
+  .liste li { border-top: 1px solid var(--filet); padding: 1rem 0; max-width: none; }
+  .liste li:last-child { border-bottom: 1px solid var(--filet); }
+  .liste a { font-weight: 600; }
   .liste span { display: block; margin-top: 0.3rem; }
   .liste__autorite { max-width: var(--mesure); }
 </style>

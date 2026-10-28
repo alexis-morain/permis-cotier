@@ -7,7 +7,7 @@ import { POUR_APP } from '../lib/cible';
  *
  * Un texte officiel se lit ailleurs, sur Légifrance ou sur le site d'un préfet
  * maritime ; une fiche du site se lit ici, parce qu'elle n'existe nulle part
- * ailleurs. Les deux liens se ressemblent, la pastille les sépare.
+ * ailleurs. Les deux liens se ressemblent, la marque les sépare.
  */
 interface Props {
   provenance: Provenance;
@@ -21,17 +21,16 @@ const nom = POUR_APP && provenance === 'fiche' ? 'Fiche maison' : NOM_PROVENANCE
 <span class={`marque marque--${provenance}`}>{nom}</span>
 
 <style>
-  /* Pas de couleur : le jaune est la seule couleur d'action du site, et une
-     pastille n'est pas une action. C'est la bordure qui appuie la fiche. */
+  /* Pas de couleur : les quatre couleurs pâles disent un groupe de thèmes, et
+     une marque de source n'en est pas un. C'est le bord qui appuie la fiche. */
   .marque {
     display: inline-block;
     margin-left: 0.4rem;
     padding: 0.05rem 0.45rem;
-    border: 2px solid var(--filet);
-    border-radius: 0.625rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
+    border: 1px solid var(--filet);
+    border-radius: var(--rayon-etiquette);
+    font-size: 0.75rem;
+    font-weight: 600;
     color: var(--texte-doux);
     white-space: nowrap;
     vertical-align: 0.1em;

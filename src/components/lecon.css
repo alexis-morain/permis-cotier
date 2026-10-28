@@ -1,35 +1,38 @@
 /*
- * L'écran de leçon. Même grammaire que l'écran de jeu : la barre en jaune,
- * les cartes à bord plein, le mémo sur une carte marine. Une idée par écran
- * quand le script est là ; tout à la suite quand il n'y est pas.
+ * L'écran de leçon, une page de carnet. Même grammaire que l'écran de jeu :
+ * un rail fin rempli d'encre, du blanc, des filets, le mémo sur un lavis. Une
+ * idée par écran quand le script est là ; tout à la suite quand il n'y est
+ * pas.
  */
 
 .lecon { scroll-margin-top: 1rem; }
 
 .lecon__entete { margin-bottom: 1.5rem; }
-.lecon__chapitre { margin: 0 0 0.6rem; font-size: 0.9rem; font-weight: 600; }
-.lecon__chapitre a { text-decoration: none; }
+.lecon__chapitre { margin: 0 0 0.6rem; font-size: 0.875rem; font-weight: 600; }
+.lecon__chapitre a { color: inherit; text-decoration: none; }
 @media (hover: hover) and (pointer: fine) {
-  .lecon__chapitre a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  .lecon__chapitre a:hover { text-decoration: underline; }
 }
 
 /* Le retour vers la série d'où l'on vient, quand la leçon a été ouverte
    depuis une question ratée. Cible tactile de 44 px. */
-.lecon__retour { margin: 0 0 0.6rem; font-weight: 700; }
+.lecon__retour { margin: 0 0 0.6rem; font-weight: 600; }
 .lecon__retour a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 
+/* Le rail : six pixels, un lavis cerné d'un filet, rempli d'encre. */
 .lecon__barre {
-  height: 0.6rem;
-  border-radius: 999px;
+  height: 6px;
+  border: 1px solid var(--filet);
+  border-radius: 3px;
   background: var(--fond-2);
   overflow: hidden;
 }
 .lecon__barre span {
   display: block;
   height: 100%;
-  background: var(--jauge);
+  background: var(--texte);
   transform-origin: left;
-  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Le pas à pas : seul l'écran courant est visible, et seulement quand la page
@@ -40,17 +43,16 @@ html:not(.js) .lecon__mode { display: none; }
 
 .ecran { outline: none; margin-bottom: 2.5rem; }
 .lecon--pas-a-pas .ecran { margin-bottom: 0; }
-.ecran--courant { animation: ecran-entree 200ms cubic-bezier(0.2, 0, 0, 1); }
+.ecran--courant { animation: ecran-entree 200ms cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes ecran-entree {
   from { opacity: 0; transform: translateY(0.5rem); }
   to { opacity: 1; transform: none; }
 }
 
 .ecran__accroche {
-  font-stretch: var(--large);
   font-weight: 600;
-  font-size: 1.3rem;
-  line-height: 1.4;
+  font-size: 1.25rem;
+  line-height: 1.45;
   max-width: 30ch;
   margin: 0.5rem 0 0;
 }
@@ -66,23 +68,21 @@ html:not(.js) .lecon__mode { display: none; }
   flex: 0 0 auto;
   display: inline-grid;
   place-items: center;
-  min-width: 1.85rem;
-  height: 1.85rem;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--filet-fort);
   border-radius: 999px;
-  background: var(--jaune);
-  color: var(--marine);
-  font-size: 0.9rem;
-  font-weight: 800;
-  font-stretch: 100%;
+  color: var(--texte);
+  font-size: 0.875rem;
+  font-weight: 600;
   letter-spacing: 0;
   align-self: center;
 }
 
 .ecran__visuel {
   margin: 0 0 1.1rem;
-  border: 2px solid var(--filet);
   border-radius: var(--rayon);
-  background: var(--fond-carte);
+  background: var(--fond-2);
   padding: 0.75rem;
   display: grid;
   place-items: center;
@@ -92,37 +92,29 @@ html:not(.js) .lecon__mode { display: none; }
 .ecran__liste { padding-left: 1.2rem; margin: 0.6rem 0 0; }
 .ecran__liste li { margin-bottom: 0.35rem; }
 
-/* Le piège : un encadré jaune pâle, cerné de marine. Pas de rouge, il est
-   réservé au verdict. */
+/* Le piège : un panneau blanc à filet, son titre en 600. Pas de rouge, il
+   est réservé au verdict. */
 .piege {
-  background: var(--jaune-pale);
-  border: 2px solid var(--texte);
+  background: var(--fond-carte);
+  border: 1px solid var(--filet-fort);
   border-radius: var(--rayon);
-  padding: 1.1rem 1.25rem;
+  padding: 1rem 1.25rem 1.25rem;
 }
 .piege__titre {
-  font-stretch: var(--large);
-  font-weight: 800;
+  font-weight: 600;
   margin: 0 0 0.4rem;
 }
 .piege p:last-child { margin: 0; }
 
-/* Le mémo : une carte marine cernée de jaune. C'est ce qu'on relit la veille.
-   La bande pleine largeur et sa ligne de flottaison restent à l'accueil ; ici
-   le jaune fait le tour, il ne souligne pas. Sur le marine, l'anneau de focus
-   marine ne se verrait pas : il passe au jaune, dans les deux thèmes. */
+/* Le mémo : un lavis, sans bord. C'est ce qu'on relit la veille. */
 .retenir {
-  --anneau: var(--jaune);
-  background: var(--bande);
-  color: var(--bande-texte);
-  border: 2px solid var(--jaune);
+  background: var(--fond-2);
   border-radius: var(--rayon);
-  padding: 1.25rem 1.4rem;
+  padding: 1rem 1.25rem 1.25rem;
 }
 .retenir__titre {
-  font-stretch: var(--large);
-  font-weight: 800;
-  font-size: 1.15rem;
+  font-weight: 600;
+  font-size: 1.25rem;
   margin: 0 0 0.6rem;
 }
 .retenir ul { margin: 0; padding-left: 1.2rem; }
@@ -130,9 +122,8 @@ html:not(.js) .lecon__mode { display: none; }
 .retenir li:last-child { margin-bottom: 0; }
 
 .verification__compteur {
-  font-stretch: var(--large);
-  font-weight: 800;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1rem;
   margin: 0 0 0.35rem;
 }
 .verification__enonce { font-size: 1.15rem; margin: 0.5rem 0 1rem; }
