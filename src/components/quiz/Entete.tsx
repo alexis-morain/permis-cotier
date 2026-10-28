@@ -1,5 +1,7 @@
 import type { Mode, Session } from '../../lib/session';
-import { SECONDES_PAR_QUESTION } from '../../lib/quiz';
+import { ERREURS_ADMISES, SECONDES_PAR_QUESTION } from '../../lib/quiz';
+import { groupeDuTheme } from '../../lib/groupes';
+import { nomDuTheme } from '../../lib/themes-client';
 import { useChrono } from './Chrono';
 
 interface Props {
@@ -51,10 +53,21 @@ export function EnteteApp({ session, mode, demanderArret, echoir }: Props & { mo
   );
 }
 
-/** Le compteur écrit, le chrono, puis les deux jauges sous l'en-tête. */
-export function EnteteSite({ session, echoir }: Props) {
+/** La consigne de l'épreuve, dite en légende ; plus longue à la toute première question d'une série d'entraînement. */
+const CONSIGNE = 'Une ou deux bonnes réponses';
+const CONSIGNE_LONGUE = `${CONSIGNE}. La réponse doit être exacte, une bonne case seule ne suffit pas quand il en faut deux.`;
+
+/**
+ * L'en-tête du site : le compteur écrit et le chrono, puis la méta de la
+ * question (le groupe de son thème, la consigne), puis le trait du chrono.
+ * En examen il pose aussi le carnet. Fragment exprès : le carnet doit être un
+ * enfant direct de `.jeu` pour que la grille le range à droite et que la
+ * feuille de l'app, qui vise `.jeu > …`, retrouve son balisage.
+ */
+export function EnteteSite({ session, echoir, mode, theme }: Props & { mode: Mode; theme: string }) {
   const restant = useChrono(session.echeance, echoir);
   const presse = urgent(restant);
+  const groupe = groupeDuTheme(theme);
   return (
     <>
       <div className="jeu__entete">
@@ -71,18 +84,57 @@ export function EnteteSite({ session, echoir }: Props) {
         )}
       </div>
 
+      <p className="jeu__meta">
+        <span className={`etiquette${groupe ? ` etiquette--${groupe.couleur}` : ''}`}>{nomDuTheme(theme)}</span>
+        <span>{mode === 'entrainement' && session.index === 0 ? CONSIGNE_LONGUE : CONSIGNE}</span>
+      </p>
+
       {restant !== null && (
         <div className="jeu__jauges" aria-hidden="true">
           <div className={`jeu__barre${presse ? ' jeu__barre--urgent' : ''}`}>
             <span style={{ transform: `scaleX(${restant / SECONDES_PAR_QUESTION})` }} />
           </div>
-          {/* Avancement dans l'examen, distinct du chrono : treize minutes sans
-              aucune correction, il faut au moins savoir où on en est. */}
-          <div className="jeu__avancement">
-            <span style={{ transform: `scaleX(${session.index / session.questions.length})` }} />
-          </div>
         </div>
       )}
+
+      {restant !== null && <Carnet session={session} restant={restant} />}
     </>
+  );
+}
+
+/**
+ * Le carnet de l'examen, à droite de la question sur un écran large : où on en
+ * est, combien de temps reste, ce qu'il faut pour être reçu. Tout vient de
+ * l'état de la session ; la grille ne dit rien que les lignes du dessus ne
+ * disent déjà, d'où `aria-hidden`. Rendu toujours, masqué par la feuille sous
+ * 60 rem, où le compteur de l'en-tête suffit. Son titre est un paragraphe, pas
+ * un `h2` : l'énoncé reste le seul titre de l'écran, celui qui prend le focus.
+ */
+function Carnet({ session, restant }: { session: Session; restant: number }) {
+  const total = session.questions.length;
+  return (
+    <aside className="encadre carnet" aria-labelledby="carnet-titre">
+      <p className="carnet__titre" id="carnet-titre">Ton examen</p>
+      <dl className="carnet__proprietes">
+        <div>
+          <dt>Question</dt>
+          <dd>{session.index + 1} sur {total}</dd>
+        </div>
+        <div>
+          <dt>Temps</dt>
+          <dd>{restant} s</dd>
+        </div>
+        <div>
+          <dt>Admis si</dt>
+          <dd>{ERREURS_ADMISES} erreurs au plus</dd>
+        </div>
+      </dl>
+      <div className="carnet__grille" aria-hidden="true">
+        {Array.from({ length: total }, (_, i) => (
+          <i key={i} className={i < session.index ? 'fait' : i === session.index ? 'ici' : undefined} />
+        ))}
+      </div>
+      <p className="carnet__pied">Aucune correction avant la fin, comme le jour de l’épreuve.</p>
+    </aside>
   );
 }

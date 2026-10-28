@@ -2,6 +2,7 @@ import type { QuestionAffichable } from '../../lib/banque';
 import type { Session } from '../../lib/session';
 import { lettreAffichee, melangerPropositions } from '../../lib/melange';
 import { nomDuTheme } from '../../lib/themes-client';
+import { groupeDuTheme } from '../../lib/groupes';
 import BoutonSignal from '../BoutonSignal';
 import { LienLecon, Signaler, Sources } from './Morceaux';
 
@@ -56,11 +57,21 @@ export function ItemRevue({
   // Une seule case cochée quand il en fallait deux : le candidat
   // ne voyait pas qu'il manquait une réponse, seulement laquelle.
   const incomplete = rate && q.reponses.length === 2 && donnee.length === 1;
+  const groupe = groupeDuTheme(q.theme);
   return (
     <article className="revue__item">
+      {/* Les virgules restent dans le texte, cachées à l'œil : le rang se lit
+          comme une phrase, et l'étiquette du groupe tient la place du thème. */}
       <p className="revue__rang">
-        Question {i + 1} sur {jouees}, {nomDuTheme(q.theme)}
-        {rate ? ', ratée' : ''}
+        <span>Question {i + 1} sur {jouees}</span>
+        <span className="visuellement-cache">, </span>
+        <span className={`etiquette${groupe ? ` etiquette--${groupe.couleur}` : ''}`}>{nomDuTheme(q.theme)}</span>
+        {rate && (
+          <>
+            <span className="visuellement-cache">, </span>
+            <span className="etiquette etiquette--faux">ratée</span>
+          </>
+        )}
       </p>
       <h2 className="revue__enonce">{d.enonce}</h2>
       {incomplete && (

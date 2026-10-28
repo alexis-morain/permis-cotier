@@ -126,7 +126,7 @@ describe('lire le résultat', () => {
     fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
 
     // Le verdict est écrit, l'haptique attend la frame qui le peint.
-    expect(screen.getByText(/Reçu\. 0 erreur sur les 5 admises\./)).toBeTruthy();
+    expect(document.querySelector('.resultat__verdict')?.textContent).toBe('Reçu. 0 erreur sur les 5 admises.');
     expect(vibrer).not.toHaveBeenCalledWith('reussi');
     frames.splice(0).forEach((f) => f(0));
     expect(vibrer).toHaveBeenCalledWith('reussi');
@@ -150,7 +150,7 @@ describe('le pire cas', () => {
       fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     }
     expect(document.querySelector('.resultat__score')?.textContent).toBe('40 / 40');
-    expect(screen.getByText('Reçu. 0 erreur sur les 5 admises.')).toBeTruthy();
+    expect(document.querySelector('.resultat__verdict')?.textContent).toBe('Reçu. 0 erreur sur les 5 admises.');
   });
 
   it('dit « 1 erreur » au singulier, et l’erreur unique au site', () => {
@@ -161,7 +161,7 @@ describe('le pire cas', () => {
     fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
     fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
-    expect(screen.getByText('Reçu. 1 erreur sur les 5 admises.')).toBeTruthy();
+    expect(document.querySelector('.resultat__verdict')?.textContent).toBe('Reçu. 1 erreur sur les 5 admises.');
     expect(screen.getByRole('button', { name: 'Revoir mon erreur' })).toBeTruthy();
   });
 
