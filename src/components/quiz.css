@@ -429,11 +429,11 @@ div.sources ul { margin: 0; }
   gap: 0.25rem 0.5rem;
   font-size: 1.0625rem;
   font-weight: 600;
-  margin: 0.75rem 0 1.25rem;
+  margin: 0.75rem 0 0;
 }
 .resultat__verdict .etiquette { font-size: 0.875rem; }
 
-.resultat__ecart { margin: -0.75rem 0 1.25rem; font-weight: 600; color: var(--texte-doux); }
+.resultat__ecart { margin: 0.5rem 0 0; font-weight: 600; color: var(--texte-doux); }
 
 /* Le pavillon Q, quand l'examen blanc est reçu.
 
@@ -470,7 +470,10 @@ div.sources ul { margin: 0; }
    en étiquette. Il entre d'un bloc, sans cascade : plusieurs
    badges d'un coup font une liste, pas une suite d'effets. La région
    `status` reste vide tant que rien n'est gagné, et ne se voit pas. Ici et
-   non dans global.css : la leçon charge cette feuille, les autres pages non. */
+   non dans global.css : la leçon charge cette feuille, les autres pages non.
+   Vide, elle sort du flux : dans une colonne flex, elle doublait l'écart
+   entre le score et la note par thème. */
+.badges-gagnes:empty { position: absolute; }
 .badges-gagnes__corps {
   margin: 0 0 1.25rem;
   padding: 1rem 1.25rem;
@@ -515,6 +518,8 @@ div.sources ul { margin: 0; }
 /* Le détail par thème, avec un rail fin sous chaque ligne : `--part` est la
    part de bonnes réponses, posée par l'écran. */
 .parTheme { list-style: none; margin: 1.5rem 0; padding: 0; max-width: 34rem; }
+/* Dans la colonne du résultat, l'écart de `.jeu` suffit : la marge s'y ajoutait. */
+.jeu > .parTheme { margin-block: 0.25rem 0; }
 .parTheme li {
   display: grid;
   grid-template-columns: 1fr auto;

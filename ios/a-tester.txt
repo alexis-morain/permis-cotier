@@ -1,4 +1,4 @@
-Version 1.0.8 : la page calme. Toute l’app change de forme, pas de contenu : une page blanche, la police de l’iPhone, des filets fins, un seul bouton jaune par écran. Regarde surtout si ça te paraît plus reposant, et si rien n’est devenu moins lisible.
+Version 1.0.8 : la page calme. Toute l’app change de forme, les questions et les leçons restent les mêmes : une page blanche, la police de l’iPhone, des filets fins, un seul bouton jaune par écran. Regarde surtout si ça te paraît plus reposant, et si rien n’est devenu moins lisible.
 
 Accueil
 • Le titre « Accueil » et la date, puis un panneau à filet : la prochaine chose à faire, avec une étiquette de couleur pour le thème de la leçon, un petit rail d’avancement et le bouton jaune « Continuer le cours ».

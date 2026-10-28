@@ -2,4 +2,4 @@ L’app change d’allure : un fond blanc (gris foncé en sombre), la police de 
 
 L’accueil montre ta prochaine étape dans un panneau, puis le reste en liste. La correction d’une question monte du bas, sur fond vert ou rouge pâle, avec son explication et « Continuer » à portée de pouce.
 
-Chaque question porte la couleur de son groupe de thèmes. Les cours, l’entraînement, ta fiche et les réglages suivent la même allure ; le contenu ne change pas.
+Les thèmes sont rangés en quatre groupes, chacun avec sa couleur, de l’accueil à la question. Les cours, l’entraînement, ta fiche et les réglages suivent la même allure ; les questions et les leçons ne changent pas.
