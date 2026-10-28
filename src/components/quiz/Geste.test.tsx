@@ -109,9 +109,9 @@ describe('passer à la suite', () => {
     expect(screen.queryByRole('status')).toBeNull();
   });
 
-  it('monte le panneau en 220 ms, transform et opacité, sur la courbe de l’app', () => {
+  it('monte la feuille de correction en 220 ms, transform et opacité, sur la courbe de l’app', () => {
     const css = feuille('src/styles/app-jeu.css');
-    expect(corps(css, 'html[data-app] .jeu__pied .verdict').join(';')).toMatch(/animation:\s*panneau-monte 220ms var\(--courbe\)/);
+    expect(corps(css, 'html[data-app] .jeu__pied:has(.verdict)').join(';')).toMatch(/animation:\s*panneau-monte 220ms var\(--courbe\)/);
     expect(css).toMatch(/@keyframes panneau-monte \{ from \{ opacity: 0; transform: translateY\(100%\); \}/);
   });
 });

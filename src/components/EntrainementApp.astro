@@ -2,7 +2,7 @@
 /**
  * La liste de l'écran Entraînement, dans l'app seulement.
  *
- * Des cellules de réglages iOS, pleine largeur, un chevron à droite, et en
+ * Des rangées nues, pleine largeur, un chevron à droite, et en
  * tête « Tes erreurs » quand il y en a : le script la montre, la page la rend
  * cachée, puisque la progression ne se lit que dans le téléphone. Sous chaque
  * thème ouvert, le script pose « n retenues sur m » et une jauge fine
@@ -58,40 +58,41 @@ const banque = JSON.stringify((await questionsPubliees()).map((q) => ({ id: q.id
 </script>
 
 <style>
-  /* Une liste de réglages iOS : cellules pleine largeur de 56 pt, un filet
-     entre deux, un chevron qui dit que la cellule mène ailleurs. */
-  .choix { list-style: none; margin: 1.25rem calc(50% - 50vw) 0; padding: 0; }
-  .choix li { border-top: 2px solid var(--filet); max-width: none; }
-  .choix li:last-child { border-bottom: 2px solid var(--filet); }
+  /* Une liste de rangées nues dans les marges de l'écran : un filet entre
+     deux, un chevron en bord de champ qui dit que la rangée mène ailleurs. */
+  .choix { list-style: none; margin: 1.25rem 0 0; padding: 0; }
+  .choix li { border-top: 1px solid var(--filet); max-width: none; }
+  .choix li:last-child { border-bottom: 1px solid var(--filet); }
   /* Le compte passe sous le nom quand les deux ne tiennent plus sur une
      ligne, aux grandes tailles de texte ; le chevron reste à droite, hors du
      flux, pour ne jamais sortir de l'écran. */
   .choix a {
     position: relative;
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 0.25rem 1rem; min-height: 3.5rem; padding: 0.75rem 2.5rem 0.75rem 16px; text-decoration: none;
+    gap: 0.25rem 1rem; min-height: 3.5rem; padding: 0.75rem 1.75rem 0.75rem 0;
+    color: inherit; text-decoration: none;
   }
   .choix a:active { background: var(--fond-2); }
   .choix a::after {
     content: '›';
-    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
-    font-size: 1.5rem; line-height: 1; color: var(--texte-doux);
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    font-size: 1.5rem; line-height: 1; color: var(--filet-fort);
   }
-  .choix__nom { flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; font-size: 1.05rem; font-weight: 700; }
+  .choix__nom { flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; font-size: 1.05rem; font-weight: 600; }
   .choix .pastille { padding: 0; background: none; border: 0; color: var(--texte-doux); font-weight: 600; font-variant-numeric: tabular-nums; }
   /* La jauge du Cours (`.chapitres__jauge`), sur toute la largeur sous le nom. */
   .choix__jauge {
     flex: 0 0 100%;
     height: 6px;
     border-radius: 999px;
-    background: var(--fond-2);
+    background: var(--filet);
     overflow: hidden;
   }
   .choix__jauge[hidden] { display: none; }
   .choix__jauge span {
     display: block;
     height: 100%;
-    background: var(--jauge);
+    background: var(--texte);
     transform-origin: left;
     transition: transform 300ms var(--courbe);
     animation: app-jauge 400ms var(--courbe) 80ms both;

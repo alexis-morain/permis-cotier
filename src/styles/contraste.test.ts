@@ -62,6 +62,12 @@ const TEXTES: [string, string][] = [
   ['--rouge-texte', '--rouge-pale'],
   ['--texte', '--vert-pale'],
   ['--texte', '--rouge-pale'],
+  // La feuille de correction de l'app : la source en légende et le lien de la
+  // leçon sur le fond du verdict.
+  ['--texte-doux', '--vert-pale'],
+  ['--texte-doux', '--rouge-pale'],
+  ['--lien', '--vert-pale'],
+  ['--lien', '--rouge-pale'],
   ['--sur-verdict', '--vert'],
   ['--sur-verdict', '--rouge'],
   ['--bleu-texte', '--bleu'],

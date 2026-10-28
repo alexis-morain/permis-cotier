@@ -3,7 +3,9 @@
 
    Le parti vient de docs/app-da.md : pendant la série, la barre d'onglets est
    cachée (`modeConcentration`), l'écran est à la question et rien d'autre ;
-   la barre d'action et le verdict forment un bloc collé au bord bas. */
+   la barre d'action et la correction forment un bloc collé au bord bas. Les
+   propositions, les étiquettes et les couleurs sont celles de `quiz.css` : on
+   ne redessine ici que ce qui est propre au téléphone. */
 
 /* ------------------------------------------------ L'écran tient la hauteur
 
@@ -37,9 +39,9 @@ html[data-app] .jeu > .jeu__actions--collant {
 }
 
 /* L'écran de départ garde la barre d'onglets, qui flotte au-dessus du bas :
-   la zone sûre s'arrête pile à son bord, et le bord plein du bouton passait
-   dessous. Une respiration en plus, et les deux boutons d'une reprise
-   empilés pleine largeur plutôt que repliés au hasard de la largeur. */
+   la zone sûre s'arrête pile à son bord. Une respiration en plus, et les deux
+   boutons d'une reprise empilés pleine largeur plutôt que repliés au hasard
+   de la largeur. */
 html[data-app] .depart > .jeu__actions--collant {
   flex-direction: column;
   align-items: stretch;
@@ -52,10 +54,15 @@ html[data-app] .depart > .jeu__actions--collant .bouton {
 
 /* ------------------------------------------------ La barre du haut
 
-   La croix à gauche, « 2 / 10 » au centre, le chrono à droite ; dessous,
-   une jauge fine pleine largeur. Le visuel passe avant l'énoncé, les
-   propositions ferment la marche : l'ordre se règle ici, le DOM garde celui
-   que lit VoiceOver (énoncé, puis visuel). */
+   La croix à gauche, le rail d'avancement qui prend la largeur, le compte
+   puis le chrono (examen) à droite : une seule ligne, comme la maquette. Le
+   visuel passe avant l'énoncé, les propositions ferment la marche : l'ordre
+   se règle ici, le DOM garde celui que lit VoiceOver (énoncé, puis visuel).
+
+   Le carnet du site, où on en est dans l'examen à côté de la question, n'a pas
+   de place sur un téléphone : l'en-tête dit déjà le compte. */
+html[data-app] .carnet { display: none; }
+
 html[data-app] .jeu__entete { order: -1; }
 html[data-app] .jeu__visuel,
 html[data-app] .jeu > .signal-ecoute-lieu { order: 1; }
@@ -67,22 +74,16 @@ html[data-app] .jeu__pied { order: 9; }
 
 html[data-app] .jeu__entete {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 0 1rem;
+  gap: 0 0.75rem;
 }
-
-html[data-app] .jeu__entete .jeu__avancement {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  margin: 0.4rem calc(50% - 50vw) 0;
-  height: 3px;
-  border-radius: 0;
-}
-html[data-app] .jeu__entete .jeu__avancement span { border-radius: 0; }
+/* L'espace vide que rend l'entraînement à la place du chrono. */
+html[data-app] .jeu__entete > span:empty { display: none; }
 
 html[data-app] .jeu__croix {
-  justify-self: start;
+  grid-column: 1;
+  grid-row: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -99,26 +100,36 @@ html[data-app] .jeu__croix {
 }
 html[data-app] .jeu__croix:active { background: var(--fond-2); }
 
+/* Le rail : un filet épais rempli d'encre. Il glisse en `transform`, comme
+   celui du site. */
+html[data-app] .jeu__entete .jeu__avancement {
+  grid-column: 2;
+  grid-row: 1;
+  height: 6px;
+  background: var(--filet);
+}
+
 html[data-app] .jeu__compteur {
-  font-family: var(--corps);
-  font-stretch: 100%;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--texte);
+  grid-column: 3;
+  grid-row: 1;
+  color: var(--texte-doux);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 html[data-app] .jeu__chrono {
+  grid-column: 4;
+  grid-row: 1;
   justify-self: end;
-  font-size: 1.35rem;
+  font-size: 1.125rem;
   line-height: 1;
 }
 
 html[data-app] .jeu__enonce {
   max-width: none;
   hyphens: manual;
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: 1.3125rem;
 }
 
 html[data-app] .jeu__consigne {
@@ -128,82 +139,36 @@ html[data-app] .jeu__consigne {
   font-size: 0.875rem;
 }
 
-/* Le visuel est une carte blanche : il se détache du fond sans bordure. */
+/* Le visuel garde son lavis, un peu plus serré qu'à l'écran large. */
 html[data-app] .jeu__visuel {
   width: 100%;
   max-height: 30svh;
   object-fit: contain;
   padding: 0.75rem;
-  border: 1px solid var(--carte-filet);
 }
 
 /* ------------------------------------------------ Propositions
 
-   Des cartes blanches, 56 pt au moins. La lettre dans un petit carré teinté.
-   Cochée : le bord passe au marine net, le fond se teinte, la lettre se
-   remplit. Après correction : bord et fond vert ou rouge pâles, un glyphe
-   (✓ ou ✕) dans le carré, jamais la couleur seule. Pas de survol : celui de
-   `quiz.css` ne vaut qu'au pointeur fin. */
-html[data-app] .propositions { gap: 0.6rem; }
+   Celles de `quiz.css` : une rangée à filet, la lettre dans un carré, cochée
+   en `--teinte` avec la lettre pleine, corrigée en vert ou rouge pâle avec un
+   signe. Ici, seulement ce que le doigt demande : 56 pt de haut, la lettre
+   centrée sur la rangée, et l'appui qui l'enfonce. */
+html[data-app] .propositions { gap: 0.5rem; }
 
 html[data-app] .proposition {
   min-height: 3.5rem;
   align-items: center;
-  border: 2px solid var(--carte-filet);
-  background: var(--fond-carte);
-  box-shadow: none;
 }
-
-html[data-app] .proposition__lettre {
-  flex-basis: 2rem;
-  height: 2rem;
-  margin-top: 0;
-  border: 0;
-  border-radius: var(--rayon-petit);
-  background: var(--teinte);
-  color: var(--texte-doux);
-  font-size: 0.9rem;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  html[data-app] .proposition:hover:not(:disabled) { box-shadow: none; }
-}
-
-html[data-app] .proposition--cochee {
-  border-color: var(--texte);
-  background: var(--teinte);
-  box-shadow: none;
-}
-html[data-app] .proposition--cochee .proposition__lettre {
-  background: var(--texte);
-  color: var(--fond-carte);
-}
-
-html[data-app] .proposition--juste {
-  border-color: var(--vert);
-  background: var(--vert-pale);
-  box-shadow: none;
-}
-html[data-app] .proposition--fausse {
-  border-color: var(--rouge);
-  background: var(--rouge-pale);
-  box-shadow: none;
-}
-html[data-app] .proposition--juste .proposition__lettre { background: var(--vert); color: var(--blanc); font-size: 0; }
-html[data-app] .proposition--fausse .proposition__lettre { background: var(--rouge); color: var(--blanc); font-size: 0; }
-html[data-app] .proposition--juste .proposition__lettre::before,
-html[data-app] .proposition--fausse .proposition__lettre::before { font-size: 1rem; }
-html[data-app] .proposition--juste .proposition__lettre::before { content: '✓'; }
-html[data-app] .proposition--fausse .proposition__lettre::before { content: '✕'; }
+html[data-app] .proposition__lettre { margin-top: 0; }
 
 /* ------------------------------------------------ Le mouvement du jeu
 
    Question à question, rien n'entre : quarante fois par examen, une entrée
    ralentit la lecture plus qu'elle ne l'aide. La question change d'un coup,
-   le compteur et le chrono remis à vingt disent qu'elle a changé, et la
-   jauge d'avancement glisse. Le `key` de Quiz.tsx remonte encore ces
-   éléments (focus sur l'énoncé, son coupé), il ne rejoue plus rien. Les
-   règles du site, elles, gardent leur entrée. */
+   le compteur et le chrono remis à vingt disent qu'elle a changé, et le rail
+   d'avancement glisse. Le `key` de Quiz.tsx remonte encore ces éléments
+   (focus sur l'énoncé, son coupé), il ne rejoue plus rien. Les règles du
+   site, elles, gardent leur entrée. */
 html[data-app] .jeu > .jeu__enonce,
 html[data-app] .jeu > .jeu__visuel,
 html[data-app] .jeu > .propositions {
@@ -212,12 +177,12 @@ html[data-app] .jeu > .propositions {
 
 /* La proposition s'enfonce à l'appui, en 100 ms, et remonte en 160. `:active`
    part au toucher grâce à l'écouteur `touchstart` de Coquille.astro.
-   L'haptique `choix` vient en renfort, jamais seule. Cochée, la lettre se
-   remplit et son disque se pose d'un léger resserrement. */
-html[data-app] .proposition {
-  transition: border-color var(--duree-courte) var(--courbe), background-color var(--duree-courte) var(--courbe),
-    box-shadow var(--duree-courte) var(--courbe), transform var(--duree-courte) var(--courbe),
-    opacity var(--duree-courte) var(--courbe);
+   L'haptique `choix` vient en renfort, jamais seule. Ses couleurs changent
+   d'un coup (`quiz.css` les fait glisser, l'app n'anime que le mouvement).
+   Cochée, la lettre se pose d'un léger resserrement. */
+html[data-app] .proposition,
+html[data-app] .proposition__lettre {
+  transition: transform var(--duree-courte) var(--courbe);
 }
 html[data-app] .proposition:active:not(:disabled) {
   transform: scale(0.97);
@@ -235,11 +200,11 @@ html[data-app] .jeu > .propositions .proposition--cochee .proposition__lettre {
 
 /* ------------------------------------------------ Le bloc du bas
 
-   Le bouton unique, pleine largeur, collé au bas. Après correction, le
-   panneau monte du bas comme une feuille blanche : la question reste visible
+   Le bouton unique, pleine largeur, collé au bas. Après correction, tout le
+   bloc devient une feuille qui monte du bas : la question reste visible
    derrière, le verdict et l'explication se lisent sans défiler, « Continuer »
    est toujours à portée de pouce. Plafonné à la hauteur sous la zone sûre :
-   aux tailles d'accessibilité le panneau rétrécit et défile dedans, la barre
+   aux tailles d'accessibilité la feuille rétrécit et défile dedans, la barre
    garde sa taille. */
 html[data-app] .jeu__pied {
   position: sticky;
@@ -257,7 +222,7 @@ html[data-app] .jeu__pied .jeu__actions--collant {
   z-index: 1;
   margin: 0;
   padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
-  border-top: 0;
+  border-top: 1px solid var(--filet);
   background: var(--fond);
 }
 html[data-app] .jeu__pied .jeu__actions--collant .bouton {
@@ -265,21 +230,35 @@ html[data-app] .jeu__pied .jeu__actions--collant .bouton {
   min-height: 3.25rem;
 }
 
-/* Corrigé, le pied devient la feuille : une surface blanche, un filet fin
-   en haut, le rayon aux coins du haut. */
+/* Corrigé, le pied est la feuille : le fond pâle du verdict, un filet teinté
+   en haut, les coins du haut arrondis, et la seule ombre de l'app avec la
+   recherche, parce que c'est ce qui flotte. La confirmation d'arrêt prend la
+   même place, en blanc. Toute la feuille monte, bouton compris : un fond qui
+   apparaîtrait d'un coup avant son texte se verrait. */
 html[data-app] .jeu__pied:has(.verdict),
 html[data-app] .jeu__pied:has(.arret) {
   background: var(--fond-carte);
-  border-top: 1px solid var(--carte-filet);
+  border-top: 1px solid var(--filet);
   border-radius: var(--rayon) var(--rayon) 0 0;
+  box-shadow: var(--ombre-flottante);
+  animation: panneau-monte 220ms var(--courbe) both;
+}
+html[data-app] .jeu__pied:has(.verdict--juste) {
+  background: var(--vert-pale);
+  border-top-color: color-mix(in srgb, var(--vert) 35%, var(--vert-pale));
+}
+html[data-app] .jeu__pied:has(.verdict--fausse) {
+  background: var(--rouge-pale);
+  border-top-color: color-mix(in srgb, var(--rouge) 35%, var(--rouge-pale));
 }
 html[data-app] .jeu__pied:has(.verdict) .jeu__actions--collant,
 html[data-app] .jeu__pied:has(.arret) .jeu__actions--collant {
-  background: var(--fond-carte);
+  background: transparent;
+  border-top: 0;
 }
 
 html[data-app] .jeu__pied .verdict {
-  /* Le panneau entier (explication plus barre d'action, environ 5 rem) ne
+  /* La feuille entière (explication plus barre d'action, environ 5 rem) ne
      passe pas la moitié de la hauteur visible : l'explication défile dedans,
      et la réponse cochée reste au-dessus (`useVerdictEnVue`). */
   max-height: calc(50svh - 5rem);
@@ -287,34 +266,26 @@ html[data-app] .jeu__pied .verdict {
   overscroll-behavior: contain;
   margin: 0;
   padding: 1.25rem 1rem 0.5rem;
-  border: 0;
   border-radius: var(--rayon) var(--rayon) 0 0;
   background: transparent;
-  animation: panneau-monte 220ms var(--courbe) both;
 }
 
-/* Le mot du verdict en pastille : la couleur renforce, le mot et le glyphe
-   disent. */
+/* Le titre dit le signe et le mot, en encre du verdict : la couleur renforce,
+   elle ne dit pas seule. */
 html[data-app] .jeu__pied .verdict__titre {
-  display: inline-block;
-  margin: 0 0 0.6rem;
-  padding: 0.2em 0.75em;
-  border-radius: 999px;
-  font-family: var(--corps);
-  font-stretch: 100%;
-  font-size: 1rem;
-  line-height: 1.4;
-  animation: app-titre-monte 200ms var(--courbe) 60ms both;
+  margin: 0 0 0.5rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
-html[data-app] .jeu__pied .verdict--juste .verdict__titre { background: var(--vert-pale); color: var(--vert-texte); }
-html[data-app] .jeu__pied .verdict--fausse .verdict__titre { background: var(--rouge-pale); color: var(--rouge-texte); }
-html[data-app] .jeu__pied .verdict p:not(.verdict__titre) { margin: 0 0 0.6rem; font-size: 0.9375rem; line-height: 1.45; }
+html[data-app] .jeu__pied .verdict p:not(.verdict__titre) { margin: 0 0 0.5rem; font-size: 0.9375rem; line-height: 1.45; }
 
 html[data-app] .jeu__pied .verdict--juste .verdict__titre::before { content: '✓\00a0'; }
 html[data-app] .jeu__pied .verdict--fausse .verdict__titre::before { content: '✕\00a0'; }
 
-/* La source se déplie ; le signalement est un lien discret. */
-html[data-app] .sources--repli { margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--texte-doux); }
+/* La source se déplie, en légende, sous l'explication ; le lien de la source
+   est bleu comme tous les liens. Le signalement est un lien discret. */
+html[data-app] .sources--repli { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--texte-doux); }
 html[data-app] .sources--repli summary {
   display: flex;
   align-items: center;
@@ -346,13 +317,7 @@ html[data-app] .jeu__pied .verdict .signaler { display: inline-block; margin-top
 }
 html[data-app] .jeu__pied .verdict__lecon { margin: 0; }
 
-/* Le mot du verdict arrive juste après le panneau : c'est lui qu'on lit. */
-@keyframes app-titre-monte {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
-
-/* La confirmation d'arrêt prend la même place que le verdict. */
+/* La confirmation d'arrêt prend la même place que la correction. */
 html[data-app] .jeu__pied .arret {
   border: 0;
   background: transparent;
@@ -360,7 +325,6 @@ html[data-app] .jeu__pied .arret {
   overscroll-behavior: contain;
   border-radius: var(--rayon) var(--rayon) 0 0;
   padding: 1.25rem 1rem max(1.1rem, env(safe-area-inset-bottom));
-  animation: panneau-monte 220ms var(--courbe) both;
 }
 
 @keyframes panneau-monte {
@@ -371,10 +335,12 @@ html[data-app] .jeu__pied .arret {
 
 /* ------------------------------------------------ Résultat
 
-   Le score en très grand, le verdict écrit, les jauges par thème, puis le
-   geste suivant en boutons pleine largeur, le partage discret dessous. */
+   Le score en très grand, le verdict en étiquette, puis le geste suivant en
+   boutons pleine largeur (le principal jaune, le second à filet), le partage
+   discret dessous. Les notes par thème et le récapitulatif sont des rangées
+   nues, séparées de filets. */
 html[data-app] .resultat__score {
-  font-size: clamp(5rem, 30vw, 8rem);
+  font-size: clamp(4.5rem, 26vw, 6.5rem);
   /* Approche optique : le blanc à gauche d'un grand chiffre le décale du texte. */
   margin-left: -0.07em;
   animation: app-entree var(--duree) var(--courbe) both;
@@ -387,33 +353,25 @@ html[data-app] .parTheme__jauge {
   grid-column: 1 / -1;
   height: 6px;
   border-radius: 999px;
-  background: var(--fond-2);
+  background: var(--filet);
   overflow: hidden;
 }
 html[data-app] .parTheme__jauge span {
   display: block;
   height: 100%;
-  background: var(--vert);
+  background: var(--texte);
   transform: scaleX(var(--part, 0));
   transform-origin: left;
   animation: app-jauge 400ms var(--courbe) calc(var(--rang, 0) * 50ms + 120ms) both;
 }
 
-/* Les notes par thème et le rappel de la raison : deux cartes blanches. */
+/* Les notes par thème : des rangées nues, la dernière aussi fermée d'un filet. */
 html[data-app] .parTheme {
   max-width: none;
-  padding: 0 1rem;
-  border: 1px solid var(--carte-filet);
-  border-radius: var(--rayon);
-  background: var(--fond-carte);
+  padding: 0;
+  border-bottom: 1px solid var(--filet);
 }
-html[data-app] .parTheme li + li { border-top: 1px solid var(--carte-filet); }
-html[data-app] .resultat__rappel {
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--carte-filet);
-  border-radius: var(--rayon);
-  background: var(--fond-carte);
-}
+html[data-app] .parTheme li { border-top: 1px solid var(--filet); }
 
 html[data-app] .resultat__actions {
   flex-direction: column;
@@ -422,6 +380,11 @@ html[data-app] .resultat__actions {
 html[data-app] .resultat__actions .bouton {
   flex: 0 0 auto;
   min-height: 3.25rem;
+}
+/* Le second geste est un bouton à filet, pas un lien souligné. */
+html[data-app] .resultat__actions .bouton--discret {
+  border-color: var(--filet-fort);
+  text-decoration: none;
 }
 
 html[data-app] .resultat__partage {
@@ -433,14 +396,14 @@ html[data-app] .resultat__partage .bouton { min-height: 2.75rem; }
 /* ------------------------------------------------ Sans mouvement */
 @media (prefers-reduced-motion: reduce) {
   html[data-app] .jeu > .propositions .proposition--cochee .proposition__lettre,
-  html[data-app] .jeu__pied .verdict,
-  html[data-app] .jeu__pied .verdict__titre,
-  html[data-app] .jeu__pied .arret,
+  html[data-app] .jeu__pied:has(.verdict),
+  html[data-app] .jeu__pied:has(.arret),
   html[data-app] .resultat__score,
   html[data-app] .parTheme__jauge span {
     animation: none;
   }
-  html[data-app] .proposition { transition: none; }
+  html[data-app] .proposition,
+  html[data-app] .proposition__lettre { transition: none; }
 }
 
 /* La confirmation d'arrêt : ses deux boutons empilés, pleine largeur, comme
@@ -456,25 +419,19 @@ html[data-app] .arret .jeu__actions .bouton {
 
 /* ------------------------------------------------ Le récapitulatif et la revue
 
-   Le récapitulatif de fin de série et d'examen reprend la grammaire de l'app :
-   une carte blanche, un filet fin entre les lignes, le titre de section des
-   autres écrans. Une ligne ouverte déplie la correction à l'intérieur de la
-   même carte, sans répéter la question que la ligne porte déjà : l'énoncé et
-   le rang restent lisibles pour un lecteur d'écran, ils ne se redisent pas à
+   Le récapitulatif de fin de série et d'examen est une liste de rangées nues :
+   un filet entre chaque ligne, le titre de section en petit, en encre douce,
+   comme « Ensuite » de l'accueil. Une ligne ouverte déplie la correction dans
+   la rangée, sans répéter la question que la ligne porte déjà : l'énoncé et le
+   rang restent lisibles pour un lecteur d'écran, ils ne se redisent pas à
    l'œil. */
 html[data-app] .recap__titre {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.375rem;
+  color: var(--texte-doux);
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
-html[data-app] .recap__liste {
-  padding: 0 1rem;
-  border: 1px solid var(--carte-filet);
-  border-radius: var(--rayon);
-  background: var(--fond-carte);
-}
-html[data-app] .recap__liste > li { border-top: 0; }
-html[data-app] .recap__liste > li + li { border-top: 1px solid var(--carte-filet); }
+html[data-app] .recap__liste { border-bottom: 1px solid var(--filet); }
 html[data-app] .recap__marque { font-weight: 600; }
 html[data-app] .recap__ligne[aria-expanded='true'] .recap__enonce { font-weight: inherit; }
 html[data-app] .recap .revue__item { padding: 0 0 1rem; }
@@ -489,8 +446,8 @@ html[data-app] .recap .revue__enonce {
   clip-path: inset(50%);
   white-space: nowrap;
 }
-/* La correction d'une ligne ouverte n'est pas une carte de plus : du texte
-   sur la carte du récapitulatif. */
+/* La correction d'une ligne ouverte n'est pas un panneau de plus : du texte
+   dans la rangée. */
 html[data-app] .recap .verdict {
   margin-top: 0.75rem !important;
   padding: 0;
@@ -511,5 +468,4 @@ html[data-app] .revue__item .proposition__marque {
   align-self: auto;
   color: var(--texte-doux);
 }
-html[data-app] .revue__item { border-top: 1px solid var(--carte-filet); }
 html[data-app] .recap .revue__item { border-top: 0; }
