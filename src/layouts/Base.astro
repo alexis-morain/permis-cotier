@@ -210,13 +210,13 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     <header class="entete">
       <div class="page entete__interieur">
         <a href="/" class="marque" aria-label="Permis côtier, accueil">
-          {/* La marque cardinale nord : deux cônes, pointes en haut, jaunes sur le
-              carré d'encre. Le seul jaune de l'en-tête, fixe en clair comme en
-              sombre. */}
+          {/* Le voyant d'une cardinale, deux cônes opposés par la base, jaunes
+              sur le carré d'encre, comme le favicon. Le seul jaune de
+              l'en-tête, fixe en clair comme en sombre. */}
           <svg class="marque__glyphe" viewBox="0 0 22 22" width="24" height="24" aria-hidden="true">
             <rect x="0.5" y="0.5" width="21" height="21" rx="4.5" fill="#191918" class="marque__fond" />
-            <path d="M11 3.5l4 5.5H7z" fill="#ffc72c" />
-            <path d="M11 11l4 5.5H7z" fill="#ffc72c" />
+            <path d="M11 4.5l4 5.5H7z" fill="#ffc72c" />
+            <path d="M11 18l4-5.5H7z" fill="#ffc72c" />
           </svg>
           <span class="marque__nom">Permis côtier</span>
         </a>
