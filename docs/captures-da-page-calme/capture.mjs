@@ -116,6 +116,12 @@ async function prise(p) {
       await evalue(`(async () => { ${p.script} })()`);
       await pause(p.attenteScript ?? 500);
     }
+    // `"mesure": true` : dit le bord droit le plus lointain, pour voir un
+    // débordement que l'émulation mobile cache (elle élargit la fenêtre).
+    if (p.mesure) {
+      const droite = await evalue(`Math.round(Math.max(...[...document.querySelectorAll('body *')].filter((e) => e.offsetWidth > 0 && !e.closest('.visuellement-cache, [hidden], dialog:not([open])')).map((e) => e.getBoundingClientRect().right)))`);
+      console.log(`${p.nom} : bord droit ${droite} pour ${largeur}${droite > largeur ? '  DÉBORDE' : ''}`);
+    }
     let clip;
     if (p.pleine) {
       // Une image paresseuse hors de l'écran ne part jamais : on la demande.

@@ -471,3 +471,9 @@ html[data-app] .maitrise a { grid-template-columns: minmax(0, 1fr) auto; }
 html[data-app] .maitrise a b { hyphens: auto; overflow-wrap: break-word; }
 html[data-app] .examens-chiffres { grid-template-columns: repeat(auto-fit, minmax(min(100%, 5rem), 1fr)); }
 html[data-app] .reglagesApp a.cellules__ligne .cellules__chevron { margin-left: auto; }
+
+/* Les derniers examens de la fiche : au grand texte, la date, le rail et le
+   score ne tiennent plus sur une ligne de 390 pt. Le rail passe dessous,
+   comme les jauges par thème du résultat. */
+html[data-app] .barres__barre { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0.5rem; }
+html[data-app] .barres__rail { grid-column: 1 / -1; grid-row: 2; }

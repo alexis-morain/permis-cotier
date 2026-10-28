@@ -63,7 +63,7 @@ n'est embarquée.
 
 ## Ménage
 
-- Budget d'`/examen` relevé de 86 240 à 88 149 octets (`docs/budgets.md`,
+- Budget d'`/examen` relevé de 86 240 à 88 169 octets (`docs/budgets.md`,
   raison écrite) ; `POUR_APP` à 38 sur 40.
 - Les images de partage (`scripts/partage.mjs`) et les visuels générés de la
   banque gardent l'encre marine : hors de ce chantier, sans incidence Apple.

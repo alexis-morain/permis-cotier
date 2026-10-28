@@ -472,3 +472,10 @@ html[data-app] .recap .revue__item { border-top: 0; }
 
 /* Le thème de la question, entre la barre du haut et le visuel. */
 html[data-app] .jeu__meta { order: 0; margin-top: 0.75rem; }
+
+/* Au grand texte, « Ski nautique et responsabilités » en étiquette tenait
+   plus que la largeur : la note se coupait sur trois lignes et la jauge
+   sortait de l'écran. L'étiquette se coupe, la note jamais. */
+html[data-app] .parTheme li { grid-template-columns: minmax(0, 1fr) auto; }
+html[data-app] .parTheme .etiquette { white-space: normal; max-width: 100%; }
+html[data-app] .parTheme__note { white-space: nowrap; }
