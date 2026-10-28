@@ -5,6 +5,7 @@ import type { Etat } from '../../lib/progression';
 import { lenteurs, type Mode, type Session } from '../../lib/session';
 import { ERREURS_ADMISES, lienErreursExamen } from '../../lib/quiz';
 import { nomDuTheme } from '../../lib/themes-client';
+import { groupeDuTheme } from '../../lib/groupes';
 import { pointFinal, rappel } from '../../lib/raison';
 import { POUR_APP } from '../../lib/cible';
 import { partager } from '../../lib/natif';
@@ -123,7 +124,7 @@ function Score({
   const precedent = mode === 'examen' && !session.interrompu ? depart.examens[0] ?? null : null;
   const ecart = precedent ? r.bonnes - precedent.bonnes : 0;
   // Le second moment écrit du site : un examen blanc reçu hisse le pavillon
-  // Q, jaune uni, le long d'un mât qui longe le score et le verdict. Il est
+  // Q, jaune uni, le long d'un mât en encre qui longe le score et le verdict. Il est
   // dessiné en CSS sur ce bloc, rien de plus ici. Recalé, interrompu,
   // entraînement : le bloc n'a pas de classe, et rien ne se hisse.
   const recu = mode === 'examen' && !session.interrompu && r.total > 0 && r.reussi;
@@ -153,10 +154,17 @@ function Score({
                   Une note sur un examen entier demande d’aller au bout.
                 </p>
               ) : (
+                // Le mot du verdict en étiquette ; le point qui le suit reste
+                // dans le texte, caché à l'œil, pour que la phrase se lise
+                // entière.
                 <p className={`resultat__verdict resultat__verdict--${r.reussi ? 'reussi' : 'echoue'}`}>
+                  <span className={`etiquette etiquette--${r.reussi ? 'juste' : 'faux'}`}>
+                    {r.reussi ? 'Reçu' : 'Recalé'}
+                  </span>
+                  <span className="visuellement-cache">.</span>
                   {r.reussi
-                    ? `Reçu. ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
-                    : `Recalé. ${r.erreurs} erreurs, l’épreuve en admet ${ERREURS_ADMISES}.`}
+                    ? ` ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
+                    : ` ${r.erreurs} erreurs, l’épreuve en admet ${ERREURS_ADMISES}.`}
                 </p>
               )
             )}
@@ -225,6 +233,12 @@ function Temps({ session }: { session: Session }) {
   );
 }
 
+/** Le nom d'un thème en étiquette, à la couleur de son groupe. */
+function Theme({ code }: { code: string }) {
+  const groupe = groupeDuTheme(code);
+  return <span className={`etiquette${groupe ? ` etiquette--${groupe.couleur}` : ''}`}>{nomDuTheme(code)}</span>;
+}
+
 /** La note par thème, du plus faible au plus solide. */
 function ParTheme({ parTheme }: { parTheme: Record<string, { bonnes: number; total: number }> }) {
   return (
@@ -236,7 +250,7 @@ function ParTheme({ parTheme }: { parTheme: Record<string, { bonnes: number; tot
             {/* Sur le site, le nom mène à l'entraînement du thème. Dans
                 l'app, chaque onglet est sa propre webview : un lien
                 ouvrirait l'entraînement sous l'onglet Examen. */}
-            <b>{POUR_APP ? nomDuTheme(code) : <a href={`/entrainement/${code}`}>{nomDuTheme(code)}</a>}</b>
+            <b>{POUR_APP ? nomDuTheme(code) : <a href={`/entrainement/${code}`}><Theme code={code} /></a>}</b>
             <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
               {note.bonnes} / {note.total}
             </span>

@@ -28,7 +28,7 @@ const premiereLecon = POUR_APP ? undefined : { chemin: premiere.chemin, nom: pre
   indexable={false}
   prechargeBanque
 >
-  <div class="page page--etroite">
+  <div class="page">
     <SansScript ecran="L’examen blanc" />
     <Quiz client:only="react" mode="examen" source={banque} premiereLecon={premiereLecon} />
   </div>

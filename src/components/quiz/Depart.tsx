@@ -54,7 +54,7 @@ export default function Depart({ mode, taille, depart, premiereLecon, reprise, c
         </div>
       )}
 
-      <ul className="depart__format">
+      <ul className="encadre depart__format">
         <li>
           <b>{taille} question{taille > 1 ? 's' : ''}</b> tirées au sort dans les quatorze
           thèmes du programme.
@@ -73,7 +73,7 @@ export default function Depart({ mode, taille, depart, premiereLecon, reprise, c
       {!POUR_APP && (
         <>
           <p className="discret">
-            Au clavier : <b>A</b>, <b>B</b>, <b>C</b>, <b>D</b> pour cocher, <b>Entrée</b> pour valider et passer.
+            Au clavier : <kbd>A</kbd>, <kbd>B</kbd>, <kbd>C</kbd>, <kbd>D</kbd> pour cocher, <kbd>Entrée</kbd> pour valider et passer.
           </p>
           <p className="discret">
             L’arrêté du 28 septembre 2007 fixe les quarante questions et les cinq erreurs admises.

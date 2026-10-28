@@ -14,8 +14,10 @@ interface Props {
 
 /**
  * Une proposition de l'écran de jeu : un bouton à bascule, sa lettre dans un
- * disque, son texte. Avant correction, elle dit si elle est cochée ; après,
- * si elle était juste ou cochée à tort.
+ * carré, son texte. Avant correction, elle dit si elle est cochée ; après,
+ * si elle était juste ou cochée à tort : par la couleur, par le signe qui
+ * remplace la lettre (feuille de style), et par un mot pour le lecteur
+ * d'écran.
  */
 export default function Proposition({ texte, rang, cochee, etat, corrigee, desactivee, basculer }: Props) {
   let classe = cochee ? ' proposition--cochee' : '';
@@ -32,6 +34,9 @@ export default function Proposition({ texte, rang, cochee, etat, corrigee, desac
       >
         <span className="proposition__lettre" aria-hidden="true">{lettreAffichee(rang)}</span>
         <span className="proposition__texte">{texte}</span>
+        {corrigee && etat && (
+          <span className="visuellement-cache">{etat === 'juste' ? ', bonne réponse' : ', réponse fausse'}</span>
+        )}
       </button>
     </li>
   );

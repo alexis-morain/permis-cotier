@@ -118,12 +118,19 @@ function BarreAction({ mode, session, question, demanderArret, envoyer, suivante
       )}
       {!app &&
         (mode === 'examen' ? (
-          <button className="bouton bouton--discret" type="button" onClick={() => demanderArret(true)}>
+          <button className="bouton" type="button" onClick={() => demanderArret(true)}>
             Arrêter
           </button>
         ) : (
           <Signaler id={question.id} />
         ))}
+      {/* L'aide clavier ne sert qu'avant la correction, et la feuille la
+          cache là où il n'y a pas de clavier. */}
+      {!app && !session.corrigee && (
+        <p className="jeu__aide">
+          <kbd>A</kbd> à <kbd>D</kbd> pour cocher, <kbd>Entrée</kbd> pour valider
+        </p>
+      )}
     </div>
   );
 }
