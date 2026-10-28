@@ -1,28 +1,29 @@
-Ce build reprend les écrans de l’app selon les règles d’Apple : l’accueil dit quoi faire ensuite, un examen raté envoie revoir ses erreurs, la fiche ne garde que ton bilan et les réglages ont leur écran.
+Version 1.0.8 : la page calme. Toute l’app change de forme, les questions et les leçons restent les mêmes : une page blanche, la police de l’iPhone, des filets fins, un seul bouton jaune par écran. Regarde surtout si ça te paraît plus reposant, et si rien n’est devenu moins lisible.
 
 Accueil
-• Rien à revoir : la grande carte propose le cours. Après quelques erreurs : « À revoir aujourd’hui » et « Faire ma série du jour ». Épreuve posée à moins de huit jours : « Examen blanc ».
-• Un seul bouton jaune, et la carte du haut ne revient pas plus bas.
-• En haut, le titre « Accueil » et la date du jour, sans passer sous l’encoche.
-• « Pose la date de ton épreuve » ouvre Réglages.
+• Le titre « Accueil » et la date, puis un panneau à filet : la prochaine chose à faire, avec une étiquette de couleur pour le thème de la leçon, un petit rail d’avancement et le bouton jaune « Continuer le cours ».
+• Dessous, « Ensuite » : des rangées avec une icône, un libellé, une valeur à droite et un chevron. Touche une rangée entière.
+• Examen blanc raté : son score est en étiquette rouge. Reçu : en vert. Le mot « Réussi » ou « Recalé » est aussi écrit sous le libellé.
+• Quelques erreurs à revoir, ou épreuve à moins de huit jours : le panneau du haut change, la rangée correspondante disparaît d’« Ensuite ».
 
-Examen blanc
-• Rien de coché : le bouton dit « Passer », il est actif et saute la question, comptée fausse. Une case cochée : « Valider et passer ». Un double appui saute deux questions.
-• VoiceOver sur ce bouton : il lit « Passer », puis « Valider et passer ».
-• En entraînement, le bouton reste grisé tant que rien n’est coché.
-• Examen recalé : juste sous le score, « Revoir mes N erreurs » en jaune et « Refaire un examen » en discret. La série qui s’ouvre a exactement N questions, celles de l’examen. Plus bas, seules tes erreurs ; « Voir les 40 questions » déplie le reste.
-• Examen reçu : les boutons sont aussi sous le score.
+Question et correction
+• Barre du haut : la croix, un rail fin, le compte. En examen, le chrono est à droite.
+• Coche une proposition : la rangée se teinte, la lettre devient noire. Rien d’autre ne bouge de couleur.
+• Entraînement, après « Valider » : l’explication monte du bas en feuille rose pâle (faux) ou verte pâle (juste), avec une ombre. Vérifie qu’elle ne cache pas la proposition que tu viens de corriger, et que « Continuer » reste sous le pouce.
+• « Source » se déplie dans la feuille. Le lien de la leçon est bleu.
+• Le bouton jaune descend d’un pixel quand tu appuies. Grisé quand rien n’est coché.
 
-Leçons et entraînement
-• Une leçon : l’accroche du premier écran est dans la police de l’iPhone, et la barre du haut est déjà un peu remplie.
-• Entraînement : un thème commencé montre « n retenues sur m » et une jauge fine. Un thème jamais ouvert dit seulement son nombre de questions.
-• Après une réponse, « Source » : le chevron pointe vers le bas et se retourne à l’ouverture.
+Résultat d’examen
+• Le grand score, l’étiquette « Reçu » ou « Recalé », puis « Refaire un examen » en jaune. Reçu : le pavillon Q jaune monte le long du mât.
+• Examen recalé : « Revoir mes N erreurs » en jaune, « Refaire un examen » à filet dessous.
+• Les notes par thème et tes réponses sont des rangées séparées de filets, sans cartes.
 
-Fiche et Réglages
-• Fiche : ton indice, tes examens, ce qui est à reprendre et tes trois thèmes les plus fragiles. « Tous les thèmes » ouvre la liste, Retour ramène à la Fiche. « Tes quatorze derniers jours » se déplie.
-• Réglages : change la date, le rythme, le prénom. Le clavier ne zoome pas et ne cache pas le champ.
-• « Effacer ma progression », tout en bas : l’alerte s’ouvre, Annuler la ferme, Effacer vide la fiche et l’accueil.
-• Passe l’iPhone en sombre puis en clair : l’app suit, même si tu avais choisi une apparence dans l’ancienne version.
+Cours, Entraînement, Fiche, Réglages
+• Cours : les chapitres en rangées, le disque du chapitre en cours teinté, celui d’un chapitre fini plein. Une leçon : Retour en encre, le texte dans la police de l’iPhone.
+• Entraînement : les thèmes en rangées, un thème commencé garde « n retenues sur m » et son rail.
+• Fiche et Réglages : plus de fond bleuté, plus de jaune hors du bouton. Les réglages sont des panneaux blancs à filet ; le contrôle du rythme est le même que sur le site.
+• « Effacer ma progression » : l’alerte s’ouvre, Annuler la ferme, Effacer vide la fiche et l’accueil.
 
-Grand texte
-• Réglages de l’iPhone > Taille du texte au plus grand : l’accueil, la liste d’entraînement, une leçon et le résultat d’examen se lisent sans rien couper. Regarde le titre « Entraînement », qui peut se couper en deux.
+Sombre et grand texte
+• Passe l’iPhone en sombre : gris foncé neutre, plus de bleu marine. Le bouton principal reste jaune, les feuilles de correction restent rouge ou vert sombre.
+• Réglages de l’iPhone > Taille du texte au plus grand : l’accueil, la feuille de correction et une leçon se lisent sans rien couper. Une rangée de l’accueil peut passer sa valeur sous le libellé.

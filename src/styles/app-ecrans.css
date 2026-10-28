@@ -2,33 +2,13 @@
    Tout est sous `html[data-app]`, comme dans app.css : le site ne voit
    aucune de ces règles.
 
-   Une grammaire pour les trois écrans : un contenu, une carte blanche au
-   rayon unique, sans ombre (un filet fin au plus) ; dedans, des cellules
-   séparées d'un filet léger, 44 pt au moins sous le doigt, jamais de carte
-   posée dans une carte. Un seul bouton lourd par écran, le jaune. L'état
-   d'une ligne (fait, en cours) est toujours écrit ou porté par une coche, la
-   couleur ne fait que le souligner. */
-
-/* Le disque des chapitres change de teinte avec le thème : marine plein sur
-   clair, jaune plein sur sombre, où le marine ne se verrait plus. Le même
-   bloc deux fois, comme dans global.css : le système, puis le choix fait sur
-   la fiche. */
-html[data-app] {
-  --disque-fait: var(--marine);
-  --disque-fait-texte: var(--blanc);
-  --disque-encours: var(--jaune);
-  --disque-encours-bord: var(--marine);
-  --disque-encours-texte: var(--marine);
-}
-@media (prefers-color-scheme: dark) {
-  html[data-app]:not([data-apparence="clair"]) {
-    --disque-fait: var(--accent);
-    --disque-fait-texte: var(--marine);
-    --disque-encours: var(--jaune-pale);
-    --disque-encours-bord: var(--jaune);
-    --disque-encours-texte: var(--texte);
-  }
-}
+   Une grammaire pour les trois écrans : des listes en rangées séparées d'un
+   filet d'un pixel, 44 pt au moins sous le doigt, sur la page blanche. Les
+   longues listes (chapitres, leçons, thèmes) sont des rangées nues ; les
+   groupes courts (la section « L'app », les Réglages) sont un panneau blanc à
+   filet, coins de dix. Pas d'ombre, pas de carte posée dans une carte, et le
+   jaune n'est qu'au bouton principal. L'état d'une ligne (fait, en cours) est
+   toujours écrit ou porté par une coche, la couleur ne fait que le souligner. */
 
 /* ------------------------------------------------------------ Le cours
 
@@ -45,13 +25,10 @@ html[data-app] .parcours__reprise .bouton--principal {
 html[data-app] .chapitres {
   list-style: none;
   margin: 1.5rem 0 0;
-  padding: 0 1rem;
-  border: 1px solid var(--carte-filet);
-  border-radius: var(--rayon);
-  background: var(--fond-carte);
+  padding: 0;
+  border-bottom: 1px solid var(--filet);
 }
-html[data-app] .chapitres li { max-width: none; }
-html[data-app] .chapitres li + li { border-top: 1px solid var(--carte-filet); }
+html[data-app] .chapitres li { max-width: none; border-top: 1px solid var(--filet); }
 
 html[data-app] .chapitres__cellule {
   touch-action: manipulation;
@@ -70,21 +47,22 @@ html[data-app] .chapitres__disque {
   display: grid;
   place-items: center;
   border-radius: 999px;
-  border: 2px solid var(--filet-fort);
+  border: 1px solid var(--filet-fort);
   color: var(--texte);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 0.95rem;
   font-variant-numeric: tabular-nums;
 }
+/* En cours : le disque se teinte et prend le bord de l'encre. Fait : plein, à
+   l'encre de l'action. Ni l'un ni l'autre n'est jaune. */
 html[data-app] .chapitres__cellule--encours .chapitres__disque {
-  background: var(--disque-encours);
-  border-color: var(--disque-encours-bord);
-  color: var(--disque-encours-texte);
+  background: var(--teinte);
+  border-color: var(--action);
 }
 html[data-app] .chapitres__cellule--fait .chapitres__disque {
-  background: var(--disque-fait);
-  border-color: var(--disque-fait);
-  color: var(--disque-fait-texte);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--sur-action);
 }
 
 html[data-app] .chapitres__corps {
@@ -95,7 +73,7 @@ html[data-app] .chapitres__corps {
   min-width: 0;
 }
 html[data-app] .chapitres__titre {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.05rem;
   line-height: 1.25;
 }
@@ -109,13 +87,13 @@ html[data-app] .chapitres__jauge {
   height: 6px;
   margin-top: 0.3rem;
   border-radius: 999px;
-  background: var(--fond-2);
+  background: var(--filet);
   overflow: hidden;
 }
 html[data-app] .chapitres__jauge span {
   display: block;
   height: 100%;
-  background: var(--jauge);
+  background: var(--texte);
   transform-origin: left;
   transition: transform 300ms var(--courbe);
   /* Au premier affichage, la jauge part de zéro jusqu'à sa part. */
@@ -126,7 +104,7 @@ html[data-app] .chapitres__cellule:active { background: var(--fond-2); }
 /* --------------------------------------------------------- Le chapitre
 
    Les leçons en cellules de 56 pt : la coche pour une leçon faite, un point
-   jaune pour celle à faire maintenant, la durée à droite. Le trait qui
+   d'encre pour celle à faire maintenant, la durée à droite. Le trait qui
    reliait les cercles sur le site laisse la place aux filets. */
 
 /* `.chapitre` porte 3 rem de marge haute dans parcours.css : sous le bouton
@@ -139,12 +117,10 @@ html[data-app] .lecons-app .chapitre__compte { margin: 1rem 0 0.25rem; }
 
 html[data-app] .etapes::before { display: none; }
 html[data-app] .etapes {
-  padding: 0 1rem;
-  border: 1px solid var(--carte-filet);
-  border-radius: var(--rayon);
-  background: var(--fond-carte);
+  padding: 0;
+  border-bottom: 1px solid var(--filet);
 }
-html[data-app] .etapes li + li { border-top: 1px solid var(--carte-filet); }
+html[data-app] .etapes li { border-top: 1px solid var(--filet); }
 html[data-app] .etape {
   min-height: 3.5rem;
   gap: 0.875rem;
@@ -159,15 +135,15 @@ html[data-app] .etape__rang {
   font-size: 0.8rem;
 }
 html[data-app] .etape--faite .etape__rang {
-  background: var(--disque-fait);
-  border-color: var(--disque-fait);
-  color: var(--disque-fait-texte);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--sur-action);
 }
 /* Le rang s'efface derrière le point : il est déjà dit par l'ordre, et
    « à faire maintenant » est écrit sous le nom. */
 html[data-app] .etape--prochaine .etape__rang {
   background: transparent;
-  border-color: var(--disque-encours-bord);
+  border-color: var(--action);
   font-size: 0;
 }
 html[data-app] .etape--prochaine .etape__rang::after {
@@ -175,7 +151,7 @@ html[data-app] .etape--prochaine .etape__rang::after {
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 999px;
-  background: var(--jaune);
+  background: var(--action);
 }
 html[data-app] .etape__corps { flex: 1 1 auto; }
 html[data-app] .etape__nom { font-size: 1rem; }
@@ -224,26 +200,21 @@ html[data-app] .lecon__suite {
   flex-wrap: nowrap;
   margin-top: 1.25rem;
   padding: 0.75rem 0 max(0.75rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--filet);
   background: var(--fond);
 }
 html[data-app] .lecon__suite .bouton { min-height: 3.25rem; }
 html[data-app] .lecon__suite .bouton--principal { flex: 1 1 auto; }
 
 /* Le texte de la leçon est en police système, à la taille et à la graisse du
-   corps ; Archivo large reste au titre d'écran et aux grands chiffres
-   (docs/app-da.md, « La retenue »). L'accroche, seule sur son écran, passe une
-   taille au-dessus, toujours en système, en `rem` : elle suit Dynamic Type.
-   Les titres d'encadré ne gardent que la graisse. */
+   corps (docs/app-da.md, « La page calme »). L'accroche, seule sur son écran,
+   passe une taille au-dessus, en `rem` : elle suit Dynamic Type. */
 html[data-app] .ecran__accroche {
-  font-stretch: 100%;
   font-weight: 400;
   font-size: 1.25rem;
   line-height: 1.4;
   max-width: var(--mesure);
 }
-html[data-app] .piege__titre,
-html[data-app] .retenir__titre,
-html[data-app] .verification__compteur { font-stretch: 100%; }
 
 /* Les visuels prennent toute la largeur de la colonne : sur un téléphone, un
    dessin de feux à 16 rem de haut est illisible. */
@@ -287,7 +258,7 @@ html[data-app] .fiche .reglage .segmente__option {
 html[data-app] .fiche__details {
   max-width: none;
   margin-top: 1rem;
-  border-block: 1px solid var(--carte-filet);
+  border-block: 1px solid var(--filet);
 }
 html[data-app] .fiche__details summary {
   justify-content: space-between;
@@ -317,12 +288,12 @@ html[data-app] .cellules {
   list-style: none;
   margin: 0;
   padding: 0 1rem;
-  border: 1px solid var(--carte-filet);
+  border: 1px solid var(--filet);
   border-radius: var(--rayon);
   background: var(--fond-carte);
 }
 html[data-app] .cellules li { max-width: none; }
-html[data-app] .cellules li + li { border-top: 1px solid var(--carte-filet); }
+html[data-app] .cellules li + li { border-top: 1px solid var(--filet); }
 html[data-app] .cellules__ligne {
   touch-action: manipulation;
   display: flex;
@@ -342,63 +313,18 @@ html[data-app] .cellules__chevron {
   color: var(--texte-doux);
 }
 
-/* Les blocs de la fiche en cartes blanches : le style des conteneurs
-   seulement, leur contenu et leur logique ne bougent pas. Les blocs
-   d'ouverture (invitation, dernier examen) restent sur le fond. */
-html[data-app] .fiche > section {
-  padding: 1.25rem;
-  border: 1px solid var(--carte-filet);
-  border-radius: var(--rayon);
-  background: var(--fond-carte);
-}
-html[data-app] .fiche { gap: 1rem; }
-html[data-app] .fiche section h2 { margin-top: 0; }
-html[data-app] .fiche .faible,
-html[data-app] .fiche .reglage { border-top-color: var(--carte-filet); }
+/* Les blocs de la fiche sont ceux du site, sur la page blanche : un titre,
+   le contenu, deux rem d'écart (trois sur un grand écran). */
+html[data-app] .fiche { gap: 2rem; }
 
 /* Les erreurs : la liste prend toute la largeur. */
 html[data-app] .erreurs__liste { max-width: none; }
 
-/* ------------------------------------------------ Le graphique des examens
-
-   Les barres de la fiche sans bord ni socle : un aplat sombre pour un examen
-   reçu, un aplat clair pour un recalé (le score écrit dedans dit le reste).
-   Les barres ont une largeur au plus de 2,2 rem et se serrent quand elles
-   sont nombreuses ; avec un à trois examens elles restent étroites et se
-   rangent à droite, le plus récent contre le seuil. */
-html[data-app] .barres {
-  gap: 0.35rem;
-  justify-content: flex-end;
-  border-bottom: 1px solid var(--carte-filet);
-}
-html[data-app] .barres__barre { flex: 0 1 2.2rem; }
-html[data-app] .barres__barre::before { border-radius: var(--rayon-petit) var(--rayon-petit) 0 0; }
-html[data-app] .barres__barre--recale::before {
-  background: color-mix(in srgb, var(--texte) 18%, var(--fond-carte));
-  box-shadow: none;
-}
-html[data-app] .barres__score {
-  bottom: 0.25rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-html[data-app] .barres__ligne { border-top: 1px dashed var(--jaune-sombre); }
-html[data-app] .barres__seuil { font-weight: 600; }
-html[data-app] .examens-chiffres b { font-size: 1.25rem; font-weight: 600; }
-
 /* ------------------------------------------------ Les fiches-mémo
 
-   Une carte à filet fin par leçon ; le titre de la carte est un titre de
-   section, dans la police du corps ; le visuel prend le rayon unique ; les
-   sources sont une liste régulière, la pastille « Fiche maison » devant le
-   texte plutôt que seule à la ligne dessous. */
-html[data-app] .memo__bloc { border: 1px solid var(--carte-filet); }
-html[data-app] .memo__bloc h2 {
-  font-family: var(--corps);
-  font-size: 1.25rem;
-  font-weight: 700;
-}
+   Le visuel prend le rayon unique ; les sources sont une liste régulière, la
+   pastille « Fiche maison » devant le texte plutôt que seule à la ligne
+   dessous. */
 html[data-app] .memo__visuel { overflow: hidden; border-radius: var(--rayon); }
 html[data-app] .memo__visuel img { border-radius: var(--rayon); }
 html[data-app] .memo__source ul { margin-top: 0; }
@@ -450,6 +376,7 @@ html[data-app] .reglagesApp__champ {
 }
 html[data-app] .reglagesApp__bouton {
   width: 100%;
+  padding-inline: 0;
   border: 0;
   background: transparent;
   font: inherit;
@@ -467,7 +394,7 @@ html[data-app] .reglagesApp__pile .segmente { display: flex; flex-wrap: nowrap; 
    en rem, il suit la taille du texte. */
 @container (max-width: 14rem) {
   html[data-app] .reglagesApp__pile .segmente { flex-direction: column; }
-  html[data-app] .reglagesApp__pile .segmente__option + .segmente__option { border-left: 0; border-top: 2px solid var(--filet-fort); }
+  html[data-app] .reglagesApp__pile .segmente__option + .segmente__option { border-left: 0; border-top: 1px solid var(--filet-fort); }
 }
 html[data-app] .reglagesApp__pile .segmente__option { flex: 1 1 0; padding-inline: 0.4rem; }
 html[data-app] .reglagesApp__valeur {
@@ -484,7 +411,8 @@ html[data-app] .reglagesApp__pied {
   color: var(--texte-doux);
 }
 
-/* L'alerte : une carte centrée sur un voile, deux boutons séparés d'un filet. */
+/* L'alerte : un panneau centré sur un voile, deux boutons séparés d'un filet.
+   Il flotte : c'est la seconde ombre de l'app avec la feuille de correction. */
 html[data-app] .alerte {
   position: fixed;
   inset: 0;
@@ -492,19 +420,20 @@ html[data-app] .alerte {
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: rgb(0 0 0 / 0.4);
+  background: var(--voile);
 }
 html[data-app] .alerte__carte {
   width: min(100%, 17rem);
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: var(--rayon);
   background: var(--fond-carte);
+  box-shadow: var(--ombre-flottante);
   text-align: center;
 }
 html[data-app] .alerte__texte { padding: 1.25rem 1rem 1rem; }
 html[data-app] .alerte__titre { margin: 0 0 0.35rem; font-weight: 700; }
 html[data-app] .alerte__message { margin: 0; font-size: 0.9rem; color: var(--texte-doux); }
-html[data-app] .alerte__boutons { display: flex; border-top: 1px solid var(--carte-filet); }
+html[data-app] .alerte__boutons { display: flex; border-top: 1px solid var(--filet); }
 html[data-app] .alerte__bouton {
   flex: 1;
   min-height: 2.75rem;
@@ -514,7 +443,7 @@ html[data-app] .alerte__bouton {
   font: inherit;
   cursor: pointer;
 }
-html[data-app] .alerte__bouton + .alerte__bouton { border-left: 1px solid var(--carte-filet); }
+html[data-app] .alerte__bouton + .alerte__bouton { border-left: 1px solid var(--filet); }
 html[data-app] .alerte__bouton--fort { font-weight: 700; }
 html[data-app] .alerte__bouton:active { background: var(--fond-2); }
 
@@ -542,3 +471,9 @@ html[data-app] .maitrise a { grid-template-columns: minmax(0, 1fr) auto; }
 html[data-app] .maitrise a b { hyphens: auto; overflow-wrap: break-word; }
 html[data-app] .examens-chiffres { grid-template-columns: repeat(auto-fit, minmax(min(100%, 5rem), 1fr)); }
 html[data-app] .reglagesApp a.cellules__ligne .cellules__chevron { margin-left: auto; }
+
+/* Les derniers examens de la fiche : au grand texte, la date, le rail et le
+   score ne tiennent plus sur une ligne de 390 pt. Le rail passe dessous,
+   comme les jauges par thème du résultat. */
+html[data-app] .barres__barre { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0.5rem; }
+html[data-app] .barres__rail { grid-column: 1 / -1; grid-row: 2; }

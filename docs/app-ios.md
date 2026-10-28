@@ -476,8 +476,8 @@ mise à jour, daté de ce jour.
   `xcrun simctl install booted` et `launch`. Tout ce que le 10 septembre
   décrivait « sur le papier » est maintenant vu à l'écran.
 - **Cinq onglets** au lieu de quatre : Accueil `/accueil`, Cours, Examen,
-  Entraînement, Fiche `/profil`. Teinte de marque (`Accent.colorset`, marine en
-  clair, jaune en sombre). Retoucher l'onglet courant ramène à sa racine puis
+  Entraînement, Fiche `/profil`. Teinte de l'onglet courant (`Accent.colorset`,
+  l'encre de la page depuis la page calme : `#37352f` en clair, `#e6e5e3` en sombre). Retoucher l'onglet courant ramène à sa racine puis
   en haut. Portrait seul, `arm64`, région `fr`.
 - **`/accueil`** est un écran construit pour l'app seule (`src/pages/[accueil].astro`,
   route dynamique dont `getStaticPaths` ne rend rien sur le site) : reprendre la
@@ -643,8 +643,8 @@ Quatre points ont demandé une adaptation de la coquille au nouveau code :
    `Base.astro` l'enregistrement du service worker et le manifeste. Ils sont
    posés sous `!POUR_APP` : `CIBLE=app` coupe la PWA, donc ni `sw.js` ni le
    manifeste ne sont bâtis et les deux balises pointeraient sur des 404. Le
-   préchargement de la police et celui de la banque, eux, valent aussi dans
-   l'app et sont gardés.
+   préchargement de la banque, lui, vaut aussi dans l'app et est gardé (la
+   police est celle du système depuis la page calme, rien à précharger).
 4. **Les fiches maison liaient vers `question/`.** `/source/<ref>` liste les
    questions qui s'appuient sur la fiche ; ces pages ne sont pas construites
    pour l'app, et `elaguer-app.mjs` refusait le bundle. La page passe par

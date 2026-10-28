@@ -12,10 +12,6 @@ import { SCRIPT_DEFILEMENT_NAVIGATION } from '../lib/navigation';
 import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 import { lienRetour, pageCourante } from '../lib/page';
-// L'adresse que `scripts/police.py` écrit, et non un nom tapé à la main : le
-// fichier porte l'empreinte de son contenu, et un préchargement qui vise
-// l'ancien nom télécharge une police que personne n'affiche.
-import { POLICE } from '../lib/police';
 import {
   SITE,
   APP_STORE,
@@ -127,17 +123,13 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     />
 
     {/*
-      Ce dont le premier écran a besoin, demandé tout de suite.
+      Ce dont le premier écran a besoin, demandé tout de suite. La police
+      est celle du système : rien à précharger.
 
-      La police n'était découverte que deux sauts après le HTML — le navigateur
-      lit la feuille de style, puis la règle `@font-face`, puis va chercher les
-      52 Ko d'Archivo. Le titre s'affichait donc en Helvetica avant de sauter.
-
-      La banque, elle, partait au quatrième aller-retour : HTML, puis
+      La banque partait au quatrième aller-retour : HTML, puis
       `client.js` et `Quiz.js`, puis l'exécution du composant, puis seulement
       le `fetch`. Un aller-retour de moins sur la première question.
     */}
-    <link rel="preload" as="font" type="font/woff2" href={POLICE} crossorigin />
     {prechargeBanque && (
       <link rel="preload" as="fetch" type="application/json" href={cheminBanque()} crossorigin />
     )}
@@ -162,8 +154,8 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     <meta name="twitter:description" content={descriptionCourte} />
     <meta name="twitter:image" content={imageAbsolue} />
     <meta name="author" content={SITE.auteur} />
-    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {/* L'app suit le système et n'a pas de réglage d'apparence : le script
         ne part que sur le site. */}
@@ -218,10 +210,13 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     <header class="entete">
       <div class="page entete__interieur">
         <a href="/" class="marque" aria-label="Permis côtier, accueil">
-          <svg class="marque__glyphe" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
-            <rect width="32" height="32" rx="8" class="marque__fond" />
-            <path d="M16 6.5 L25.5 21.5 H6.5 Z" class="marque__cone" />
-            <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" class="marque__cone" />
+          {/* Le voyant d'une cardinale, deux cônes opposés par la base, jaunes
+              sur le carré d'encre, comme le favicon. Le seul jaune de
+              l'en-tête, fixe en clair comme en sombre. */}
+          <svg class="marque__glyphe" viewBox="0 0 22 22" width="24" height="24" aria-hidden="true">
+            <rect x="0.5" y="0.5" width="21" height="21" rx="4.5" fill="#191918" class="marque__fond" />
+            <path d="M11 4.5l4 5.5H7z" fill="#ffc72c" />
+            <path d="M11 18l4-5.5H7z" fill="#ffc72c" />
           </svg>
           <span class="marque__nom">Permis côtier</span>
         </a>
@@ -234,11 +229,11 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
         >
           <svg
             viewBox="0 0 24 24"
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             fill="none"
             stroke="currentColor"
-            stroke-width="2.5"
+            stroke-width="2.25"
             stroke-linecap="round"
             aria-hidden="true"
           >
@@ -349,28 +344,34 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     )}
 
     <style>
-      .ariane { padding-block: 0.9rem 0; font-size: 0.85rem; color: var(--texte-doux); }
+      .ariane { padding-block: 0.9rem 0; font-size: 0.875rem; color: var(--texte-doux); }
       .ariane ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
       .ariane li + li::before { content: "›"; margin-right: 0.4rem; color: var(--filet-fort); }
       .ariane a { color: inherit; text-decoration: none; }
       @media (hover: hover) and (pointer: fine) {
-        .ariane a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+        .ariane a:hover { text-decoration: underline; }
       }
       .ariane [aria-current="page"] { color: var(--texte); }
 
+      /* Le plan du site : une liste de liens, donc en encre et sans trait. */
       .pied__plan {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem 1.5rem;
         margin: 1.5rem 0;
-        font-size: 0.9rem;
+        font-size: 0.875rem;
+      }
+      .pied__plan a { color: var(--texte); text-decoration: none; }
+      @media (hover: hover) and (pointer: fine) {
+        .pied__plan a:hover { text-decoration: underline; }
       }
 
+      /* L'en-tête : blanc, 56 px, un filet dessous. */
       .entete {
-        background: var(--fond-carte);
-        border-bottom: 2px solid var(--filet);
+        background: var(--fond);
+        border-bottom: 1px solid var(--filet);
       }
-      /* Trois pièces, deux dispositions : la marque et la loupe vont ensemble,
+      /* Trois pièces, deux dispositions : la marque et le champ vont ensemble,
          la navigation se met où elle tient. En grille et non en flux, parce
          qu'elles n'ont pas le même ordre sur un téléphone et sur un écran. */
       .entete__interieur {
@@ -378,9 +379,8 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
         grid-template-areas: 'marque recherche nav';
         grid-template-columns: auto auto minmax(0, 1fr);
         align-items: center;
-        gap: 0.5rem 1.25rem;
-        min-height: 3.75rem;
-        padding-block: 0.5rem;
+        gap: 0.5rem 1.5rem;
+        min-height: 3.5rem;
       }
       .marque { grid-area: marque; }
       .ouvrir-recherche { grid-area: recherche; }
@@ -388,23 +388,24 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
       .marque {
         display: inline-flex;
         align-items: center;
-        gap: 0.6rem;
+        gap: 0.5rem;
         min-height: 2.75rem;
+        color: var(--texte);
         text-decoration: none;
       }
-      .marque__fond { fill: var(--marque-fond); }
-      .marque__cone { fill: var(--marque-cone); }
+      .marque__glyphe { flex: none; }
+      /* En sombre, le carré d'encre se perd sur le fond : un liseré à l'encre
+         du jour le tient. En clair, l'encre et le carré sont le même noir. */
+      .marque__fond { stroke: var(--action); stroke-opacity: 0.35; }
       .marque__nom {
-        font-stretch: var(--large);
-        font-weight: 800;
-        font-size: 1.1rem;
-        letter-spacing: -0.01em;
+        font-weight: 600;
+        font-size: 0.9375rem;
         white-space: nowrap;
       }
       .entete nav {
         display: flex;
         gap: 0 0.25rem;
-        margin-inline: -0.6rem;
+        margin-inline: -0.625rem;
       }
       /* Sous 48 rem, la navigation prend sa propre ligne. Six entrées, la
          marque et la loupe ne tiennent pas côte à côte : la ligne file jusqu'aux
@@ -430,12 +431,12 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
           grid-template-areas: 'marque recherche' 'nav nav';
           grid-template-columns: minmax(0, 1fr) auto;
           gap: 0;
-          padding-block: 0.5rem 0.25rem;
+          padding-block: 0.25rem;
         }
         .entete nav {
           justify-self: stretch;
           justify-content: flex-start;
-          gap: 0 0.15rem;
+          gap: 0 0.125rem;
           margin-inline: -1.25rem;
           padding-inline: 1rem 2.5rem;
           padding-block: 0.25rem;
@@ -458,29 +459,35 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
           }
         }
         .entete nav::-webkit-scrollbar { display: none; }
-        .entete nav a { padding-inline: 0.4rem; font-size: 0.8125rem; white-space: nowrap; flex: 0 0 auto; }
+        .entete nav a { padding-inline: 0.5rem; font-size: 0.875rem; white-space: nowrap; flex: 0 0 auto; }
       }
       .entete nav a {
         display: inline-flex;
         align-items: center;
         min-height: 2.75rem;
-        padding: 0.25rem 0.6rem;
+        padding: 0.25rem 0.625rem;
         font-size: 0.875rem;
-        font-weight: 700;
+        color: var(--texte-doux);
         text-decoration: none;
         border-radius: var(--rayon-petit);
-        /* Le trait jaune est réservé à la page où on est. */
-        box-shadow: inset 0 -3px 0 transparent;
-        transition: box-shadow var(--transition), background var(--transition);
+        transition: background-color var(--transition), color var(--transition);
       }
       @media (hover: hover) and (pointer: fine) {
-        .entete nav a:hover { background: var(--fond-2); }
+        .entete nav a:hover { background: var(--fond-2); color: var(--texte); }
       }
-      .entete nav a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--jaune); }
+      /* La page où on est : l'encre, 600, sur la teinte. Plus de trait. */
+      .entete nav a[aria-current='page'] {
+        background: var(--teinte);
+        color: var(--texte);
+        font-weight: 600;
+      }
+      @media (min-width: 48rem) {
+        .entete nav a { min-height: 2rem; }
+      }
 
       .pied {
         margin-top: 5rem;
-        border-top: 2px solid var(--filet);
+        border-top: 1px solid var(--filet);
         background: var(--fond-2);
       }
       .pied__interieur { padding-block: 2.5rem 3.5rem; }

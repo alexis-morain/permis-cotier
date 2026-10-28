@@ -6,6 +6,7 @@ import { GUIDE } from '../lib/guide';
 import { POUR_APP } from '../lib/cible';
 import { COURS, cheminCours, leconsDuCours, leconsDuParcours } from '../lib/parcours';
 import { codesLeconsEcrites, compteLeconsEcrites } from '../lib/lecons';
+import { groupeDuTheme } from '../lib/groupes';
 import { SITE, APP_STORE, absolue } from '../lib/seo';
 import SCRIPT_BANDE from 'virtual:bande-avant-rendu';
 
@@ -28,10 +29,11 @@ const parcours = COURS.map((c) => ({
   chemin: cheminCours(c.code),
   lecons: leconsDuCours(c.code).filter((l) => ecrites.has(l.notion.code)).length,
   questions: themes.find((t) => t.code === c.code)?.publiees ?? 0,
+  groupe: groupeDuTheme(c.code),
 }));
 
 /**
- * La question qu'on essaie dans la bande d'ouverture. Depuis que la page ne
+ * La question qu'on essaie dans l'ouverture. Depuis que la page ne
  * signe plus d'un nom, la preuve doit venir du produit : une vraie question,
  * qu'on coche et qu'on valide comme à l'épreuve. Celle-ci est choisie pour
  * son visuel, qui dit la situation sans un mot, et pour ses deux bonnes
@@ -43,7 +45,7 @@ const MONTREE = 'barre-route-0029';
 const demo = questions.find((q) => q.id === MONTREE) ?? questions.find((q) => q.visuel);
 
 /**
- * Ce que lisent la bande d'ouverture (`bande-rendu.ts`) et les blocs qui
+ * Ce que lisent l'ouverture de qui revient (`bande-rendu.ts`) et les blocs qui
  * suivent la progression (`accueil-site.ts`) : les leçons dans l'ordre du
  * parcours, et la banque publiée réduite à l'identifiant et au thème. En JSON
  * dans un bloc inerte, et non en props d'îlot : sérialisées dans un attribut,
@@ -160,7 +162,7 @@ const CAPTURE = { width: 640, height: 1391 };
     )}
   </section>
 
-  <section class="bandeau" aria-labelledby="rang-examen">
+  <section aria-labelledby="rang-examen">
     <div class="rang rang--inverse page">
       <div class="rang__texte">
         <h2 id="rang-examen">L’examen blanc tourne comme le vrai</h2>
@@ -300,19 +302,38 @@ const CAPTURE = { width: 640, height: 1391 };
       Un cours par thème du programme, dans l’ordre de l’apprentissage. Pour l’ordre de
       l’arrêté, thème par thème, va au <a href="/themes">programme</a>.
     </p>
-    <ul class="listeCours">
-      {parcours.map((c) => (
-        <li>
-          <a href={c.chemin} data-mesure="accueil-cours-theme" data-mesure-theme={c.code}>
-            <span class="listeCours__nom">{c.titre}</span>
-            <span class="pastille">
+    {/* Une vue de base : une rangée par cours. Sous 40 rem, les rangées se
+        replient en liste (voir la feuille), sans défilement latéral. */}
+    <table class="programme">
+      <caption class="visuellement-cache">Les quatorze cours, leur groupe, leurs leçons et leurs questions</caption>
+      <thead>
+        <tr>
+          <th scope="col">Cours</th>
+          <th scope="col">Groupe</th>
+          <th scope="col">Leçons</th>
+          <th scope="col" class="programme__nombre">Questions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {parcours.map((c) => (
+          <tr>
+            <th scope="row" class="programme__nom">
+              <a href={c.chemin} data-mesure="accueil-cours-theme" data-mesure-theme={c.code}>{c.titre}</a>
+              <span class="programme__promesse">{c.promesse}</span>
+            </th>
+            <td class="programme__groupe">
+              {c.groupe && <span class={`etiquette etiquette--${c.groupe.couleur}`}>{c.groupe.nom}</span>}
+            </td>
+            <td class="programme__lecons">
               {c.lecons > 0 ? `${c.lecons} leçon${c.lecons > 1 ? 's' : ''}` : 'en résumé'}
-            </span>
-          </a>
-          <p class="discret">{c.promesse}</p>
-        </li>
-      ))}
-    </ul>
+            </td>
+            <td class="programme__nombre">
+              {c.questions}<span class="programme__unite"> question{c.questions > 1 ? 's' : ''}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </section>
 
   <section class="page guide">
@@ -357,68 +378,68 @@ const CAPTURE = { width: 640, height: 1391 };
 <style is:global>
   /* Les blocs que le script rend : hors de la portée du style de page,
      puisque leurs éléments n'ont pas l'attribut de portée d'Astro. */
-  .reprise { border-top: 2px solid var(--filet); padding-top: 0.9rem; margin-top: 1.25rem; font-size: 0.95rem; }
+  .reprise { border-top: 1px solid var(--filet); padding-top: 0.9rem; margin-top: 1.25rem; font-size: 0.95rem; }
   .reprise p { margin: 0; }
   .reprise__raison { margin-top: 0.4rem; font-weight: 600; }
   .reprise q { quotes: '« ' ' »'; }
 
-  .dateExamen label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
+  .dateExamen label { display: block; font-weight: 600; margin-bottom: 0.4rem; }
   .dateExamen__compte { margin: 0.5rem 0 0; }
   .dateExamen__note { margin: 0.4rem 0 0; }
 
-  /* Les derniers examens blancs de qui revient, posés par le script de la
-     bande à la place du panneau des comptes, dont ils prennent l'apparence.
-     Une ligne par examen : la date, le score, le verdict en mots, et dessous
-     la barre du score avec le trait de la barre d'admission à 35 sur 40,
-     comme la liste de la fiche. Le rail est le filet et non `--fond-2` : en
-     sombre, le panneau a déjà la couleur du fond, la barre s'y perdrait. */
-  .ouverture__examens {
-    /* Sur le panneau clair, l'anneau jaune de la bande ne se voit pas : il
-       reprend la couleur du texte du panneau. */
-    --anneau: var(--texte);
-    align-self: start;
-    background: var(--panneau);
-    color: var(--texte);
-    border: 2px solid var(--panneau-filet);
-    border-radius: var(--rayon);
-    padding: 1.5rem;
-  }
-  .ouverture__examens h2 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+  /* Les derniers examens blancs de qui revient, posés par le script de
+     l'ouverture à la place de la question à essayer : un `.encadre`. Une
+     rangée par examen : la date en encre douce, le rail du score avec le trait
+     vert de la barre d'admission à 35 sur 40, le score en étiquette de
+     verdict. Le rail est sur le lavis, filet autour : en sombre, le lavis se
+     détache du fond. */
+  .ouverture__examens { align-self: start; }
+  .ouverture__examens h2 { font-size: 1rem; font-weight: 600; margin: 0 0 0.75rem; }
   .ouverture__examens ol { list-style: none; margin: 0; padding: 0; }
   .ouverture__examens li {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto 3rem;
-    align-items: baseline;
-    gap: 0.35rem 0.75rem;
-    padding: 0.55rem 0;
+    grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0;
+    border-top: 1px solid var(--filet);
     max-width: none;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
   }
-  .ouverture__examens li::before,
-  .ouverture__examens li::after {
-    content: '';
-    grid-row: 2;
-    grid-column: 1 / -1;
-    align-self: center;
+  .ouverture__date { color: var(--texte-doux); }
+  .ouverture__examens .rail {
+    position: relative;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--fond-2);
+    border: 1px solid var(--filet);
   }
-  .ouverture__examens li::before {
-    height: 8px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--texte) calc(var(--part, 0) * 100%), var(--filet) 0);
+  .ouverture__examens .rail i {
+    position: absolute;
+    inset: -1px auto -1px -1px;
+    width: calc(var(--part, 0) * 100% + 1px);
+    min-width: 6px;
+    border-radius: 3px;
+    background: var(--texte);
   }
-  .ouverture__examens li::after {
-    justify-self: start;
+  /* Le trait de la barre d'admission : 35 sur 40, pris sur la largeur
+     intérieure du rail. */
+  .ouverture__examens .rail b {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    left: calc(35 / 40 * 100%);
     width: 2px;
-    height: 16px;
-    margin-left: calc(35 / 40 * 100%);
-    background: var(--jauge);
+    margin-left: -1px;
+    background: var(--vert);
   }
-  .ouverture__examens li > span:first-child { color: var(--texte-doux); font-weight: 600; }
-  .ouverture__examens li > span:last-child { color: var(--texte-doux); font-size: 0.8rem; font-weight: 700; }
-  .ouverture__examens b { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .ouverture__examens .recu { color: var(--vert-texte); }
-  .ouverture__examens .recale { color: var(--rouge-texte); }
-  .ouverture__examens .discret { margin: 1rem 0 0; }
+  .ouverture__examens .etiquette { font-variant-numeric: tabular-nums; }
+  .ouverture__examens .discret {
+    margin: 0.25rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--filet);
+    font-size: 0.8125rem;
+  }
   /* Sur téléphone, rien sous la suite logique, comme le panneau des comptes. */
   @media (max-width: 51.99rem) {
     .ouverture__examens { display: none; }
@@ -426,18 +447,12 @@ const CAPTURE = { width: 640, height: 1391 };
 </style>
 
 <style>
-  /* La bande marine, soulignée de la ligne de flottaison jaune. Sur ce fond,
-     l'anneau de focus marine ne se verrait pas : il passe au jaune. */
-  .ouverture {
-    --anneau: var(--jaune);
-    background: var(--bande);
-    color: var(--bande-texte);
-    border-bottom: 6px solid var(--jaune);
-  }
+  /* L'ouverture : la page blanche. Le texte à gauche, un panneau à droite à
+     partir de 52 rem. Plus de bande, plus de ligne de flottaison. */
   .ouverture__grille {
     display: grid;
     gap: 2.5rem;
-    padding-block: 2.75rem 3.25rem;
+    padding-block: 2.75rem 3rem;
   }
   /* La colonne de qui revient est rendue par le script en ligne, sans
      l'attribut de portée : ses classes se visent en `:global`, sous la
@@ -451,38 +466,36 @@ const CAPTURE = { width: 640, height: 1391 };
   }
   /* Qui a terminé un examen blanc voit ses derniers à la place de la question. */
   .ouverture[data-panneau] .ouverture__cote { display: none; }
-  .ouverture :global(h1) {
-    max-width: 14ch;
-    font-size: clamp(2.1rem, 6.4vw, 3.6rem);
-    line-height: 1.02;
-    text-wrap: balance;
+  .ouverture :global(h1) { max-width: 20ch; margin-bottom: 0; }
+  .ouverture :global(.ouverture__promesse) {
+    font-size: 1.25rem;
+    line-height: 1.45;
+    max-width: 34rem;
+    color: var(--texte-doux);
+    margin-top: 1.25rem;
   }
-  .ouverture :global(.ouverture__promesse) { font-size: 1.15rem; max-width: 44ch; color: var(--bande-doux); margin-top: 1.25rem; }
   .ouverture :global(.ouverture__actions) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.85rem 1rem;
+    gap: 0.75rem;
     margin-top: 2rem;
   }
-  .ouverture :global(.ouverture__deja) { margin: 1.5rem 0 0; color: var(--bande-doux); font-size: 1rem; max-width: 46ch; }
-  .ouverture :global(.ouverture__deja a) { color: var(--bande-texte); }
+  .ouverture :global(.ouverture__deja) { margin: 1.5rem 0 0; font-size: 1rem; max-width: 40rem; }
 
   .ouverture__cote { align-self: start; min-width: 0; }
-  .ouverture__legende { margin: 0.9rem 0 0; color: var(--bande-doux); font-size: 0.92rem; }
-  .ouverture__legende a { color: var(--bande-texte); }
+  .ouverture__legende { margin: 0.9rem 0 0; color: var(--texte-doux); font-size: 0.875rem; }
 
   /* Les rangs : un écran de l'app à côté de ce qu'il fait. Le texte et
-     l'image alternent de côté, et le rang de l'examen passe sur la surface
-     blanche, en pleine largeur : trois rangs, trois rythmes. */
+     l'image alternent de côté ; la page reste blanche d'un rang à l'autre. */
   .rang {
     display: grid;
     gap: 2.25rem;
     align-items: center;
-    padding-block: 4rem;
+    padding-block: 3rem;
   }
   .rang__texte { min-width: 0; }
-  .rang__texte h2 { font-size: clamp(1.6rem, 4.2vw, 2.4rem); line-height: 1.05; max-width: 16ch; text-wrap: balance; margin-bottom: 1.25rem; }
+  .rang__texte h2 { max-width: 24ch; text-wrap: balance; margin-bottom: 1rem; }
   .rang__texte p { max-width: 50ch; }
   .rang__liens {
     display: flex;
@@ -503,32 +516,27 @@ const CAPTURE = { width: 640, height: 1391 };
     margin: 0 0 1.25rem;
   }
   .chiffre .display {
-    font-size: clamp(3rem, 8vw, 4.5rem);
-    line-height: 0.9;
+    font-size: clamp(2.5rem, 7vw, 3.5rem);
+    line-height: 1;
     font-variant-numeric: tabular-nums;
-    text-decoration: underline;
-    text-decoration-color: var(--jaune);
-    text-decoration-thickness: 0.12em;
-    text-underline-offset: 0.08em;
-    text-decoration-skip-ink: none;
   }
   .chiffre span { font-weight: 600; max-width: 24ch; line-height: 1.3; }
 
-  /* Le téléphone : l'écran de l'app dans un cadre marine. La capture porte
-     déjà la barre d'état et l'île ; le cadre ne dessine que le boîtier. */
+  /* Le téléphone : l'écran de l'app dans un cadre noir, le seul objet de la
+     page dont le coin dépasse dix pixels, parce qu'il dessine un boîtier. La
+     capture porte déjà la barre d'état et l'île ; le cadre ne dessine que le
+     bord, d'un filet clair autour pour qu'il se détache en sombre aussi. */
   .telephone {
     margin: 0;
     width: min(100%, 15rem);
-    border: 0.55rem solid var(--marine);
+    border: 0.4rem solid #191918;
     border-radius: 2.6rem;
     overflow: hidden;
-    background: var(--brume);
-    outline: 2px solid var(--filet-fort);
+    background: #191918;
+    outline: 1px solid var(--filet-fort);
     outline-offset: 0;
   }
   .telephone img { display: block; width: 100%; height: auto; aspect-ratio: 640 / 1391; }
-
-  .bandeau { background: var(--fond-carte); border-block: 2px solid var(--filet); }
 
   /* Deux écrans de l'examen, l'un devant l'autre : la question, puis le score. */
   .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 26rem); }
@@ -540,36 +548,31 @@ const CAPTURE = { width: 640, height: 1391 };
   /* L'absence de compte, dite puis montrée : où on en est, et la date qu'on
      peut poser. Hors du premier écran, parce qu'elle ne parle qu'à celui qui
      a déjà commencé. */
-  .reprendre { padding-block: 1rem 4rem; }
-  .reprendre h2 { font-size: clamp(1.6rem, 4.2vw, 2.4rem); line-height: 1.05; max-width: 20ch; text-wrap: balance; margin-bottom: 1.25rem; }
+  .reprendre { padding-block: 1rem 3rem; }
+  .reprendre h2 { max-width: 28ch; text-wrap: balance; margin-bottom: 1rem; }
   .reprendre__chapo { max-width: var(--mesure); margin-bottom: 1.75rem; }
   .reprendre__grille { display: grid; gap: 1.5rem; align-items: start; }
   .reprendre__etat { min-width: 0; }
   .reprendre__date { max-width: 26rem; }
   .reprendre :global(.reprise) { border-top: 0; padding-top: 0; margin-top: 0; }
 
-  /* L'app : la seconde bande marine de la page, sans ligne de flottaison,
-     le téléphone posé sur son bord bas comme sur un quai. */
+  /* L'app : une surface sur le lavis, deux filets, le téléphone posé dedans.
+     Rien de plus : la page reste calme jusqu'au bout. */
   .app {
-    --anneau: var(--jaune);
-    /* Le filet de la bande : un voile clair, lisible en clair comme en
-       sombre, où la bande prend déjà la teinte de la surface. */
-    --bande-filet: rgb(255 255 255 / 0.2);
-    background: var(--bande);
-    color: var(--bande-texte);
+    background: var(--fond-2);
+    border-block: 1px solid var(--filet);
+    margin-top: 2rem;
     overflow: hidden;
   }
-  .app__grille { display: grid; gap: 2.5rem; padding-block: 3.5rem; }
-  .app h2 { font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.02; margin-bottom: 1rem; }
-  .app__chapo { font-size: 1.15rem; color: var(--bande-doux); max-width: 40ch; }
+  .app__grille { display: grid; gap: 2.5rem; padding-block: 3rem; }
+  .app__chapo { font-size: 1.25rem; line-height: 1.45; color: var(--texte-doux); max-width: 34rem; }
   .app__plus { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 34rem; }
   .app__plus li {
-    border-top: 2px solid var(--bande-filet);
+    border-top: 1px solid var(--filet);
     padding: 0.75rem 0;
-    font-weight: 600;
     max-width: none;
   }
-  .app__plus li:last-child { border-bottom: 2px solid var(--bande-filet); }
+  .app__plus li:last-child { border-bottom: 1px solid var(--filet); }
   .app__liens {
     display: flex;
     flex-wrap: wrap;
@@ -580,58 +583,93 @@ const CAPTURE = { width: 640, height: 1391 };
   .app__badge { display: inline-block; line-height: 0; border-radius: 0.6rem; }
   .app__badge img { width: 11.875rem; height: auto; }
   .app__qr { display: none; margin: 0; align-items: center; gap: 1rem; }
+  /* Le code se scanne : toujours noir sur blanc, en clair comme en sombre. */
   .app__qr img {
     width: 5.5rem;
     height: 5.5rem;
     padding: 0.45rem;
-    background: var(--blanc);
+    background: #ffffff;
+    border: 1px solid var(--filet);
     border-radius: var(--rayon-petit);
   }
-  .app__qr figcaption { max-width: 15ch; font-size: 0.9rem; color: var(--bande-doux); line-height: 1.35; }
+  .app__qr figcaption { max-width: 15ch; font-size: 0.875rem; color: var(--texte-doux); line-height: 1.35; }
   /* Le code ne sert qu'à qui lit sur un ordinateur : au doigt, le badge suffit. */
   @media (hover: hover) and (pointer: fine) {
     .app__qr { display: flex; }
   }
-  .app__android { margin: 1.75rem 0 0; font-size: 0.92rem; color: var(--bande-doux); max-width: 46ch; }
-  /* L'écran se montre entier : la bande coupe ce qui dépasse. */
+  .app__android { margin: 1.75rem 0 0; font-size: 0.875rem; color: var(--texte-doux); max-width: 46ch; }
   .app__telephone {
     justify-self: center;
     align-self: center;
     width: min(100%, 17rem);
-    outline-color: var(--bande-filet);
   }
 
-  .cours { padding-block: 4rem 0; }
+  .cours { padding-block: 3rem 0; }
   .cours__note { margin-bottom: 1.5rem; max-width: var(--mesure); }
-  .listeCours { list-style: none; margin: 0; padding: 0; }
-  .listeCours li {
-    border-top: 2px solid var(--filet);
-    padding: 1rem 0 1.1rem;
-    max-width: none;
+
+  /* Le programme, vue de base : une rangée par cours, des filets, un lavis au
+     survol. Le nom du cours porte le lien, sans soulignement ; la promesse
+     en légende dessous. */
+  .programme { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .programme th,
+  .programme td { padding: 0.75rem 1rem 0.75rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--filet); }
+  .programme thead th {
+    padding-block: 0.5rem;
+    border-bottom-color: var(--filet);
+    color: var(--texte-doux);
+    font-size: 0.8125rem;
+    font-weight: 400;
   }
-  .listeCours li:last-child { border-bottom: 2px solid var(--filet); }
-  .listeCours a {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem 1.5rem;
-    min-height: 2.75rem;
+  .programme__nom { font-weight: 400; }
+  .programme__nom a {
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 600;
     text-decoration: none;
   }
+  .programme__promesse { display: block; margin-top: 0.125rem; max-width: 36rem; color: var(--texte-doux); font-size: 0.8125rem; line-height: 1.45; }
+  .programme__lecons { color: var(--texte-doux); white-space: nowrap; }
+  .programme td.programme__nombre,
+  .programme th.programme__nombre { text-align: right; padding-right: 0.5rem; font-variant-numeric: tabular-nums; }
+  .programme__unite { display: none; }
   @media (hover: hover) and (pointer: fine) {
-    .listeCours a:hover .listeCours__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+    .programme tbody tr:hover { background: var(--fond-2); }
+    .programme__nom a:hover { text-decoration: underline; }
   }
-  .listeCours__nom { font-size: 1.2rem; font-weight: 700; }
-  .listeCours p { margin: 0.1rem 0 0; max-width: var(--mesure); }
+  /* Sous 40 rem, une rangée devient un bloc : le nom et sa promesse, puis le
+     groupe, les leçons et les questions sur une ligne. Rien ne défile de côté. */
+  @media (max-width: 39.999rem) {
+    .programme thead {
+      position: absolute;
+      width: 1px; height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+    .programme,
+    .programme tbody { display: block; }
+    .programme tr {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 0.75rem;
+      padding: 0.875rem 0;
+      border-bottom: 1px solid var(--filet);
+    }
+    .programme th,
+    .programme td { display: block; padding: 0; border-bottom: 0; }
+    .programme__nom { flex: 1 1 100%; }
+    .programme td.programme__nombre { margin-left: auto; padding-right: 0; }
+    .programme__unite { display: inline; color: var(--texte-doux); }
+  }
 
   .guide { padding-block: 3.5rem 0; }
   .guide__liens { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 46rem; }
-  .guide__liens li { border-top: 2px solid var(--filet); padding: 0.9rem 0; max-width: none; }
-  .guide__liens li:last-child { border-bottom: 2px solid var(--filet); }
-  .guide__liens > li > a { font-weight: 700; text-decoration: none; }
+  .guide__liens li { border-top: 1px solid var(--filet); padding: 0.9rem 0; max-width: none; }
+  .guide__liens li:last-child { border-bottom: 1px solid var(--filet); }
+  .guide__liens > li > a { color: inherit; font-weight: 600; text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
-    .guide__liens > li > a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+    .guide__liens > li > a:hover { text-decoration: underline; }
   }
   .guide__liens p { margin: 0.35rem 0 0; }
 
@@ -648,23 +686,21 @@ const CAPTURE = { width: 640, height: 1391 };
     .ouverture__grille {
       grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
       gap: 4rem;
-      align-items: center;
-      padding-block: 4.5rem 5rem;
+      align-items: start;
+      padding-block: 4rem 2.5rem;
     }
     .rang {
       grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
       gap: 4rem;
-      padding-block: 6rem;
+      padding-block: 3.5rem;
     }
     .rang--inverse { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
     .rang--inverse .rang__texte { order: 2; }
     .telephone { width: min(100%, 16.5rem); }
     .duo { width: min(100%, 28rem); }
-    .reprendre { padding-block: 1rem 6rem; }
+    .reprendre { padding-block: 1rem 4rem; }
     .reprendre__grille { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 3rem; }
-    .app__grille { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; padding-block: 5rem; }
+    .app__grille { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; padding-block: 4rem; }
     .app__telephone { width: min(100%, 18.5rem); }
-    .listeCours { column-count: 2; column-gap: 3rem; }
-    .listeCours li { break-inside: avoid; }
   }
 </style>

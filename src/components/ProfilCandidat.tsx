@@ -24,6 +24,7 @@ import { surProgressionChangee } from '../lib/vivant';
 import Reglages from './profil/Reglages';
 import ListeThemes from './profil/ListeThemes';
 import DerniersExamens from './profil/DerniersExamens';
+import EtiquetteGroupe from './profil/EtiquetteGroupe';
 import { accorde } from './profil/accorde';
 import './profil.css';
 
@@ -194,7 +195,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
 
 
   const blocIndice = (
-    <section className="fiche__indice" aria-labelledby="indice-titre">
+    <section className="fiche__indice encadre" aria-labelledby="indice-titre">
       <h2 id="indice-titre" className={enApp ? 'indice__mot' : 'visuellement-cache'}>
         Indice de préparation
       </h2>
@@ -392,6 +393,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
                   <li className="faible" key={n.code}>
                     <p className="faible__nom">
                       <b>{n.nom}</b> <span className="discret">{nomDuTheme(n.theme)}</span>
+                      <EtiquetteGroupe theme={n.theme} />
                     </p>
                     <p className="faible__note discret">
                       {n.vues === 0 ? `Jamais ouverte, ${accorde(n.total, 'question')} en banque.` : <Compte {...n} />}

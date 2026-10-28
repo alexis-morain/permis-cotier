@@ -2,11 +2,10 @@
  * L'accueil de l'app. Ces règles ne touchent que `.accueilApp`, rendu dans la
  * seule coquille : le site n'en voit rien.
  *
- * Quatre cartes. La carte marine est la prochaine chose à faire (cours,
- * série du jour ou examen blanc, selon `prochaineAction`), avec le seul
- * bouton jaune de l'écran. Les autres sont des cartes blanches entièrement
- * touchables : un titre, une ligne, parfois un chiffre, et un lien dont le
- * `::after` couvre toute la carte.
+ * Une page blanche, deux blocs. Le panneau du haut est la prochaine chose à
+ * faire (cours, série du jour ou examen blanc, selon `prochaineAction`), avec
+ * le seul bouton jaune de l'écran. « Ensuite » est une liste de rangées nues,
+ * séparées de filets, pour tout le reste.
  */
 /* Pas de rembourrage en haut : `<main>` pose déjà la zone sûre plus 1 rem,
    la marge de tous les écrans de l'app. Les côtés en points, comme `.page` :
@@ -14,161 +13,176 @@
 .accueilApp {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.5rem;
   padding: 0 16px 1rem;
 }
 
-/* Le haut de l'écran, comme le résumé des apps d'Apple : la date en petit,
-   puis le grand titre. `<main>` pose déjà la zone sûre haute. */
-.accueilApp__entete { padding-block: 0.25rem 0.25rem; }
+/* Le haut de l'écran : le titre, puis le jour en encre douce. `<main>` pose
+   déjà la zone sûre haute. */
+.accueilApp__entete { padding-block: 0.25rem 0; }
+.accueilApp__h1 { margin: 0; font-size: 2.125rem; }
 .accueilApp__jour {
-  margin: 0;
+  margin: 0.25rem 0 0;
   color: var(--texte-doux);
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.9375rem;
 }
 /* Le jour prend une majuscule, pas le mois. */
 .accueilApp__jour::first-letter { text-transform: uppercase; }
-.accueilApp__h1 { margin: 0; }
 
-/* Les quatre blocs arrivent l'un après l'autre, une fois, au montage. */
+/* Les deux blocs arrivent ensemble, une fois, au montage. */
 .accueilApp > section {
   animation: app-entree var(--duree) var(--courbe) both;
 }
-.accueilApp > section:nth-of-type(2) { animation-delay: 60ms; }
-.accueilApp > section:nth-of-type(3) { animation-delay: 120ms; }
-.accueilApp > section:nth-of-type(4) { animation-delay: 180ms; }
-.accueilApp > section:nth-of-type(5) { animation-delay: 240ms; }
 
-.accueilApp__bloc {
-  position: relative;
-  padding: 1.25rem;
-  border: 1px solid var(--carte-filet);
+/* Le panneau de la prochaine chose à faire : blanc, un filet, coins de dix. */
+.accueilApp__tete {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid var(--filet);
   border-radius: var(--rayon);
   background: var(--fond-carte);
 }
 
-.accueilApp__reprendre {
-  --anneau: var(--jaune);
-  border-color: var(--bande);
-  background: var(--bande);
-  color: var(--bande-texte);
-}
-
 .accueilApp__chapitre {
-  margin: 0 0 0.4rem;
-  color: var(--bande-doux);
-  font-size: 0.9rem;
-  font-weight: 600;
+  margin: 0 0 0.625rem;
+  /* Aux grandes tailles de texte, l'étiquette passe à la ligne plutôt que de
+     sortir du panneau. */
+  white-space: normal;
 }
 
-.accueilApp__lecon {
-  margin: 0 0 1.25rem;
-  font-size: 1.5rem;
-  line-height: 1.15;
+.accueilApp__titre {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 
-/* Série ou examen en tête : le titre, une ligne, le bouton. */
-.accueilApp__chapitre--bas { margin: 0 0 1.25rem; }
-.accueilApp__lecon:has(+ .accueilApp__chapitre--bas) { margin-bottom: 0.4rem; }
+/* Une ligne en encre douce sous le titre, avant le bouton. */
+.accueilApp__ligne {
+  margin: 0 0 1rem;
+  color: var(--texte-doux);
+  font-size: 0.9375rem;
+}
 
-.accueilApp__avancement { margin-bottom: 1.25rem; }
-/* Rendue en carte blanche, la jauge change de teinte. */
-.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__avancement { margin: 0.5rem 0 0; }
-.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__jauge { background: var(--fond-2); }
-.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__jauge span { background: var(--texte); }
-.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__compte,
-.accueilApp__bloc:not(.accueilApp__reprendre) .accueilApp__chapitre { color: var(--texte-doux); }
-
-.accueilApp__jauge {
-  height: 0.5rem;
-  border-radius: var(--rayon);
-  background: color-mix(in srgb, var(--bande-texte) 22%, transparent);
+/* Le rail : un filet rempli d'encre, « 2 leçons sur 105 » en légende à
+   droite. Il se remplit en `transform`. */
+.accueilApp__avancement {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0.5rem 0 1rem;
+}
+.accueilApp__rail {
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--filet);
   overflow: hidden;
 }
-.accueilApp__jauge span {
+.accueilApp__rail span {
   display: block;
   height: 100%;
-  background: var(--jaune);
+  background: var(--texte);
   transform-origin: left;
   animation: app-jauge 400ms var(--courbe) 160ms both;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .accueilApp > section,
-  .accueilApp__jauge span {
-    animation: none;
-  }
-}
-
 .accueilApp__compte {
-  margin: 0.45rem 0 0;
-  color: var(--bande-doux);
-  font-size: 0.9rem;
-  font-weight: 600;
+  flex: 0 1 auto;
+  margin: 0;
+  color: var(--texte-doux);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
 }
 
-.accueilApp__titre {
-  margin: 0 0 0.35rem;
-  font-size: 1.0625rem;
-}
-
-.accueilApp__texte { margin: 0; color: var(--texte-doux); }
-.accueilApp__fort { font-weight: 700; font-size: 1.15rem; color: var(--texte); }
-
-.accueilApp__nombre {
-  margin-inline-end: 0.15em;
-  color: var(--texte);
-  font-size: 2.6rem;
-  line-height: 1;
-}
-
-/* Le bouton jaune de la carte marine : pleine largeur, une cible au pouce. */
+/* Le bouton jaune du panneau : pleine largeur, une cible au pouce. */
 .accueilApp__bouton {
   display: flex;
   width: 100%;
+  min-height: 3.25rem;
+  text-align: center;
 }
 
-/* Le lien d'une carte blanche : une ligne de texte et un chevron. Son
-   `::after` s'étend sur la carte (`position: relative` plus haut), si bien
-   que toute la carte est la cible. Sans cadre, sans socle. */
-.accueilApp__action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  margin-top: 0.5rem;
-  color: var(--texte);
-  font-weight: 600;
-  text-decoration: none;
-}
-.accueilApp__action::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--rayon);
-}
-.accueilApp__bloc:has(.accueilApp__action:active) { background: var(--fond-2); }
-.accueilApp__chevron {
-  color: var(--texte-doux);
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-/* Un lien seul est une cible : il tient les 44 pt. */
+/* Le lien du cours terminé : pas de bouton jaune, il n'y a rien à lancer. */
 .accueilApp__lien {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  font-weight: 700;
+  font-weight: 600;
 }
-.accueilApp__reprendre .accueilApp__lien { color: var(--bande-texte); }
 
-.accueilApp__serie {
+/* « Ensuite » : le petit titre doux, puis les rangées. Le sélecteur est plus
+   long que celui du `h2` de l'app (`app.css`), qui sinon l'emporterait. */
+html[data-app] .accueilApp h2.accueilApp__soustitre {
+  margin: 0 0 0.375rem;
+  color: var(--texte-doux);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.accueilApp__liste {
+  list-style: none;
   margin: 0;
-  padding-top: 0.25rem;
-  text-align: center;
+  padding: 0;
+  border-bottom: 1px solid var(--filet);
+}
+.accueilApp__liste li { max-width: none; border-top: 1px solid var(--filet); }
+
+/* Une rangée : l'icône dans un carré lavis, le libellé et sa légende, la
+   valeur à droite, le chevron en bord de champ. La rangée entière se touche ;
+   le fond se pose à l'appui, sans transition. */
+.accueilApp__rangee {
+  touch-action: manipulation;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  min-height: 3.5rem;
+  padding-block: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+a.accueilApp__rangee:active { background: var(--fond-2); }
+.accueilApp__ico {
+  flex: 0 0 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--rayon-petit);
+  background: var(--fond-2);
+}
+.accueilApp__txt {
+  /* Une base de 9 rem : aux grandes tailles de texte, la valeur passe sous le
+     libellé au lieu de le réduire à une lettre par ligne. */
+  flex: 1 1 9rem;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.accueilApp__sous {
+  display: block;
+  color: var(--texte-doux);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+.accueilApp__val {
+  flex: 0 0 auto;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.accueilApp__chev {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  color: var(--filet-fort);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accueilApp > section,
+  .accueilApp__rail span {
+    animation: none;
+  }
 }

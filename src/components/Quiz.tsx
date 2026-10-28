@@ -324,7 +324,7 @@ function Partie({
   );
 
   return (
-    <div className="jeu">
+    <div className={mode === 'examen' ? 'jeu jeu--examen' : 'jeu'}>
       <h1 className="visuellement-cache">{titre}</h1>
 
       {offreReprise && (
@@ -352,7 +352,7 @@ function Partie({
         </div>
       )}
 
-      {POUR_APP ? <EnteteApp session={session} mode={mode} demanderArret={setArretDemande} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} />}
+      {POUR_APP ? <EnteteApp session={session} mode={mode} demanderArret={setArretDemande} echoir={echoir} theme={affichee.theme} /> : <EnteteSite session={session} echoir={echoir} mode={mode} theme={affichee.theme} />}
 
       {rienDu && session.index === 0 && (
         <p className="discret">
@@ -361,12 +361,9 @@ function Partie({
         </p>
       )}
 
-      {mode === 'entrainement' && session.index === 0 && (
-        <p className="jeu__consigne">
-          {POUR_APP
-            ? 'Une ou deux bonnes réponses : il faut toutes les bonnes cases.'
-            : 'Une ou deux bonnes réponses. La réponse doit être exacte, une bonne case seule ne suffit pas quand il en faut deux.'}
-        </p>
+      {/* Sur le site, la consigne est dite dans la méta de l'en-tête. */}
+      {POUR_APP && mode === 'entrainement' && session.index === 0 && (
+        <p className="jeu__consigne">Une ou deux bonnes réponses : il faut toutes les bonnes cases.</p>
       )}
 
       {/* `key` sur ces trois éléments : React les remonte à chaque question,
@@ -525,6 +522,6 @@ export default function Quiz({ source, questions, ...reste }: Props) {
   if (echec) return <Panne reessayer={() => setEssai((n) => n + 1)} />;
   // Quatre propositions : c'est le format visé par la banque, et une silhouette
   // qui se trompe d'une ligne ne se remarque pas ; une qui saute, si.
-  if (!servies) return <Silhouette propositions={4} />;
+  if (!servies) return <Silhouette propositions={4} examen={reste.mode === 'examen'} />;
   return <Partie {...reste} questions={servies} banque={chargees!} />;
 }

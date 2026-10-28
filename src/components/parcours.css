@@ -1,7 +1,9 @@
 /*
- * Le parcours : une colonne de leçons, chacune avec son rang dans un cercle,
- * reliées par un trait. Faite, le cercle passe jaune avec une coche ; à
- * faire maintenant, il passe marine. Rien d'autre ne bouge.
+ * Le parcours : une colonne de rangées à filet, sans cartes. Chaque leçon a
+ * son rang dans un rond cerné ; faite, le rond se remplit d'encre avec une
+ * coche ; à faire maintenant, il est cerné d'encre et le nom passe en 600.
+ * Rien n'est jaune, rien n'est coloré : l'état est dit par la forme, et par le
+ * texte caché à côté.
  */
 
 .parcours__reprise {
@@ -11,9 +13,9 @@
   justify-content: space-between;
   gap: 0.75rem 1.5rem;
   margin: 2rem 0 0;
-  padding: 1.25rem 1.4rem;
+  padding: 1rem 1.25rem 1.25rem;
   background: var(--fond-carte);
-  border: 2px solid var(--filet);
+  border: 1px solid var(--filet);
   border-radius: var(--rayon);
 }
 .parcours__reprise p { margin: 0; }
@@ -23,21 +25,13 @@
 .chapitre__promesse { margin: 0 0 0.6rem; max-width: 52ch; }
 .chapitre__compte { margin: 0 0 1.25rem; }
 
+html:not([data-app]) .etapes { border-bottom: 1px solid var(--filet); }
+html:not([data-app]) .etapes li { border-top: 1px solid var(--filet); }
 .etapes {
   list-style: none;
   margin: 0;
   padding: 0;
   position: relative;
-}
-/* Le trait qui relie les cercles. */
-.etapes::before {
-  content: "";
-  position: absolute;
-  left: 1.1rem;
-  top: 1.2rem;
-  bottom: 1.2rem;
-  width: 2px;
-  background: var(--filet);
 }
 .etapes li { max-width: none; position: relative; }
 
@@ -48,120 +42,93 @@
   gap: 1rem;
   min-height: 3.5rem;
   padding: 0.55rem 0.5rem 0.55rem 0;
+  color: inherit;
   text-decoration: none;
   border-radius: var(--rayon-petit);
 }
 @media (hover: hover) and (pointer: fine) {
-  .etape:hover .etape__nom {
-    text-decoration: underline;
-    text-decoration-color: var(--jaune);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.16em;
-  }
+  .etape:hover .etape__nom { text-decoration: underline; }
 }
 
 .etape__rang {
-  flex: 0 0 2.25rem;
-  height: 2.25rem;
+  flex: 0 0 2rem;
+  height: 2rem;
   display: grid;
   place-items: center;
   border-radius: 999px;
   background: var(--fond-carte);
-  border: 2px solid var(--filet-fort);
-  color: var(--texte);
-  font-weight: 800;
-  font-size: 0.9rem;
+  border: 1px solid var(--filet-fort);
+  color: var(--texte-doux);
+  font-weight: 600;
+  font-size: 0.875rem;
   font-variant-numeric: tabular-nums;
-  position: relative;
-  z-index: 1;
 }
 .etape--faite .etape__rang {
-  background: var(--jaune);
-  border-color: var(--jaune);
-  color: var(--marine);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--sur-action);
 }
 .etape--prochaine .etape__rang {
-  background: var(--texte);
   border-color: var(--texte);
-  color: var(--fond-carte);
+  color: var(--texte);
 }
-.etape--prochaine .etape__nom { font-weight: 800; }
+.etape--prochaine .etape__nom { font-weight: 600; }
 
 .etape__corps { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
-.etape__nom { font-weight: 700; font-size: 1.05rem; }
-.etape__meta { font-size: 0.85rem; }
+.etape__nom { font-weight: 400; font-size: 1rem; }
+.etape__meta { font-size: 0.8125rem; }
 
 .parcours__boutons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; width: 100%; }
 
-/* La liste des cours : même grammaire que les leçons, en plus grand. Le rang
-   dans un cercle, le titre en display, la promesse dessous. Fait, le cercle
-   passe jaune ; en cours, marine. */
+/* La liste des cours : la même grammaire que les leçons, en plus grand. Le
+   rang dans un rond, le titre en 600, la promesse dessous. Fait, le rond se
+   remplit d'encre ; en cours, il est cerné d'encre. */
 .coursListe__liste {
   list-style: none;
   margin: 2rem 0 0;
   padding: 0;
-  position: relative;
+  border-bottom: 1px solid var(--filet);
 }
-.coursListe__liste::before {
-  content: "";
-  position: absolute;
-  left: 1.35rem;
-  top: 1.5rem;
-  bottom: 1.5rem;
-  width: 2px;
-  background: var(--filet);
-}
-.coursListe__item { max-width: none; position: relative; }
+.coursListe__item { max-width: none; border-top: 1px solid var(--filet); }
 .coursListe__item a {
   display: flex;
   align-items: flex-start;
-  gap: 1.1rem;
-  padding: 0.9rem 0.5rem 0.9rem 0;
+  gap: 1rem;
+  padding: 1rem 0.5rem 1rem 0;
+  color: inherit;
   text-decoration: none;
   border-radius: var(--rayon-petit);
 }
 @media (hover: hover) and (pointer: fine) {
-  .coursListe__item a:hover .coursListe__titre {
-    text-decoration: underline;
-    text-decoration-color: var(--jaune);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.16em;
-  }
+  .coursListe__item a:hover .coursListe__titre { text-decoration: underline; }
 }
 .coursListe__rang {
-  flex: 0 0 2.75rem;
-  height: 2.75rem;
+  flex: 0 0 2rem;
+  height: 2rem;
   display: grid;
   place-items: center;
   border-radius: 999px;
   background: var(--fond-carte);
-  border: 2px solid var(--filet-fort);
-  color: var(--texte);
-  font-stretch: var(--large);
-  font-weight: 800;
-  font-size: 1rem;
+  border: 1px solid var(--filet-fort);
+  color: var(--texte-doux);
+  font-weight: 600;
+  font-size: 0.875rem;
   font-variant-numeric: tabular-nums;
-  position: relative;
-  z-index: 1;
 }
 .coursListe__item--fait .coursListe__rang {
-  background: var(--jaune);
-  border-color: var(--jaune);
-  color: var(--marine);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--sur-action);
 }
 .coursListe__item--encours .coursListe__rang {
-  background: var(--texte);
   border-color: var(--texte);
-  color: var(--fond-carte);
+  color: var(--texte);
 }
-.coursListe__corps { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; padding-top: 0.35rem; }
+.coursListe__corps { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
 .coursListe__titre {
-  font-stretch: var(--large);
-  font-weight: 800;
-  font-size: clamp(1.15rem, 2.6vw, 1.4rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.3;
 }
-.coursListe__item--encours .coursListe__titre { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 3px; text-underline-offset: 0.16em; }
 .coursListe__promesse { max-width: 52ch; }
-.coursListe__meta { font-size: 0.85rem; }
+.coursListe__meta { font-size: 0.8125rem; }

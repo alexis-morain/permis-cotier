@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Permis côtier">
-  <!-- Une bouée conique, jaune cardinal sur marine. Même dessin que le wordmark. -->
-  <rect width="32" height="32" rx="8" fill="#0b1d3a"/>
-  <path d="M16 6.5 L25.5 21.5 H6.5 Z" fill="#ffc72c"/>
-  <rect x="10.5" y="23.5" width="11" height="3" rx="1.5" fill="#ffc72c"/>
+  <!-- Le voyant d'une cardinale, deux cônes jaunes sur le noir de l'action. Même dessin que la marque de l'en-tête. -->
+  <rect width="32" height="32" rx="7.25" fill="#191918"/>
+  <path d="M16 6.55 L21.82 14.55 H10.18 Z" fill="#ffc72c"/>
+  <path d="M16 26.18 L21.82 18.18 H10.18 Z" fill="#ffc72c"/>
 </svg>

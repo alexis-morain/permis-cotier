@@ -89,9 +89,9 @@ export function LienLecon({ question, retour }: { question: QuestionAffichable; 
  * `aria-busy` et le texte hors écran disent au lecteur d'écran ce que l'œil
  * comprend tout seul.
  */
-export function Silhouette({ propositions }: { propositions: number }) {
+export function Silhouette({ propositions, examen = false }: { propositions: number; examen?: boolean }) {
   return (
-    <div className="jeu silhouette" aria-busy="true" aria-live="polite">
+    <div className={`jeu silhouette${examen ? ' jeu--examen' : ''}`} aria-busy="true" aria-live="polite">
       <p className="visuellement-cache">Chargement des questions.</p>
       <div className="silhouette__enonce">
         <span className="silhouette__ligne" />
@@ -119,7 +119,7 @@ export function Silhouette({ propositions }: { propositions: number }) {
  */
 export function Panne({ reessayer }: { reessayer: () => void }) {
   return (
-    <div className="encadre">
+    <div className="encadre encadre--seul">
       <h1 className="encadre__titre">Les questions ne sont pas arrivées.</h1>
       <p className="discret">
         La connexion a lâché pendant le téléchargement de la banque. Rien n’est perdu : ta
@@ -137,7 +137,7 @@ export function Panne({ reessayer }: { reessayer: () => void }) {
 /** Une série vide : rien de dû aujourd'hui, ou une banque encore sans question. */
 export function SerieVide({ revoir }: { revoir: boolean }) {
   return revoir ? (
-    <div className="encadre">
+    <div className="encadre encadre--seul">
       <h1 className="encadre__titre">Rien à revoir aujourd’hui.</h1>
       <p className="discret">
         Chaque question réussie revient un jour plus tard, puis trois, puis sept, puis vingt et un.
@@ -145,7 +145,7 @@ export function SerieVide({ revoir }: { revoir: boolean }) {
       </p>
     </div>
   ) : (
-    <div className="encadre">
+    <div className="encadre encadre--seul">
       <h1 className="encadre__titre">Aucune question publiée pour l’instant.</h1>
       <p className="discret">
         La banque se remplit thème par thème, chaque question citant le texte dont elle est tirée.

@@ -41,7 +41,7 @@ class EcranWeb: CAPBridgeViewController {
         webView?.allowsBackForwardNavigationGestures = true
         // Le fond de la webview est celui de la page, clair ou sombre : sans
         // lui, chaque chargement montre un blanc le temps que le CSS arrive.
-        // La brume `#f3f6fb` et le marine `#0a1730` de `global.css`.
+        // Le blanc `#ffffff` et le gris `#191919` de `--fond`, dans `global.css`.
         let fond = UIColor(named: "Fond")
         webView?.isOpaque = false
         webView?.backgroundColor = fond

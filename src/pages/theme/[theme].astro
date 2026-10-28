@@ -6,6 +6,7 @@ import { questionsDuTheme } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
 import { notionsDuTheme } from '../../lib/notions';
 import { coursParCode, cheminCours } from '../../lib/parcours';
+import { groupeDuTheme } from '../../lib/groupes';
 
 export async function getStaticPaths() {
   return THEMES.map((theme) => ({ params: { theme: theme.code }, props: { theme } }));
@@ -27,6 +28,7 @@ const etapes = notions.map((notion) => ({
 // de page tant que la banque n'est pas entièrement reclassée.
 const orphelines = questions.filter((q) => !q.notion);
 const cours = coursParCode(theme.code);
+const groupe = groupeDuTheme(theme.code);
 ---
 
 <Base
@@ -40,7 +42,10 @@ const cours = coursParCode(theme.code);
   <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
     <p class="chapitre web-seulement"><a href="/themes">Programme</a></p>
     <h1>{theme.nom}</h1>
-    <p class="intitule">{theme.intitule}</p>
+    <p class="meta">
+      {groupe && <span class={`etiquette etiquette--${groupe.couleur}`}>{groupe.nom}</span>}
+      <span class="intitule">{theme.intitule}</span>
+    </p>
     <p class="chapo web-seulement">{theme.description}</p>
 
     {questions.length > 0 ? (
@@ -117,41 +122,39 @@ const cours = coursParCode(theme.code);
 </Base>
 
 <style>
-  .intitule { color: var(--texte-doux); font-size: 1rem; margin-top: -0.4rem; }
-  .chapo { font-size: 1.1rem; }
+  /* Le groupe se lit sous le titre, avec l'intitulé de l'arrêté en légende. */
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; margin: -0.25rem 0 1.25rem; }
+  .intitule { color: var(--texte-doux); font-size: 0.8125rem; line-height: 1.45; }
+  .chapo { color: var(--texte-doux); font-size: 1.25rem; line-height: 1.45; max-width: 34rem; }
 
   .notions { list-style: none; padding: 0; margin-top: 1.5rem; counter-reset: notion; }
-  .notion { margin-bottom: 2.2rem; }
+  .notion { padding: 1.25rem 0; border-top: 1px solid var(--filet); max-width: none; }
+  .notion:last-child { border-bottom: 1px solid var(--filet); }
   .notion h3 {
-    font-size: 1.1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
     margin-bottom: 0.35rem;
     counter-increment: notion;
   }
   .notion h3::before {
-    content: counter(notion) " ";
-    display: inline-grid;
-    place-items: center;
-    min-width: 1.75rem;
-    height: 1.75rem;
-    margin-right: 0.5rem;
-    padding-inline: 0.3rem;
-    border-radius: 999px;
-    background: var(--jaune);
-    color: var(--marine);
-    font-size: 0.85rem;
+    content: counter(notion);
+    flex: 0 0 1.5rem;
+    color: var(--texte-doux);
+    font-size: 0.875rem;
+    font-weight: 400;
     font-variant-numeric: tabular-nums;
-    vertical-align: 0.1em;
   }
-  .notion h3 a { text-decoration: none; }
+  .notion h3 a { color: inherit; text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
-    .notion h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+    .notion h3 a:hover { text-decoration: underline; }
   }
-  .resume { margin: 0 0 0.6rem; }
-  .aucune { margin: 0; font-style: italic; }
+  .resume { margin: 0 0 0.6rem; padding-left: 2.25rem; }
+  .aucune { margin: 0; padding-left: 2.25rem; font-style: italic; }
 
-  .questions { padding-left: 1.2rem; margin: 0; }
+  .questions { padding-left: 3.5rem; margin: 0; }
   .questions li { margin-bottom: 0.45rem; }
-  .questions a { text-decoration: none; }
+  .questions a { color: inherit; text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
     .questions a:hover { text-decoration: underline; }
   }

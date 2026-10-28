@@ -36,8 +36,9 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        // La teinte de marque : marine en clair, jaune en sombre. Le fond de
-        // la barre reste au système, verre sur iOS 26, translucide avant.
+        // L'onglet courant prend l'encre de la page (DESIGN.md, « la page
+        // calme ») : gris chaud en clair, blanc cassé en sombre. Le fond de la
+        // barre reste au système, verre sur iOS 26, translucide avant.
         tabBar.tintColor = UIColor(named: "Accent")
 
         viewControllers = Self.onglets.map { onglet in

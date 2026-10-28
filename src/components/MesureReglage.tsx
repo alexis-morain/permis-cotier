@@ -55,10 +55,10 @@ export default function MesureReglage() {
           align-items: center;
           gap: 0.6rem;
           min-height: 2.75rem;
-          font-weight: 700;
+          font-weight: 600;
           cursor: pointer;
         }
-        .mesureReglage input { width: 1.15rem; height: 1.15rem; accent-color: var(--accent); }
+        .mesureReglage input { width: 1.15rem; height: 1.15rem; accent-color: var(--action); }
       `}</style>
     </p>
   );
