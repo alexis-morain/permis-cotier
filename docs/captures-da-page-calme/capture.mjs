@@ -118,6 +118,9 @@ async function prise(p) {
     }
     let clip;
     if (p.pleine) {
+      // Une image paresseuse hors de l'écran ne part jamais : on la demande.
+      await evalue(`Promise.all([...document.querySelectorAll('img[loading="lazy"]')].map((i) => { i.loading = 'eager'; return i.decode().catch(() => {}); }))`);
+      await pause(300);
       const h = await evalue('Math.ceil(document.documentElement.scrollHeight)');
       clip = { x: 0, y: 0, width: largeur, height: Math.min(h, p.hauteurMax ?? 6000), scale: 1 };
     }
