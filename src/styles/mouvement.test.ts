@@ -136,8 +136,10 @@ describe('le mouvement du site', () => {
     }
   });
 
-  it('tient le jeton --transition à 120 ms, que les contrôles lisent sans écrire de durée', () => {
-    expect(lire('src/styles/global.css')).toMatch(/--transition: 120ms cubic-bezier\(0\.2, 0, 0, 1\);/);
+  // La page calme (DESIGN.md, « Mouvement ») : 160 ms, une courbe qui part
+  // vite et se pose, celle de tri-offres.
+  it('tient le jeton --transition à 160 ms, que les contrôles lisent sans écrire de durée', () => {
+    expect(lire('src/styles/global.css')).toMatch(/--transition: 160ms cubic-bezier\(0\.16, 1, 0\.3, 1\);/);
   });
 
   it('garde la coupe globale de global.css', () => {
