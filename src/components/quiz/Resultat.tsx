@@ -250,7 +250,7 @@ function ParTheme({ parTheme }: { parTheme: Record<string, { bonnes: number; tot
             {/* Sur le site, le nom mène à l'entraînement du thème. Dans
                 l'app, chaque onglet est sa propre webview : un lien
                 ouvrirait l'entraînement sous l'onglet Examen. */}
-            <b>{POUR_APP ? nomDuTheme(code) : <a href={`/entrainement/${code}`}><Theme code={code} /></a>}</b>
+            <b>{POUR_APP ? <Theme code={code} /> : <a href={`/entrainement/${code}`}><Theme code={code} /></a>}</b>
             <span className={`parTheme__note${note.bonnes < note.total ? ' parTheme__note--faible' : ''}`}>
               {note.bonnes} / {note.total}
             </span>

@@ -352,7 +352,7 @@ function Partie({
         </div>
       )}
 
-      {POUR_APP ? <EnteteApp session={session} mode={mode} demanderArret={setArretDemande} echoir={echoir} /> : <EnteteSite session={session} echoir={echoir} mode={mode} theme={affichee.theme} />}
+      {POUR_APP ? <EnteteApp session={session} mode={mode} demanderArret={setArretDemande} echoir={echoir} theme={affichee.theme} /> : <EnteteSite session={session} echoir={echoir} mode={mode} theme={affichee.theme} />}
 
       {rienDu && session.index === 0 && (
         <p className="discret">

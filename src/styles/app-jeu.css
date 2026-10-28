@@ -469,3 +469,6 @@ html[data-app] .revue__item .proposition__marque {
   color: var(--texte-doux);
 }
 html[data-app] .recap .revue__item { border-top: 0; }
+
+/* Le thème de la question, entre la barre du haut et le visuel. */
+html[data-app] .jeu__meta { order: 0; margin-top: 0.75rem; }

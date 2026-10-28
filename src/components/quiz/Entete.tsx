@@ -21,10 +21,12 @@ const urgent = (restant: number | null) => restant !== null && restant <= 5;
  * en tête de l'énoncé. Pas de jauge de chrono : le nombre dit tout, et passe
  * au rouge sur les cinq dernières secondes.
  */
-export function EnteteApp({ session, mode, demanderArret, echoir }: Props & { mode: Mode; demanderArret: (oui: boolean) => void }) {
+export function EnteteApp({ session, mode, demanderArret, echoir, theme }: Props & { mode: Mode; demanderArret: (oui: boolean) => void; theme: string }) {
   const restant = useChrono(session.echeance, echoir);
   const presse = urgent(restant);
+  const groupe = groupeDuTheme(theme);
   return (
+    <>
     <div className="jeu__entete">
       {mode === 'examen' ? (
         <button className="jeu__croix" type="button" aria-label="Arrêter" onClick={() => demanderArret(true)}>
@@ -50,6 +52,11 @@ export function EnteteApp({ session, mode, demanderArret, echoir }: Props & { mo
         <span style={{ transform: `scaleX(${session.index / session.questions.length})` }} />
       </div>
     </div>
+    {/* Sous la barre, le thème de la question dans l'étiquette de son groupe. */}
+    <p className="jeu__meta">
+      <span className={`etiquette${groupe ? ` etiquette--${groupe.couleur}` : ''}`}>{nomDuTheme(theme)}</span>
+    </p>
+    </>
   );
 }
 

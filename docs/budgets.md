@@ -13,7 +13,7 @@ Décidées le 10 octobre 2026 (plan « app solide », décision 5), posées au l
 {
   "lignesParFichier": 600,
   "pourAppDansLesComposants": 40,
-  "examen": { "reference": 86240, "marge": 1024 }
+  "examen": { "reference": 88149, "marge": 1024 }
 }
 ```
 
@@ -52,3 +52,12 @@ node scripts/verifier-budgets.mjs   # 0 = dans les budgets
 ```
 
 **Relevé le 23 octobre 2026** (86194 → 86240, +46 octets) : le libellé « Passer » et le lien « Revoir mes erreurs » (`lienErreursExamen`, `questionsParIds`) sont dans le composant partagé avec le site.
+
+**Relevé le 28 octobre 2026** (86240 → 88149, la mesure de la branche
+`da-page-calme`) : `main` était à 87263, un octet sous le plafond ; la page
+calme y ajoute 886 octets. Le carnet de l'examen (trois propriétés et la
+grille des quarante cases), l'étiquette de groupe au-dessus de chaque question
+(`groupes.ts` part avec le jeu), les touches de clavier dessinées et les
+signes ✓ et ✕ du site. Le retrait d'Archivo, lui, ne compte pas ici : la
+police est hors de ce budget, et c'est 52 Ko de moins sur chaque première
+visite. La marge repart entière.
