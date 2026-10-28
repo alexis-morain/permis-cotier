@@ -248,7 +248,9 @@ Le cadre de téléphone des captures de l'accueil est le seul arrondi au-delà,
 parce qu'il dessine un objet : bord noir `#191918`, filet clair.
 
 La marque est le carré noir `#191918` aux coins de 5 px qui porte deux cônes
-jaunes, la marque cardinale nord : le seul jaune de l'en-tête.
+jaunes opposés par la base, le voyant d'une marque cardinale : le seul jaune de
+l'en-tête, et celui du favicon. L'icône de l'app garde pour l'instant sa bouée
+jaune sur marine : la changer est une décision d'App Store, à part.
 
 Les icônes sont en SVG en ligne, trait en `currentColor`, décoratives
 (`aria-hidden`).

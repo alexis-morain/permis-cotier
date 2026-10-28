@@ -5,9 +5,12 @@
  *     node scripts/icones-ios.mjs            # écrit dans ios/App/App/Assets.xcassets/
  *     node scripts/icones-ios.mjs --verifier # échoue si les fichiers livrés ont dérivé
  *
- * Le dessin est celui de `public/favicon.svg`, à la géométrie près : la même
- * bouée conique jaune sur marine que porte le wordmark du site. Une app dont
- * l'icône ne ressemble pas au site qu'elle prolonge se cherche deux fois.
+ * Le dessin est la bouée conique jaune sur marine de l'icône livrée. La page
+ * calme (28 octobre 2026) a donné au site une autre marque, deux cônes sur
+ * noir (`public/favicon.svg`) ; l'icône de l'App Store ne la suit pas encore,
+ * c'est une décision à part. Seul le fond de l'écran de démarrage a changé :
+ * il prend le `--fond` de la page, blanc en clair, gris de Notion en sombre,
+ * pour qu'aucun aplat ne clignote entre le démarrage et le premier écran.
  *
  * Deux règles d'Apple valent d'être dites, parce qu'elles refusent un envoi :
  *
@@ -29,12 +32,12 @@ import sharp from 'sharp';
 const RACINE = dirname(dirname(fileURLToPath(import.meta.url)));
 const CATALOGUE = join(RACINE, 'ios', 'App', 'App', 'Assets.xcassets');
 
-// Reprises telles quelles de `:root` dans src/styles/global.css.
+// Le marine de l'icône, et le jaune cardinal de `:root` (src/styles/global.css).
 const MARINE = '#0b1d3a';
 const JAUNE = '#ffc72c';
-const BRUME = '#f3f6fb';
-// `--fond` en sombre, la même valeur que la balise `theme-color` de Base.astro.
-const MARINE_SOMBRE = '#0a1730';
+// `--fond` en clair et en sombre, les valeurs des balises `theme-color` de Base.astro.
+const FOND_CLAIR = '#ffffff';
+const FOND_SOMBRE = '#191919';
 
 /**
  * La bouée, dans un carré de 32 comme le favicon. `fond` à `null` laisse le
@@ -66,7 +69,7 @@ function demarrage(cote, fond) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${cote}" height="${cote}" viewBox="0 0 ${cote} ${cote}">
   <rect width="${cote}" height="${cote}" fill="${fond}"/>
   <svg x="${marge}" y="${marge}" width="${badge}" height="${badge}" viewBox="0 0 32 32">
-    ${bouee({ fond: fond === BRUME ? MARINE : JAUNE, rayon: 8 })}
+    ${bouee({ fond: fond === FOND_CLAIR ? MARINE : JAUNE, rayon: 8 })}
   </svg>
 </svg>`;
 }
@@ -79,7 +82,7 @@ function demarrageSombre(cote) {
   const badge = Math.round(cote / 8);
   const marge = Math.round((cote - badge) / 2);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${cote}" height="${cote}" viewBox="0 0 ${cote} ${cote}">
-  <rect width="${cote}" height="${cote}" fill="${MARINE_SOMBRE}"/>
+  <rect width="${cote}" height="${cote}" fill="${FOND_SOMBRE}"/>
   <svg x="${marge}" y="${marge}" width="${badge}" height="${badge}" viewBox="0 0 32 32">
     <rect width="32" height="32" rx="8" fill="${JAUNE}"/>
     <path d="M16 6.5 L25.5 21.5 H6.5 Z" fill="${MARINE}"/>
@@ -105,11 +108,11 @@ const aEcrire = [
   },
   {
     chemin: join(CATALOGUE, 'Splash.imageset', 'demarrage-clair.png'),
-    png: await rendre(demarrage(COTE_DEMARRAGE, BRUME), BRUME),
+    png: await rendre(demarrage(COTE_DEMARRAGE, FOND_CLAIR), FOND_CLAIR),
   },
   {
     chemin: join(CATALOGUE, 'Splash.imageset', 'demarrage-sombre.png'),
-    png: await rendre(demarrageSombre(COTE_DEMARRAGE), MARINE_SOMBRE),
+    png: await rendre(demarrageSombre(COTE_DEMARRAGE), FOND_SOMBRE),
   },
 ];
 
