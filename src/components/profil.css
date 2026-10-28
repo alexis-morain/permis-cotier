@@ -1,8 +1,10 @@
 /*
- * La fiche du candidat et le questionnaire de départ. Même grammaire que
- * l'écran de jeu : le bord plein sous ce qu'on presse, le rayon unique, le
- * jaune pour l'action, le marine pour ce qui est acquis. Le vert et le rouge
- * restent au verdict des examens blancs.
+ * La fiche du candidat, le questionnaire de départ et la liste des erreurs :
+ * une page de carnet. Le blanc sépare les sections, le filet d'un pixel les
+ * rangées, le panneau `.encadre` ce qui se lit d'un coup d'œil. L'encre porte
+ * tout ce qui est acquis (rails, cases pleines) ; le vert et le rouge restent
+ * au verdict des examens blancs, et chaque thème porte l'étiquette de son
+ * groupe (`EtiquetteGroupe`).
  */
 
 /* ---- Questionnaire ------------------------------------------------------ */
@@ -14,39 +16,40 @@
   padding-block: 1.25rem 2rem;
   min-height: 60vh;
 }
-.questionnaire__etape { font-weight: 700; margin: 0 0 0.5rem; font-size: 0.95rem; }
+.questionnaire__etape { font-weight: 600; margin: 0 0 0.5rem; font-size: 0.875rem; }
+/* La progression : un rail fin sur le filet, rempli d'encre. */
 .questionnaire__barre {
-  height: 6px;
-  border-radius: 999px;
-  background: var(--fond-2);
+  height: 4px;
+  border-radius: 2px;
+  background: var(--filet);
   overflow: hidden;
 }
 .questionnaire__barre span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--jauge);
+  background: var(--texte);
   transform-origin: left;
-  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .questionnaire__ecran { display: flex; flex-direction: column; gap: 0.75rem; }
-.questionnaire__ecran h1 { font-size: clamp(1.7rem, 6vw, 2.5rem); max-width: 18ch; margin: 0; outline: none; }
+.questionnaire__ecran h1 { max-width: 18ch; margin: 0; outline: none; }
 .questionnaire__ecran .discret { margin: 0; max-width: 46ch; }
 .questionnaire__phrase { resize: vertical; min-height: 6rem; max-width: 34rem; margin-top: 0.5rem; }
 .questionnaire__compte { text-align: right; max-width: 34rem; }
 .questionnaire__date, .questionnaire__prenom { max-width: 20rem; margin-top: 0.5rem; }
-.questionnaire__jours { font-weight: 700; margin: 0; }
+.questionnaire__jours { font-weight: 600; margin: 0; }
 .questionnaire__actions { margin-top: auto; }
 
-/* Les options : une carte à bord plein, comme une proposition de question.
-   Cochée, elle passe jaune pâle avec bordure marine. */
+/* Les options : une rangée à filet, coins de contrôle. Cochée, elle passe sur
+   la teinte, le bord au bord de champ, et son contrôle se remplit d'encre. */
 .choix {
   list-style: none;
   margin: 0.5rem 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.5rem;
   max-width: 34rem;
 }
 .choix li { max-width: none; }
@@ -56,10 +59,10 @@
   align-items: center;
   gap: 0.9rem;
   width: 100%;
-  min-height: 3.5rem;
-  padding: 0.8rem 1rem;
-  border: 2px solid var(--filet-fort);
-  border-radius: var(--rayon);
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon-petit);
   background: var(--fond-carte);
   color: inherit;
   font: inherit;
@@ -67,83 +70,89 @@
   line-height: 1.35;
   text-align: left;
   cursor: pointer;
-  box-shadow: 0 var(--bord) 0 var(--filet-fort);
-  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
+  transition: border-color var(--transition), background-color var(--transition);
 }
 @media (hover: hover) and (pointer: fine) {
-  .choix__option:hover { border-color: var(--texte); box-shadow: 0 var(--bord) 0 var(--texte); }
+  .choix__option:hover { border-color: var(--filet-fort); }
 }
-.choix__option:active { transform: translateY(var(--bord)); box-shadow: 0 0 0 var(--filet-fort); }
 .choix__option--coche {
-  border-color: var(--texte);
-  background: var(--jaune-pale);
-  box-shadow: 0 var(--bord) 0 var(--texte);
+  border-color: var(--filet-fort);
+  background: var(--teinte);
 }
 .choix__case {
-  flex: 0 0 1.35rem;
-  height: 1.35rem;
-  border: 2px solid var(--filet-fort);
-  border-radius: var(--rayon-petit);
+  flex: 0 0 1.25rem;
+  height: 1.25rem;
+  border: 1px solid var(--filet-fort);
+  border-radius: var(--rayon-etiquette);
+  background: var(--fond-carte);
   position: relative;
-  transition: background var(--transition), border-color var(--transition);
+  transition: background-color var(--transition), border-color var(--transition);
 }
 .choix__case--ronde { border-radius: 999px; }
-.choix__option--coche .choix__case { background: var(--texte); border-color: var(--texte); }
+.choix__option--coche .choix__case { background: var(--action); border-color: var(--action); }
+/* Le signe est un masque : il prend `--sur-action`, blanc sur l'encre en
+   clair, sombre sur l'encre claire en sombre. */
 .choix__option--coche .choix__case::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: no-repeat center / 70% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 8.5 6 12l7.5-8' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background: var(--sur-action);
+  -webkit-mask: no-repeat center / 70% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 8.5 6 12l7.5-8' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask: no-repeat center / 70% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 8.5 6 12l7.5-8' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .choix__option--coche .choix__case--ronde::after {
-  background: var(--fond-carte);
+  -webkit-mask: none;
+  mask: none;
   inset: 4px;
   border-radius: 999px;
 }
-.choix__nombre { font-size: 1.6rem; line-height: 1; flex: 0 0 2.6rem; text-align: center; }
+.choix__nombre { font-size: 1.5rem; line-height: 1; flex: 0 0 2.6rem; text-align: center; }
 .choix__corps { display: flex; flex-direction: column; gap: 0.1rem; }
-.choix__corps .discret { font-weight: 500; }
+.choix__corps .discret { font-weight: 400; }
 
 /* ---- La fiche ----------------------------------------------------------- */
 
-.fiche { display: flex; flex-direction: column; gap: 2.75rem; padding-block: 1.5rem 2rem; }
+.fiche { display: flex; flex-direction: column; gap: 3rem; padding-block: 1.5rem 2rem; }
 .fiche h1 { margin: 0 0 1rem; max-width: 16ch; }
 .fiche h2 { margin-bottom: 0.5rem; }
 .fiche section > .discret { margin-bottom: 1rem; }
 .fiche__tete { display: flex; flex-direction: column; }
 .fiche__invitation { margin: 0; max-width: var(--mesure); }
-/* Le score du recalé sous le titre : un résumé, donc la largeur et la graisse
-   d'un chapeau, rien d'autre (DESIGN.md, « Forme »). */
-.fiche__dernier { margin: 0.75rem 0 0; font-stretch: var(--large); font-weight: 600; max-width: var(--mesure); }
+/* Le score du recalé sous le titre : un résumé, donc la graisse d'un
+   chapeau, rien d'autre (DESIGN.md, « Typographie »). */
+.fiche__dernier { margin: 0.75rem 0 0; font-weight: 600; max-width: var(--mesure); }
 /* `.jeu__actions` n'a de règle que dans la feuille de l'app : sur le site,
    « Annuler » et « Oui, tout effacer » se touchaient. */
 .fiche .jeu__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; }
 .fiche__details { max-width: var(--mesure); margin-top: 0.75rem; }
-.fiche__details summary { cursor: pointer; font-weight: 700; min-height: 2.75rem; display: flex; align-items: center; }
+.fiche__details summary { cursor: pointer; font-weight: 600; min-height: 2.75rem; display: flex; align-items: center; }
 .fiche__details p { margin: 0.5rem 0 0; }
+/* Les panneaux de la fiche ne passent pas la mesure d'une page de carnet. */
+.fiche > .encadre { max-width: 44rem; }
+.fiche > .encadre h2 { margin-top: 0.25rem; }
 
-/* L'indice : le grand nombre, le palier à côté, la jauge en trois parts. */
+/* L'indice : le palier en tête, le grand nombre à côté, le rail en trois parts. */
 .indice { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 2rem; }
 .indice__nombre { display: flex; align-items: baseline; margin: 0; }
-.indice__nombre .display { font-size: clamp(4rem, 18vw, 6.5rem); line-height: 0.95; letter-spacing: -0.03em; }
-.indice__nombre small { font-size: 1.1rem; font-weight: 600; color: var(--texte-doux); }
+.indice__nombre .display { font-size: clamp(3.5rem, 14vw, 5rem); line-height: 0.95; }
+.indice__nombre small { font-size: 1rem; font-weight: 600; color: var(--texte-doux); }
 .indice__texte { flex: 1 1 16rem; }
 .indice__texte p { margin: 0; max-width: 40ch; }
-.indice__palier { font-stretch: var(--large); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
-/* Avec un examen, le palier en tête et en grand ; l'indice en second. */
-.indice--examens .indice__palier { font-size: clamp(1.8rem, 1.2rem + 2.5vw, 2.6rem); line-height: 1.05; margin-bottom: 0.4rem; }
+.indice__palier { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+/* Avec un examen, le palier en tête ; l'indice en second, plus petit. */
+.indice--examens .indice__palier { margin-bottom: 0.4rem; }
 .indice--examens .indice__nombre { align-self: flex-end; }
-.indice--examens .indice__nombre .display { font-size: 2.4rem; }
+.indice--examens .indice__nombre .display { font-size: 2.5rem; }
 /* Le nombre est en flex : l'espace après « Indice » n'y survit pas. */
 .indice--examens .indice__nombre small:first-child { margin-right: 0.35rem; }
 .indice__jauge {
   position: relative;
-  height: 14px;
+  height: 6px;
   margin-top: 1.25rem;
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--fond-2);
+  box-shadow: inset 0 0 0 1px var(--filet);
   overflow: hidden;
-  max-width: 40rem;
 }
 /* Les trois parts sont des calques superposés, du plus long au plus court.
    Chacun est mis à l'échelle : `width` ne s'anime pas, `transform` si. */
@@ -152,51 +161,39 @@
   inset: 0;
   transform-origin: left;
   transform: scaleX(var(--part, 0));
-  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.indice__part--vu, .indice__puce--vu { background: var(--indice-vu, var(--jauge)); }
+/* Trois encres sur le lavis, du plus clair au plus plein : le vu (rencontré),
+   les examens (la plus grosse part), le retenu (acquis). Le nombre écrit dans
+   la légende dit le reste, la clarté seule ne le porte pas. */
+.indice__part--vu, .indice__puce--vu { background: color-mix(in oklab, var(--texte) 30%, var(--fond-2)); }
+.indice__part--examens, .indice__puce--examens { background: color-mix(in oklab, var(--texte) 60%, var(--fond-2)); }
 .indice__part--retenu, .indice__puce--retenu { background: var(--texte); }
-/* Les examens, la plus grosse part, ne prennent plus `--filet-fort`, qui dit
-   « vu, pas retenu » dans les jauges de thème : un marine entre le texte et
-   ce filet, plein à l'œil et distinct du retenu par sa clarté. */
-.indice__part--examens, .indice__puce--examens {
-  background: var(--filet-fort);
-  background: color-mix(in oklab, var(--texte) 55%, var(--filet-fort));
-}
-/* En sombre, le retenu prend la couleur du texte, presque blanche : contre le
-   jaune plein du vu, elle ne fait que 1,39:1. Le vu s'éteint donc au jaune
-   mêlé à 60 % au rail (`--fond-2`), 3,21:1 contre le retenu, et le jaune plein
-   reste à l'action. Le même bloc deux fois, comme dans global.css. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-apparence="clair"]) { --indice-vu: #9f8433; }
-}
-:root[data-apparence="sombre"] { --indice-vu: #9f8433; }
 .indice__legende {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem 1.25rem;
-  margin: 0.6rem 0 0;
+  margin: 0.75rem 0 0;
   padding: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.8125rem;
   color: var(--texte-doux);
 }
 .indice__legende li { display: flex; align-items: center; gap: 0.4rem; max-width: none; }
-.indice__puce { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 999px; }
+.indice__puce { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: var(--rayon-etiquette); }
 
 /* Aujourd'hui : l'objectif et la série côte à côte. */
 .jour { display: grid; gap: 1.5rem; margin-bottom: 1.25rem; }
 .jour__chiffre { display: flex; align-items: baseline; gap: 0.3rem; margin: 0 0 0.4rem; }
-.jour__chiffre .display { font-size: 2.6rem; line-height: 1; }
-.jour__barre { height: 10px; border-radius: 999px; background: var(--fond-2); overflow: hidden; max-width: 22rem; }
+.jour__chiffre .display { font-size: 2.5rem; line-height: 1; }
+.jour__barre { height: 6px; border-radius: 3px; background: var(--fond-2); box-shadow: inset 0 0 0 1px var(--filet); overflow: hidden; max-width: 22rem; }
 .jour__barre span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--jauge);
+  background: var(--texte);
   transform-origin: left;
-  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .jour__note { margin: 0.5rem 0 0; }
 .jour__examen { margin: 0 0 1.25rem; max-width: 46ch; }
@@ -215,15 +212,15 @@
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  border-radius: var(--rayon-petit);
+  border-radius: var(--rayon-etiquette);
   background: var(--fond-2);
   color: var(--texte-doux);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   max-width: none;
 }
 .jours__case--actif { background: var(--texte); color: var(--fond-carte); }
-.jours__case--aujourdhui { outline: 2px solid var(--jaune); outline-offset: 1px; }
+.jours__case--aujourdhui { outline: 1px solid var(--texte); outline-offset: 2px; }
 
 /* Le changement de comptage, dit une fois. Ni encadré ni couleur : une
    phrase sous la jauge, qui s'en va toute seule au bout d'un mois. */
@@ -234,39 +231,43 @@
 }
 
 /* À reprendre en premier : trois notions, chacune avec sa leçon et sa série.
-   Mêmes filets horizontaux que la liste des thèmes, un cran plus fin. */
-.faibles { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 40rem; }
-.faible { border-top: 2px solid var(--filet); padding: 0.9rem 0; max-width: none; }
-.faible:last-child { border-bottom: 2px solid var(--filet); }
-.faible__nom { margin: 0; font-size: 1.1rem; }
-.faible__nom .discret { font-size: 0.9rem; font-weight: 600; }
-.faible__note { margin: 0.2rem 0 0; font-size: 0.9rem; }
-.faible__actions { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 0; font-weight: 700; }
+   Des rangées à filet, comme la vue de base des thèmes. */
+.faibles { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 44rem; }
+.faible { border-top: 1px solid var(--filet); padding: 0.9rem 0; max-width: none; }
+.faible:last-child { border-bottom: 1px solid var(--filet); }
+.faible__nom { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.6rem; margin: 0; font-size: 1rem; }
+.faible__nom .discret { font-size: 0.875rem; }
+.faible__note { margin: 0.2rem 0 0; font-size: 0.875rem; }
+.faible__actions { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 0; font-weight: 600; }
 .faible__actions a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 
-/* Thème par thème : une ligne par thème, le nom, le pourcentage retenu, une
-   barre. Le pourcentage est ce que la barre remplit, rien d'autre. */
-.maitrise { list-style: none; margin: 0; padding: 0; max-width: 40rem; }
-.maitrise > li { max-width: none; border-top: 2px solid var(--filet); }
-.maitrise > li:last-child { border-bottom: 2px solid var(--filet); }
+/* Thème par thème : une rangée par thème, le nom et son étiquette de groupe,
+   le pourcentage retenu, un rail. Le pourcentage est ce que le rail remplit,
+   rien d'autre. Un lien de liste : en encre, souligné au survol seulement. */
+.maitrise { list-style: none; margin: 0; padding: 0; max-width: 44rem; }
+.maitrise > li { max-width: none; border-top: 1px solid var(--filet); }
+.maitrise > li:last-child { border-bottom: 1px solid var(--filet); }
 .maitrise a {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.3rem 1rem;
-  align-items: baseline;
-  padding: 0.75rem 0 0.6rem;
+  gap: 0.4rem 1rem;
+  align-items: start;
+  padding: 0.75rem 0 0.7rem;
+  color: inherit;
   text-decoration: none;
 }
+.maitrise__nom { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.6rem; min-width: 0; }
 @media (hover: hover) and (pointer: fine) {
-  .maitrise a:hover b { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+  .maitrise a:hover b { text-decoration: underline; text-underline-offset: 0.18em; }
 }
-.maitrise__pourcent { font-weight: 800; font-variant-numeric: tabular-nums; }
+.maitrise__pourcent { font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.6; }
 .maitrise__jauge {
   grid-column: 1 / -1;
   position: relative;
-  height: 8px;
-  border-radius: 999px;
+  height: 6px;
+  border-radius: 3px;
   background: var(--fond-2);
+  box-shadow: inset 0 0 0 1px var(--filet);
   overflow: hidden;
 }
 .maitrise__retenues {
@@ -277,112 +278,111 @@
   transform-origin: left;
   transform: scaleX(var(--pourcent, 0));
 }
-/* Les thèmes jamais ouverts, groupés en bas : le nom et le nombre de questions, sans barre. */
-.maitrise__titre { margin: 1.5rem 0 0.4rem; font-size: 1rem; }
+/* Les thèmes jamais ouverts, groupés en bas : le nom et le nombre de questions, sans rail. */
+.maitrise__titre { margin: 2rem 0 0.5rem; }
 .maitrise--neufs a { padding: 0.6rem 0; min-height: 2.75rem; align-items: center; }
-.maitrise--neufs .discret { font-size: 0.9rem; }
+.maitrise--neufs .discret { font-size: 0.875rem; }
 
-/* Les paliers d'un thème, sous sa jauge : une ligne avec le nom de ce qui est
+/* Les paliers d'un thème, sous son rail : une ligne avec le nom de ce qui est
    gagné, le fait daté replié, puis le prochain en petit. */
-.paliers { padding: 0 0 0.85rem; font-size: 0.9rem; }
-.paliers summary { cursor: pointer; font-weight: 700; display: flex; align-items: center; min-height: 2.75rem; }
+.paliers { padding: 0 0 0.85rem; font-size: 0.875rem; }
+.paliers summary { cursor: pointer; font-weight: 600; display: flex; align-items: center; min-height: 2.75rem; }
 .paliers summary::after { content: '›'; margin-left: 0.4rem; color: var(--texte-doux); transition: transform 0.15s; }
 .paliers details[open] summary::after { transform: rotate(90deg); }
-@media (prefers-reduced-motion: reduce) { .paliers summary::after { transition: none; } }
 .paliers summary::-webkit-details-marker { display: none; }
 .paliers ul { list-style: none; margin: 0; padding: 0; }
 .paliers li { max-width: none; }
 .paliers li + li { margin-top: 0.3rem; }
-.paliers__prochain { margin: 0.2rem 0 0; font-size: 0.8rem; }
+.paliers__prochain { margin: 0.2rem 0 0; font-size: 0.8125rem; }
 .paliers details + .paliers__prochain { margin-top: 0; }
 
-/* Les derniers examens blancs : un histogramme en HTML, une barre par examen,
-   le plus récent à droite. La hauteur est `--part` (score sur 40). La ligne
-   pointillée est le seuil, à 35 sur 40. Recalé = barre creuse. */
-.barres__cadre {
-  position: relative;
+/* Les derniers examens blancs, comme sur l'accueil : une rangée par examen,
+   la date en encre douce, un rail rempli d'encre à la hauteur du score
+   (`--part`, score sur 40), le trait vert à 35 sur 40, le verdict en
+   étiquette. Le trait vert marque la barre d'admission, il ne dit pas
+   « reçu » : le score l'écrit. */
+.barres { list-style: none; margin: 0.75rem 0 0; padding: 0; }
+.barres__barre {
   display: grid;
-  grid-template-columns: 1fr 3.6rem;
-  align-items: stretch;
-  max-width: 34rem;
-  margin: 1.25rem 0 0.75rem;
-  height: 10.5rem;
-  padding-top: 1.1rem;
+  grid-template-columns: 6.5rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-top: 1px solid var(--filet);
+  font-size: 0.875rem;
+  max-width: none;
 }
-.barres {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: stretch;
-  gap: 0.3rem;
-  border-bottom: 2px solid var(--filet-fort);
+.barres__barre:first-child { border-top: 0; }
+.barres__date { color: var(--texte-doux); }
+.barres__rail {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--fond-2);
+  box-shadow: inset 0 0 0 1px var(--filet);
 }
-.barres__barre { position: relative; flex: 1 1 0; max-width: none; min-width: 0; }
-.barres__barre::before {
+.barres__rail i {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--texte);
+  transform-origin: left;
+  transform: scaleX(var(--part, 0));
+}
+/* 35 sur 40 : le trait est à 87,5 % du rail. */
+.barres__rail::after {
   content: '';
   position: absolute;
-  inset: auto 0 0 0;
-  height: calc(var(--part, 0) * 100%);
-  background: var(--texte);
-  border-radius: 4px 4px 0 0;
-}
-.barres__barre--recale::before {
-  background: var(--fond-carte);
-  box-shadow: inset 0 0 0 2px var(--texte);
-}
-/* Le score au pied de la barre, dedans : la ligne du seuil ne le croise jamais. */
-.barres__score {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.3rem;
-  text-align: center;
-  font-size: 0.8rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: var(--fond-carte);
-}
-.barres__barre--recale .barres__score { color: var(--texte); }
-/* 35 sur 40 : la ligne est à 87,5 % de la hauteur utile (le cadre moins son
-   bandeau du haut), le bas du graphique est le zéro. */
-.barres__ligne {
-  position: absolute;
-  left: 0;
-  right: 3.6rem;
-  bottom: calc((100% - 1.1rem) * 35 / 40);
-  border-top: 2px dashed var(--jaune-sombre);
-  pointer-events: none;
+  top: -4px;
+  bottom: -4px;
+  left: 87.5%;
+  width: 2px;
+  background: var(--vert);
 }
 .barres__seuil {
-  position: absolute;
-  right: 0;
-  bottom: calc((100% - 1.1rem) * 35 / 40);
-  transform: translateY(50%);
-  font-size: 0.8rem;
-  font-weight: 700;
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--filet);
+  font-size: 0.8125rem;
   color: var(--texte-doux);
-  white-space: nowrap;
+}
+.barres__seuil::before {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 0.8em;
+  margin-right: 0.5rem;
+  background: var(--vert);
+  vertical-align: -0.05em;
 }
 .examens-chiffres {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem 1rem;
-  max-width: 34rem;
+  margin-top: 1rem;
 }
 .examens-chiffres > div { display: flex; flex-direction: column; gap: 0.1rem; max-width: none; }
-.examens-chiffres b { font-size: 1.35rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
-.examens-chiffres .discret { font-size: 0.85rem; }
+.examens-chiffres b { font-size: 1.25rem; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.examens-chiffres .discret { font-size: 0.8125rem; }
 .examens-vide { margin: 0; }
-.examens-vide a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; }
+.examens-vide a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 600; }
 
-/* Les réglages : une ligne par réglage, séparées d'un filet. */
-.reglage { border-top: 2px solid var(--filet); padding: 1rem 0; max-width: 40rem; }
-.reglage:last-child { border-bottom: 2px solid var(--filet); }
-.reglage label, .reglage__titre { display: block; font-weight: 700; margin: 0 0 0.5rem; }
+/* Les réglages : des propriétés, comme celles d'une page Notion. Une ligne
+   par réglage entre deux filets ; dès 40 rem, le libellé en encre douce à
+   gauche et la valeur à droite. */
+.reglages { margin: 0; max-width: 44rem; }
+.reglage { border-top: 1px solid var(--filet); padding: 1rem 0; }
+.reglage:last-child { border-bottom: 1px solid var(--filet); }
+.reglage dt, .reglage dd { margin: 0; }
+.reglage dt, .reglage label, .reglage__titre { display: block; color: var(--texte-doux); font-size: 0.875rem; font-weight: 600; margin: 0 0 0.5rem; }
 .reglage .champ { max-width: 20rem; }
+.reglage q { quotes: '« ' ' »'; }
 .reglage__valeur { margin: 0; }
 .reglage__ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+@media (min-width: 40rem) {
+  .reglage { display: grid; grid-template-columns: 12rem 1fr; gap: 0 1.5rem; align-items: center; }
+  .reglage dt, .reglage label, .reglage__titre { margin: 0; }
+}
 
 /* « effacer la date » : le même lien d'action discret que « Signaler » sous
    une question. Sa règle vit dans `quiz.css`, que la fiche ne charge pas :
@@ -397,68 +397,66 @@
   padding-block: 0.6rem;
   padding-inline: 0;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--texte-doux);
   text-decoration: underline;
-  text-decoration-color: var(--filet-fort);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.16em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
   cursor: pointer;
 }
 @media (hover: hover) and (pointer: fine) {
-  .reglage__ligne .signaler:hover { color: var(--texte); text-decoration-color: var(--jaune); }
+  .reglage__ligne .signaler:hover { color: var(--texte); }
 }
 /* Le seul bouton rouge : celui qui efface. Plein, pour qu'on le lise avant
    de l'enfoncer ; « Annuler » reste un bouton ordinaire, sans couleur. */
 .bouton--danger {
   background: var(--rouge);
   border-color: var(--rouge);
-  color: var(--blanc);
-  box-shadow: 0 var(--bord) 0 var(--rouge-texte);
+  color: var(--sur-verdict);
 }
 @media (hover: hover) and (pointer: fine) {
   .bouton--danger:hover { background: var(--rouge-texte); border-color: var(--rouge-texte); }
 }
-.bouton--danger:active { box-shadow: 0 0 0 var(--rouge-texte); }
 
 @media (min-width: 40rem) {
   .jour { grid-template-columns: 1fr 1fr; gap: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .questionnaire__barre span, .jour__barre span, .indice__part { transition: none; }
+  .questionnaire__barre span, .jour__barre span, .indice__part, .paliers summary::after { transition: none; }
 }
 
 /* --------------------------------------------------------------------- */
 /* Mes erreurs : une liste qui se lit, pas un jeu. Pas de proposition à
    cocher, pas de bouton par ligne — l'énoncé, la bonne réponse, la raison,
-   la leçon. Filets horizontaux comme la liste des thèmes, aucun cadre. */
+   la leçon. Une rangée à filet par question, l'étiquette de groupe de son
+   thème sur la ligne des méta. */
 
 .erreurs h1 { margin-bottom: 0.75rem; }
 .erreurs > p { max-width: var(--mesure); }
-.erreurs section { margin-top: 2.5rem; }
+.erreurs section { margin-top: 3rem; }
 .erreurs h2 { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
 
 .erreurs__liste { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 44rem; }
 .erreur {
-  border-top: 2px solid var(--filet);
+  border-top: 1px solid var(--filet);
   padding: 1.1rem 0;
   max-width: none;
 }
-.erreurs__liste .erreur:last-child { border-bottom: 2px solid var(--filet); }
-.erreur__rang { margin: 0.25rem 0 0.5rem; font-size: 0.85rem; font-weight: 600; }
+.erreurs__liste .erreur:last-child { border-bottom: 1px solid var(--filet); }
+.erreur__rang { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.6rem; margin: 0.25rem 0 0.75rem; font-size: 0.8125rem; }
 .erreur__bonnes { margin: 0.25rem 0 0; padding-left: 1.2rem; }
-.erreur__enonce { font-size: 1.1rem; margin: 0 0 0.5rem; }
+.erreur__enonce { font-size: 1.125rem; margin: 0 0 0.5rem; }
 .erreur__visuel {
   display: block;
   border-radius: var(--rayon);
-  border: 2px solid var(--filet);
-  background: var(--fond-carte);
+  border: 1px solid var(--filet);
+  background: var(--fond-2);
   max-width: 14rem;
   margin: 0 0 0.6rem;
 }
 .erreur__bonne { margin: 0 0 0.4rem; }
 .erreur__explication { margin: 0; color: var(--texte-doux); }
-.erreur__lecon { margin: 0.4rem 0 0; font-weight: 700; }
+.erreur__lecon { margin: 0.4rem 0 0; font-weight: 600; }
 .erreur__lecon a { display: inline-flex; align-items: center; min-height: 2.75rem; }

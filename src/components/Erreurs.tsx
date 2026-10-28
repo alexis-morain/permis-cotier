@@ -9,6 +9,7 @@ import { lienLecon } from '../lib/retour';
 import { nomDuTheme } from '../lib/themes-client';
 import { dateLisible } from '../lib/jour';
 import { POUR_APP } from '../lib/cible';
+import EtiquetteGroupe from './profil/EtiquetteGroupe';
 import './profil.css';
 
 /**
@@ -55,14 +56,17 @@ function Erreur({ question, etat, jour }: Ligne & { jour: string }) {
   const bonnes = bonnesReponses(question);
   return (
     <li className="erreur">
-      {/* Le thème et le compte sous l'énoncé, jamais au-dessus : un sur-titre
-          est ce que le système refuse, et un lecteur d'écran qui va de titre
-          en titre le sautait. */}
+      {/* Le thème, son étiquette de groupe et le compte sous l'énoncé, jamais
+          au-dessus : un sur-titre est ce que le système refuse, et un lecteur
+          d'écran qui va de titre en titre le sautait. */}
       <h3 className="erreur__enonce">{question.enonce}</h3>
       <p className="erreur__rang discret">
-        {nomDuTheme(question.theme)}
-        {etat.ratees > 0 && ` · ratée ${etat.ratees === 1 ? 'une fois' : `${etat.ratees} fois`}`}
-        {retard && ` · due depuis le ${dateLisible(retard)}`}
+        <span>
+          {nomDuTheme(question.theme)}
+          {etat.ratees > 0 && ` · ratée ${etat.ratees === 1 ? 'une fois' : `${etat.ratees} fois`}`}
+          {retard && ` · due depuis le ${dateLisible(retard)}`}
+        </span>
+        <EtiquetteGroupe theme={question.theme} />
       </p>
       {question.visuel && (
         <img

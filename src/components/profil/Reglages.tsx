@@ -34,9 +34,13 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
         Tout reste dans ce navigateur. Changer d’appareil, ou effacer les données du site, efface la fiche.
       </p>
 
+      {/* Des propriétés, comme celles d'une page Notion : le libellé en encre
+          douce à gauche, la valeur à droite dès 40 rem. */}
+      <dl className="reglages">
+
       <div className="reglage">
-        <label htmlFor="reglage-prenom">Prénom</label>
-        <input
+        <dt><label htmlFor="reglage-prenom">Prénom</label></dt>
+        <dd><input
           id="reglage-prenom"
           className="champ"
           type="text"
@@ -44,20 +48,20 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
           maxLength={40}
           value={p.prenom}
           onChange={(e) => ecrire(enregistrerProfil(etat, { ...p, prenom: e.target.value }))}
-        />
+        /></dd>
       </div>
 
       <div className="reglage">
-        <p className="reglage__titre">Pourquoi tu passes le permis</p>
-        <p className="reglage__valeur">
+        <dt className="reglage__titre">Pourquoi tu passes le permis</dt>
+        <dd>
           {raison ? <q>{raison}</q> : <span className="discret">Pas encore dit.</span>}{' '}
           <a href="/profil/depart">{profilRempli(p) ? 'Modifier mes réponses' : 'Répondre'}</a>
-        </p>
+        </dd>
       </div>
 
       <div className="reglage">
-        <p className="reglage__titre" id="reglage-rythme">Questions par jour</p>
-        <div className="segmente" role="group" aria-labelledby="reglage-rythme">
+        <dt className="reglage__titre" id="reglage-rythme">Questions par jour</dt>
+        <dd><div className="segmente" role="group" aria-labelledby="reglage-rythme">
           {RYTHMES.map((r) => (
             <button
               key={r.questions}
@@ -69,12 +73,12 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
               {r.questions} <span className="discret">{r.nom}</span>
             </button>
           ))}
-        </div>
+        </div></dd>
       </div>
 
       <div className="reglage">
-        <label htmlFor="reglage-date">Date de l’examen</label>
-        <div className="reglage__ligne">
+        <dt><label htmlFor="reglage-date">Date de l’examen</label></dt>
+        <dd><div className="reglage__ligne">
           <input
             id="reglage-date"
             className="champ"
@@ -102,24 +106,25 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
               Effacer la date
             </button>
           )}
-        </div>
+        </div></dd>
       </div>
 
       <div className="reglage">
-        <p className="reglage__titre" id="reglage-apparence">Apparence</p>
-        <Apparence idTitre="reglage-apparence" />
+        <dt className="reglage__titre" id="reglage-apparence">Apparence</dt>
+        <dd><Apparence idTitre="reglage-apparence" /></dd>
       </div>
 
       <div className="reglage">
-        <p className="reglage__titre">Vie privée et licences</p>
-        <p className="reglage__valeur">
+        <dt className="reglage__titre">Vie privée et licences</dt>
+        <dd>
           La mesure d’audience, la version de la banque et les licences sont sur la page{' '}
           <a href="/parametres">réglages du site</a>.
-        </p>
+        </dd>
       </div>
 
       <div className="reglage reglage--danger">
-        <p className="reglage__titre">Effacer</p>
+        <dt className="reglage__titre">Effacer</dt>
+        <dd>
         {confirme ? (
           <>
             {partira && <p className="reglage__valeur">{partira}</p>}
@@ -153,7 +158,9 @@ export default function Reglages({ etat, rien, efface, ecrire, surEffacement }: 
             </button>
           </p>
         )}
+        </dd>
       </div>
+      </dl>
     </section>
   );
 }

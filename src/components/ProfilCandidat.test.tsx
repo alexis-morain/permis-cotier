@@ -445,7 +445,7 @@ describe('la remesure du 4 octobre', () => {
   it('range les examens blancs avant les thèmes', () => {
     sauvegarder(enregistrerReponse(recaleHier(), 'vhf-0', false, '2026-09-20'));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    const sections = [...document.querySelectorAll('section')].map((s) => s.className);
+    const sections = [...document.querySelectorAll('section')].map((s) => s.classList[0]);
     expect(sections.indexOf('fiche__examens')).toBeGreaterThan(-1);
     expect(sections.indexOf('fiche__examens')).toBeLessThan(sections.indexOf('fiche__themes'));
   });
@@ -527,16 +527,16 @@ describe('les derniers examens blancs', () => {
     return e;
   }
 
-  it('dessine une barre par examen, le plus récent à droite, avec un texte pour chacune', () => {
+  it('dessine une rangée par examen, le plus récent en haut, avec un texte pour chacune', () => {
     sauvegarder(septExamens());
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     const barres = [...document.querySelectorAll('.barres > li')];
     expect(barres).toHaveLength(7);
     const lus = barres.map((li) => li.querySelector('.visuellement-cache')!.textContent);
-    expect(lus[0]).toBe('28 sur 40, recalé, 1 octobre');
-    expect(lus[2]).toBe('37 sur 40, reçu, 3 octobre');
-    expect(lus[6]).toBe('31 sur 40, recalé, 7 octobre');
-    // Recalé ou reçu ne tient pas à la couleur : la barre recalée est creuse.
+    expect(lus[0]).toBe('31 sur 40, recalé, 7 octobre');
+    expect(lus[4]).toBe('37 sur 40, reçu, 3 octobre');
+    expect(lus[6]).toBe('28 sur 40, recalé, 1 octobre');
+    // Recalé ou reçu ne tient pas à la couleur : l’étiquette écrit le score et le texte dit le verdict.
     expect(barres[0]!.className).toContain('barres__barre--recale');
     expect(barres[1]!.className).not.toContain('barres__barre--recale');
   });
@@ -577,7 +577,7 @@ describe('les derniers examens blancs', () => {
   it('passe avant l’indice, qui le suit', () => {
     sauvegarder(septExamens());
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
-    const sections = [...document.querySelectorAll('section')].map((s) => s.className);
+    const sections = [...document.querySelectorAll('section')].map((s) => s.classList[0]);
     expect(sections.indexOf('fiche__examens')).toBeLessThan(sections.indexOf('fiche__indice'));
   });
 });

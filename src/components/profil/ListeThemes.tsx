@@ -4,6 +4,7 @@ import type { QuestionConnue } from '../../lib/profil';
 import type { Etat } from '../../lib/progression';
 import { nomDuTheme } from '../../lib/themes-client';
 import PaliersDuTheme from './PaliersDuTheme';
+import EtiquetteGroupe from './EtiquetteGroupe';
 import { accorde } from './accorde';
 
 interface Props {
@@ -30,7 +31,10 @@ export default function ListeThemes({ etat, banque, limite }: Props) {
         {travailles.map((t) => (
           <li key={t.code} style={{ '--pourcent': t.pourcent / 100 } as React.CSSProperties}>
             <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
-              <b>{nomDuTheme(t.code)}</b>
+              <span className="maitrise__nom">
+                <b>{nomDuTheme(t.code)}</b>
+                <EtiquetteGroupe theme={t.code} />
+              </span>
               <span className="maitrise__pourcent">{t.pourcent}{'\u00a0'}%</span>
               <span className="maitrise__jauge" aria-hidden="true">
                 <span className="maitrise__retenues" />
@@ -48,7 +52,10 @@ export default function ListeThemes({ etat, banque, limite }: Props) {
             {jauges.neufs.map((t) => (
               <li key={t.code}>
                 <a href={`/entrainement/${t.code}`} data-mesure="profil-theme" data-mesure-theme={t.code}>
-                  <b>{nomDuTheme(t.code)}</b>
+                  <span className="maitrise__nom">
+                    <b>{nomDuTheme(t.code)}</b>
+                    <EtiquetteGroupe theme={t.code} />
+                  </span>
                   <span className="discret">{accorde(t.total, 'question')}</span>
                 </a>
               </li>

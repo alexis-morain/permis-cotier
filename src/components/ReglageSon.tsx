@@ -57,7 +57,7 @@ export default function ReglageSon() {
           justify-content: space-between;
           gap: 1rem;
           min-height: 2.75rem;
-          font-weight: 700;
+          font-weight: 600;
           cursor: pointer;
         }
         .interrupteur__case {
@@ -72,7 +72,7 @@ export default function ReglageSon() {
           position: relative;
           width: 3.25rem;
           height: 2rem;
-          border: 2px solid var(--filet-fort);
+          border: 1px solid var(--filet-fort);
           border-radius: 1rem;
           background: var(--fond-2);
           transition: background var(--transition), border-color var(--transition);
@@ -80,8 +80,8 @@ export default function ReglageSon() {
         .interrupteur__rail::before {
           content: '';
           position: absolute;
-          top: 0.1875rem;
-          left: 0.1875rem;
+          top: 0.25rem;
+          left: 0.25rem;
           width: 1.375rem;
           height: 1.375rem;
           border-radius: 50%;
@@ -89,15 +89,15 @@ export default function ReglageSon() {
           transition: transform var(--transition), background var(--transition);
         }
         .interrupteur__case:checked + .interrupteur__rail {
-          background: var(--accent);
-          border-color: var(--marine);
+          background: var(--action);
+          border-color: var(--action);
         }
         .interrupteur__case:checked + .interrupteur__rail::before {
-          background: var(--marine);
+          background: var(--sur-action);
           transform: translateX(1.25rem);
         }
         .interrupteur__case:focus-visible + .interrupteur__rail {
-          outline: 3px solid var(--anneau);
+          outline: 2px solid var(--anneau);
           outline-offset: 2px;
         }
         @media (prefers-reduced-motion: reduce) {
