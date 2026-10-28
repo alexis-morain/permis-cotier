@@ -267,6 +267,12 @@ img { max-width: 100%; height: auto; }
   color: var(--texte-doux);
   margin: 0 0 0.75rem;
 }
+/* En bleu souligné, il se lisait comme un sur-titre au-dessus du titre : il
+   reste dans l'encre douce, et ne se souligne qu'au survol. */
+.chapitre a { color: inherit; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .chapitre a:hover { text-decoration: underline; }
+}
 
 /* Boutons. Un pixel de bord, six de coin, et l'appui qui descend d'un
    pixel : aucune ombre, aucun socle. */
