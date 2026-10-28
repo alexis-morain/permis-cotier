@@ -70,7 +70,7 @@ describe('le script en ligne de la bande', () => {
     localStorage.setItem(CLE_STOCKAGE, JSON.stringify(etat));
     executer();
     expect(document.querySelector('.ouverture')?.getAttribute('data-panneau')).toBe('examens');
-    expect(document.querySelector('.ouverture__examens li')?.textContent).toBe('1 janvier29 / 40recalé');
+    expect(document.querySelector('.ouverture__examens li')?.textContent).toBe('1 janvier29\u00a0sur\u00a040, recalé');
   });
 
   it('laisse le nouveau venu tel quel, et ne lève rien sur un stockage abîmé', () => {

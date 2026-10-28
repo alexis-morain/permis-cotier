@@ -26,7 +26,7 @@ const consigne =
   'Une ou deux bonnes réponses. La réponse doit être exacte : une bonne case seule ne suffit pas quand il en faut deux.';
 ---
 
-<div class="essai" data-essai data-reponses={q.reponses.join(',')} data-theme={q.theme}>
+<div class="essai encadre" data-essai data-reponses={q.reponses.join(',')} data-theme={q.theme}>
   <div class="essai__tete">
     {q.visuel && (
       <img
@@ -138,16 +138,10 @@ const consigne =
 </script>
 
 <style>
-  /* Le panneau clair posé sur la bande : la question telle que l'écran de jeu
-     la montre, propositions à bord plein et lettre dans un cercle. */
-  .essai {
-    --anneau: var(--texte);
-    background: var(--panneau);
-    color: var(--texte);
-    border: 2px solid var(--panneau-filet);
-    border-radius: var(--rayon);
-    padding: 1.25rem;
-  }
+  /* Le panneau de la question à essayer : un `.encadre`, la question telle que
+     l'écran de jeu la montre. Propositions en rangées à filet, coins de six
+     pixels, la lettre dans un petit carré cerné. */
+  .essai { padding: 1.25rem; }
   .essai__tete {
     display: grid;
     grid-template-columns: 5.5rem minmax(0, 1fr);
@@ -155,21 +149,23 @@ const consigne =
     align-items: start;
   }
   .essai__tete:not(:has(img)) { grid-template-columns: minmax(0, 1fr); }
+  /* Le visuel sur lavis, dix pixels de coin, comme le cadre d'un visuel de
+     l'examen. */
   .essai__visuel {
     width: 100%;
     height: auto;
-    border: 2px solid var(--filet);
-    border-radius: var(--rayon-petit);
-    background: var(--fond-carte);
+    border-radius: var(--rayon);
+    background: var(--fond-2);
   }
-  .essai__enonce { margin: 0; font-weight: 700; font-size: 1.02rem; line-height: 1.35; }
+  .essai__enonce { margin: 0; font-weight: 700; font-size: 1.0625rem; line-height: 1.35; }
   .essai__consigne {
     margin: 1rem 0 0.75rem;
     padding: 0.55rem 0.75rem;
     border-radius: var(--rayon-petit);
-    background: var(--jaune-pale);
-    font-size: 0.85rem;
-    line-height: 1.4;
+    background: var(--fond-2);
+    color: var(--texte-doux);
+    font-size: 0.8125rem;
+    line-height: 1.45;
     max-width: none;
   }
 
@@ -183,63 +179,59 @@ const consigne =
     width: 100%;
     min-height: 3rem;
     padding: 0.55rem 0.8rem;
-    border: 2px solid var(--filet-fort);
-    border-radius: var(--rayon);
+    border: 1px solid var(--filet);
+    border-radius: var(--rayon-petit);
     background: var(--fond-carte);
     color: var(--texte);
     font: inherit;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
     line-height: 1.3;
     text-align: left;
-    box-shadow: 0 var(--bord) 0 var(--filet-fort);
-    transition: background var(--transition), transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    transition: background-color var(--transition), border-color var(--transition);
   }
   /* Sans script, les propositions ne réagissent pas : elles n'en ont pas l'air. */
-  .essai:not([data-vivant]) .essai__proposition { box-shadow: none; cursor: default; }
+  .essai:not([data-vivant]) .essai__proposition { cursor: default; }
   .essai[data-vivant]:not([data-corrige]) .essai__proposition { cursor: pointer; }
   @media (hover: hover) and (pointer: fine) {
-    .essai[data-vivant]:not([data-corrige]) .essai__proposition:hover { background: var(--fond-2); }
+    .essai[data-vivant]:not([data-corrige]) .essai__proposition:hover { border-color: var(--filet-fort); }
   }
-  .essai[data-vivant]:not([data-corrige]) .essai__proposition:active {
-    transform: translateY(var(--bord));
-    box-shadow: 0 0 0 var(--filet-fort);
-  }
+  /* Cochée : la teinte, le bord de champ, la lettre pleine en `--action`. */
   .essai__proposition[aria-pressed='true'] {
-    background: var(--jaune-pale);
-    border-color: var(--texte);
-    box-shadow: 0 var(--bord) 0 var(--texte);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .essai[data-vivant]:not([data-corrige]) .essai__proposition[aria-pressed='true']:hover { background: var(--jaune-pale); }
+    background: var(--teinte);
+    border-color: var(--filet-fort);
   }
   .essai__lettre {
-    flex: 0 0 1.85rem;
-    height: 1.85rem;
+    flex: 0 0 1.5rem;
+    height: 1.5rem;
     display: grid;
     place-items: center;
-    border: 2px solid var(--filet-fort);
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    transition: background var(--transition), border-color var(--transition), color var(--transition);
+    border: 1px solid var(--filet-fort);
+    border-radius: var(--rayon-etiquette);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: background-color var(--transition), border-color var(--transition), color var(--transition);
   }
-  .essai__proposition[aria-pressed='true'] .essai__lettre { background: var(--texte); border-color: var(--texte); color: var(--panneau); }
+  .essai__proposition[aria-pressed='true'] .essai__lettre { background: var(--action); border-color: var(--action); color: var(--sur-action); }
   .essai__texte { flex: 1; }
-  .essai__etat { font-size: 0.78rem; font-weight: 800; white-space: nowrap; }
+  .essai__etat { font-size: 0.8125rem; font-weight: 600; white-space: nowrap; }
   .essai__etat:empty { display: none; }
 
-  /* Le verdict : tout se colore d'un coup, la lettre dit l'état, le mot aussi. */
-  .essai[data-corrige] .essai__proposition { box-shadow: none; transform: none; }
+  /* Le verdict : tout se colore d'un coup, la lettre dit l'état, le mot et le
+     signe aussi : ✓ pour une bonne, ✕ pour une fausse. Une bonne oubliée garde
+     son bord en pointillé. */
   .essai__proposition[data-etat='bonne'],
   .essai__proposition[data-etat='oubliee'] { border-color: var(--vert); background: var(--vert-pale); }
   .essai__proposition[data-etat='oubliee'] { border-style: dashed; }
   .essai__proposition[data-etat='fausse'] { border-color: var(--rouge); background: var(--rouge-pale); }
   .essai__proposition[data-etat='bonne'] .essai__lettre,
-  .essai__proposition[data-etat='oubliee'] .essai__lettre { background: var(--vert); border-color: var(--vert); color: var(--blanc); }
-  .essai__proposition[data-etat='fausse'] .essai__lettre { background: var(--rouge); border-color: var(--rouge); color: var(--blanc); }
+  .essai__proposition[data-etat='oubliee'] .essai__lettre { background: var(--vert); border-color: var(--vert); color: var(--sur-verdict); }
+  .essai__proposition[data-etat='fausse'] .essai__lettre { background: var(--rouge); border-color: var(--rouge); color: var(--sur-verdict); }
   .essai__proposition[data-etat='bonne'] .essai__etat,
   .essai__proposition[data-etat='oubliee'] .essai__etat { color: var(--vert-texte); }
   .essai__proposition[data-etat='fausse'] .essai__etat { color: var(--rouge-texte); }
+  .essai__proposition[data-etat='bonne'] .essai__etat::before,
+  .essai__proposition[data-etat='oubliee'] .essai__etat::before { content: '✓ '; }
+  .essai__proposition[data-etat='fausse'] .essai__etat::before { content: '✕ '; }
 
   .essai__barre {
     display: flex;
@@ -253,9 +245,8 @@ const consigne =
   .essai__barre .bouton[hidden] { display: none; }
   .essai__verdict {
     margin: 0;
-    font-stretch: var(--large);
-    font-weight: 800;
-    font-size: 1.3rem;
+    font-weight: 600;
+    font-size: 1.125rem;
   }
   .essai__verdict:empty { display: none; }
   .essai[data-corrige='juste'] .essai__verdict { color: var(--vert-texte); }
@@ -264,11 +255,11 @@ const consigne =
   .essai__reponse { margin-top: 1rem; }
   .essai__reponse summary {
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
+    color: var(--lien);
     text-decoration: underline;
-    text-decoration-color: var(--jaune);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.16em;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
   }
   /* Avec le script, le dépliant n'a plus de poignée : il s'ouvre au verdict. */
   .essai[data-vivant] .essai__reponse summary { display: none; }
@@ -279,25 +270,23 @@ const consigne =
     to { opacity: 1; transform: none; }
   }
   .essai__correction > * { max-width: none; }
-  .essai__bonnes { font-weight: 700; margin: 0.75rem 0 0.4rem; }
+  .essai__bonnes { font-weight: 600; margin: 0.75rem 0 0.4rem; }
   .essai[data-vivant] .essai__bonnes { margin-top: 0; }
-  .essai__explication { font-size: 0.95rem; line-height: 1.45; margin-bottom: 0.75rem; }
+  .essai__explication { font-size: 0.9375rem; line-height: 1.45; margin-bottom: 0.75rem; }
   .essai__source {
     padding-top: 0.75rem;
-    border-top: 2px solid var(--filet);
-    font-weight: 600;
-    font-size: 0.95rem;
+    border-top: 1px solid var(--filet);
+    font-size: 0.875rem;
   }
   .essai__etiquette {
     display: inline-block;
     margin-right: 0.5rem;
-    padding: 0.1em 0.55em;
-    border-radius: var(--rayon-petit);
-    background: var(--jaune);
-    color: var(--marine);
-    font-size: 0.78rem;
-    font-weight: 800;
-    font-stretch: var(--large);
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--rayon-etiquette);
+    background: var(--fond-2);
+    color: var(--texte-doux);
+    font-size: 0.8125rem;
+    font-weight: 600;
   }
   .essai__suite {
     display: flex;

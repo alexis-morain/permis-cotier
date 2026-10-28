@@ -65,17 +65,16 @@ const base = Astro.site ?? new URL(SITE.domaine);
 
 <style>
   /* Même chapô que sur une page thème, qui le définit aussi localement. */
-  .chapo { font-size: 1.1rem; }
+  .chapo { font-size: 1.25rem; line-height: 1.45; color: var(--texte-doux); max-width: 34rem; }
 
   .entrees { list-style: none; margin: 0; padding: 0; }
-  .entrees li { border-top: 2px solid var(--filet); padding: 1.4rem 0; }
-  .entrees li:last-child { border-bottom: 2px solid var(--filet); }
-  /* Un titre d'entrée à 20 px tombe sur deux lignes : l'interligne display
-     de 1,1 les colle, 1,3 les sépare. */
+  .entrees li { border-top: 1px solid var(--filet); padding: 1.25rem 0; max-width: none; }
+  .entrees li:last-child { border-bottom: 1px solid var(--filet); }
+  /* Une question par rangée : le titre-lien en encre, sans soulignement. */
   .entrees h2 { font-size: 1.25rem; line-height: 1.3; margin: 0 0 0.5rem; }
-  .entrees h2 a { text-decoration: none; }
+  .entrees h2 a { color: inherit; text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
-    .entrees h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+    .entrees h2 a:hover { text-decoration: underline; }
   }
   .entrees p { margin: 0; max-width: var(--mesure); }
 </style>

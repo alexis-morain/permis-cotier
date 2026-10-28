@@ -45,7 +45,7 @@ function depuis(jours: number): string {
 }
 
 /** « 29 sur 40 » ne se coupe pas : un titre qui finit une ligne sur « 29 sur » se lit mal. */
-const score = (e: ExamenBande) => `${e.bonnes}\u00a0sur\u00a0${e.total}`;
+const score = (e: Pick<ExamenBande, 'bonnes' | 'total'>) => `${e.bonnes}\u00a0sur\u00a0${e.total}`;
 
 function dernier(examen: ExamenBande, reussi: boolean): string {
   return `Dernier examen blanc${DEUX_POINTS} ${score(examen)}, ${reussi ? 'reçu' : 'recalé'}.`;
@@ -209,18 +209,22 @@ export function rendreBande(doc: Document, bande: Bande): HTMLElement | null {
 
 /**
  * Le panneau des derniers examens blancs, ou `null` s'il n'y en a aucun. Une
- * ligne par examen : la date, la barre du score (sa part dans `--part`, le
- * trait de la barre d'admission posé par la feuille), le score, le verdict.
+ * ligne par examen : la date, le rail du score (sa part dans `--part`, le
+ * trait vert de la barre d'admission posé par la feuille), et le score en
+ * étiquette de verdict, avec le mot pour qui ne voit pas la couleur.
  */
 export function rendrePanneau(doc: Document, examens: readonly ExamenPasse[], cas: Bande['cas']): HTMLElement | null {
   if (examens.length === 0) return null;
-  return el(doc, 'aside', { class: 'ouverture__examens' },
+  return el(doc, 'aside', { class: 'ouverture__examens encadre' },
     el(doc, 'h2', {}, 'Tes derniers examens blancs'),
     el(doc, 'ol', {}, ...examens.map((x) =>
       el(doc, 'li', { style: `--part:${x.bonnes / x.total}` },
-        el(doc, 'span', {}, dateLisible(x.date)),
-        el(doc, 'b', { class: x.reussi ? 'recu' : 'recale' }, `${x.bonnes} / ${x.total}`),
-        el(doc, 'span', {}, x.reussi ? 'reçu' : 'recalé'),
+        el(doc, 'span', { class: 'ouverture__date' }, dateLisible(x.date)),
+        el(doc, 'span', { class: 'rail', 'aria-hidden': 'true' }, el(doc, 'i'), el(doc, 'b')),
+        el(doc, 'span', { class: `etiquette ${x.reussi ? 'etiquette--juste' : 'etiquette--faux'}` },
+          score(x),
+          el(doc, 'span', { class: 'visuellement-cache' }, x.reussi ? ', reçu' : ', recalé'),
+        ),
       ))),
     el(doc, 'p', { class: 'discret' },
       'Le trait marque 35 sur 40, la barre d’admission. ',

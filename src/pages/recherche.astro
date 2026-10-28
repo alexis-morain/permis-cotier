@@ -84,13 +84,13 @@ const cours = COURS.map((c) => ({ ...c, lecons: leconsDuCours(c.code), questions
   .sommaire h2 {
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 2px solid var(--filet);
-    font-size: 1.5rem;
+    border-top: 1px solid var(--filet);
+    font-size: 1.25rem;
   }
-  .sommaire h3 { font-size: 1.05rem; margin-bottom: 0.25rem; }
-  .sommaire h3 a { text-decoration: none; }
+  .sommaire h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+  .sommaire h3 a { color: inherit; text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
-    .sommaire h3 a:hover { text-decoration: underline; text-decoration-color: var(--jaune); }
+    .sommaire h3 a:hover { text-decoration: underline; }
   }
 
   .sommaire__cours { list-style: none; margin: 0; padding: 0; counter-reset: cours; }
@@ -119,8 +119,9 @@ const cours = COURS.map((c) => ({ ...c, lecons: leconsDuCours(c.code), questions
     align-items: center;
     min-height: 2.75rem;
     padding: 0 0.65rem;
-    border: 2px solid var(--filet);
+    border: 1px solid var(--filet);
     border-radius: var(--rayon-petit);
+    color: inherit;
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;

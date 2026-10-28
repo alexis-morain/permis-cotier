@@ -220,7 +220,8 @@ describe('le panneau des derniers examens blancs', () => {
     return p;
   };
   const lignes = (p: HTMLElement) =>
-    [...p.querySelectorAll('li')].map((li) => [...li.children].map((c) => c.textContent).join(' | '));
+    [...p.querySelectorAll('li')].map((li) =>
+      [...li.children].filter((c) => !c.classList.contains('rail')).map((c) => c.textContent).join(' | '));
 
   it('rien sans examen', () => {
     expect(rendrePanneau(document, [], 'recale')).toBeNull();
@@ -231,14 +232,21 @@ describe('le panneau des derniers examens blancs', () => {
     expect(p.tagName).toBe('ASIDE');
     expect(p.querySelector('h2')?.textContent).toBe('Tes derniers examens blancs');
     expect(lignes(p)).toEqual([
-      '3 octobre | 29 / 40 | recalé',
-      '28 septembre | 36 / 40 | reçu',
-      '20 septembre | 30 / 40 | recalé',
+      '3 octobre | 29\u00a0sur\u00a040, recalé',
+      '28 septembre | 36\u00a0sur\u00a040, reçu',
+      '20 septembre | 30\u00a0sur\u00a040, recalé',
     ]);
   });
 
   it('un seul examen, une seule ligne', () => {
-    expect(lignes(panneau(trois.slice(0, 1)))).toEqual(['3 octobre | 29 / 40 | recalé']);
+    expect(lignes(panneau(trois.slice(0, 1)))).toEqual(['3 octobre | 29\u00a0sur\u00a040, recalé']);
+  });
+
+  it('le score est une étiquette de verdict, avec le mot pour qui ne voit pas la couleur', () => {
+    const [recale, recu] = panneau(trois).querySelectorAll('li .etiquette');
+    expect(recale?.classList.contains('etiquette--faux')).toBe(true);
+    expect(recu?.classList.contains('etiquette--juste')).toBe(true);
+    expect(recale?.querySelector('.visuellement-cache')?.textContent).toBe(', recalé');
   });
 
   it('la barre lit sa part du score dans --part', () => {
@@ -278,6 +286,7 @@ describe('le panneau posé dans la page', () => {
     const retour = document.querySelector('.ouverture__texte--retour');
     const panneau = retour?.nextElementSibling;
     expect(panneau?.classList.contains('ouverture__examens')).toBe(true);
+    expect(panneau?.classList.contains('encadre')).toBe(true);
     expect(panneau?.querySelectorAll('li')).toHaveLength(3);
     expect(document.querySelector('.ouverture')?.getAttribute('data-panneau')).toBe('examens');
     // Le panneau des comptes reste dans la page : la feuille le cache.
