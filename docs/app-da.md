@@ -37,36 +37,46 @@ enchaîne d'un pouce, un examen joué plein écran, un résultat qui donne le ge
 suivant. Zéro texte d'explication de la page elle-même : l'app se comprend en
 la regardant.
 
-La marque reste la nôtre : le marine, le jaune, Archivo, un rayon et un seul.
-On ne change pas la marque, on change **ce que l'écran montre**, **comment il
-bouge** et **combien il en montre** : voir « La retenue » plus bas. Pas de
-beige, pas de serif, pas de dégradé, pas de bordure colorée de côté, pas
-d'ombre douce.
+La page est calme : le blanc, l'encre gris chaud, la police du système et
+un seul bouton coloré. On ne change pas ce que l'app dit, on change **ce que
+l'écran montre**, **comment il bouge** et **combien il en montre** : voir « La
+page calme » plus bas. Pas de beige, pas de serif, pas de dégradé, pas de
+bordure colorée de côté, pas de marine ; d'ombre, une seule, pour ce qui flotte.
 
-## La retenue (19 octobre 2026)
+## La page calme (28 octobre 2026)
 
-La première version de la couche app gardait tout le vocabulaire du site : bord
-plein sous chaque proposition, chaque bouton, chaque bloc, Archivo large
-partout. Sur un téléphone, tout pesait autant, et l'œil ne savait pas où aller.
-La grammaire de l'app est maintenant celle-ci, et chaque écran la suit :
+Remplace « La retenue » du 19 octobre, qui posait un fond gris-bleu, des cartes
+blanches, un bouton à socle et Archivo large sur les titres. Le monde visuel est
+celui de `DESIGN.md`, commun au site ; l'app n'en redéfinit aucun jeton. Ce qui
+est propre au téléphone :
 
-- **Un fond, des cartes.** Le fond est un gris-bleu très clair (`--fond`
-  `#eaf0f8` ; `#0a1730` en sombre). Les contenus sont regroupés en cartes
-  blanches au rayon unique, sans ombre et sans bordure épaisse : un filet d'un
-  pixel (`--carte-filet`) au plus. En sombre, la carte est la surface un cran
-  au-dessus du fond (`--fond-carte`). Jamais de carte dans une carte.
-- **Un seul objet lourd par écran : le bouton jaune**, avec son socle. Les
-  autres boutons sont un contour fin ou du texte, sans socle. Désactivé, le
-  bouton principal devient un aplat gris, sans relief.
-- **Les propositions sont des cartes blanches** ; la lettre est dans un petit
-  carré teinté (`--teinte`). Cochée : bord marine net, fond légèrement teinté,
-  lettre pleine. Après correction : bord et fond vert ou rouge pâles, un ✓ ou
-  un ✕ dans le carré. La couleur ne dit jamais seule juste ou faux.
-- **Archivo large n'est que pour le titre d'écran et les grands chiffres.** Le
-  corps, les énoncés, les propositions et les boutons sont en police système
-  (`--corps`, `-apple-system`) ; les titres de bloc (`h2`, `h3`) aussi, en 700.
-  Les jetons `--fond`, `--fond-2`, `--carte-filet`, `--teinte` et `--corps` sont
-  posés sous `html[data-app]` dans `app.css` ; le site ne les voit pas.
+- **Une page blanche** (`#191919` en sombre), des filets d'un pixel
+  (`--filet`), l'encre `--texte`. Un groupe de lignes est ou bien des
+  **rangées nues** séparées de filets (cours, leçons, thèmes, notes, récapitulatif,
+  « Ensuite »), ou bien un **panneau blanc à filet**, coins de 10 px, pour un
+  court groupe titré (Réglages, « L'app », le panneau de la prochaine action). Pas
+  de carte dans une carte, aucune ombre.
+- **Un seul bouton coloré : le jaune franc** `--jaune` (`#ffc72c`), texte
+  `--sur-jaune`, 600, coins de 6 px, sans socle ni ombre. Appuyé, il descend d'un
+  pixel et s'assombrit à peine ; désactivé, c'est un aplat gris. En sombre aussi.
+  Le second bouton est un filet fort sur blanc, le troisième du texte souligné.
+  Le jaune n'est nulle part ailleurs que sur ce bouton, au pavillon Q du reçu et
+  à la marque.
+- **Les propositions sont celles de `quiz.css`** : une rangée à filet, la lettre
+  dans un carré. Cochée : fond `--teinte`, lettre pleine à l'encre
+  (`--action`). Corrigée : vert ou rouge pâle, un ✓ ou un ✕ dans le carré. La
+  couleur ne dit jamais seule juste ou faux. L'app n'ajoute que la hauteur de
+  56 pt et l'appui qui enfonce à 0,97.
+- **La correction est une feuille** (`.jeu__pied`) : après validation en
+  entraînement, tout le bloc du bas (explication, source, « Continuer ») prend le
+  fond `--vert-pale` ou `--rouge-pale`, un filet haut teinté, les coins du haut
+  arrondis et `--ombre-flottante` : c'est ce qui flotte, avec l'alerte des
+  Réglages. Elle monte du bas en 220 ms, transform et opacité, coupée sous
+  `prefers-reduced-motion`.
+- **Une police, celle du système**, partout : le titre d'écran et les grands
+  chiffres sont la même police en 700, serrée de -0,02 em (`global.css`).
+- **On n'anime que `transform` et `opacity`**, de 80 à 240 ms. Un fond qui change
+  à l'appui change d'un coup.
 
 ## La structure : cinq onglets
 
@@ -79,8 +89,8 @@ La grammaire de l'app est maintenant celle-ci, et chaque écran la suit :
 | Fiche | `/profil` | `person.crop.circle` | Indice de préparation, derniers examens, thèmes faibles (le bilan seulement) |
 
 L'app ouvre sur **Accueil**. Retoucher l'onglet courant ramène à sa racine puis
-en haut de page. La barre prend la teinte de la marque : marine sur clair, jaune
-sur sombre. Portrait seulement : un QCM à vingt secondes ne se joue pas en
+en haut de page. La barre prend l'encre : `#37352f` sur clair, `#e6e5e3` sur
+sombre, jamais le bleu système. Portrait seulement : un QCM à vingt secondes ne se joue pas en
 paysage, et on ne teste pas ce qu'on ne livre pas.
 
 ## Ce que la couche app change, écran par écran
@@ -143,58 +153,60 @@ Tout ce qui suit vit sous `html[data-app]` (CSS) ou derrière `POUR_APP`
   la webview de l'onglet. `natif.ts` expose `ouvrirDehors(url)`, et un écouteur
   global sous `POUR_APP` intercepte les `<a>` dont l'hôte n'est pas le nôtre.
 - **Cibles de 44 pt minimum** sur tout ce qui se touche. Marges latérales
-  16 pt. Une liste est une carte blanche ; ses cellules sont séparées d'un
-  filet léger, à l'intérieur de la carte (voir « La retenue »).
+  16 pt. Une liste est faite de rangées séparées d'un filet, nues ou dans un
+  panneau à filet (voir « La page calme »).
 - **Retour haptique** déjà présent à la correction ; on l'ajoute au passage
   d'une leçon à la suivante (léger) et au verdict d'examen (succès/erreur).
 
 ### Accueil (nouvel écran, `src/components/AccueilApp.tsx`)
 
-Le tableau de bord, quatre cartes de haut en bas, aucun texte de présentation.
-En haut, la date du jour en petit (« vendredi 23 octobre »), puis le grand titre
-« Accueil » (`apple-hig`, `layout.md` : même rang que les quatre autres onglets).
-Chaque carte blanche se touche entièrement (le `::after` de son lien la couvre) :
-un titre, une ligne, parfois un grand chiffre, un lien à chevron.
+Le tableau de bord : le titre « Accueil » (display, 2,125 rem) et la date du jour
+en encre douce (« Mercredi 28 octobre, 4 jours de suite »), puis un **panneau**
+pour la prochaine chose à faire, puis « Ensuite », une liste de rangées. Aucun
+texte de présentation. Chaque rangée se touche entièrement : une icône dans un
+carré lavis de 2 rem, un libellé et sa légende, une valeur à droite en 600, un
+chevron `›` en `--filet-fort`.
 
-**La grande carte marine est la prochaine chose à faire**, choisie par
-`prochaineAction` (`src/lib/accueil.ts`) ; son bouton jaune est le seul de
-l'écran, et la carte ne reparaît pas plus bas :
+**Le panneau est la prochaine chose à faire**, choisie par `prochaineAction`
+(`src/lib/accueil.ts`) ; son bouton jaune est le seul de l'écran, et la chose ne
+reparaît pas dans la liste :
 
 1. épreuve posée à sept jours ou moins, et pas passée → **Examen blanc**,
    « Faire un examen blanc » (même avec des questions dues : à ce stade se
    mesurer compte plus que réviser) ;
 2. sinon des questions dues → **À revoir aujourd'hui**, le nombre que `/revoir`
    jouera (borné au rythme, comme `serieDuJour`), « Faire ma série du jour » ;
-3. sinon → **le cours** : titre de la prochaine leçon, chapitre, jauge,
-   « Continuer le cours » (« Commencer le cours » si rien n'est commencé). Cours
-   terminé : « Revoir le plan du cours », lien sans bouton jaune.
+3. sinon → **le cours** : le chapitre et le rang de la leçon dans une étiquette
+   à la couleur du groupe de son thème (`groupeDuTheme`), son titre, un rail
+   d'avancement et « 2 leçons sur 105 » en légende, « Continuer le cours »
+   (« Commencer le cours » si rien n'est commencé). Cours terminé : « Revoir le
+   plan du cours », lien sans bouton jaune.
 
-Les trois autres cartes suivent en blanc, dans l'ordre cours, à revoir, examen,
-puis **Ton épreuve** (le compte à rebours, ou « Pose la date de ton épreuve »
-vers `/profil`, au même style que les autres liens). Le dernier score de
-l'examen s'affiche sur sa carte, jamais passé : « Quarante questions, vingt
-secondes chacune ». Pas d'encart « commence plutôt par la leçon » du site.
+« Ensuite » reprend, dans l'ordre cours, à revoir, examen, ce que le panneau n'a
+pas pris, puis **Ton épreuve** (« Dans 23 jours » et la date à droite, ou « Pose
+la date de ton épreuve » vers `/parametres`). Le dernier score de l'examen est une
+étiquette `etiquette--juste` ou `--faux` (« 32 sur 40 »), avec « Réussi » ou
+« Recalé » écrit dessous : la couleur ne dit pas seule. Pas d'encart « commence
+plutôt par la leçon » du site.
 
-Chaque bouton dit un verbe et ce qu'il ouvre, avec les mots de la Fiche pour
+Chaque libellé dit un verbe et ce qu'il ouvre, avec les mots de la Fiche pour
 les mêmes destinations (audit du 14 octobre, `docs/audit-ux-app-2026-10-14.md`).
-
-Deux gros chiffres au plus sur l'écran (leçons faites, jours restants), pas de
-rangée de statistiques. Le jour est parisien (`src/lib/jour.ts`). Tout se lit
-dans `localStorage`, comme le reste du site.
+Le jour est parisien (`src/lib/jour.ts`). Tout se lit dans `localStorage`,
+comme le reste du site.
 
 ### Cours
 
-La liste des quatorze chapitres en **parcours vertical** : un numéro dans un
-disque, le titre, « n / m leçons », une jauge fine. Chapitre terminé : disque
-plein marine avec coche. Chapitre en cours : disque jaune. Une cellule par
-chapitre dans une seule carte blanche, 64 pt de haut minimum. Le bloc « Reprendre » du haut
-reste (il existe). Dans une leçon : la barre « leçon n / m du chapitre » colle
-sous la zone sûre, le bouton « Leçon suivante » colle en bas au-dessus de la
-barre d'onglets.
+La liste des quatorze chapitres en **parcours vertical**, des rangées nues : un
+numéro dans un disque, le titre, « n / m leçons », un rail fin. Chapitre
+terminé : disque plein à l'encre de l'action avec le numéro. Chapitre en cours :
+disque teinté au bord de l'encre. Une rangée par chapitre, 64 pt de haut minimum.
+Le bloc « Reprendre » du haut reste (il existe, bouton jaune). Dans une leçon :
+la barre « leçon n / m du chapitre » colle sous la zone sûre, le bouton « Leçon
+suivante » colle en bas au-dessus de la barre d'onglets.
 
 Le texte d'une leçon est en police système, au corps et à la graisse normaux ;
 l'accroche, seule sur son premier écran, passe à 1,25 rem, toujours en système
-(Archivo reste au titre d'écran et aux grands chiffres). La barre sous « Leçon
+(le titre d'écran seul est en 700). La barre sous « Leçon
 n / m » compte l'écran où l'on est : un neuvième dès le premier, pleine à la fin.
 
 ### Examen et entraînement (`Quiz.tsx`, `quiz.css`)
@@ -219,23 +231,28 @@ n / m » compte l'écran où l'on est : un neuvième dès le premier, pleine à 
   et en révision, grisé tant que rien n'est coché. En examen blanc, jamais
   grisé : rien de coché, il dit « Passer » et saute la question, comptée sans
   réponse comme au buzzer ; une case cochée, il redevient « Valider et passer ».
-- Propositions : cartes blanches, 56 pt de haut minimum, la lettre dans un
-  carré teinté. Cochée : bord marine net et fond teinté. Pas de socle ; l'appui
-  est un enfoncement à 0,97.
-- Correction immédiate (entraînement) : le verdict monte du bas en feuille
-  blanche et laisse voir la question derrière. Le mot « Juste » ou « Faux »
-  (avec ✓ ou ✕, en pastille verte ou rouge pâle) et l'explication se lisent
-  sans défiler ; la source est un `<details>` « Source » à chevron vers le bas qui se retourne à l'ouverture (comme « Comment c'est compté » de la Fiche), le signalement un lien
-  discret, le bouton « Continuer » reste dans la feuille. Le panneau anime
-  `transform` et `opacity`, 220 ms, easing sobre.
-- Résultat : le score en très grand (Archivo, c'est un grand chiffre), le
-  verdict écrit, puis **les actions sous le score, avant la carte** (sinon le bouton tombe sous le pli),
-  puis les notes par thème dans une carte, puis le récapitulatif. Examen recalé : « Revoir mes N erreurs »
-  (jaune, vers `/revoir?examen=<ids>` : les ratées de l'examen, par identifiant, N exact ; l'écran s'y
-  titre « Tes erreurs de l'examen », ignore une série ordinaire arrêtée et joue toutes les erreurs sans
-  le plafond du rythme), « Refaire un examen » (discret), partage natif ; le récapitulatif est **réduit
-  aux erreurs** (« Voir les 40 questions » les déplie). Examen reçu : même ordre, « Refaire un examen »
-  en jaune et les 40 lignes.
+- Propositions : celles du site (voir « La page calme »), 56 pt de haut
+  minimum. Pas de socle ; l'appui est un enfoncement à 0,97. Le carnet de
+  l'examen du site, à côté de la question, est masqué.
+- Correction immédiate (entraînement) : le verdict monte du bas en **feuille**
+  aux couleurs du verdict (voir « La page calme ») et laisse voir la question
+  derrière. Le signe et le mot (« ✓ Juste », « ✕ Faux ») et l'explication se lisent
+  sans défiler ; la source est un `<details>` « Source » en légende, à chevron vers
+  le bas qui se retourne à l'ouverture (comme « Comment c'est compté » de la
+  Fiche), le lien de la leçon est bleu, le signalement un lien discret, le bouton
+  jaune « Continuer » reste dans la feuille. Elle anime `transform` et `opacity`,
+  220 ms, easing sobre.
+- Résultat : le score en très grand (display 700), l'étiquette « Reçu » ou
+  « Recalé » avec sa phrase, puis **les actions sous le score, avant la liste**
+  (sinon le bouton tombe sous le pli), puis les notes par thème en rangées nues
+  avec leur rail, puis le récapitulatif. Un examen reçu hisse le pavillon Q jaune
+  le long d'un mât d'encre. Examen recalé : « Revoir mes N erreurs » (jaune, vers
+  `/revoir?examen=<ids>` : les ratées de l'examen, par identifiant, N exact ;
+  l'écran s'y titre « Tes erreurs de l'examen », ignore une série ordinaire
+  arrêtée et joue toutes les erreurs sans le plafond du rythme), « Refaire un
+  examen » (bouton à filet), partage natif ; le récapitulatif est **réduit aux
+  erreurs** (« Voir les 40 questions » les déplie). Examen reçu : même ordre,
+  « Refaire un examen » en jaune et les 40 lignes.
 
 ### Fiche (`/profil`)
 
@@ -257,7 +274,7 @@ son réglage.
 
 ### Réglages (`/parametres`)
 
-Cartes blanches de cellules à filet, sous un petit titre doux, comme l'app
+Panneaux blancs de cellules à filet, sous un petit titre doux, comme l'app
 Réglages d'iOS : « Ton épreuve » (date d'examen), « Ton rythme » (questions par
 jour, contrôle segmenté), « Toi » (prénom, pourquoi tu passes le permis), « Sons »,
 « Cette version », « Ce que l'app sait de toi », « Licences ». « Effacer ma
@@ -266,17 +283,14 @@ progression » tout en bas, en rouge, ouvre une alerte (`alerts.md`) : titre
 Échap), « Effacer » à droite. Le bouton de confirmation n'est pas rouge : le
 geste est délibéré.
 
-La jauge de l'indice, en sombre (décidé le 3 octobre 2026) : le « vu » prend
-`--indice-vu`, le jaune mêlé à 60 % au rail (`#9f8433`), le « retenu » reste la
-couleur du texte comme en clair, les examens le filet fort. Vu/retenu 3,21:1,
-retenu/examens 4,21:1, examens/piste 3,46:1 ; les puces de légende suivent leur
-part. Le jaune plein reste à l'action. Le jaune plein contre le retenu presque
-blanc ne faisait que 1,39:1.
+La jauge de l'indice est faite de trois encres de plus en plus pleines (vu,
+examens, retenu : `profil.css`), en clair comme en sombre, sans jaune : le jaune
+reste au bouton.
 
 ## Les règles de la coquille (Swift)
 
-- Cinq onglets, teinte de marque par un jeu de couleurs `Accent` dans
-  `Assets.xcassets` (clair `#0b1d3a`, sombre `#ffc72c`).
+- Cinq onglets, teinte d'encre par un jeu de couleurs `Accent` dans
+  `Assets.xcassets` (clair `#37352f`, sombre `#e6e5e3`).
 - `Ecran` : un plugin Capacitor maison, une méthode `pleinEcran({actif})`, qui
   cache ou montre la barre d'onglets avec animation. iOS 18 et plus :
   `setTabBarHidden(_:animated:)` ; avant : `tabBar.isHidden` plus
@@ -322,8 +336,8 @@ version de ce fichier, qui disait « pas de badges »), tranchés le 14. La règ
 - **Rien pour la présence** : ni série, ni jours, ni ouvertures de l'app.
   Aucun badge transversal, aucun total de badges, aucun score qui monte seul.
 - **Annoncés une fois, à l'écran qui les a fait gagner** (fin de leçon, fin de
-  série, résultat d'examen) : un bloc sous le résultat, « Palier gagné » sur le
-  jaune, puis le palier, le thème et le fait. Le texte d'abord ; dans l'app,
+  série, résultat d'examen) : un bloc sous le résultat, « Palier gagné » en étiquette
+  teintée, puis le palier, le thème et le fait. Le texte d'abord ; dans l'app,
   le son `lecon` en renfort, après celui du verdict. Rien de modal : la suite
   reste à un doigt. Plusieurs d'un coup : trois lignes au plus, puis « Les
   autres sont sur ta fiche. », sans cascade d'animations. Une entrée de 200 ms

@@ -1,7 +1,5 @@
-L’accueil te propose la prochaine chose à faire : ta série du jour quand des questions t’attendent, un examen blanc quand l’épreuve approche.
+Toute l’app prend la page calme : un fond blanc (gris foncé en sombre), la police de l’iPhone, des filets fins à la place des cartes, et un seul bouton jaune par écran.
 
-En examen blanc, « Passer » quand tu ne sais pas. Après un examen raté, « Revoir mes erreurs » te fait rejouer tes erreurs de l’examen, et la revue les montre d’abord.
+L’accueil montre ta prochaine étape dans un panneau, puis le reste en liste. La correction d’une question monte du bas en feuille rouge ou verte pâle, avec son explication et « Continuer » à portée de pouce.
 
-L’entraînement montre où tu en es dans chaque thème, et les leçons se lisent mieux.
-
-La fiche se concentre sur ton bilan, tes réglages ont leur propre écran, et effacer ta progression demande une confirmation. L’app suit l’apparence de ton iPhone.
+Les cours, les thèmes d’entraînement, ta fiche et les réglages suivent la même grammaire. Le contenu ne change pas.

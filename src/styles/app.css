@@ -13,60 +13,32 @@
 
    Trois jetons pour toute l'app. Deux durées : la courte pour ce qui répond
    au doigt, la normale pour ce qui entre à l'écran. Une courbe qui démarre
-   vite et se pose, sans rebond. On n'anime que `transform` et `opacity`,
-   plus le bord plein des boutons, qui est la marque de l'appui. Tout se
-   coupe sous `prefers-reduced-motion`, en bas de chaque feuille. */
+   vite et se pose, sans rebond. On n'anime que `transform` et `opacity` : un
+   fond qui change à l'appui change d'un coup, sans transition. Tout se coupe
+   sous `prefers-reduced-motion`, en bas de chaque feuille. */
 html[data-app] {
   --duree-courte: 160ms;
   --duree: 240ms;
   --courbe: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* ------------------------------------------------------------ La retenue
+/* ------------------------------------------------------------ La page calme
 
-   La grammaire de l'app : un fond gris-bleu très clair, des contenus en
-   cartes blanches au rayon unique, un seul objet lourd par écran (le bouton
-   jaune). Quatre jetons de plus que le site, posés ici seulement : `--teinte`
-   pour ce qui est choisi, `--carte-filet` pour le contour à peine visible
-   d'une carte. En sombre, la carte est la surface un cran au-dessus du fond.
-   Le même bloc trois fois, comme `global.css` : le système, puis le réglage
-   de la fiche dans un sens et dans l'autre. */
-html[data-app] {
-  --fond: #eaf0f8;
-  --fond-2: #d9e2ef;
-  --carte-filet: #dfe7f1;
-  --teinte: #e4ecf7;
-  --corps: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  html[data-app]:not([data-apparence="clair"]) {
-    --fond: #0a1730;
-    --fond-2: #1a2e55;
-    --carte-filet: #1d3157;
-    --teinte: #1b3059;
-  }
-}
+   L'app prend les jetons du site tels quels (`global.css`) : une page blanche
+   (`#191919` en sombre), un lavis, des filets d'un pixel, l'encre gris chaud.
+   Elle n'en redéfinit aucun. Ce qu'elle ajoute tient en une couleur : le
+   bouton principal est jaune franc (plus bas), la seule couleur franche d'un
+   écran avec le verdict et le pavillon Q du reçu.
 
-/* Archivo large garde le titre d'écran et les grands chiffres. Le reste du
-   texte passe à la police du système : celle que le doigt connaît. */
-html[data-app] body,
-html[data-app] button,
-html[data-app] input,
-html[data-app] textarea {
-  font-family: var(--corps);
-}
-html[data-app] h1,
-html[data-app] .display {
-  font-family: var(--sans);
-}
+   Le texte est dans la police du système, partout : celle que le doigt
+   connaît. Le titre d'écran et les grands chiffres sont la même police en
+   700, serrée de -0,02 em, ce que `global.css` pose déjà à `h1` et
+   `.display`. */
 html[data-app] h2,
 html[data-app] h3 {
-  font-stretch: 100%;
-  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: 0;
 }
-html[data-app] h2 { font-size: 1.25rem; }
+html[data-app] h2 { font-size: 1.25rem; font-weight: 700; }
 
 /* L'entrée commune : un fondu et une montée de huit points. */
 @keyframes app-entree {
@@ -116,7 +88,7 @@ html[data-app] body::before {
 @supports (font: -apple-system-body) {
   html[data-app] {
     font: -apple-system-body;
-    font-family: var(--corps);
+    font-family: var(--sans);
     line-height: 1.5;
   }
 
@@ -196,8 +168,8 @@ html[data-app] .recherche__corps {
 
    Le fil d'Ariane du site, réduit à l'échelon du dessus. Un chevron et un
    mot, comme le bouton de retour d'iOS, sans cadre : c'est de la navigation,
-   pas une action. Le chevron déborde à gauche pour que le mot s'aligne sur le
-   titre. */
+   pas une action, donc à l'encre et non en bleu de lien. Le chevron déborde à
+   gauche pour que le mot s'aligne sur le titre. */
 html[data-app] .retour {
   display: flex;
   align-items: center;
@@ -213,7 +185,8 @@ html[data-app] .retour__lien {
   margin-inline-start: -0.4rem;
   padding-inline: 0.4rem 0.6rem;
   border-radius: var(--rayon-petit);
-  font-weight: 700;
+  color: var(--texte);
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -221,11 +194,11 @@ html[data-app] .retour__lien:active {
   background: var(--fond-2);
 }
 
-/* Le glyphe `‹` est petit dans Archivo : à deux fois la taille du mot, il
-   a le poids du chevron d'iOS, et `line-height: 1` le centre sur le mot. */
+/* Le glyphe `‹` est petit à la taille du mot : plus grand et mince, il a la
+   finesse du chevron d'iOS, et `line-height: 1` le centre sur le mot. */
 html[data-app] .retour__chevron {
-  font-size: 2.1rem;
-  font-weight: 500;
+  font-size: 1.9rem;
+  font-weight: 400;
   line-height: 1;
 }
 
@@ -298,83 +271,62 @@ html[data-app] button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Les encadrés : la même carte que partout, un filet fin au lieu de deux
-   pixels. */
-html[data-app] .encadre { border: 1px solid var(--carte-filet); }
-
 /* ------------------------------------------------------------ Les boutons
 
-   Le bouton principal garde son socle jaune : c'est le seul objet lourd. Les
-   autres sont un contour fin ou du texte, sans socle. Désactivé, le principal
+   Le principal est jaune franc, texte encre, coins de six, sans socle ni
+   ombre : c'est la seule couleur franche d'un écran, en sombre aussi. À
+   l'appui il descend d'un pixel et s'assombrit à peine. Le second est un filet
+   fort sur blanc, le discret du texte souligné. Désactivé, le principal
    devient un aplat gris, sans relief : il ne promet rien. */
 html[data-app] .bouton {
-  font-family: var(--corps);
-  border-width: 1.5px;
+  font-family: var(--sans);
   box-shadow: none;
 }
 html[data-app] .bouton:not(.bouton--principal):not(.bouton--discret) {
-  background: transparent;
-  border-color: var(--filet-fort);
-}
-/* Sur une bande marine (l'ouverture de l'accueil, la section « L'app », le
-   mémo d'une leçon), un contour transparent ne porte plus le texte marine :
-   le bouton reprend son fond de carte, cerné d'un filet clair (le fond de la
-   carte et celui de la bande se confondent en thème sombre). */
-html[data-app] :is(.ouverture, .app, .retenir) .bouton:not(.bouton--principal):not(.bouton--discret) {
   background: var(--fond-carte);
-  border-color: color-mix(in srgb, var(--bande-texte) 30%, transparent);
-}
-html[data-app] :is(.ouverture, .app, .retenir) .bouton:not(.bouton--principal):active {
-  background: var(--fond-2);
+  border-color: var(--filet-fort);
 }
 html[data-app] .bouton:not(.bouton--principal):active {
   transform: none;
   background: var(--fond-2);
 }
 html[data-app] .bouton--principal {
-  border-width: 2px;
-  box-shadow: 0 var(--bord) 0 var(--jaune-sombre);
+  background: var(--jaune);
+  border-color: var(--jaune);
+  color: var(--sur-jaune);
 }
 html[data-app] .bouton--principal:active {
-  transform: translateY(var(--bord));
-  box-shadow: 0 0 0 var(--jaune-sombre);
+  transform: translateY(1px);
+  background: color-mix(in srgb, var(--jaune) 90%, #000);
+  border-color: color-mix(in srgb, var(--jaune) 90%, #000);
 }
 html[data-app] .bouton[disabled],
 html[data-app] .bouton--principal[disabled] {
   background: var(--fond-2);
-  border-color: var(--fond-2);
+  border-color: var(--filet);
   color: var(--texte-doux);
-  box-shadow: none;
   transform: none;
 }
 
 /* ------------------------------------------------------------- L'appui
 
-   Le bouton s'enfonce vite, en 80 ms, et remonte en 160 : la transition qui
-   joue est celle de l'état d'arrivée. */
+   Le bouton descend vite, en 80 ms, et remonte en 160 : la transition qui
+   joue est celle de l'état d'arrivée. Les cellules de liste, elles, prennent
+   leur fond au toucher sans transition : rien au survol. */
 html[data-app] .bouton {
-  transition: transform var(--duree-courte) var(--courbe), box-shadow var(--duree-courte) var(--courbe);
+  transition: transform var(--duree-courte) var(--courbe);
 }
 html[data-app] .bouton:active {
   transition-duration: 80ms;
 }
-
-/* Les cellules de liste : le fond se pose au toucher, rien au survol. */
 html[data-app] .choix a,
 html[data-app] .chapitres__cellule,
 html[data-app] .etape,
 html[data-app] a.cellules__ligne,
 html[data-app] .retour__lien {
-  transition: background-color 80ms ease-out;
+  transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-app] .bouton,
-  html[data-app] .choix a,
-  html[data-app] .chapitres__cellule,
-  html[data-app] .etape,
-  html[data-app] a.cellules__ligne,
-  html[data-app] .retour__lien {
-    transition: none;
-  }
+  html[data-app] .bouton { transition: none; }
 }
