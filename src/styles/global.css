@@ -1,152 +1,157 @@
 /*
- * Direction artistique : la signalétique de mer. Le détail est dans DESIGN.md.
+ * Direction artistique : la page calme. Le détail est dans DESIGN.md.
  *
- * Le site ressemble aux objets qu'il fait apprendre, pas au manuel qui les
- * décrit : une bouée, un gilet, un panneau de port. Deux couleurs tenues
- * partout, le bleu marine de l'encre et le jaune des marques cardinales, sur
- * un blanc à peine froid. Le vert et le rouge ne servent qu'au verdict, comme
- * sur l'eau : ils ne décorent jamais. Aucun gris neutre, tout est teinté.
+ * Une page blanche de carnet de bord, une encre gris chaud, un filet d'un
+ * pixel. Le contraste se dépense sur le texte et sur la seule action de
+ * l'écran, noire sur le site, jaune cardinal dans l'app. Le vert et le rouge
+ * ne servent qu'au verdict ; quatre étiquettes pâles disent le groupe d'un
+ * thème. Tout le reste est gris.
  *
- * Une seule famille, Archivo, prise sur deux largeurs. Étendue et très grasse
- * pour les titres et les grands nombres, elle sonne comme une inscription de
- * coque ; normale pour tout le reste. Chiffres tabulaires partout.
+ * La police est celle du système : rien ne se télécharge. Trois coins, chacun
+ * son métier : 4 px les petites marques, 6 px les contrôles, 10 px les
+ * panneaux. Une seule ombre, sur ce qui flotte.
  *
- * Coins ronds assumés, un rayon et un seul. Pas d'ombre portée : la seule
- * profondeur est le bord plein sous les boutons et les propositions, qui
- * s'enfonce au clic. C'est la signature de l'interface, elle ne va nulle part
- * ailleurs.
+ * Chaque paire de couleurs est tenue par `contraste.test.ts`, qui lit ce
+ * fichier : une couleur changée ici sans passer par lui rougit.
  */
 
-@font-face {
-  font-family: 'Archivo Variable';
-  font-style: normal;
-  font-display: swap;
-  /* Ce que le fichier porte, et rien de plus : `scripts/police.py` le taille
-     aux graisses 400 à 800 et aux largeurs 100 à 125, les seules employées. */
-  font-weight: 400 800;
-  font-stretch: 100% 125%;
-  src: url('/polices/archivo-latin.4a1617c6.woff2') format('woff2-variations');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 :root {
-  /* La palette, nommée par ce qu'elle est. */
-  --marine: #0b1d3a;
-  --marine-2: #122446;
-  --brume: #f3f6fb;
-  --brume-2: #e6ecf5;
-  --blanc: #ffffff;
+  /* Les neutres. `--fond` et `--fond-carte` valent le même blanc ; deux
+     jetons pour qu'une teinte du fond ne coûte qu'une ligne. */
+  --fond: #ffffff;
+  --fond-carte: #ffffff;
+  --fond-2: #f7f7f5;
+  --filet: #e9e9e7;
+  --filet-fort: #8e8c86;
+  --texte: #37352f;
+  --texte-doux: #6b6a65;
+
+  /* L'action, et ce qui est choisi. */
+  --action: #191918;
+  --action-survol: #3b3a36;
+  --sur-action: #ffffff;
+  --teinte: #efefed;
+
+  /* Le lien et l'anneau de focus : rien d'autre n'est bleu. */
+  --lien: #1d63c9;
+  --anneau: var(--lien);
+
+  /* Le verdict, et lui seul. `--vert` et `--rouge` sont les bords et les
+     lettres pleines, `--sur-verdict` le signe posé dessus. */
+  --vert: #3f8458;
+  --vert-texte: #245133;
+  --vert-pale: #e3f0e4;
+  --rouge: #c4332b;
+  --rouge-texte: #8f2721;
+  --rouge-pale: #fbeceb;
+  --sur-verdict: #ffffff;
+
+  /* Le jaune cardinal : le bouton principal de l'app, la marque, le pavillon
+     Q. Jamais un fond de panneau, jamais un lien. */
   --jaune: #ffc72c;
-  --jaune-vif: #ffd35a;
-  --jaune-sombre: #c99a00;
-  --jaune-pale: #fff1c2;
-  --vert: #0f8544;
-  --vert-texte: #0b6b37;
-  --vert-pale: #d8f3e2;
-  --rouge: #d92b22;
-  --rouge-texte: #a8231c;
-  --rouge-pale: #fde0dd;
+  --sur-jaune: #191918;
 
-  /* Les rôles, seuls noms employés dans les composants. */
-  --fond: var(--brume);
-  --fond-2: var(--brume-2);
-  --fond-carte: var(--blanc);
-  --texte: var(--marine);
-  --texte-doux: #4c5c78;
-  --filet: #cfd8e6;
-  --filet-fort: #6e85a8;
-  --accent: var(--jaune);
-  /* Le jaune des jauges. Sur le rail clair, le jaune cardinal ne vaut que
-     1,31:1 : il est assombri jusqu'à 3,19:1 pour rester lisible d'un coup
-     d'œil. Sur le rail marine du thème sombre, le jaune plein passe seul. */
-  --jauge: #a87c00;
-  --bande: var(--marine);
-  --bande-texte: var(--blanc);
-  --bande-doux: #bcc9df;
-  --anneau: var(--marine);
-  /* Le glyphe de la marque et le panneau posé sur la bande d'accueil
-     s'inversent en sombre : deux jetons plutôt que deux requêtes média. */
-  --marque-fond: var(--marine);
-  --marque-cone: var(--jaune);
-  --panneau: var(--fond-carte);
-  --panneau-filet: var(--fond-carte);
-  /* La fenêtre de recherche : son filet et le voile qu'elle pose sur la page.
-     Deux jetons plutôt que deux requêtes média, sinon elle suivrait le système
-     et non le réglage d'apparence. */
-  --fenetre-filet: var(--marine);
-  --voile: rgb(11 29 58 / 0.6);
+  /* Les quatre groupes de thèmes (`src/lib/groupes.ts`) : un fond pâle, une
+     encre pour le texte posé dessus, un trait pour les marques sur le blanc. */
+  --bleu: #e1edf6;
+  --bleu-texte: #1d4466;
+  --bleu-trait: #3a78ad;
+  --rose: #f8e4ec;
+  --rose-texte: #6e2a48;
+  --rose-trait: #c0477f;
+  --sable: #fbf0d4;
+  --sable-texte: #5c4210;
+  --sable-trait: #a87316;
+  --orange: #f8e6d7;
+  --orange-texte: #693913;
+  --orange-trait: #b8682a;
 
-  --sans: 'Archivo Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --large: 125%;
+  /* La seule ombre, l'ombre de menu de Notion : sur ce qui flotte. */
+  --ombre-flottante: 0 0 0 1px rgb(15 15 15 / 0.05), 0 3px 6px rgb(15 15 15 / 0.1), 0 9px 24px rgb(15 15 15 / 0.2);
+  --voile: rgb(15 15 15 / 0.4);
 
-  /* `ch` vaut la chasse du « 0 », large chez Archivo : 66ch rendaient
-     quatre-vingt-dix caractères par ligne, 56ch en rendent soixante-douze. */
-  --mesure: 56ch;
-  --rayon: 1rem;
-  --rayon-petit: 0.625rem;
-  --bord: 3px;
-  --transition: 120ms cubic-bezier(0.2, 0, 0, 1);
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  /* Soixante-dix caractères de la sans du système. */
+  --mesure: 40rem;
+  --rayon: 10px;
+  --rayon-petit: 6px;
+  --rayon-etiquette: 4px;
+  --transition: 160ms cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: light dark;
-  accent-color: var(--marine);
-  caret-color: var(--marine);
+  accent-color: var(--action);
+  caret-color: var(--texte);
 }
 
 /* Le sombre suit le système, sauf si le candidat a choisi depuis sa fiche :
    `data-apparence` sur <html>, posé avant le premier rendu par un script en
    tête de page. Le même bloc deux fois, c'est voulu : un navigateur qui ne
-   connaît pas light-dark() garderait sinon une page sans couleur. */
+   connaît pas light-dark() garderait sinon une page sans couleur.
+   `contraste.test.ts` vérifie que les deux ne divergent pas. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-apparence="clair"]) {
-    --fond: #0a1730;
-    --fond-2: #0f1f3d;
-    --fond-carte: var(--marine-2);
-    --texte: #eef2f9;
-    --texte-doux: #b3c0d6;
-    --filet: #2a3f66;
-    --filet-fort: #5175a6;
-    --jauge: var(--jaune);
-    --jaune-pale: #3a3212;
-    --vert-texte: #5fd58f;
-    --vert-pale: #10331f;
-    --rouge-texte: #ff8a80;
-    --rouge-pale: #3e1614;
-    --bande: var(--marine-2);
-    --anneau: var(--jaune);
-    --marque-fond: var(--jaune);
-    --marque-cone: var(--marine);
-    --panneau: var(--fond);
-    --panneau-filet: var(--filet);
-    --fenetre-filet: var(--filet-fort);
-    --voile: rgb(3 8 18 / 0.72);
-    accent-color: var(--jaune);
-    caret-color: var(--jaune);
+    --fond: #191919;
+    --fond-carte: #191919;
+    --fond-2: #252525;
+    --filet: #2f2f2f;
+    --filet-fort: #74736f;
+    --texte: #e6e5e3;
+    --texte-doux: #9b9a97;
+    --action: #e6e5e3;
+    --action-survol: #ffffff;
+    --sur-action: #191919;
+    --teinte: #2c2c2b;
+    --lien: #5c9fe8;
+    --vert: #5fb37a;
+    --vert-texte: #8fd2a3;
+    --vert-pale: #18301f;
+    --rouge: #e0574e;
+    --rouge-texte: #f4a59e;
+    --rouge-pale: #3a1c1a;
+    --sur-verdict: #191919;
+    --bleu: #1f3447;
+    --bleu-texte: #a9cbe8;
+    --rose: #3e2230;
+    --rose-texte: #eeb3cd;
+    --sable: #3b3016;
+    --sable-texte: #efd38c;
+    --orange: #3d2a1b;
+    --orange-texte: #f0bf94;
+    --ombre-flottante: 0 0 0 1px rgb(255 255 255 / 0.08), 0 3px 6px rgb(0 0 0 / 0.4), 0 9px 24px rgb(0 0 0 / 0.5);
+    --voile: rgb(0 0 0 / 0.6);
   }
 }
 :root[data-apparence="sombre"] {
-    --fond: #0a1730;
-    --fond-2: #0f1f3d;
-    --fond-carte: var(--marine-2);
-    --texte: #eef2f9;
-    --texte-doux: #b3c0d6;
-    --filet: #2a3f66;
-    --filet-fort: #5175a6;
-    --jauge: var(--jaune);
-    --jaune-pale: #3a3212;
-    --vert-texte: #5fd58f;
-    --vert-pale: #10331f;
-    --rouge-texte: #ff8a80;
-    --rouge-pale: #3e1614;
-    --bande: var(--marine-2);
-    --anneau: var(--jaune);
-    --marque-fond: var(--jaune);
-    --marque-cone: var(--marine);
-    --panneau: var(--fond);
-    --panneau-filet: var(--filet);
-    --fenetre-filet: var(--filet-fort);
-    --voile: rgb(3 8 18 / 0.72);
-    accent-color: var(--jaune);
-    caret-color: var(--jaune);
+    --fond: #191919;
+    --fond-carte: #191919;
+    --fond-2: #252525;
+    --filet: #2f2f2f;
+    --filet-fort: #74736f;
+    --texte: #e6e5e3;
+    --texte-doux: #9b9a97;
+    --action: #e6e5e3;
+    --action-survol: #ffffff;
+    --sur-action: #191919;
+    --teinte: #2c2c2b;
+    --lien: #5c9fe8;
+    --vert: #5fb37a;
+    --vert-texte: #8fd2a3;
+    --vert-pale: #18301f;
+    --rouge: #e0574e;
+    --rouge-texte: #f4a59e;
+    --rouge-pale: #3a1c1a;
+    --sur-verdict: #191919;
+    --bleu: #1f3447;
+    --bleu-texte: #a9cbe8;
+    --rose: #3e2230;
+    --rose-texte: #eeb3cd;
+    --sable: #3b3016;
+    --sable-texte: #efd38c;
+    --orange: #3d2a1b;
+    --orange-texte: #f0bf94;
+    --ombre-flottante: 0 0 0 1px rgb(255 255 255 / 0.08), 0 3px 6px rgb(0 0 0 / 0.4), 0 9px 24px rgb(0 0 0 / 0.5);
+    --voile: rgb(0 0 0 / 0.6);
 }
 
 *,
@@ -173,53 +178,54 @@ body {
   background: var(--fond);
   color: var(--texte);
   font-family: var(--sans);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   line-height: 1.5;
   font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--jaune);
-  color: var(--marine);
+  background: var(--bleu);
+  color: var(--texte);
 }
 
 h1, h2, h3 {
   margin: 0 0 0.5em;
-  line-height: 1.05;
   text-wrap: balance;
 }
 
-/* Le display : Archivo étendue, très grasse. Titres et grands nombres. */
-h1, h2, .display {
-  font-stretch: var(--large);
-  font-weight: 800;
-  letter-spacing: -0.01em;
+/* Le display : le `h1` de l'écran, un seul, et les grands chiffres. */
+h1, .display {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
-h1 { font-size: clamp(1.9rem, 5.2vw, 3rem); }
-h2 { font-size: clamp(1.35rem, 3.4vw, 1.8rem); line-height: 1.1; }
-h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.25; }
+h1 { font-size: clamp(1.875rem, 4.2vw, 2.5rem); }
+h2 { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+h3 { font-size: 1rem; font-weight: 600; line-height: 1.3; }
 
 p, li { max-width: var(--mesure); }
 p { margin: 0 0 1em; }
 
-b, strong { font-weight: 700; }
+b, strong { font-weight: 600; }
 
-/* Le lien : souligné d'un trait jaune, comme un surligneur. */
+/* Le lien : bleu, souligné d'un pixel dans le texte, parce que le bleu seul
+   ne se distingue pas assez de l'encre (WCAG 1.4.1). Deux pixels au survol.
+   Une navigation ou une liste de liens le reprend en encre, sans trait. */
 a {
-  color: inherit;
+  color: var(--lien);
   text-decoration: underline;
-  text-decoration-color: var(--jaune);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.16em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
 }
 /* Le survol n'existe qu'au pointeur fin : au doigt, iOS le pose au premier
    appui et le laisse collé sur la dernière cible touchée. Chaque `:hover` du
    site vit sous cette garde ; `scripts/verifier-css-mobile.mjs` refuse le
    bundle de l'app qui en aurait un dehors. */
 @media (hover: hover) and (pointer: fine) {
-  a:hover { text-decoration-color: currentColor; }
+  a:hover { text-decoration-thickness: 2px; }
 }
 
 /* Un contrôle répond au premier appui. Sans `manipulation`, WebKit peut
@@ -234,13 +240,13 @@ button,
 }
 
 :focus-visible {
-  outline: 3px solid var(--anneau);
+  outline: 2px solid var(--anneau);
   outline-offset: 2px;
 }
 
 hr {
   border: 0;
-  border-top: 2px solid var(--filet);
+  border-top: 1px solid var(--filet);
   margin: 2rem 0;
 }
 
@@ -257,187 +263,200 @@ img { max-width: 100%; height: auto; }
 /* Fil d'Ariane : une ligne courte au-dessus du titre, avec un lien vers
    l'échelon du dessus. Jamais un sur-titre décoratif. */
 .chapitre {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.875rem;
   color: var(--texte-doux);
   margin: 0 0 0.75rem;
 }
 
-/* Boutons. Le bord plein de trois pixels est la seule profondeur du site ;
-   il s'efface quand on appuie, et le bouton descend d'autant. */
+/* Boutons. Un pixel de bord, six de coin, et l'appui qui descend d'un
+   pixel : aucune ombre, aucun socle. */
 .bouton {
   touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 3rem;
-  padding: 0.7rem 1.4rem;
-  border: 2px solid var(--filet-fort);
-  border-radius: var(--rayon);
+  min-height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--filet-fort);
+  border-radius: var(--rayon-petit);
   background: var(--fond-carte);
   color: var(--texte);
   font: inherit;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 var(--bord) 0 var(--filet-fort);
-  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  transition: background-color var(--transition), transform var(--transition);
 }
 @media (hover: hover) and (pointer: fine) {
   .bouton:hover { background: var(--fond-2); }
 }
-.bouton:active {
-  transform: translateY(var(--bord));
-  box-shadow: 0 0 0 var(--filet-fort);
-}
-/* Désactivé : le bouton garde sa place et sa forme, perd sa couleur d'action
-   et son relief fort. Pas d'opacité : à 50 %, « Valider » lisait à 2,2:1 et
-   se devinait plus qu'il ne se lisait. Ici le texte doux tient 4,5:1 sur les
-   deux fonds, clair et sombre. */
+.bouton:active { transform: translateY(1px); }
+/* Désactivé : le bouton garde sa place et sa forme, perd sa couleur
+   d'action. Pas d'opacité : à 50 %, « Valider » se devinait plus qu'il ne se
+   lisait. Le texte doux tient 4,5:1 sur le lavis, clair et sombre. */
 .bouton[disabled] {
   cursor: not-allowed;
   transform: none;
   background: var(--fond-2);
   border-color: var(--filet);
   color: var(--texte-doux);
-  box-shadow: 0 var(--bord) 0 var(--filet);
 }
 
+/* Le principal : noir sur le site. L'app le repasse au jaune cardinal
+   (`app.css`). */
 .bouton--principal {
-  background: var(--jaune);
-  border-color: var(--jaune);
-  color: var(--marine);
-  font-size: 1.05rem;
-  padding: 0.85rem 1.6rem;
-  box-shadow: 0 var(--bord) 0 var(--jaune-sombre);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--sur-action);
 }
 @media (hover: hover) and (pointer: fine) {
-  .bouton--principal:hover { background: var(--jaune-vif); border-color: var(--jaune-vif); }
+  .bouton--principal:hover { background: var(--action-survol); border-color: var(--action-survol); }
 }
-.bouton--principal:active { box-shadow: 0 0 0 var(--jaune-sombre); }
 .bouton--principal[disabled] {
-  background: var(--jaune-pale);
-  border-color: var(--jaune-pale);
+  background: var(--fond-2);
+  border-color: var(--filet);
   color: var(--texte-doux);
-  box-shadow: 0 var(--bord) 0 var(--filet);
 }
 
 .bouton--discret {
   border-color: transparent;
   background: transparent;
-  box-shadow: none;
   /* Le filet transparent compte comme un bord pour le détecteur, et quatre
      pixels à côté du texte lisent serré : la même marge qu'un bouton. */
   padding-inline: 0.75rem;
-  font-weight: 600;
+  color: var(--texte);
   text-decoration: underline;
-  text-decoration-color: var(--jaune);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.16em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
 }
 @media (hover: hover) and (pointer: fine) {
-  .bouton--discret:hover { background: transparent; text-decoration-color: currentColor; }
+  .bouton--discret:hover { background: var(--fond-2); }
 }
-.bouton--discret:active { transform: none; box-shadow: none; }
+.bouton--discret:active { transform: none; }
 
-/* Encadré de contenu : surface blanche, filet de deux pixels, pas d'ombre. */
+/* Le panneau : blanc, un filet, dix pixels de coin, pas d'ombre. */
 .encadre {
   background: var(--fond-carte);
-  border: 2px solid var(--filet);
+  border: 1px solid var(--filet);
   border-radius: var(--rayon);
-  padding: 1.25rem;
+  padding: 1rem 1.25rem 1.25rem;
 }
 
-/* Pastille de compte : « 38 questions », « à venir ». */
-.pastille {
-  display: inline-block;
-  padding: 0.15em 0.6em;
-  border-radius: 999px;
+/* L'étiquette : un groupe de thèmes ou un verdict, jamais une valeur
+   quelconque. Les couleurs de groupe viennent de `src/lib/groupes.ts`. */
+.etiquette {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--rayon-etiquette);
   background: var(--fond-2);
   color: var(--texte-doux);
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.etiquette--bleu { background: var(--bleu); color: var(--bleu-texte); }
+.etiquette--rose { background: var(--rose); color: var(--rose-texte); }
+.etiquette--sable { background: var(--sable); color: var(--sable-texte); }
+.etiquette--orange { background: var(--orange); color: var(--orange-texte); }
+.etiquette--juste { background: var(--vert-pale); color: var(--vert-texte); }
+.etiquette--faux { background: var(--rouge-pale); color: var(--rouge-texte); }
+
+/* Pastille de compte : « 38 questions », « à venir ». Une étiquette grise. */
+.pastille {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--rayon-etiquette);
+  background: var(--fond-2);
+  color: var(--texte-doux);
+  font-size: 0.8125rem;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 /* Le rappel de la raison de passer le permis, dite au questionnaire de
    départ. Une seule phrase, « Tu passes ce permis pour … », la raison en
-   largeur 125 % et graisse 600 : c'est ainsi que le système distingue un
-   chapeau, sans label au-dessus. Il revient sur l'écran de résultat, sur
-   l'accueil et sur la fiche le jour où un examen blanc est recalé, et sur
-   l'écran de fin du questionnaire : d'où sa place ici. */
+   600 : c'est ainsi que le système distingue un chapeau, sans label
+   au-dessus. Il revient sur l'écran de résultat, sur l'accueil et sur la
+   fiche le jour où un examen blanc est recalé, et sur l'écran de fin du
+   questionnaire : d'où sa place ici. */
 .rappel {
   margin: 0;
-  padding: 1rem 1.2rem;
+  padding: 0.75rem 1rem;
   border-radius: var(--rayon);
-  background: var(--jaune-pale);
+  background: var(--fond-2);
   max-width: 40rem;
-  font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 .rappel q {
-  font-stretch: var(--large);
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-weight: 600;
   quotes: '« ' ' »';
 }
-.rappel .discret { display: block; margin-top: 0.5rem; font-weight: 400; }
+.rappel .discret { display: block; margin-top: 0.5rem; }
 
 
-/* Le contrôle segmenté : des boutons collés, l'enfoncé est marine. Sert au
-   rythme et à l'apparence, sur la fiche comme sur les réglages du site. */
+/* Le contrôle segmenté : des boutons collés, l'enfoncé passe à l'encre sur
+   la teinte, comme une vue de Notion. Sert au rythme et à l'apparence, sur la
+   fiche comme sur les réglages du site. */
 .segmente {
   display: inline-flex;
   flex-wrap: wrap;
-  border: 2px solid var(--filet-fort);
+  gap: 2px;
+  padding: 2px;
   border-radius: var(--rayon-petit);
-  overflow: hidden;
-  background: var(--fond-carte);
+  background: var(--fond-2);
+  box-shadow: inset 0 0 0 1px var(--filet);
 }
 .segmente__option {
   touch-action: manipulation;
-  min-height: 2.75rem;
-  padding: 0.4rem 0.9rem;
+  min-height: 2.5rem;
+  padding: 0.375rem 0.875rem;
   border: 0;
+  border-radius: 4px;
   background: transparent;
-  color: inherit;
+  color: var(--texte-doux);
   font: inherit;
-  font-weight: 700;
+  font-size: 0.9375rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition);
+  transition: background-color var(--transition), color var(--transition);
 }
-.segmente__option + .segmente__option { border-left: 2px solid var(--filet-fort); }
 @media (hover: hover) and (pointer: fine) {
-  .segmente__option:hover { background: var(--fond-2); }
+  .segmente__option:hover { color: var(--texte); }
 }
-.segmente__option[aria-pressed='true'] { background: var(--texte); color: var(--fond-carte); --anneau: var(--jaune); }
-.segmente__option[aria-pressed='true'] .discret { color: inherit; opacity: 0.8; }
-.segmente__option:focus-visible { outline-offset: -3px; }
+.segmente__option[aria-pressed='true'] {
+  background: var(--fond-carte);
+  color: var(--texte);
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+}
+.segmente__option[aria-pressed='true'] .discret { color: var(--texte-doux); }
+.segmente__option:focus-visible { outline-offset: -2px; }
 
 /* Champs de formulaire. */
 .champ {
   font: inherit;
   width: 100%;
-  min-height: 3rem;
-  padding: 0.6rem 0.8rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
   /* Un champ de saisie est un contrôle : son contour tient les 3:1 de la
-     WCAG 1.4.11 au repos, pas seulement au survol. Le survol se distingue
-     alors par le marine, plus franc que le filet fort. */
-  border: 2px solid var(--filet-fort);
+     WCAG 1.4.11 au repos, pas seulement au survol. */
+  border: 1px solid var(--filet-fort);
   border-radius: var(--rayon-petit);
   background: var(--fond-carte);
   color: inherit;
   transition: border-color var(--transition);
 }
 @media (hover: hover) and (pointer: fine) {
-  .champ:hover { border-color: var(--texte); }
+  .champ:hover { border-color: var(--texte-doux); }
 }
 .champ:focus-visible { border-color: var(--anneau); outline-offset: 0; }
 .champ::placeholder { color: var(--texte-doux); opacity: 1; }
 
-.discret { color: var(--texte-doux); font-size: 0.9rem; }
+.discret { color: var(--texte-doux); font-size: 0.875rem; }
 
 .visuellement-cache {
   position: absolute;
@@ -453,9 +472,9 @@ img { max-width: 100%; height: auto; }
   position: absolute;
   left: -9999px;
   top: 0.5rem;
-  background: var(--jaune);
-  color: var(--marine);
-  font-weight: 700;
+  background: var(--action);
+  color: var(--sur-action);
+  font-weight: 600;
   padding: 0.75rem 1rem;
   border-radius: var(--rayon-petit);
   z-index: 10;

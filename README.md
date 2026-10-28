@@ -107,7 +107,6 @@ npm run dev
 | `npm run verifier:accessibilite` | noms, `alt`, étiquettes et ARIA des pages de `dist-app/` |
 | `npm run poids` | ce que pèsent l'accueil, un cours et une leçon en brotli, actifs compris ; `-- --reference <dist de main>` dit l'écart |
 | `.venv/bin/python -m pytest tests -q` | tests du validateur |
-| `python3 scripts/police.py` | retaille Archivo à ce que le site emploie et repointe `global.css` ; fonttools dans un venv à part, `--verifier` en relecture |
 
 ## Le signalement en ligne
 

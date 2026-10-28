@@ -12,10 +12,6 @@ import { SCRIPT_DEFILEMENT_NAVIGATION } from '../lib/navigation';
 import { comptesDeRelecture, versionBanque, cheminBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
 import { lienRetour, pageCourante } from '../lib/page';
-// L'adresse que `scripts/police.py` écrit, et non un nom tapé à la main : le
-// fichier porte l'empreinte de son contenu, et un préchargement qui vise
-// l'ancien nom télécharge une police que personne n'affiche.
-import { POLICE } from '../lib/police';
 import {
   SITE,
   APP_STORE,
@@ -127,17 +123,13 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     />
 
     {/*
-      Ce dont le premier écran a besoin, demandé tout de suite.
+      Ce dont le premier écran a besoin, demandé tout de suite. La police
+      est celle du système : rien à précharger.
 
-      La police n'était découverte que deux sauts après le HTML — le navigateur
-      lit la feuille de style, puis la règle `@font-face`, puis va chercher les
-      52 Ko d'Archivo. Le titre s'affichait donc en Helvetica avant de sauter.
-
-      La banque, elle, partait au quatrième aller-retour : HTML, puis
+      La banque partait au quatrième aller-retour : HTML, puis
       `client.js` et `Quiz.js`, puis l'exécution du composant, puis seulement
       le `fetch`. Un aller-retour de moins sur la première question.
     */}
-    <link rel="preload" as="font" type="font/woff2" href={POLICE} crossorigin />
     {prechargeBanque && (
       <link rel="preload" as="fetch" type="application/json" href={cheminBanque()} crossorigin />
     )}
@@ -162,8 +154,8 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
     <meta name="twitter:description" content={descriptionCourte} />
     <meta name="twitter:image" content={imageAbsolue} />
     <meta name="author" content={SITE.auteur} />
-    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0a1730" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {/* L'app suit le système et n'a pas de réglage d'apparence : le script
         ne part que sur le site. */}
