@@ -30,8 +30,8 @@
 </a>
 
 <style>
-  /* Un lien qui a l'air d'un champ, pleine largeur, 44 pt de haut. Un filet
-     et pas de bord plein : on y tape, on n'y appuie pas comme sur un bouton.
+  /* Un lien qui a l'air d'un champ, pleine largeur, 44 pt de haut, sur le
+     lavis : on y tape, on n'y appuie pas comme sur un bouton.
      Le style vit ici et non dans `recherche.css`, que le site charge : la
      règle n'a rien à faire dans sa feuille. */
   .champ-recherche {
@@ -41,11 +41,9 @@
     width: 100%;
     min-height: 2.75rem;
     padding: 0 0.9rem;
-    border: 2px solid var(--filet);
     border-radius: var(--rayon-petit);
-    background: var(--fond-carte);
+    background: var(--fond-2);
     color: var(--texte-doux);
-    font-weight: 600;
     text-decoration: none;
   }
   @media (hover: hover) and (pointer: fine) {
