@@ -72,8 +72,10 @@
 
   --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 
-  /* Soixante-dix caractères de la sans du système. */
-  --mesure: 40rem;
+  /* Soixante-dix caractères de la sans du système, quelle que soit la taille
+     du texte : `ch` se lit dans la police de l'élément, un pied en petit
+     ne court donc pas plus loin qu'un paragraphe de corps. */
+  --mesure: 54ch;
   --rayon: 10px;
   --rayon-petit: 6px;
   --rayon-etiquette: 4px;
@@ -207,7 +209,7 @@ h2 { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
 h3 { font-size: 1rem; font-weight: 600; line-height: 1.3; }
 
 p, li { max-width: var(--mesure); }
-p { margin: 0 0 1em; }
+p { margin: 0 0 1em; text-wrap: pretty; }
 
 b, strong { font-weight: 600; }
 

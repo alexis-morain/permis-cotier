@@ -190,8 +190,9 @@ graisse, pas d'une seconde famille. Chiffres tabulaires partout
 - **Sous-titre** (600, 1 rem) : `h3`, titres de panneau.
 - **Chapeau** (400, 1,25 rem, 1,45, encre douce) : la phrase d'ouverture d'une
   page, 34 rem au plus.
-- **Corps** (400, 1 rem, 1,5) : la prose, mesurée à 40 rem au plus
-  (`--mesure`), soit soixante-dix caractères.
+- **Corps** (400, 1 rem, 1,5) : la prose, mesurée à 54 ch au plus
+  (`--mesure`), soit soixante-dix caractères à toute taille ; `text-wrap:
+  pretty` évite le mot seul en dernière ligne.
 - **Petit** (0,875 rem) : navigation, rangées de tableau, pied.
 - **Légende** (0,8125 rem) : méta, compteurs, en-têtes de colonne. Jamais
   plus petit, sauf le libellé d'onglet natif de l'app (11 pt, la mesure d'iOS).
