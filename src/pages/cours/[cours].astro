@@ -252,10 +252,10 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
 <style>
   h1 { margin-bottom: 0.75rem; }
   .chapo {
-    font-stretch: var(--large);
-    font-weight: 600;
+    color: var(--texte-doux);
     font-size: 1.25rem;
-    line-height: 1.5;
+    line-height: 1.45;
+    max-width: 34rem;
     margin: 0 0 1.5rem;
   }
 
@@ -266,13 +266,13 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem 1.5rem;
     margin: 0;
-    padding: 1.1rem 1.25rem;
-    border: 2px solid var(--filet);
+    padding: 1rem 1.25rem 1.25rem;
+    border: 1px solid var(--filet);
     border-radius: var(--rayon);
     background: var(--fond-carte);
   }
   .chiffres div { display: flex; flex-direction: column-reverse; gap: 0.1rem; }
-  .chiffres dt { font-size: 0.85rem; color: var(--texte-doux); font-weight: 600; }
+  .chiffres dt { font-size: 0.8125rem; color: var(--texte-doux); font-weight: 400; }
   .chiffres dd { margin: 0; }
   .chiffres .display { font-size: 2rem; line-height: 1; }
   .chiffres__note { margin: 0.6rem 0 0; }
@@ -289,20 +289,20 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
 
   .pieges { list-style: none; padding: 0; margin: 0; }
   .pieges li {
-    border-top: 2px solid var(--filet);
+    border-top: 1px solid var(--filet);
     padding: 0.75rem 0;
     max-width: var(--mesure);
   }
-  .pieges li:last-child { border-bottom: 2px solid var(--filet); }
+  .pieges li:last-child { border-bottom: 1px solid var(--filet); }
 
   .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; max-width: none; }
 
   .textes {
-    border: 2px solid var(--filet);
+    border: 1px solid var(--filet);
     border-radius: var(--rayon);
-    padding: 1.25rem 1.4rem;
+    padding: 1rem 1.25rem 1.25rem;
   }
-  .textes h2 { font-size: 1.05rem; }
+  .textes h2 { font-size: 1rem; }
   .textes ul { padding-left: 1.1rem; margin: 0 0 0.8rem; }
   .textes li { margin-bottom: 0.3rem; }
   .textes p:last-child { margin: 0; }
@@ -315,11 +315,11 @@ const description = `${cours.promesse} ${lecons.length} leçons, ${minutes} minu
     gap: 1rem 2rem;
     margin: 0;
     padding-top: 1.5rem;
-    border-top: 2px solid var(--filet);
+    border-top: 1px solid var(--filet);
   }
-  .voisins a { display: block; text-decoration: none; }
+  .voisins a { display: block; color: inherit; text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
-    .voisins a:hover span:last-child { text-decoration: underline; text-decoration-color: var(--accent); }
+    .voisins a:hover span:last-child { text-decoration: underline; }
   }
   .voisins span { display: block; }
   .voisins__suivant { text-align: right; margin-left: auto; }

@@ -4,6 +4,7 @@ import EntrainementApp from '../../components/EntrainementApp.astro';
 import { themesAvecComptes } from '../../lib/banque';
 import { POUR_APP } from '../../lib/cible';
 import OuvrirRecherche from '../../components/OuvrirRecherche.astro';
+import { groupeDuTheme } from '../../lib/groupes';
 
 const themes = await themesAvecComptes();
 const disponibles = themes.filter((t) => t.publiees > 0);
@@ -37,7 +38,12 @@ const aVenir = themes.filter((t) => t.publiees === 0);
           <li>
             <a href={`/entrainement/${t.code}`}>
               <span class="choix__nom">{t.nom}</span>
-              <span class="pastille">{t.publiees} question{t.publiees > 1 ? 's' : ''}</span>
+              <span class="choix__infos">
+                {groupeDuTheme(t.code) && (
+                  <span class={`etiquette etiquette--${groupeDuTheme(t.code)!.couleur}`}>{groupeDuTheme(t.code)!.nom}</span>
+                )}
+                <span class="pastille">{t.publiees} question{t.publiees > 1 ? 's' : ''}</span>
+              </span>
             </a>
           </li>
         ))}
@@ -54,15 +60,22 @@ const aVenir = themes.filter((t) => t.publiees === 0);
 </Base>
 
 <style>
+  /* Des rangées à filet, comme le programme : le thème à gauche, son groupe
+     et ses questions à droite, qui passent dessous sur un téléphone. */
   .choix { list-style: none; margin: 2rem 0 0; padding: 0; }
-  .choix li { border-top: 2px solid var(--filet); max-width: none; }
-  .choix li:last-child { border-bottom: 2px solid var(--filet); }
+  .choix li { border-top: 1px solid var(--filet); max-width: none; }
+  .choix li:last-child { border-bottom: 1px solid var(--filet); }
   .choix a {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; padding: 0.9rem 0; min-height: 3.25rem; text-decoration: none;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 0.5rem 1rem; padding: 0.75rem 0; min-height: 3.25rem;
+    color: inherit; text-decoration: none;
   }
   @media (hover: hover) and (pointer: fine) {
-    .choix a:hover .choix__nom { text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 0.16em; }
+    .choix a:hover .choix__nom { text-decoration: underline; }
   }
-  .choix__nom { font-size: 1.2rem; font-weight: 700; }
+  .choix__nom { font-size: 1rem; font-weight: 600; }
+  .choix__infos { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  @media (max-width: 39.99rem) {
+    .choix__nom { flex: 1 1 100%; }
+  }
 </style>

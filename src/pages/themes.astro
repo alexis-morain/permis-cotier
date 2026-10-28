@@ -2,8 +2,9 @@
 import Base from '../layouts/Base.astro';
 import { POUR_APP } from '../lib/cible';
 import { themesAvecComptes } from '../lib/banque';
+import { lignesProgramme } from '../lib/programme';
 
-const themes = await themesAvecComptes();
+const lignes = lignesProgramme(await themesAvecComptes());
 ---
 
 <Base
@@ -11,7 +12,7 @@ const themes = await themesAvecComptes();
   description="Les quatorze thèmes de l’épreuve théorique du permis plaisance option côtière, dans l’ordre de l’arrêté du 28 septembre 2007."
   miettes={[{ nom: 'Programme', chemin: '/themes' }]}
 >
-  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 1rem'}>
+  <div class="page" style={POUR_APP ? undefined : 'padding-block:3rem 1rem'}>
     <h1>Les quatorze thèmes de l’épreuve</h1>
     <p class="web-seulement">
       L’arrêté du 28 septembre 2007 fixe le programme à son article 1er, paragraphe 1.2.
@@ -21,43 +22,109 @@ const themes = await themesAvecComptes();
   </div>
 
   <div class="page">
-    <ul class="grilleThemes">
-      {themes.map((t) => (
-        <li>
-          <h2><a href={`/theme/${t.code}`}>{t.nom}</a></h2>
-          <p class="discret grilleThemes__intitule">{t.intitule}</p>
-          <p>{t.description}</p>
-          <p class="grilleThemes__compte">
-            <span class="pastille">
-              {t.publiees > 0 ? `${t.publiees} question${t.publiees > 1 ? 's' : ''}` : 'à venir'}
-            </span>
-            <span class="discret">cible {t.cibleJ1}</span>
-          </p>
-        </li>
-      ))}
-    </ul>
+    {/* Une vue de base, comme une base Notion : une rangée par thème, des
+        filets, un lavis au survol. Le groupe passe sous le nom sur un
+        téléphone, où quatre colonnes ne tiennent pas. */}
+    <div class="programme">
+      <table class="base">
+        <thead>
+          <tr>
+            <th scope="col">Thème</th>
+            <th scope="col" class="base__groupe">Groupe</th>
+            <th scope="col" class="base__nombre">Questions</th>
+            <th scope="col" class="base__nombre base__cible">Cible</th>
+          </tr>
+        </thead>
+        <tbody>
+          {lignes.map((l) => (
+            <tr>
+              <th scope="row" class="base__nom">
+                <a href={`/theme/${l.code}`}>{l.nom}</a>
+                <span class="base__intitule">{l.intitule}</span>
+                <span class={`etiquette etiquette--${l.groupe.couleur} base__groupe-court`}>{l.groupe.nom}</span>
+              </th>
+              <td class="base__groupe">
+                <span class={`etiquette etiquette--${l.groupe.couleur}`}>{l.groupe.nom}</span>
+              </td>
+              <td class={`base__nombre${l.aVenir ? ' base__avenir' : ''}`}>{l.questions}</td>
+              <td class="base__nombre base__cible">{l.cible}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  {/* La description de chaque thème est du contenu à part entière : elle reste
+      dans la page, sous le tableau, lisible à la mesure. */}
+  <section class="page couvre">
+    <h2>Ce que couvre chaque thème</h2>
+    <dl>
+      {lignes.map((l) => (
+        <div>
+          <dt><a href={`/theme/${l.code}`}>{l.nom}</a></dt>
+          <dd>{l.description}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
 </Base>
 
 <style>
-  .grilleThemes { list-style: none; margin: 0 0 3rem; padding: 0; }
-  .grilleThemes li { border-top: 2px solid var(--filet); padding: 1.75rem 0; max-width: none; }
-  .grilleThemes h2 { font-size: 1.4rem; margin-bottom: 0.15rem; }
-  .grilleThemes h2 a { text-decoration: none; }
+  .programme { margin: 0 0 3rem; }
+
+  .base { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .base th, .base td {
+    padding: 0.625rem 0.75rem;
+    border-bottom: 1px solid var(--filet);
+    text-align: left;
+    vertical-align: middle;
+  }
+  .base th:first-child, .base td:first-child { padding-left: 0; }
+  .base th:last-child, .base td:last-child { padding-right: 0; }
+  .base thead th {
+    padding-block: 0.5rem;
+    color: var(--texte-doux);
+    font-size: 0.8125rem;
+    font-weight: 400;
+  }
+  .base tbody th { font-weight: 400; }
   @media (hover: hover) and (pointer: fine) {
-    .grilleThemes h2 a:hover { text-decoration: underline; }
+    .base tbody tr:hover > * { background: var(--fond-2); }
   }
-  .grilleThemes__intitule { margin-bottom: 0.75rem; }
-  .grilleThemes__compte { display: flex; align-items: center; gap: 0.6rem; margin: 0; }
-  @media (min-width: 60rem) {
-    .grilleThemes li {
-      display: grid;
-      grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
-      gap: 0 3rem;
-    }
-    .grilleThemes li > h2 { grid-row: 1; margin: 0; }
-    .grilleThemes li > .grilleThemes__intitule { grid-column: 1; }
-    .grilleThemes li > p:not(.grilleThemes__intitule) { grid-column: 2; }
-    .grilleThemes li > p:nth-of-type(2) { grid-row: 1 / span 2; }
+
+  .base__nom a {
+    display: block;
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
   }
+  @media (hover: hover) and (pointer: fine) {
+    .base__nom a:hover { text-decoration: underline; }
+  }
+  .base__intitule { display: block; color: var(--texte-doux); font-size: 0.8125rem; line-height: 1.45; }
+  .base__groupe-court { display: none; margin-top: 0.375rem; }
+
+  .base__nombre { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .base thead .base__nombre { text-align: right; }
+  .base__avenir { color: var(--texte-doux); }
+
+  /* Sous 40 rem : le groupe vient sous le nom, la cible s'efface (elle est
+     une estimation de répartition, pas ce qu'on cherche sur un téléphone). */
+  @media (max-width: 39.99rem) {
+    .base__groupe, .base__cible { display: none; }
+    .base__groupe-court { display: inline-flex; white-space: normal; }
+  }
+
+  .couvre { margin-bottom: 4.5rem; }
+  .couvre dl { margin: 0; }
+  .couvre dl > div { padding: 1rem 0; border-top: 1px solid var(--filet); }
+  .couvre dl > div:last-child { border-bottom: 1px solid var(--filet); }
+  .couvre dt { margin-bottom: 0.25rem; font-weight: 600; }
+  .couvre dt a { color: inherit; text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .couvre dt a:hover { text-decoration: underline; }
+  }
+  .couvre dd { margin: 0; color: var(--texte); max-width: var(--mesure); }
 </style>
