@@ -14,7 +14,7 @@ Question et correction
 • Le bouton jaune descend d’un pixel quand tu appuies. Grisé quand rien n’est coché.
 
 Résultat d’examen
-• Le grand score, l’étiquette « Reçu » ou « Recalé », puis « Refaire un examen » en jaune. Reçu : le pavillon Q jaune monte le long du mât.
+• Le grand score, l’étiquette « Reçu » ou « Recalé », puis « Refaire un examen » en jaune. Reçu : le pavillon Q jaune monte le long du mât, et « Pavillon Q hissé : libre pratique » se lit sous la phrase du verdict, sans la chevaucher.
 • Examen recalé : « Revoir mes N erreurs » en jaune, « Refaire un examen » à filet dessous.
 • Les notes par thème et tes réponses sont des rangées séparées de filets, sans cartes.
 
