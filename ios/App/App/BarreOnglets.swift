@@ -33,6 +33,29 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
         Onglet(titre: "Fiche", chemin: "/profil", symbole: "person.crop.circle")
     ]
 
+    /// Les cinq écrans, créés d'avance. Une `EcranWeb` ne charge sa webview
+    /// qu'à la première visite : l'objet seul ne coûte rien. Les garder ici
+    /// laisse `selectionner(chemin:)` les retrouver, qu'ils aient des
+    /// `UITab` (iPad, iOS 18) ou non.
+    private lazy var ecrans: [EcranWeb] = Self.onglets.map { onglet in
+        let ecran = EcranWeb()
+        ecran.cheminDeDepart = onglet.chemin
+        ecran.tabBarItem = Self.item(onglet)
+        return ecran
+    }
+
+    private static func image(_ symbole: String, remplie: Bool = false) -> UIImage? {
+        UIImage(systemName: remplie ? "\(symbole).fill" : symbole)
+    }
+
+    private static func item(_ onglet: Onglet) -> UITabBarItem {
+        UITabBarItem(
+            title: onglet.titre,
+            image: image(onglet.symbole),
+            selectedImage: image(onglet.symbole, remplie: true) ?? image(onglet.symbole)
+        )
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
@@ -41,16 +64,23 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
         // barre reste au système, verre sur iOS 26, translucide avant.
         tabBar.tintColor = UIColor(named: "Accent")
 
-        viewControllers = Self.onglets.map { onglet in
-            let ecran = EcranWeb()
-            ecran.cheminDeDepart = onglet.chemin
-            ecran.tabBarItem = UITabBarItem(
-                title: onglet.titre,
-                image: UIImage(systemName: onglet.symbole),
-                selectedImage: UIImage(systemName: "\(onglet.symbole).fill")
-                    ?? UIImage(systemName: onglet.symbole)
-            )
-            return ecran
+        if #available(iOS 18.0, *), UIDevice.current.userInterfaceIdiom == .pad {
+            // iPad : la barre latérale. UIKit la montre en largeur normale et
+            // retombe seul sur la barre d'onglets en largeur compacte (Slide
+            // Over, Split View étroit, fenêtre étirée de Stage Manager).
+            // `tile` pousse la webview à côté de la barre au lieu de la
+            // glisser dessous : la page ne se lit jamais derrière elle.
+            tabs = zip(Self.onglets, ecrans).map { onglet, ecran in
+                UITab(title: onglet.titre,
+                      image: Self.image(onglet.symbole),
+                      identifier: onglet.chemin) { _ in ecran }
+            }
+            mode = .tabSidebar
+            sidebar.preferredLayout = .tile
+            // Sur iPad la teinte se lit sur la vue, non sur `tabBar`.
+            view.tintColor = UIColor(named: "Accent")
+        } else {
+            viewControllers = ecrans
         }
 
         // L'app ouvre sur l'accueil : il dit par où reprendre, et chaque
@@ -58,12 +88,31 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
         selectedIndex = 0
     }
 
+    /// Bascule vers l'onglet dont l'adresse de départ est `chemin`. Rend
+    /// `false` s'il est déjà l'onglet courant, ou introuvable.
+    func selectionner(chemin: String) -> Bool {
+        guard let rang = ecrans.firstIndex(where: { $0.cheminDeDepart == chemin }),
+              rang != selectedIndex else { return false }
+        selectedIndex = rang
+        return true
+    }
+
     func tabBarController(_ tabBarController: UITabBarController,
                           shouldSelect viewController: UIViewController) -> Bool {
-        if viewController === selectedViewController,
-           let ecran = viewController as? EcranWeb {
+        retoucher(viewController)
+        return true
+    }
+
+    @available(iOS 18.0, *)
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelectTab tab: UITab) -> Bool {
+        retoucher(tab.viewController)
+        return true
+    }
+
+    /// Retoucher l'onglet déjà ouvert le ramène au départ.
+    private func retoucher(_ viewController: UIViewController?) {
+        if let ecran = viewController as? EcranWeb, ecran === selectedViewController {
             ecran.revenirAuDepart()
         }
-        return true
     }
 }
