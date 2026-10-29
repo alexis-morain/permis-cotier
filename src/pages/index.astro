@@ -185,7 +185,7 @@ const CAPTURE = { width: 640, height: 1391 };
         <figure class="telephone duo__avant">
           <img
             src="/vitrine/examen.webp"
-            alt="Une question d’examen blanc : le chrono à vingt secondes, la troisième question sur quarante, trois propositions et le bouton « Valider et passer »."
+            alt="Une question d’examen blanc : un feu d’écluse en image, le chrono à treize secondes, la première question sur quarante, trois propositions et le bouton « Passer »."
             {...CAPTURE}
             loading="lazy"
             decoding="async"
@@ -194,7 +194,7 @@ const CAPTURE = { width: 640, height: 1391 };
         <figure class="telephone duo__arriere">
           <img
             src="/vitrine/resultat.webp"
-            alt="Le résultat d’un examen blanc : 36 sur 40, reçu avec quatre erreurs sur les cinq admises, puis le score de chaque thème."
+            alt="Le résultat d’un examen blanc : 36 sur 40, reçu avec quatre erreurs sur les cinq admises, le pavillon Q hissé, puis le score de chaque thème."
             {...CAPTURE}
             loading="lazy"
             decoding="async"
@@ -230,7 +230,7 @@ const CAPTURE = { width: 640, height: 1391 };
       <figure class="telephone rang__image">
         <img
           src="/vitrine/correction.webp"
-          alt="Une correction dans l’app : « Juste », l’explication de la bouée d’épave, puis les trois articles de l’arrêté du 30 novembre 2017 qui la fondent."
+          alt="Une correction dans l’app : « Juste » sur un navire vu de nuit, l’explication de son feu rouge de bâbord, puis la règle 21 du RIPAM qui la fonde."
           {...CAPTURE}
           loading="lazy"
           decoding="async"
@@ -286,7 +286,7 @@ const CAPTURE = { width: 640, height: 1391 };
         <figure class="telephone app__telephone">
           <img
             src="/vitrine/accueil.webp"
-            alt="L’accueil de l’app : la leçon à continuer, quatorze questions à revoir aujourd’hui, le dernier examen blanc et les jours qui restent avant l’examen."
+            alt="L’accueil de l’app : quatorze questions à revoir aujourd’hui, puis la leçon à continuer, le dernier examen blanc à 36 sur 40 et la date de l’épreuve, dans dix-huit jours."
             {...CAPTURE}
             loading="lazy"
             decoding="async"
@@ -541,7 +541,9 @@ const CAPTURE = { width: 640, height: 1391 };
   /* Deux écrans de l'examen, l'un devant l'autre : la question, puis le score. */
   .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 26rem); }
   .duo .telephone { width: 100%; grid-row: 1; }
-  .duo { gap: 0 1.25rem; }
+  /* `start` : étiré à la hauteur de la rangée, que la marge du premier
+     allonge, le second montrait le fond noir de son cadre sous la capture. */
+  .duo { gap: 0 1.25rem; align-items: start; }
   .duo__avant { grid-column: 1; margin-top: 3.5rem; }
   .duo__arriere { grid-column: 2; }
 
