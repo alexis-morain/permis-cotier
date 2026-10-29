@@ -462,7 +462,9 @@ div.sources ul { margin: 0; }
   border-radius: 0 3px 3px 0;
   background: var(--jaune);
 }
-.resultat__pavillon { margin: -0.75rem 0 1.25rem; font-weight: 600; }
+/* Sous le verdict, qui n'a plus de marge basse : une marge haute positive,
+   sinon la phrase du pavillon remonte sur celle du verdict. */
+.resultat__pavillon { margin: 0.5rem 0 0; font-weight: 600; }
 .resultat__pavillon .discret { display: block; margin-top: 0.15rem; font-weight: 400; }
 
 /* Un badge gagné, annoncé une fois à l'écran qui l'a fait gagner : fin de
