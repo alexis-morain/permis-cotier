@@ -15,6 +15,9 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 0 16px 1rem;
+  /* iPad : la colonne de lecture des autres écrans, centrée. */
+  max-width: calc(44rem + 32px);
+  margin-inline: auto;
 }
 
 /* Le haut de l'écran : le titre, puis le jour en encre douce. `<main>` pose

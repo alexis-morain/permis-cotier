@@ -244,7 +244,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
         <section className="questionnaire__ecran">
           <h1 ref={titre} tabIndex={-1}>Un prénom, pour la fiche ?</h1>
           <p className="discret">
-            {POUR_APP ? 'Il reste sur ton téléphone.' : 'Il reste dans ce navigateur.'} Il ne sert qu’à te parler à toi.
+            {POUR_APP ? 'Il reste sur cet appareil.' : 'Il reste dans ce navigateur.'} Il ne sert qu’à te parler à toi.
           </p>
           <label className="visuellement-cache" htmlFor="prenom">Prénom</label>
           <input

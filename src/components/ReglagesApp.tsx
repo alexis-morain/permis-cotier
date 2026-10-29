@@ -167,7 +167,7 @@ export default function ReglagesApp({ version, total }: Props) {
         <h2 id="reglages-savoir" className="reglagesApp__titre">Ce que l’app sait de toi</h2>
         <p className="reglagesApp__pied">
           Rien. Aucun compte, aucun traceur, aucune mesure d’audience. Ta progression et ta date
-          d’examen restent sur ton téléphone. Un signalement d’erreur part par courrier, et
+          d’examen restent sur cet appareil. Un signalement d’erreur part par courrier, et
           seulement si tu l’envoies.
         </p>
       </section>

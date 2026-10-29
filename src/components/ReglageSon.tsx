@@ -46,7 +46,7 @@ export default function ReglageSon() {
         <span className="interrupteur__rail" aria-hidden="true" />
       </label>
       <p id="reglage-son-aide" className="discret">
-        Les sons suivent le bouton silencieux de ton iPhone.
+        Les sons suivent le mode silencieux de ton appareil.
       </p>
       <style>{`
         .reglageSon p { margin-top: 0.25rem; }
