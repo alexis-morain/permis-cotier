@@ -51,6 +51,11 @@ class EcranWeb: CAPBridgeViewController {
         bridge?.registerPluginInstance(EcranPlugin())
         // Les bruitages, en session audio ambiante : voir `SonPlugin`.
         bridge?.registerPluginInstance(SonPlugin())
+        #if targetEnvironment(macCatalyst)
+        // Vibration et barre d'état : sans objet sur Mac (`GreffonsMuets`).
+        bridge?.registerPluginInstance(VibrationMuettePlugin())
+        bridge?.registerPluginInstance(BarreEtatMuettePlugin())
+        #endif
         // Le web rend la barre à la fin de la série ; mais un lien suivi en
         // pleine série, ou un glissement de retour, quitte la page sans
         // repasser par lui. La coquille tient donc le dernier mot : une
@@ -70,6 +75,18 @@ class EcranWeb: CAPBridgeViewController {
         super.viewWillAppear(animated)
         webView?.evaluateJavaScript("window.dispatchEvent(new Event('app:onglet'))", completionHandler: nil)
     }
+
+    #if targetEnvironment(macCatalyst)
+    /// Sur Mac le titre de la fenêtre dit où l'on est : le nom de l'onglet.
+    /// Une fenêtre qui s'appelle toujours pareil ne l'apprend pas à
+    /// Mission Control ni au menu Fenêtre.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let titre = tabBarItem.title {
+            view.window?.windowScene?.title = titre
+        }
+    }
+    #endif
 
     /// Ramène l'onglet à son adresse de départ, puis en haut de la page.
     /// Appelé quand on retouche l'onglet déjà ouvert : c'est le geste qui

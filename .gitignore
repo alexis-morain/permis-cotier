@@ -40,6 +40,8 @@ data/questions/_inbox/*.yaml
 dist-app/
 ios/App/App/public/
 ios/App/build/
+# Capacitor et espace de travail du Mac, refaits par scripts/capacitor-catalyst.sh
+ios/App/catalyst/
 ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
 ios/App/App.xcodeproj/xcuserdata/
 

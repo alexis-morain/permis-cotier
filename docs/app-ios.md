@@ -740,3 +740,135 @@ sa banque **par version**.
 
 Les quatre vérifications passent à cette date : `npm test` (1 282), `npx astro
 check` (0 erreur), `npm run build`, `npm run build:app`.
+
+## 30 octobre 2026 — la coquille Mac (lot 2)
+
+**L'app Mac se construit, signée ou non, et tourne** : essai à l'écran le 30 au
+matin, sur le créneau d'Alexis (voir « À l'écran »).
+
+### Capacitor sur Mac
+
+`capacitor-swift-pm` 8.5.1 ne distribue `Capacitor.xcframework` et
+`Cordova.xcframework` que pour `ios-arm64` et `ios-arm64_x86_64-simulator` :
+le build Catalyst tombait sur chaque paquet (« no library for this platform was
+found »). Décidé le 30 par Alexis : les reconstruire à la volée, pour le build
+Mac seul, sans binaire au dépôt.
+
+`scripts/capacitor-catalyst.sh` :
+
+1. lit la version dans `CapApp-SPM/Package.swift` (`exact: "8.5.1"`) et refuse
+   si `node_modules/@capacitor/ios` en dit une autre (sync à refaire) ;
+2. clone `ionic-team/capacitor` à ce tag, archive les schémas `Cordova` et
+   `Capacitor` (espace `ios/Capacitor/Capacitor.xcworkspace`, Release,
+   `BUILD_LIBRARY_FOR_DISTRIBUTION=YES`, `SKIP_INSTALL=NO`) pour iPhone,
+   simulateur et Mac Catalyst, puis `-create-xcframework` : trois tranches
+   chacun. Quatre minutes. `native-bridge.js` est au dépôt, rien à construire en npm ;
+3. range le tout dans `ios/App/catalyst/<version>/capacitor-swift-pm/`, avec un
+   `Package.swift` de même nom et mêmes produits, en `binaryTarget(path:)`.
+   Un fichier `.complet` marque le cache : une version faite n'est pas refaite
+   (`--refaire` force) ;
+4. pose `ios/App/catalyst/App-Mac.xcworkspace` : `App.xcodeproj` plus ce
+   paquet. **Un paquet local d'un espace de travail remplace le paquet distant
+   de même identité**, pour `CapApp-SPM` comme pour les six greffons qui le
+   demandent par URL. Rien n'est réécrit : `cap sync` peut refaire
+   `Package.swift`, le build Mac suit.
+
+Pourquoi pas la réécriture de `CapApp-SPM/Package.swift` après `cap sync` : un
+fichier suivi par git qu'un script modifie puis que le sync écrase, dans un
+sens ou dans l'autre, c'est une archive iOS qui part un jour avec un chemin
+local. Pourquoi pas un miroir SwiftPM : il faudrait un dépôt git local avec son
+tag, et la configuration vivrait dans `App.xcodeproj`, que l'iOS lit aussi.
+
+`--build` compile en Debug sans signature (`catalyst/derived/`) ; `--signe`
+compile signé, profil de développement Catalyst créé au besoin
+(`-allowProvisioningUpdates`), dans `catalyst/derived-signe/`, à lancer par
+`open`. Bac à sable, client réseau et `get-task-allow` lus dans la signature.
+
+### Ce qui a changé
+
+- `App.xcodeproj`, cible `App`, Debug et Release : `SUPPORTS_MACCATALYST = YES`,
+  `TARGETED_DEVICE_FAMILY = "1,2,6"` (idiome « Optimisé pour Mac »),
+  `DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO` (même identifiant que
+  l'iOS), `"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 18.0`, soit macOS 15 :
+  la barre latérale `UITab` demande iOS 18. **`MACOSX_DEPLOYMENT_TARGET` ne
+  joue pas pour Catalyst** : posé à 15.0, le binaire sortait en `minos 16.0`
+  (macOS 13), lu par `vtool -show-build`. `CODE_SIGN_ENTITLEMENTS[sdk=macosx*] =
+  App/App-Mac.entitlements`.
+- `App-Mac.entitlements` : bac à sable et client réseau, rien d'autre. Branché
+  pour le seul SDK macOS : l'archive iOS ne le voit pas.
+- `SceneDelegate` (sous `#if targetEnvironment(macCatalyst)`) : taille minimale
+  800 × 600, 1100 × 780 au premier lancement seulement (macOS restaure ensuite),
+  titre visible, pas de `NSToolbar` (rien à y mettre avant le lot des menus).
+- `EcranWeb.viewDidAppear` : le titre de la fenêtre suit l'onglet courant.
+- `BarreOnglets` : l'idiome `.mac` prend la barre latérale comme l'iPad, et
+  `ajusterALaLargeur` (classe compacte sous 1 000 points) ne s'y applique pas.
+- `GreffonsMuets.swift` (Catalyst seul) : `Haptics` et `StatusBar` remplacés,
+  dans `EcranWeb.capacitorDidLoad`, par deux greffons de même nom JavaScript
+  qui répondent à chaque méthode sans rien faire. Toutes les méthodes des
+  greffons d'origine sont reprises : une méthode absente laisse la promesse en
+  suspens. Le web n'a pas changé (`natif.ts` et `apparence.ts` avalaient déjà
+  les erreurs).
+- `EcranPlugin` n'a pas changé : `isTabBarHidden` plus le repli de
+  `sidebar.isHidden` valent pour le Mac, à vérifier à l'écran.
+
+### Vérifié
+
+- Build Catalyst Debug, sans signature puis signé : verts, aucun avertissement
+  sur notre code. `vtool` : `MACCATALYST`, `minos 18.0`, Capacitor et Cordova
+  embarqués en tranche Catalyst ; aucun paquet distant téléchargé
+  (`SourcePackages/checkouts` vide).
+- Archive iOS Release par `App.xcodeproj`, la commande de `app-ios.yml` :
+  verte, `IOS`, `minos 16.0`, paquet officiel téléchargé.
+- `npm run build:app` (donc `cap sync ios`) : aucun fichier suivi ne bouge, le
+  build Mac repasse sur le cache.
+
+### À l'écran (30 octobre, MacBook Air, macOS 26)
+
+Lancée par `scripts/capacitor-catalyst.sh --signe` puis `open`, pilotée par
+Peekaboo en clics d'arrière-plan, et AppleScript pour le clavier, l'app
+vérifiée au premier plan avant chaque frappe. Captures dans le dossier du projet,
+`docs/captures-mac-2026-10-30/`.
+
+- **Idiome Mac** : contrôles Mac, barre latérale aux cinq entrées, titre de
+  fenêtre qui suit l'onglet (« Accueil », « Examen », « Fiche »).
+- **Examen** : la barre latérale se replie au départ et revient au résultat.
+  B coche, Entrée valide en série. **Plus de zone vide du clavier virtuel**, ni
+  en examen, ni dans un champ du signalement (focus et saisie), ni de barre
+  d'accessoires : le défaut 1 du lot 0 est réglé. « Arrêter l'examen ? »
+  montre ses deux boutons entiers.
+- **Mode sombre** : suit le système en direct (bascule de dix secondes, rendue).
+  `-AppleInterfaceStyle Dark` en argument ne prend pas en Catalyst.
+- **Fenêtre** : rien sous 800 × 600. Agrandie, la mise en page tient.
+- **Taille de départ : défaut trouvé et corrigé.** Demandée dans
+  `willConnectTo`, puis à l'activation, la fenêtre sortait à 800 de large :
+  AppKit repose derrière nous son cadre gardé (`NSWindow Frame
+  MainSceneWindow`) ou sa taille par défaut. Posée une demi-seconde après la
+  première activation, une seule fois (clé `fenetreMac.tailleDeDepartPosee`) :
+  1100 × 780, centrée, vu après avoir retiré le cadre gardé. Un saut visible
+  au tout premier lancement, une fois.
+- **Signalement** : « Préparer le signalement » ouvre un brouillon Mail à
+  `contact@`, objet et corps remplis ; le bac à sable laisse passer `mailto:`.
+  Brouillon fermé sans enregistrement.
+- **Vibration** : cocher puis valider en série passe par `Haptics` (muet), la
+  correction s'affiche, rien n'attend. La trace de Capacitor n'a pas pu être
+  lue (rien sur la sortie standard, rien dans `log show`).
+
+**Pour le lot 3** :
+- la barre de menus dit « App » : `CFBundleName` vaut `$(PRODUCT_NAME)`. À
+  régler avec les menus (« Le Permis Côtier » a 16 caractères, au-dessus des
+  15 conseillés) ;
+- Échap ne fait rien en examen ;
+- « Les sons suivent le mode silencieux de ton appareil » (Réglages) : un Mac
+  n'en a pas ;
+- une fenêtre de 500 × 500, hors écran et invisible, existe à côté de la
+  fenêtre principale (vue par Peekaboo), sans effet visible ; à identifier.
+
+**Pas essayé** : liens externes (`Browser`, ouvrirait le navigateur par
+défaut), Partager, rappels, sons à l'oreille. **Traces** dans les données
+partagées avec la 1.0.7 : un examen interrompu (1 question), une série du jour
+entamée (une réponse fausse), le cadre de fenêtre gardé remplacé.
+
+### Reste
+
+1. Liens externes, Partager, rappels et sons à l'écran, au lot 3 avec les menus.
+2. CI : rien ne construit le Mac en CI. À poser au lot 4, avec le workflow Mac.
