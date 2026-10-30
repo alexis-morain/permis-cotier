@@ -1,8 +1,8 @@
 Version avec l’iPad : l’app s’ouvre maintenant sur iPad, dans toutes les orientations. Sur iPhone, rien ne change. Regarde surtout si l’iPad se lit bien, en grand comme en fenêtre réduite.
 
 Navigation
-• iPad sous iOS 18 ou plus : les cinq entrées (Accueil, Cours, Examen, Entraînement, Fiche) sont dans une barre latérale. Touche le bouton à gauche de la barre du haut pour l’ouvrir ; en paysage, regarde si elle se range à côté de la page ou si elle la recouvre.
-• iPad sous iOS 16 ou 17, et iPhone : la barre d’onglets habituelle, en bas.
+• iPad sous iOS 18 ou plus, en paysage et sur le 13 pouces tenu droit : les cinq entrées (Accueil, Cours, Examen, Entraînement, Fiche) sont en haut, et dans une barre latérale. Touche le bouton à gauche de la barre du haut pour l’ouvrir ; en paysage, regarde si elle se range à côté de la page ou si elle la recouvre. Elle n’a plus de bouton « Modifier ».
+• iPad plus petit tenu droit (mini, Air, 11 pouces), iPad sous iOS 16 ou 17, et iPhone : la barre d’onglets habituelle, en bas, avec les cinq entrées. Tourne l’iPad : la barre doit passer en haut en paysage, et revenir en bas.
 • Pendant un examen blanc, la navigation disparaît, comme sur iPhone, et revient à la fin. Vérifie-le avec la barre latérale ouverte, puis fermée.
 • Reprends l’onglet déjà ouvert : il revient à son départ, comme sur iPhone.
 
@@ -17,4 +17,3 @@ Textes
 
 À savoir
 • Sur iPad Pro, la barre latérale s’ouvre en recouvrant la page en portrait ; c’est le comportement d’iPadOS.
-• Sur un iPad mini tenu droit, la barre du haut peut ne montrer que trois entrées et une flèche : les autres sont derrière la flèche, ou dans la barre latérale.

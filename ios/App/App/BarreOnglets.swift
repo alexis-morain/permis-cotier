@@ -70,10 +70,16 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
             // Over, Split View étroit, fenêtre étirée de Stage Manager).
             // `tile` pousse la webview à côté de la barre au lieu de la
             // glisser dessous : la page ne se lit jamais derrière elle.
+            // `fixed` : les cinq entrées ne se déplacent ni ne se masquent.
+            // Un seul onglet personnalisable suffit à UIKit pour poser un
+            // bouton « Modifier » en tête de la barre latérale, qui n'y a rien
+            // à modifier.
             tabs = zip(Self.onglets, ecrans).map { onglet, ecran in
-                UITab(title: onglet.titre,
-                      image: Self.image(onglet.symbole),
-                      identifier: onglet.chemin) { _ in ecran }
+                let tab = UITab(title: onglet.titre,
+                                image: Self.image(onglet.symbole),
+                                identifier: onglet.chemin) { _ in ecran }
+                tab.preferredPlacement = .fixed
+                return tab
             }
             mode = .tabSidebar
             sidebar.preferredLayout = .tile
@@ -86,6 +92,34 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
         // L'app ouvre sur l'accueil : il dit par où reprendre, et chaque
         // onglet reste à un doigt.
         selectedIndex = 0
+    }
+
+    /// En dessous, la barre du haut ne tient pas les cinq entrées. UIKit la
+    /// plafonne à un peu plus de la moitié de la largeur et range le reste
+    /// derrière une flèche : « Fiche » disparaît sur un iPad 11 pouces en
+    /// portrait, « Entraînement » aussi sur un iPad mini. Seul le 13 pouces en
+    /// portrait (1 032 points) et tout iPad en paysage la tiennent entière.
+    private static let largeurBarreDuHaut: CGFloat = 1000
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if #available(iOS 18.0, *), mode == .tabSidebar {
+            ajusterALaLargeur()
+        }
+    }
+
+    /// Plus étroit que `largeurBarreDuHaut`, l'iPad prend la barre du bas de
+    /// l'iPhone, où les cinq entrées tiennent toujours. UIKit fait déjà ce
+    /// repli en largeur compacte ; on le lui demande un peu plus tôt.
+    @available(iOS 18.0, *)
+    private func ajusterALaLargeur() {
+        let etroite = view.bounds.width < Self.largeurBarreDuHaut
+        let forcee = traitOverrides.contains(UITraitHorizontalSizeClass.self)
+        if etroite && !forcee {
+            traitOverrides.horizontalSizeClass = .compact
+        } else if !etroite && forcee {
+            traitOverrides.remove(UITraitHorizontalSizeClass.self)
+        }
     }
 
     /// Bascule vers l'onglet dont l'adresse de départ est `chemin`. Rend
