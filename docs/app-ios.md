@@ -144,8 +144,10 @@ premier plan après vérification). Captures gardées hors du dépôt.
   WebKit, et la date du jour est **enregistrée** dès l'ouverture, sans validation
   (« Effacer la date » apparaît). Même comportement qu'un `<input type="date">`
   vide sur iPhone. Le calendrier (une fenêtre à part) ne répond pas aux clics
-  programmés. Date effacée à la main ensuite. À trancher : laisser, ou ne poser
-  la date qu'à la fermeture du calendrier.
+  programmés. Date effacée à la main ensuite. **Décidé le 30 : laissé.** C'est
+  WebKit, comme sur iPhone ; « Effacer la date » le rattrape, et une date du
+  jour n'arme aucun rappel (leurs heures sont passées). Réécrire la saisie
+  toucherait un écran iOS qui marche, pour un cas qui ne naît que de Tab sur Mac.
 - **Liens externes** : « MIT » des Licences n'ouvrait rien (défaut corrigé) ;
   après correction, le navigateur par défaut passe au premier plan.
 - **La fenêtre de 500 × 500** : une fenêtre de l'app, sans titre, à (0, 456),
