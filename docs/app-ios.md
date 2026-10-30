@@ -32,6 +32,25 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 30 octobre 2026 — deux défauts iPad de la PR #56
+
+- **La barre du haut ne tenait pas les cinq entrées** sous le 13 pouces en
+  portrait. UIKit la plafonne à un peu plus de la moitié de la largeur et range
+  le reste derrière une flèche : « Fiche » cachée sur un iPad Pro 11 pouces en
+  portrait (834 pt), « Entraînement » aussi sur l'iPad mini (744 pt). Sous
+  1 000 pt de large, `BarreOnglets` pose `traitOverrides.horizontalSizeClass =
+  .compact` : la barre du bas de l'iPhone, où les cinq tiennent. Le repli que
+  UIKit fait déjà en largeur compacte, demandé plus tôt. Au-delà (13 pouces en
+  portrait, tout iPad en paysage), barre du haut et barre latérale.
+- **Le bouton « Modifier »** en tête de la barre latérale : UIKit le pose dès
+  qu'un `UITab` a un placement personnalisable, ce qui est le cas par défaut
+  (`automatic`). Les cinq passent en `preferredPlacement = .fixed`.
+- Vu au simulateur en iOS 26.5 : iPad mini (A17 Pro) et iPad Pro 11 pouces (M5)
+  en portrait, barre du bas avec les cinq entrées, cachée pendant l'examen et
+  rendue au résultat ; iPad Pro 13 pouces (M5), barre du haut entière, barre
+  latérale sans « Modifier ». Paysage non essayé (rotation impossible au
+  simulateur fenêtré).
+
 ## 29 octobre 2026 — l'iPad (lot 1 du plan « iPad et Mac »)
 
 ### Ce qui a changé
@@ -86,9 +105,6 @@ de la copie se reporte en ligne, et inversement.
   par le menu du simulateur. Surtout : la barre latérale en paysage (est-elle en
   tuile à côté de la page ?), et sa disparition pendant l'examen quand elle est
   ouverte.
-- **iPad mini en portrait** : la barre du haut ne montre que trois entrées et
-  une flèche ; les deux autres sont derrière, ou dans la barre latérale.
-- Le bouton « Modifier » de la barre latérale ne sert à rien ici.
 - Examen en deux colonnes en paysage large (visuel à gauche, propositions à
   droite) : écarté, ce n'est pas simple, et la colonne tient.
 - Iconographie et fiche : captures iPad 13 pouces, voir `docs/captures-app-store/ipad/`
