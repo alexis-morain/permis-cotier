@@ -215,6 +215,9 @@ sources.
 - **Un îlot qui importe `natif`** fait naître sur le site un morceau de fonctions
   vides : les écrans annoncent (`annoncerDateExamen`, `progression.ts`),
   `Coquille.astro` écoute.
+- **Mac Catalyst (lot 2, 30 octobre)** : réglages et code Mac posés, `cap sync` ne les
+  touche pas, mais **la cible Mac ne se construit pas** : `Capacitor.xcframework` 8.5.1
+  n'a pas de tranche Catalyst (voir `docs/app-ios.md`). Ne pas y toucher sans cette décision.
 - **Cible iOS 16.0** (iPhone 8 et après) : rien au-dessus de Safari 16.0 sans
   repli, `elaguer-app.mjs` refuse le JavaScript plus récent. Le
   greffon `Ecran` garde un chemin d'avant iOS 18 (`basculerAvantIOS18`).

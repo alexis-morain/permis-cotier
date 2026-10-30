@@ -64,8 +64,9 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
         // barre reste au système, verre sur iOS 26, translucide avant.
         tabBar.tintColor = UIColor(named: "Accent")
 
-        if #available(iOS 18.0, *), UIDevice.current.userInterfaceIdiom == .pad {
-            // iPad : la barre latérale. UIKit la montre en largeur normale et
+        let idiome = UIDevice.current.userInterfaceIdiom
+        if #available(iOS 18.0, *), idiome == .pad || idiome == .mac {
+            // iPad et Mac : la barre latérale. UIKit la montre en largeur normale et
             // retombe seul sur la barre d'onglets en largeur compacte (Slide
             // Over, Split View étroit, fenêtre étirée de Stage Manager).
             // `tile` pousse la webview à côté de la barre au lieu de la
@@ -83,7 +84,7 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
             }
             mode = .tabSidebar
             sidebar.preferredLayout = .tile
-            // Sur iPad la teinte se lit sur la vue, non sur `tabBar`.
+            // Sur iPad et Mac la teinte se lit sur la vue, non sur `tabBar`.
             view.tintColor = UIColor(named: "Accent")
         } else {
             viewControllers = ecrans
@@ -111,8 +112,13 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
     /// Plus étroit que `largeurBarreDuHaut`, l'iPad prend la barre du bas de
     /// l'iPhone, où les cinq entrées tiennent toujours. UIKit fait déjà ce
     /// repli en largeur compacte ; on le lui demande un peu plus tôt.
+    ///
+    /// Pas sur Mac : une fenêtre de 800 points y garde sa barre latérale, qui
+    /// n'a pas la limite de la barre du haut, et la barre du bas n'existe pas
+    /// dans une fenêtre Mac.
     @available(iOS 18.0, *)
     private func ajusterALaLargeur() {
+        guard UIDevice.current.userInterfaceIdiom != .mac else { return }
         let etroite = view.bounds.width < Self.largeurBarreDuHaut
         let forcee = traitOverrides.contains(UITraitHorizontalSizeClass.self)
         if etroite && !forcee {

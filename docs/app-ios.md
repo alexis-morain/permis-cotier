@@ -740,3 +740,56 @@ sa banque **par version**.
 
 Les quatre vérifications passent à cette date : `npm test` (1 282), `npx astro
 check` (0 erreur), `npm run build`, `npm run build:app`.
+
+## 30 octobre 2026 — la coquille Mac (lot 2)
+
+**Le lot est à moitié fait : le réglage et le code Mac sont posés, mais la cible
+Mac Catalyst ne se construit pas.** Raison : `capacitor-swift-pm` 8.5.1 ne
+distribue `Capacitor.xcframework` et `Cordova.xcframework` que pour
+`ios-arm64` et `ios-arm64_x86_64-simulator`. `xcodebuild … -destination
+'platform=macOS,variant=Mac Catalyst'` échoue sur chaque paquet (« no library
+for this platform was found »), pas sur notre code. Les greffons officiels
+(Haptics, StatusBar, App, Browser, Share, LocalNotifications) tombent avec
+lui : ce n'est donc pas l'un d'eux qu'on isole.
+
+**Ce qui a changé**
+
+- `App.xcodeproj`, cible `App`, Debug et Release : `SUPPORTS_MACCATALYST = YES`,
+  `TARGETED_DEVICE_FAMILY = "1,2,6"` (idiome « Optimisé pour Mac »),
+  `DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO` (même identifiant que
+  l'iOS), `MACOSX_DEPLOYMENT_TARGET = 15.0` (la barre latérale `UITab` demande
+  iOS 18, soit macOS 15 ; en dessous il n'y aurait que des onglets),
+  `CODE_SIGN_ENTITLEMENTS[sdk=macosx*] = App/App-Mac.entitlements`.
+- `App-Mac.entitlements` : bac à sable et client réseau, rien d'autre. Branché
+  pour le seul SDK macOS : l'archive iOS ne le voit pas.
+- `SceneDelegate` (sous `#if targetEnvironment(macCatalyst)`) : taille minimale
+  800 × 600, 1100 × 780 au premier lancement seulement (macOS restaure ensuite),
+  titre visible, pas de `NSToolbar` (rien à y mettre avant le lot des menus).
+- `EcranWeb.viewDidAppear` : le titre de la fenêtre suit l'onglet courant.
+- `BarreOnglets` : l'idiome `.mac` prend la barre latérale comme l'iPad, et
+  `ajusterALaLargeur` (classe compacte sous 1 000 points) ne s'y applique pas.
+- `EcranPlugin` n'a pas changé : `isTabBarHidden` plus le repli de
+  `sidebar.isHidden` valent pour le Mac, à vérifier à l'écran.
+- `npx cap sync ios` ne retouche pas le `.pbxproj` (comparé avant et après,
+  identique).
+
+**Vérifié** : archive iOS Release (`generic/platform=iOS`,
+`CODE_SIGNING_ALLOWED=NO`, la commande de `app-ios.yml`) verte ; build
+simulateur iPad Pro 13 pouces (M5) vert ; `npm run build:app` vert.
+
+**Non vérifié** : le code `#if targetEnvironment(macCatalyst)` n'a jamais
+été compilé pour Catalyst, la compilation s'arrêtant sur Capacitor avant lui.
+Rien n'a été lancé ni regardé à l'écran du Mac.
+
+**Reste**
+
+1. **Décider comment Capacitor entre en Catalyst.** Sondé : le dépôt `capacitor`
+   en 8.5.1 s'archive pour `generic/platform=macOS,variant=Mac Catalyst`
+   (schémas `Capacitor` et `Cordova`, `ARCHIVE SUCCEEDED`). Il manque donc
+   seulement les tranches dans les xcframeworks. Mais `CapApp-SPM/Package.swift`
+   est réécrit par `cap sync` et pointe l'URL officielle : tout contournement
+   (xcframeworks maison dans le dépôt ou construits en CI, paquet local de même
+   identité, script après `cap sync`) engage la CI et la maintenance.
+2. L'essai à l'écran sur le Mac, par le pilote, une fois la cible construite :
+   fenêtre, barre latérale à 800 points, examen (barre repliée puis rendue),
+   mode sombre, titre de fenêtre.

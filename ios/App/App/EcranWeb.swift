@@ -71,6 +71,18 @@ class EcranWeb: CAPBridgeViewController {
         webView?.evaluateJavaScript("window.dispatchEvent(new Event('app:onglet'))", completionHandler: nil)
     }
 
+    #if targetEnvironment(macCatalyst)
+    /// Sur Mac le titre de la fenêtre dit où l'on est : le nom de l'onglet.
+    /// Une fenêtre qui s'appelle toujours pareil ne l'apprend pas à
+    /// Mission Control ni au menu Fenêtre.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let titre = tabBarItem.title {
+            view.window?.windowScene?.title = titre
+        }
+    }
+    #endif
+
     /// Ramène l'onglet à son adresse de départ, puis en haut de la page.
     /// Appelé quand on retouche l'onglet déjà ouvert : c'est le geste qui
     /// sort d'une leçon, comme dans toute app iOS.
