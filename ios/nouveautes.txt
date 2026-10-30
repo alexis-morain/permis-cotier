@@ -1,5 +1,3 @@
-L’app change d’allure : un fond blanc (gris foncé en sombre), la police de l’iPhone, des filets fins à la place des cartes, et un seul bouton jaune par écran.
+L’app s’ouvre sur iPad. Les cinq rubriques sont dans une barre latérale (iPadOS 18 ou plus), la page tient dans une colonne confortable, et l’app suit toutes les orientations et le multitâche : Split View, Slide Over, fenêtres.
 
-L’accueil montre ta prochaine étape dans un panneau, puis le reste en liste. La correction d’une question monte du bas, sur fond vert ou rouge pâle, avec son explication et « Continuer » à portée de pouce.
-
-Les thèmes sont rangés en quatre groupes, chacun avec sa couleur, de l’accueil à la question. Les cours, l’entraînement, ta fiche et les réglages suivent la même allure ; les questions et les leçons ne changent pas.
+Sur iPhone, rien ne change. Quelques textes parlent désormais de « ton appareil » plutôt que de « ton téléphone ».

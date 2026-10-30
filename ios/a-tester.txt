@@ -1,29 +1,20 @@
-Version 1.0.8 : la page calme. Toute l’app change de forme, les questions et les leçons restent les mêmes : une page blanche, la police de l’iPhone, des filets fins, un seul bouton jaune par écran. Regarde surtout si ça te paraît plus reposant, et si rien n’est devenu moins lisible.
+Version avec l’iPad : l’app s’ouvre maintenant sur iPad, dans toutes les orientations. Sur iPhone, rien ne change. Regarde surtout si l’iPad se lit bien, en grand comme en fenêtre réduite.
 
-Accueil
-• Le titre « Accueil » et la date, puis un panneau à filet : la prochaine chose à faire, avec une étiquette de couleur pour le thème de la leçon, un petit rail d’avancement et le bouton jaune « Continuer le cours ».
-• Dessous, « Ensuite » : des rangées avec une icône, un libellé, une valeur à droite et un chevron. Touche une rangée entière.
-• Examen blanc raté : son score est en étiquette rouge. Reçu : en vert. Le mot « Réussi » ou « Recalé » est aussi écrit sous le libellé.
-• Quelques erreurs à revoir, ou épreuve à moins de huit jours : le panneau du haut change, la rangée correspondante disparaît d’« Ensuite ».
+Navigation
+• iPad sous iOS 18 ou plus : les cinq entrées (Accueil, Cours, Examen, Entraînement, Fiche) sont dans une barre latérale. Touche le bouton à gauche de la barre du haut pour l’ouvrir ; en paysage, regarde si elle se range à côté de la page ou si elle la recouvre.
+• iPad sous iOS 16 ou 17, et iPhone : la barre d’onglets habituelle, en bas.
+• Pendant un examen blanc, la navigation disparaît, comme sur iPhone, et revient à la fin. Vérifie-le avec la barre latérale ouverte, puis fermée.
+• Reprends l’onglet déjà ouvert : il revient à son départ, comme sur iPhone.
 
-Question et correction
-• Barre du haut : la croix, un rail fin, le compte. En examen, le chrono est à droite.
-• Coche une proposition : la rangée se teinte, la lettre devient noire. Rien d’autre ne bouge de couleur.
-• Entraînement, après « Valider » : l’explication monte du bas en feuille rose pâle (faux) ou verte pâle (juste), avec une ombre. Vérifie qu’elle ne cache pas la proposition que tu viens de corriger, et que « Continuer » reste sous le pouce.
-• « Source » se déplie dans la feuille. Le lien de la leçon est bleu.
-• Le bouton jaune descend d’un pixel quand tu appuies. Grisé quand rien n’est coché.
+Mise en page
+• La page tient dans une colonne centrée, jamais une ligne de cent caractères. Regarde l’accueil, une leçon, les réglages et la fiche en grand écran.
+• Examen et entraînement : la question, le visuel et les propositions restent dans la même colonne, la barre « Passer » ou « Valider » en pleine largeur en bas, alignée sur les propositions. La feuille de correction monte du bas avec son texte aligné sur la colonne.
+• Tourne l’iPad dans les deux sens, en examen aussi : rien ne doit se couper.
+• Multitâche : ouvre l’app en Split View, en Slide Over et dans une fenêtre de Stage Manager, puis étire la fenêtre. La barre latérale doit laisser la place à la barre d’onglets quand la fenêtre est étroite.
 
-Résultat d’examen
-• Le grand score, l’étiquette « Reçu » ou « Recalé », puis « Refaire un examen » en jaune. Reçu : le pavillon Q jaune monte le long du mât, et « Pavillon Q hissé : libre pratique » se lit sous la phrase du verdict, sans la chevaucher.
-• Examen recalé : « Revoir mes N erreurs » en jaune, « Refaire un examen » à filet dessous.
-• Les notes par thème et tes réponses sont des rangées séparées de filets, sans cartes.
+Textes
+• Réglages : « Les sons suivent le mode silencieux de ton appareil ». La fiche et le questionnaire disent « sur cet appareil » et non plus « sur ton téléphone ».
 
-Cours, Entraînement, Fiche, Réglages
-• Cours : les chapitres en rangées, le disque du chapitre en cours teinté, celui d’un chapitre fini plein. Une leçon : Retour en encre, le texte dans la police de l’iPhone.
-• Entraînement : les thèmes en rangées, un thème commencé garde « n retenues sur m » et son rail.
-• Fiche et Réglages : plus de fond bleuté, plus de jaune hors du bouton. Les réglages sont des panneaux blancs à filet ; le contrôle du rythme est le même que sur le site.
-• « Effacer ma progression » : l’alerte s’ouvre, Annuler la ferme, Effacer vide la fiche et l’accueil.
-
-Sombre et grand texte
-• Passe l’iPhone en sombre : gris foncé neutre, plus de bleu marine. Le bouton principal reste jaune, les feuilles de correction restent rouge ou vert sombre.
-• Réglages de l’iPhone > Taille du texte au plus grand : l’accueil, la feuille de correction et une leçon se lisent sans rien couper. Une rangée de l’accueil peut passer sa valeur sous le libellé.
+À savoir
+• Sur iPad Pro, la barre latérale s’ouvre en recouvrant la page en portrait ; c’est le comportement d’iPadOS.
+• Sur un iPad mini tenu droit, la barre du haut peut ne montrer que trois entrées et une flèche : les autres sont derrière la flèche, ou dans la barre latérale.
