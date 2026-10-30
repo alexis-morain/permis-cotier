@@ -320,13 +320,14 @@ function ActionsApp({ mode, session, retour, ratees, recale }: PropsActions) {
           <button
             className="bouton bouton--discret"
             type="button"
-            onClick={() =>
+            onClick={(evenement) =>
               void partager(
                 'Mon examen blanc du permis côtier',
                 r.reussi
                   ? `Reçu à l’examen blanc : ${r.bonnes} sur ${r.total}, ${r.erreurs} erreur${r.erreurs > 1 ? 's' : ''} sur les ${ERREURS_ADMISES} admises.`
                   : `${r.bonnes} sur ${r.total} à l’examen blanc, ${r.erreurs} erreurs. L’épreuve en admet ${ERREURS_ADMISES}. On y retourne.`,
                 'https://lepermiscotier.fr',
+                evenement.currentTarget,
               )
             }
           >

@@ -64,6 +64,8 @@ class EcranWeb: CAPBridgeViewController {
         bridge?.registerPluginInstance(BarreEtatMuettePlugin())
         // Liens d'un autre site : le navigateur par défaut (`GreffonsMuets`).
         bridge?.registerPluginInstance(NavigateurMacPlugin())
+        // Feuille de partage accrochée au bouton cliqué (`GreffonsMuets`).
+        bridge?.registerPluginInstance(PartageMacPlugin())
         // La page apprend qu'elle est sur Mac avant son premier script
         // (`surMac()` de `src/lib/cible.ts`) : la plateforme de Capacitor y
         // dit `ios`. Sur `window`, pas sur `<html>`, dont le routeur d'Astro

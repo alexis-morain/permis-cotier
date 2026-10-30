@@ -37,6 +37,8 @@ de la copie se reporte en ligne, et inversement.
 Plan « iPad et Mac », lot 3 : ce qui fait d'une app iPad agrandie une app Mac.
 Branche `app-mac-usages`. Essayé à l'écran le 30 à midi, sur le créneau
 d'Alexis (« À l'écran », plus bas) ; trois défauts trouvés et corrigés.
+Fini l'après-midi (« À l'écran, la fin ») : sons, survol, rappels et partage
+vus, deux défauts de plus corrigés (survol des boutons, bulle de partage).
 
 ### La barre de menus (`MenusMac.swift`, Catalyst seul)
 
@@ -116,11 +118,14 @@ gardent `CFBundleDisplayName`, « Le Permis Côtier ».
 
 ### Vérifié
 
-- Vitest : 9 tests du clavier et des commandes, 1 du texte des sons ; gate vert.
+- Vitest : 9 tests du clavier et des commandes, 1 du texte des sons ; puis
+  4 du survol des boutons (`src/styles/mac.test.ts`) et 2 de la place du
+  bouton de partage (`src/lib/natif.partage.test.ts`) ; gate vert.
 - Build Catalyst, sans signature et signé : verts, aucun avertissement sur notre code ;
   `CFBundleName` = « Permis Côtier ».
 - Archive iOS par la commande de `app-ios.yml` : verte, `CFBundleName` = « App »,
-  `minos 16.0`, aucun symbole de `MenusMac`.
+  `minos 16.0`, aucun symbole de `MenusMac` ; refaite après les corrections de
+  l'après-midi, ni `NavigateurMac` ni `PartageMac` non plus.
 
 ### À l'écran (30 octobre, midi, MacBook Air, macOS 26, Stage Manager)
 
@@ -156,11 +161,59 @@ premier plan après vérification). Captures gardées hors du dépôt.
   d'UIKit pour le Mac (texte, pointeur), sans effet visible ; sa classe n'a pas
   pu être lue (le diagnostic interne n'a rien écrit). Laissée.
 
-**Pas essayé** : Partager (il faut un examen reçu), rappels (la date ci-dessus
-les aurait armés pour un jour déjà passé : rien de programmé), sons à
-l'oreille, survol et curseur main (la souris n'a pas été bougée, sauf deux
-clics). **Traces** dans les données partagées avec la 1.0.7 : un examen
+**Pas essayé à midi** : Partager, rappels, sons, survol (vus l'après-midi,
+plus bas). **Traces** dans les données partagées avec la 1.0.7 : un examen
 interrompu (8 questions), date d'examen posée puis effacée.
+
+### À l'écran, la fin (30 octobre, après-midi)
+
+Même machine, sur le créneau d'Alexis, puis seul (« avance en autonomie »).
+Clics d'arrière-plan par Peekaboo, premier plan vérifié avant chaque frappe
+et chaque déplacement de souris, captures limitées aux fenêtres de l'app.
+
+- **Sons** : une bonne réponse validée en série du jour, son entendu par
+  Alexis (volume du Mac à 37 %).
+- **Survol et curseur** : sur une proposition, la bordure passe au filet fort
+  et le curseur est la main (`NSCursor.currentSystem` au point chaud de
+  `pointingHand`). **Défaut corrigé** : les boutons de l'app (jaune, second)
+  ne bougeaient pas sous la souris. Leurs couleurs `html[data-app] .bouton…`
+  sont plus spécifiques que les `:hover` de `global.css`. Règle de survol
+  propre à l'app dans `app.css`, sous `(hover: hover) and (pointer: fine)` :
+  le jaune s'assombrit de 5 % (l'appui, 10 %), le second prend `--fond-2`.
+  Placée avant `:active` et `[disabled]`, de même spécificité, qui l'emportent.
+  Revu : `#F6C951` au repos, `#EABF4C` sous la souris (`src/styles/mac.test.ts`).
+- **Rappels** : macOS refusait la demande sans boîte de dialogue
+  (`requestAuthorization`, `didGrant: 0 hasError: 1`) : les notifications de
+  `fr.lepermiscotier.app` étaient coupées dans Réglages Système, réglage
+  partagé avec la 1.0.7. Le refus est respecté sans erreur visible, comme
+  voulu. Autorisées le temps de l'essai (accord d'Alexis), puis remises sur
+  Non. Date posée au 9 novembre (J+10) au clic, calendrier passé au mois
+  suivant par défilement : quatre demandes ajoutées sans erreur (J−7, J−3,
+  J−1, le jour même), quatre identifiants dans la table `requests` de
+  usernoted. « Effacer la date » : `Removing 4 pending notification
+  requests`, la table vide. Preuves sur Mac : `/usr/bin/log stream --process
+  <pid>` (dans zsh, `log` est une commande intégrée qui ne rend rien) et
+  `~/Library/Group Containers/group.com.apple.usernoted/db2/db`.
+- **La date se pose aussi au clic**, pas seulement par Tab : ouvrir le
+  calendrier enregistre la date du jour, avant tout choix. Même comportement
+  que décrit plus haut, même décision (laissé).
+- **Partager** : feuille du Mac (AirDrop, Mail, Messages, Copier…) ouverte
+  depuis un résultat d'examen, refermée par Échap sans rien envoyer.
+  **Défaut corrigé** : le greffon `Share` pose la bulle au centre de la vue
+  (`setCenteredPopover`), sa flèche pointait le milieu de la page, 75 pt
+  au-dessus du bouton. `PartageMacPlugin` (`GreffonsMuets.swift`, Catalyst
+  seul) le remplace sous le même nom JavaScript : `partager` envoie la place
+  du bouton cliqué (`ancre`, pixels CSS, `natif.partage.test.ts`), le greffon
+  la multiplie par `pageZoom` et y accroche la bulle. Revu : bulle collée au
+  bord droit du bouton, à sa hauteur. L'iPhone et l'iPad gardent le greffon
+  officiel, qui ignore la clé. Une feuille refermée reste listée par Peekaboo
+  « ON-SCREEN » : CoreGraphics la dit hors écran, macOS la garde pour la suite.
+
+**Traces** dans les données partagées avec la 1.0.7 : une série du jour
+entamée (1 question sur 20, juste), **deux examens blancs terminés** (11 sur
+40, recalés, première proposition cochée partout : leurs erreurs sont entrées
+dans la file de révision), date posée puis effacée (aucune date au final),
+réglage des notifications rendu à Non.
 
 ## 30 octobre 2026 — deux défauts iPad de la PR #56
 

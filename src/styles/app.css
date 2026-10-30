@@ -302,6 +302,18 @@ html[data-app] .bouton--principal {
   border-color: var(--jaune);
   color: var(--sur-jaune);
 }
+/* Sous la souris (le Mac), le principal s'assombrit moitié moins qu'à
+   l'appui, le second prend le fond de l'appui. Placé avant `:active` et
+   `[disabled]`, de même spécificité : l'appui et l'éteint l'emportent. */
+@media (hover: hover) and (pointer: fine) {
+  html[data-app] .bouton--principal:hover {
+    background: color-mix(in srgb, var(--jaune) 95%, #000);
+    border-color: color-mix(in srgb, var(--jaune) 95%, #000);
+  }
+  html[data-app] .bouton:not(.bouton--principal):not(.bouton--discret):hover {
+    background: var(--fond-2);
+  }
+}
 html[data-app] .bouton--principal:active {
   transform: translateY(1px);
   background: color-mix(in srgb, var(--jaune) 90%, #000);
