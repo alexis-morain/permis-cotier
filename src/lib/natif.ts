@@ -201,16 +201,19 @@ export function surRetourAuPremierPlan(faire: () => void): () => void {
  * l'arrêt la ramène. C'est le geste d'une app d'apprentissage : pendant les
  * vingt secondes d'une question, rien d'autre à l'écran. Le greffon `Ecran`
  * est écrit dans la coquille (`ios/App/App/EcranPlugin.swift`), une méthode,
- * `pleinEcran({ actif })`. Absent, rien ne se passe.
+ * `pleinEcran({ actif, examen })`. Absent, rien ne se passe.
+ *
+ * `examen` dit au Mac quelles commandes du menu « Examen » s'appliquent :
+ * « Passer la question » n'existe qu'en examen blanc.
  */
-export function modeConcentration(actif: boolean): Promise<void> | undefined {
+export function modeConcentration(actif: boolean, examen = false): Promise<void> | undefined {
   if (!POUR_APP) return;
-  return concentrerDansLApp(actif);
+  return concentrerDansLApp(actif, examen);
 }
 
-async function concentrerDansLApp(actif: boolean): Promise<void> {
+async function concentrerDansLApp(actif: boolean, examen: boolean): Promise<void> {
   try {
-    await avecGreffon('Ecran', (g) => g.pleinEcran({ actif }));
+    await avecGreffon('Ecran', (g) => g.pleinEcran({ actif, examen }));
   } catch {
     // Greffon absent, ou coquille d'une autre version : la barre reste.
   }

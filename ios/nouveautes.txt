@@ -1,3 +1,5 @@
 L’app s’ouvre sur iPad. Sur grand écran, les cinq rubriques sont aussi dans une barre latérale (iPadOS 18 ou plus), la page tient dans une colonne confortable, et l’app suit toutes les orientations et le multitâche : Split View, Slide Over, fenêtres.
 
+Avec un clavier, les flèches passent d’une proposition à l’autre, et Échap propose d’arrêter l’examen blanc.
+
 Sur iPhone, rien ne change. Quelques textes parlent désormais de « ton appareil » plutôt que de « ton téléphone ».

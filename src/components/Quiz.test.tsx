@@ -1244,29 +1244,29 @@ describe('le plein écran de la série, dans l’app', () => {
 
   it('cache la barre au départ et la rend au résultat', () => {
     lancerExamen();
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, true]]);
     for (let i = 0; i < 3; i++) {
       fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
     }
     expect(screen.getByText(/Examen blanc terminé/)).toBeTruthy();
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, true], [false]]);
   });
 
   it('rend la barre à l’arrêt', () => {
     lancerExamen();
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter' }));
     // La confirmation ne sort pas du plein écran : on est encore dans l'épreuve.
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, true]]);
     fireEvent.click(screen.getByRole('button', { name: 'Arrêter et voir le résultat' }));
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, true], [false]]);
   });
 
   it('rend la barre quand l’écran s’en va en pleine série', () => {
     const { unmount } = render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
     // L'entraînement n'a pas d'écran de départ : la série court dès l'ouverture.
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, false]]);
     unmount();
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, false], [false]]);
   });
 
   it('rend la barre quand on suit un lien en pleine série', () => {
@@ -1274,7 +1274,7 @@ describe('le plein écran de la série, dans l’app', () => {
     act(() => {
       window.dispatchEvent(new Event('pagehide'));
     });
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true], [false]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, false], [false]]);
   });
 
   it('cache la barre à la reprise d’un examen laissé en plan', () => {
@@ -1300,7 +1300,7 @@ describe('le plein écran de la série, dans l’app', () => {
     render(<Quiz mode="examen" questions={trois} />);
     expect(modeConcentration).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', { name: /Reprendre à la question 2/ }));
-    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true]]);
+    expect(vi.mocked(modeConcentration).mock.calls).toEqual([[true, true]]);
   });
 });
 
@@ -1783,5 +1783,94 @@ describe('/revoir?examen joue les erreurs de l’examen, et elles seules', () =>
     } finally {
       cible.app = false;
     }
+  });
+});
+
+/** Une commande de la barre de menus du Mac, telle que la coquille la relaie. */
+const commande = (nom: string) =>
+  act(() => {
+    window.dispatchEvent(new CustomEvent('app:commande', { detail: { nom } }));
+  });
+
+describe('Échap, flèches et barre de menus', () => {
+  it('Échap demande l’arrêt de l’examen, et le redemander le referme', () => {
+    lancerExamen();
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(screen.getByText('Arrêter l’examen maintenant ?')).toBeTruthy();
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(screen.queryByText('Arrêter l’examen maintenant ?')).toBeNull();
+    expect(screen.getByRole('heading', { level: 2 })).toBeTruthy();
+  });
+
+  it('Échap ne fait rien sur l’écran de départ', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy();
+  });
+
+  it('Échap quitte l’entraînement par le même lien que l’écran', () => {
+    const clic = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+    try {
+      render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+      fireEvent.keyDown(document.body, { key: 'Escape' });
+      expect(clic).toHaveBeenCalledTimes(1);
+      expect((clic.mock.contexts[0] as HTMLAnchorElement).getAttribute('href')).toBe('/entrainement');
+    } finally {
+      clic.mockRestore();
+    }
+  });
+
+  it('les flèches font circuler le focus entre les propositions', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    const l = lignes();
+    fireEvent.keyDown(document.activeElement ?? document.body, { key: 'ArrowDown' });
+    expect(document.activeElement).toBe(l[0]);
+    fireEvent.keyDown(l[0]!, { key: 'ArrowDown' });
+    expect(document.activeElement).toBe(l[1]);
+    fireEvent.keyDown(l[1]!, { key: 'ArrowUp' });
+    expect(document.activeElement).toBe(l[0]);
+    fireEvent.keyDown(l[0]!, { key: 'ArrowUp' });
+    expect(document.activeElement).toBe(l[3]);
+    // Circuler ne coche rien.
+    expect(l.some((n) => n.getAttribute('aria-pressed') === 'true')).toBe(false);
+  });
+
+  it('« Valider » du menu valide comme Entrée', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'a' });
+    commande('valider');
+    expect(screen.getByRole('status')).toBeTruthy();
+    commande('valider');
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+  });
+
+  it('« Passer » du menu saute la question d’examen sans la réponse cochée', () => {
+    lancerExamen();
+    fireEvent.keyDown(document.body, { key: 'a' });
+    commande('passer');
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 2');
+    for (let i = 0; i < 2; i++) commande('passer');
+    // Trois questions passées : aucune bonne réponse.
+    expect(document.querySelector('.resultat__score')?.firstChild?.textContent).toBe('0');
+  });
+
+  it('« Passer » ne fait rien en entraînement', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    commande('passer');
+    expect(screen.queryByRole('status')).toBeNull();
+    expect(document.querySelector('.jeu__compteur')?.textContent).toContain('Question 1');
+  });
+
+  it('« Quitter l’examen » du menu demande l’arrêt', () => {
+    lancerExamen();
+    commande('quitter');
+    expect(screen.getByText('Arrêter l’examen maintenant ?')).toBeTruthy();
+  });
+
+  it('une commande sans série en cours ne fait rien', () => {
+    render(<Quiz mode="examen" questions={trois} />);
+    commande('valider');
+    commande('quitter');
+    expect(screen.getByRole('button', { name: /Commencer l’examen/ })).toBeTruthy();
   });
 });

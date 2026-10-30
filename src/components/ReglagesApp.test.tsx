@@ -18,7 +18,7 @@ import {
   sauvegarder,
 } from '../lib/progression';
 
-vi.mock('../lib/cible', () => ({ POUR_APP: true }));
+vi.mock('../lib/cible', () => ({ POUR_APP: true, surMac: () => false }));
 
 const rendre = () => render(<ReglagesApp version="1.20.1" total={658} />);
 

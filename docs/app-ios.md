@@ -32,6 +32,97 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 30 octobre 2026 — les usages Mac (lot 3)
+
+Plan « iPad et Mac », lot 3 : ce qui fait d'une app iPad agrandie une app Mac.
+Branche `app-mac-usages`. Construit et compilé ; **l'essai à l'écran attend un
+créneau d'Alexis** (liste en fin de section).
+
+### La barre de menus (`MenusMac.swift`, Catalyst seul)
+
+`AppDelegate.buildMenu` appelle `MenusMac.construire`. Les actions vivent dans
+une extension de `BarreOnglets`, qui sait quel onglet est devant et se trouve
+sur la chaîne des répondeurs entre la webview et l'app.
+
+| Menu | Lignes |
+|---|---|
+| Permis Côtier | À propos (celui du système), **Réglages… ⌘,** |
+| Fichier | **Nouvel examen blanc ⌘N**, puis Fermer du système |
+| Édition | celui du système (copier-coller du signalement) |
+| **Examen** | Valider ⌘↩, Passer la question ⌘→, Quitter l'examen ⌘. |
+| Présentation | Masquer/Afficher la barre latérale ⌃⌘S ; Accueil à Fiche ⌘1 à ⌘5 ; Agrandir le texte ⌘+, Réduire ⌘−, Taille réelle ⌘0 ; plein écran du système |
+| Fenêtre | celui du système |
+| Aide | Le site lepermiscotier.fr, Signaler une erreur… |
+
+Retirés : Format, barre d'outils, nouvelle fenêtre.
+
+- **Le menu Examen relaie, il ne refait rien.** `EcranWeb.relayer` envoie
+  `app:commande` (`{ nom: 'valider' | 'passer' | 'quitter' }`) à la page, qui
+  fait ce que font ses touches (`useClavier`, `quiz/effets.ts`). Grisé hors
+  série : la page dit à `pleinEcran` si une série court et si c'est un examen
+  (`pleinEcran({ actif, examen })`), `EcranWeb.serie` le garde, et toute
+  nouvelle adresse l'oublie. « Passer la question » n'existe qu'en examen ;
+  « Quitter » devient « Quitter la série » en entraînement.
+- **Pas de raccourci de menu sans ⌘.** Un raccourci Entrée ou Échap pris par
+  le menu ne parviendrait plus à la page, champs compris. D'où ⌘↩ et ⌘. (le
+  « annuler » du Mac) ; Échap reste à la page.
+- **Réglages ⌘,** ouvre l'onglet Fiche sur `/parametres`, avec son retour
+  « ‹ Ta fiche ». Pas de feuille : il y faudrait une sixième webview, où le
+  retour et les liens de la page n'auraient pas de sens.
+- **Nouvel examen ⌘N** amène l'onglet Examen tel qu'il est : un examen commencé
+  y reste, à reprendre ou à arrêter.
+- **Taille du texte** : `pageZoom` de chaque webview, paliers 80 % à 200 %,
+  gardé dans `UserDefaults` (`texteMac.zoom`), posé au chargement de chaque onglet.
+- **Signaler une erreur…** ouvre `/signaler` dans l'onglet courant, qui prépare
+  le courrier à `contact@` comme depuis une question.
+
+### Le nom dans la barre de menus
+
+`CFBundleName` valait `$(PRODUCT_NAME)`, soit « App ». Il vaut maintenant
+`$(NOM_DU_PAQUET)`, réglage de build : `$(PRODUCT_NAME)` partout, **« Permis
+Côtier » pour le SDK macOS seul**. L'iOS garde « App », son module et son
+exécutable ne bougent pas (vérifié dans l'archive). « Permis Côtier » (13
+caractères) plutôt que « Le Permis Côtier » (16, au-dessus des 15 conseillés),
+qui donnerait « À propos de Le Permis Côtier ». Le Dock et le Finder
+gardent `CFBundleDisplayName`, « Le Permis Côtier ».
+
+### Côté web (le site en profite)
+
+- **Échap** : en examen, ouvre la confirmation d'arrêt, et la referme au second
+  appui. En entraînement, suit le lien de l'écran (la croix de l'app,
+  « Changer de thème » du site) : la série est écrite, rien n'est perdu.
+- **↑ et ↓** font circuler le focus entre les propositions, en boucle ;
+  l'espace coche. Sans rien cocher.
+- `surMac()` (`src/lib/cible.ts`) : la coquille pose `window.coquilleMac` par un
+  `WKUserScript` en début de document. Sur `window` et pas sur `<html>`, dont le
+  routeur d'Astro remplace les attributs.
+- **Sons sur Mac** : actifs au premier lancement, comme sur iPhone (pas de
+  bouton silencieux, mais la session ambiante suit le volume du système). Le
+  Réglage dit « Les sons suivent le volume de ton Mac. »
+
+### Vérifié
+
+- Vitest : 9 tests du clavier et des commandes, 1 du texte des sons ; gate vert.
+- Build Catalyst, sans signature et signé : verts, aucun avertissement sur notre code ;
+  `CFBundleName` = « Permis Côtier ».
+- Archive iOS par la commande de `app-ios.yml` : verte, `CFBundleName` = « App »,
+  `minos 16.0`, aucun symbole de `MenusMac`.
+
+### À voir à l'écran (créneau d'Alexis)
+
+1. Chaque menu : titres, raccourcis, grisé hors série, « Quitter la série » en
+   entraînement, coche de l'onglet courant ; doublons éventuels que UIKit
+   ajouterait (barre latérale, ⌘1 à ⌘5).
+2. ⌘↩ et ⌘. pendant que la webview a le focus ; Échap et ↑↓ en examen.
+3. ⌘+ ⌘− ⌘0 : `pageZoom` dans les cinq onglets, gardé après relance.
+4. Survol (`(hover: hover) and (pointer: fine)` vrai ?), curseur main,
+   Tab qui parcourt liens et boutons (`tabFocusesLinks` n'existe pas en Catalyst),
+   anneau visible.
+5. Liens externes (`Browser` en popover), Partager, rappels (date posée puis
+   effacée ; permission), sons à l'oreille.
+6. La fenêtre de 500 × 500 hors écran : un diagnostic non commité liste les
+   fenêtres AppKit (classe, cadre, délégué) au lancement.
+
 ## 30 octobre 2026 — deux défauts iPad de la PR #56
 
 - **La barre du haut ne tenait pas les cinq entrées** sous le 13 pouces en

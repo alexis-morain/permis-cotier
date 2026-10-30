@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { jouer, reglerSon, sonActif } from '../lib/son';
+import { surMac } from '../lib/cible';
 
 /**
  * L'interrupteur des sons de l'app, sur l'écran des réglages.
@@ -45,8 +46,10 @@ export default function ReglageSon() {
         />
         <span className="interrupteur__rail" aria-hidden="true" />
       </label>
+      {/* Un Mac n'a pas de bouton silencieux : la session audio ambiante y
+          suit le volume du système, et les sons restent actifs par défaut. */}
       <p id="reglage-son-aide" className="discret">
-        Les sons suivent le mode silencieux de ton appareil.
+        {surMac() ? 'Les sons suivent le volume de ton Mac.' : 'Les sons suivent le mode silencieux de ton appareil.'}
       </p>
       <style>{`
         .reglageSon p { margin-top: 0.25rem; }

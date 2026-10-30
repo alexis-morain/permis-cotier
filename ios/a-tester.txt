@@ -12,6 +12,10 @@ Mise en page
 • Tourne l’iPad dans les deux sens, en examen aussi : rien ne doit se couper.
 • Multitâche : ouvre l’app en Split View, en Slide Over et dans une fenêtre de Stage Manager, puis étire la fenêtre. La barre latérale doit laisser la place à la barre d’onglets quand la fenêtre est étroite.
 
+Clavier (iPad avec un clavier)
+• En examen ou en entraînement : A à D pour cocher, Entrée pour valider. Les flèches haut et bas passent d’une proposition à l’autre, la barre d’espace coche celle qui est entourée.
+• Échap pendant un examen blanc ouvre « Arrêter l’examen ? » ; un second Échap le referme et l’examen continue. En entraînement, Échap ramène au choix du thème, la série reste à reprendre.
+
 Textes
 • Réglages : « Les sons suivent le mode silencieux de ton appareil ». La fiche et le questionnaire disent « sur cet appareil » et non plus « sur ton téléphone ».
 

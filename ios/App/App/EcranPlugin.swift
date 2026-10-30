@@ -39,8 +39,10 @@ public class EcranPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func pleinEcran(_ call: CAPPluginCall) {
         let actif = call.getBool("actif") ?? false
+        let examen = call.getBool("examen") ?? false
         DispatchQueue.main.async { [weak self] in
             if let ecran = self?.bridge?.viewController {
+                (ecran as? EcranWeb)?.serie = actif ? (examen ? .examen : .entrainement) : nil
                 Self.basculer(dans: ecran, cachee: actif)
             }
             // Pas de barre d'onglets : rien à cacher, et rien d'anormal.
