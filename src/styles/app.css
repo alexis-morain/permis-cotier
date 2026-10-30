@@ -153,6 +153,13 @@ html[data-app] .page--etroite {
   width: min(100% - 32px, 44rem);
 }
 
+/* iPad : une colonne de lecture, jamais plus large que la colonne étroite.
+   Sous 46 rem (tout iPhone, Slide Over, mini en portrait) `100% - 32px` est
+   déjà le plus petit des deux : rien ne change. */
+html[data-app] .page {
+  width: min(100% - 32px, 46rem);
+}
+
 /* La recherche s'ouvre en plein écran, `<dialog>` par-dessus tout : `<main>`
    ne la rembourre pas. Sans ces deux règles, le mot cherché s'écrit sous
    l'heure, et la fin des résultats sous la barre d'onglets. */

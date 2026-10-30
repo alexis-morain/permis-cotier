@@ -32,15 +32,8 @@ public class EcranPlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func onglet(_ call: CAPPluginCall) {
         let chemin = call.getString("chemin") ?? ""
         DispatchQueue.main.async { [weak self] in
-            guard let barre = self?.bridge?.viewController?.tabBarController,
-                  let ecrans = barre.viewControllers,
-                  let rang = ecrans.firstIndex(where: { ($0 as? EcranWeb)?.cheminDeDepart == chemin }),
-                  rang != barre.selectedIndex else {
-                call.resolve(["bascule": false])
-                return
-            }
-            barre.selectedIndex = rang
-            call.resolve(["bascule": true])
+            let barre = self?.bridge?.viewController?.tabBarController as? BarreOnglets
+            call.resolve(["bascule": barre?.selectionner(chemin: chemin) ?? false])
         }
     }
 
@@ -64,9 +57,31 @@ public class EcranPlugin: CAPPlugin, CAPBridgedPlugin {
             guard barre.isTabBarHidden != cachee else { return }
             // UIKit anime la barre et recalcule lui-même la zone sûre.
             barre.setTabBarHidden(cachee, animated: true)
+            // Sur iPad, la barre latérale a son propre état : on la replie
+            // pour l'épreuve, et on ne la rouvre que si elle était ouverte.
+            if barre.mode == .tabSidebar {
+                basculerBarreLaterale(barre: barre, cachee: cachee)
+            }
         } else {
             guard barre.tabBar.isHidden != cachee else { return }
             basculerAvantIOS18(barre: barre, ecran: ecran, cachee: cachee)
+        }
+    }
+
+    /// L'état de la barre latérale avant l'épreuve : `nil` tant qu'on ne l'a
+    /// pas repliée nous-mêmes. Rouvrir une barre que la personne avait
+    /// refermée serait lui reprendre la main.
+    private static var lateraleOuverteAvant: Bool?
+
+    @available(iOS 18.0, *)
+    private static func basculerBarreLaterale(barre: UITabBarController, cachee: Bool) {
+        if cachee {
+            guard lateraleOuverteAvant == nil else { return }
+            lateraleOuverteAvant = !barre.sidebar.isHidden
+            barre.sidebar.isHidden = true
+        } else if let ouverte = lateraleOuverteAvant {
+            lateraleOuverteAvant = nil
+            barre.sidebar.isHidden = !ouverte
         }
     }
 

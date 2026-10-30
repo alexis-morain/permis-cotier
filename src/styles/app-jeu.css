@@ -389,6 +389,7 @@ html[data-app] .resultat__actions .bouton--discret {
 
 html[data-app] .resultat__partage {
   margin: 0;
+  max-width: none; /* `p` plafonne à 54ch : centré dans cette boîte, il flottait à gauche sur iPad */
   text-align: center;
 }
 html[data-app] .resultat__partage .bouton { min-height: 2.75rem; }
@@ -479,3 +480,32 @@ html[data-app] .jeu__meta { order: 0; margin-top: 0.75rem; }
 html[data-app] .parTheme li { grid-template-columns: minmax(0, 1fr) auto; }
 html[data-app] .parTheme .etiquette { white-space: normal; max-width: 100%; }
 html[data-app] .parTheme__note { white-space: nowrap; }
+
+
+/* ------------------------------------------------ iPad : la colonne de jeu
+
+   Dès 50 rem de large (iPad en plein écran ou en moitié d'écran large), le
+   site met l'examen en deux colonnes, la question à gauche et le carnet à
+   droite. L'app n'a pas de carnet : elle garde la colonne du téléphone, plus
+   large (44 rem), centrée.
+
+   Les barres du bas débordent jusqu'aux bords par `margin-inline: calc(50% -
+   50vw)`, ce qui suppose une colonne centrée. Leur contenu se recale alors
+   sur la colonne : un fond pleine largeur, des boutons et un texte alignés
+   sur les propositions. */
+@media (min-width: 50rem) {
+  html[data-app] .jeu--examen {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    max-width: 44rem;
+  }
+  html[data-app] .jeu--examen > * { margin-block-end: 0; }
+  html[data-app] .jeu > .jeu__actions--collant {
+    padding-inline: max(1rem, calc(50vw - 22rem));
+  }
+  html[data-app] .jeu__pied {
+    padding-inline: max(0px, calc(50vw - 22rem - 1rem));
+  }
+}

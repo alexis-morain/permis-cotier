@@ -32,6 +32,73 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 29 octobre 2026 — l'iPad (lot 1 du plan « iPad et Mac »)
+
+### Ce qui a changé
+
+- **Projet** : `TARGETED_DEVICE_FAMILY = "1,2"`, `UISupportedInterfaceOrientations~ipad`
+  (les quatre), l'iPhone reste en portrait. Aucun `UIRequiresFullScreen` :
+  Split View, Slide Over et Stage Manager sont permis.
+- **Navigation** (`BarreOnglets.swift`) : sur iPad en iOS 18 ou plus, les cinq
+  entrées sont des `UITab` en mode `.tabSidebar`, avec `sidebar.preferredLayout
+  = .tile`. UIKit retombe seul sur la barre d'onglets en largeur compacte. Sur
+  iPad en iOS 16-17 et sur iPhone, rien ne change (`viewControllers`). Les cinq
+  `EcranWeb` sont créées d'avance (l'objet ne charge sa webview qu'à la première
+  visite) ; `selectionner(chemin:)` les retrouve, et le greffon `Ecran` n'appelle
+  plus `viewControllers`, que `tabs` rend muet.
+- **`Ecran`** : pendant l'examen, `setTabBarHidden` puis, en mode barre
+  latérale, `sidebar.isHidden = true` ; à la fin, la barre latérale revient
+  dans l'état où la personne l'avait laissée. `basculerAvantIOS18` n'a pas
+  bougé.
+- **Web (build app seulement, sous `html[data-app]`)** : `.page` plafonnée à
+  46 rem ; l'accueil recentré en 44 rem ; dès 50 rem, l'examen perd la grille
+  « question + carnet » du site (le carnet est caché dans l'app) et redevient la
+  colonne de 44 rem, `align-items: stretch`. Les barres du bas, pleine largeur
+  par `margin-inline: calc(50% - 50vw)`, recalent leur contenu sur la colonne
+  (`padding-inline: … 50vw - 22rem …`). Avant, à 1032 pt, la colonne partait à
+  gauche et la barre « Passer » débordait. Gardé par `src/styles/ipad.test.ts`.
+- **Textes** : « Les sons suivent le mode silencieux de ton appareil », « sur
+  cet appareil » (Réglages, questionnaire, À propos de l'app, fiche App Store).
+- Le site public ne change pas : diff de `dist/` contre `db36e0a`, seuls
+  bougent les identifiants d'îlots, les dates du sitemap et `sw.js` ;
+  `npm run poids` identique.
+
+### Ce qui a été vérifié
+
+- Chromium aux largeurs 320, 744, 1032 et 1366 pt, sur `dist-app/` : accueil,
+  cours, leçon, examen (départ et question), correction, entraînement, fiche,
+  réglages, signalement. Plus de ligne de 150 caractères, plus de débord.
+- Simulateur, iPad Pro 13 pouces (M5) en iOS 26.5 : lancement, navigation du
+  haut avec le bouton de barre latérale, barre latérale ouverte (elle recouvre
+  la page en portrait), bascule d'onglet, examen qui cache la navigation et la
+  rend. iPad Pro 13 pouces (M4) en 17.5 : barre d'onglets du bas, examen qui la
+  cache. iPad mini (A17 Pro) en 26.5 et iPhone 17 Pro en 26.5 : pas de
+  régression.
+- Le pilotage du simulateur passait par un harnais jetable lu dans
+  l'environnement (`SIMCTL_CHILD_STEPS`), jamais committé : `simctl` ne sait ni
+  toucher ni tourner.
+
+### Ce qui reste
+
+- **Rotation, Split View, Slide Over, Stage Manager non essayés** : les iPad
+  du simulateur sont en mode fenêtré, qui refuse `requestGeometryUpdate`, et
+  `simctl` ne rend pas la main sur le Split View. À voir sur un vrai iPad ou
+  par le menu du simulateur. Surtout : la barre latérale en paysage (est-elle en
+  tuile à côté de la page ?), et sa disparition pendant l'examen quand elle est
+  ouverte.
+- **iPad mini en portrait** : la barre du haut ne montre que trois entrées et
+  une flèche ; les deux autres sont derrière, ou dans la barre latérale.
+- Le bouton « Modifier » de la barre latérale ne sert à rien ici.
+- Examen en deux colonnes en paysage large (visuel à gauche, propositions à
+  droite) : écarté, ce n'est pas simple, et la colonne tient.
+- Iconographie et fiche : captures iPad 13 pouces, voir `docs/captures-app-store/ipad/`
+  du dossier de gestion ; copie de la fiche à reporter à la main (« ton
+  téléphone » → « ton appareil » dans la description).
+- La page d'accueil du site et son pied disent encore « L'app iPhone » et
+  « Aussi sur iPhone » : à passer à « iPhone et iPad » le jour de la sortie.
+- Preflight de la version, réponse 4.2 relue pour le grand écran : à faire
+  avant la fusion.
+
 ## 15 octobre 2026 — l'app descend à iOS 16
 
 ### Ce qui a changé

@@ -22,7 +22,7 @@ describe('interrupteur des sons', () => {
     expect(inter.checked).toBe(true);
     expect(inter.type).toBe('checkbox');
     const aide = document.getElementById(inter.getAttribute('aria-describedby') ?? '');
-    expect(aide?.textContent).toBe('Les sons suivent le bouton silencieux de ton iPhone.');
+    expect(aide?.textContent).toBe('Les sons suivent le mode silencieux de ton appareil.');
   });
 
   it('se coupe sans rien jouer, se rallume en jouant « juste » une fois', () => {
