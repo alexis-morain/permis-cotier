@@ -389,6 +389,7 @@ html[data-app] .resultat__actions .bouton--discret {
 
 html[data-app] .resultat__partage {
   margin: 0;
+  max-width: none; /* `p` plafonne à 54ch : centré dans cette boîte, il flottait à gauche sur iPad */
   text-align: center;
 }
 html[data-app] .resultat__partage .bouton { min-height: 2.75rem; }

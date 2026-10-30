@@ -29,3 +29,9 @@ describe('iPad : la colonne de jeu', () => {
     expect(lire('src/styles/app.css')).toMatch(/html\[data-app\] \.page\s*{\s*width:\s*min\(100% - 32px, 46rem\)/);
   });
 });
+
+describe('iPad : le résultat', () => {
+  it('le lien de partage est centré sur la colonne, pas dans une boîte de 54ch', () => {
+    expect(lire('src/styles/app-jeu.css')).toMatch(/\.resultat__partage\s*{[^}]*max-width:\s*none/);
+  });
+});
