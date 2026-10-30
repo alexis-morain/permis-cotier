@@ -743,8 +743,8 @@ check` (0 erreur), `npm run build`, `npm run build:app`.
 
 ## 30 octobre 2026 — la coquille Mac (lot 2)
 
-**L'app Mac se construit, signée ou non. Elle n'a pas encore été lancée** : l'essai
-à l'écran attend un créneau d'Alexis (voir « Reste »).
+**L'app Mac se construit, signée ou non, et tourne** : essai à l'écran le 30 au
+matin, sur le créneau d'Alexis (voir « À l'écran »).
 
 ### Capacitor sur Mac
 
@@ -822,12 +822,53 @@ compile signé, profil de développement Catalyst créé au besoin
 - `npm run build:app` (donc `cap sync ios`) : aucun fichier suivi ne bouge, le
   build Mac repasse sur le cache.
 
+### À l'écran (30 octobre, MacBook Air, macOS 26)
+
+Lancée par `scripts/capacitor-catalyst.sh --signe` puis `open`, pilotée par
+Peekaboo en clics d'arrière-plan, et AppleScript pour le clavier, l'app
+vérifiée au premier plan avant chaque frappe. Captures dans le dossier du projet,
+`docs/captures-mac-2026-10-30/`.
+
+- **Idiome Mac** : contrôles Mac, barre latérale aux cinq entrées, titre de
+  fenêtre qui suit l'onglet (« Accueil », « Examen », « Fiche »).
+- **Examen** : la barre latérale se replie au départ et revient au résultat.
+  B coche, Entrée valide en série. **Plus de zone vide du clavier virtuel**, ni
+  en examen, ni dans un champ du signalement (focus et saisie), ni de barre
+  d'accessoires : le défaut 1 du lot 0 est réglé. « Arrêter l'examen ? »
+  montre ses deux boutons entiers.
+- **Mode sombre** : suit le système en direct (bascule de dix secondes, rendue).
+  `-AppleInterfaceStyle Dark` en argument ne prend pas en Catalyst.
+- **Fenêtre** : rien sous 800 × 600. Agrandie, la mise en page tient.
+- **Taille de départ : défaut trouvé et corrigé.** Demandée dans
+  `willConnectTo`, puis à l'activation, la fenêtre sortait à 800 de large :
+  AppKit repose derrière nous son cadre gardé (`NSWindow Frame
+  MainSceneWindow`) ou sa taille par défaut. Posée une demi-seconde après la
+  première activation, une seule fois (clé `fenetreMac.tailleDeDepartPosee`) :
+  1100 × 780, centrée, vu après avoir retiré le cadre gardé. Un saut visible
+  au tout premier lancement, une fois.
+- **Signalement** : « Préparer le signalement » ouvre un brouillon Mail à
+  `contact@`, objet et corps remplis ; le bac à sable laisse passer `mailto:`.
+  Brouillon fermé sans enregistrement.
+- **Vibration** : cocher puis valider en série passe par `Haptics` (muet), la
+  correction s'affiche, rien n'attend. La trace de Capacitor n'a pas pu être
+  lue (rien sur la sortie standard, rien dans `log show`).
+
+**Pour le lot 3** :
+- la barre de menus dit « App » : `CFBundleName` vaut `$(PRODUCT_NAME)`. À
+  régler avec les menus (« Le Permis Côtier » a 16 caractères, au-dessus des
+  15 conseillés) ;
+- Échap ne fait rien en examen ;
+- « Les sons suivent le mode silencieux de ton appareil » (Réglages) : un Mac
+  n'en a pas ;
+- une fenêtre de 500 × 500, hors écran et invisible, existe à côté de la
+  fenêtre principale (vue par Peekaboo), sans effet visible ; à identifier.
+
+**Pas essayé** : liens externes (`Browser`, ouvrirait le navigateur par
+défaut), Partager, rappels, sons à l'oreille. **Traces** dans les données
+partagées avec la 1.0.7 : un examen interrompu (1 question), une série du jour
+entamée (une réponse fausse), le cadre de fenêtre gardé remplacé.
+
 ### Reste
 
-1. **L'essai à l'écran**, sur un créneau demandé à Alexis :
-   `scripts/capacitor-catalyst.sh --signe` puis `open` du `.app`. Fenêtre
-   (taille de départ, minimum 800 × 600), barre latérale à 800 points, examen
-   (barre repliée puis rendue), mode sombre, titre de fenêtre, **disparition de
-   la zone vide du clavier virtuel** du lot 0, Mail, Browser, Partager, rappels,
-   sons. Les données sont celles de la 1.0.7 installée (même identifiant).
+1. Liens externes, Partager, rappels et sons à l'écran, au lot 3 avec les menus.
 2. CI : rien ne construit le Mac en CI. À poser au lot 4, avec le workflow Mac.
