@@ -23,6 +23,8 @@ enum MenusMac {
         menus.remove(menu: .format)
         menus.remove(menu: .toolbar)
         menus.remove(menu: .newScene)
+        // Dupliquer, Déplacer, Renommer, Exporter : une app sans document.
+        menus.remove(menu: .document)
 
         // Le Permis Côtier > Réglages…, sous « À propos ».
         let reglages = UIKeyCommand(title: "Réglages…",
@@ -36,11 +38,12 @@ enum MenusMac {
                                         input: "n", modifierFlags: .command)
         menus.insertChild(UIMenu(options: .displayInline, children: [nouvelExamen]), atStartOfMenu: .file)
 
-        // Examen, entre Édition et Présentation. ⌘↩ et ⌘. : un raccourci de
-        // menu sans ⌘ volerait Entrée et Échap à la page, champs compris.
+        // Examen, entre Édition et Présentation. Un raccourci de menu sans ⌘
+        // volerait Entrée et Échap à la page, champs compris. « Valider » n'en
+        // a pas : la webview garde ⌘↩ pour elle (vu à l'écran le 30 octobre),
+        // et Entrée valide déjà dans la page.
         let examen = UIMenu(title: "Examen", identifier: .examen, children: [
-            UIKeyCommand(title: "Valider", action: #selector(BarreOnglets.validerQuestion(_:)),
-                         input: "\r", modifierFlags: .command),
+            UICommand(title: "Valider", action: #selector(BarreOnglets.validerQuestion(_:))),
             UIKeyCommand(title: "Passer la question", action: #selector(BarreOnglets.passerQuestion(_:)),
                          input: UIKeyCommand.inputRightArrow, modifierFlags: .command),
             UIKeyCommand(title: "Quitter l’examen", action: #selector(BarreOnglets.quitterSerie(_:)),
@@ -64,9 +67,13 @@ enum MenusMac {
             UIKeyCommand(title: "Taille réelle", action: #selector(BarreOnglets.tailleReelle(_:)),
                          input: "0", modifierFlags: .command)
         ]
-        menus.insertChild(UIMenu(options: .displayInline, children: texte), atStartOfMenu: .view)
-        menus.insertChild(UIMenu(options: .displayInline, children: allerA), atStartOfMenu: .view)
+        // Chaque bloc se pose en tête du menu. Un bloc en ligne dans un autre
+        // disparaît, `insertSibling` après un bloc en ligne aussi, et
+        // `replaceChildren` sur Présentation fait lever une exception à UIKit
+        // (vus le 30) : trois `insertChild`, rien d'autre.
         menus.insertChild(UIMenu(options: .displayInline, children: [laterale]), atStartOfMenu: .view)
+        menus.insertChild(UIMenu(options: .displayInline, children: allerA), atStartOfMenu: .view)
+        menus.insertChild(UIMenu(options: .displayInline, children: texte), atStartOfMenu: .view)
 
         // Aide : le site, et le signalement. L'aide d'Apple n'a rien à dire
         // d'une app sans livre d'aide.

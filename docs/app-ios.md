@@ -35,8 +35,8 @@ de la copie se reporte en ligne, et inversement.
 ## 30 octobre 2026 — les usages Mac (lot 3)
 
 Plan « iPad et Mac », lot 3 : ce qui fait d'une app iPad agrandie une app Mac.
-Branche `app-mac-usages`. Construit et compilé ; **l'essai à l'écran attend un
-créneau d'Alexis** (liste en fin de section).
+Branche `app-mac-usages`. Essayé à l'écran le 30 à midi, sur le créneau
+d'Alexis (« À l'écran », plus bas) ; trois défauts trouvés et corrigés.
 
 ### La barre de menus (`MenusMac.swift`, Catalyst seul)
 
@@ -47,14 +47,23 @@ sur la chaîne des répondeurs entre la webview et l'app.
 | Menu | Lignes |
 |---|---|
 | Permis Côtier | À propos (celui du système), **Réglages… ⌘,** |
-| Fichier | **Nouvel examen blanc ⌘N**, puis Fermer du système |
+| Fichier | **Nouvel examen blanc ⌘N**, puis Fermer et Tout fermer du système |
 | Édition | celui du système (copier-coller du signalement) |
-| **Examen** | Valider ⌘↩, Passer la question ⌘→, Quitter l'examen ⌘. |
-| Présentation | Masquer/Afficher la barre latérale ⌃⌘S ; Accueil à Fiche ⌘1 à ⌘5 ; Agrandir le texte ⌘+, Réduire ⌘−, Taille réelle ⌘0 ; plein écran du système |
+| **Examen** | Valider (sans raccourci : Entrée dans la page), Passer la question ⌘→, Quitter l'examen ⌘. |
+| Présentation | Agrandir le texte ⌘+, Réduire ⌘−, Taille réelle ⌘0 ; Accueil à Fiche ⌘1 à ⌘5 ; Masquer/Afficher la barre latérale ⌃⌘S ; plein écran du système |
 | Fenêtre | celui du système |
 | Aide | Le site lepermiscotier.fr, Signaler une erreur… |
 
-Retirés : Format, barre d'outils, nouvelle fenêtre.
+Retirés : Format, barre d'outils, nouvelle fenêtre, les entrées de document de
+Fichier (Dupliquer, Déplacer, Renommer, Exporter). Sur un clavier AZERTY, AppKit
+traduit seul les raccourcis à la touche physique : ⌘1 s'affiche ⌘&, ⌘. s'affiche
+⌘;, ⌘0 s'affiche ⌘À.
+
+**Pièges du constructeur de menus** (vus le 30) : `replaceChildren` sur
+Présentation fait lever une `NSInvalidArgumentException` au lancement ; un bloc
+en ligne dans un autre bloc en ligne disparaît ; `insertSibling` après un bloc
+en ligne aussi. Seuls trois `insertChild` en tête tiennent, et l'ordre affiché
+n'est pas celui de l'insertion : la barre latérale finit en dernier.
 
 - **Le menu Examen relaie, il ne refait rien.** `EcranWeb.relayer` envoie
   `app:commande` (`{ nom: 'valider' | 'passer' | 'quitter' }`) à la page, qui
@@ -64,8 +73,13 @@ Retirés : Format, barre d'outils, nouvelle fenêtre.
   nouvelle adresse l'oublie. « Passer la question » n'existe qu'en examen ;
   « Quitter » devient « Quitter la série » en entraînement.
 - **Pas de raccourci de menu sans ⌘.** Un raccourci Entrée ou Échap pris par
-  le menu ne parviendrait plus à la page, champs compris. D'où ⌘↩ et ⌘. (le
-  « annuler » du Mac) ; Échap reste à la page.
+  le menu ne parviendrait plus à la page, champs compris. D'où ⌘. (le
+  « annuler » du Mac) ; Échap reste à la page. **⌘↩ n'arrive jamais au menu** :
+  la webview le garde (essayé deux fois à l'écran, rien), « Valider » n'a donc
+  pas de raccourci.
+- **Liens d'un autre site** : `Browser` (Safari intégré) n'ouvrait rien sur Mac.
+  `NavigateurMacPlugin` (`GreffonsMuets.swift`) le remplace sous le même nom
+  JavaScript et ouvre le navigateur par défaut (`UIApplication.open`).
 - **Réglages ⌘,** ouvre l'onglet Fiche sur `/parametres`, avec son retour
   « ‹ Ta fiche ». Pas de feuille : il y faudrait une sixième webview, où le
   retour et les liens de la page n'auraient pas de sens.
@@ -108,20 +122,43 @@ gardent `CFBundleDisplayName`, « Le Permis Côtier ».
 - Archive iOS par la commande de `app-ios.yml` : verte, `CFBundleName` = « App »,
   `minos 16.0`, aucun symbole de `MenusMac`.
 
-### À voir à l'écran (créneau d'Alexis)
+### À l'écran (30 octobre, midi, MacBook Air, macOS 26, Stage Manager)
 
-1. Chaque menu : titres, raccourcis, grisé hors série, « Quitter la série » en
-   entraînement, coche de l'onglet courant ; doublons éventuels que UIKit
-   ajouterait (barre latérale, ⌘1 à ⌘5).
-2. ⌘↩ et ⌘. pendant que la webview a le focus ; Échap et ↑↓ en examen.
-3. ⌘+ ⌘− ⌘0 : `pageZoom` dans les cinq onglets, gardé après relance.
-4. Survol (`(hover: hover) and (pointer: fine)` vrai ?), curseur main,
-   Tab qui parcourt liens et boutons (`tabFocusesLinks` n'existe pas en Catalyst),
-   anneau visible.
-5. Liens externes (`Browser` en popover), Partager, rappels (date posée puis
-   effacée ; permission), sons à l'oreille.
-6. La fenêtre de 500 × 500 hors écran : un diagnostic non commité liste les
-   fenêtres AppKit (classe, cadre, délégué) au lancement.
+App signée lancée par `open`, pilotée par Peekaboo (menus par AX, touches au
+premier plan après vérification). Captures gardées hors du dépôt.
+
+- **Barre de menus** : « Permis Côtier » (À propos, Réglages ⌘,, Masquer,
+  Quitter), Examen grisé hors série et actif pendant l'épreuve, aucun doublon
+  ajouté par UIKit (pas de deuxième barre latérale, pas de ⌘1 à ⌘5 du système).
+- **Examen** : ⌘3 ouvre l'onglet, Entrée lance, B coche ; « Valider » du menu
+  valide ; ⌘→ passe ; ↓ pose le focus sur une proposition, anneau visible ;
+  Échap ouvre « Arrêter l'examen ? », un second Échap le referme ; « Quitter
+  l'examen » du menu l'ouvre aussi. **⌘↩ sans effet** : retiré (voir plus haut).
+- **Présentation** : ⌘+ deux fois agrandit la page, Taille réelle la rend ;
+  la barre latérale se masque et revient ; ⌘, ouvre Réglages dans la Fiche, où
+  le texte dit « Les sons suivent le volume de ton Mac. »
+- **Clavier** : Tab ne va qu'aux champs, ⌥Tab atteint liens et boutons avec
+  l'anneau. C'est le Mac par défaut (Réglages Système > Clavier > Navigation au
+  clavier), comme Safari : rien à corriger.
+- **Défaut, non corrigé** : Tab sur « Date de l'examen » ouvre le calendrier de
+  WebKit, et la date du jour est **enregistrée** dès l'ouverture, sans validation
+  (« Effacer la date » apparaît). Même comportement qu'un `<input type="date">`
+  vide sur iPhone. Le calendrier (une fenêtre à part) ne répond pas aux clics
+  programmés. Date effacée à la main ensuite. À trancher : laisser, ou ne poser
+  la date qu'à la fermeture du calendrier.
+- **Liens externes** : « MIT » des Licences n'ouvrait rien (défaut corrigé) ;
+  après correction, le navigateur par défaut passe au premier plan.
+- **La fenêtre de 500 × 500** : une fenêtre de l'app, sans titre, à (0, 456),
+  hors écran, présente dès le lancement, couche 0 (CGWindowList). Elle passe à
+  64 × 64 quand le calendrier s'ouvre. Probablement une fenêtre d'hébergement
+  d'UIKit pour le Mac (texte, pointeur), sans effet visible ; sa classe n'a pas
+  pu être lue (le diagnostic interne n'a rien écrit). Laissée.
+
+**Pas essayé** : Partager (il faut un examen reçu), rappels (la date ci-dessus
+les aurait armés pour un jour déjà passé : rien de programmé), sons à
+l'oreille, survol et curseur main (la souris n'a pas été bougée, sauf deux
+clics). **Traces** dans les données partagées avec la 1.0.7 : un examen
+interrompu (8 questions), date d'examen posée puis effacée.
 
 ## 30 octobre 2026 — deux défauts iPad de la PR #56
 

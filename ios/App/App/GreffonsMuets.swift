@@ -1,5 +1,6 @@
 #if targetEnvironment(macCatalyst)
 import Capacitor
+import UIKit
 
 /// Sur Mac, la vibration et la barre d'état n'ont pas d'objet : pas de moteur
 /// haptique sous le doigt, pas de barre d'état dans une fenêtre. Plutôt que de
@@ -53,5 +54,36 @@ public class BarreEtatMuettePlugin: CAPPlugin, CAPBridgedPlugin {
         call.resolve(["visible": false, "style": "DEFAULT", "overlays": false])
     }
     @objc func setOverlaysWebView(_ call: CAPPluginCall) { call.resolve() }
+}
+
+/// Le greffon `Browser` ouvre un Safari intégré (`SFSafariViewController`)
+/// par-dessus l'écran. Sur Mac il n'ouvrait rien du tout (vu à l'écran le 30
+/// octobre : un lien de licence restait sans effet). Une app Mac envoie les
+/// liens d'un autre site au navigateur par défaut : c'est ce que fait celui-ci,
+/// sous le même nom JavaScript, sans toucher à `natif.ts`.
+@objc(NavigateurMacPlugin)
+public class NavigateurMacPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "NavigateurMacPlugin"
+    public let jsName = "Browser"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "open", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "close", returnType: CAPPluginReturnPromise)
+    ]
+
+    @objc func open(_ call: CAPPluginCall) {
+        guard let texte = call.getString("url"), let adresse = URL(string: texte),
+              adresse.scheme == "https" || adresse.scheme == "http" else {
+            call.reject("Adresse invalide")
+            return
+        }
+        DispatchQueue.main.async {
+            UIApplication.shared.open(adresse) { ouvert in
+                ouvert ? call.resolve() : call.reject("Rien n'a pu ouvrir l'adresse")
+            }
+        }
+    }
+
+    /// Rien à refermer : la page vit dans le navigateur, pas dans l'app.
+    @objc func close(_ call: CAPPluginCall) { call.resolve() }
 }
 #endif
