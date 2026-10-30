@@ -51,6 +51,11 @@ class EcranWeb: CAPBridgeViewController {
         bridge?.registerPluginInstance(EcranPlugin())
         // Les bruitages, en session audio ambiante : voir `SonPlugin`.
         bridge?.registerPluginInstance(SonPlugin())
+        #if targetEnvironment(macCatalyst)
+        // Vibration et barre d'état : sans objet sur Mac (`GreffonsMuets`).
+        bridge?.registerPluginInstance(VibrationMuettePlugin())
+        bridge?.registerPluginInstance(BarreEtatMuettePlugin())
+        #endif
         // Le web rend la barre à la fin de la série ; mais un lien suivi en
         // pleine série, ou un glissement de retour, quitte la page sans
         // repasser par lui. La coquille tient donc le dernier mot : une

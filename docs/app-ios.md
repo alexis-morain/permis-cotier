@@ -743,23 +743,57 @@ check` (0 erreur), `npm run build`, `npm run build:app`.
 
 ## 30 octobre 2026 — la coquille Mac (lot 2)
 
-**Le lot est à moitié fait : le réglage et le code Mac sont posés, mais la cible
-Mac Catalyst ne se construit pas.** Raison : `capacitor-swift-pm` 8.5.1 ne
-distribue `Capacitor.xcframework` et `Cordova.xcframework` que pour
-`ios-arm64` et `ios-arm64_x86_64-simulator`. `xcodebuild … -destination
-'platform=macOS,variant=Mac Catalyst'` échoue sur chaque paquet (« no library
-for this platform was found »), pas sur notre code. Les greffons officiels
-(Haptics, StatusBar, App, Browser, Share, LocalNotifications) tombent avec
-lui : ce n'est donc pas l'un d'eux qu'on isole.
+**L'app Mac se construit, signée ou non. Elle n'a pas encore été lancée** : l'essai
+à l'écran attend un créneau d'Alexis (voir « Reste »).
 
-**Ce qui a changé**
+### Capacitor sur Mac
+
+`capacitor-swift-pm` 8.5.1 ne distribue `Capacitor.xcframework` et
+`Cordova.xcframework` que pour `ios-arm64` et `ios-arm64_x86_64-simulator` :
+le build Catalyst tombait sur chaque paquet (« no library for this platform was
+found »). Décidé le 30 par Alexis : les reconstruire à la volée, pour le build
+Mac seul, sans binaire au dépôt.
+
+`scripts/capacitor-catalyst.sh` :
+
+1. lit la version dans `CapApp-SPM/Package.swift` (`exact: "8.5.1"`) et refuse
+   si `node_modules/@capacitor/ios` en dit une autre (sync à refaire) ;
+2. clone `ionic-team/capacitor` à ce tag, archive les schémas `Cordova` et
+   `Capacitor` (espace `ios/Capacitor/Capacitor.xcworkspace`, Release,
+   `BUILD_LIBRARY_FOR_DISTRIBUTION=YES`, `SKIP_INSTALL=NO`) pour iPhone,
+   simulateur et Mac Catalyst, puis `-create-xcframework` : trois tranches
+   chacun. Quatre minutes. `native-bridge.js` est au dépôt, rien à construire en npm ;
+3. range le tout dans `ios/App/catalyst/<version>/capacitor-swift-pm/`, avec un
+   `Package.swift` de même nom et mêmes produits, en `binaryTarget(path:)`.
+   Un fichier `.complet` marque le cache : une version faite n'est pas refaite
+   (`--refaire` force) ;
+4. pose `ios/App/catalyst/App-Mac.xcworkspace` : `App.xcodeproj` plus ce
+   paquet. **Un paquet local d'un espace de travail remplace le paquet distant
+   de même identité**, pour `CapApp-SPM` comme pour les six greffons qui le
+   demandent par URL. Rien n'est réécrit : `cap sync` peut refaire
+   `Package.swift`, le build Mac suit.
+
+Pourquoi pas la réécriture de `CapApp-SPM/Package.swift` après `cap sync` : un
+fichier suivi par git qu'un script modifie puis que le sync écrase, dans un
+sens ou dans l'autre, c'est une archive iOS qui part un jour avec un chemin
+local. Pourquoi pas un miroir SwiftPM : il faudrait un dépôt git local avec son
+tag, et la configuration vivrait dans `App.xcodeproj`, que l'iOS lit aussi.
+
+`--build` compile en Debug sans signature (`catalyst/derived/`) ; `--signe`
+compile signé, profil de développement Catalyst créé au besoin
+(`-allowProvisioningUpdates`), dans `catalyst/derived-signe/`, à lancer par
+`open`. Bac à sable, client réseau et `get-task-allow` lus dans la signature.
+
+### Ce qui a changé
 
 - `App.xcodeproj`, cible `App`, Debug et Release : `SUPPORTS_MACCATALYST = YES`,
   `TARGETED_DEVICE_FAMILY = "1,2,6"` (idiome « Optimisé pour Mac »),
   `DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO` (même identifiant que
-  l'iOS), `MACOSX_DEPLOYMENT_TARGET = 15.0` (la barre latérale `UITab` demande
-  iOS 18, soit macOS 15 ; en dessous il n'y aurait que des onglets),
-  `CODE_SIGN_ENTITLEMENTS[sdk=macosx*] = App/App-Mac.entitlements`.
+  l'iOS), `"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 18.0`, soit macOS 15 :
+  la barre latérale `UITab` demande iOS 18. **`MACOSX_DEPLOYMENT_TARGET` ne
+  joue pas pour Catalyst** : posé à 15.0, le binaire sortait en `minos 16.0`
+  (macOS 13), lu par `vtool -show-build`. `CODE_SIGN_ENTITLEMENTS[sdk=macosx*] =
+  App/App-Mac.entitlements`.
 - `App-Mac.entitlements` : bac à sable et client réseau, rien d'autre. Branché
   pour le seul SDK macOS : l'archive iOS ne le voit pas.
 - `SceneDelegate` (sous `#if targetEnvironment(macCatalyst)`) : taille minimale
@@ -768,28 +802,32 @@ lui : ce n'est donc pas l'un d'eux qu'on isole.
 - `EcranWeb.viewDidAppear` : le titre de la fenêtre suit l'onglet courant.
 - `BarreOnglets` : l'idiome `.mac` prend la barre latérale comme l'iPad, et
   `ajusterALaLargeur` (classe compacte sous 1 000 points) ne s'y applique pas.
+- `GreffonsMuets.swift` (Catalyst seul) : `Haptics` et `StatusBar` remplacés,
+  dans `EcranWeb.capacitorDidLoad`, par deux greffons de même nom JavaScript
+  qui répondent à chaque méthode sans rien faire. Toutes les méthodes des
+  greffons d'origine sont reprises : une méthode absente laisse la promesse en
+  suspens. Le web n'a pas changé (`natif.ts` et `apparence.ts` avalaient déjà
+  les erreurs).
 - `EcranPlugin` n'a pas changé : `isTabBarHidden` plus le repli de
   `sidebar.isHidden` valent pour le Mac, à vérifier à l'écran.
-- `npx cap sync ios` ne retouche pas le `.pbxproj` (comparé avant et après,
-  identique).
 
-**Vérifié** : archive iOS Release (`generic/platform=iOS`,
-`CODE_SIGNING_ALLOWED=NO`, la commande de `app-ios.yml`) verte ; build
-simulateur iPad Pro 13 pouces (M5) vert ; `npm run build:app` vert.
+### Vérifié
 
-**Non vérifié** : le code `#if targetEnvironment(macCatalyst)` n'a jamais
-été compilé pour Catalyst, la compilation s'arrêtant sur Capacitor avant lui.
-Rien n'a été lancé ni regardé à l'écran du Mac.
+- Build Catalyst Debug, sans signature puis signé : verts, aucun avertissement
+  sur notre code. `vtool` : `MACCATALYST`, `minos 18.0`, Capacitor et Cordova
+  embarqués en tranche Catalyst ; aucun paquet distant téléchargé
+  (`SourcePackages/checkouts` vide).
+- Archive iOS Release par `App.xcodeproj`, la commande de `app-ios.yml` :
+  verte, `IOS`, `minos 16.0`, paquet officiel téléchargé.
+- `npm run build:app` (donc `cap sync ios`) : aucun fichier suivi ne bouge, le
+  build Mac repasse sur le cache.
 
-**Reste**
+### Reste
 
-1. **Décider comment Capacitor entre en Catalyst.** Sondé : le dépôt `capacitor`
-   en 8.5.1 s'archive pour `generic/platform=macOS,variant=Mac Catalyst`
-   (schémas `Capacitor` et `Cordova`, `ARCHIVE SUCCEEDED`). Il manque donc
-   seulement les tranches dans les xcframeworks. Mais `CapApp-SPM/Package.swift`
-   est réécrit par `cap sync` et pointe l'URL officielle : tout contournement
-   (xcframeworks maison dans le dépôt ou construits en CI, paquet local de même
-   identité, script après `cap sync`) engage la CI et la maintenance.
-2. L'essai à l'écran sur le Mac, par le pilote, une fois la cible construite :
-   fenêtre, barre latérale à 800 points, examen (barre repliée puis rendue),
-   mode sombre, titre de fenêtre.
+1. **L'essai à l'écran**, sur un créneau demandé à Alexis :
+   `scripts/capacitor-catalyst.sh --signe` puis `open` du `.app`. Fenêtre
+   (taille de départ, minimum 800 × 600), barre latérale à 800 points, examen
+   (barre repliée puis rendue), mode sombre, titre de fenêtre, **disparition de
+   la zone vide du clavier virtuel** du lot 0, Mail, Browser, Partager, rappels,
+   sons. Les données sont celles de la 1.0.7 installée (même identifiant).
+2. CI : rien ne construit le Mac en CI. À poser au lot 4, avec le workflow Mac.

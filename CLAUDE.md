@@ -215,9 +215,18 @@ sources.
 - **Un îlot qui importe `natif`** fait naître sur le site un morceau de fonctions
   vides : les écrans annoncent (`annoncerDateExamen`, `progression.ts`),
   `Coquille.astro` écoute.
-- **Mac Catalyst (lot 2, 30 octobre)** : réglages et code Mac posés, `cap sync` ne les
-  touche pas, mais **la cible Mac ne se construit pas** : `Capacitor.xcframework` 8.5.1
-  n'a pas de tranche Catalyst (voir `docs/app-ios.md`). Ne pas y toucher sans cette décision.
+- **L'app Mac (Mac Catalyst) se construit par `scripts/capacitor-catalyst.sh`**, jamais
+  par `App.xcodeproj` seul : `capacitor-swift-pm` n'a pas de tranche Mac. Le script lit la
+  version dans `CapApp-SPM/Package.swift`, construit Capacitor et Cordova depuis
+  `ionic-team/capacitor` à ce tag (iPhone, simulateur, Catalyst ; quatre minutes, une fois
+  par version), les range dans `ios/App/catalyst/<version>/capacitor-swift-pm` (ignoré) et
+  pose `ios/App/catalyst/App-Mac.xcworkspace`, où ce paquet local remplace le distant de
+  même nom. `--build` compile sans signature, `--signe` donne une app à lancer par `open`
+  (même identifiant que l'App Store : données partagées). L'iOS et `app-ios.yml` gardent
+  le paquet officiel. `cap sync` n'y change rien. Une montée de Capacitor : refaire
+  `cap sync`, le script reconstruit seul. Le minimum Mac se règle par
+  `IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]` (18.0 = macOS 15), pas `MACOSX_DEPLOYMENT_TARGET`.
+  Vibration et barre d'état sont remplacées sur Mac par des greffons muets (`GreffonsMuets`).
 - **Cible iOS 16.0** (iPhone 8 et après) : rien au-dessus de Safari 16.0 sans
   repli, `elaguer-app.mjs` refuse le JavaScript plus récent. Le
   greffon `Ecran` garde un chemin d'avant iOS 18 (`basculerAvantIOS18`).
