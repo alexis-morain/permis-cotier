@@ -54,13 +54,22 @@ async function vibrerDansLApp(genre: Son): Promise<void> {
   }
 }
 
-/** Le partage natif, sur l'écran de résultat. */
-export async function partager(titre: string, texte: string, url?: string): Promise<boolean> {
+/**
+ * Le partage natif, sur l'écran de résultat. `ancre`, le bouton cliqué : sur
+ * Mac, la feuille de partage est une bulle qui pointe dessus (`PartageMacPlugin`
+ * reçoit sa place en pixels CSS) ; l'iPhone ignore la clé.
+ */
+export async function partager(titre: string, texte: string, url?: string, ancre?: Element): Promise<boolean> {
   if (!POUR_APP) return false;
   try {
     const { Share } = await import('@capacitor/share');
     if (!(await Share.canShare()).value) return false;
-    await Share.share({ title: titre, text: texte, url, dialogTitle: titre });
+    const options = { title: titre, text: texte, url, dialogTitle: titre };
+    if (ancre) {
+      const { x, y, width, height } = ancre.getBoundingClientRect();
+      Object.assign(options, { ancre: { x, y, largeur: width, hauteur: height } });
+    }
+    await Share.share(options);
     return true;
   } catch {
     // Feuille de partage refermée sans rien choisir : ce n'est pas une erreur.
@@ -201,16 +210,19 @@ export function surRetourAuPremierPlan(faire: () => void): () => void {
  * l'arrêt la ramène. C'est le geste d'une app d'apprentissage : pendant les
  * vingt secondes d'une question, rien d'autre à l'écran. Le greffon `Ecran`
  * est écrit dans la coquille (`ios/App/App/EcranPlugin.swift`), une méthode,
- * `pleinEcran({ actif })`. Absent, rien ne se passe.
+ * `pleinEcran({ actif, examen })`. Absent, rien ne se passe.
+ *
+ * `examen` dit au Mac quelles commandes du menu « Examen » s'appliquent :
+ * « Passer la question » n'existe qu'en examen blanc.
  */
-export function modeConcentration(actif: boolean): Promise<void> | undefined {
+export function modeConcentration(actif: boolean, examen = false): Promise<void> | undefined {
   if (!POUR_APP) return;
-  return concentrerDansLApp(actif);
+  return concentrerDansLApp(actif, examen);
 }
 
-async function concentrerDansLApp(actif: boolean): Promise<void> {
+async function concentrerDansLApp(actif: boolean, examen: boolean): Promise<void> {
   try {
-    await avecGreffon('Ecran', (g) => g.pleinEcran({ actif }));
+    await avecGreffon('Ecran', (g) => g.pleinEcran({ actif, examen }));
   } catch {
     // Greffon absent, ou coquille d'une autre version : la barre reste.
   }

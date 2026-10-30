@@ -57,17 +57,17 @@ function attribuer({ banque, gagnes }: Badges): void {
  * démonte pas React, et la barre resterait cachée sur l'écran suivant. Sur
  * le site, `modeConcentration` ne fait rien.
  */
-export function useModeConcentration(enJeu: boolean): void {
+export function useModeConcentration(enJeu: boolean, examen: boolean): void {
   useEffect(() => {
     if (!enJeu) return;
-    void modeConcentration(true);
+    void modeConcentration(true, examen);
     const rendre = () => void modeConcentration(false);
     window.addEventListener('pagehide', rendre);
     return () => {
       window.removeEventListener('pagehide', rendre);
       rendre();
     };
-  }, [enJeu]);
+  }, [enJeu, examen]);
 }
 
 /**
@@ -286,11 +286,91 @@ export interface ContexteClavier {
 }
 
 /**
+ * Les commandes de la barre de menus du Mac, relayées par la coquille
+ * (`BarreOnglets.swift`) en `app:commande`. Elles font ce que font les
+ * touches, et rien de plus : le menu ne sait que nommer le geste.
+ */
+export const EVENEMENT_COMMANDE = 'app:commande';
+type Commande = 'valider' | 'passer' | 'quitter';
+
+/**
+ * Échap, le menu « Quitter » : en examen, la confirmation d'arrêt s'ouvre, et
+ * se referme au second appui, comme « Continuer l'examen ». En entraînement,
+ * rien n'est perdu à partir, la série est écrite : on suit le lien de l'écran,
+ * la croix de l'app ou « Changer de thème » du site, pour passer par les
+ * mêmes chemins qu'un clic.
+ */
+function quitter(contexte: ContexteClavier, demanderArret: (oui: boolean) => void): boolean {
+  const { session: s, mode: m, arretDemande: arret } = contexte;
+  if (s.phase !== 'en-cours') return false;
+  if (m === 'examen') {
+    demanderArret(!arret);
+    return true;
+  }
+  const lien = document.querySelector<HTMLAnchorElement>('a.jeu__croix, .jeu__entete a.signaler');
+  if (!lien) return false;
+  lien.click();
+  return true;
+}
+
+/** Entrée hors d'un bouton : valide, ou passe à la suivante une fois corrigée. */
+function valider(contexte: ContexteClavier, envoyer: Envoyer): boolean {
+  const { session: s, mode: m, arretDemande: arret } = contexte;
+  if (s.phase !== 'en-cours' || arret) return false;
+  const choix = s.selections[s.index] ?? [];
+  if (s.corrigee) {
+    envoyer({ type: 'suivante', maintenant: Date.now() });
+    return true;
+  }
+  if (m === 'entrainement' && choix.length === 0) return false;
+  envoyer({ type: 'valider', maintenant: Date.now() });
+  return true;
+}
+
+/**
+ * « Passer la question », en examen seulement : comptée sans réponse, comme
+ * le bouton « Passer » quand rien n'est coché. Ce qui était coché est
+ * décoché d'abord : le menu dit passer, pas valider.
+ */
+function passer(contexte: ContexteClavier, envoyer: Envoyer): boolean {
+  const { session: s, mode: m, arretDemande: arret } = contexte;
+  if (m !== 'examen' || s.phase !== 'en-cours' || arret || s.corrigee) return false;
+  for (const proposition of s.selections[s.index] ?? []) envoyer({ type: 'basculer', proposition });
+  envoyer({ type: 'valider', maintenant: Date.now() });
+  return true;
+}
+
+/**
+ * ↑ et ↓ font circuler le focus d'une proposition à l'autre, en boucle ;
+ * l'espace coche celle qui l'a. Pour qui joue sans souris, Tab y arrive aussi,
+ * mais traverse l'en-tête à chaque question.
+ */
+function circuler(sens: 1 | -1, cible: HTMLElement | null): boolean {
+  const lignes = [...document.querySelectorAll<HTMLButtonElement>('.propositions .proposition:not(:disabled)')];
+  if (lignes.length === 0) return false;
+  const ici = cible ? lignes.indexOf(cible as HTMLButtonElement) : -1;
+  const suivante = ici < 0 ? (sens === 1 ? 0 : lignes.length - 1) : (ici + sens + lignes.length) % lignes.length;
+  lignes[suivante]!.focus();
+  return true;
+}
+
+/**
  * Le clavier, pour bachoter au bureau. Le contexte passe par une référence :
  * il change à chaque case cochée, on ne réabonne pas l'écouteur pour ça.
  */
-export function useClavier(contexte: MutableRefObject<ContexteClavier>, envoyer: Envoyer): void {
+export function useClavier(
+  contexte: MutableRefObject<ContexteClavier>,
+  envoyer: Envoyer,
+  demanderArret: (oui: boolean) => void,
+): void {
   useEffect(() => {
+    function surCommande(evenement: Event) {
+      const nom = (evenement as CustomEvent<{ nom?: Commande } | null>).detail?.nom;
+      if (nom === 'valider') valider(contexte.current, envoyer);
+      else if (nom === 'passer') passer(contexte.current, envoyer);
+      else if (nom === 'quitter') quitter(contexte.current, demanderArret);
+    }
+
     function surTouche(evenementClavier: KeyboardEvent) {
       if (evenementClavier.metaKey || evenementClavier.ctrlKey || evenementClavier.altKey) return;
       // La cible n'est pas toujours un élément : une touche pressée sans focus
@@ -308,7 +388,7 @@ export function useClavier(contexte: MutableRefObject<ContexteClavier>, envoyer:
         !cible.classList.contains('proposition') &&
         !cible.classList.contains('signal-ecoute');
 
-      const { session: s, ordre: o, mode: m, arretDemande: arret } = contexte.current;
+      const { session: s, ordre: o, arretDemande: arret } = contexte.current;
 
       if (s.phase === 'depart') {
         if (evenementClavier.key === 'Enter' && !activable) {
@@ -317,7 +397,16 @@ export function useClavier(contexte: MutableRefObject<ContexteClavier>, envoyer:
         }
         return;
       }
+      if (evenementClavier.key === 'Escape') {
+        if (quitter(contexte.current, demanderArret)) evenementClavier.preventDefault();
+        return;
+      }
       if (s.phase !== 'en-cours' || arret) return;
+
+      if (evenementClavier.key === 'ArrowDown' || evenementClavier.key === 'ArrowUp') {
+        if (circuler(evenementClavier.key === 'ArrowDown' ? 1 : -1, cible)) evenementClavier.preventDefault();
+        return;
+      }
 
       // La touche vise une ligne de l'écran, pas un identifiant de fichier :
       // « B » coche ce que l'écran appelle B, quel que soit l'id derrière.
@@ -331,18 +420,15 @@ export function useClavier(contexte: MutableRefObject<ContexteClavier>, envoyer:
       }
 
       if (evenementClavier.key === 'Enter' && !activable) {
-        const choix = s.selections[s.index] ?? [];
-        if (s.corrigee) {
-          evenementClavier.preventDefault();
-          envoyer({ type: 'suivante', maintenant: Date.now() });
-        } else if (!(m === 'entrainement' && choix.length === 0)) {
-          evenementClavier.preventDefault();
-          envoyer({ type: 'valider', maintenant: Date.now() });
-        }
+        if (valider(contexte.current, envoyer)) evenementClavier.preventDefault();
       }
     }
 
     document.addEventListener('keydown', surTouche);
-    return () => document.removeEventListener('keydown', surTouche);
-  }, [contexte, envoyer]);
+    window.addEventListener(EVENEMENT_COMMANDE, surCommande);
+    return () => {
+      document.removeEventListener('keydown', surTouche);
+      window.removeEventListener(EVENEMENT_COMMANDE, surCommande);
+    };
+  }, [contexte, envoyer, demanderArret]);
 }

@@ -226,7 +226,15 @@ sources.
   le paquet officiel. `cap sync` n'y change rien. Une montée de Capacitor : refaire
   `cap sync`, le script reconstruit seul. Le minimum Mac se règle par
   `IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]` (18.0 = macOS 15), pas `MACOSX_DEPLOYMENT_TARGET`.
-  Vibration et barre d'état sont remplacées sur Mac par des greffons muets (`GreffonsMuets`).
+  Vibration et barre d'état sont remplacées sur Mac par des greffons muets (`GreffonsMuets`),
+  `Browser` par le navigateur par défaut, `Share` par une bulle accrochée au bouton (`ancre`).
+  Preuve des rappels sur Mac : `/usr/bin/log stream --process <pid>` (`log` seul est un
+  intégré de zsh) et la table `requests` de `group.com.apple.usernoted/db2/db`.
+  La barre de menus est dans `MenusMac.swift` : le menu Examen relaie à la page
+  (`app:commande`), qui fait ce que font ses touches ; jamais de raccourci de menu
+  sans ⌘, il volerait Entrée ou Échap à la page. `CFBundleName` passe par
+  `NOM_DU_PAQUET`, « Permis Côtier » pour le seul SDK macOS. La page sait qu'elle
+  est sur Mac par `surMac()` (`window.coquilleMac`, posé par `EcranWeb`).
 - **Cible iOS 16.0** (iPhone 8 et après) : rien au-dessus de Safari 16.0 sans
   repli, `elaguer-app.mjs` refuse le JavaScript plus récent. Le
   greffon `Ecran` garde un chemin d'avant iOS 18 (`basculerAvantIOS18`).

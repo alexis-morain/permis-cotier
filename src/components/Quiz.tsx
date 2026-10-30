@@ -212,7 +212,7 @@ function Partie({
     [banque],
   );
 
-  useModeConcentration(session.phase === 'en-cours');
+  useModeConcentration(session.phase === 'en-cours', mode === 'examen');
   useEcritureDeLaSerie(session, mode, theme, retourSerie, journalEcrit, badges);
   useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion, revoir, badges });
   useVerdictEnVue(session, verdict);
@@ -231,7 +231,7 @@ function Partie({
 
   const contexte = useRef<ContexteClavier>({ session, ordre, mode, arretDemande });
   contexte.current = { session, ordre, mode, arretDemande };
-  useClavier(contexte, envoyer);
+  useClavier(contexte, envoyer, setArretDemande);
 
   // Le chrono vit dans l'en-tête et ne parle à la session qu'une fois par
   // question, quand l'échéance est passée : l'écran ne se refait pas à la

@@ -1,5 +1,6 @@
 import Capacitor
 import UIKit
+import WebKit
 
 /// Un onglet : une webview sur le site embarqué, ouverte à son adresse de départ.
 ///
@@ -36,6 +37,12 @@ class EcranWeb: CAPBridgeViewController {
     /// Guette l'adresse de la webview : toute nouvelle page rend la barre.
     private var changementDAdresse: NSKeyValueObservation?
 
+    /// La série qui court dans cet onglet, dite par la page quand elle cache
+    /// la barre (`EcranPlugin.pleinEcran`), oubliée à chaque nouvelle adresse.
+    /// Les menus du Mac s'en servent pour griser ce qui ne vaut pas.
+    enum Serie { case examen, entrainement }
+    var serie: Serie?
+
     override func capacitorDidLoad() {
         super.capacitorDidLoad()
         webView?.allowsBackForwardNavigationGestures = true
@@ -55,6 +62,17 @@ class EcranWeb: CAPBridgeViewController {
         // Vibration et barre d'état : sans objet sur Mac (`GreffonsMuets`).
         bridge?.registerPluginInstance(VibrationMuettePlugin())
         bridge?.registerPluginInstance(BarreEtatMuettePlugin())
+        // Liens d'un autre site : le navigateur par défaut (`GreffonsMuets`).
+        bridge?.registerPluginInstance(NavigateurMacPlugin())
+        // Feuille de partage accrochée au bouton cliqué (`GreffonsMuets`).
+        bridge?.registerPluginInstance(PartageMacPlugin())
+        // La page apprend qu'elle est sur Mac avant son premier script
+        // (`surMac()` de `src/lib/cible.ts`) : la plateforme de Capacitor y
+        // dit `ios`. Sur `window`, pas sur `<html>`, dont le routeur d'Astro
+        // remplace les attributs à chaque navigation.
+        webView?.configuration.userContentController.addUserScript(
+            WKUserScript(source: "window.coquilleMac = true;", injectionTime: .atDocumentStart, forMainFrameOnly: true))
+        webView?.pageZoom = Self.zoomTexte
         #endif
         // Le web rend la barre à la fin de la série ; mais un lien suivi en
         // pleine série, ou un glissement de retour, quitte la page sans
@@ -62,7 +80,10 @@ class EcranWeb: CAPBridgeViewController {
         // adresse qui change, c'est une page où la barre a sa place.
         changementDAdresse = webView?.observe(\.url, options: [.new]) { [weak self] _, _ in
             guard let self = self else { return }
-            DispatchQueue.main.async { EcranPlugin.basculer(dans: self, cachee: false) }
+            DispatchQueue.main.async {
+                self.serie = nil
+                EcranPlugin.basculer(dans: self, cachee: false)
+            }
         }
     }
 
@@ -85,6 +106,37 @@ class EcranWeb: CAPBridgeViewController {
         if let titre = tabBarItem.title {
             view.window?.windowScene?.title = titre
         }
+    }
+    #endif
+
+    #if targetEnvironment(macCatalyst)
+    /// La taille du texte des menus du Mac (⌘+, ⌘−, ⌘0) : un zoom de page,
+    /// le même pour les cinq onglets, gardé d'un lancement à l'autre. Les
+    /// paliers sont ceux de Safari, à peu près.
+    static let zoomsTexte: [CGFloat] = [0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2]
+    private static let cleZoomTexte = "texteMac.zoom"
+
+    static var zoomTexte: CGFloat {
+        get {
+            let garde = UserDefaults.standard.double(forKey: cleZoomTexte)
+            return garde > 0 ? CGFloat(garde) : 1
+        }
+        set { UserDefaults.standard.set(Double(newValue), forKey: cleZoomTexte) }
+    }
+
+    /// Relaie à la page une commande des menus (`app:commande`) ; la page
+    /// fait ce que font ses touches (`useClavier`, `quiz/effets.ts`).
+    func relayer(_ nom: String) {
+        let script = "window.dispatchEvent(new CustomEvent('app:commande', { detail: { nom: '\(nom)' } }))"
+        webView?.evaluateJavaScript(script, completionHandler: nil)
+    }
+
+    /// Ouvre une page du site embarqué dans cet onglet, chargé ou non.
+    func aller(a chemin: String) {
+        loadViewIfNeeded()
+        guard let base = bridge?.config.serverURL,
+              let adresse = URL(string: chemin, relativeTo: base) else { return }
+        webView?.load(URLRequest(url: adresse))
     }
     #endif
 

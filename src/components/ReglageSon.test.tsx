@@ -25,6 +25,20 @@ describe('interrupteur des sons', () => {
     expect(aide?.textContent).toBe('Les sons suivent le mode silencieux de ton appareil.');
   });
 
+  it('sur Mac, ne parle pas d’un mode silencieux qui n’existe pas', () => {
+    // La coquille Mac pose `coquilleMac` avant le premier script (`EcranWeb.swift`).
+    (window as { coquilleMac?: boolean }).coquilleMac = true;
+    try {
+      render(<ReglageSon />);
+      const inter = screen.getByRole('switch', { name: 'Jouer les sons' }) as HTMLInputElement;
+      expect(inter.checked).toBe(true);
+      const aide = document.getElementById(inter.getAttribute('aria-describedby') ?? '');
+      expect(aide?.textContent).toBe('Les sons suivent le volume de ton Mac.');
+    } finally {
+      delete (window as { coquilleMac?: boolean }).coquilleMac;
+    }
+  });
+
   it('se coupe sans rien jouer, se rallume en jouant « juste » une fois', () => {
     render(<ReglageSon />);
     const inter = screen.getByRole('switch') as HTMLInputElement;

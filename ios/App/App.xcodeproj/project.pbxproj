@@ -17,6 +17,7 @@
 		A1B2C3D40000000000000E42 /* EcranPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000E41 /* EcranPlugin.swift */; };
 		A1B2C3D40000000000000F52 /* SonPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000F51 /* SonPlugin.swift */; };
 		A1B2C3D40000000000000M22 /* GreffonsMuets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000M21 /* GreffonsMuets.swift */; };
+		A1B2C3D40000000000000M32 /* MenusMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000M31 /* MenusMac.swift */; };
 		A1B2C3D40000000000000F54 /* Sons in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000F53 /* Sons */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		A1B2C3D400000000000000P2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D400000000000000P1 /* PrivacyInfo.xcprivacy */; };
@@ -36,6 +37,7 @@
 		A1B2C3D40000000000000E41 /* EcranPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcranPlugin.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000F51 /* SonPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SonPlugin.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000M21 /* GreffonsMuets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreffonsMuets.swift; sourceTree = "<group>"; };
+		A1B2C3D40000000000000M31 /* MenusMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenusMac.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000M11 /* App-Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "App-Mac.entitlements"; sourceTree = "<group>"; };
 		A1B2C3D40000000000000F53 /* Sons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sons; sourceTree = "<group>"; };
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				A1B2C3D40000000000000E41 /* EcranPlugin.swift */,
 				A1B2C3D40000000000000F51 /* SonPlugin.swift */,
 				A1B2C3D40000000000000M21 /* GreffonsMuets.swift */,
+				A1B2C3D40000000000000M31 /* MenusMac.swift */,
 				A1B2C3D40000000000000F53 /* Sons */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -190,6 +193,7 @@
 				A1B2C3D40000000000000E42 /* EcranPlugin.swift in Sources */,
 				A1B2C3D40000000000000F52 /* SonPlugin.swift in Sources */,
 				A1B2C3D40000000000000M22 /* GreffonsMuets.swift in Sources */,
+				A1B2C3D40000000000000M32 /* MenusMac.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +343,8 @@
 				SWIFT_VERSION = 5.0;
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = App/App-Mac.entitlements;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				NOM_DU_PAQUET = "$(PRODUCT_NAME)";
+				"NOM_DU_PAQUET[sdk=macosx*]" = "Permis Côtier";
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 18.0;
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
@@ -365,6 +371,8 @@
 				SWIFT_VERSION = 5.0;
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = App/App-Mac.entitlements;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				NOM_DU_PAQUET = "$(PRODUCT_NAME)";
+				"NOM_DU_PAQUET[sdk=macosx*]" = "Permis Côtier";
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 18.0;
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,6";

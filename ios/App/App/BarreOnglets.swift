@@ -36,8 +36,9 @@ final class BarreOnglets: UITabBarController, UITabBarControllerDelegate {
     /// Les cinq écrans, créés d'avance. Une `EcranWeb` ne charge sa webview
     /// qu'à la première visite : l'objet seul ne coûte rien. Les garder ici
     /// laisse `selectionner(chemin:)` les retrouver, qu'ils aient des
-    /// `UITab` (iPad, iOS 18) ou non.
-    private lazy var ecrans: [EcranWeb] = Self.onglets.map { onglet in
+    /// `UITab` (iPad, iOS 18) ou non. Les menus du Mac les visent aussi
+    /// (`MenusMac.swift`).
+    lazy var ecrans: [EcranWeb] = Self.onglets.map { onglet in
         let ecran = EcranWeb()
         ecran.cheminDeDepart = onglet.chemin
         ecran.tabBarItem = Self.item(onglet)

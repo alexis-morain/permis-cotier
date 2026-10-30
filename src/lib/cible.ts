@@ -26,3 +26,13 @@ declare const __POUR_APP__: boolean;
 
 export const POUR_APP: boolean =
   typeof __POUR_APP__ === 'boolean' ? __POUR_APP__ : false;
+
+/**
+ * L'app tourne sur Mac (Mac Catalyst) : la coquille pose `coquilleMac` sur
+ * `window` avant le premier script de chaque page (`EcranWeb.swift`). La
+ * plateforme de Capacitor y dit `ios`, et l'agent utilisateur ressemble à
+ * celui d'un iPad : rien d'autre ne les distingue. Sur le site, jamais vrai.
+ */
+export function surMac(): boolean {
+  return typeof window !== 'undefined' && (window as { coquilleMac?: boolean }).coquilleMac === true;
+}
