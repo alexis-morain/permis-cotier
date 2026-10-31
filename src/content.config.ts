@@ -4,6 +4,7 @@ import { schemaQuestion } from './lib/schema';
 import { schemaLecon } from './lib/cours';
 import { schemaFiche } from './lib/fiches';
 import { chargeurFiches } from './lib/fiches-fichiers';
+import { schemaRevision } from './lib/revision';
 
 /**
  * La banque vient de fichiers YAML, un par question. Les brouillons de
@@ -40,4 +41,14 @@ const fiches = defineCollection({
   schema: schemaFiche,
 });
 
-export const collections = { questions, lecons, fiches };
+/**
+ * Les fiches de révision, une par cours, dans `data/revision/`. Le nom du
+ * fichier est le code du cours ; `revision-fichiers.test.ts` le vérifie, avec
+ * les dessins et les leçons qu'elles résument.
+ */
+const revisions = defineCollection({
+  loader: glob({ pattern: '*.yaml', base: './data/revision' }),
+  schema: schemaRevision,
+});
+
+export const collections = { questions, lecons, fiches, revisions };

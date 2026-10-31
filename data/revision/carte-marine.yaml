@@ -1,0 +1,147 @@
+cours: carte-marine
+resume: >-
+  Sur la carte, la couleur dit la profondeur, la sonde est un minimum et la marée s’y ajoute ; on
+  mesure sur les bords verticaux seulement.
+sections:
+  - titre: La couleur d’abord, puis les deux nords
+    notions: [carte-generalites, carte-symboles]
+    blocs:
+      - galerie:
+          - visuel: carte/estran-et-sondes.svg
+            alt: Une bande jaune de terre, une bande verte, deux bleus qui s’éclaircissent puis du blanc, avec des chiffres dont deux soulignés dans la bande verte.
+            nom: La couleur donne la profondeur
+            lignes: ["Blanc : eaux profondes", "Bleu : petits fonds", "Vert : estran", "Jaune ou beige : terre"]
+          - visuel: carte/rose-des-vents.svg
+            alt: Deux cercles concentriques gradués, chacun avec sa flèche de nord ; celle du cercle intérieur est tournée vers la droite.
+            nom: La rose a deux nords
+            lignes: ["Extérieur : nord vrai", "Intérieur : nord magnétique", "L’écart est la déclinaison"]
+      - regles:
+          - L’estran, en vert, est la bande qui découvre entre haute et basse mer. On ne la franchit qu’en connaissant la marée.
+          - La déclinaison est inscrite au centre de la rose avec son année et sa variation annuelle. Elle bouge lentement.
+          - De 2 à moins de 6 milles d’un abri, une carte marine officielle tenue à jour est obligatoire à bord.
+
+  - titre: Mesurer, sur les bords verticaux
+    largeur: demie
+    notions: [carte-distances]
+    blocs:
+      - regles:
+          - "Une minute de latitude vaut un mille marin, soit 1 852 mètres, à toute latitude."
+          - Le compas se reporte sur l’échelle des latitudes, aux bords droit et gauche de la carte. Autant de minutes, autant de milles.
+          - Une encablure est le dixième du mille, environ 185 mètres.
+      - piege: >-
+          Mesurer sur les bords haut et bas, parce que c’est plus commode. Ils portent les longitudes, et la
+          minute de longitude rétrécit vers le nord : la distance est fausse.
+
+  - titre: Sondes et nature du fond
+    largeur: demie
+    notions: [carte-symboles, carte-generalites]
+    blocs:
+      - tableau:
+          colonnes: [Sur la carte, Ça veut dire]
+          lignes:
+            - [Chiffre non souligné, "Sonde : profondeur minimale, comptée sous le zéro des cartes"]
+            - [Chiffre souligné, "Hauteur d’un haut-fond qui découvre, comptée au-dessus du zéro des cartes"]
+            - ["S, R, G, Co", "Sable, roche, gravier, corail"]
+            - [V ou M, "Vase, selon la convention de la carte"]
+            - [Cq ou Sh, "Coquilles, en français et en anglais"]
+      - regles:
+          - Les altitudes à terre et les hauteurs de feux se comptent depuis le niveau moyen des pleines mers de vive-eau.
+
+  - titre: Dangers et repères
+    largeur: demie
+    notions: [carte-dangers-amers, carte-symboles]
+    blocs:
+      - tableau:
+          colonnes: [Symbole, Sens]
+          lignes:
+            - [Croix ou astérisque, "Roche qui découvre, avec sa hauteur soulignée"]
+            - [Pointillé de danger, "Roche à fleur d’eau ou dangereuse"]
+            - [Fuseau, "Épave, barrée si elle est dangereuse"]
+            - [Ancre, Mouillage]
+            - [Tireté magenta, "Zone interdite ou réglementée, avec sa mention"]
+            - [Petit cercle à la base d’une bouée, "Sa position exacte"]
+            - [Deux amers superposés, "Alignement : un même relèvement, l’axe d’un chenal ou une route sûre"]
+
+  - titre: Lire un feu
+    notions: [carte-dangers-amers, carte-symboles]
+    blocs:
+      - schema:
+          fichier: carte-marine-feu.svg
+          alt: >-
+            La ligne Fl(2) R 10s 12m 9M en grandes lettres, chaque élément relié à son nom : caractère,
+            couleur, période, hauteur, portée.
+      - galerie:
+          - visuel: rythmes/caractere-fixe.svg
+            alt: Une frise où la lumière reste allumée d’un bout à l’autre.
+            nom: F, fixe
+            lignes: [Jamais éteint]
+          - visuel: rythmes/caractere-a-eclats.svg
+            alt: Une frise de courts éclats séparés par de longues obscurités.
+            nom: Fl, à éclats
+            lignes: [L’obscurité domine]
+          - visuel: rythmes/caractere-a-occultations.svg
+            alt: Une frise de longues lumières coupées par de courtes extinctions.
+            nom: Oc, à occultations
+            lignes: [La lumière domine]
+          - visuel: rythmes/caractere-isophase.svg
+            alt: Une frise où lumière et obscurité ont la même longueur.
+            nom: Iso, isophase
+            lignes: [À égalité]
+      - regles:
+          - Le chiffre entre parenthèses compte les éclats, jamais les secondes. La période est le nombre suivi de s.
+          - "LFl : un éclat long, d’au moins 2 secondes. Q : de 50 à 79 éclats par minute, VQ : de 100 à 159."
+      - piege: >-
+          Confondre 12m et 9M. La casse tranche : m minuscule pour la hauteur en mètres, M majuscule pour la
+          portée en milles, et la hauteur est écrite avant la portée.
+
+  - titre: La marée, les mots
+    largeur: demie
+    notions: [maree-definitions, maree-principe]
+    blocs:
+      - schema:
+          fichier: carte-marine-maree.svg
+          alt: >-
+            Une courbe de la surface de l’eau avec deux pleines mers et une basse mer, un trait en tireté
+            pour le zéro des cartes et le fond en dessous. Des flèches montrent le marnage, la hauteur de
+            marée et la sonde.
+      - regles:
+          - Le marnage est la différence de hauteur entre une pleine mer et la basse mer qui la suit. C’est une hauteur, jamais une durée.
+          - Le zéro des cartes est le niveau des plus basses mers astronomiques. La sonde et la hauteur d’eau de l’annuaire se comptent depuis lui.
+          - "Profondeur réelle : la sonde plus la hauteur de la marée du moment. La sonde est un plancher."
+
+  - titre: Vive-eau, morte-eau, coefficient
+    largeur: demie
+    notions: [maree-principe, maree-coefficient]
+    blocs:
+      - schema:
+          fichier: carte-marine-astres.svg
+          alt: >-
+            Deux panneaux. À gauche, vive-eau : deux flèches parallèles de même sens, nommées Soleil et
+            Lune. À droite, morte-eau : deux flèches en croix, nommées Soleil et Lune.
+      - tableau:
+          colonnes: [Coefficient, Marée]
+          lignes:
+            - ["45", "Morte-eau moyenne, marnage faible"]
+            - ["95", "Vive-eau moyenne, marnage important"]
+            - ["120", La plus forte marée astronomique]
+      - regles:
+          - Le coefficient va de 20 à 120, sans unité. Il donne l’amplitude, pas l’heure ni la hauteur d’eau, que l’annuaire donne port par port.
+      - piege: >-
+          Associer la vive-eau à la seule pleine lune. La nouvelle lune donne les mêmes vives-eaux : ce qui
+          compte est l’alignement des deux astres.
+
+  - titre: Ce que la marée change
+    notions: [maree-consequences]
+    blocs:
+      - regles:
+          - "Eau sous la quille : la sonde, plus la hauteur de marée du moment, moins ton tirant d’eau, et une marge."
+          - En Manche et en Atlantique, la marée décide de l’heure d’un passage ou d’une entrée de port. La route est la même, l’heure change.
+          - "Un passage ne se juge pas pareil à coefficient 40 et à coefficient 100 : en vive-eau, les hauts-fonds découvrent largement."
+          - La règle des douzièmes relève de l’extension hauturière, pas de l’option côtière.
+      - piege: >-
+          Appliquer en Méditerranée le raisonnement de la Manche. Le marnage y est de quelques dizaines de
+          centimètres au plus, la marée n’y commande pas la navigation.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

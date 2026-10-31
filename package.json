@@ -36,6 +36,8 @@
     "situations": "python3 scripts/situations.py",
     "sons": "python3 scripts/sons.py",
     "planche": "python3 scripts/planche.py",
+    "schemas": "python3 scripts/schemas_revision.py",
+    "fiches": "node scripts/fiches-pdf.mjs",
     "generer": "python3 scripts/generer.py",
     "partage": "node scripts/partage.mjs",
     "build:pages": "astro build",

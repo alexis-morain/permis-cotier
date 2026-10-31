@@ -1,0 +1,178 @@
+cours: balisage
+resume: >-
+  Une marque se lit dans cet ordre : le voyant, puis la couleur, puis le nom. De nuit, la couleur du
+  feu d’abord ; s’il est blanc, on compte.
+sections:
+  - titre: Les latérales, du large vers le port
+    notions: [balisage-lateral]
+    blocs:
+      - schema:
+          fichier: balisage-chenal.svg
+          alt: >-
+            Un chenal vu du ciel, du large en bas au port en haut. À gauche, trois bouées rouges
+            cylindriques ; à droite, trois bouées vertes coniques. Une flèche monte vers le port.
+      - regles:
+          - "Région A, dont la France : bâbord rouge, cylindre ; tribord vert, cône."
+          - Le sens conventionnel va du large vers le port. En sortant, tout s’inverse pour toi, pas pour la bouée.
+          - "La forme dit la même chose que la couleur : un cylindre est toujours bâbord, un cône toujours tribord."
+          - Sur un espar ou une charpente, la forme disparaît, le voyant la remplace.
+
+  - titre: Le chenal préféré, à la fourche
+    largeur: demie
+    notions: [balisage-chenal-prefere]
+    blocs:
+      - tableau:
+          colonnes: [Marque, Se laisse à, Chenal principal]
+          lignes:
+            - [Rouge à bande verte et cylindre, Bâbord, Part à tribord]
+            - [Vert à bande rouge et cône, Tribord, Part à bâbord]
+      - astuce: >-
+          La couleur dominante dit de quel côté laisser la marque, la bande dit où part le chenal principal.
+          Dans le doute, regarde la forme.
+
+  - titre: Le piège de la sortie
+    largeur: demie
+    notions: [balisage-lateral]
+    blocs:
+      - piege: >-
+          L’épreuve te fait souvent sortir du port. Tu vas alors contre le sens conventionnel : la rouge est
+          à ta droite, la verte à ta gauche. Lis d’abord dans quel sens tu vas.
+
+  - titre: Les cardinales, le nom dit où passer
+    notions: [balisage-cardinal]
+    blocs:
+      - schema:
+          fichier: balisage-cardinales.svg
+          alt: >-
+            Une roche au centre, et quatre bouées noires et jaunes posées au nord, à l’est, au sud et à
+            l’ouest, chacune avec ses deux cônes. Des flèches tournent autour, à l’extérieur des bouées.
+      - astuce: >-
+          Les pointes des cônes montrent où est le noir sur le corps. Nord : pointes en haut, noir en haut.
+          Sud : pointes en bas. Est : base contre base, comme un losange. Ouest : pointe contre pointe,
+          comme un sablier.
+      - piege: >-
+          Passer entre la marque et la côte parce qu’elle a l’air près du bord. Une cardinale Sud se
+          contourne par le sud, même si ça fait un détour.
+
+  - titre: Les quatre autres marques
+    notions: [balisage-danger-isole, balisage-eaux-saines, balisage-speciale, balisage-danger-nouveau]
+    blocs:
+      - tableau:
+          colonnes: [Marque, Corps et voyant, Feu, Ce qu’elle te dit]
+          lignes:
+            - - visuel: balisage/danger-isole.svg
+                alt: Une bouée noire à large bande rouge, surmontée de deux sphères noires.
+              - Noir à bande rouge horizontale, deux sphères noires
+              - Blanc, deux éclats groupés
+              - "Danger isolé : elle est sur le danger. Eaux saines autour, passe du côté que tu veux, à distance."
+            - - visuel: balisage/eaux-saines.svg
+                alt: Une bouée à bandes verticales rouges et blanches, surmontée d’une sphère rouge.
+              - Bandes verticales rouges et blanches, une sphère rouge
+              - Blanc lent, isophase, occultations, éclat long ou morse A
+              - "Eaux saines : atterrissage ou milieu de chenal. Elle se laisse d’un côté ou de l’autre."
+            - - visuel: balisage/speciale.svg
+                alt: Une bouée jaune surmontée d’une croix jaune en forme de X.
+              - Toute jaune, croix jaune en X
+              - Jaune
+              - "Spéciale : une zone ou une installation, pas un danger. La carte dit quoi faire."
+            - - visuel: balisage/danger-nouveau.svg
+                alt: Une bouée à bandes verticales bleues et jaunes, surmontée d’une croix jaune droite.
+              - Bandes verticales bleues et jaunes, croix jaune droite
+              - Bleu et jaune alternés
+              - "Danger nouveau : pas encore sur la carte. On passe loin."
+
+  - titre: Les cardinales de nuit, lire l’heure
+    largeur: demie
+    notions: [balisage-feux, balisage-cardinal]
+    blocs:
+      - schema:
+          fichier: balisage-cadran.svg
+          alt: >-
+            Un cadran d’horloge. Le 12 est marqué Nord continu, le 3 Est, le 6 Sud avec un éclat long,
+            le 9 Ouest.
+      - regles:
+          - "Feu blanc, scintillant ou scintillant rapide. On compte : 3 Est, 6 plus un éclat long Sud, 9 Ouest, continu Nord."
+          - L’éclat long qui suit les six scintillements lève le doute entre Sud et Ouest dans la houle.
+
+  - titre: La couleur du feu d’abord
+    largeur: demie
+    notions: [balisage-feux, balisage-chenal-prefere]
+    blocs:
+      - tableau:
+          colonnes: [Feu, C’est]
+          lignes:
+            - - visuel: rythmes/laterale-babord.svg
+                alt: Un feu rouge qui s’allume et s’éteint sur une frise.
+              - Rouge, rythme quelconque, sauf 2 + 1 réservé au chenal préféré
+            - - visuel: rythmes/laterale-tribord.svg
+                alt: Un feu vert qui s’allume et s’éteint sur une frise.
+              - Vert, même règle
+            - - visuel: rythmes/speciale.svg
+                alt: Un feu jaune qui s’allume et s’éteint sur une frise.
+              - Jaune, marque spéciale
+            - - visuel: rythmes/danger-isole.svg
+                alt: Un feu blanc à deux éclats rapprochés sur une frise.
+              - Blanc à deux éclats, danger isolé
+      - piege: >-
+          Un feu rouge n’est pas toujours une bouée : sur un navire, c’est le feu de côté bâbord.
+
+  - titre: La bande des 300 mètres
+    largeur: demie
+    notions: [balisage-plages]
+    blocs:
+      - schema:
+          fichier: balisage-300-metres.svg
+          alt: >-
+            Une plage vue du ciel. Une ligne de bouées jaunes rondes court parallèlement au rivage.
+            Un couloir la traverse, bordé de bouées jaunes cylindriques à gauche et coniques à droite.
+      - regles:
+          - 5 nœuds dans la bande, même là où aucune bouée ne la marque. Elle se compte depuis l’eau, à l’instant, et suit la marée.
+          - "Chenal traversier : transit direct, ni stationnement ni mouillage. Le chenal de vitesse, créé par arrêté, est celui où les 5 nœuds ne valent pas."
+
+  - titre: Les pictogrammes du littoral
+    largeur: demie
+    notions: [balisage-pictogrammes]
+    blocs:
+      - schema:
+          fichier: balisage-pictogrammes.svg
+          alt: >-
+            Deux panneaux carrés avec un bateau à moteur. Le premier, bleu à figure blanche. Le second,
+            blanc à figure noire, bordé et barré de rouge.
+      - regles:
+          - La figure nomme l’activité, les couleurs disent si elle est permise.
+          - Les bouées qui les portent sont des marques spéciales, sans voyant.
+      - piege: >-
+          Répondre « interdit » devant un pictogramme bleu. Le bleu à figure blanche autorise.
+
+  - titre: Les mots des rythmes
+    notions: [balisage-feux]
+    blocs:
+      - galerie:
+          - visuel: rythmes/caractere-fixe.svg
+            alt: Une frise où la lumière reste allumée d’un bout à l’autre.
+            nom: Fixe
+            lignes: [Allumé en permanence]
+          - visuel: rythmes/caractere-a-occultations.svg
+            alt: Une frise de longues lumières coupées par de courtes extinctions.
+            nom: À occultations
+            lignes: [La lumière domine, coupée de courtes extinctions]
+          - visuel: rythmes/caractere-isophase.svg
+            alt: Une frise où lumière et obscurité ont la même longueur.
+            nom: Isophase
+            lignes: [Autant de lumière que d’obscurité]
+          - visuel: rythmes/caractere-a-eclats.svg
+            alt: Une frise de courts éclats séparés par de longues obscurités.
+            nom: À éclats
+            lignes: [L’obscurité domine, coupée de courts éclats]
+          - visuel: rythmes/caractere-scintillant.svg
+            alt: Une frise d’éclats très rapprochés.
+            nom: Scintillant
+            lignes: [Des éclats très rapprochés]
+          - visuel: rythmes/caractere-scintillant-rapide.svg
+            alt: Une frise d’éclats encore plus rapprochés.
+            nom: Scintillant rapide
+            lignes: [Des éclats très rapprochés]
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

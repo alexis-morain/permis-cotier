@@ -9,7 +9,7 @@ import {
   IGNORER_PARAMETRES,
   reglesALaDemande,
 } from './src/lib/hors-ligne.ts';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { construireScriptBande } from './scripts/bande-avant-rendu.mjs';
 import { typographieDesSources, typographieDuHtml } from './scripts/typographie.mjs';
 
@@ -120,6 +120,13 @@ const leconIndexable = (page) => {
   return !code || code === 'memo' || existsSync(new URL(`./data/cours/${code}.yaml`, import.meta.url));
 };
 
+// Les PDF des fiches de révision : des fichiers de `public/`, que le sitemap
+// ne voit pas tout seul. Un PDF par fiche de `data/revision/`, et
+// `fiches-pdf.mjs --verifier` garantit qu'il existe.
+const pdfsDesFiches = readdirSync(new URL('./data/revision/', import.meta.url))
+  .filter((f) => f.endsWith('.yaml'))
+  .map((f) => new URL(`/fiches-revision/${f.replace(/\.yaml$/, '')}.pdf`, site).href);
+
 export default defineConfig({
   site,
   outDir: pourApp ? './dist-app' : './dist',
@@ -145,6 +152,7 @@ export default defineConfig({
     // premier n'a pas de lecteur et le second doublerait un cache local.
     ...(pourApp ? [] : [
     sitemap({
+      customPages: pdfsDesFiches,
       // Les écrans de jeu ne sont pas du contenu : ils tirent des questions et
       // n'ont rien d'indexable. Ils sont écartés ici comme dans robots.txt.
       // La fiche du candidat et ses erreurs non plus : elles sont vides tant
@@ -170,6 +178,7 @@ export default defineConfig({
         // sujets où les concurrents recopient sans jamais citer.
         else if (chemin === '/source' || chemin.startsWith('/source/')) item.priority = 0.7;
         else if (chemin.startsWith('/notion/')) item.priority = 0.7;
+        else if (chemin.startsWith('/fiches-revision')) item.priority = 0.8;
         else if (chemin.startsWith('/question/')) item.priority = 0.4;
         else item.priority = 0.3;
         return item;

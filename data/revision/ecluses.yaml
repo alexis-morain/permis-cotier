@@ -1,0 +1,110 @@
+cours: ecluses
+resume: >-
+  Une écluse se lit d’abord à ses feux : un rouge allumé, on n’entre pas ; seuls un vert isolé ou deux
+  verts côte à côte ouvrent l’accès. Dedans, on est amarré et le moteur ne tient plus le bateau.
+sections:
+  - titre: Les feux d’accès, du rouge au vert
+    notions: [ecluses-signaux-acces]
+    blocs:
+      - galerie:
+          - visuel: ecluses/acces-deux-rouges-superposes.svg
+            alt: Deux feux rouges allumés, l’un au-dessus de l’autre.
+            nom: Hors service
+            lignes: [Accès interdit]
+          - visuel: ecluses/acces-rouge-isole.svg
+            alt: Un feu rouge isolé allumé.
+            nom: Fermée
+            lignes: [Accès interdit]
+          - visuel: ecluses/acces-deux-rouges-juxtaposes.svg
+            alt: Deux feux rouges allumés, côte à côte.
+            nom: Fermée
+            lignes: [Accès interdit]
+          - visuel: ecluses/acces-un-rouge-eteint.svg
+            alt: Deux feux côte à côte, celui de gauche rouge et allumé, celui de droite éteint.
+            nom: En préparation
+            lignes: [Accès interdit]
+          - visuel: ecluses/acces-rouge-vert-juxtaposes.svg
+            alt: Deux feux allumés côte à côte, un rouge et un vert.
+            nom: En préparation
+            lignes: [Accès interdit]
+          - visuel: ecluses/acces-rouge-sur-vert.svg
+            alt: Un feu rouge allumé au-dessus d’un feu vert allumé.
+            nom: En préparation
+            lignes: [Accès interdit]
+          - visuel: ecluses/acces-vert-isole.svg
+            alt: Un feu vert isolé allumé.
+            nom: Ouverte
+            lignes: [Accès autorisé]
+          - visuel: ecluses/acces-deux-verts-juxtaposes.svg
+            alt: Deux feux verts allumés, côte à côte.
+            nom: Ouverte
+            lignes: [Accès autorisé]
+      - piege: >-
+          Le vert d’un signal mixte ne t’ouvre rien. Un rouge et un vert côte à côte, ou un rouge au-dessus
+          d’un vert, annoncent l’ouverture sans la donner. Le vert n’autorise que seul, ou avec un autre vert.
+
+  - titre: Ce que chaque signal te fait faire
+    notions: [ecluses-signaux-acces, ecluses-approche]
+    blocs:
+      - tableau:
+          colonnes: [Signal, Sens, Tu fais]
+          lignes:
+            - [Deux rouges superposés, Écluse hors service, "Inutile d’attendre : elle ne s’ouvrira pas"]
+            - [Un rouge isolé ou deux rouges côte à côte, Écluse fermée, "Tu attends : ton tour viendra"]
+            - ["Un rouge éteint sur deux, rouge et vert côte à côte, ou rouge au-dessus d’un vert", Écluse en préparation, "Tu relèves les ancres et sors les défenses, tu n’avances pas"]
+            - [Un vert isolé ou deux verts côte à côte, Accès autorisé, Tu entres en réduisant ta vitesse]
+            - [Ni feu ni panneau, Accès et sortie interdits, "Seul l’ordre du personnel te laisse passer"]
+      - astuce: >-
+          Retiens les trois signaux de préparation ensemble : dans les trois cas, un rouge est encore allumé.
+
+  - titre: À la sortie, et quand il n’y a rien d’allumé
+    largeur: demie
+    notions: [ecluses-signaux-acces, ecluses-approche]
+    blocs:
+      - regles:
+          - "À la sortie, le code est simple : un ou deux feux rouges interdisent, un ou deux feux verts autorisent."
+          - Le feu vert peut être remplacé par un panneau E.1, le rouge par un panneau A.1.
+          - Sans feu ni panneau, l’accès et la sortie sont interdits, sauf ordre spécial du personnel.
+      - piege: >-
+          Une écluse éteinte n’est pas une écluse ouverte. « J’entre si personne ne se présente » est faux.
+
+  - titre: Attendre son tour au garage
+    largeur: demie
+    notions: [ecluses-approche]
+    blocs:
+      - schema:
+          fichier: ecluses-file.svg
+          alt: >-
+            Un garage à gauche et une écluse à droite, entre deux rives. Trois bateaux numérotés 1, 2 et 3
+            attendent en file, le 1 le plus près de l’écluse. Un panneau B.5 est posé sur la rive, une ligne
+            en pointillé en dessous. Une flèche de dépassement est barrée.
+      - regles:
+          - On ralentit à l’approche des garages.
+          - Le passage se fait dans l’ordre d’arrivée dans les garages.
+          - Tout dépassement est interdit à l’approche des écluses et dans les garages.
+          - Une menue embarcation ne peut pas exiger un éclusage spécial pour elle seule.
+          - Les bateaux en service urgent et ceux qui portent la flamme rouge passent avant. On leur facilite le passage au maximum.
+
+  - titre: Entrer et s’amarrer dans le sas
+    notions: [ecluses-passage]
+    blocs:
+      - schema:
+          fichier: ecluses-sas.svg
+          alt: >-
+            Un sas vu en coupe, entre deux murs. Un bateau flotte au milieu, une défense de chaque côté de sa
+            coque. Une amarre relie chaque bord à un point d’amarrage du mur. Une double flèche verticale
+            marque le niveau de l’eau.
+      - regles:
+          - On entre en réduisant sa vitesse pour éviter tout choc contre les portes, les dispositifs de protection ou les autres bateaux.
+          - Une menue embarcation entre après y avoir été invitée par le personnel, et après les autres si l’éclusage est en commun.
+          - Les ancres sont complètement relevées. Les défenses sont obligatoires, et flottantes si elles sont amovibles.
+          - Le bateau est amarré pendant le remplissage et la vidange, jusqu’à l’autorisation de sortie. Les amarres sont manœuvrées pour éviter tout choc.
+          - Débarquer est interdit sans autorisation du personnel. Rejeter de l’eau sur les terre-pleins ou les autres bateaux l’est aussi.
+          - Si tu as une VHF, elle est à l’écoute sur la voie de l’écluse, et on suit les instructions du personnel.
+      - piege: >-
+          Garder le moteur embrayé au ralenti pour tenir le bateau au milieu du sas. Une fois amarré, plus de
+          propulsion mécanique jusqu’à l’autorisation de sortie, sauf règlement local : c’est l’amarre qui tient le bateau.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

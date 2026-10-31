@@ -1,0 +1,145 @@
+cours: meteo
+resume: >-
+  Le bulletin donne le vent en Beaufort puis la mer de 0 à 9, deux échelles à ne pas mélanger ; il
+  prévoit une zone, et c’est toi qui décides de sortir.
+sections:
+  - titre: Beaufort mesure le vent moyen
+    notions: [meteo-beaufort, meteo-facteurs]
+    blocs:
+      - regles:
+          - Le degré Beaufort décrit le vent moyen, pris sur dix minutes, à dix mètres au-dessus de la surface.
+          - Il ne dit rien de l’état de la mer, ni des rafales.
+          - Les rafales dépassent couramment le vent moyen d’un tiers. Un force 5 annoncé se prépare avec des pointes de l’ordre du force 6.
+
+  - titre: De 0 à 6, la brise monte
+    largeur: demie
+    notions: [meteo-beaufort]
+    blocs:
+      - tableau:
+          colonnes: [Force, Nom, Nœuds]
+          lignes:
+            - ["0", Calme, Moins de 1]
+            - ["1", Très légère brise, 1 à 3]
+            - ["2", Légère brise, 4 à 6]
+            - ["3", Petite brise, 7 à 10]
+            - ["4", Jolie brise, 11 à 16]
+            - ["5", Bonne brise, 17 à 21]
+            - ["6", Vent frais, 22 à 27]
+
+  - titre: De 7 à 12, on rentre
+    largeur: demie
+    notions: [meteo-beaufort, meteo-bulletin]
+    blocs:
+      - tableau:
+          colonnes: [Force, Nom, Nœuds]
+          lignes:
+            - ["7", Grand frais, 28 à 33]
+            - ["8", Coup de vent, 34 à 40]
+            - ["9", Fort coup de vent, 41 à 47]
+            - ["10", Tempête, 48 à 55]
+            - ["11", Violente tempête, 56 à 63]
+            - ["12", Ouragan, 64 et plus]
+      - regles:
+          - L’avis porte le nom de la force annoncée, à partir de 7. « Avis de coup de vent », c’est 34 nœuds au moins.
+      - piege: >-
+          Le vent frais (force 6, 22 à 27 nœuds) et le grand frais (force 7, 28 à 33 nœuds) se suivent.
+          Le grand frais est le premier degré qui déclenche un avis.
+
+  - titre: L’état de la mer, de 0 à 9
+    largeur: demie
+    notions: [meteo-etat-mer]
+    blocs:
+      - tableau:
+          colonnes: [Degré, Mer, Hauteur]
+          lignes:
+            - ["0", Calme vitreuse, 0 m]
+            - ["1", Calme ridée, "0 à 0,1 m"]
+            - ["2", "Belle, vaguelettes", "0,1 à 0,5 m"]
+            - ["3", Peu agitée, "0,5 à 1,25 m"]
+            - ["4", Agitée, "1,25 à 2,5 m"]
+            - ["5", Forte, "2,5 à 4 m"]
+            - ["6", Très forte, 4 à 6 m]
+            - ["7", Grosse, 6 à 9 m]
+            - ["8", Très grosse, 9 à 14 m]
+            - ["9", Énorme, Plus de 14 m]
+
+  - titre: Deux échelles, deux lectures
+    largeur: demie
+    notions: [meteo-etat-mer]
+    blocs:
+      - regles:
+          - Le bulletin donne le vent en Beaufort, puis la mer de 0 à 9. Les deux ne se déduisent pas l’un de l’autre.
+          - La hauteur annoncée est la hauteur significative, la moyenne du tiers des vagues les plus hautes. Des vagues la dépassent nettement.
+      - piege: >-
+          « Mer 5 » ne veut pas dire « vent force 5 » : c’est une mer forte, de 2,5 à 4 mètres.
+
+  - titre: Ce qui change le vent près de la côte
+    largeur: demie
+    notions: [meteo-facteurs]
+    blocs:
+      - schema:
+          fichier: meteo-brise.svg
+          alt: >-
+            Une coupe avec la mer à gauche et la terre à droite. Une flèche horizontale va de la mer vers la
+            terre, une flèche monte au-dessus de la terre.
+      - regles:
+          - Le vent va des hautes pressions vers les basses, d’autant plus fort que les isobares sont resserrés. Une pression qui baisse vite annonce un renforcement.
+          - "Hémisphère nord : sens inverse des aiguilles autour d’une dépression, sens des aiguilles autour d’un anticyclone."
+          - La brise de mer peut ajouter deux à trois degrés Beaufort à un vent général faible.
+          - "À un cap, au débouché d’une vallée, au pied d’une falaise, le vent se renforce et change de direction : c’est l’effet de site."
+          - La brume vient d’un air doux et humide au-dessus d’une mer plus froide, par vent faible.
+      - piege: >-
+          Se fier au calme du matin sous la côte pour juger l’après-midi et le large. La zone abritée et la
+          brise de mer de 14 h sont deux raisons de trouver un vent sans rapport avec celui du mouillage.
+
+  - titre: Où trouver la météo
+    largeur: demie
+    notions: [meteo-sources]
+    blocs:
+      - schema:
+          fichier: meteo-portees.svg
+          alt: >-
+            Une bande de terre à gauche, puis trois zones de mer côte à côte : côte, large, grand large,
+            chacune avec sa portée en milles.
+      - regles:
+          - "À terre : le site, l’application et le répondeur de Météo-France, et l’affichage de la capitainerie. Tu lis et tu décides à quai."
+          - En mer, le CROSS annonce sur le canal 16, puis tu bascules sur la voie qu’il indique. Le 16 annonce, il ne diffuse pas.
+          - Le Navtex, en zone couverte, reçoit les mêmes bulletins et avis, en texte.
+
+  - titre: Le bulletin, l’avis passe avant
+    notions: [meteo-bulletin]
+    blocs:
+      - regles:
+          - Le bulletin météorologique spécial (BMS) est un avis diffusé à part, hors des heures normales, dès qu’un vent de force 7 au moins est attendu ou observé. Il prime sur le bulletin de côte.
+          - "Le bulletin de côte donne la situation générale, puis par zone, dans cet ordre : vent, mer, temps, visibilité. La marée et la pression n’en sont pas des rubriques."
+      - piege: >-
+          Attendre l’heure du bulletin pour savoir s’il y a un avis. Un bulletin lu la veille au soir peut
+          être périmé par un BMS émis pendant la nuit.
+
+  - titre: Décider de sortir
+    notions: [meteo-decision]
+    blocs:
+      - tableau:
+          colonnes: [Catégorie, Vent, Vagues]
+          lignes:
+            - [A, Au-delà de force 8, Au-delà de 4 mètres]
+            - [B, Jusqu’à force 8 comprise, 4 mètres compris]
+            - [C, Jusqu’à force 6 comprise, 2 mètres compris]
+            - [D, Jusqu’à force 4 comprise, "0,3 mètre compris, vagues occasionnelles de 0,5 mètre au maximum"]
+      - tableau:
+          colonnes: [Je regarde, Ce que ça change]
+          lignes:
+            - ["Le bateau", "La catégorie de conception de la plaque est une limite de construction, pas une promesse de confort"]
+            - ["L’équipage", "Un équipage inexpérimenté ramène la limite de plusieurs degrés Beaufort sous celle du bateau"]
+            - ["La zone", "Vent de terre : mer plate au départ, formée au large. Vent contre le courant : mer courte et creuse"]
+            - ["L’abri", "Un abri s’apprécie selon les conditions du moment : celui de la force 3 n’abrite plus à la force 7"]
+            - ["Le retour", "Une brise de mer qui monte l’après-midi change un aller au portant en un retour au près"]
+      - regles:
+          - Renoncer ou reporter se décide à quai, avant d’appareiller, quand cela ne coûte rien.
+      - piege: >-
+          Juger la sortie sur ce qu’on voit depuis le port. Par vent de terre, la mer est plate le long du
+          quai et formée deux milles plus loin.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

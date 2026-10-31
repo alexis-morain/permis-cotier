@@ -1,0 +1,140 @@
+cours: securite
+resume: >-
+  Tout s’accroche à la distance d’un abri : elle fixe l’armement, le niveau du gilet et ce que
+  chaque embarcation peut faire. Le reste se lit sur la plaque du bateau et dans les pièces
+  qu’on sort au contrôle.
+sections:
+  - titre: Tout se compte depuis un abri
+    notions: [securite-limitations, securite-armement-cotier, securite-equipement-individuel]
+    blocs:
+      - schema:
+          fichier: securite-zones.svg
+          alt: >-
+            Une bande de terre à gauche, puis quatre bandes côte à côte, chacune avec son nom, sa
+            distance, le niveau du gilet et quelques pièces de matériel. Une règle graduée court
+            dessous, marquée abri, 2, 6 et 60 milles.
+      - piege: >-
+          Compter depuis le port ou la côte visible. Un abri se juge avec la météo du moment : par vent
+          de mer établi, la crique la plus proche n’en est plus un.
+
+  - titre: Le basique, le côtier, le semi-hauturier
+    notions: [securite-armement-basique, securite-armement-cotier, securite-equipement-individuel]
+    blocs:
+      - tableau:
+          colonnes: [Armement, Matériel]
+          lignes:
+            - - "Basique, moins de 2 milles"
+              - "Gilet de niveau 50 par personne, sauf enfants de 30 kg au plus, dispositif lumineux, extincteur, assèchement manuel, remorquage, ligne de mouillage, moyen de connaître les marées, pavillon national hors des eaux territoriales"
+            - - "Côtier, de 2 à moins de 6 milles"
+              - "Le basique, plus : bouée fer à cheval ou couronne, gilets de niveau 100, trois feux rouges à main, compas magnétique, cartes à jour, RIPAM ou résumé, document de balisage"
+            - - "Semi-hauturier, de 6 à moins de 60 milles"
+              - "Ajoute : VHF fixe, radeaux de survie, livre des feux, journal de bord, trousse de secours, harnais, projecteur, gilets de niveau 150"
+      - regles:
+          - "Marées : pas requis en Méditerranée. Assèchement : si non auto-videur ou habitable."
+
+  - titre: Le coupe-circuit, relié dès que le moteur tourne
+    largeur: demie
+    notions: [securite-armement-basique]
+    blocs:
+      - regles:
+          - "Hors-bord à la barre ou en déporté : cordon relié au conducteur dès que le moteur est allumé, quelle que soit la distance."
+          - "Jamais rallongé ni déplacé. Pour bouger à bord, moteur éteint, ou au point mort et hélice qui ne peut pas tourner."
+          - "Un second coupe-circuit reste accessible, connu de tous."
+
+  - titre: Extincteur et ligne de mouillage
+    largeur: demie
+    notions: [securite-incendie-mouillage]
+    blocs:
+      - regles:
+          - "Extincteur : le manuel du propriétaire, à défaut l’annexe 240-A3."
+      - tableau:
+          colonnes: [Sans ligne de mouillage, Condition]
+          lignes:
+            - [Voilier, Moins de 250 kg lège]
+            - - Navire à moteur
+              - "Moins de 250 kg lège et 4,5 kW au plus"
+            - [Véhicule nautique à moteur, Dispensé]
+
+  - titre: Le niveau du gilet monte avec la distance
+    largeur: demie
+    notions: [securite-equipement-individuel]
+    blocs:
+      - tableau:
+          colonnes: [Distance d’un abri, Niveau]
+          lignes:
+            - [Moins de 2 milles, "50"]
+            - [De 2 à moins de 6 milles, "100"]
+            - [À partir de 6 milles, "150"]
+      - regles:
+          - "Enfant de 30 kg au maximum : niveau 100, partout."
+      - piege: >-
+          Savoir nager ne dispense du niveau 100 que si tu portes effectivement un niveau 50 ou une combinaison de flottabilité conforme.
+
+  - titre: Les catégories de conception
+    largeur: demie
+    notions: [securite-categories-conception]
+    blocs:
+      - schema:
+          fichier: securite-categories.svg
+          alt: >-
+            Quatre colonnes en escalier, de D à gauche à A à droite, de plus en plus hautes. Sous chacune,
+            une force de vent et une hauteur de vague.
+      - regles:
+          - "Le bateau-école côtier : marqué CE, catégorie C au moins, ou type approuvé en 5e catégorie."
+      - piege: >-
+          La lettre n’autorise aucun éloignement, et le nombre de personnes se lit sur la plaque.
+
+  - titre: Combien de personnes à bord
+    largeur: demie
+    notions: [securite-charge-personnes]
+    blocs:
+      - regles:
+          - "Nombre et charge maximaux : sur la plaque, jamais dépassés sauf force majeure."
+          - "Seuls les enfants de moins d’1 an ne comptent pas."
+      - piege: >-
+          Les 30 kg fixent le gilet d’un enfant, pas le décompte.
+
+  - titre: Les plongeurs
+    largeur: demie
+    notions: [securite-plongeurs]
+    blocs:
+      - galerie:
+          - visuel: feux/capacite-de-manoeuvre-restreinte.svg
+            alt: "Trois feux superposés vus de face sur un mât : un rouge en haut, un blanc au milieu, un rouge en bas."
+            nom: De nuit
+            lignes: [Rouge, blanc, rouge]
+      - regles:
+          - "Petit navire en plongée, de jour : pavillon « A » rigide, 1 mètre au moins, visible sur tout l’horizon."
+          - "Capacité de manœuvre restreinte : moteur comme voile s’écartent."
+      - piege: >-
+          Ce ne sont pas des signaux de détresse.
+
+  - titre: Embarcations, véhicule nautique et bande des 300 mètres
+    notions: [securite-limitations]
+    blocs:
+      - tableau:
+          colonnes: [Embarcation, Limite]
+          lignes:
+            - - Annexe
+              - "300 mètres d’un abri, le navire porteur comptant comme abri"
+            - - Engin de plage
+              - "300 mètres, de jour ; 2 milles seulement en activité encadrée par une structure agréée"
+            - - Planches à voile, aérotractées, nautiques à moteur
+              - "De jour, 2 milles ; flottabilité et repérage lumineux portés dès 300 mètres"
+            - - Propulsion humaine
+              - "2 milles ; 6 milles hors engins de plage, sauf planche à pagaie, à deux embarcations de conserve au moins avec une VHF étanche par groupe ; seul, association déclarée et VHF"
+            - - Véhicule nautique à moteur
+              - "Interdit à 6 milles et au-delà ; de 2 à moins de 6 milles : 2 places au moins, armement côtier spécifique"
+
+  - titre: Les pièces à sortir au contrôle
+    notions: [securite-pieces-administratives]
+    blocs:
+      - regles:
+          - "Moteur de plus de 4,5 kW : permis obligatoire. À la voile, aucun permis en eaux maritimes."
+          - "Radio à bord : licence de station de navire, qui vise le navire."
+          - "Pièces non présentées tout de suite : 2e classe. Rien après 5 jours : 4e classe."
+          - "Location : déclaration signée en deux exemplaires, copie du dernier rapport de vérification spéciale au contrat, et à bord s’il y a un espace habitable."
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

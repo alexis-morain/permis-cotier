@@ -115,6 +115,20 @@ for (const [nom, raison] of A_RETIRER) {
   retirés.push([nom, raison, taille]);
 }
 
+// Les PDF des fiches de révision : l'app les ouvre sur le site, dans Safari
+// intégré, qui sait les partager et les imprimer. Les pages et les schémas des
+// fiches restent, eux, dans le bundle.
+const fiches = join(racine, 'fiches-revision');
+if (existsSync(fiches)) {
+  for (const entrée of await readdir(fiches, { withFileTypes: true })) {
+    if (!entrée.isFile() || !/\.(pdf|json)$/.test(entrée.name)) continue;
+    const chemin = join(fiches, entrée.name);
+    const taille = await tailleDe(chemin);
+    await rm(chemin, { force: true });
+    retirés.push([`fiches-revision/${entrée.name}`, 'PDF ouvert en ligne', taille]);
+  }
+}
+
 for (const entrée of await readdir(racine, { withFileTypes: true })) {
   if (!entrée.isFile() || !MOTIFS.some((m) => m.test(entrée.name))) continue;
   const chemin = join(racine, entrée.name);

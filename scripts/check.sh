@@ -55,6 +55,8 @@ etape "Planches de carte marine"          "$PY" scripts/carte.py --verifier
 etape "Rythmes de feux"                   "$PY" scripts/rythmes.py --verifier
 etape "Situations de rencontre"           "$PY" scripts/situations.py --verifier
 etape "Signaux sonores"                   "$PY" scripts/sons.py --verifier
+etape "Schémas des fiches de révision"    "$PY" scripts/schemas_revision.py --verifier
+etape "PDF des fiches de révision"        node scripts/fiches-pdf.mjs --verifier
 etape "Sons de l'app"                     "$PY" scripts/sons_app.py --verifier
 etape "Compte de la fiche App Store"      "$PY" scripts/app_store.py verifier-fiche
 etape "Tests du validateur"               "$PY" -m pytest tests -q
