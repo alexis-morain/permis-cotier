@@ -19,8 +19,9 @@ donc **avant la fusion** qui ouvre une version, pas après.
    version ; le ménage va au journal.
 3. **Le compte de la fiche.** `python scripts/app_store.py verifier-fiche`
    (en CI, et refait par `preparer`) compte les questions publiées de
-   `data/questions/` et relit `ios/nouveautes.txt`, `ios/a-tester.txt` et
-   `docs/fiche-app-store/*.txt`. Règle : un nombre de cent ou plus suivi de
+   `data/questions/` et relit `ios/nouveautes.txt`, `ios/a-tester.txt`,
+   `ios/a-tester-mac.txt`, `docs/fiche-app-store/*.txt` et
+   `docs/fiche-app-store/mac/*.txt`. Règle : un nombre de cent ou plus suivi de
    « questions » est **exact**, ou **arrondi par en dessous** à la centaine
    près, « plus de N » avec N ≤ compte < N + 100 (658 : « plus de 600 »). Un
    bump de banque qui franchit la centaine rend la CI rouge jusqu'à ce que la
@@ -31,6 +32,91 @@ donc **avant la fusion** qui ouvre une version, pas après.
 à la main, le script ne pousse que les nouveautés et « À tester ». Sous `docs/`,
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
+
+## 31 octobre 2026 — la publication Mac (lot 4)
+
+Plan « iPad et Mac », lot 4. Branche `app-mac-publication`. **Le Mac 1.0 (23)
+est sur TestFlight**, installé et lancé sur le MacBook Air d'Alexis ; rien en
+revue. Preflight : `docs/preflight-mac-1.0.md`.
+
+### Deux plateformes, un script
+
+`scripts/app_store.py` prend `--plateforme IOS|MAC_OS` (`IOS` par défaut :
+`app-ios.yml` n'a pas changé). Les versions se lisent par plateforme
+(`filter[platform]`), les builds de toutes, chacun avec la plateforme de sa
+version de test (`preReleaseVersion.platform`). **`decider` décide sur les
+builds de sa plateforme et numérote au-dessus de tous** : avant, un build Mac
+plus haut que le dernier build iOS, au même commit et au même numéro de
+version, aurait été pris pour le build iOS à soumettre. Le Mac a son « À
+tester », `ios/a-tester-mac.txt` ; pas de nouveautés tant que la 1.0 n'est
+pas sortie. Le Mac part en **1.0**, sa suite à lui (décidé le 31).
+
+### `app-mac.yml`, à la main seulement
+
+`workflow_dispatch` et rien d'autre (un test le garde) ; même groupe de
+concurrence que `app-ios.yml`, puisque les numéros de build sont communs. Une
+case `revue`, décochée par défaut : sans elle, `soumettre --sans-revue`, le
+build va sur TestFlight seul. Comme l'iOS, rien sans une CI verte sur le
+commit, et l'environnement `app-store` n'est ouvert qu'à `main`.
+
+L'archive passe par `scripts/capacitor-catalyst.sh` (Capacitor reconstruit,
+quatre minutes en CI) et `App-Mac.xcworkspace`, destination
+`generic/platform=macOS,variant=Mac Catalyst`. **Signée ad hoc**
+(`CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=-`) et non sans signature comme
+l'iOS : une archive non signée ne porte aucun droit, l'export n'en remet pas,
+et le Mac App Store refuse une app sans bac à sable. Une étape vérifie
+`app-sandbox` dans l'archive avant l'export (`plutil` lit les points d'une clé
+comme un chemin : `'com\.apple\.security\.app-sandbox'`). L'export reprend
+`ios/ExportOptions.plist` tel quel ; il sort un `.pkg` signé pour l'installeur.
+
+`Info.plist` gagne `LSApplicationCategoryType` (Éducation), sans quoi le Mac
+App Store refuse le paquet. L'iOS l'ignore ; c'est le seul écart de son archive.
+
+### Vérifié
+
+- `tests/test_app_store.py` : 11 tests de plus (plateformes, numérotation,
+  lecture des builds et des versions, fiche Mac relue, déclencheurs des deux
+  workflows) ; gate vert.
+- Archive Catalyst Release, en local, avec les réglages du workflow : droits
+  `app-sandbox` et `network.client`, `x86_64 arm64`, `minos 18.0`. Export
+  local (destination `export`) : profil « Mac Catalyst Team Store » créé par
+  Xcode (accord d'Alexis), `.pkg` signé « 3rd Party Mac Developer Installer »,
+  droits gardés. L'étape « Bac à sable dans l'archive » rejouée en local :
+  passe sur l'archive ad hoc, **refuse** l'archive non signée.
+- Archive iOS par la commande de `app-ios.yml` : `CFBundleName` = App, `minos
+  16.0`, aucun symbole `MenusMac`, `NavigateurMac`, `PartageMac` ; seule la
+  clé de catégorie en plus.
+- `preparer --plateforme MAC_OS` à blanc contre App Store Connect : construire
+  1.0 (23), « aucune version App Store » ; `preparer` iOS inchangé.
+- **Envoi** (accord d'Alexis) : 1.0 (23) téléversé depuis le Mac avec la clé
+  d'API, traité en deux minutes, « À tester » posé par `soumettre --sans-revue`
+  (référence `ff05e30`). App Store Connect n'a pas demandé d'ajouter la
+  plateforme macOS d'abord. Groupe « Interne », en test.
+- **TestFlight sur le Mac** : installé par TestFlight (clic au premier plan,
+  vérifié ; le bouton ne répond ni aux clics d'arrière-plan ni à `AXPress`),
+  il remplace la 1.0.7 « Conçue pour iPhone » dans `/Applications`. Signature
+  « TestFlight Beta Distribution », droits du bac à sable. Lancé : données
+  d'Alexis retrouvées, barre de menus complète, lien du menu Aide vers le
+  navigateur par défaut. Voir le preflight pour le processus arrêté vu une fois.
+
+### Captures
+
+Cinq, 2880 × 1800, dans le dossier de gestion (`docs/captures-app-store/mac/`,
+avec `composer.py`). L'app signée de développement, fenêtre posée à 1280 × 800
+points par Peekaboo, prise par `screencapture -o -l <fenêtre>` (2560 × 1600,
+sans ombre), posée sur `--bleu` (`#e1edf6`) avec une ombre douce, aplatie en
+RGB. La progression vient de `poser.py` (états A, B, D), écrite dans le
+localStorage du conteneur, **partagé avec l'app installée** : sauvegardé avant,
+remis après, vérifié à l'écran. Piège : la lettre affichée n'est pas l'id du
+YAML, la bonne réponse se choisit par son texte.
+
+### Reste
+
+1. App Store Connect, à la main (Alexis) : version macOS 1.0, textes de
+   `docs/fiche-app-store/mac/`, captures, puis revue.
+2. Premier passage de `app-mac.yml` après fusion : la signature dans le nuage
+   d'un `.pkg` (certificat d'installeur) n'a pas pu être essayée en local, où
+   Xcode a pris les certificats du trousseau.
 
 ## 30 octobre 2026 — les usages Mac (lot 3)
 
@@ -1054,4 +1140,5 @@ entamée (une réponse fausse), le cadre de fenêtre gardé remplacé.
 ### Reste
 
 1. Liens externes, Partager, rappels et sons à l'écran, au lot 3 avec les menus.
-2. CI : rien ne construit le Mac en CI. À poser au lot 4, avec le workflow Mac.
+2. CI : rien ne construit le Mac en CI. Posé au lot 4 : `app-mac.yml`, à la
+   main seulement (voir « la publication Mac »).
