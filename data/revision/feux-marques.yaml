@@ -9,8 +9,8 @@ sections:
   - schema:
       fichier: feux-marques-secteurs.svg
       alt: Un navire vu du ciel, l’avant en haut. Un grand disque blanc l’entoure, coupé en deux secteurs, un grand
-        à l’avant, un plus petit à l’arrière. Devant la coque, un quart de disque rouge à gauche et un quart de
-        disque vert à droite.
+        à l’avant, un plus petit à l’arrière. Devant la coque, un secteur rouge à gauche et un secteur vert
+        à droite, devant la coque.
   - regles:
     - 'Tête de mât : blanc, 225 degrés vers l’avant.'
     - 'Feux de côté : vert à tribord, rouge à bâbord, 112,5 degrés chacun.'
@@ -144,14 +144,14 @@ sections:
       - De jour
       lignes:
       - - Mouillage
-        - Un feu blanc sur tout l’horizon à l’avant, un second plus bas à l’arrière au-delà de 50 mètres
+        - Un feu blanc sur tout l’horizon à l’avant, un second plus bas à l’arrière à partir de 50 mètres
         - Une boule à l’avant
       - - Échoué
         - Les feux de mouillage et deux feux rouges superposés
         - Trois boules superposées
   - regles:
     - 'Moins de 7 mètres au mouillage : rien d’exigé, sauf chenal, ancrage ou route fréquentée.'
-    - 'Moins de 12 mètres échoué : ni feux rouges ni boules, mais le feu de mouillage reste dû.'
+    - 'Moins de 12 mètres échoué : ni feux rouges ni boules, mais les feux de mouillage restent dus s’ils le sont à ta longueur.'
 - titre: De jour, les formes se comptent
   notions:
   - marques-jour

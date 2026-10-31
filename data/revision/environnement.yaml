@@ -1,6 +1,6 @@
 cours: environnement
 resume: >-
-  Trois réflexes : ne rien rejeter à la mer, à aucune distance ; pêcher pour ta famille, avec une liste
+  Trois réflexes : aucun seuil de distance ne rend un rejet permis ; pêcher pour ta famille, avec une liste
   d’engins fermée ; reconnaître une aire protégée à sa catégorie.
 sections:
   - titre: Aucune distance ne rend un rejet permis
@@ -14,7 +14,7 @@ sections:
       - regles:
           - "Jeter, déverser ou laisser écouler en mer des substances nuisibles à la faune ou à la flore marines : 100 000 euros d’amende."
           - "« Directement ou indirectement » couvre aussi ce qui rejoint la mer par un caniveau ou par une cale de mise à l’eau."
-          - "Deux cas ne sont pas des infractions : le rejet pour la sécurité, le sauvetage ou la lutte contre la pollution, et le rejet dû à une avarie, au-delà des eaux territoriales."
+          - "Deux cas ne sont pas des infractions, sous les conditions de MARPOL : le rejet pour la sécurité, le sauvetage ou la lutte contre la pollution, et le rejet dû à une avarie, au-delà des eaux territoriales."
           - "Ce qui n’est pas rejetable en mer redescend à terre, dans les bacs du port."
       - piege: >-
           Croire qu’un rejet devient permis au-delà de 3 ou de 12 milles. Le texte qui s’applique au
@@ -34,7 +34,7 @@ sections:
             - [Prises d’eau et décharges de WC, "Une vanne de coque chacune"]
       - piege: >-
           Croire que l’obligation dépend de la taille du bateau ou du réservoir. Ce sont les toilettes qui
-          la déclenchent. Un broyeur qui rejette directement à la mer n’est ni une rétention ni un
+          la déclenchent, à bord d’un navire soumis à la division 245. Un broyeur qui rejette directement à la mer n’est ni une rétention ni un
           traitement.
 
   - titre: Caréner à terre
@@ -55,7 +55,7 @@ sections:
     blocs:
       - regles:
           - "Pêche non commerciale, pour la consommation exclusive du pêcheur et de sa famille. Le produit ne se colporte pas, ne se vend pas, ne s’achète pas en connaissance de cause."
-          - "Tailles minimales, engins, zones, périodes et arrêtés : ceux des professionnels. Les règles de loisir ne sont jamais plus favorables."
+          - "Tailles minimales, engins, zones, périodes et arrêtés : au moins ceux des professionnels. Les règles de loisir ne sont jamais plus favorables."
           - "Une pêche qui pèse sur la ressource peut être soumise à autorisation."
       - piege: >-
           Vendre sa pêche à un restaurateur. L’interdiction vise aussi l’acheteur qui sait d’où viennent
@@ -98,11 +98,10 @@ sections:
       - schema:
           fichier: environnement-amendes.svg
           alt: >-
-            Deux barres horizontales à l’échelle. La première, courte, est marquée 22 500 euros pour
-            les infractions de pêche. La seconde, quatre fois plus longue, 100 000 euros pour les rejets
-            nuisibles.
+            Deux barres horizontales à l’échelle. La première, courte, est marquée 22 500 euros. La
+            seconde, plus de quatre fois plus longue, est marquée 100 000 euros.
       - regles:
-          - "22 500 euros : détenir à bord ou employer pour la pêche des explosifs, des armes à feu, des substances soporifiques ou toxiques. La détention suffit."
+          - "22 500 euros : détenir à bord pour la pêche, ou employer, des explosifs, des armes à feu, des substances soporifiques ou toxiques. La détention à bord suffit."
           - "22 500 euros : détenir un engin prohibé, en employer plus que le nombre autorisé, pêcher ou débarquer des captures trop petites, enfreindre le marquage et le tri."
       - piege: >-
           Croire que fermetures, tailles minimales et engins prohibés ne visent que les professionnels. Le
@@ -114,7 +113,7 @@ sections:
     notions: [env-aires-protegees]
     blocs:
       - tableau:
-          colonnes: [Dans la liste du code de l’environnement]
+          colonnes: [Les principales catégories de la liste]
           lignes:
             - ["Parcs nationaux, partie maritime"]
             - ["Réserves naturelles, partie maritime et périmètres de protection"]

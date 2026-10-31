@@ -4,7 +4,7 @@ resume: >-
   mesure sur les bords verticaux seulement.
 sections:
   - titre: La couleur d’abord, puis les deux nords
-    notions: [carte-generalites]
+    notions: [carte-generalites, carte-symboles]
     blocs:
       - galerie:
           - visuel: carte/estran-et-sondes.svg
@@ -116,8 +116,8 @@ sections:
       - schema:
           fichier: carte-marine-astres.svg
           alt: >-
-            Deux petits schémas. À gauche, le Soleil et la Lune du même côté d’un point nommé mer. À droite, le
-            Soleil d’un côté et la Lune en haut, à angle droit.
+            Deux panneaux. À gauche, vive-eau : deux flèches parallèles de même sens, nommées Soleil et
+            Lune. À droite, morte-eau : deux flèches en croix, nommées Soleil et Lune.
       - tableau:
           colonnes: [Coefficient, Marée]
           lignes:

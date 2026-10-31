@@ -1,16 +1,16 @@
 {
   "balisage": "ec4df93f2bde0026",
   "balisage-region-b": "13781d576789f2f0",
-  "barre-route": "69835e12156dd66a",
-  "carburant": "8ca6394c52fe514b",
-  "carte-marine": "183d2dcef435d929",
-  "ecluses": "ecea67087e199d09",
-  "environnement": "6a41d2172c4301bc",
-  "feux-marques": "c7258af4d457532d",
+  "barre-route": "64e779b5c46d3a17",
+  "carburant": "c7cd3b37ef4bd383",
+  "carte-marine": "185d09d2d3f47fab",
+  "ecluses": "5885cc426be8d7bf",
+  "environnement": "3299fd237ee18a83",
+  "feux-marques": "15fcc44903dfb533",
   "meteo": "cb8710627c369251",
-  "securite": "f5bfecf4245c27ec",
-  "signaux": "ec2805029f4aefcc",
-  "ski-responsabilites": "d52ce82d82a8611c",
+  "securite": "e75920a61214214c",
+  "signaux": "fa63f5ffeb2de23b",
+  "ski-responsabilites": "1f196de8244f62a4",
   "titre-conduite": "eb0242c071e41fe2",
-  "vhf": "2d50aadfd6547e0d"
+  "vhf": "1c27a89b44172a01"
 }

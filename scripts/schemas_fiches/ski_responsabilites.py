@@ -82,7 +82,7 @@ def ordres() -> str:
     morceaux += _rangee(4, "Incendie", [
         (["1. Couper", "l’alimentation"], ["vanne, batterie,", "robinet de gaz"]),
         (["2. Feu sous", "le vent"], ["manœuvrer pour", "venir au vent"]),
-        (["3. Base des", "flammes"], ["capot fermé :", "pas d’appel d’air"]),
+        (["3. Base des", "flammes"], ["capot pas grand", "ouvert : par", "l’orifice prévu"]),
         (["4. Alerter"], ["feu non maîtrisé", "en quelques", "instants"]),
     ])
     morceaux += _rangee(170, "Voie d’eau, après les brassières", [
@@ -124,7 +124,7 @@ def homme_a_la_mer() -> str:
         # la récupération, côté sous le vent
         f'<line x1="236" y1="244" x2="236" y2="304" stroke="{ENCRE}" stroke-width="4" stroke-linecap="round" />',
         _texte(246, 322, "Récupération par le côté sous le vent,", taille=14, graisse=700, ancre="start"),
-        _texte(246, 340, "à l’horizontale", taille=14, ancre="start"),
+        _texte(246, 340, "si possible à l’horizontale", taille=14, ancre="start"),
         _texte(L / 2, 362, "Pas retrouvée tout de suite : MAYDAY, avec la position du point de chute", taille=14, couleur=DOUX),
     ]
     morceaux.append("</svg>")

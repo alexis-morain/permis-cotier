@@ -16,7 +16,7 @@ sections:
               - Une VHF fixe, pas une portative
             - - 60 milles et plus
               - "La fixe, plus une portative étanche et une radiobalise de localisation des sinistres"
-            - - Bateau loué, plus de 2 milles
+            - - "Bateau loué (moteur de plus de 4,5 kW, ou voilier de plus de 250 kg lège), plus de 2 milles"
               - "Une VHF, avec moyen de positionnement électronique et document d’instructions"
       - piege: >-
           Répondre « dès 2 milles ». Le seuil de l’armement côtier n’est pas celui de la VHF : 6 milles.
@@ -37,7 +37,7 @@ sections:
               - "Neuf chiffres, les trois premiers désignent le pays : 226, 227, 228 en France métropolitaine"
             - - CRR
               - La personne
-              - "Obligatoire en eaux internationales ; examen dès 16 ans"
+              - "Obligatoire hors eaux territoriales françaises, sauf titres supérieurs ; examen dès 16 ans"
       - regles:
           - "Eaux territoriales françaises : le CRR ou le permis plaisance à moteur."
           - "Portatif de 6 watts au plus, sans ASN, en eaux territoriales françaises : aucun titre. Avec l’ASN, le titre redevient exigé."
@@ -63,7 +63,7 @@ sections:
               - Voies de travail entre navires
       - regles:
           - "À la mer, veille permanente du canal 16 quand c’est possible."
-          - "25 watts en fixe, 6 en portative : la portée vient de la hauteur des antennes, pas des watts."
+          - "25 watts au plus en fixe, 6 en portative : la portée vient de la hauteur des antennes, pas des watts."
       - piege: >-
           Passer en pleine puissance pour joindre un bateau lointain. Les 25 watts ne franchissent pas
           l’horizon.
@@ -139,7 +139,7 @@ sections:
           fichier: vhf-trame-detresse.svg
           alt: >-
             Huit lignes numérotées de 1 à 8, l’une sous l’autre, chacune avec son texte, de MAYDAY répété
-            trois fois à la dernière ligne.
+            trois fois en première ligne jusqu’à À VOUS en dernière ligne.
       - piege: >-
           Commencer par la position, ou fermer par « TERMINÉ ». Le mot de la fin est « À VOUS ».
 
@@ -148,7 +148,7 @@ sections:
     notions: [vhf-relais, vhf-fausses-alertes]
     blocs:
       - regles:
-          - "MAYDAY RELAY : tu relayes sur le 16 un MAYDAY resté sans réponse, avec l’identité et la position du navire en détresse, pas les tiennes."
+          - "MAYDAY RELAY : tu relayes sur le 16 un MAYDAY resté sans réponse, avec l’identité et la position du navire en détresse, pas les tiennes comme sinistré ; tu t’annonces comme station qui relaie."
           - "Alerte partie par erreur : tu dis clairement sur le 16 qu’elle est annulée, sans attendre. Éteindre la VHF ne la retire pas."
           - "Une fausse alerte retire des secours à ceux qui en ont besoin ailleurs."
       - piege: >-

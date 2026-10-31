@@ -1,7 +1,8 @@
 cours: barre-route
 resume: >-
-  Devant une rencontre, cherche d’abord s’il y a un rattrapant, un chenal étroit ou de la brume : ces
-  règles passent avant les autres. Sinon, regarde les types de navires, puis le côté d’où vient l’autre.
+  Devant une rencontre, cherche d’abord un rattrapant ou un chenal étroit : ces règles passent avant
+  les autres. Sinon, regarde les types de navires, puis le côté d’où vient l’autre. Par brume, les règles
+  entre navires en vue ne s’appliquent pas.
 sections:
   - titre: Qui s’écarte, rencontre par rencontre
     notions: [barre-rattrapant, barre-routes-opposees, barre-routes-croisees, barre-voiliers, barre-hierarchie-privileges]
@@ -14,7 +15,7 @@ sections:
             - ["Deux navires à moteur, routes qui se croisent", Celui qui voit l’autre sur tribord, "L’autre, qui te voit sur son bâbord"]
             - ["Deux voiliers, bords différents", Celui qui reçoit le vent de bâbord, Le voilier tribord amures]
             - ["Deux voiliers, même bord", Celui qui est au vent, Celui qui est sous le vent]
-            - [Deux navires de types différents, Celui qui est le plus bas dans l’échelle, Celui qui le précède dans l’échelle]
+            - [Deux navires de types différents, "Celui qui est le plus bas dans l’échelle (face au tirant d’eau : éviter de gêner)", Celui qui le précède dans l’échelle]
 
   - titre: Veiller et voir le risque
     largeur: demie
@@ -23,7 +24,7 @@ sections:
       - regles:
           - Veille visuelle et auditive permanente, par tous les moyens.
           - "Vitesse de sécurité : pouvoir éviter un abordage et s’arrêter à temps. Pas de chiffre."
-          - Relèvement constant et distance qui diminue, il y a risque.
+          - Relèvement constant et distance qui diminue, il y a risque. Un relèvement qui bouge ne garantit rien.
           - Dans le doute, le risque existe.
       - piege: >-
           « Vitesse de sécurité » ne veut pas dire « vitesse lente » : par brume épaisse très faible, par temps clair et mer libre élevée.
@@ -78,7 +79,7 @@ sections:
       - regles:
           - Celui qui s’écarte évite, si possible, de croiser sur l’avant de l’autre.
       - piege: >-
-          Ces règles ne valent qu’entre deux navires à moteur. Face à un voilier, tu t’écartes, quelle que soit sa position.
+          Ces règles ne valent qu’entre deux navires à moteur. Face à un voilier, tu t’écartes, sauf s’il te rattrape ou dans un chenal étroit.
 
   - titre: Entre voiliers, le vent décide
     largeur: demie
@@ -95,7 +96,7 @@ sections:
             lignes: [Celui au vent s’écarte]
       - regles:
           - Le vent vient du côté opposé à la grand-voile.
-          - Dans le doute sur les amures de l’autre, bâbord amures s’écarte.
+          - "Bâbord amures, l’autre au vent et son bord inconnu : tu t’écartes."
 
   - titre: Le rattrapant s’écarte toujours
     largeur: demie
@@ -140,11 +141,12 @@ sections:
           alt: >-
             Vue de dessus. Un navire fait route vers le haut, une ligne pointillée le coupe par le travers.
             Un point devant à droite et un point derrière à droite figurent des échos. Deux flèches courbes
-            barrées de rouge partent du navire, l’une vers la gauche, l’autre vers le point arrière.
+            rouges partent du navire, l’une vers la gauche, l’autre vers le point à l’arrière, légendées
+            « Pas sur bâbord » et « Pas vers lui ».
       - regles:
           - Vitesse de sécurité, machine prête à manœuvrer. Personne n’est privilégié.
           - "Écho radar avant du travers : pas sur bâbord, sauf si on rattrape. Par le travers ou sur l’arrière : pas vers lui."
-          - Signal de brume sur l’avant du travers, vitesse au minimum, extrême précaution.
+          - Signal de brume sur l’avant du travers, vitesse au minimum, extrême précaution, sauf risque écarté.
       - piege: >-
           « Je le vois au radar » n’est pas « en vue » : aucune priorité.
 

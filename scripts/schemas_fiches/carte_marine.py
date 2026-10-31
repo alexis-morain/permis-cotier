@@ -63,40 +63,30 @@ def maree() -> str:
     return "".join(m) + "\n"
 
 
-def _astre(x: float, y: float, r: float, fond: str) -> str:
-    return f'<circle cx="{x}" cy="{y}" r="{r}" fill="{fond}" stroke="{ENCRE}" stroke-width="2" />'
-
-
 def astres() -> str:
     """Vive-eau et morte-eau : le Soleil et la Lune tirent dans le même sens, ou en croix."""
     L, H = 560, 210
     m = [_entete(L, H), f'<rect width="{L}" height="{H}" fill="{EAU}" />']
     m.append(f'<line x1="280" y1="14" x2="280" y2="196" stroke="{FILET}" stroke-width="1.5" stroke-dasharray="5 5" />')
-    # À gauche : alignés, ils tirent du même côté.
+    # À gauche : deux flèches parallèles, de même sens.
     m += [
-        _texte(140, 26, "Vive-eau : marnage maximal", taille=15, graisse=700),
+        _texte(140, 26, "Vive-eau :", taille=15, graisse=700),
         _texte(140, 46, "pleine et nouvelle lune", taille=14, couleur=DOUX),
-        _astre(40, 130, 16, "#f0d98a"),
-        _astre(100, 130, 8, "#ffffff"),
-        f'<circle cx="190" cy="130" r="5" fill="{ENCRE}" />',
-        _fleche(176, 118, 114, 118, epaisseur=2),
-        _fleche(176, 152, 62, 152, epaisseur=2),
-        _texte(40, 184, "Soleil", taille=14),
-        _texte(100, 184, "Lune", taille=14),
-        _texte(190, 108, "mer", taille=14, graisse=700),
+        _texte(140, 84, "Soleil", taille=14),
+        _fleche(60, 94, 220, 94, epaisseur=2),
+        _texte(140, 128, "Lune", taille=14),
+        _fleche(60, 138, 220, 138, epaisseur=2),
+        _texte(140, 184, "ils tirent dans le même sens", taille=14, graisse=700),
     ]
-    # À droite : en croix, leurs effets se contrarient.
+    # À droite : deux flèches en croix.
     m += [
-        _texte(420, 26, "Morte-eau : marnage minimal", taille=15, graisse=700),
-        _texte(420, 46, "quartiers de lune", taille=14, couleur=DOUX),
-        _astre(340, 140, 16, "#f0d98a"),
-        _astre(470, 80, 8, "#ffffff"),
-        f'<circle cx="470" cy="140" r="5" fill="{ENCRE}" />',
-        _fleche(456, 140, 362, 140, epaisseur=2),
-        _fleche(470, 126, 470, 94, epaisseur=2),
-        _texte(340, 184, "Soleil", taille=14),
-        _texte(500, 84, "Lune", taille=14, ancre="start"),
-        _texte(470, 162, "mer", taille=14, graisse=700),
+        _texte(420, 26, "Morte-eau :", taille=15, graisse=700),
+        _texte(420, 46, "premier et dernier quartier", taille=14, couleur=DOUX),
+        _fleche(350, 130, 470, 130, epaisseur=2),
+        _texte(445, 150, "Soleil", taille=14),
+        _fleche(400, 160, 400, 68, epaisseur=2),
+        _texte(412, 80, "Lune", taille=14, ancre="start"),
+        _texte(420, 184, "ils tirent en croix", taille=14, graisse=700),
     ]
     m.append("</svg>")
     return "".join(m) + "\n"

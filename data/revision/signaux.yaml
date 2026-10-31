@@ -37,7 +37,6 @@ sections:
     notions: [signaux-lumineux]
     blocs:
       - regles:
-          - Un éclat par son bref, le même comptage qu’au sifflet.
           - Feu blanc, visible sur tout l’horizon, 5 milles au moins.
           - Un éclat dure une seconde environ, l’intervalle une seconde, dix secondes au moins entre deux signaux.
           - Le signal lumineux complète le sifflet, il ne le remplace pas.
@@ -52,7 +51,6 @@ sections:
           - "Au moins 5 sons brefs et rapides : je ne comprends pas tes intentions, ou je doute que tu en fasses assez pour éviter l’abordage."
           - Le doute s’émet tout de suite, et peut être doublé d’au moins 5 éclats brefs et rapides.
           - Pour attirer l’attention, tout signal qui ne peut pas être confondu avec un signal du Règlement. Le projecteur se dirige vers le danger, jamais vers le navire.
-          - Évite les feux intermittents ou tournants à haute intensité.
       - piege: >-
           Le doute n’est pas une détresse : cinq sons brefs ne demandent aucune assistance.
 
@@ -119,7 +117,7 @@ sections:
             - - visuel: sons/brume-pilote.svg
                 alt: Quatre impulsions sonores courtes et rapprochées.
               - Bateau-pilote en service
-              - Ajouté à son signal normal
+              - Peut s’ajouter à son signal normal
       - astuce: >-
           Un seul trait, j’avance. Deux traits, je suis arrêté sur l’eau. Trois coups, la sonnerie, trois coups :
           ce navire ne bougera pas.
@@ -157,8 +155,7 @@ sections:
             verts superposés.
       - regles:
           - "Trois feux verticaux rouges : passage interdit. Trois verts : passage autorisé, sous certaines conditions."
-          - Les signaux auxiliaires se lisent dans les publications nautiques et le règlement local.
-          - Le même système sert sur les écluses et les ponts mobiles.
+          - Le même système peut servir aux écluses et aux ponts mobiles.
 
   - titre: Les avis de météo portent un chiffre
     largeur: demie
@@ -171,7 +168,6 @@ sections:
             frais à ouragan.
       - regles:
           - Un avis est émis dès force 7 attendue ou observée.
-          - Un avis en cours est diffusé hors des heures normales, par les CROSS sur VHF après annonce sur le canal 16, et par Navtex.
           - "Force 7 ou plus annoncée sur ta zone : la sortie côtière se reporte, à quai."
       - piege: >-
           Un avis de coup de vent parle de force 8, pas de force 7.

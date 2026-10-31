@@ -54,7 +54,7 @@ def file() -> str:
 
 def sas() -> str:
     """Le sas en coupe : bateau amarré aux deux bajoyers, défenses, amarres qui suivent le niveau."""
-    L, H = 560, 330
+    L, H = 560, 346
     morceaux = [_entete(L, H), f'<rect width="{L}" height="{H}" fill="#ffffff" />']
     mur = 70
     morceaux += [
@@ -90,6 +90,7 @@ def sas() -> str:
         _texte(430, 94, "les bajoyers ni les portes", taille=14, ancre="middle"),
         _texte(280, 300, "Le niveau monte ou descend", taille=14, ancre="middle"),
         _texte(280, 318, "Bateau amarré : plus de propulsion mécanique", taille=14, graisse=700, ancre="middle"),
+        _texte(280, 336, "jusqu’à l’autorisation de sortie, sauf règlement local", taille=14, graisse=700, ancre="middle"),
         _texte(176, 208, "défense", taille=14, ancre="middle", couleur=DOUX),
         _texte(384, 208, "défense", taille=14, ancre="middle", couleur=DOUX),
     ]

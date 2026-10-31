@@ -16,6 +16,7 @@ sections:
           - "Deux à bord : l’un conduit, l’autre surveille, et il a 16 ans au moins."
           - "Seul le moniteur de ski nautique breveté d’État peut tout faire seul, avec un rétroviseur."
           - "Départ et retour par un chenal de vitesse, dégagé."
+          - "Les règles sont celles du préfet maritime de ta façade : vérifie son arrêté. En Atlantique, à moins de 2 milles de la côte."
       - piege: >-
           Tracter seul parce que le rétroviseur permet de voir le skieur. Pour toi, il faut une deuxième
           personne, d’au moins 16 ans, qui ne fait que surveiller.
@@ -63,7 +64,7 @@ sections:
     blocs:
       - regles:
           - "Il répond de la conduite, des règlements et de la sécurité des personnes embarquées. Ni le propriétaire, ni le plus âgé : celui qui conduit."
-          - "Avant de partir, il vérifie sa navigation, le matériel de sécurité et sa mise en œuvre."
+          - "Il s’assure que sa navigation convient au bateau et que le matériel est à bord et en état ; il le met en œuvre quand il le faut."
           - "Respecter le RIPAM n’exonère pas d’une négligence (règle 2)."
           - "Conduire sans permis : contravention de 5e classe."
 
@@ -78,14 +79,14 @@ sections:
           colonnes: [Signal, Quand]
           lignes:
             - [MAYDAY, "Danger grave et imminent, assistance immédiate"]
-            - [PAN PAN, "Urgence sans menace immédiate, comme une avarie de moteur"]
+            - [PAN PAN, "Urgence sans menace immédiate, comme une avarie de moteur sans danger imminent"]
 
   - titre: Échouement et panne
     largeur: demie
     notions: [conduite-echouement-panne]
     blocs:
       - regles:
-          - "Échouement : la coque et la voie d’eau d’abord, jamais de marche arrière à plein gaz."
+          - "Échouement : la coque et la voie d’eau d’abord, pas de marche arrière à plein gaz avant d’avoir vu la coque."
           - "Marée montante, on attend. Marée descendante, chaque minute compte."
           - "Hélice et refroidissement vérifiés avant de relancer le moteur."
           - "Panne avec dérive vers un danger : on mouille avant d’ouvrir le capot."

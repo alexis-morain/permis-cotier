@@ -100,10 +100,10 @@ sections:
           - Les ancres sont complètement relevées. Les défenses sont obligatoires, et flottantes si elles sont amovibles.
           - Le bateau est amarré pendant le remplissage et la vidange, jusqu’à l’autorisation de sortie. Les amarres sont manœuvrées pour éviter tout choc.
           - Débarquer est interdit sans autorisation du personnel. Rejeter de l’eau sur les terre-pleins ou les autres bateaux l’est aussi.
-          - La radio est à l’écoute sur la voie de l’écluse, et on suit les instructions du personnel.
+          - Si tu as une VHF, elle est à l’écoute sur la voie de l’écluse, et on suit les instructions du personnel.
       - piege: >-
           Garder le moteur embrayé au ralenti pour tenir le bateau au milieu du sas. Une fois amarré, plus de
-          propulsion mécanique jusqu’à l’autorisation de sortie : c’est l’amarre qui tient le bateau.
+          propulsion mécanique jusqu’à l’autorisation de sortie, sauf règlement local : c’est l’amarre qui tient le bateau.
 
 meta:
   cree_le: '2026-10-31'
