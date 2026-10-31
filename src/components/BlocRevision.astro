@@ -1,0 +1,66 @@
+---
+/**
+ * Un bloc d'une fiche de révision : schéma, galerie, tableau, règles, astuce
+ * ou piège. Le même rendu sert à l'écran et à l'impression ; `revision.css`
+ * règle la différence.
+ */
+import type { BlocRevision } from '../lib/revision';
+
+interface Props {
+  bloc: BlocRevision;
+}
+
+const { bloc } = Astro.props;
+---
+
+{'schema' in bloc && (
+  <figure class="revision__schema">
+    <img src={`/fiches-revision/schemas/${bloc.schema.fichier}`} alt={bloc.schema.alt} loading="lazy" />
+    {bloc.schema.legende && <figcaption>{bloc.schema.legende}</figcaption>}
+  </figure>
+)}
+
+{'galerie' in bloc && (
+  <ul class="revision__galerie">
+    {bloc.galerie.map((g) => (
+      <li>
+        <img src={`/visuels/${g.visuel}`} alt={g.alt} loading="lazy" />
+        <b>{g.nom}</b>
+        {g.lignes?.map((l) => <span>{l}</span>)}
+      </li>
+    ))}
+  </ul>
+)}
+
+{'tableau' in bloc && (
+  <div class={bloc.tableau.colonnes.length > 2 ? 'revision__tableau revision__tableau--large' : 'revision__tableau'}>
+    <table>
+      <thead>
+        <tr>{bloc.tableau.colonnes.map((c) => <th scope="col">{c}</th>)}</tr>
+      </thead>
+      <tbody>
+        {bloc.tableau.lignes.map((ligne) => (
+          <tr>
+            {ligne.map((cellule, i) => {
+              const contenu =
+                typeof cellule === 'string' ? cellule : <img src={`/visuels/${cellule.visuel}`} alt={cellule.alt} loading="lazy" />;
+              return i === 0 ? <th scope="row">{contenu}</th> : <td data-colonne={bloc.tableau.colonnes[i]}>{contenu}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
+{'regles' in bloc && (
+  <ul class="revision__regles">{bloc.regles.map((r) => <li>{r}</li>)}</ul>
+)}
+
+{'astuce' in bloc && (
+  <p class="revision__encart revision__encart--astuce"><b>Pour retenir</b> {bloc.astuce}</p>
+)}
+
+{'piege' in bloc && (
+  <p class="revision__encart revision__encart--piege"><b>Piège</b> {bloc.piege}</p>
+)}

@@ -50,7 +50,7 @@
  * quand on les a ouverts. Un test vérifie que chacun est bien un dossier de
  * pages, faute de quoi l'exclusion ne désignerait plus rien.
  */
-export const CONTENU_A_LA_DEMANDE = ['question', 'notion', 'cours', 'theme', 'guide', 'source'] as const;
+export const CONTENU_A_LA_DEMANDE = ['question', 'notion', 'cours', 'theme', 'guide', 'source', 'fiches-revision'] as const;
 
 /**
  * Les écrans de jeu qui se gardent à la lecture, et non d'avance.

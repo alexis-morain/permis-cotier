@@ -1,0 +1,173 @@
+/*
+ * La fiche de révision d'un cours, à l'écran et sur papier A4.
+ *
+ * À l'écran : une colonne qui passe à deux à partir de 52 rem, une section
+ * par panneau à filet. Sur papier : la même grille, plus serrée, sans
+ * l'en-tête ni le pied du site, en Helvetica (une police du système Apple
+ * ne s'embarque pas dans un PDF qu'on diffuse). Le piège reprend le cadre à
+ * filet fort de la leçon, l'astuce son lavis : un candidat qui a lu une leçon
+ * les reconnaît.
+ */
+
+.revision {
+  width: min(100% - 2.5rem, 64rem);
+  margin-inline: auto;
+}
+
+.revision__marque {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texte-doux);
+}
+
+.revision__tete h1 { margin: 0.6rem 0 0.4rem; }
+.revision__resume { font-size: 1.125rem; color: var(--texte-doux); max-width: 44rem; margin: 0; }
+.revision__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.25rem 0 0; max-width: none; }
+
+.revision__grille {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 52rem) {
+  .revision__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .revision__section--pleine { grid-column: 1 / -1; }
+  /* Une section pleine qui porte un schéma : le schéma à gauche, le reste à droite. */
+  .revision__section--pleine:has(> .revision__schema) {
+    display: grid; grid-template-columns: 1.15fr 1fr; column-gap: 1.25rem; row-gap: 0.75rem; align-content: start;
+  }
+  .revision__section--pleine:has(> .revision__schema) > h2 { grid-column: 1 / -1; }
+  .revision__section--pleine:has(> .revision__schema) > .revision__schema { grid-column: 1; grid-row: 2 / span 4; align-self: start; }
+  .revision__section--pleine:has(> .revision__schema) > :not(h2, .revision__schema) { grid-column: 2; }
+}
+
+.revision__section {
+  background: var(--fond-carte);
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon);
+  padding: 1rem 1.25rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.revision__section h2 { font-size: 1.125rem; margin: 0; }
+.revision__section p, .revision__section li { max-width: none; }
+
+.revision__schema { margin: 0; display: grid; place-items: center; }
+.revision__schema img { width: 100%; height: auto; max-height: 24rem; object-fit: contain; border-radius: var(--rayon-petit); }
+.revision__section--demie .revision__schema img { max-height: 15rem; }
+.revision__schema figcaption { font-size: 0.8125rem; color: var(--texte-doux); margin-top: 0.3rem; }
+
+.revision__galerie {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+}
+.revision__galerie li { display: flex; flex-direction: column; gap: 0.1rem; font-size: 0.875rem; }
+.revision__galerie img { width: 100%; height: auto; border-radius: var(--rayon-petit); margin-bottom: 0.3rem; }
+
+.revision__tableau { overflow-x: auto; }
+.revision__tableau table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.revision__tableau th, .revision__tableau td {
+  text-align: left; vertical-align: middle;
+  padding: 0.45rem 0.6rem 0.45rem 0;
+  border-bottom: 1px solid var(--filet);
+}
+.revision__tableau thead th { font-size: 0.8125rem; font-weight: 600; color: var(--texte-doux); }
+.revision__tableau tbody th { font-weight: 600; }
+.revision__tableau tr:last-child > * { border-bottom: 0; }
+.revision__tableau img { display: block; width: 4.5rem; height: auto; border-radius: 4px; }
+.revision__tableau img[src*='/rythmes/'] { width: 6.5rem; }
+
+/* Sur un téléphone, un tableau de trois colonnes et plus devient une pile : la
+   première cellule en tête, chaque autre précédée du nom de sa colonne. */
+@media screen and (max-width: 36rem) {
+  .revision__tableau--large thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .revision__tableau--large tr { display: block; padding: 0.6rem 0; border-bottom: 1px solid var(--filet); }
+  .revision__tableau--large tr:last-child { border-bottom: 0; }
+  .revision__tableau--large th, .revision__tableau--large td { display: block; border: 0; padding: 0.1rem 0; }
+  .revision__tableau--large td::before { content: attr(data-colonne) '\00a0: '; color: var(--texte-doux); }
+}
+
+.revision__regles { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; }
+
+.revision__encart { margin: 0; padding: 0.75rem 1rem; border-radius: var(--rayon-petit); font-size: 0.9375rem; }
+.revision__encart b { display: block; margin-bottom: 0.15rem; }
+.revision__encart--astuce { background: var(--fond-2); }
+.revision__encart--piege { border: 1px solid var(--filet-fort); }
+
+.revision__pied { margin: 2rem 0 0; padding-top: 1rem; border-top: 1px solid var(--filet); font-size: 0.8125rem; color: var(--texte-doux); }
+.revision__sources-titre { font-weight: 600; margin: 0 0 0.3rem; color: var(--texte); }
+.revision__sources { list-style: none; padding: 0; margin: 0; columns: 2 18rem; column-gap: 1.5rem; }
+.revision__sources li { margin-bottom: 0.15rem; break-inside: avoid; }
+.revision__colophon { margin: 0.75rem 0 0; max-width: none; }
+
+/* L'index des fiches. */
+.fiches-revision { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 0; }
+.fiches-revision li {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1rem; align-items: center;
+  padding: 0.75rem 0; border-bottom: 1px solid var(--filet); max-width: none;
+}
+.fiches-revision a.fiches-revision__nom { font-weight: 600; color: var(--texte); text-decoration: none; }
+@media (hover: hover) { .fiches-revision a.fiches-revision__nom:hover { text-decoration: underline; } }
+.fiches-revision__pdf { font-size: 0.875rem; }
+
+@page {
+  size: A4;
+  margin: 10mm 10mm 11mm;
+}
+
+@media print {
+  html, body { background: #ffffff !important; color: #1b1b1b; }
+  body { font-family: Helvetica, Arial, sans-serif; font-size: 8.6pt; line-height: 1.32; }
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .entete, .pied, .ariane, .retour, .revision__actions, [data-signaler], .bande, .sans-script { display: none !important; }
+  main { padding: 0 !important; }
+
+  .revision { width: 100%; padding: 0 !important; }
+  .revision__marque { display: flex; font-size: 8pt; margin-bottom: 1mm; }
+  .revision__tete { display: grid; grid-template-columns: auto 1fr; column-gap: 4mm; align-items: baseline; }
+  .revision__marque { grid-column: 1 / -1; }
+  .revision__tete h1 { font-size: 20pt; margin: 0; letter-spacing: -0.01em; grid-row: 2; grid-column: 1; }
+  .revision__tete .etiquette { grid-row: 2; grid-column: 2; justify-self: start; font-size: 7.5pt; }
+  .revision__resume { grid-column: 1 / -1; font-size: 9.5pt; margin-top: 1mm; max-width: none; }
+
+  .revision__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm; margin-top: 4mm; }
+  .revision__section--pleine { grid-column: 1 / -1; }
+  .revision__section { padding: 2.6mm 3.2mm 3mm; gap: 1.8mm; border-radius: 2.5mm; border-color: #d9d8d4; break-inside: avoid; }
+  .revision__section h2 { font-size: 10.5pt; }
+
+  .revision__schema img { max-height: 48mm; border-radius: 1.5mm; }
+  .revision__section--demie .revision__schema img { max-height: 46mm; }
+  .revision__section--pleine:has(> .revision__schema) {
+    display: grid; grid-template-columns: 1.15fr 1fr; column-gap: 4mm; row-gap: 1.8mm; align-content: start;
+  }
+  .revision__section--pleine:has(> .revision__schema) > h2 { grid-column: 1 / -1; }
+  .revision__section--pleine:has(> .revision__schema) > .revision__schema { grid-column: 1; grid-row: 2 / span 4; align-self: start; }
+  .revision__section--pleine:has(> .revision__schema) > :not(h2, .revision__schema) { grid-column: 2; }
+
+  .revision__tableau { overflow: visible; }
+  .revision__tableau table { font-size: 8pt; }
+  .revision__tableau th, .revision__tableau td { padding: 0.7mm 2mm 0.7mm 0; border-color: #e3e2de; }
+  .revision__tableau thead th { font-size: 7.5pt; }
+  .revision__tableau img { width: 8mm; }
+  .revision__tableau img[src*='/rythmes/'] { width: 20mm; }
+
+  .revision__regles { gap: 0.8mm; padding-left: 4mm; }
+  .revision__encart { padding: 1.8mm 2.6mm; font-size: 8.3pt; border-radius: 1.5mm; }
+  .revision__encart--astuce { background: #f3f3f1; }
+
+  .revision__pied { margin-top: 3mm; padding-top: 2mm; font-size: 7pt; }
+  .revision__sources { columns: 2; column-gap: 5mm; }
+  .revision__sources li .marque.marque--fiche { display: inline; font-size: 6.5pt; padding: 0 0.8mm; border-width: 0.5pt; vertical-align: baseline; }
+  .revision__galerie { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2.5mm; }
+  .revision__galerie li { font-size: 7.5pt; line-height: 1.25; }
+  .revision__galerie img { border-radius: 1mm; margin-bottom: 0.8mm; }
+  .revision__sources a { color: inherit; text-decoration: none; }
+  .revision__colophon { margin-top: 1.5mm; }
+}

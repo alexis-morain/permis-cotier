@@ -79,6 +79,15 @@ jobs:
       - name: Vérifier les signaux sonores
         run: python scripts/sons.py --verifier
 
+      # Les schémas des fiches de révision sont dessinés par script, et chaque
+      # PDF garde l'empreinte de ce dont il est fait : un YAML ou une leçon
+      # retouchée sans réimprimer la fiche la laisserait dire l'ancienne règle.
+      - name: Vérifier les schémas des fiches de révision
+        run: python scripts/schemas_revision.py --verifier
+
+      - name: Vérifier les PDF des fiches de révision
+        run: node scripts/fiches-pdf.mjs --verifier
+
       # Les bruitages de l'app sont calculés, pas enregistrés : un WAV retouché
       # à la main sortirait du contrôle du script qui le synthétise.
       - name: Vérifier les sons de l'app

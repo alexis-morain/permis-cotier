@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import BlocRevision from '../../components/BlocRevision.astro';
+import MarqueSource from '../../components/MarqueSource.astro';
+import '../../components/revision.css';
+import { cheminCours } from '../../lib/parcours';
+import { leconDeLaNotion } from '../../lib/lecons';
+import { notionParCode } from '../../lib/notions';
+import { cheminRevision, cheminPdf, notionsDeLaFiche, regrouperSources, sourcesDeLaFiche, type Revision } from '../../lib/revision';
+import { themeParCode } from '../../lib/themes';
+import { groupeDuTheme } from '../../lib/groupes';
+import { SITE, ressource } from '../../lib/seo';
+import { POUR_APP } from '../../lib/cible';
+
+export async function getStaticPaths() {
+  const fiches = await getCollection('revisions');
+  return fiches.map((f) => ({ params: { cours: f.data.cours }, props: { fiche: f.data } }));
+}
+
+const { fiche } = Astro.props as { fiche: Revision };
+const theme = themeParCode(fiche.cours);
+if (!theme) throw new Error(`fiche de révision sans thème : ${fiche.cours}`);
+const groupe = groupeDuTheme(fiche.cours);
+const chemin = cheminRevision(fiche.cours);
+const base = Astro.site ?? SITE.domaine;
+
+const lecons = await Promise.all(
+  notionsDeLaFiche(fiche).map(async (code) => {
+    const notion = notionParCode(code);
+    if (!notion) throw new Error(`fiche ${fiche.cours} : notion inconnue ${code}`);
+    return leconDeLaNotion(notion);
+  }),
+);
+const sources = regrouperSources(sourcesDeLaFiche(lecons.map((l) => l.sources)));
+
+// Dans l'app, le PDF part du site : la coquille ouvre un lien d'une autre
+// origine dans Safari intégré, qui l'affiche, le partage et l'imprime.
+const pdf = POUR_APP ? new URL(cheminPdf(fiche.cours), SITE.domaine).href : cheminPdf(fiche.cours);
+const adresse = `${new URL(chemin, SITE.domaine).host}${chemin}`;
+
+const titre = `Fiche de révision : ${theme.nom.toLowerCase()}`;
+const description = `${theme.nom} pour le permis côtier, sur une ou deux pages A4 à imprimer : schémas, tableaux et pièges d’examen, chaque règle tirée des textes. PDF gratuit.`;
+---
+
+<Base
+  titre={titre}
+  description={description}
+  miettes={[
+    { nom: 'Fiches de révision', chemin: '/fiches-revision' },
+    { nom: theme.nom, chemin },
+  ]}
+  jsonLd={[
+    ressource(
+      { nom: titre, resume: description, chemin, theme: theme.nom, nombreQuestions: 0, type: 'Fiche de révision' },
+      base,
+    ),
+  ]}
+>
+  <article class="revision" style={POUR_APP ? undefined : 'padding-block:2.5rem 0'}>
+    <header class="revision__tete">
+      <p class="revision__marque" aria-hidden="true">
+        <svg viewBox="0 0 22 22" width="18" height="18">
+          <rect x="0.5" y="0.5" width="21" height="21" rx="4.5" fill="#191918" />
+          <path d="M11 4.5l4 5.5H7z" fill="#ffc72c" />
+          <path d="M11 18l4-5.5H7z" fill="#ffc72c" />
+        </svg>
+        Le Permis Côtier · fiche de révision
+      </p>
+      {groupe && <p class={`etiquette etiquette--${groupe.couleur}`}>{groupe.nom}</p>}
+      <h1>{theme.nom}</h1>
+      <p class="revision__resume">{fiche.resume}</p>
+      <p class="revision__actions">
+        <a class="bouton bouton--principal" href={pdf} download={POUR_APP ? undefined : `permis-cotier-${fiche.cours}.pdf`} data-mesure="fiche-pdf" data-mesure-theme={fiche.cours}>
+          Télécharger le PDF
+        </a>
+        <a class="bouton" href={cheminCours(fiche.cours)}>Le cours complet</a>
+      </p>
+    </header>
+
+    <div class="revision__grille">
+      {fiche.sections.map((s) => (
+        <section class={`revision__section revision__section--${s.largeur}`}>
+          <h2>{s.titre}</h2>
+          {s.blocs.map((b) => <BlocRevision bloc={b} />)}
+        </section>
+      ))}
+    </div>
+
+    <footer class="revision__pied">
+      <p class="revision__sources-titre">Tiré de ces textes, liés article par article dans chaque leçon</p>
+      <ul class="revision__sources">
+        {sources.map((s) => (
+          <li>
+            <b>{s.texte}</b>{s.parties.length > 0 && `, ${s.parties.join(' ; ')}`}
+            {s.provenance === 'fiche' && <> <MarqueSource provenance={s.provenance} /></>}
+          </li>
+        ))}
+      </ul>
+      <p class="revision__colophon">
+        {adresse} · gratuit, sans inscription. Une erreur ? Signale-la depuis la page en ligne.
+      </p>
+    </footer>
+  </article>
+</Base>
