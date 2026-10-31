@@ -238,8 +238,8 @@ def test_lecture_des_builds_et_versions_depuis_le_json_api(monkeypatch):
                  "relationships": {"preReleaseVersion": {"data": {"type": "preReleaseVersions", "id": "p0"}}}},
             ],
             "included": [
-                {"type": "preReleaseVersions", "id": "p1", "attributes": {"version": "1.0.1"}},
-                {"type": "preReleaseVersions", "id": "p0", "attributes": {"version": "1.0"}},
+                {"type": "preReleaseVersions", "id": "p1", "attributes": {"version": "1.0.1", "platform": "IOS"}},
+                {"type": "preReleaseVersions", "id": "p0", "attributes": {"version": "1.0", "platform": "IOS"}},
                 {"type": "betaBuildLocalizations", "id": "l1",
                  "attributes": {"locale": "fr-FR", "whatsNew": "main 0123456"}},
             ],
@@ -426,3 +426,125 @@ def test_preparer_refuse_une_fiche_fausse_avant_tout_appel(monkeypatch, tmp_path
         assert "622 questions" in str(arret)
     else:
         raise AssertionError("preparer aurait dû refuser la fiche")
+
+
+# --- Deux plateformes, un compteur de builds ----------------------------------
+#
+# L'app Mac (Mac Catalyst) partage l'identifiant de l'iOS : ses builds tombent
+# dans la même liste `/v1/builds`. Chaque plateforme décide sur ses builds à
+# elle, mais les numéros se prennent au-dessus de tous, pour qu'un build Mac et
+# un build iOS ne portent jamais le même.
+
+
+def test_un_build_mac_ne_passe_pas_pour_le_dernier_build_ios():
+    versions = [Version("1.0.9", "READY_FOR_SALE", build=22)]
+    builds = [
+        Build(22, "1.0.9", AUTRE[:7]),
+        Build(23, "1.0.10", AUTRE[:7]),
+        # Même commit, même numéro de version : seule la plateforme le distingue.
+        Build(24, "1.0.10", SHA[:7], "MAC_OS"),
+    ]
+    d = decider(versions, builds, SHA)
+    assert (d.action, d.version, d.build) == ("construire", "1.0.10", 25)
+
+
+def test_un_build_ios_ne_passe_pas_pour_le_dernier_build_mac():
+    builds = [Build(22, "1.0.9", None), Build(23, "1.0", SHA[:7])]
+    d = decider([], builds, SHA, "MAC_OS")
+    assert (d.action, d.version, d.build, d.soumission) == ("construire", "1.0", 24, True)
+
+
+def test_le_mac_retrouve_son_build_au_meme_commit():
+    builds = [Build(23, "1.0", SHA[:7], "MAC_OS"), Build(24, "1.0.10", None)]
+    d = decider([], builds, SHA, "MAC_OS")
+    assert (d.action, d.version, d.build) == ("soumettre", "1.0", 23)
+
+
+def test_la_plateforme_des_builds_se_lit_dans_leur_version_de_test(monkeypatch):
+    import app_store
+
+    page = {
+        "data": [
+            {"type": "builds", "id": "b2", "attributes": {"version": "24"},
+             "relationships": {"preReleaseVersion": {"data": {"type": "preReleaseVersions", "id": "p2"}}}},
+            {"type": "builds", "id": "b1", "attributes": {"version": "23"},
+             "relationships": {"preReleaseVersion": {"data": {"type": "preReleaseVersions", "id": "p1"}}}},
+        ],
+        "included": [
+            {"type": "preReleaseVersions", "id": "p2", "attributes": {"version": "1.0", "platform": "MAC_OS"}},
+            {"type": "preReleaseVersions", "id": "p1", "attributes": {"version": "1.0.10", "platform": "IOS"}},
+        ],
+    }
+    monkeypatch.setattr(app_store, "appeler", lambda methode, url: page)
+    assert app_store.lire_builds() == [Build(24, "1.0", None, "MAC_OS"), Build(23, "1.0.10", None, "IOS")]
+
+
+def test_les_versions_se_lisent_par_plateforme(monkeypatch):
+    import app_store
+
+    vues = []
+
+    def appeler(methode, url):
+        vues.append(url)
+        return {"data": []}
+
+    monkeypatch.setattr(app_store, "appeler", appeler)
+    app_store.lire_versions("MAC_OS")
+    app_store.lire_versions()
+    assert "filter%5Bplatform%5D=MAC_OS" in vues[0]
+    assert "filter%5Bplatform%5D=IOS" in vues[1]
+
+
+def test_une_plateforme_inconnue_est_refusee():
+    import pytest
+    import app_store
+
+    with pytest.raises(SystemExit):
+        app_store.main(["preparer", "--commit", SHA, "--plateforme", "TV_OS"])
+
+
+def test_le_mac_a_son_propre_a_tester():
+    import app_store
+
+    assert app_store.A_TESTER_PAR_PLATEFORME["MAC_OS"].name == "a-tester-mac.txt"
+    assert lire_a_tester(app_store.A_TESTER_PAR_PLATEFORME["MAC_OS"])
+
+
+def test_la_fiche_mac_est_relue_par_verifier_fiche():
+    from app_store import FICHE, RACINE
+
+    relus = {c.relative_to(RACINE).as_posix() for c in FICHE}
+    for nom in ("description.txt", "mots-cles.txt", "notes-revue.txt"):
+        assert f"docs/fiche-app-store/mac/{nom}" in relus
+    assert "ios/a-tester-mac.txt" in relus
+
+
+# --- Les workflows : jamais deux plateformes d'un coup ------------------------
+
+
+def _workflow(nom):
+    import yaml
+
+    texte = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / nom).read_text(encoding="utf-8")
+    flux = yaml.safe_load(texte)
+    # PyYAML lit la clé `on` comme le booléen True.
+    return texte, flux, flux.get("on", flux.get(True))
+
+
+def test_le_workflow_mac_ne_part_qu_a_la_main():
+    _, _, declencheurs = _workflow("app-mac.yml")
+    assert set(declencheurs) == {"workflow_dispatch"}
+
+
+def test_le_workflow_mac_ne_soumet_qu_a_la_demande():
+    texte, _, declencheurs = _workflow("app-mac.yml")
+    revue = declencheurs["workflow_dispatch"]["inputs"]["revue"]
+    assert revue["type"] == "boolean" and revue["default"] is False
+    assert "--plateforme MAC_OS" in texte and "--sans-revue" in texte
+    assert "Mac Catalyst" in texte
+
+
+def test_le_workflow_ios_reste_a_l_ios():
+    texte, _, _ = _workflow("app-ios.yml")
+    assert "MAC_OS" not in texte and "Catalyst" not in texte
+    assert "-destination generic/platform=iOS " in texte

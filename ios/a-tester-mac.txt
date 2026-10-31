@@ -1,0 +1,19 @@
+Première version Mac : l'app tourne dans une fenêtre, avec la barre latérale et la barre de menus. Ta progression est celle de l'app iPhone installée sur ce Mac, s'il y en a une. Regarde surtout si tout se fait au clavier et à la souris.
+
+Fenêtre
+• Rétrécis la fenêtre au plus petit, puis agrandis-la, puis passe en plein écran : rien ne doit se couper, la page reste dans une colonne centrée.
+• La barre latérale se masque et revient (Présentation, ou ⌃⌘S). Pendant un examen blanc, elle se range seule et revient à la fin.
+• Passe le Mac en mode sombre : l'app suit.
+
+Menus et clavier
+• ⌘N ouvre l'examen blanc, ⌘1 à ⌘5 passent d'une partie à l'autre, ⌘, ouvre les réglages.
+• En examen : A à D pour cocher, Entrée pour valider, ⌘→ pour passer la question. Les flèches haut et bas passent d'une proposition à l'autre. Échap ouvre « Arrêter l'examen ? », un second Échap le referme.
+• Le menu Examen est grisé hors série, actif pendant l'épreuve.
+• ⌘+ et ⌘− changent la taille du texte, ⌘0 la remet.
+
+Le reste
+• Les sons suivent le volume du Mac.
+• Signaler une erreur (menu Aide, ou sous une question) ouvre un brouillon dans Mail.
+• Un lien vers un autre site s'ouvre dans ton navigateur.
+• Partager un résultat d'examen ouvre la bulle de partage, accrochée au bouton.
+• Pose une date d'examen dans ta fiche : le Mac demande la permission d'envoyer des notifications, puis les rappels sont programmés.
