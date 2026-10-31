@@ -143,7 +143,8 @@ jobs:
         run: |
           app=$(ls -d "$RUNNER_TEMP"/App.xcarchive/Products/Applications/*.app)
           codesign -d --entitlements - --xml "$app" > "$RUNNER_TEMP/droits.plist"
-          plutil -extract com.apple.security.app-sandbox raw "$RUNNER_TEMP/droits.plist" | grep -qx true
+          # `plutil` lit les points comme un chemin : ils se protègent.
+          plutil -extract 'com\.apple\.security\.app-sandbox' raw "$RUNNER_TEMP/droits.plist" | grep -qx true
 
       - name: Signer et téléverser
         env:
