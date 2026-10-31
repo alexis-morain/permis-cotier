@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import '../../components/revision.css';
+import { COURS } from '../../lib/parcours';
+import { cheminRevision, cheminPdf } from '../../lib/revision';
+import { themeParCode } from '../../lib/themes';
+import { SITE } from '../../lib/seo';
+import { POUR_APP } from '../../lib/cible';
+
+/**
+ * Les fiches de révision, dans l'ordre du cours. Un cours sans fiche n'y
+ * paraît pas : la liste dit ce qui existe, pas ce qui est prévu.
+ */
+const codes = new Set((await getCollection('revisions')).map((f) => f.data.cours));
+const fiches = COURS.filter((c) => codes.has(c.code)).map((c) => ({ code: c.code, nom: themeParCode(c.code)?.nom ?? c.titre }));
+const pdf = (code: string) => (POUR_APP ? new URL(cheminPdf(code), SITE.domaine).href : cheminPdf(code));
+---
+
+<Base
+  titre="Fiches de révision du permis côtier en PDF"
+  description="Une fiche par chapitre du permis côtier, à imprimer sur une ou deux pages A4 : schémas, tableaux et pièges d’examen. Gratuites, chaque règle tirée des textes."
+  miettes={[{ nom: 'Fiches de révision', chemin: '/fiches-revision' }]}
+>
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:2.5rem 0'}>
+    <h1>Fiches de révision</h1>
+    <p class="chapo">
+      Une fiche par chapitre, une ou deux pages A4 à imprimer ou à garder sur le téléphone. Les schémas
+      et les tableaux résument les leçons, et chaque fiche dit de quels textes elle vient.
+    </p>
+    <ul class="fiches-revision">
+      {fiches.map((f) => (
+        <li>
+          <a class="fiches-revision__nom" href={cheminRevision(f.code)}>{f.nom}</a>
+          <a class="fiches-revision__pdf" href={pdf(f.code)} data-mesure="fiche-pdf" data-mesure-theme={f.code}>PDF</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

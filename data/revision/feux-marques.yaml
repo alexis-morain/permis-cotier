@@ -1,0 +1,197 @@
+cours: feux-marques
+resume: Chaque feu a une couleur, un secteur et une portée. De nuit on lit les feux, de jour les formes, et on compte
+  avant de conclure.
+sections:
+- titre: Les quatre secteurs, 225 et 135 font 360
+  notions:
+  - feux-definitions
+  blocs:
+  - schema:
+      fichier: feux-marques-secteurs.svg
+      alt: Un navire vu du ciel, l’avant en haut. Un grand disque blanc l’entoure, coupé en deux secteurs, un grand
+        à l’avant, un plus petit à l’arrière. Devant la coque, un secteur rouge à gauche et un secteur vert
+        à droite, devant la coque.
+  - regles:
+    - 'Tête de mât : blanc, 225 degrés vers l’avant.'
+    - 'Feux de côté : vert à tribord, rouge à bâbord, 112,5 degrés chacun.'
+    - 'Poupe : blanc, 135 degrés. Remorquage : jaune, 135 degrés.'
+    - 'Tout l’horizon : 360 degrés. Feu à éclats : 120 éclats par minute au moins.'
+  - piege: Les quatre secteurs s’échangent à l’épreuve. Le fanal unique des feux de côté est permis sous 20 mètres,
+      pas sous 12.
+- titre: Ce que chaque feu porte, la longueur commande
+  notions:
+  - feux-portee
+  blocs:
+  - tableau:
+      colonnes:
+      - Feu
+      - Moins de 12 m
+      - 12 à moins de 50 m
+      - 50 m et plus
+      lignes:
+      - - Tête de mât
+        - 2 milles
+        - 5 milles, 3 milles sous 20 m
+        - 6 milles
+      - - Feux de côté
+        - 1 mille
+        - 2 milles
+        - 3 milles
+      - - Poupe
+        - 2 milles
+        - 2 milles
+        - 3 milles
+      - - Remorquage
+        - 2 milles
+        - 2 milles
+        - 3 milles
+      - - Tout l’horizon
+        - 2 milles
+        - 2 milles
+        - 3 milles
+  - piege: Sous 12 mètres, on donne 2 milles à tous les feux. Le feu de côté est le seul à 1 mille, alors qu’il
+      dit par quel bord tu vois l’autre.
+- titre: À moteur, la signature de base
+  largeur: demie
+  notions:
+  - feux-moteur-route
+  blocs:
+  - regles:
+    - 'Moteur faisant route : tête de mât, feux de côté, feu de poupe.'
+    - 'Second feu de tête de mât : obligatoire à partir de 50 mètres, permis en dessous.'
+    - 'Moins de 12 mètres : un feu blanc sur tout l’horizon et des feux de côté.'
+    - 'Moins de 7 mètres et 7 nœuds au plus : le feu blanc seul, feux de côté si possible.'
+- titre: À la voile, jamais de tête de mât
+  largeur: demie
+  notions:
+  - feux-voile-aviron
+  blocs:
+  - regles:
+    - 'Voilier faisant route : feux de côté et feu de poupe, jamais de tête de mât.'
+    - 'Moins de 20 mètres : les trois feux peuvent former un fanal unique en tête de mât.'
+    - 'Facultatif, jamais avec le fanal : rouge au-dessus de vert.'
+    - 'Moins de 7 mètres ou à l’aviron : une lampe blanche prête.'
+    - 'Voile et moteur ensemble : un cône la pointe en bas, à l’avant.'
+- titre: La pile de feux, on lit celui du haut
+  notions:
+  - feux-peche
+  - feux-pilote
+  - feux-manoeuvre-restreinte
+  - feux-tirant-eau
+  blocs:
+  - galerie:
+    - visuel: feux/chalut.svg
+      alt: Deux feux superposés sur fond de nuit, le supérieur vert, l’inférieur blanc.
+      nom: Chalut
+      lignes:
+      - Vert sur blanc
+    - visuel: feux/peche-hors-chalut.svg
+      alt: Deux feux superposés sur fond de nuit, le supérieur rouge, l’inférieur blanc.
+      nom: Autre pêche
+      lignes:
+      - Rouge sur blanc
+    - visuel: feux/bateau-pilote.svg
+      alt: Deux feux superposés sur fond de nuit, le supérieur blanc, l’inférieur rouge.
+      nom: Bateau-pilote
+      lignes:
+      - Blanc sur rouge
+    - visuel: feux/non-maitre-de-sa-manoeuvre.svg
+      alt: Deux feux rouges superposés sur fond de nuit.
+      nom: Pas maître de sa manœuvre
+      lignes:
+      - Deux rouges
+    - visuel: feux/capacite-de-manoeuvre-restreinte.svg
+      alt: Trois feux superposés sur fond de nuit, rouge, blanc, rouge.
+      nom: Manœuvre restreinte
+      lignes:
+      - Rouge
+      - blanc
+      - rouge
+    - visuel: feux/handicape-par-son-tirant-d-eau.svg
+      alt: Trois feux rouges superposés sur fond de nuit.
+      nom: Tirant d’eau
+      lignes:
+      - Trois rouges
+  - astuce: 'Deux rouges : pas maître de sa manœuvre. Rouge, blanc, rouge : manœuvre restreinte. Trois rouges :
+      tirant d’eau.'
+  - regles:
+    - 'En pêche avec de l’erre : feux de côté et feu de poupe en plus.'
+    - 'Pêche hors chalut, engin à plus de 150 mètres : feu blanc ou cône la pointe en haut dans son alignement.'
+    - 'Pas maître de sa manœuvre ou manœuvre restreinte : tu t’écartes. Tirant d’eau : tu évites de gêner son passage.'
+  - piege: Rouge sur blanc, c’est la pêche hors chalut ; blanc sur rouge, le pilote.
+- titre: Remorquer, la pile blanche et le jaune
+  largeur: demie
+  notions:
+  - feux-remorquage
+  blocs:
+  - schema:
+      fichier: feux-marques-remorquage.svg
+      alt: Trois panneaux sombres. Le premier porte deux feux blancs superposés, le deuxième trois feux blancs superposés,
+        le troisième un feu jaune au-dessus d’un feu blanc.
+  - regles:
+    - 'Remorqueur : deux feux de tête de mât superposés, trois au-delà de 200 mètres, et le feu jaune au-dessus
+      du feu de poupe.'
+    - 'Remorqué : feux de côté et feu de poupe, sans feu jaune.'
+- titre: Au mouillage un feu blanc, échoué deux rouges en plus
+  largeur: demie
+  notions:
+  - feux-mouillage-echoue
+  blocs:
+  - tableau:
+      colonnes:
+      - Situation
+      - De nuit
+      - De jour
+      lignes:
+      - - Mouillage
+        - Un feu blanc sur tout l’horizon à l’avant, un second plus bas à l’arrière à partir de 50 mètres
+        - Une boule à l’avant
+      - - Échoué
+        - Les feux de mouillage et deux feux rouges superposés
+        - Trois boules superposées
+  - regles:
+    - 'Moins de 7 mètres au mouillage : rien d’exigé, sauf chenal, ancrage ou route fréquentée.'
+    - 'Moins de 12 mètres échoué : ni feux rouges ni boules, mais les feux de mouillage restent dus s’ils le sont à ta longueur.'
+- titre: De jour, les formes se comptent
+  notions:
+  - marques-jour
+  blocs:
+  - galerie:
+    - visuel: navires/mouillage-jour.svg
+      alt: Un bateau dont le mât porte une boule noire à l’avant.
+      nom: Mouillage
+      lignes:
+      - Une boule
+    - visuel: navires/non-maitre-jour.svg
+      alt: Un bateau dont le mât porte deux boules noires superposées.
+      nom: Pas maître de sa manœuvre
+      lignes:
+      - Deux boules
+    - visuel: navires/echoue-jour.svg
+      alt: Un bateau dont le mât porte trois boules noires superposées.
+      nom: Échoué
+      lignes:
+      - Trois boules
+    - visuel: navires/voilier-au-moteur-jour.svg
+      alt: Un voilier avec un cône noir accroché devant le mât, la pointe en bas.
+      nom: Voile et moteur
+      lignes:
+      - Un cône pointe en bas
+    - visuel: navires/chalutier-jour.svg
+      alt: Un chalutier vu de face, avec deux cônes noirs réunis par la pointe en haut du mât.
+      nom: En pêche
+      lignes:
+      - Deux cônes pointes jointes
+    - visuel: navires/remorqueur-jour.svg
+      alt: Un remorqueur dont le mât porte une forme noire à deux cônes accolés par la base.
+      nom: Remorque de plus de 200 m
+      lignes:
+      - Un bicône
+  - regles:
+    - 'Manœuvre restreinte : boule, bicône, boule. Tirant d’eau : un cylindre.'
+    - 'Cône la pointe en haut vers un engin de pêche de plus de 150 mètres : il s’ajoute aux deux cônes.'
+    - 'Plongeurs, navire trop petit pour tout montrer : pavillon « A » rigide d’au moins 1 mètre.'
+  - piege: Un cône seul pointe en bas veut dire « mon moteur tourne », pas « je pêche ».
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

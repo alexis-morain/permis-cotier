@@ -1,3 +1,11 @@
+Nouveau : les fiches de révision. Une fiche par chapitre, une ou deux pages A4, avec des schémas et des tableaux.
+
+Fiches de révision
+• Ouvre un cours (Balisage par exemple) : sous la liste des leçons, un bouton « La fiche de révision ». La fiche s’affiche dans l’app ; regarde si les schémas et les tableaux se lisent bien, sur iPhone comme sur iPad.
+• Sur iPhone, les tableaux larges se lisent en pile : chaque ligne en bloc, chaque valeur précédée du nom de sa colonne.
+• Touche « Télécharger le PDF » : le PDF s’ouvre dans Safari intégré, depuis le site (il faut une connexion). Essaie le bouton de partage pour l’enregistrer dans Fichiers ou l’imprimer, puis referme d’un geste : tu dois revenir à la fiche.
+• Coupe le réseau : la fiche se lit toujours (elle est dans l’app), le PDF ne s’ouvre pas.
+
 Version avec l’iPad : l’app s’ouvre maintenant sur iPad, dans toutes les orientations. Sur iPhone, rien ne change. Regarde surtout si l’iPad se lit bien, en grand comme en fenêtre réduite.
 
 Navigation

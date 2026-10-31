@@ -1,0 +1,120 @@
+cours: ski-responsabilites
+resume: >-
+  Le chef de bord répond de tout ce qui se passe à bord. Retiens les chiffres du ski et du véhicule
+  nautique à moteur, puis l’ordre des gestes quand ça tourne mal.
+sections:
+  - titre: Le ski nautique, deux à bord, de jour, au large des 300 mètres
+    notions: [ski-conditions]
+    blocs:
+      - schema:
+          fichier: ski-responsabilites-ski.svg
+          alt: >-
+            Le rivage en haut, la bande des 300 mètres bordée de bouées jaunes rondes, avec un passage
+            libre au milieu. Dessous, un bateau qui porte une flamme orange tracte un skieur par une
+            remorque.
+      - regles:
+          - "Deux à bord : l’un conduit, l’autre surveille, et il a 16 ans au moins."
+          - "Seul le moniteur de ski nautique breveté d’État peut tout faire seul, avec un rétroviseur."
+          - "Départ et retour par un chenal de vitesse, dégagé."
+          - "Les règles sont celles du préfet maritime de ta façade : vérifie son arrêté. En Atlantique, à moins de 2 milles de la côte."
+      - piege: >-
+          Tracter seul parce que le rétroviseur permet de voir le skieur. Pour toi, il faut une deuxième
+          personne, d’au moins 16 ans, qui ne fait que surveiller.
+
+  - titre: Gilet, flamme et remorque
+    largeur: demie
+    notions: [ski-conditions]
+    blocs:
+      - tableau:
+          colonnes: [Qui ou quoi, Exigé]
+          lignes:
+            - [Le skieur, Un équipement individuel de flottabilité]
+            - [Le navire tracteur, "Une flamme fluorescente orange de 2 mètres"]
+            - [Bouée ou engin tracté, "Remorque flottante de couleur vive, largage rapide sur le bateau"]
+            - [Parachute ascensionnel, "50 mètres de haut au plus, jamais à plus de 2 milles de la côte"]
+
+  - titre: Le chenal traversier et les pictogrammes
+    largeur: demie
+    notions: [ski-conditions]
+    blocs:
+      - regles:
+          - "Chenal traversier : cylindrique à bâbord, conique à tribord, en accédant au rivage."
+          - "Pictogramme : figure blanche sur fond bleu, autorisé. Figure noire sur fond blanc barré de rouge, interdit."
+
+  - titre: Le véhicule nautique à moteur
+    largeur: demie
+    notions: [vnm-regles]
+    blocs:
+      - tableau:
+          colonnes: [Conçu pour, Distance d’un abri, Flottabilité]
+          lignes:
+            - [Une personne au plus, 2 milles, Niveau 50]
+            - [Plus d’une personne, 6 milles, "Niveau 50 jusqu’à 2 milles, niveau 100 au-delà"]
+      - regles:
+          - "Navigation exclusivement diurne."
+          - "En permanence : flottabilité et néoprène de 2 mm au moins."
+          - "Moins de 2 milles : repérage lumineux, remorquage, marées. De 2 à 6 milles s’ajoutent feux à main, compas, cartes, RIPAM, balisage."
+      - piege: >-
+          Retenir 2 milles pour tous les scooters des mers : cette valeur ne vaut que pour les
+          monoplaces.
+
+  - titre: Le chef de bord répond du bord
+    largeur: demie
+    notions: [responsabilite-chef-de-bord]
+    blocs:
+      - regles:
+          - "Il répond de la conduite, des règlements et de la sécurité des personnes embarquées. Ni le propriétaire, ni le plus âgé : celui qui conduit."
+          - "Il s’assure que sa navigation convient au bateau et que le matériel est à bord et en état ; il le met en œuvre quand il le faut."
+          - "Respecter le RIPAM n’exonère pas d’une négligence (règle 2)."
+          - "Conduire sans permis : contravention de 5e classe."
+
+  - titre: Détresse, on alerte sur le doute
+    largeur: demie
+    notions: [conduite-detresse]
+    blocs:
+      - regles:
+          - "Brassières dès que ça se dégrade. Alerte dès que tu doutes de t’en tirer seul."
+          - "La VHF avant le téléphone, le 196 depuis un téléphone. On reste à bord tant que le bateau flotte."
+      - tableau:
+          colonnes: [Signal, Quand]
+          lignes:
+            - [MAYDAY, "Danger grave et imminent, assistance immédiate"]
+            - [PAN PAN, "Urgence sans menace immédiate, comme une avarie de moteur sans danger imminent"]
+
+  - titre: Échouement et panne
+    largeur: demie
+    notions: [conduite-echouement-panne]
+    blocs:
+      - regles:
+          - "Échouement : la coque et la voie d’eau d’abord, pas de marche arrière à plein gaz avant d’avoir vu la coque."
+          - "Marée montante, on attend. Marée descendante, chaque minute compte."
+          - "Hélice et refroidissement vérifiés avant de relancer le moteur."
+          - "Panne avec dérive vers un danger : on mouille avant d’ouvrir le capot."
+
+  - titre: Feu et voie d’eau, l’ordre commande
+    notions: [conduite-incendie-voie-eau]
+    blocs:
+      - schema:
+          fichier: ski-responsabilites-ordres.svg
+          alt: >-
+            Deux rangées de quatre cases reliées par des flèches. La première décrit l’incendie, la
+            seconde la voie d’eau, chaque case avec une consigne et un détail.
+      - regles:
+          - "Pas d’eau sur un feu électrique ou d’hydrocarbures."
+          - "Voie d’eau : écoper avant d’avoir bouché ne fait que retarder l’issue."
+
+  - titre: L’homme à la mer, ne pas perdre le point de vue
+    notions: [conduite-homme-a-la-mer]
+    blocs:
+      - schema:
+          fichier: ski-responsabilites-homme-a-la-mer.svg
+          alt: >-
+            Vu du ciel, un bateau proue en haut, une flèche de vent venant d’en haut à gauche. À droite
+            du bateau, une personne dans l’eau et une bouée. Des textes nomment chaque geste.
+      - regles:
+          - "Sous voiles, on abat puis on revient. Au moteur, on vire du côté opposé, pour éloigner l’hélice."
+          - "Approche face au vent : l’arrière, où tourne l’hélice, reste loin de la personne."
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude
