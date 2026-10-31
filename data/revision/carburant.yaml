@@ -1,0 +1,64 @@
+cours: carburant
+resume: >-
+  Le réservoir se calcule en heures, puis en milles ; la distance où tu peux aller se calcule sur un
+  tiers du carburant, jamais sur le plein.
+sections:
+  - titre: De l’heure au mille
+    notions: [carburant-autonomie]
+    blocs:
+      - schema:
+          fichier: carburant-chaine.svg
+          alt: >-
+            Deux rangées de cases reliées par des signes. En haut, 120 litres divisés par 15 litres par
+            heure donnent 8 heures. En bas, 8 heures multipliées par 12 nœuds donnent 96 milles.
+      - regles:
+          - "Autonomie en heures : le carburant disponible divisé par la consommation horaire."
+          - "Distance en milles : l’autonomie multipliée par la vitesse. Le nœud est un mille par heure, aucune conversion."
+          - À 6 nœuds, les mêmes 8 heures ne font que 48 milles.
+
+  - titre: Ce qui fait bouger le chiffre
+    largeur: demie
+    notions: [carburant-autonomie]
+    blocs:
+      - regles:
+          - La consommation dépend du régime moteur, pas de la coque.
+          - Sur une coque planante, elle monte beaucoup plus vite que la vitesse. Gagner 2 nœuds au-dessus du régime économique peut coûter la moitié de l’autonomie.
+          - Une mer formée, un vent debout, une carène sale ou une surcharge la font monter.
+          - "Le réservoir annoncé n’est pas le carburant disponible : fond du réservoir, gîte, assiette et jauge imprécise en retirent une part."
+
+  - titre: Autonomie n’est pas éloignement
+    largeur: demie
+    notions: [carburant-autonomie]
+    blocs:
+      - piege: >-
+          Répondre 96 milles à la question « jusqu’où peux-tu aller ». Ces 96 milles sont la route totale,
+          aller et retour compris, réservoir vidé jusqu’à la dernière goutte.
+
+  - titre: La règle des tiers
+    notions: [carburant-regle-tiers]
+    blocs:
+      - schema:
+          fichier: carburant-tiers.svg
+          alt: >-
+            Une barre de 150 litres coupée en trois parts égales de 50 litres : aller, retour, réserve.
+            Sous la part de l’aller, le calcul de la durée puis de la distance.
+      - regles:
+          - Un tiers pour aller, un tiers pour revenir, un tiers de réserve.
+          - La distance où tu peux t’éloigner se calcule sur un tiers du carburant disponible.
+          - "Vérification : 120 milles de route au total, et les 40 milles de l’aller en sont bien le tiers."
+      - piege: >-
+          Calculer l’éloignement sur la totalité du réservoir : 120 milles, de quoi arriver là-bas et rien
+          pour revenir. Le chiffre à donner est celui du tiers, 40 milles.
+
+  - titre: La réserve et l’examen
+    notions: [carburant-regle-tiers, carburant-autonomie]
+    blocs:
+      - regles:
+          - "Le troisième tiers couvre l’imprévu : vent contraire, courant, mer formée, détour, assistance à un autre bateau."
+          - Ces situations arrivent presque toujours au retour, quand le réservoir est déjà entamé.
+          - Aucun texte réglementaire n’impose la règle des tiers. C’est un usage de bonne pratique maritime, enseigné et interrogé à l’examen.
+          - "Le programme demande des notions d’autonomie en matière de carburant : une division pour la durée, une multiplication pour la distance, puis les trois tiers."
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

@@ -1,3 +1,5 @@
+Nouveau : une fiche de révision par chapitre, avec schémas et tableaux, à lire dans l’app ou à ouvrir en PDF pour l’imprimer ou la garder.
+
 L’app s’ouvre sur iPad. Sur grand écran, les cinq rubriques sont aussi dans une barre latérale (iPadOS 18 ou plus), la page tient dans une colonne confortable, et l’app suit toutes les orientations et le multitâche : Split View, Slide Over, fenêtres.
 
 Avec un clavier, les flèches passent d’une proposition à l’autre, et Échap propose d’arrêter l’examen blanc.

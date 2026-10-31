@@ -1,0 +1,123 @@
+cours: titre-conduite
+resume: >-
+  Le permis se lit en quatre questions : à partir de quelle puissance, jusqu’où en mer, quelles
+  conditions pour l’obtenir, et dans quel cas on le perd.
+sections:
+  - titre: Le permis se joue sur la puissance du moteur
+    notions: [titre-obligation]
+    blocs:
+      - schema:
+          fichier: titre-conduite-seuil.svg
+          alt: >-
+            Quatre cartes rangées en deux lignes. En haut, « 4,5 kW ou moins » à côté de « Plus de
+            4,5 kW ». En bas, « En mer » à côté de « Rivières et canaux », pour un voilier.
+      - regles:
+          - "Le seuil porte sur la puissance du moteur. Ni la longueur du bateau, ni le nombre de personnes, ni la distance n’entrent dans le calcul."
+          - "Un bateau de plaisance à moteur est exclusivement motorisé. Un flotteur très peu toilé pour son poids relève du permis, malgré sa voile."
+          - "La dispense du voilier tient au bateau, pas à ce qui le fait avancer. Un voilier de 10 mètres qui rentre au moteur reste un voilier."
+      - piege: >-
+          Cocher « oui, il faut le permis » pour un voilier auxiliaire en mer. En eaux maritimes, il est
+          dispensé quelle que soit la puissance du moteur. Le même voilier sur un canal exige un titre eaux
+          intérieures.
+
+  - titre: Les options, la mer par la distance
+    notions: [titre-options]
+    blocs:
+      - schema:
+          fichier: titre-conduite-distances.svg
+          alt: >-
+            Deux bandes. En haut, un abri puis l’option côtière jusqu’à 6 milles, puis l’extension
+            hauturière au-delà. En bas, l’option eaux intérieures sous 20 mètres, puis la grande
+            plaisance à partir de 20 mètres.
+      - regles:
+          - "L’option côtière est l’option de base. 6 milles, c’est aussi le seuil où l’armement de sécurité passe de côtier à semi-hauturier."
+          - "Pour s’inscrire à l’extension hauturière, il faut déjà détenir l’option côtière, le permis A ou le permis mer « côtier »."
+          - "Épreuve hauturière : 1 h 30 sur la carte n° 9999. Il faut au moins 10 sur l’ensemble et au moins 7 à l’épreuve sur carte."
+
+  - titre: Le côtier sur les lacs, pas sur les canaux
+    largeur: demie
+    notions: [titre-options]
+    blocs:
+      - tableau:
+          colonnes: [Où, "Le côtier suffit ?"]
+          lignes:
+            - [Lacs et plans d’eau fermés, "Oui : côtière et hauturière valent l’option eaux intérieures"]
+            - [Rivières et canaux, "Non : il faut l’option eaux intérieures"]
+      - piege: >-
+          Croire que le côtier ouvre toutes les eaux intérieures. Pour descendre un canal avec un bateau
+          à moteur de 12 mètres, il faut l’option eaux intérieures.
+
+  - titre: De l’épreuve au titre, dans cet ordre
+    largeur: demie
+    notions: [titre-examen, titre-conditions]
+    blocs:
+      - regles:
+          - "Le QCM d’abord, puis l’attestation de formation pratique, puis le titre."
+          - "L’attestation ne peut pas être délivrée avant la réussite à la théorie."
+          - "L’établissement agréé forme, valide la pratique et remet l’attestation. Il ne délivre pas le permis."
+          - "Le permis est délivré par le préfet du département où siège le service qui a instruit la candidature."
+      - piege: >-
+          Croire que réussir le QCM donne le permis. Tant que la pratique n’est pas validée, il n’y a pas de
+          titre, et la réussite théorique s’éteint au bout de dix-huit mois.
+
+  - titre: Les chiffres de l’épreuve et de la formation
+    notions: [titre-examen, titre-conditions]
+    blocs:
+      - tableau:
+          colonnes: [Quoi, Combien, À savoir]
+          lignes:
+            - [Épreuve théorique, "40 questions, 5 erreurs admises", "À la sixième réponse fausse, l’épreuve est manquée"]
+            - [Théorie acquise, 18 mois, "Pendant ce délai, il reste à faire valider la pratique ; passé ce délai, la théorie tombe"]
+            - [Théorie en salle, 5 heures au moins, "Peut être collective. Les titulaires de l’option eaux intérieures sont dispensés de cette obligation, pas de l’épreuve"]
+            - [Pratique, 3 h 30 au moins, "1 h 30 sur la sécurité, la décision de sortie et la responsabilité du chef de bord, puis 2 h de conduite effective par candidat, 4 élèves embarqués au plus"]
+      - piege: >-
+          Mélanger les deux durées. Cinq heures, c’est la théorie en salle. Trois heures trente, c’est la
+          pratique, dont deux heures de conduite effective par candidat.
+
+  - titre: L’âge et la conduite sans titre
+    largeur: demie
+    notions: [titre-conditions]
+    blocs:
+      - tableau:
+          colonnes: [Âge, Ce qui est permis]
+          lignes:
+            - [16 ans, Obtenir le permis]
+            - [18 ans, L’extension grande plaisance eaux intérieures]
+            - [14 à 16 ans, "Conduire de jour un bateau de moins de 20 mètres, dans un organisme affilié à une fédération sportive agréée, sous encadrement. C’est une autorisation, pas un titre"]
+            - [Dès 16 ans, "Conduite accompagnée : un an, avec un titulaire depuis trois ans au moins d’un permis ou d’un titre, dans les limites de son titre, après une déclaration valable un an"]
+
+  - titre: L’aptitude se vérifie avant l’examen
+    largeur: demie
+    notions: [titre-conditions]
+    blocs:
+      - tableau:
+          colonnes: [Quoi, Exigé]
+          lignes:
+            - [Vue, "6/10 d’un œil et 4/10 de l’autre, ou 5/10 de chaque œil, correction admise. Champ visuel périphérique normal, sens chromatique satisfaisant"]
+            - [Audition, "Voix chuchotée à 0,50 mètre, voix haute à 5 mètres, de chaque oreille"]
+            - [Corps, "Prise en main satisfaisante, membres inférieurs fonctionnels"]
+            - [Santé, Toute affection exposant à une perte brutale de connaissance entraîne l’inaptitude]
+      - regles:
+          - "Membres inférieurs non conformes : tu passes l’examen, mais tu n’embarques pas seul. Une tierce personne de 16 ans au moins, apte sans restriction, t’accompagne. Elle n’a pas besoin du permis."
+
+  - titre: Le retrait, huit jours, un an, trois ans
+    notions: [titre-sanctions]
+    blocs:
+      - schema:
+          fichier: titre-conduite-delais.svg
+          alt: >-
+            Trois cartes côte à côte, marquées « 8 jours », « 1 an » et « 3 ans », chacune avec une
+            courte ligne d’explication.
+      - regles:
+          - "Trois motifs : inobservation des règlements de police de la circulation ; négligence ou imprudence grave compromettant la sécurité ; ébriété ou stupéfiants."
+          - "Le retrait temporaire dure un an au plus. Le retrait définitif n’a pas de terme, mais il faut attendre trois ans avant de solliciter un nouveau permis."
+          - "En urgence motivée, le retrait peut précéder l’audition, pour huit jours seulement, pendant lesquels l’intéressé est entendu."
+          - "Sans permis français, on ne peut pas te retirer un titre que tu n’as pas : pour les mêmes motifs, on t’interdit, temporairement ou définitivement, de naviguer au départ des ports français ou dans les eaux territoriales françaises."
+      - piege: >-
+          Confondre les durées. Un an, c’est le maximum du retrait temporaire. Trois ans, c’est l’attente
+          avant un nouveau permis après un retrait définitif. Huit jours, c’est le seul cas où l’on retire
+          avant d’entendre.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

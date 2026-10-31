@@ -1,0 +1,181 @@
+cours: signaux
+resume: >-
+  Deux sons, bref et prolongé, et une lumière qui les double : on compte les coups, puis on regarde le
+  contexte, vue, chenal, brume ou détresse.
+sections:
+  - titre: Un bref, deux brefs, trois brefs, on compte les coups
+    notions: [signaux-manoeuvre, signaux-lumineux]
+    blocs:
+      - schema:
+          fichier: signaux-code-sonore.svg
+          alt: >-
+            Une échelle graduée de 0 à 6 secondes. Une barre courte d’une seconde, puis une barre longue
+            de quatre secondes prolongée de deux secondes plus claires.
+      - tableau:
+          colonnes: [Au sifflet, En lumière, Ça dit]
+          lignes:
+            - - visuel: sons/manoeuvre-tribord.svg
+                alt: Une impulsion sonore courte et isolée, tracée dans le temps.
+              - Un éclat
+              - Je viens sur tribord
+            - - visuel: sons/manoeuvre-babord.svg
+                alt: Deux impulsions sonores courtes séparées par un silence de même durée.
+              - Deux éclats
+              - Je viens sur bâbord
+            - - visuel: sons/manoeuvre-arriere.svg
+                alt: Trois impulsions sonores courtes émises à la suite.
+              - Trois éclats
+              - Je bats en arrière
+      - regles:
+          - Signaux d’un navire à moteur faisant route, en vue d’un autre. Pas à la voile seule, pas au mouillage, pas dans la brume.
+      - piege: >-
+          Un bref, c’est tribord, pas bâbord. Et tu n’as aucun signal à émettre quand tu vires de bord à la
+          voile en vue d’un autre bateau.
+
+  - titre: La lumière double le sifflet
+    largeur: demie
+    notions: [signaux-lumineux]
+    blocs:
+      - regles:
+          - Un éclat par son bref, le même comptage qu’au sifflet.
+          - Feu blanc, visible sur tout l’horizon, 5 milles au moins.
+          - Un éclat dure une seconde environ, l’intervalle une seconde, dix secondes au moins entre deux signaux.
+          - Le signal lumineux complète le sifflet, il ne le remplace pas.
+      - piege: >-
+          Quatre à six secondes, c’est le son prolongé au sifflet, jamais un éclat.
+
+  - titre: Le doute et l’attention
+    largeur: demie
+    notions: [signaux-avertissement, signaux-attirer-attention]
+    blocs:
+      - regles:
+          - "Au moins 5 sons brefs et rapides : je ne comprends pas tes intentions, ou je doute que tu en fasses assez pour éviter l’abordage."
+          - Le doute s’émet tout de suite, et peut être doublé d’au moins 5 éclats brefs et rapides.
+          - Pour attirer l’attention, tout signal qui ne peut pas être confondu avec un signal du Règlement. Le projecteur se dirige vers le danger, jamais vers le navire.
+          - Évite les feux intermittents ou tournants à haute intensité.
+      - piege: >-
+          Le doute n’est pas une détresse : cinq sons brefs ne demandent aucune assistance.
+
+  - titre: Chenal et coude, se faire entendre
+    notions: [signaux-chenal, signaux-coude]
+    blocs:
+      - tableau:
+          colonnes: [Son, Ce que ça dit, Qui l’émet]
+          lignes:
+            - - visuel: sons/coude.svg
+                alt: Une impulsion sonore tenue, bien plus longue qu’un son bref, tracée dans le temps.
+              - Je suis là, à l’approche d’un coude ou d’un obstacle qui masque la vue
+              - Le navire qui s’approche. Celui qui l’entend répond par le même son prolongé.
+            - - visuel: sons/depassement-tribord.svg
+                alt: Deux impulsions sonores tenues, suivies d’une impulsion courte.
+              - Je compte vous rattraper sur tribord
+              - Le navire qui veut doubler
+            - - visuel: sons/depassement-babord.svg
+                alt: Deux impulsions sonores tenues, suivies de deux impulsions courtes.
+              - Je compte vous rattraper sur bâbord
+              - Le navire qui veut doubler
+            - - visuel: sons/accord-depassement.svg
+                alt: Une impulsion tenue, une courte, une tenue, une courte, dans cet ordre.
+              - D’accord, il manœuvre ensuite pour permettre le dépassement
+              - Le navire sur le point d’être rattrapé
+      - regles:
+          - Les signaux de dépassement valent dans un chenal étroit ou une voie d’accès, entre navires en vue l’un de l’autre.
+          - "Il n’existe pas de signal de refus : le doute se dit par au moins 5 sons brefs."
+          - Le navire qui rattrape s’écarte jusqu’à être complètement paré. Le signal du coude ne dispense pas de ralentir.
+      - piege: >-
+          Un simple son bref ne veut pas dire « je te double par tribord » : il dit « je viens sur tribord ».
+          Ce sont les deux prolongés en tête qui font la demande.
+
+  - titre: Dans la brume, le son dit qui tu es
+    notions: [signaux-brume]
+    blocs:
+      - tableau:
+          colonnes: [Son, Qui l’émet, Intervalle]
+          lignes:
+            - - visuel: sons/brume-avec-erre.svg
+                alt: Une impulsion sonore tenue, isolée.
+              - Navire à moteur qui a de l’erre
+              - 2 minutes au plus
+            - - visuel: sons/brume-stoppe.svg
+                alt: Deux impulsions sonores tenues, séparées par un court silence.
+              - Navire à moteur stoppé, sans erre
+              - 2 minutes au plus
+            - - visuel: sons/brume-manoeuvre-restreinte.svg
+                alt: Une impulsion sonore tenue, suivie de deux impulsions courtes.
+              - "Pas maître de sa manœuvre, capacité restreinte, tirant d’eau, voilier, pêcheur, remorqueur ou pousseur"
+              - 2 minutes au plus
+            - - visuel: sons/brume-remorque.svg
+                alt: Une impulsion sonore tenue, suivie de trois impulsions courtes.
+              - Le navire remorqué, ou le dernier du convoi, s’il a un équipage à bord
+              - 2 minutes au plus
+            - - visuel: sons/brume-mouillage.svg
+                alt: Le tracé d’un signal à la cloche, une volée de coups de cloche serrés pendant cinq secondes environ.
+              - Navire au mouillage, cloche pendant 5 secondes
+              - 1 minute au plus
+            - - visuel: sons/brume-echouement.svg
+                alt: Le tracé d’un signal à la cloche, trois coups espacés, une volée de coups serrés, puis trois coups espacés.
+              - Navire échoué, trois coups avant et après la cloche
+              - Comme au mouillage
+            - - visuel: sons/brume-pilote.svg
+                alt: Quatre impulsions sonores courtes et rapprochées.
+              - Bateau-pilote en service
+              - Ajouté à son signal normal
+      - astuce: >-
+          Un seul trait, j’avance. Deux traits, je suis arrêté sur l’eau. Trois coups, la sonnerie, trois coups :
+          ce navire ne bougera pas.
+      - regles:
+          - Un pêcheur ou un navire à capacité de manœuvre restreinte qui travaille au mouillage fait un prolongé et deux brefs, pas la cloche.
+          - "Moins de 12 mètres : un autre signal sonore efficace, toutes les 2 minutes au plus. Se taire n’est pas une option."
+      - piege: >-
+          Confondre « stoppé sans erre » et « au mouillage ». Le stoppé fait deux sons prolongés au sifflet toutes
+          les deux minutes, le mouillé sonne la cloche cinq secondes toutes les minutes.
+
+  - titre: Détresse, une liste fermée à l’annexe IV
+    notions: [signaux-detresse]
+    blocs:
+      - tableau:
+          colonnes: [Famille, Signaux]
+          lignes:
+            - [Rouge, "Étoiles rouges lancées une à une à de courts intervalles, fusée à parachute, feu à main"]
+            - [Orange, "Fumigène à fumée orange, pour être vu d’un aéronef de jour"]
+            - [Sans pyrotechnie, "Pavillon carré avec une boule au-dessus ou en dessous, signal NC, flammes sur le navire"]
+            - [Sons et mots, "Coup de canon à une minute d’intervalle environ, son continu, SOS, MAYDAY en radiotéléphonie"]
+            - [Électronique, "Appel sélectif numérique sur la voie 70, station terrienne par satellite, radiobalises, répondeurs radar"]
+            - [Sans rien, Battements lents et répétés des bras étendus de chaque côté]
+      - piege: >-
+          Tirer une fusée périmée pour fêter une arrivée, ou un feu à main pour éclairer une manœuvre. Aucun de
+          ces signaux ne s’emploie hors détresse ou besoin d’assistance.
+
+  - titre: Les ports parlent en trois feux
+    largeur: demie
+    notions: [signaux-portuaires]
+    blocs:
+      - schema:
+          fichier: signaux-portuaires.svg
+          alt: >-
+            Deux panneaux sombres. Le premier porte trois feux rouges superposés, le second trois feux
+            verts superposés.
+      - regles:
+          - "Trois feux verticaux rouges : passage interdit. Trois verts : passage autorisé, sous certaines conditions."
+          - Les signaux auxiliaires se lisent dans les publications nautiques et le règlement local.
+          - Le même système sert sur les écluses et les ponts mobiles.
+
+  - titre: Les avis de météo portent un chiffre
+    largeur: demie
+    notions: [signaux-meteo]
+    blocs:
+      - schema:
+          fichier: signaux-avis-meteo.svg
+          alt: >-
+            Six colonnes de hauteur croissante, de force 7 à force 12, chacune nommée dessous, de grand
+            frais à ouragan.
+      - regles:
+          - Un avis est émis dès force 7 attendue ou observée.
+          - Un avis en cours est diffusé hors des heures normales, par les CROSS sur VHF après annonce sur le canal 16, et par Navtex.
+          - "Force 7 ou plus annoncée sur ta zone : la sortie côtière se reporte, à quai."
+      - piege: >-
+          Un avis de coup de vent parle de force 8, pas de force 7.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

@@ -133,6 +133,41 @@ function chrome() {
   return trouve;
 }
 
+/**
+ * Une fiche, dans un profil neuf. Chrome headless cale parfois sans raison
+ * visible : passé une minute, on le tue et on recommence une fois.
+ */
+async function imprimerUne(code, port) {
+  for (let essai = 1; ; essai++) {
+    const profil = mkdtempSync(join(tmpdir(), 'fiches-pdf-'));
+    try {
+      // Asynchrone : un appel synchrone bloquerait le serveur, qui ne répondrait plus à Chrome.
+      await promisify(execFile)(
+        chrome(),
+        [
+          '--headless=new',
+          '--no-first-run',
+          `--user-data-dir=${profil}`,
+          '--no-pdf-header-footer',
+          // Rien d'autre que le serveur local : la page charge la mesure
+          // Umami, et un serveur de mesure muet faisait attendre Chrome sans fin.
+          '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1',
+          '--virtual-time-budget=4000',
+          `--print-to-pdf=${join(sortie, `${code}.pdf`)}`,
+          `http://127.0.0.1:${port}/fiches-revision/${code}`,
+        ],
+        { timeout: 60_000 },
+      );
+      return;
+    } catch (erreur) {
+      if (essai >= 2) throw erreur;
+      console.error(`${code} : Chrome n'a pas rendu la main, nouvel essai`);
+    } finally {
+      rmSync(profil, { recursive: true, force: true });
+    }
+  }
+}
+
 async function imprimer(codes) {
   const dist = join(racine, 'dist');
   for (const code of codes) {
@@ -143,31 +178,15 @@ async function imprimer(codes) {
   const serveur = servir(dist);
   await new Promise((ok) => serveur.listen(0, '127.0.0.1', ok));
   const { port } = serveur.address();
-  const profil = mkdtempSync(join(tmpdir(), 'fiches-pdf-'));
   const empreintes = lireEmpreintes();
   try {
     for (const code of codes) {
-      const pdf = join(sortie, `${code}.pdf`);
-      // Asynchrone : un appel synchrone bloquerait le serveur ci-dessus, qui ne répondrait plus à Chrome.
-      await promisify(execFile)(
-        chrome(),
-        [
-          '--headless=new',
-          '--no-first-run',
-          `--user-data-dir=${profil}`,
-          '--no-pdf-header-footer',
-          '--virtual-time-budget=4000',
-          `--print-to-pdf=${pdf}`,
-          `http://127.0.0.1:${port}/fiches-revision/${code}`,
-        ],
-        { timeout: 60_000 },
-      );
+      await imprimerUne(code, port);
       empreintes[code] = empreinteDe(code);
       console.log(`écrit public/fiches-revision/${code}.pdf`);
     }
   } finally {
     serveur.close();
-    rmSync(profil, { recursive: true, force: true });
   }
   const triees = Object.fromEntries(Object.entries(empreintes).sort(([a], [b]) => a.localeCompare(b)));
   writeFileSync(fichierEmpreintes, `${JSON.stringify(triees, null, 2)}\n`);

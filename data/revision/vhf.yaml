@@ -1,0 +1,172 @@
+cours: vhf
+resume: >-
+  La VHF se lit en trois temps : ce qu’on emporte et ce qu’on a le droit d’en faire, les canaux et
+  les mots qu’on y dit, puis qui répond. Les trois messages s’apprennent dans l’ordre exact de leurs
+  mots.
+sections:
+  - titre: Quelle VHF, selon la distance d’un abri
+    largeur: demie
+    notions: [vhf-emport]
+    blocs:
+      - tableau:
+          colonnes: [Sur ton bateau, VHF imposée]
+          lignes:
+            - [Moins de 6 milles, Aucune]
+            - - De 6 à moins de 60 milles
+              - Une VHF fixe, pas une portative
+            - - 60 milles et plus
+              - "La fixe, plus une portative étanche et une radiobalise de localisation des sinistres"
+            - - Bateau loué, plus de 2 milles
+              - "Une VHF, avec moyen de positionnement électronique et document d’instructions"
+      - piege: >-
+          Répondre « dès 2 milles ». Le seuil de l’armement côtier n’est pas celui de la VHF : 6 milles.
+          Seul un bateau loué en exige une dès 2 milles.
+
+  - titre: La licence au navire, le certificat à la personne
+    largeur: demie
+    notions: [vhf-licence-mmsi, vhf-crr]
+    blocs:
+      - tableau:
+          colonnes: [Titre, Pour qui, À savoir]
+          lignes:
+            - - Licence de station de navire
+              - Le navire
+              - Délivrée par l’Agence nationale des fréquences
+            - - MMSI
+              - Le navire
+              - "Neuf chiffres, les trois premiers désignent le pays : 226, 227, 228 en France métropolitaine"
+            - - CRR
+              - La personne
+              - "Obligatoire en eaux internationales ; examen dès 16 ans"
+      - regles:
+          - "Eaux territoriales françaises : le CRR ou le permis plaisance à moteur."
+          - "Portatif de 6 watts au plus, sans ASN, en eaux territoriales françaises : aucun titre. Avec l’ASN, le titre redevient exigé."
+      - piege: >-
+          Partir vers l’Espagne ou l’Italie avec le seul permis plaisance. Il ne tient lieu de titre radio
+          que dans les eaux territoriales françaises.
+
+  - titre: Les canaux à connaître
+    notions: [vhf-canaux, vhf-fausses-alertes]
+    blocs:
+      - tableau:
+          colonnes: [Canal, Usage]
+          lignes:
+            - - "16"
+              - "Détresse, urgence et appel, sur 156,800 MHz : on appelle, puis on dégage sur une voie de travail"
+            - - "70"
+              - Appel sélectif numérique seulement, aucune phonie
+            - - "6"
+              - Sécurité, coordination des recherches et du sauvetage
+            - - "9, 12, 14"
+              - Voies portuaires, capitaineries
+            - - "72, 77"
+              - Voies de travail entre navires
+      - regles:
+          - "À la mer, veille permanente du canal 16 quand c’est possible."
+          - "25 watts en fixe, 6 en portative : la portée vient de la hauteur des antennes, pas des watts."
+      - piege: >-
+          Passer en pleine puissance pour joindre un bateau lointain. Les 25 watts ne franchissent pas
+          l’horizon.
+
+  - titre: L’alphabet, un mot par lettre
+    largeur: demie
+    notions: [vhf-alphabet]
+    blocs:
+      - tableau:
+          colonnes: [Lettres, Mots]
+          lignes:
+            - [A à G, "Alfa, Bravo, Charlie, Delta, Echo, Foxtrot, Golf"]
+            - [H à N, "Hotel, India, Juliett, Kilo, Lima, Mike, November"]
+            - [O à U, "Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform"]
+            - [V à Z, "Victor, Whiskey, X-ray, Yankee, Zulu"]
+      - regles:
+          - "ORQUE se dit Oscar Romeo Quebec Uniform Echo."
+      - piege: >-
+          Un mot inventé glissé parmi les justes : Nectar, Santiago, Xénon, Zèbre. Et pas de prénoms
+          français, Anatole ou Berthe.
+
+  - titre: Les zones du SMDSM, le moyen qui porte l’alerte
+    largeur: demie
+    notions: [vhf-smdsm-zones]
+    blocs:
+      - schema:
+          fichier: vhf-zones-smdsm.svg
+          alt: >-
+            Une bande de terre à gauche, puis quatre bandes côte à côte nommées A1 à A4, chacune avec le
+            moyen radio qui la couvre. Une accolade sous la première.
+      - piege: >-
+          Confondre les 6 milles du permis et la zone A1. Les 6 milles sont une limite de titre, A1 est
+          une portée radio.
+
+  - titre: Trois messages, trois niveaux
+    notions: [vhf-urgence-securite, vhf-detresse]
+    blocs:
+      - tableau:
+          colonnes: [Signal, Quand, Exemple]
+          lignes:
+            - - MAYDAY
+              - "Danger grave et imminent, assistance immédiate demandée. Impose le silence radio à tous"
+              - Une voie d’eau, la pompe ne suit plus
+            - - PAN PAN
+              - "Urgent : sécurité du navire ou d’une personne, sans danger imminent"
+              - "Avarie de moteur au large, blessé dont l’état n’est pas critique, homme à la mer récupéré"
+            - - SÉCURITÉ
+              - Sécurité de la navigation ou avertissement météorologique
+              - Avis de coup de vent du CROSS
+      - regles:
+          - "Priorité : MAYDAY, puis PAN PAN, puis SÉCURITÉ. Les trois s’annoncent sur le canal 16."
+      - piege: >-
+          Dire MAYDAY pour une panne par mer belle, sans blessé : c’est PAN PAN. Et SÉCURITÉ ne parle
+          jamais de l’état d’une personne.
+
+  - titre: L’alerte numérique, puis la voix
+    largeur: demie
+    notions: [vhf-asn, vhf-canaux]
+    blocs:
+      - regles:
+          - "Capot rouge soulevé, touche maintenue : l’alerte part sur le canal 70 avec le MMSI, et la position si un récepteur de positionnement est raccordé."
+          - "Elle dit qui tu es et où tu es, rien de plus. Tu passes ensuite sur le 16 et tu émets le MAYDAY parlé."
+          - "Fixe ou portative, une VHF à ASN se programme avec le MMSI du navire."
+      - piege: >-
+          Croire que la touche rouge fait tout. Elle envoie une alerte de données, pas un appel au
+          secours détaillé.
+
+  - titre: La trame du message de détresse
+    largeur: demie
+    notions: [vhf-detresse]
+    blocs:
+      - schema:
+          fichier: vhf-trame-detresse.svg
+          alt: >-
+            Huit lignes numérotées de 1 à 8, l’une sous l’autre, chacune avec son texte, de MAYDAY répété
+            trois fois à la dernière ligne.
+      - piege: >-
+          Commencer par la position, ou fermer par « TERMINÉ ». Le mot de la fin est « À VOUS ».
+
+  - titre: Relayer une détresse, annuler une fausse alerte
+    largeur: demie
+    notions: [vhf-relais, vhf-fausses-alertes]
+    blocs:
+      - regles:
+          - "MAYDAY RELAY : tu relayes sur le 16 un MAYDAY resté sans réponse, avec l’identité et la position du navire en détresse, pas les tiennes."
+          - "Alerte partie par erreur : tu dis clairement sur le 16 qu’elle est annulée, sans attendre. Éteindre la VHF ne la retire pas."
+          - "Une fausse alerte retire des secours à ceux qui en ont besoin ailleurs."
+      - piege: >-
+          Attendre encore en se disant que le CROSS finira bien par entendre. Le relais se fait tout de
+          suite.
+
+  - titre: Qui répond
+    largeur: demie
+    notions: [vhf-sauvetage]
+    blocs:
+      - regles:
+          - "Les CROSS reçoivent l’alerte, coordonnent les moyens et veillent le canal 16 en permanence."
+          - "Depuis un téléphone : le 196, numéro d’urgence maritime unique."
+          - "Un appel VHF est entendu du CROSS et de tous les navires à portée, souvent les plus proches. Le téléphone n’a qu’un correspondant."
+          - "Le canal 6 sert à coordonner les recherches et le sauvetage entre navires et aéronefs."
+      - piege: >-
+          Appeler la capitainerie : elle tient les voies portuaires, pas le sauvetage.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude

@@ -65,7 +65,7 @@ const description = `${theme.nom} pour le permis côtier, sur une ou deux pages 
           <path d="M11 4.5l4 5.5H7z" fill="#ffc72c" />
           <path d="M11 18l4-5.5H7z" fill="#ffc72c" />
         </svg>
-        Le Permis Côtier · fiche de révision
+        <span>Le Permis Côtier · fiche de révision<span class="revision__papier"> · {adresse}</span></span>
       </p>
       {groupe && <p class={`etiquette etiquette--${groupe.couleur}`}>{groupe.nom}</p>}
       <h1>{theme.nom}</h1>
@@ -93,11 +93,11 @@ const description = `${theme.nom} pour le permis côtier, sur une ou deux pages 
         {sources.map((s) => (
           <li>
             <b>{s.texte}</b>{s.parties.length > 0 && `, ${s.parties.join(' ; ')}`}
-            {s.provenance === 'fiche' && <> <MarqueSource provenance={s.provenance} /></>}
+            {s.provenance === 'fiche' && <> <span class="revision__ecran"><MarqueSource provenance={s.provenance} /></span><span class="revision__papier">(fiche du site)</span></>}
           </li>
         ))}
       </ul>
-      <p class="revision__colophon">
+      <p class="revision__colophon revision__ecran">
         {adresse} · gratuit, sans inscription. Une erreur ? Signale-la depuis la page en ligne.
       </p>
     </footer>

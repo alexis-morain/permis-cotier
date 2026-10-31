@@ -1,0 +1,142 @@
+cours: environnement
+resume: >-
+  Trois réflexes : ne rien rejeter à la mer, à aucune distance ; pêcher pour ta famille, avec une liste
+  d’engins fermée ; reconnaître une aire protégée à sa catégorie.
+sections:
+  - titre: Aucune distance ne rend un rejet permis
+    notions: [env-rejets]
+    blocs:
+      - schema:
+          fichier: environnement-rejets.svg
+          alt: >-
+            Quatre bidons alignés au-dessus de l’eau, chacun avec une croix rouge dessous et une
+            légende : au ponton, à 3 milles, à 6 milles, à 12 milles.
+      - regles:
+          - "Jeter, déverser ou laisser écouler en mer des substances nuisibles à la faune ou à la flore marines : 100 000 euros d’amende."
+          - "« Directement ou indirectement » couvre aussi ce qui rejoint la mer par un caniveau ou par une cale de mise à l’eau."
+          - "Deux cas ne sont pas des infractions : le rejet pour la sécurité, le sauvetage ou la lutte contre la pollution, et le rejet dû à une avarie, au-delà des eaux territoriales."
+          - "Ce qui n’est pas rejetable en mer redescend à terre, dans les bacs du port."
+      - piege: >-
+          Croire qu’un rejet devient permis au-delà de 3 ou de 12 milles. Le texte qui s’applique au
+          plaisancier ne contient aucun seuil de distance, ni de quantité.
+
+  - titre: Des toilettes à bord, une rétention ou un traitement
+    largeur: demie
+    notions: [env-equipement-sanitaire]
+    blocs:
+      - tableau:
+          colonnes: [Quoi, Règle]
+          lignes:
+            - [Toilettes à bord, "Au moins l’un des deux : des capacités de rétention des eaux usées, ou une installation de traitement"]
+            - [Réservoir fixé à demeure, "Raccord de vidange normalisé, pour brancher les tuyaux du port"]
+            - [Réservoir fixe, "1,5 litre au minimum par personne pouvant être embarquée"]
+            - [Norme NF EN ISO 8099, "Vaut équivalence pour la rétention"]
+            - [Prises d’eau et décharges de WC, "Une vanne de coque chacune"]
+      - piege: >-
+          Croire que l’obligation dépend de la taille du bateau ou du réservoir. Ce sont les toilettes qui
+          la déclenchent. Un broyeur qui rejette directement à la mer n’est ni une rétention ni un
+          traitement.
+
+  - titre: Caréner à terre
+    largeur: demie
+    notions: [env-antisalissures]
+    blocs:
+      - regles:
+          - "Une poussière de ponçage ou une eau de rinçage qui rejoint la mer par la cale ou le caniveau est un rejet indirect : 100 000 euros d’amende."
+          - "On carène à terre, sur une aire équipée qui récupère les eaux de lavage et les résidus de peinture."
+          - "Restes de pots, chiffons et papiers abrasifs vont aux bacs du port, comme les huiles usagées."
+      - piege: >-
+          Croire qu’un rinçage à l’eau claire d’une coque poncée est neutre. Ce qui part avec l’eau, ce
+          sont les particules de peinture.
+
+  - titre: La pêche de loisir se mange en famille
+    largeur: demie
+    notions: [env-peche-loisir]
+    blocs:
+      - regles:
+          - "Pêche non commerciale, pour la consommation exclusive du pêcheur et de sa famille. Le produit ne se colporte pas, ne se vend pas, ne s’achète pas en connaissance de cause."
+          - "Tailles minimales, engins, zones, périodes et arrêtés : ceux des professionnels. Les règles de loisir ne sont jamais plus favorables."
+          - "Une pêche qui pèse sur la ressource peut être soumise à autorisation."
+      - piege: >-
+          Vendre sa pêche à un restaurateur. L’interdiction vise aussi l’acheteur qui sait d’où viennent
+          les poissons.
+
+  - titre: Sous l’eau, c’est aussi de la pêche de loisir
+    largeur: demie
+    notions: [env-peche-sous-marine]
+    blocs:
+      - regles:
+          - "Fusil-harpon : interdit aux personnes de moins de seize ans."
+          - "La limite vise l’engin, pas la plongée : nager, descendre en apnée et remonter des coquillages à la main n’y tombe pas."
+          - "Pêcher dans une zone ou à une période interdite : 22 500 euros d’amende. Tu vérifies l’arrêté de ta façade avant de mettre à l’eau."
+      - piege: >-
+          Répondre dix-huit ans par réflexe de majorité. La réponse est seize ans, et elle porte sur le
+          fusil-harpon.
+
+  - titre: Ce que tu embarques est une liste fermée
+    notions: [env-peche-loisir]
+    blocs:
+      - tableau:
+          colonnes: [Engin, Limite]
+          lignes:
+            - [Palangres, "Deux, de trente hameçons chacune"]
+            - [Casiers, Deux]
+            - [Foëne et épuisette, "Une de chaque"]
+            - [Lignes, "Douze hameçons au total en action de pêche, un leurre compte pour un hameçon"]
+            - [Méditerranée, "Une grappette à dents"]
+            - ["Mer du Nord, Manche, Atlantique", "Un filet maillant calé ou un trémail de 50 mètres de long et 2 mètres de haut au plus"]
+            - ["Bretagne, Pays de la Loire, Aquitaine", "Un carrelet par navire et trois balances par personne embarquée"]
+            - [Moulinets électriques, "Trois par navire, 800 watts chacun. Vire-casiers, vire-filets et treuils : interdits"]
+      - piege: >-
+          Lire les douze hameçons comme un nombre par ligne : c’est un total, et un arrêté ministériel
+          peut le ramener à cinq par personne. Les 800 watts n’autorisent pas un vire-casier électrique :
+          ils encadrent les seuls vire-lignes et moulinets.
+
+  - titre: Faune et flore, deux montants à ne pas confondre
+    notions: [env-faune-flore]
+    blocs:
+      - schema:
+          fichier: environnement-amendes.svg
+          alt: >-
+            Deux barres horizontales à l’échelle. La première, courte, est marquée 22 500 euros pour
+            les infractions de pêche. La seconde, quatre fois plus longue, 100 000 euros pour les rejets
+            nuisibles.
+      - regles:
+          - "22 500 euros : détenir à bord ou employer pour la pêche des explosifs, des armes à feu, des substances soporifiques ou toxiques. La détention suffit."
+          - "22 500 euros : détenir un engin prohibé, en employer plus que le nombre autorisé, pêcher ou débarquer des captures trop petites, enfreindre le marquage et le tri."
+      - piege: >-
+          Croire que fermetures, tailles minimales et engins prohibés ne visent que les professionnels. Le
+          texte punit « le fait de », qui que ce soit. Remettre la prise à l’eau après coup n’efface pas
+          l’infraction.
+
+  - titre: Une aire marine protégée est une catégorie de la liste
+    largeur: demie
+    notions: [env-aires-protegees]
+    blocs:
+      - tableau:
+          colonnes: [Dans la liste du code de l’environnement]
+          lignes:
+            - ["Parcs nationaux, partie maritime"]
+            - ["Réserves naturelles, partie maritime et périmètres de protection"]
+            - ["Arrêtés de protection de biotope, d’habitats naturels, de sites géologiques"]
+            - ["Parcs naturels marins"]
+            - ["Sites Natura 2000, partie maritime"]
+            - ["Domaine du Conservatoire du littoral, partie maritime"]
+            - ["Zones de conservation halieutiques"]
+            - ["Parcs naturels régionaux, partie maritime"]
+
+  - titre: Ce qui y ressemble sans en être
+    largeur: demie
+    notions: [env-aires-protegees]
+    blocs:
+      - regles:
+          - "Chaque catégorie relève de son propre régime : ce qui est permis dépend de l’aire où tu es."
+          - "Une zone est une aire marine protégée parce qu’elle appartient à une catégorie de la liste, pas parce qu’elle est balisée ou fréquentée."
+      - piege: >-
+          Prendre pour des aires protégées une zone de mouillages et d’équipements légers, un mouillage
+          organisé de port de plaisance ou un chenal traversier de plage. Elles organisent la circulation
+          et le stationnement, et ne figurent pas dans la liste.
+
+meta:
+  cree_le: '2026-10-31'
+  genere_par: claude
