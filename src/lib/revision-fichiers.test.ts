@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { schemaRevision, notionsDeLaFiche, visuelsDeLaFiche } from './revision';
+import { COURS } from './parcours';
 
 /**
  * Les fiches de révision de `data/revision/` telles qu'elles sont sur le
@@ -42,8 +43,8 @@ function texteDe(v: unknown): string {
 }
 
 describe('les fiches de révision', () => {
-  it('existent', () => {
-    expect(fichiers.length).toBeGreaterThan(0);
+  it('couvrent chaque cours, une fiche chacun', () => {
+    expect(fichiers).toEqual(COURS.map((c) => `${c.code}.yaml`).sort());
   });
 
   for (const fichier of fichiers) {
