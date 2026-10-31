@@ -235,6 +235,13 @@ sources.
   sans ⌘, il volerait Entrée ou Échap à la page. `CFBundleName` passe par
   `NOM_DU_PAQUET`, « Permis Côtier » pour le seul SDK macOS. La page sait qu'elle
   est sur Mac par `surMac()` (`window.coquilleMac`, posé par `EcranWeb`).
+- **L'app Mac se publie par `app-mac.yml`, à la main seulement** (case `revue`
+  décochée : TestFlight seul), jamais avec l'iOS. `app_store.py --plateforme
+  MAC_OS` : versions Mac à part (1.0 au départ), numéros de build communs aux
+  deux plateformes. L'archive Catalyst est **signée ad hoc**, pas sans
+  signature : sans signature, l'export perd le bac à sable. `ios/a-tester-mac.txt`
+  et `docs/fiche-app-store/mac/` sont relus par `verifier-fiche`. État et
+  preflight : `docs/app-ios.md`, `docs/preflight-mac-1.0.md`.
 - **Cible iOS 16.0** (iPhone 8 et après) : rien au-dessus de Safari 16.0 sans
   repli, `elaguer-app.mjs` refuse le JavaScript plus récent. Le
   greffon `Ecran` garde un chemin d'avant iOS 18 (`basculerAvantIOS18`).

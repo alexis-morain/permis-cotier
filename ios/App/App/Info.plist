@@ -18,6 +18,8 @@
 	<array>
 		<string>fr</string>
 	</array>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.education</string>
 	<key>CFBundleName</key>
 	<string>$(NOM_DU_PAQUET)</string>
 	<key>CFBundlePackageType</key>

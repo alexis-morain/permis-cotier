@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fait suivre `main` à l'app iOS : décide, puis soumet par l'API App Store Connect.
 
-    python scripts/app_store.py preparer --commit <sha>
-    python scripts/app_store.py soumettre --version 1.0.1 --build 3 --commit <sha>
+    python scripts/app_store.py preparer --commit <sha> [--plateforme MAC_OS]
+    python scripts/app_store.py soumettre --version 1.0.1 --build 3 --commit <sha> [--plateforme MAC_OS]
     python scripts/app_store.py verifier-fiche
 
 `preparer` lit les versions App Store et les builds, et dit s'il faut
@@ -10,6 +10,8 @@ construire, seulement soumettre un build déjà téléversé, ou ne rien faire.
 `soumettre` attend la fin du traitement d'un build, pose dans « À tester » de
 TestFlight le texte de `ios/a-tester.txt` suivi de la référence du commit, puis
 l'envoie en revue si aucune revue n'est en cours.
+`--plateforme` vaut `IOS` par défaut ; `MAC_OS` sert l'app Mac (Mac Catalyst),
+même identifiant, même liste de builds, versions à part (`app-mac.yml`).
 `verifier-fiche`, sans secret, refuse une fiche qui ne dit pas le vrai nombre
 de questions de la banque ; `preparer` le refait avant toute décision.
 
@@ -35,6 +37,10 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[1]
 NOUVEAUTES = RACINE / "ios" / "nouveautes.txt"
 A_TESTER = RACINE / "ios" / "a-tester.txt"
+A_TESTER_MAC = RACINE / "ios" / "a-tester-mac.txt"
+
+PLATEFORMES = ("IOS", "MAC_OS")
+A_TESTER_PAR_PLATEFORME = {"IOS": A_TESTER, "MAC_OS": A_TESTER_MAC}
 
 APP_ID = "6818903859"
 API = "https://api.appstoreconnect.apple.com"
@@ -85,6 +91,7 @@ class Build:
     numero: int
     version: str  # version marketing
     commit: str | None  # SHA court lu dans « À tester »
+    plateforme: str = "IOS"  # celle de sa version de test (`preReleaseVersion`)
 
 
 @dataclass(frozen=True)
@@ -142,7 +149,12 @@ def lire_a_tester(chemin: Path = A_TESTER) -> str:
 # mots-clés et notes au relecteur se posent à la main, et leur copie vit dans
 # `docs/` pour qu'une retouche ne reconstruise pas l'app.
 FICHE_DOSSIER = RACINE / "docs" / "fiche-app-store"
-FICHE = [NOUVEAUTES, A_TESTER, *sorted(FICHE_DOSSIER.glob("*.txt"))]
+# La fiche Mac (`mac/`) a sa description, ses mots-clés et ses notes ; le
+# sous-titre est commun à l'app.
+FICHE = [
+    NOUVEAUTES, A_TESTER, A_TESTER_MAC,
+    *sorted(FICHE_DOSSIER.glob("*.txt")), *sorted((FICHE_DOSSIER / "mac").glob("*.txt")),
+]
 
 # Au-dessous de cent, un nombre de questions parle d'un examen (40) ou d'une
 # série, jamais de la banque.
@@ -256,11 +268,16 @@ def viser(versions: list[Version]) -> tuple[str, bool, str]:
     return cible, True, raison
 
 
-def decider(versions: list[Version], builds: list[Build], commit: str) -> Decision:
-    """Construire, soumettre un build déjà là, ou rien. Fonction pure."""
+def decider(versions: list[Version], builds: list[Build], commit: str, plateforme: str = "IOS") -> Decision:
+    """Construire, soumettre un build déjà là, ou rien. Fonction pure.
+
+    `versions` sont celles de `plateforme`, `builds` ceux de toutes : le numéro
+    suivant se prend au-dessus de tous, la décision sur ceux de la plateforme.
+    """
     cible, permis, raison = viser(versions)
-    par_numero = {b.numero: b for b in builds}
     suivant = max((b.numero for b in builds), default=0) + 1
+    builds = [b for b in builds if b.plateforme == plateforme]
+    par_numero = {b.numero: b for b in builds}
     court = commit[:7]
 
     # Le commit est-il déjà dans la version la plus haute ?
@@ -376,11 +393,11 @@ def numero(build: dict) -> int | None:
         return None
 
 
-def lire_versions() -> tuple[list[Version], dict[str, dict]]:
-    """Les versions iOS, et leurs objets bruts par versionString."""
+def lire_versions(plateforme: str = "IOS") -> tuple[list[Version], dict[str, dict]]:
+    """Les versions d'une plateforme, et leurs objets bruts par versionString."""
     donnees, inclus = lister(
         f"/v1/apps/{APP_ID}/appStoreVersions",
-        {"filter[platform]": "IOS", "include": "build", "limit": "200"},
+        {"filter[platform]": plateforme, "include": "build", "limit": "200"},
     )
     builds = {b["id"]: numero(b) for b in inclus if b.get("type") == "builds"}
     versions, brutes = [], {}
@@ -394,6 +411,7 @@ def lire_versions() -> tuple[list[Version], dict[str, dict]]:
 
 
 def lire_builds() -> list[Build]:
+    """Les builds de toutes les plateformes, chacun avec la sienne."""
     donnees, inclus = lister(
         "/v1/builds",
         {
@@ -410,12 +428,13 @@ def lire_builds() -> list[Build]:
             continue
         liens = b.get("relationships") or {}
         pre = (liens.get("preReleaseVersion") or {}).get("data")
-        version = par_cle.get(("preReleaseVersions", pre["id"]), {}).get("attributes", {}).get("version") if pre else None
+        attributs = par_cle.get(("preReleaseVersions", pre["id"]), {}).get("attributes", {}) if pre else {}
+        version = attributs.get("version")
         commit = None
         for lien in (liens.get("betaBuildLocalizations") or {}).get("data") or []:
             loc = par_cle.get(("betaBuildLocalizations", lien["id"]), {}).get("attributes", {})
             commit = commit or commit_du_texte(loc.get("whatsNew"))
-        builds.append(Build(n, version or "0", commit))
+        builds.append(Build(n, version or "0", commit, attributs.get("platform") or "INCONNUE"))
     return builds
 
 
@@ -441,14 +460,15 @@ def fichiers_changes(depuis: str, jusqua: str) -> list[str] | None:
     return [ligne for ligne in sortie.splitlines() if ligne]
 
 
-def preparer(commit: str) -> int:
+def preparer(commit: str, plateforme: str = "IOS") -> int:
     # Avant les trois minutes d'archive : un « À tester » vide ou trop long
     # arrêterait `soumettre` après le téléversement.
-    lire_a_tester()
+    lire_a_tester(A_TESTER_PAR_PLATEFORME[plateforme])
     verifier_fiche(FICHE, compte_banque())
-    versions, _ = lire_versions()
+    versions, _ = lire_versions(plateforme)
     builds = lire_builds()
-    dernier = max(builds, key=lambda b: b.numero).commit if builds else None
+    siens = [b for b in builds if b.plateforme == plateforme]
+    dernier = max(siens, key=lambda b: b.numero).commit if siens else None
     fichiers = fichiers_changes(dernier, commit) if dernier else None
     effectif = commit_effectif(commit, dernier, fichiers)
     if effectif != commit:
@@ -458,7 +478,7 @@ def preparer(commit: str) -> int:
             ["git", "rev-parse", "--verify", f"{effectif}^{{commit}}"],
             cwd=RACINE, capture_output=True, text=True, check=True,
         ).stdout.strip()
-    decision = decider(versions, builds, effectif)
+    decision = decider(versions, builds, effectif, plateforme)
     ecrire_sorties({
         "commit": effectif,
         "action": decision.action,
@@ -473,7 +493,7 @@ def preparer(commit: str) -> int:
 # --- Soumettre ---------------------------------------------------------------
 
 
-def attendre_build(version: str, build: int) -> dict:
+def attendre_build(version: str, build: int, plateforme: str = "IOS") -> dict:
     """Le build traité, ou un échec net : INVALID, FAILED, ou 45 min passées."""
     debut = time.monotonic()
     while True:
@@ -483,6 +503,7 @@ def attendre_build(version: str, build: int) -> dict:
                 "filter[app]": APP_ID,
                 "filter[version]": str(build),
                 "filter[preReleaseVersion.version]": version,
+                "filter[preReleaseVersion.platform]": plateforme,
                 "include": "betaBuildLocalizations",
             },
         )
@@ -497,8 +518,8 @@ def attendre_build(version: str, build: int) -> dict:
         time.sleep(SONDAGE_S)
 
 
-def poser_a_tester(build: dict, commit: str) -> None:
-    texte = texte_a_tester(commit, lire_a_tester())
+def poser_a_tester(build: dict, commit: str, plateforme: str = "IOS") -> None:
+    texte = texte_a_tester(commit, lire_a_tester(A_TESTER_PAR_PLATEFORME[plateforme]))
     donnees, _ = lister(f"/v1/builds/{build['id']}/betaBuildLocalizations", {"limit": "50"})
     existante = next((l for l in donnees if l["attributes"].get("locale") == LOCALE), None)
     if existante:
@@ -538,15 +559,15 @@ def poser_nouveautes(version_id: str, texte: str) -> None:
         })
 
 
-def envoyer_en_revue(version_id: str) -> None:
+def envoyer_en_revue(version_id: str, plateforme: str = "IOS") -> None:
     ouvertes, _ = lister("/v1/reviewSubmissions", {
-        "filter[app]": APP_ID, "filter[platform]": "IOS", "filter[state]": "READY_FOR_REVIEW",
+        "filter[app]": APP_ID, "filter[platform]": plateforme, "filter[state]": "READY_FOR_REVIEW",
     })
     if ouvertes:
         soumission_id = ouvertes[0]["id"]
     else:
         soumission_id = appeler("POST", "/v1/reviewSubmissions", {
-            "data": {"type": "reviewSubmissions", "attributes": {"platform": "IOS"},
+            "data": {"type": "reviewSubmissions", "attributes": {"platform": plateforme},
                      "relationships": {"app": {"data": {"type": "apps", "id": APP_ID}}}},
         })["data"]["id"]
 
@@ -567,15 +588,15 @@ def envoyer_en_revue(version_id: str) -> None:
     })
 
 
-def soumettre(version: str, build: int, commit: str, sans_revue: bool) -> int:
-    objet_build = attendre_build(version, build)
-    poser_a_tester(objet_build, commit)
+def soumettre(version: str, build: int, commit: str, sans_revue: bool, plateforme: str = "IOS") -> int:
+    objet_build = attendre_build(version, build, plateforme)
+    poser_a_tester(objet_build, commit, plateforme)
     if sans_revue:
         print("TestFlight seul : --sans-revue.")
         return 0
 
     # L'état d'il y a 30 min ne vaut plus : une revue a pu s'ouvrir ou finir.
-    versions, brutes = lire_versions()
+    versions, brutes = lire_versions(plateforme)
     cible, permis, raison = viser(versions)
     if not permis or cle_version(cible) != cle_version(version):
         print(f"TestFlight seul : {raison}.")
@@ -590,7 +611,7 @@ def soumettre(version: str, build: int, commit: str, sans_revue: bool) -> int:
     else:
         version_id = appeler("POST", "/v1/appStoreVersions", {
             "data": {"type": "appStoreVersions",
-                     "attributes": {"platform": "IOS", "versionString": version, "releaseType": "AFTER_APPROVAL"},
+                     "attributes": {"platform": plateforme, "versionString": version, "releaseType": "AFTER_APPROVAL"},
                      "relationships": {"app": {"data": {"type": "apps", "id": APP_ID}}}},
         })["data"]["id"]
         print(f"Version {version} créée.")
@@ -599,7 +620,7 @@ def soumettre(version: str, build: int, commit: str, sans_revue: bool) -> int:
             {"data": {"type": "builds", "id": objet_build["id"]}})
     if nouveautes:
         poser_nouveautes(version_id, nouveautes)
-    envoyer_en_revue(version_id)
+    envoyer_en_revue(version_id, plateforme)
     print(f"{version} ({build}) envoyée en revue.")
     return 0
 
@@ -610,12 +631,14 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sous.add_parser("preparer", help="décider : construire, soumettre ou rien")
     p.add_argument("--commit", required=True, help="SHA du commit de main")
+    p.add_argument("--plateforme", choices=PLATEFORMES, default="IOS")
 
     s = sous.add_parser("soumettre", help="attendre le build, puis l'envoyer en revue si permis")
     s.add_argument("--version", required=True, help="version marketing, ex. 1.0.1")
     s.add_argument("--build", required=True, type=int, help="numéro du build")
     s.add_argument("--commit", required=True, help="SHA du commit de main")
     s.add_argument("--sans-revue", action="store_true", help="TestFlight seul")
+    s.add_argument("--plateforme", choices=PLATEFORMES, default="IOS")
 
     sous.add_parser("verifier-fiche", help="la fiche dit-elle le vrai nombre de questions ? sans secret")
 
@@ -627,8 +650,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     try:
         if args.commande == "preparer":
-            return preparer(args.commit)
-        return soumettre(args.version, args.build, args.commit, args.sans_revue)
+            return preparer(args.commit, args.plateforme)
+        return soumettre(args.version, args.build, args.commit, args.sans_revue, args.plateforme)
     except ErreurApi as erreur:
         print(f"App Store Connect a refusé :\n{erreur}", file=sys.stderr)
         return 1

@@ -1,0 +1,200 @@
+name: App Mac
+
+# L'app Mac (Mac Catalyst) : même identifiant que l'iOS, versions à part.
+# Elle ne part qu'à la main, jamais sur un push ni à heure fixe : deux
+# plateformes ne partent pas d'un coup par accident. Par défaut, le build va sur
+# TestFlight seul ; la case `revue` l'envoie en revue si rien ne s'y oppose.
+# La décision est dans `scripts/app_store.py --plateforme MAC_OS`, testée.
+on:
+  workflow_dispatch:
+    inputs:
+      revue:
+        description: Envoyer en revue après TestFlight
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+# Le groupe de `app-ios.yml` : les numéros de build sont communs aux deux
+# plateformes, deux passages à la fois prendraient le même.
+concurrency:
+  group: app-ios
+  cancel-in-progress: false
+
+jobs:
+  # Le passage part de la tête de la branche choisie ; l'environnement
+  # `app-store` n'est ouvert qu'à `main`. Rien sans une CI verte sur ce commit.
+  garde:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      verte: ${{ steps.ci.outputs.verte }}
+    steps:
+      - name: CI verte sur ce commit
+        id: ci
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          n=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$COMMIT&event=push&status=success" --jq '.total_count')
+          if [ "$n" -gt 0 ]; then
+            echo "verte=oui" >> "$GITHUB_OUTPUT"
+          else
+            echo "Aucune CI verte sur ${COMMIT:0:7} : l'app Mac attend."
+            echo "verte=non" >> "$GITHUB_OUTPUT"
+          fi
+
+  preparer:
+    needs: garde
+    if: needs.garde.outputs.verte == 'oui'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: app-store
+    outputs:
+      commit: ${{ steps.decision.outputs.commit }}
+      action: ${{ steps.decision.outputs.action }}
+      version: ${{ steps.decision.outputs.version }}
+      build: ${{ steps.decision.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-app.txt
+
+      - name: Décider
+        id: decision
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          COMMIT: ${{ github.sha }}
+        run: python scripts/app_store.py preparer --plateforme MAC_OS --commit "$COMMIT"
+
+  construire:
+    needs: preparer
+    if: needs.preparer.outputs.action == 'construire'
+    runs-on: macos-26
+    timeout-minutes: 60
+    environment: app-store
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preparer.outputs.commit }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Choisir Xcode 26
+        run: |
+          xcode=$(printf '%s\n' /Applications/Xcode_26*.app | grep -iv beta | sort -V | tail -1)
+          sudo xcode-select -s "$xcode/Contents/Developer"
+          xcodebuild -version
+
+      - run: npm run build:app
+      - run: npx cap sync ios
+
+      # Capacitor n'a pas de tranche Mac : le script le reconstruit depuis ses
+      # sources (quatre minutes) et pose l'espace de travail du Mac.
+      - run: scripts/capacitor-catalyst.sh
+
+      - name: Écrire la clé d'API
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          umask 077
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+
+      # Signée ad hoc, sans certificat : la signature porte les droits du bac
+      # à sable (`App-Mac.entitlements`), qu'une archive sans signature
+      # perdrait à l'export. L'export re-signe dans le nuage.
+      - name: Archiver
+        env:
+          VERSION: ${{ needs.preparer.outputs.version }}
+          BUILD: ${{ needs.preparer.outputs.build }}
+        run: |
+          xcodebuild archive \
+            -workspace ios/App/catalyst/App-Mac.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -destination 'generic/platform=macOS,variant=Mac Catalyst' \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY=- \
+            PROVISIONING_PROFILE_SPECIFIER= \
+            MARKETING_VERSION="$VERSION" \
+            CURRENT_PROJECT_VERSION="$BUILD"
+
+      - name: Bac à sable dans l'archive
+        run: |
+          app=$(ls -d "$RUNNER_TEMP"/App.xcarchive/Products/Applications/*.app)
+          codesign -d --entitlements - --xml "$app" > "$RUNNER_TEMP/droits.plist"
+          # `plutil` lit les points comme un chemin : ils se protègent.
+          plutil -extract 'com\.apple\.security\.app-sandbox' raw "$RUNNER_TEMP/droits.plist" | grep -qx true
+
+      - name: Signer et téléverser
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist ios/ExportOptions.plist \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+
+      - name: Effacer la clé
+        if: always()
+        run: rm -f "$RUNNER_TEMP/AuthKey.p8"
+
+  soumettre:
+    needs: [preparer, construire]
+    if: >-
+      always()
+      && needs.preparer.result == 'success'
+      && needs.preparer.outputs.action != 'rien'
+      && (needs.construire.result == 'success' || needs.construire.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: app-store
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preparer.outputs.commit }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-app.txt
+
+      - name: Soumettre
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          VERSION: ${{ needs.preparer.outputs.version }}
+          BUILD: ${{ needs.preparer.outputs.build }}
+          COMMIT: ${{ needs.preparer.outputs.commit }}
+          REVUE: ${{ inputs.revue }}
+        run: |
+          sans_revue=--sans-revue
+          [ "$REVUE" = true ] && sans_revue=
+          python scripts/app_store.py soumettre --plateforme MAC_OS \
+            --version "$VERSION" --build "$BUILD" --commit "$COMMIT" $sans_revue
