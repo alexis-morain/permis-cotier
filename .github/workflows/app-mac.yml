@@ -112,6 +112,15 @@ jobs:
       # sources (quatre minutes) et pose l'espace de travail du Mac.
       - run: scripts/capacitor-catalyst.sh
 
+      # Sans certificat de distribution dans le trousseau du runner, le script
+      # laisse Capacitor et Cordova sans signature, et l'App Store refuse le
+      # build à la soumission (ITMS-91065). Mieux vaut s'arrêter ici.
+      - name: SDK signés
+        run: |
+          for xcf in ios/App/catalyst/*/capacitor-swift-pm/*.xcframework; do
+            codesign -v "$xcf" || { echo "::error::$xcf sans signature (ITMS-91065) : construire le Mac en local, voir docs/app-ios.md"; exit 1; }
+          done
+
       - name: Écrire la clé d'API
         env:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}

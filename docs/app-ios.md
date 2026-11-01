@@ -33,6 +33,28 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 31 octobre 2026 (soir) — la revue Mac et la signature du SDK
+
+La 1.0 (24) envoyée en revue est passée aussitôt en `INVALID_BINARY` :
+**ITMS-91065**, `Capacitor.framework` et `Cordova.framework` sans signature.
+Apple exige qu'un SDK de sa liste des SDK courants arrive signé ; le paquet
+officiel l'est par Ionic (équipe `9YN2HU59K8`), nos reconstructions Catalyst ne
+l'étaient pas. L'iOS n'est pas touché : il prend le paquet officiel.
+
+`scripts/capacitor-catalyst.sh` signe désormais les deux xcframeworks avec
+`CAPACITOR_SIGNATURE`, ou la première « Apple Distribution » du trousseau
+(`codesign --timestamp`). Xcode recopie la signature dans le dossier
+`Signatures` de l'archive (`Capacitor.xcframework-ios-macabi.signature`,
+`signatureType` `AppleDeveloperProgram`), qu'App Store Connect lit.
+
+**La CI n'a pas de certificat** : `app-mac.yml` s'arrête donc à l'étape « SDK
+signés » plutôt que de téléverser un build refusé d'avance. En attendant un
+certificat dans les secrets, le Mac se construit ici, avec les réglages du
+workflow : `capacitor-catalyst.sh`, `xcodebuild archive` (signature ad hoc,
+`MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` au-dessus de tous les builds),
+puis `-exportArchive` avec `ios/ExportOptions.plist` et la clé d'API. C'est
+ainsi qu'est partie la **1.0 (26)**.
+
 ## 31 octobre 2026 — la publication Mac (lot 4)
 
 Plan « iPad et Mac », lot 4. Branche `app-mac-publication`. **Le Mac 1.0 (23)
