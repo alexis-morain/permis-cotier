@@ -209,6 +209,14 @@ html[data-app] .retour__chevron {
   line-height: 1;
 }
 
+/* La fiche de révision s'étale sur 64 rem pour sa grille : le Retour prend sa
+   largeur, sinon il reste dans la colonne de 46 rem, décalé à droite du titre
+   sur Mac et sur iPad. Les marges sont celles de l'app, seize points. */
+html[data-app] .revision,
+html[data-app] main:has(> .revision) > .retour {
+  width: min(100% - 32px, 64rem);
+}
+
 /* ------------------------------------------------------ Cibles tactiles
 
    Quarante-quatre points au moins pour tout ce qui se touche, la mesure des

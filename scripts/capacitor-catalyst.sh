@@ -113,6 +113,30 @@ else
   echo "== Capacitor $VERSION : déjà construit ($PAQUET)"
 fi
 
+# --- La signature du SDK ------------------------------------------------------
+# Apple refuse à la soumission un SDK courant livré sans signature (ITMS-91065,
+# 31 octobre : la 1.0 (24) rejetée pour Capacitor et Cordova). Le paquet officiel
+# est signé par Ionic ; ces reconstructions le sont par qui les construit, avec
+# le certificat de distribution de l'équipe. Xcode recopie la signature dans le
+# dossier `Signatures` de l'archive, qu'App Store Connect lit au téléversement.
+# `CAPACITOR_SIGNATURE` désigne l'identité ; sinon, la première « Apple
+# Distribution » du trousseau. Sans identité, un avertissement : un build de
+# développement s'en passe, `app-mac.yml` refuse d'archiver.
+IDENTITE="${CAPACITOR_SIGNATURE:-$(security find-identity -v -p codesigning 2>/dev/null \
+  | sed -nE 's/.*"(Apple Distribution: [^"]+)".*/\1/p' | head -1)}"
+for schema in Cordova Capacitor; do
+  xcf="$PAQUET/$schema.xcframework"
+  if codesign -v "$xcf" 2>/dev/null; then
+    continue
+  elif [[ -n "$IDENTITE" ]]; then
+    echo "== Signature de $schema.xcframework : $IDENTITE"
+    codesign --timestamp --force --sign "$IDENTITE" "$xcf"
+    codesign -v "$xcf"
+  else
+    echo "!! $schema.xcframework sans signature : l'App Store refusera ce build (ITMS-91065)" >&2
+  fi
+done
+
 # --- L'espace de travail du Mac -----------------------------------------------
 ESPACE_MAC="$CACHE/App-Mac.xcworkspace"
 mkdir -p "$ESPACE_MAC"

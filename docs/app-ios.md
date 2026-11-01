@@ -33,6 +33,34 @@ donc **avant la fusion** qui ouvre une version, pas après.
 une retouche de fiche ne reconstruit pas l'app (`hors_app()`). Toute correction
 de la copie se reporte en ligne, et inversement.
 
+## 31 octobre 2026 (soir) — la revue Mac et la signature du SDK
+
+La 1.0 (24) envoyée en revue est passée aussitôt en `INVALID_BINARY` :
+**ITMS-91065**, `Capacitor.framework` et `Cordova.framework` sans signature.
+Apple exige qu'un SDK de sa liste des SDK courants arrive signé ; le paquet
+officiel l'est par Ionic (équipe `9YN2HU59K8`), nos reconstructions Catalyst ne
+l'étaient pas. L'iOS n'est pas touché : il prend le paquet officiel.
+
+`scripts/capacitor-catalyst.sh` signe désormais les deux xcframeworks avec
+`CAPACITOR_SIGNATURE`, ou la première « Apple Distribution » du trousseau
+(`codesign --timestamp`). Xcode recopie la signature dans le dossier
+`Signatures` de l'archive (`Capacitor.xcframework-ios-macabi.signature`,
+`signatureType` `AppleDeveloperProgram`), qu'App Store Connect lit.
+
+La **1.0 (26)** est partie du Mac d'Alexis, avec les réglages du workflow :
+`capacitor-catalyst.sh`, `xcodebuild archive` (signature ad hoc,
+`MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` au-dessus de tous les builds),
+puis `-exportArchive` avec `ios/ExportOptions.plist` et la clé d'API.
+
+**La CI a depuis son propre certificat** « Apple Distribution » (créé par
+l'API le 31, expire le 1er novembre 2027 ; celui du Mac d'Alexis est un autre).
+Il vit en .p12 dans l'environnement `app-store` (`MAC_DISTRIBUTION_P12`, en
+base64, et `MAC_DISTRIBUTION_P12_MOT_DE_PASSE`). `app-mac.yml` l'importe dans un
+trousseau jetable, `capacitor-catalyst.sh` signe le SDK, l'étape « SDK signés »
+le vérifie, puis le trousseau est effacé avant l'archive : l'export signe dans
+le nuage comme avant. Sans ces secrets, le workflow s'arrête au trousseau. À
+l'échéance : un nouveau certificat, les deux secrets reposés.
+
 ## 31 octobre 2026 — la publication Mac (lot 4)
 
 Plan « iPad et Mac », lot 4. Branche `app-mac-publication`. **Le Mac 1.0 (23)
