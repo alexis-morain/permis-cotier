@@ -1,3 +1,9 @@
+Ce build est signé par la CI, sans changement pour toi, et corrige l'alignement du bouton « Retour » sur les fiches de révision. Le reste est celui de la 1.0.
+
+Fiches de révision
+• Cours, Balisage, puis « La fiche de révision » : le chevron de « Retour » doit tomber à l'aplomb du titre, et non plus au milieu de la fenêtre. Élargis et rétrécis la fenêtre pour vérifier.
+• Touche « Retour » : tu reviens au cours.
+
 Première version Mac : l'app tourne dans une fenêtre, avec la barre latérale et la barre de menus. Ta progression est celle de l'app iPhone installée sur ce Mac, s'il y en a une. Regarde surtout si tout se fait au clavier et à la souris.
 
 Fenêtre

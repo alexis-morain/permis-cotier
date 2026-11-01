@@ -47,13 +47,19 @@ l'étaient pas. L'iOS n'est pas touché : il prend le paquet officiel.
 `Signatures` de l'archive (`Capacitor.xcframework-ios-macabi.signature`,
 `signatureType` `AppleDeveloperProgram`), qu'App Store Connect lit.
 
-**La CI n'a pas de certificat** : `app-mac.yml` s'arrête donc à l'étape « SDK
-signés » plutôt que de téléverser un build refusé d'avance. En attendant un
-certificat dans les secrets, le Mac se construit ici, avec les réglages du
-workflow : `capacitor-catalyst.sh`, `xcodebuild archive` (signature ad hoc,
+La **1.0 (26)** est partie du Mac d'Alexis, avec les réglages du workflow :
+`capacitor-catalyst.sh`, `xcodebuild archive` (signature ad hoc,
 `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` au-dessus de tous les builds),
-puis `-exportArchive` avec `ios/ExportOptions.plist` et la clé d'API. C'est
-ainsi qu'est partie la **1.0 (26)**.
+puis `-exportArchive` avec `ios/ExportOptions.plist` et la clé d'API.
+
+**La CI a depuis son propre certificat** « Apple Distribution » (créé par
+l'API le 31, expire le 1er novembre 2027 ; celui du Mac d'Alexis est un autre).
+Il vit en .p12 dans l'environnement `app-store` (`MAC_DISTRIBUTION_P12`, en
+base64, et `MAC_DISTRIBUTION_P12_MOT_DE_PASSE`). `app-mac.yml` l'importe dans un
+trousseau jetable, `capacitor-catalyst.sh` signe le SDK, l'étape « SDK signés »
+le vérifie, puis le trousseau est effacé avant l'archive : l'export signe dans
+le nuage comme avant. Sans ces secrets, le workflow s'arrête au trousseau. À
+l'échéance : un nouveau certificat, les deux secrets reposés.
 
 ## 31 octobre 2026 — la publication Mac (lot 4)
 

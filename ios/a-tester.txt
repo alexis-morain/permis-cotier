@@ -1,31 +1,7 @@
-Nouveau : les fiches de révision. Une fiche par chapitre, une ou deux pages A4, avec des schémas et des tableaux.
+Petite version de suivi : un défaut de mise en page sur les fiches de révision. Le reste est celui de la 1.0.9.
 
 Fiches de révision
-• Ouvre un cours (Balisage par exemple) : sous la liste des leçons, un bouton « La fiche de révision ». La fiche s’affiche dans l’app ; regarde si les schémas et les tableaux se lisent bien, sur iPhone comme sur iPad.
-• Sur iPhone, les tableaux larges se lisent en pile : chaque ligne en bloc, chaque valeur précédée du nom de sa colonne.
-• Touche « Télécharger le PDF » : le PDF s’ouvre dans Safari intégré, depuis le site (il faut une connexion). Essaie le bouton de partage pour l’enregistrer dans Fichiers ou l’imprimer, puis referme d’un geste : tu dois revenir à la fiche.
-• Coupe le réseau : la fiche se lit toujours (elle est dans l’app), le PDF ne s’ouvre pas.
-
-Version avec l’iPad : l’app s’ouvre maintenant sur iPad, dans toutes les orientations. Sur iPhone, rien ne change. Regarde surtout si l’iPad se lit bien, en grand comme en fenêtre réduite.
-
-Navigation
-• iPad sous iOS 18 ou plus, en paysage et sur le 13 pouces tenu droit : les cinq entrées (Accueil, Cours, Examen, Entraînement, Fiche) sont en haut, et dans une barre latérale. Touche le bouton à gauche de la barre du haut pour l’ouvrir ; en paysage, regarde si elle se range à côté de la page ou si elle la recouvre. Elle n’a plus de bouton « Modifier ».
-• iPad plus petit tenu droit (mini, Air, 11 pouces), iPad sous iOS 16 ou 17, et iPhone : la barre d’onglets habituelle, en bas, avec les cinq entrées. Tourne l’iPad : la barre doit passer en haut en paysage, et revenir en bas.
-• Pendant un examen blanc, la navigation disparaît, comme sur iPhone, et revient à la fin. Vérifie-le avec la barre latérale ouverte, puis fermée.
-• Reprends l’onglet déjà ouvert : il revient à son départ, comme sur iPhone.
-
-Mise en page
-• La page tient dans une colonne centrée, jamais une ligne de cent caractères. Regarde l’accueil, une leçon, les réglages et la fiche en grand écran.
-• Examen et entraînement : la question, le visuel et les propositions restent dans la même colonne, la barre « Passer » ou « Valider » en pleine largeur en bas, alignée sur les propositions. La feuille de correction monte du bas avec son texte aligné sur la colonne.
-• Tourne l’iPad dans les deux sens, en examen aussi : rien ne doit se couper.
-• Multitâche : ouvre l’app en Split View, en Slide Over et dans une fenêtre de Stage Manager, puis étire la fenêtre. La barre latérale doit laisser la place à la barre d’onglets quand la fenêtre est étroite.
-
-Clavier (iPad avec un clavier)
-• En examen ou en entraînement : A à D pour cocher, Entrée pour valider. Les flèches haut et bas passent d’une proposition à l’autre, la barre d’espace coche celle qui est entourée.
-• Échap pendant un examen blanc ouvre « Arrêter l’examen ? » ; un second Échap le referme et l’examen continue. En entraînement, Échap ramène au choix du thème, la série reste à reprendre.
-
-Textes
-• Réglages : « Les sons suivent le mode silencieux de ton appareil ». La fiche et le questionnaire disent « sur cet appareil » et non plus « sur ton téléphone ».
-
-À savoir
-• Sur iPad Pro, la barre latérale s’ouvre en recouvrant la page en portrait ; c’est le comportement d’iPadOS.
+• Ouvre un cours (Balisage par exemple), puis « La fiche de révision ». En haut, le chevron du bouton « Retour » doit tomber exactement à l’aplomb du titre et de l’étiquette du groupe, comme sur une leçon.
+• Sur iPad, c’était là que ça se voyait : dès que l’écran est large, le « Retour » restait vers le milieu, loin du titre. Vérifie-le en paysage et en portrait, et en fenêtre réduite.
+• Touche « Retour » : tu reviens au cours.
+• Touche « Télécharger le PDF » : le PDF n’a pas changé, il s’ouvre toujours dans Safari intégré.

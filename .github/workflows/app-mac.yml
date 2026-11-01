@@ -108,18 +108,48 @@ jobs:
       - run: npm run build:app
       - run: npx cap sync ios
 
+      # Le certificat « Apple Distribution » propre à la CI (pas celui du Mac
+      # d'Alexis), en .p12 dans l'environnement `app-store`. Un trousseau
+      # jetable, en tête de la liste de recherche : `capacitor-catalyst.sh` y
+      # trouve l'identité qui signe Capacitor et Cordova. Effacé en fin de job.
+      - name: Trousseau de signature
+        env:
+          P12: ${{ secrets.MAC_DISTRIBUTION_P12 }}
+          P12_MOT_DE_PASSE: ${{ secrets.MAC_DISTRIBUTION_P12_MOT_DE_PASSE }}
+        run: |
+          [ -n "$P12" ] && [ -n "$P12_MOT_DE_PASSE" ] || { echo "::error::MAC_DISTRIBUTION_P12 absent de l'environnement app-store"; exit 1; }
+          umask 077
+          trousseau="$RUNNER_TEMP/signature.keychain-db"
+          mdp=$(openssl rand -hex 24)
+          echo "::add-mask::$mdp"
+          printf '%s' "$P12" | base64 --decode > "$RUNNER_TEMP/ci.p12"
+          security create-keychain -p "$mdp" "$trousseau"
+          security set-keychain-settings -lut 3600 "$trousseau"
+          security unlock-keychain -p "$mdp" "$trousseau"
+          security import "$RUNNER_TEMP/ci.p12" -k "$trousseau" -P "$P12_MOT_DE_PASSE" -T /usr/bin/codesign
+          rm -f "$RUNNER_TEMP/ci.p12"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$mdp" "$trousseau" > /dev/null
+          security list-keychains -d user -s "$trousseau" $(security list-keychains -d user | tr -d '"')
+          security find-identity -v -p codesigning | grep -q '"Apple Distribution: ' \
+            || { echo "::error::aucune identité Apple Distribution après l'import"; exit 1; }
+
       # Capacitor n'a pas de tranche Mac : le script le reconstruit depuis ses
-      # sources (quatre minutes) et pose l'espace de travail du Mac.
+      # sources (quatre minutes), le signe avec l'identité du trousseau et pose
+      # l'espace de travail du Mac.
       - run: scripts/capacitor-catalyst.sh
 
-      # Sans certificat de distribution dans le trousseau du runner, le script
-      # laisse Capacitor et Cordova sans signature, et l'App Store refuse le
-      # build à la soumission (ITMS-91065). Mieux vaut s'arrêter ici.
+      # Sans signature, l'App Store refuse le build à la soumission
+      # (ITMS-91065) : mieux vaut s'arrêter ici.
       - name: SDK signés
         run: |
           for xcf in ios/App/catalyst/*/capacitor-swift-pm/*.xcframework; do
             codesign -v "$xcf" || { echo "::error::$xcf sans signature (ITMS-91065) : construire le Mac en local, voir docs/app-ios.md"; exit 1; }
           done
+
+      # Le certificat n'a servi qu'au SDK : l'archive reste signée ad hoc et
+      # l'export signe dans le nuage, comme avant.
+      - name: Retirer le trousseau
+        run: security delete-keychain "$RUNNER_TEMP/signature.keychain-db"
 
       - name: Écrire la clé d'API
         env:
@@ -169,9 +199,11 @@ jobs:
             -authenticationKeyID "$ASC_KEY_ID" \
             -authenticationKeyIssuerID "$ASC_ISSUER_ID"
 
-      - name: Effacer la clé
+      - name: Effacer la clé et le trousseau
         if: always()
-        run: rm -f "$RUNNER_TEMP/AuthKey.p8"
+        run: |
+          rm -f "$RUNNER_TEMP/AuthKey.p8" "$RUNNER_TEMP/ci.p12"
+          security delete-keychain "$RUNNER_TEMP/signature.keychain-db" 2>/dev/null || true
 
   soumettre:
     needs: [preparer, construire]
