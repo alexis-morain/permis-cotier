@@ -239,6 +239,18 @@ const CAPTURE = { width: 640, height: 1391 };
     )}
   </section>
 
+  <section class="page fiches" aria-labelledby="fiches-titre">
+    <h2 id="fiches-titre">Quatorze fiches à imprimer</h2>
+    <p class="fiches__chapo">
+      Une fiche par cours, sur une ou deux pages A4 : les schémas, les tableaux et les pièges
+      d’examen, avec les textes dont chaque règle est tirée. En PDF, gratuites, à garder sur le
+      téléphone ou à scotcher au-dessus du bureau.
+    </p>
+    <p class="fiches__lien">
+      <a class="bouton" href="/fiches-revision" data-mesure="accueil-fiches">Voir les fiches de révision</a>
+    </p>
+  </section>
+
   <section class="page reprendre" aria-labelledby="reprendre">
     <h2 id="reprendre">Tes erreurs reviennent jusqu’à ce que tu les tiennes</h2>
     <p class="reprendre__chapo">
@@ -546,6 +558,13 @@ const CAPTURE = { width: 640, height: 1391 };
   .duo { gap: 0 1.25rem; align-items: start; }
   .duo__avant { grid-column: 1; margin-top: 3.5rem; }
   .duo__arriere { grid-column: 2; }
+
+  /* Les fiches PDF : un titre, une phrase, un bouton second. Le bouton
+     principal de la page reste « Commencer le cours ». */
+  .fiches { padding-block: 1rem 2.5rem; }
+  .fiches h2 { max-width: 28ch; text-wrap: balance; margin-bottom: 1rem; }
+  .fiches__chapo { max-width: var(--mesure); margin-bottom: 1.5rem; }
+  .fiches__lien { margin: 0; }
 
   /* L'absence de compte, dite puis montrée : où on en est, et la date qu'on
      peut poser. Hors du premier écran, parce qu'elle ne parle qu'à celui qui

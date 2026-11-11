@@ -9,6 +9,7 @@ import { groupeDuTheme } from '../../lib/groupes';
 import { pointFinal, rappel } from '../../lib/raison';
 import { POUR_APP } from '../../lib/cible';
 import { partager } from '../../lib/natif';
+import { fichePourLeVerdict, lienPdfFiche } from '../../lib/fiche-a-reviser';
 import RevueDesErreurs from './RevueDesErreurs';
 import Recap from './Recap';
 import AnnonceBadges from './AnnonceBadges';
@@ -99,6 +100,7 @@ export default function Resultat({ mode, session, titre, depart, parId, retour, 
               récapitulatif reste après, chaque ligne s'ouvre. */}
           {POUR_APP && <ActionsApp {...actions} />}
           {r.total > 0 && <ParTheme parTheme={r.parTheme} />}
+          {mode === 'examen' && !session.interrompu && <FicheAReviser parTheme={r.parTheme} />}
           {POUR_APP ? (
             <Recap session={session} parId={parId} retourLecon={retourLecon} erreursSeules={recale} />
           ) : (
@@ -262,6 +264,32 @@ function ParTheme({ parTheme }: { parTheme: Record<string, { bonnes: number; tot
           </li>
         ))}
     </ul>
+  );
+}
+
+/**
+ * La fiche de révision du thème le plus raté, en PDF. Une phrase sous la note
+ * par thème, hors du bloc du verdict où se hisse le pavillon Q. Le lien ouvre
+ * le PDF à part (Safari intégré dans l'app, nouvel onglet sur le site) : le
+ * résultat reste à l'écran.
+ */
+function FicheAReviser({ parTheme }: { parTheme: Record<string, { bonnes: number; total: number }> }) {
+  const fiche = fichePourLeVerdict(parTheme);
+  if (!fiche) return null;
+  return (
+    <p className="resultat__fiche">
+      Le thème où tu as perdu le plus de points : {nomDuTheme(fiche.theme)} ({fiche.erreurs} erreur
+      {fiche.erreurs > 1 ? 's' : ''}).{' '}
+      <a
+        href={lienPdfFiche(fiche.theme)}
+        target="_blank"
+        rel="noopener"
+        data-mesure="verdict-fiches"
+        data-mesure-theme={fiche.theme}
+      >
+        Prendre sa fiche de révision en PDF
+      </a>
+    </p>
   );
 }
 

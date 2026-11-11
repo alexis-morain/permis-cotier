@@ -1,7 +1,11 @@
-Petite version de suivi : un défaut de mise en page sur les fiches de révision. Le reste est celui de la 1.0.9.
+Les fiches de révision passent devant : une rangée sur l’Accueil, et une proposition au résultat de l’examen blanc. Le reste est celui de la 1.0.9.
 
-Fiches de révision
-• Ouvre un cours (Balisage par exemple), puis « La fiche de révision ». En haut, le chevron du bouton « Retour » doit tomber exactement à l’aplomb du titre et de l’étiquette du groupe, comme sur une leçon.
-• Sur iPad, c’était là que ça se voyait : dès que l’écran est large, le « Retour » restait vers le milieu, loin du titre. Vérifie-le en paysage et en portrait, et en fenêtre réduite.
-• Touche « Retour » : tu reviens au cours.
-• Touche « Télécharger le PDF » : le PDF n’a pas changé, il s’ouvre toujours dans Safari intégré.
+Accueil
+• Sous « Ton épreuve », la rangée « Fiches de révision » (« Quatorze PDF à garder sur ton téléphone »). Touche-la : tu arrives sur la liste des fiches, avec le « Retour » en haut.
+• Le bouton jaune du panneau du haut reste seul : la rangée des fiches n’en prend pas.
+
+Résultat de l’examen blanc
+• Termine un examen en ratant quelques questions. Sous la note par thème, une phrase dit le thème où tu as perdu le plus de points, avec le lien « Prendre sa fiche de révision en PDF ».
+• Touche le lien : le PDF s’ouvre dans Safari intégré, par-dessus le résultat. Ferme-le : le résultat est toujours là, le pavillon Q (si tu es reçu) n’a pas bougé.
+• Un examen sans aucune erreur, ou interrompu : pas de phrase. L’entraînement n’en a pas non plus.
+• Vérifie en taille de texte maximale (Dynamic Type) que la phrase ne chevauche ni la note par thème, ni « Revoir mes erreurs ».

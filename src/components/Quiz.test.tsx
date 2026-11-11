@@ -1174,6 +1174,60 @@ describe('le geste suivant, au résultat de l’examen sur le site', () => {
   });
 });
 
+describe('la fiche de révision proposée au verdict de l’examen', () => {
+  function finir(reponses: (string | null)[]) {
+    lancerExamen();
+    for (const texte of reponses) {
+      if (texte) fireEvent.click(screen.getByRole('button', { name: texte }));
+      fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
+    }
+  }
+  const fiche = () => document.querySelector<HTMLAnchorElement>('[data-mesure="verdict-fiches"]');
+
+  it('propose le PDF du thème où il y a le plus d’erreurs, et le mesure', () => {
+    finir(['Première proposition', null, null]);
+    const lien = fiche()!;
+    expect(lien).toBeTruthy();
+    expect(lien.getAttribute('href')).toBe('/fiches-revision/ecluses.pdf');
+    expect(lien.getAttribute('data-mesure-theme')).toBe('ecluses');
+    expect(lien.getAttribute('target')).toBe('_blank');
+    expect(lien.getAttribute('rel')).toBe('noopener');
+    const phrase = lien.closest('.resultat__fiche')!;
+    expect(phrase.textContent).toContain(nomDuTheme('ecluses'));
+    expect(phrase.textContent).toContain('2 erreurs');
+    expect(lien.textContent).toBe('Prendre sa fiche de révision en PDF');
+  });
+
+  it('reste hors du bloc du verdict, où se hisse le pavillon Q', () => {
+    // Reçu avec deux erreurs : le pavillon est hissé, la fiche n'y touche pas.
+    finir(['Première proposition', null, null]);
+    expect(document.querySelector('.resultat--recu')).toBeTruthy();
+    expect(fiche()!.closest('.resultat--recu')).toBeNull();
+  });
+
+  it('dit « une erreur » au singulier', () => {
+    finir(['Première proposition', 'Première proposition', null]);
+    expect(fiche()!.closest('.resultat__fiche')!.textContent).toContain('1 erreur');
+    expect(fiche()!.closest('.resultat__fiche')!.textContent).not.toContain('1 erreurs');
+  });
+
+  it('se tait sans erreur', () => {
+    finir(['Première proposition', 'Première proposition', 'Première proposition']);
+    expect(fiche()).toBeNull();
+  });
+
+  it('se tait en entraînement', () => {
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(screen.getByRole('button', { name: /Deuxième proposition/ }));
+      fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+      fireEvent.click(screen.getByRole('button', { name: /Question suivante|Voir le résultat/ }));
+    }
+    expect(document.querySelector('.resultat__score')).toBeTruthy();
+    expect(fiche()).toBeNull();
+  });
+});
+
 describe('la revue dit ce que le candidat a coché', () => {
   /** La marque écrite sur la proposition qui porte ce texte, dans un article. */
   function marque(article: Element, texte: string) {
