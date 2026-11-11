@@ -15,11 +15,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 240-2.20, III, vise les installations fixes et portatives munies de l'appel
-  sélectif numérique : lorsqu'elles sont programmées, elles le sont avec le MMSI attribué
-  par l'autorité qui délivre les licences de stations. La portative n'y échappe pas. Le
-  texte ne dit pas « le MMSI du navire » : seul le IV, qui ne vise que la VHF fixe, le
-  nomme ainsi. Une portative peut recevoir son propre identifiant.
+  Une VHF portative munie de l'ASN, comme une fixe, se programme avec le MMSI attribué par
+  l'autorité qui délivre les licences de stations. Ce n'est pas forcément « le MMSI du
+  navire » : seule la VHF fixe est liée au navire, une portative peut recevoir son propre
+  identifiant.
 sources:
   - texte: Division 240, article 240-2.20, III
     ref: division-240
@@ -27,4 +26,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

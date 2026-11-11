@@ -19,12 +19,10 @@ reponses:
   - b
   - d
 explication: >-
-  L'annexe IV du RIPAM compte parmi les signaux qui indiquent la détresse et le besoin
-  d'assistance les signaux émis par les radiobalises de localisation des sinistres, au
-  1 n), et les signaux approuvés des systèmes de radiocommunications, y compris les
-  répondeurs radar pour embarcations et radeaux de sauvetage, au 1 o). PAN PAN et
-  SÉCURITÉ n'y figurent pas : le premier annonce l'urgence, le second un message sur la
-  sécurité de la navigation, aucun ne dit la détresse.
+  Les signaux d'une radiobalise de localisation des sinistres et ceux d'un répondeur radar
+  d'embarcation ou de radeau de sauvetage indiquent la détresse. PAN PAN et SÉCURITÉ n'en
+  font pas partie : le premier annonce l'urgence, le second un message sur la sécurité de la
+  navigation.
 sources:
   - texte: RIPAM, annexe IV, 1 n) et o)
     ref: decret-77-733
@@ -34,4 +32,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

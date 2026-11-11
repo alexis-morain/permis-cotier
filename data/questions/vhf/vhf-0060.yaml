@@ -19,12 +19,9 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'annexe IV du RIPAM, au paragraphe 1 l) i), range parmi les signaux de détresse
-  l'alerte émise par appel sélectif numérique sur la voie 70 en ondes métriques. Ces
-  signaux, utilisés ensemble ou séparément, indiquent la détresse et le besoin
-  d'assistance : l'alerte numérique vaut donc détresse à elle seule. Le piège est le
-  message parlé que l'on enchaîne ensuite sur le canal 16 : il complète l'alerte, il ne
-  lui donne pas sa valeur.
+  L'alerte émise par appel sélectif numérique sur la voie 70 est un signal de détresse à
+  part entière. Elle vaut détresse à elle seule. Le message parlé que tu enchaînes ensuite
+  sur le canal 16 la complète, mais ne lui donne pas sa valeur.
 sources:
   - texte: RIPAM, annexe IV, 1 l) i)
     ref: decret-77-733
@@ -33,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'
