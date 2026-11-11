@@ -15,16 +15,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 25 c) permet au navire à voile faisant route de montrer, au sommet ou à la
-  partie supérieure du mât, deux feux superposés visibles sur tout l'horizon : le supérieur
-  rouge, l'inférieur vert. L'ordre est le piège, on inverse facilement les deux couleurs.
-  Ces feux restent facultatifs et la même règle interdit de les montrer en même temps
-  que le fanal unique autorisé au paragraphe b).
+  Le navire à voile qui fait route peut montrer en tête de mât deux feux superposés visibles
+  sur tout l'horizon : rouge au-dessus, vert au-dessous. L'ordre est le piège, on inverse
+  facilement les couleurs. Ces feux restent facultatifs et ne se montrent pas en même temps
+  que le fanal unique.
 sources:
   - texte: RIPAM, règle 25 c)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

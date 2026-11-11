@@ -17,10 +17,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 25 b) autorise le navire à voile de longueur inférieure à 20 mètres à réunir
-  les feux du paragraphe a), donc les feux de côté et le feu de poupe, en un seul fanal
-  au sommet ou à la partie supérieure du mât. Ton bateau de 16 mètres entre dans cette
-  limite. Attention à la valeur : la règle dit 20 mètres, pas 12, et le fanal réunit bien
+  Un navire à voile de moins de 20 mètres peut réunir ses feux de côté et son feu de poupe
+  en un seul fanal au sommet ou à la partie supérieure du mât. Ton bateau de 16 mètres entre
+  dans cette limite. Attention : la limite est 20 mètres, pas 12, et le fanal réunit bien
   les trois feux, pas seulement les deux feux de côté.
 sources:
   - texte: RIPAM, règle 25 b)
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -14,15 +14,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 27 h) le dit expressément : les signaux qu'elle prescrit ne sont pas des signaux
-  de navires en détresse et demandant assistance. Un navire non maître de sa manœuvre
-  demande qu'on s'écarte de lui, pas qu'on vienne à son secours. Les signaux de détresse
-  sont à l'annexe IV.
+  Non : un navire non maître de sa manœuvre demande qu'on s'écarte de lui, pas qu'on vienne
+  à son secours. Ces signaux ne sont pas des signaux de détresse, qui forment une liste à
+  part.
 sources:
   - texte: RIPAM, règle 27 h)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

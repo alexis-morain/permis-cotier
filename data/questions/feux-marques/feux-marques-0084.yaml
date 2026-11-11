@@ -17,16 +17,16 @@ propositions:
 reponses:
   - c
 explication: >-
-  La règle 24 f) i) ne demande au navire poussé en avant, hors unité composite, que des
-  feux de côté à son extrémité avant : son arrière est masqué par le pousseur, qui porte
-  déjà le feu de poupe de l'ensemble. Le piège est la règle voisine du même paragraphe
-  : c'est le navire remorqué à couple qui montre en plus un feu de poupe. Les feux blancs
-  d'extrémité, eux, sont réservés aux objets remorqués partiellement submergés.
+  Le navire poussé en avant, hors unité composite, ne montre que des feux de côté à son
+  extrémité avant : son arrière est masqué par le pousseur, qui porte déjà le feu de poupe
+  de l'ensemble. Piège : c'est le navire remorqué à couple qui montre en plus un feu de
+  poupe. Les feux blancs d'extrémité sont réservés aux objets remorqués partiellement
+  submergés.
 sources:
   - texte: RIPAM, règle 24 f) i)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-11'
