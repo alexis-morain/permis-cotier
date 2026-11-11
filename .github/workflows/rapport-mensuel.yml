@@ -1,0 +1,59 @@
+name: Rapport mensuel
+
+# Le 1er de chaque mois, un mail avec les chiffres du mois écoulé : site
+# (Umami), app iOS et app Mac (rapports d'analyse App Store Connect), avis.
+# Le calcul est dans `scripts/rapport_mensuel.py`, testé ; ce fichier le lance.
+#
+# Le cron est en UTC : « 0 7 1 * * » donne 8 h à Paris l'hiver (UTC+1) et
+# 9 h l'été (UTC+2). GitHub ne connaît pas les fuseaux ; on garde l'heure
+# d'hiver, le mail part au plus tard à 9 h.
+#
+# Un passage à la main (Actions > Rapport mensuel > Run workflow) prend un
+# mois AAAA-MM facultatif, par défaut le mois précédent. Le mail repart alors
+# vraiment : l'envoi est idempotent côté Resend pendant 24 h par mois, un
+# second lancement le même jour ne double pas le courrier.
+on:
+  schedule:
+    - cron: '0 7 1 * *'
+  workflow_dispatch:
+    inputs:
+      mois:
+        description: 'Mois du rapport, AAAA-MM (par défaut : le mois précédent)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rapport-mensuel
+  cancel-in-progress: false
+
+jobs:
+  rapport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # L'environnement porte les secrets, et n'est ouvert qu'à `main`.
+    environment: app-store
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-app.txt
+
+      - name: Envoyer le rapport
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          UMAMI_USER: ${{ secrets.UMAMI_USER }}
+          UMAMI_PASSWORD: ${{ secrets.UMAMI_PASSWORD }}
+          RAPPORT_DESTINATAIRE: ${{ secrets.RAPPORT_DESTINATAIRE }}
+          MOIS: ${{ inputs.mois }}
+        run: |
+          args=()
+          if [ -n "$MOIS" ]; then args=(--mois "$MOIS"); fi
+          python scripts/rapport_mensuel.py "${args[@]}"
