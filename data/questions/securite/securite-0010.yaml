@@ -17,14 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 240-2.04, point 4, fixe le nombre à trois feux rouges à main, conformes à
-  la division 311 du règlement. Le piège tient au nombre, que l'on retient volontiers
-  de travers, et au type d'artifice : le texte nomme le feu rouge à main, pas le fumigène.
+  De 2 à moins de 6 milles d'un abri, il faut trois feux rouges à main. Le piège tient au
+  nombre, que l'on retient volontiers de travers, et au type d'artifice : c'est le feu rouge
+  à main, pas le fumigène.
 sources:
   - texte: Division 240, article 240-2.04, point 4
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

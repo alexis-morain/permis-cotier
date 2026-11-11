@@ -21,17 +21,16 @@ reponses:
   - a
   - b
 explication: >-
-  L'article 240-3.02 fait renseigner et signer au locataire une déclaration établie sur
-  le modèle de l'annexe 240-A.6, que le loueur contresigne après avoir vérifié les indications
-  portées. Le texte en prévoit ensuite deux exemplaires : l'un remis à l'utilisateur du
-  navire et présentable à tout instant aux autorités de contrôle, l'autre conservé par
-  le loueur et tenu à la disposition des mêmes autorités. Le document t'accompagne donc
-  à bord, il ne dort ni à l'agence ni dans un bureau de l'administration.
+  Le locataire renseigne et signe la déclaration, que le loueur contresigne après
+  vérification. Il en existe deux exemplaires : l'un t'est remis et tu dois pouvoir le
+  présenter à tout instant aux autorités de contrôle, l'autre reste chez le loueur à leur
+  disposition. Le document t'accompagne donc à bord, il ne dort ni à l'agence ni dans un
+  bureau de l'administration.
 sources:
   - texte: Division 240, article 240-3.02, I
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

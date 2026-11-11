@@ -15,16 +15,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  Dans le tableau du point 8 de l'article 240-2.01, la tranche de 2 à moins de 6 milles
-  porte, pour les véhicules nautiques à moteur, la mention « Navigation réservée aux VNM
-  supérieurs ou égaux à 2 places », avec l'armement côtier spécifique de l'article 240-2.12.
-  Le matériel ne suffit donc pas, la place supplémentaire fait partie de la condition.
-  Au-delà de 6 milles, la navigation leur est interdite.
+  De 2 à moins de 6 milles, un véhicule nautique à moteur doit compter au moins deux places,
+  en plus de l'armement côtier spécifique. Le matériel ne suffit donc pas, la place
+  supplémentaire fait partie de la condition. Au-delà de 6 milles, la navigation leur est
+  interdite.
 sources:
   - texte: Division 240, article 240-2.01, point 8
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

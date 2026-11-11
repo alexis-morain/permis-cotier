@@ -17,17 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  Pour les navires exclus du marquage CE, l'annexe 240-A3 plafonne à 2 kg la capacité
-  d'un extincteur portatif au CO2. La même annexe encadre son emplacement : il ne se place
-  que dans un local d'habitation contenant des équipements électriques sous tension ou
-  des liquides inflammables, et il ne peut y en avoir plus d'un par espace habitable.
-  Le CO2 est donc l'agent le plus tenu en bride du texte, qui interdit par ailleurs tout
-  agent au halon.
+  Sur un navire exclu du marquage CE, un extincteur portatif au CO2 est limité à 2 kg. Il ne
+  se place que dans un local d'habitation contenant des équipements électriques sous tension
+  ou des liquides inflammables, et il ne peut y en avoir plus d'un par espace habitable. Le
+  CO2 est l'agent le plus encadré, et tout agent au halon est interdit.
 sources:
   - texte: Division 240, annexe 240-A3, II
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

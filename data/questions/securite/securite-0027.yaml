@@ -20,15 +20,14 @@ reponses:
   - a
   - b
 explication: >-
-  Le point II. 9 de l'article 245-1.02 définit chaque catégorie par un couple vent et
-  vague : la catégorie C, c'est force 6 comprise et 2 mètres de hauteur significative
-  comprise. Les deux valeurs vont ensemble, elles viennent de la même ligne du tableau.
-  Force 8 et 4 mètres, c'est la catégorie B : le piège est de monter d'un cran.
+  Chaque catégorie de conception associe un vent et une vague. La catégorie C, c'est force 6
+  comprise et 2 mètres de hauteur significative comprise : les deux valeurs vont ensemble.
+  Force 8 et 4 mètres, c'est la catégorie B. Piège : monter d'un cran.
 sources:
   - texte: Division 245, article 245-1.02, II. 9
     ref: division-245
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'
