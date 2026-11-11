@@ -17,11 +17,8 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée fixe pour la personne
-  chargée de la surveillance « l'âge minimum de 16 ans requis pour le passage des épreuves
-  du permis plaisance français ». Les arrêtés de l'Atlantique et de la Manche disent la
-  même chose autrement : « en âge de passer le permis ». La majorité n'est pas exigée,
-  mais un enfant de 14 ans ne suffit pas.
+  Le surveillant doit avoir 16 ans au moins, l'âge requis pour passer les épreuves du permis
+  plaisance. La majorité n'est pas exigée, mais un enfant de 14 ans ne suffit pas.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -31,4 +28,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

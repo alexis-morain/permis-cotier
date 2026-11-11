@@ -17,10 +17,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée réserve le ski nautique
-  à la zone située « au-delà de la bande littorale des 300 mètres ». La bande des 300
-  mètres est celle des baigneurs : on n'y tracte pas un skieur, même lentement. Les
-  100 mètres sont une autre règle, celle du rayon autour d'un pavillon de plongeur.
+  Le ski nautique se pratique au-delà de la bande littorale des 300 mètres. Cette bande est
+  celle des baigneurs : on n'y tracte pas un skieur, même lentement. Les 100 mètres sont une
+  autre règle, celle du rayon autour d'un pavillon de plongeur.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'
