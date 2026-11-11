@@ -20,16 +20,16 @@ propositions:
 reponses:
   - d
 explication: >-
-  L'article 5 prévoit que le permis peut être délivré avec exemption partielle ou totale
-  de l'examen préalable aux personnes dont la fonction ou la qualification garantit un
-  niveau suffisant de connaissances théoriques et pratiques en navigation. Les conditions
-  en sont fixées par arrêté des ministres chargés de la mer et des transports. Le texte
-  ne parle ni d'une épreuve pratique de remplacement ni d'une priorité d'inscription.
+  Si ta fonction ou ta qualification garantit un niveau suffisant de connaissances
+  théoriques et pratiques en navigation, le permis peut être délivré avec une exemption
+  partielle ou totale de l'examen. Les conditions sont fixées par arrêté des ministres
+  chargés de la mer et des transports. Il n'y a ni épreuve pratique de remplacement ni
+  priorité d'inscription.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 5
     ref: decret-2007-1167
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'
