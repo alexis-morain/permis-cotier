@@ -54,6 +54,9 @@ def page(app: dict, cap: dict, cadre: Path, brute: Path) -> str:
     t = app["texte"]
     with Image.open(cadre) as im:
         cw, ch = im.size
+        # La marge transparente autour de l'appareil ne compte pas : on cadre sur l'appareil.
+        bx, by, bx1, by1 = im.split()[3].getbbox()
+    bw, bh = bx1 - bx, by1 - by
     # L'appareil prend toute la hauteur laissée par le texte (mesurée par le navigateur).
     return f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"><style>
 html,body{{margin:0;width:{L}px;height:{H}px;overflow:hidden;background:{FONDS[cap['fond']]}}}
@@ -64,10 +67,10 @@ header{{flex:none;height:{t['bloc']}px;overflow:hidden;box-sizing:border-box;pad
 h1{{margin:0;font-size:{t['titre']}px;line-height:1.06;font-weight:800;letter-spacing:-0.02em;text-wrap:balance}}
 p{{margin:{round(t['sous'] * 0.6)}px 0 0;font-size:{t['sous']}px;line-height:1.3;color:{DOUX};font-weight:500;text-wrap:pretty}}
 main{{flex:1;min-height:0;display:flex;justify-content:center;align-items:flex-end;padding:{round(t['titre'] * 0.6)}px 0 {app['bas']}px}}
-.appareil{{position:relative;height:100%;aspect-ratio:{cw}/{ch}}}
+.appareil{{position:relative;height:100%;aspect-ratio:{bw}/{bh}}}
 .appareil img{{position:absolute}}
-.ecran{{left:{ex / cw * 100}%;top:{ey / ch * 100}%;width:{ew / cw * 100}%;height:{eh / ch * 100}%}}
-.cadre{{left:0;top:0;width:100%;height:100%}}
+.ecran{{left:{(ex - bx) / bw * 100}%;top:{(ey - by) / bh * 100}%;width:{ew / bw * 100}%;height:{eh / bh * 100}%}}
+.cadre{{left:{-bx / bw * 100}%;top:{-by / bh * 100}%;width:{cw / bw * 100}%;height:{ch / bh * 100}%}}
 </style></head><body>
 <header><div class="filet"></div><h1>{html.escape(cap['titre'])}</h1><p>{html.escape(cap['sous'])}</p></header>
 <main><div class="appareil"><img class="ecran" src="{brute.as_uri()}"><img class="cadre" src="{cadre.as_uri()}"></div></main>
@@ -120,15 +123,20 @@ def main() -> None:
         sortie = DOSSIER / "sortie" / nom
         sortie.mkdir(parents=True, exist_ok=True)
         faits = []
+        for vieux in sortie.glob("*.png"):
+            vieux.unlink()
         with tempfile.TemporaryDirectory() as tmp:
             for cap in conf["captures"]:
-                brute = DOSSIER / "brutes" / nom / cap["brute"]
+                if nom not in cap.get("appareils", conf["appareils"]):
+                    continue
+                b = cap["brute"]
+                brute = DOSSIER / "brutes" / nom / (b[nom] if isinstance(b, dict) else b)
                 with Image.open(brute) as im:
                     if im.size != tuple(app["ecran"][2:]):
                         sys.exit(f"{brute} : {im.size}, l'écran du cadre fait {tuple(app['ecran'][2:])}")
                 f = Path(tmp) / f"{cap['id']}.html"
                 f.write_text(page(app, cap, cadre, brute))
-                png = sortie / f"{cap['id']}.png"
+                png = sortie / f"{len(faits) + 1}-{cap['id']}.png"
                 rendre(f, png, L, H)
                 aplatir_et_verifier(png, L, H)
                 faits.append(png)
