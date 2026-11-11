@@ -16,16 +16,16 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article L. 945-4, I, 3° punit de 22 500 euros d'amende le fait de pêcher certaines
-  espèces dans une zone, à une profondeur ou à une période où leur pêche est interdite.
-  Le texte ne distingue pas le loisir du professionnel. Le piège est de croire que ces
-  fermetures ne concernent que les métiers : elles protègent la ressource, donc tout
-  le monde. Avant de partir, on vérifie l'arrêté en vigueur sur sa façade.
+  Pêcher certaines espèces dans une zone, à une profondeur ou à une période où leur pêche
+  est interdite est puni de 22 500 euros d'amende, sans distinction entre loisir et
+  professionnel. Piège : croire que ces fermetures ne concernent que les métiers. Elles
+  protègent la ressource, donc tout le monde. Avant de partir, vérifie l'arrêté en vigueur
+  sur ta façade.
 sources:
   - texte: Code rural et de la pêche maritime, article L. 945-4, I, 3°
     ref: peche-loisir
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

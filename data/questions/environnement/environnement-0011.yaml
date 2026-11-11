@@ -18,12 +18,11 @@ reponses:
   - a
   - b
 explication: >-
-  L'article L. 945-4, I, 7° punit de 22 500 euros d'amende le fait de détenir à bord
-  ou d'utiliser pour la pêche des explosifs, des armes à feu, des substances soporifiques
-  ou toxiques de nature à détruire ou altérer les animaux, les végétaux marins et leur
-  milieu. Le fusil de chasse est une arme à feu, la javel une substance toxique : les
-  deux tombent sous la même règle, parce que l'un et l'autre tuent bien au-delà de la
-  prise. Casier et épuisette sont des engins de pêche ordinaires, encadrés ailleurs.
+  Détenir à bord ou utiliser pour la pêche des explosifs, des armes à feu, des substances
+  soporifiques ou toxiques de nature à détruire ou altérer les animaux, les végétaux marins
+  et leur milieu est puni de 22 500 euros d'amende. Le fusil de chasse est une arme à feu,
+  la javel une substance toxique : l'un et l'autre tuent bien au-delà de la prise. Casier et
+  épuisette sont des engins de pêche ordinaires.
 sources:
   - texte: Code rural et de la pêche maritime, article L. 945-4, I, 7°
     ref: peche-loisir
@@ -31,4 +30,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

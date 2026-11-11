@@ -18,16 +18,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article vise deux effets et non un seul : les substances nuisibles pour la conservation
-  ou la reproduction des mammifères marins, poissons, crustacés, coquillages, mollusques
-  ou végétaux, et celles de nature à les rendre impropres à la consommation. Un produit
-  qui ne tue rien mais contamine la chair d'un coquillage tombe sous le second membre
-  de phrase.
+  Deux effets sont visés, pas un seul : les substances nuisibles pour la conservation ou la
+  reproduction des mammifères marins, poissons, crustacés, coquillages, mollusques ou
+  végétaux, et celles de nature à les rendre impropres à la consommation. Un produit qui ne
+  tue rien mais contamine la chair d'un coquillage tombe sous le second cas.
 sources:
   - texte: Code de l'environnement, article L. 218-73
     ref: code-environnement
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-11-11'

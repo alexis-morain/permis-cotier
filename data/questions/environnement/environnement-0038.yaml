@@ -17,10 +17,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  Pour les mollusques bivalves, palourdes, coques, praires ou huîtres, l'annexe II de l'arrêté
-  du 26 octobre 2012 retient la plus grande dimension de la coquille. On pose le coquillage
-  dans sa plus grande longueur contre la règle. Le poids ne sert qu'à quelques espèces de
-  l'annexe I, comme le poulpe.
+  Pour les mollusques bivalves (palourdes, coques, praires, huîtres), on retient la plus
+  grande dimension de la coquille. On pose le coquillage dans sa plus grande longueur contre
+  la règle. Le poids ne sert qu'à quelques espèces, comme le poulpe.
 sources:
   - texte: Arrêté du 26 octobre 2012, annexe II, A. 7 et B. 5
     ref: arrete-2012-10-26
@@ -28,4 +27,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

@@ -18,14 +18,14 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article prévoit 100 000 euros d'amende, « ce montant pouvant être porté jusqu'au double de
-  l'avantage tiré de la commission de l'infraction ». Le chiffre à retenir est donc 100 000
-  euros, avec un plafond que le gain tiré de l'infraction peut relever.
+  Les 100 000 euros sont le montant de base, mais il peut être porté jusqu'au double de
+  l'avantage tiré de l'infraction. Le plafond n'est donc pas absolu : le gain tiré de
+  l'infraction peut le relever.
 sources:
   - texte: Code de l'environnement, article L. 218-73
     ref: code-environnement
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'
