@@ -17,14 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le son continu produit par un appareil quelconque pour signaux de brume est un signal
-  de détresse de l'annexe IV. Les signaux de brume réglementaires sont tous rythmés, par
-  sons brefs et prolongés séparés d'intervalles.
+  Un son continu produit par un appareil quelconque pour signaux de brume est un signal de
+  détresse. Les signaux de brume réglementaires sont tous rythmés, par sons brefs et
+  prolongés séparés d'intervalles.
 sources:
   - texte: RIPAM, annexe IV, 1 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

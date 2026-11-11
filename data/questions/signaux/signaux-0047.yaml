@@ -17,10 +17,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le groupe SOS du code Morse, trois points, trois traits, trois points, émis par tout
-  système de signalisation, est un signal de détresse de l'annexe IV. Morse D est le code
-  d'une balise radar de danger nouveau, Morse A le rythme d'une marque d'eaux saines : ni
-  l'un ni l'autre ne parle de détresse.
+  Le groupe SOS en Morse, trois points, trois traits, trois points, émis par tout système de
+  signalisation, est un signal de détresse. Morse D est le code d'une balise radar de danger
+  nouveau, Morse A le rythme d'une marque d'eaux saines : ni l'un ni l'autre ne parle de
+  détresse.
 sources:
   - texte: RIPAM, annexe IV, 1 d)
     ref: decret-77-733
@@ -30,4 +30,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

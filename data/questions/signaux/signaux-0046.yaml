@@ -16,10 +16,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le signal constitué par un pavillon carré avec une boule ou un objet analogue au-dessus ou
-  en dessous est un signal de détresse de l'annexe IV. Le navire handicapé par son tirant
-  d'eau montre une marque cylindrique, règle 28, et le mouillage se signale par une boule
-  seule, règle 30.
+  Un pavillon carré avec une boule ou un objet analogue au-dessus ou en dessous est un
+  signal de détresse. Le navire handicapé par son tirant d'eau montre une marque
+  cylindrique, et le mouillage se signale par une boule seule.
 sources:
   - texte: RIPAM, annexe IV, 1 g)
     ref: decret-77-733
@@ -31,4 +30,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'
