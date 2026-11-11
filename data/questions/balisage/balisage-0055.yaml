@@ -15,14 +15,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 2 de l'arrêté du 27 mars 1991 est net : les bouées sont dépourvues de voyant.
-  Elles ont pourtant les caractères des marques spéciales, jaunes, mais c'est leur forme,
-  sphérique, cylindrique ou conique, qui dit leur rôle.
+  Non, ces bouées n'ont pas de voyant. Elles ont pourtant les caractères des marques
+  spéciales, jaunes, mais c'est leur forme, sphérique, cylindrique ou conique, qui dit leur
+  rôle.
 sources:
   - texte: Arrêté du 27 mars 1991, article 2
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

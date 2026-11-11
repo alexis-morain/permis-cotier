@@ -20,11 +20,10 @@ reponses:
   - b
   - d
 explication: >-
-  Le paragraphe 5.2 donne au feu de la marque d'eaux saines la couleur blanche et quatre
-  rythmes possibles : isophase, à occultations, à un éclat long toutes les 10 secondes ou
-  lettre Morse « A ». Les scintillements sont ceux des cardinales : continus au Nord, par six
-  suivis d'un éclat long au Sud. L'éclat long seul est un rythme d'eaux saines, mais derrière
-  six scintillements, c'est une cardinale Sud.
+  Le feu d'une marque d'eaux saines est blanc, avec quatre rythmes possibles : isophase, à
+  occultations, à un éclat long toutes les 10 secondes, ou lettre Morse « A ». Les
+  scintillements sont ceux des cardinales : continus au Nord, par six suivis d'un éclat long
+  au Sud. Un éclat long derrière six scintillements, c'est donc une cardinale Sud.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 5.2
     ref: arrete-2017-11-30
@@ -34,4 +33,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

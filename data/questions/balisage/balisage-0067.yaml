@@ -19,10 +19,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le paragraphe 6.1 dit que la marque spéciale indique une zone ou une configuration
-  « dont la nature exacte est déterminée en se référant aux documents nautiques
-  appropriés ». Son feu a un rythme quelconque et sa forme est au choix, ils ne codent
-  donc pas l'usage. Le pictogramme est autorisé par le paragraphe 6.2, pas imposé.
+  La nature exacte de la zone ou de l'installation se lit dans les documents nautiques
+  appropriés. Le feu a un rythme quelconque et la forme est au choix, donc ni l'un ni
+  l'autre ne code l'usage. Le pictogramme est autorisé, pas imposé.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 6.1
     ref: arrete-2017-11-30
@@ -31,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

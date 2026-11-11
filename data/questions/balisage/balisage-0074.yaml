@@ -19,11 +19,10 @@ propositions:
 reponses:
   - d
 explication: >-
-  L'annexe III balise de jour les chenaux qui passent sous un pont dangereux pour la
-  navigation. En région A, un panneau à carré plein rouge marque le côté bâbord, un panneau
-  à triangle plein vert, pointe en haut, le côté tribord. Les travées pour très petits
-  bateaux peuvent porter des marques spéciales jaunes, et l'interdiction de passer a ses
-  propres panneaux.
+  De jour, un chenal qui passe sous un pont dangereux est balisé par des panneaux. En région
+  A, un carré plein rouge marque le côté bâbord, un triangle plein vert pointe en haut le
+  côté tribord. Les travées pour très petits bateaux peuvent porter des marques spéciales
+  jaunes, et l'interdiction de passer a ses propres panneaux.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe III, 2
     ref: arrete-2017-11-30
@@ -31,4 +30,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

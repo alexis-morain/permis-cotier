@@ -18,17 +18,15 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'article 1 de l'arrêté du 27 mars 1991 prévoit que la limite des 300 mètres, ainsi
-  que les limites des zones et chenaux réglementés créés en deçà de cette limite, sont
-  matérialisées par des bouées présentant les caractères des marques spéciales définies
-  au chapitre 6 de l'annexe I au décret du 7 septembre 1983. Le piège tient au mot « chenal
-  » : on l'associe d'ordinaire au balisage latéral, bâbord et tribord, alors que le texte
-  range ces bouées dans la catégorie des marques spéciales.
+  La limite des 300 mètres et celles des zones et chenaux réglementés créés en deçà sont
+  matérialisées par des bouées qui ont les caractères des marques spéciales. Piège : le mot
+  « chenal » fait penser au balisage latéral, bâbord et tribord, alors que ces bouées sont
+  des marques spéciales.
 sources:
   - texte: Arrêté du 27 mars 1991, article 1
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

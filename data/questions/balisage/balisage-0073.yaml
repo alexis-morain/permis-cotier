@@ -17,12 +17,11 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le paragraphe 7.2.1 dit que si le service responsable estime le danger particulièrement
-  grave, au moins une des marques est doublée aussitôt que possible. La marque mise en double
-  est en tous points identique à celle avec laquelle elle est couplée (7.2.3). La marque
-  spéciale n'est pas au nombre des marques prévues pour un danger nouveau, et la bouée
-  d'épave en cas d'urgence est l'un des moyens de le signaler, pas un remplacement imposé
-  par la gravité.
+  Si le service responsable juge le danger particulièrement grave, au moins une des marques
+  est doublée aussitôt que possible. La marque doublée est en tous points identique à celle
+  avec laquelle elle est couplée. La marque spéciale n'est pas prévue pour un danger
+  nouveau, et la bouée d'épave en cas d'urgence est un moyen de le signaler, pas un
+  remplacement imposé par la gravité.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.1
     ref: arrete-2017-11-30
@@ -32,4 +31,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'
