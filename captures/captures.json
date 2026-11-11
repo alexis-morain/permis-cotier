@@ -14,10 +14,10 @@
       ],
       "texte": {
         "marge": 96,
-        "haut": 170,
-        "titre": 118,
-        "sous": 52,
-        "bloc": 640
+        "haut": 160,
+        "titre": 128,
+        "sous": 54,
+        "bloc": 700
       },
       "bas": 90
     },
@@ -38,7 +38,7 @@
         "haut": 150,
         "titre": 132,
         "sous": 58,
-        "bloc": 560
+        "bloc": 640
       },
       "bas": 90
     }
@@ -48,8 +48,8 @@
       "id": "1-examen",
       "brute": "3-examen.png",
       "fond": "bleu",
-      "titre": "Des examens blancs au vrai format",
-      "sous": "40 questions, 5 erreurs admises, comme le jour J"
+      "titre": "L’examen comme le jour J",
+      "sous": "40 questions, 5 erreurs admises : le format officiel"
     },
     {
       "id": "2-source",
@@ -63,7 +63,7 @@
       "brute": "5-resultat.png",
       "fond": "rose",
       "titre": "Sache quand tu es prêt",
-      "sous": "Ton score par thème après chaque examen blanc"
+      "sous": "Ton score par thème, examen après examen"
     },
     {
       "id": "4-cours",

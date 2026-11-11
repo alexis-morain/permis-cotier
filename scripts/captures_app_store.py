@@ -59,7 +59,7 @@ def page(app: dict, cap: dict, cadre: Path, brute: Path) -> str:
 html,body{{margin:0;width:{L}px;height:{H}px;overflow:hidden;background:{FONDS[cap['fond']]}}}
 body{{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,sans-serif;
   -webkit-font-smoothing:antialiased;color:{ENCRE}}}
-header{{flex:0 0 {t['bloc']}px;box-sizing:border-box;padding:{t['haut']}px {t['marge']}px 0}}
+header{{flex:none;height:{t['bloc']}px;overflow:hidden;box-sizing:border-box;padding:{t['haut']}px {t['marge']}px 0}}
 .filet{{width:{round(t['titre'] * 1.1)}px;height:{round(t['titre'] * 0.14)}px;background:{JAUNE};border-radius:2px;margin-bottom:{round(t['titre'] * 0.42)}px}}
 h1{{margin:0;font-size:{t['titre']}px;line-height:1.06;font-weight:800;letter-spacing:-0.02em;text-wrap:balance}}
 p{{margin:{round(t['sous'] * 0.6)}px 0 0;font-size:{t['sous']}px;line-height:1.3;color:{DOUX};font-weight:500;text-wrap:pretty}}
@@ -71,7 +71,11 @@ main{{flex:1;min-height:0;display:flex;justify-content:center;align-items:flex-e
 </style></head><body>
 <header><div class="filet"></div><h1>{html.escape(cap['titre'])}</h1><p>{html.escape(cap['sous'])}</p></header>
 <main><div class="appareil"><img class="ecran" src="{brute.as_uri()}"><img class="cadre" src="{cadre.as_uri()}"></div></main>
-</body></html>"""
+<script>
+// Garde-fou : une légende qui déborde de son bloc peint le coin en rouge vif, le script s'arrête.
+const h = document.querySelector('header');
+if (h.scrollHeight > h.clientHeight + 1) document.body.insertAdjacentHTML('beforeend', '<i style="position:fixed;left:0;top:0;width:8px;height:8px;background:#f00"></i>');
+</script></body></html>"""
 
 
 def rendre(fichier_html: Path, sortie: Path, L: int, H: int) -> None:
@@ -87,6 +91,8 @@ def aplatir_et_verifier(png: Path, L: int, H: int) -> None:
         if im.size != (L, H):
             sys.exit(f"{png.name} : {im.size}, attendu {(L, H)}")
         rgb = im.convert("RGB")
+    if rgb.getpixel((2, 2)) == (255, 0, 0):
+        sys.exit(f"{png.name} : la légende déborde de son bloc, raccourcir le texte")
     rgb.save(png, optimize=True)
 
 
