@@ -19,11 +19,10 @@ propositions:
 reponses:
   - d
 explication: >-
-  Le paragraphe 2.2 range en région B les littoraux de Saint-Pierre-et-Miquelon, de la
-  Guyane, de la Martinique et de la Guadeloupe. La Réunion, la Nouvelle-Calédonie et la
-  Polynésie française sont en région A, avec la métropole, Mayotte, Wallis-et-Futuna et les
-  Terres australes et antarctiques françaises. L'éloignement de la métropole ne dit rien :
-  c'est la liste de l'arrêté qui fait foi.
+  Saint-Pierre-et-Miquelon est en région B, comme la Guyane, la Martinique et la Guadeloupe.
+  La Réunion, la Nouvelle-Calédonie et la Polynésie française sont en région A, avec la
+  métropole, Mayotte, Wallis-et-Futuna et les Terres australes et antarctiques françaises.
+  L'éloignement de la métropole ne compte pas : seule la liste fait foi.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.2
     ref: arrete-2017-11-30
@@ -31,4 +30,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'
