@@ -47,3 +47,6 @@ ios/App/App.xcodeproj/xcuserdata/
 
 # harnais local, chemins absolus
 .claude/settings.local.json
+
+# captures App Store composées : elles contiennent les cadres Apple, sous licence
+captures/sortie/

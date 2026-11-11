@@ -1,0 +1,83 @@
+{
+  "appareils": {
+    "iphone": {
+      "toile": [
+        1320,
+        2868
+      ],
+      "cadre": "iphone/iPhone 18 Pro Max - Black - Portrait.png",
+      "ecran": [
+        75,
+        66,
+        1320,
+        2868
+      ],
+      "texte": {
+        "marge": 96,
+        "haut": 170,
+        "titre": 118,
+        "sous": 52,
+        "bloc": 640
+      },
+      "bas": 90
+    },
+    "ipad": {
+      "toile": [
+        2064,
+        2752
+      ],
+      "cadre": "ipad/iPad Pro (M5) 13\" - Space Black - Portrait.png",
+      "ecran": [
+        118,
+        124,
+        2064,
+        2752
+      ],
+      "texte": {
+        "marge": 150,
+        "haut": 150,
+        "titre": 132,
+        "sous": 58,
+        "bloc": 560
+      },
+      "bas": 90
+    }
+  },
+  "captures": [
+    {
+      "id": "1-examen",
+      "brute": "3-examen.png",
+      "fond": "bleu",
+      "titre": "Des examens blancs au vrai format",
+      "sous": "40 questions, 5 erreurs admises, comme le jour J"
+    },
+    {
+      "id": "2-source",
+      "brute": "4-correction.png",
+      "fond": "sable",
+      "titre": "Chaque réponse cite sa source",
+      "sous": "La règle exacte, sous chaque correction"
+    },
+    {
+      "id": "3-pret",
+      "brute": "5-resultat.png",
+      "fond": "rose",
+      "titre": "Sache quand tu es prêt",
+      "sous": "Ton score par thème après chaque examen blanc"
+    },
+    {
+      "id": "4-cours",
+      "brute": "2-cours.png",
+      "fond": "orange",
+      "titre": "Tout le programme en 105 leçons",
+      "sous": "Balisage, feux, météo, VHF : des leçons courtes"
+    },
+    {
+      "id": "5-serie",
+      "brute": "1-accueil.png",
+      "fond": "bleu",
+      "titre": "Ta série du jour t’attend",
+      "sous": "Les questions ratées reviennent au bon moment"
+    }
+  ]
+}
