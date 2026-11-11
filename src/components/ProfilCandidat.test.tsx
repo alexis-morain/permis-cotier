@@ -32,6 +32,7 @@ const banque = [
 beforeEach(() => {
   localStorage.clear();
   window.scrollTo = vi.fn();
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
 });
 afterEach(() => cleanup());
 
@@ -179,6 +180,7 @@ describe('la fiche', () => {
     sauvegarder(enregistrerProfil(enregistrerReponse(etatInitial(), 'vhf-0', true, aujourdhui()), { ...profilVide(), prenom: 'Léa', rempliLe: '2026-09-01' }));
     render(<ProfilCandidat banque={banque} totalLecons={105} />);
     fireEvent.click(screen.getByRole('button', { name: /Effacer ma progression/ }));
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 500 });
     fireEvent.click(screen.getByRole('button', { name: 'Oui, tout effacer' }));
     expect(charger()).toEqual(etatInitial());
     const titre = screen.getByRole('heading', { level: 1 });
@@ -186,7 +188,7 @@ describe('la fiche', () => {
     // Ce qui s'est passé est dit, et le focus repart du haut.
     expect(screen.getByRole('status').textContent).toBe('Fiche effacée.');
     expect(document.activeElement).toBe(titre);
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0 });
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
   it('demande confirmation avec Annuler d’abord, et dit ce qui part', () => {
