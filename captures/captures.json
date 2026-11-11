@@ -99,6 +99,18 @@
       "sous": "Ton score par thème, examen après examen"
     },
     {
+      "id": "visuel",
+      "appareils": [
+        "iphone"
+      ],
+      "brute": {
+        "iphone": "6-visuel.png"
+      },
+      "fond": "orange",
+      "titre": "Les balises en images",
+      "sous": "108 dessins : bouées, feux de navires, pavillons"
+    },
+    {
       "id": "fiches",
       "appareils": [
         "mac"
@@ -106,7 +118,7 @@
       "brute": {
         "mac": "3-fiche-revision.png"
       },
-      "fond": "sable",
+      "fond": "orange",
       "titre": "Des fiches à imprimer",
       "sous": "Quatorze fiches de révision, une ou deux pages chacune"
     },
@@ -117,9 +129,9 @@
         "ipad": "2-cours.png",
         "mac": "2-cours.png"
       },
-      "fond": "orange",
+      "fond": "bleu",
       "titre": "Tout le programme en 105 leçons",
-      "sous": "Balisage, feux, météo, VHF : des leçons courtes"
+      "sous": "Balisage, feux, météo, VHF : 2 à 5 minutes la leçon"
     },
     {
       "id": "serie",
@@ -128,9 +140,9 @@
         "ipad": "1-accueil.png",
         "mac": "1-accueil.png"
       },
-      "fond": "bleu",
+      "fond": "rose",
       "titre": "Ta série du jour t’attend",
-      "sous": "Les questions ratées reviennent au bon moment"
+      "sous": "Une question ratée revient jusqu’à ce que tu la saches"
     }
   ]
 }
