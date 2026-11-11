@@ -13,12 +13,12 @@ import type { LeconAffichable } from '../lib/cours';
 import type { QuestionAffichable } from '../lib/affichable';
 import { aujourdhui, charger, etatInitial, sauvegarder, terminerLecon } from '../lib/progression';
 import { notionsDuTheme } from '../lib/notions';
-import { vibrer } from '../lib/natif';
+import { proposerLaNote, vibrer } from '../lib/natif';
 import { evenement } from '../lib/mesure';
 
 // Le retour d'un geste, vibration et son (`natif.ts`) : on regarde ce que la
 // leçon demande, pas ce que le greffon en fait. La mesure de même.
-vi.mock('../lib/natif', () => ({ vibrer: vi.fn() }));
+vi.mock('../lib/natif', () => ({ vibrer: vi.fn(), proposerLaNote: vi.fn() }));
 vi.mock('../lib/mesure', () => ({ evenement: vi.fn() }));
 
 function question(id: string, reponses = ['a']): QuestionAffichable {
@@ -417,6 +417,16 @@ describe('le retour de chaque geste', () => {
     cliquer('Tout lire d’une traite');
     cliquer('Reprendre pas à pas');
     expect(vi.mocked(vibrer).mock.calls).toEqual([['lecon']]);
+  });
+
+  it('propose la note une seule fois, à la fin de la leçon', () => {
+    vi.mocked(proposerLaNote).mockClear();
+    monter(courte, null);
+    expect(proposerLaNote).not.toHaveBeenCalled();
+    cliquer('Terminer la leçon');
+    cliquer('Tout lire d’une traite');
+    cliquer('Reprendre pas à pas');
+    expect(proposerLaNote).toHaveBeenCalledTimes(1);
   });
 });
 

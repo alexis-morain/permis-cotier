@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro';
+import { POUR_APP } from '../lib/cible';
+import { raisonDuRepli } from '../lib/signalement';
+
+// Le pendant de `signaler.astro` pour un avis général, sans question à citer.
+// Même mécanique, deux différences qui comptent : le Worker ne l'ouvre jamais
+// en issue (un avis n'a rien de public), il le remet par courrier seulement ; et
+// le widget Turnstile porte une autre action (`avis`), que le Worker exige.
+// Hors ligne, clé absente, panne : le courrier pré-rempli, comme pour un
+// signalement. Dans l'app il n'y a pas de Worker, donc toujours le courrier.
+const ADRESSE = 'contact@lepermiscotier.fr';
+
+// Clé publique du widget, la même que celle du signalement : voir `signaler.astro`.
+const CLE_TURNSTILE = POUR_APP
+  ? ''
+  : (import.meta.env.TURNSTILE_SITE_KEY ?? process.env.TURNSTILE_SITE_KEY ?? '0x4AAAAAAFMTO43R4l4TgTgm');
+const ENVOI_EN_LIGNE = CLE_TURNSTILE !== '';
+const ENVOI = ENVOI_EN_LIGNE ? '/api/signaler' : undefined;
+
+const RAISONS = JSON.stringify({
+  403: raisonDuRepli(403),
+  429: raisonDuRepli(429),
+  503: raisonDuRepli(503),
+  autre: raisonDuRepli(500),
+  reseau: raisonDuRepli(null),
+  sansJeton: raisonDuRepli('sans-jeton'),
+});
+---
+
+<Base titre="Donner un avis" description="Dire ce qui t’a servi, ce qui manque ou ce qui t’a gêné." indexable={false} retourApp={{ nom: 'Ta fiche', chemin: '/profil' }}>
+  <div class="page page--etroite" style={POUR_APP ? undefined : 'padding-block:3rem 0'}>
+    <h1>Donner un avis</h1>
+    <p>
+      Ce qui t’a servi, ce qui manque, ce qui t’a gêné : tout m’intéresse. Ton message
+      m’arrive par courrier et reste entre nous, il ne devient pas une fiche publique. Pour
+      une question qui te paraît fausse, le bouton de signalement est sous la question.
+    </p>
+
+    <form class="avis" id="avis" method="post" enctype="text/plain"
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-envoi={ENVOI} data-raisons={RAISONS}>
+      <p>
+        <label for="note">Ta note, si tu veux en donner une</label>
+        <select id="note" name="note" class="champ">
+          <option value="">Pas de note</option>
+          <option value="5">5 sur 5</option>
+          <option value="4">4 sur 5</option>
+          <option value="3">3 sur 5</option>
+          <option value="2">2 sur 5</option>
+          <option value="1">1 sur 5</option>
+        </select>
+      </p>
+      <p>
+        <label for="message">Ton avis</label>
+        <textarea id="message" name="message" class="champ" rows="6" maxlength="1200" required
+          placeholder="Les leçons sont claires, il me manque…"></textarea>
+      </p>
+      {ENVOI_EN_LIGNE ? (
+        <p class="discret">
+          L’avis part seul : ni adresse, ni adresse IP, ni cookie ne sont joints. La
+          vérification anti-robot ci-dessous et la mesure d’audience voient ta connexion,
+          comme tout site voit qui l’appelle ; l’avis, lui, n’en garde rien. Tu veux une
+          réponse ? Écris-moi plutôt à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> : c’est le
+          seul endroit où une adresse circule, et c’est toi qui la donnes.
+        </p>
+      ) : (
+        <p class="discret">
+          Le message part de ta boîte, ton adresse m’est donc visible et ne sert qu’à te répondre.
+          Rien n’est enregistré ailleurs, aucun compte, aucune adresse IP conservée.
+        </p>
+      )}
+      {ENVOI_EN_LIGNE && (
+        <div class="cf-turnstile" data-sitekey={CLE_TURNSTILE} data-language="fr"
+          data-action="avis" data-appearance="interaction-only"></div>
+      )}
+      <p>
+        <button class="bouton bouton--principal" id="envoyer" type="submit">
+          {ENVOI_EN_LIGNE ? 'Envoyer mon avis' : 'Préparer mon avis'}
+        </button>
+      </p>
+      <noscript>
+        <p class="discret">
+          Sans JavaScript, écris directement à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a>.
+        </p>
+      </noscript>
+    </form>
+
+    <div class="confirmation" id="confirmation-envoi" role="status" tabindex="-1" hidden>
+      <p class="confirmation__titre">C’est parti. Merci.</p>
+      <p>Ton avis est arrivé. Rien de personnel n’a été enregistré.</p>
+      <p>
+        <a class="bouton bouton--discret" href="/">Revenir à l’accueil</a>
+      </p>
+    </div>
+
+    <div class="confirmation" id="confirmation" role="status" tabindex="-1" hidden>
+      <p class="confirmation__titre">Ton logiciel de courrier s’ouvre avec le message pré-rempli.</p>
+      <p id="confirmation-raison" hidden></p>
+      <p>
+        Il ne part pas tout seul : relis-le, puis envoie-le. Rien n’est enregistré ici.
+      </p>
+      <p class="discret">
+        Rien ne s’est ouvert ? Écris à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a>, c’est la
+        même chose, à la main.
+      </p>
+    </div>
+  </div>
+
+  {ENVOI_EN_LIGNE && (
+    <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+  )}
+
+  {/* Un script en ligne enveloppé dans une fonction : le routeur de la coquille
+      le rejoue à chaque arrivée, voir `signaler.astro`. */}
+  <script is:inline>
+  (() => {
+    const formulaire = document.getElementById('avis');
+    const adresse = formulaire?.dataset.adresse ?? '';
+    const cleTurnstile = formulaire?.dataset.turnstile ?? '';
+    const confirmation = document.getElementById('confirmation');
+    const confirmationEnvoi = document.getElementById('confirmation-envoi');
+    const bouton = document.getElementById('envoyer');
+    const raisons = JSON.parse(formulaire?.dataset.raisons ?? '{}');
+
+    // Quinze secondes, puis le courrier : voir `signaler.astro`.
+    const ATTENTE_WORKER = 15000;
+
+    function replierSurCourrier(note, message, raison) {
+      const corps = [
+        `Note : ${note ? `${note} sur 5` : 'aucune'}`,
+        '',
+        message,
+      ].join('\n');
+
+      const lien =
+        `mailto:${adresse}` +
+        `?subject=${encodeURIComponent('Avis sur Le Permis Côtier')}` +
+        `&body=${encodeURIComponent(corps)}`;
+
+      const explication = document.getElementById('confirmation-raison');
+      if (explication && raison) {
+        explication.textContent = raison;
+        explication.hidden = false;
+      }
+      if (formulaire) formulaire.hidden = true;
+      if (confirmation) {
+        confirmation.hidden = false;
+        confirmation.focus();
+      }
+      window.umami?.track('avis-prepare');
+      location.href = lien;
+    }
+
+    formulaire?.addEventListener('submit', async (evenement) => {
+      evenement.preventDefault();
+      const valeurNote = Number(document.getElementById('note')?.value ?? '');
+      const note = valeurNote >= 1 && valeurNote <= 5 ? valeurNote : null;
+      const message = (document.getElementById('message')?.value ?? '').trim();
+      if (!message) return;
+
+      const jeton = cleTurnstile ? (window.turnstile?.getResponse() ?? '') : '';
+      const envoi = formulaire?.dataset.envoi ?? '';
+      if (!cleTurnstile || !jeton || !envoi) {
+        replierSurCourrier(note, message, cleTurnstile ? raisons.sansJeton : '');
+        return;
+      }
+
+      if (bouton) {
+        bouton.disabled = true;
+        bouton.textContent = 'Envoi…';
+      }
+
+      const controleur = new AbortController();
+      const echeance = setTimeout(() => controleur.abort(), ATTENTE_WORKER);
+      try {
+        const reponse = await fetch(envoi, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ genre: 'avis', message, note, turnstile: jeton }),
+          signal: controleur.signal,
+        });
+        if (!reponse.ok) throw Object.assign(new Error(`HTTP ${reponse.status}`), { statut: reponse.status });
+        // La note seule part à la mesure : jamais le texte de l'avis.
+        window.umami?.track('avis-envoye', note ? { note } : undefined);
+        if (formulaire) formulaire.hidden = true;
+        if (confirmationEnvoi) {
+          confirmationEnvoi.hidden = false;
+          confirmationEnvoi.focus();
+        }
+      } catch (erreur) {
+        window.turnstile?.reset();
+        if (bouton) {
+          bouton.disabled = false;
+          bouton.textContent = 'Envoyer mon avis';
+        }
+        const statut = erreur && typeof erreur.statut === 'number' ? erreur.statut : null;
+        const raison = statut === null ? raisons.reseau : raisons[statut] ?? raisons.autre;
+        replierSurCourrier(note, message, raison);
+      } finally {
+        clearTimeout(echeance);
+      }
+    });
+  })();
+  </script>
+</Base>
+
+<style>
+  .avis { margin-top: 2rem; max-width: 34rem; }
+  .avis label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+  .avis textarea { min-height: 8rem; resize: vertical; }
+  .avis .discret { display: block; margin-top: 0.3rem; }
+  .avis :global(.cf-turnstile) { margin: 1rem 0; }
+
+  .confirmation {
+    margin-top: 2rem;
+    max-width: 34rem;
+    border-radius: var(--rayon);
+    padding: 1.25rem;
+    background: var(--vert-pale);
+  }
+  .confirmation__titre { font-weight: 600; color: var(--vert-texte); margin-top: 0; }
+  .confirmation p:last-child { margin-bottom: 0; }
+</style>

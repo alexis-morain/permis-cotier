@@ -9,6 +9,7 @@ import { vibrer } from '../lib/natif';
 
 vi.mock('../lib/natif', () => ({
   vibrer: vi.fn(async () => {}),
+  proposerLaNote: vi.fn(async () => {}),
   partager: vi.fn(async () => false),
   modeConcentration: vi.fn(async () => {}),
   surRetourAuPremierPlan: vi.fn(() => () => {}),

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { comptesDeRelecture, versionBanque } from '../lib/banque';
 import { POUR_APP } from '../lib/cible';
+import { APP_STORE, DEPOT, DON } from '../lib/seo';
 
 // Dans l'app, cette page est la politique de confidentialité que la fiche de
 // l'App Store désigne, et elle reprend ce que le pied de page du site dit
@@ -121,5 +122,36 @@ const relecture = await comptesDeRelecture();
         des <a href="/credits">crédits</a>.
       </p>
     )}
+
+    {/* Sur le site seulement : l'app a la même section dans Ta fiche. */}
+    {!POUR_APP && (
+    <section aria-labelledby="soutenir" class="soutenir">
+      <h2 id="soutenir">Soutenir le projet</h2>
+      <p>
+        Le site et l’app sont 100 % gratuits et open source : le code est sous licence MIT, la
+        banque de questions sous CC BY-SA 4.0, le tout sur <a href={DEPOT}>GitHub</a>. Si le
+        projet t’aide, trois gestes comptent.
+      </p>
+      <ul class="soutenir__gestes">
+        <li>
+          <a class="bouton" href={APP_STORE.urlNote} data-mesure="soutenir-note" data-mesure-lieu="a-propos">Noter l’app sur l’App Store</a>
+          <span class="discret">Une note aide d’autres candidats à la trouver.</span>
+        </li>
+        <li>
+          <a class="bouton" href="/avis" data-mesure="soutenir-avis" data-mesure-lieu="a-propos">Donner un avis</a>
+          <span class="discret">Ce qui marche, ce qui manque. Le message m’arrive par courrier.</span>
+        </li>
+        <li>
+          <a class="bouton" href={DON} data-mesure="soutenir-don" data-mesure-lieu="a-propos">Faire un don</a>
+          <span class="discret">Sur Buy Me a Coffee. Facultatif : rien n’est réservé aux donateurs.</span>
+        </li>
+      </ul>
+    </section>
+    )}
   </div>
 </Base>
+
+<style>
+  .soutenir__gestes { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 1rem; }
+  .soutenir__gestes li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; max-width: none; }
+</style>

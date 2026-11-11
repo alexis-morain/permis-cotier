@@ -24,9 +24,13 @@
 import {
   SITE,
   TAILLE_CORPS_MAX,
+  corpsAvis,
   corpsIssue,
+  titreAvis,
   titreIssue,
   valider,
+  validerAvis,
+  type Avis,
   type Signalement,
 } from './lib/signalement';
 
@@ -73,10 +77,13 @@ const DELAI_MS = 8000;
 const FORME_DEPOT = /^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/;
 
 /**
- * L'action que le widget du formulaire pose sur son jeton, `data-action` dans
- * `src/pages/signaler.astro`. Turnstile la rend telle quelle à la vérification.
+ * L'action que le widget de chaque formulaire pose sur son jeton, `data-action`
+ * dans `src/pages/signaler.astro` et `src/pages/avis.astro`. Turnstile la rend
+ * telle quelle à la vérification : un jeton du formulaire d'avis ne vaut pas
+ * pour un signalement, et inversement.
  */
-const ACTION_ATTENDUE = 'signalement';
+const ACTION_SIGNALEMENT = 'signalement';
+const ACTION_AVIS = 'avis';
 
 /** Le domaine du site. `SITE` vient de `src/lib/seo.ts` : une seule copie. */
 const HOTE_SITE = new URL(SITE).hostname;
@@ -195,6 +202,7 @@ async function jetonValide(
   jeton: string,
   secret: string,
   hotes: Set<string>,
+  action: string,
 ): Promise<boolean | null> {
   try {
     const reponse = await fetch(SITEVERIFY, {
@@ -214,7 +222,7 @@ async function jetonValide(
       console.warn('signalement : jeton frappé hors du site');
       return false;
     }
-    if (rendu.action !== ACTION_ATTENDUE) {
+    if (rendu.action !== action) {
       console.warn('signalement : jeton frappé hors du formulaire');
       return false;
     }
@@ -260,15 +268,16 @@ async function ouvrirIssue(
 }
 
 /**
- * La notification par courrier, si Resend est configuré. Facultative : son
- * échec ne change rien, l'issue est déjà ouverte et c'est elle qui fait foi.
- * Texte brut seulement, jamais de HTML.
+ * Un courrier par Resend, texte brut seulement, jamais de HTML. Rend `true`
+ * quand Resend l'a pris, `false` sinon, et `null` quand Resend n'est pas
+ * configuré. Pour un signalement il est facultatif (l'issue fait foi) ; pour
+ * un avis, c'est la seule remise.
  */
-async function notifier(signalement: Signalement, env: Env): Promise<void> {
+async function envoyerCourrier(sujet: string, texte: string, env: Env): Promise<boolean | null> {
   const { RESEND_API_KEY, SIGNALEMENT_MAIL_TO, SIGNALEMENT_MAIL_FROM } = env;
-  if (!RESEND_API_KEY || !SIGNALEMENT_MAIL_TO || !SIGNALEMENT_MAIL_FROM) return;
+  if (!RESEND_API_KEY || !SIGNALEMENT_MAIL_TO || !SIGNALEMENT_MAIL_FROM) return null;
   try {
-    await fetch(RESEND, {
+    const reponse = await fetch(RESEND, {
       method: 'POST',
       headers: {
         authorization: `Bearer ${RESEND_API_KEY}`,
@@ -277,13 +286,16 @@ async function notifier(signalement: Signalement, env: Env): Promise<void> {
       body: JSON.stringify({
         from: SIGNALEMENT_MAIL_FROM,
         to: SIGNALEMENT_MAIL_TO,
-        subject: titreIssue(signalement),
-        text: corpsIssue(signalement),
+        subject: sujet,
+        text: texte,
       }),
       signal: AbortSignal.timeout(DELAI_MS),
     });
+    if (!reponse.ok) console.warn(`signalement : Resend a répondu ${reponse.status}`);
+    return reponse.ok;
   } catch {
-    console.warn('signalement : notification par courrier impossible');
+    console.warn('signalement : courrier impossible');
+    return false;
   }
 }
 
@@ -321,12 +333,11 @@ export async function signaler(requete: Request, env: Env): Promise<Response> {
   }
 
   // Rien n'est accepté tant que la vérification ou la remise manquent : mieux
-  // vaut renvoyer la page au `mailto:` que garder un signalement sans preuve
-  // ni destination.
+  // vaut renvoyer la page au `mailto:` que garder un envoi sans preuve ni
+  // destination. La remise propre à chaque genre se vérifie plus bas, une fois
+  // le genre connu.
   const { TURNSTILE_SECRET_KEY, GITHUB_BOT_TOKEN, GITHUB_REPO } = env;
-  if (!TURNSTILE_SECRET_KEY || !GITHUB_BOT_TOKEN || !GITHUB_REPO || !FORME_DEPOT.test(GITHUB_REPO)) {
-    return refus(503, FERME);
-  }
+  if (!TURNSTILE_SECRET_KEY) return refus(503, FERME);
 
   // Avant de lire quoi que ce soit : une adresse qui poste en rafale n'a pas
   // besoin qu'on analyse son corps. Un refus ici ne coûte rien et n'appelle
@@ -348,20 +359,54 @@ export async function signaler(requete: Request, env: Env): Promise<Response> {
     return refus(400, REFUS);
   }
 
+  // Un avis se reconnaît à son genre. Il a son propre validateur, sa propre
+  // action Turnstile et sa propre remise : le courrier, jamais une issue.
+  const estAvis =
+    typeof donnees === 'object' && donnees !== null && (donnees as { genre?: unknown }).genre === 'avis';
+
+  if (estAvis) {
+    const validation = validerAvis(donnees);
+    if (!validation.ok) return refus(400, REFUS);
+    const { turnstile, ...avis } = validation.valeur;
+    return remettreAvis(avis, turnstile, TURNSTILE_SECRET_KEY, requete, env);
+  }
+
   const validation = valider(donnees);
   if (!validation.ok) return refus(400, REFUS);
   const { turnstile, ...signalement } = validation.valeur;
 
-  const verdict = await jetonValide(turnstile, TURNSTILE_SECRET_KEY, hotesAcceptes(requete));
+  if (!GITHUB_BOT_TOKEN || !GITHUB_REPO || !FORME_DEPOT.test(GITHUB_REPO)) return refus(503, FERME);
+
+  const verdict = await jetonValide(turnstile, TURNSTILE_SECRET_KEY, hotesAcceptes(requete), ACTION_SIGNALEMENT);
   if (verdict === null) return refus(503, FERME);
   if (!verdict) return refus(403, 'Vérification anti-robot échouée.');
 
   const issue = await ouvrirIssue(signalement, GITHUB_REPO, GITHUB_BOT_TOKEN);
   if (issue === null) return refus(503, FERME);
 
-  await notifier(signalement, env);
+  // Facultatif : l'issue est ouverte, c'est elle qui fait foi.
+  await envoyerCourrier(titreIssue(signalement), corpsIssue(signalement), env);
 
   return json(200, { ok: true, url: issue.url });
+}
+
+/** L'avis : Turnstile, puis le courrier. Sans courrier configuré ou pris, 503. */
+async function remettreAvis(
+  avis: Avis,
+  turnstile: string,
+  secret: string,
+  requete: Request,
+  env: Env,
+): Promise<Response> {
+  if (!env.RESEND_API_KEY || !env.SIGNALEMENT_MAIL_TO || !env.SIGNALEMENT_MAIL_FROM) {
+    return refus(503, FERME);
+  }
+  const verdict = await jetonValide(turnstile, secret, hotesAcceptes(requete), ACTION_AVIS);
+  if (verdict === null) return refus(503, FERME);
+  if (!verdict) return refus(403, 'Vérification anti-robot échouée.');
+
+  if (!(await envoyerCourrier(titreAvis(avis), corpsAvis(avis), env))) return refus(503, FERME);
+  return json(200, { ok: true });
 }
 
 export default {

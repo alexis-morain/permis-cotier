@@ -8,7 +8,7 @@ import { fireEvent, screen } from '@testing-library/dom';
 import { monterLecon, ID_LECON } from './lecon-site';
 
 vi.mock('../lib/cible', () => ({ POUR_APP: true }));
-vi.mock('../lib/natif', () => ({ vibrer: vi.fn() }));
+vi.mock('../lib/natif', () => ({ vibrer: vi.fn(), proposerLaNote: vi.fn() }));
 
 const cours = { code: 'balisage', titre: 'Lire le balisage', chemin: '/cours/balisage' };
 const suite = { type: 'lecon', chemin: '/cours/balisage/balisage-chenal-prefere', nom: 'Chenal préféré' };

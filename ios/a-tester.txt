@@ -1,7 +1,11 @@
-Petite version de suivi : un défaut de mise en page sur les fiches de révision. Le reste est celui de la 1.0.9.
+Nouveau : tu peux soutenir le projet depuis l’app. Le reste est celui de la 1.0.9.
 
-Fiches de révision
-• Ouvre un cours (Balisage par exemple), puis « La fiche de révision ». En haut, le chevron du bouton « Retour » doit tomber exactement à l’aplomb du titre et de l’étiquette du groupe, comme sur une leçon.
-• Sur iPad, c’était là que ça se voyait : dès que l’écran est large, le « Retour » restait vers le milieu, loin du titre. Vérifie-le en paysage et en portrait, et en fenêtre réduite.
-• Touche « Retour » : tu reviens au cours.
-• Touche « Télécharger le PDF » : le PDF n’a pas changé, il s’ouvre toujours dans Safari intégré.
+Ta fiche
+• Sous « L’app », une section « Soutenir le projet » dit que l’app est gratuite et open source, avec un lien vers le code sur GitHub (Safari intégré).
+• « Noter l’app sur l’App Store » ouvre l’application App Store sur la fenêtre d’avis. Elle ne marche pas depuis TestFlight tant que l’app n’est pas en vente avec cette fiche : regarde seulement que l’App Store s’ouvre.
+• « Donner un avis » ouvre un formulaire (note facultative, message). Le bouton prépare un brouillon dans Mail, à envoyer toi-même. Le message n’est jamais publié.
+• « Faire un don » ouvre la page Buy Me a Coffee dans Safari intégré. À confirmer : l’adresse de cette page est provisoire.
+
+La fenêtre de note d’Apple
+• Après environ deux heures d’usage cumulé, la fenêtre « Vous aimez … ? » avec les étoiles peut apparaître une fois : à la fin d’une leçon, ou après un examen blanc réussi. Jamais en plein examen, jamais après un échec. Elle ne revient pas avant 120 jours.
+• Apple ne l’affiche pas en TestFlight : il n’y a rien à voir dans ce build. Vérifie seulement que rien ne plante en finissant une leçon et un examen blanc.

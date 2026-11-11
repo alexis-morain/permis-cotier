@@ -3,6 +3,8 @@ import { avecGreffon } from './greffons';
 import { jouer } from './son';
 import type { Son } from './son';
 import { EVENEMENT_DATE_EXAMEN } from './progression';
+import { aujourdhui } from './jour';
+import { lireEtat, marquerDemandee, noteDue, SEUIL_MS, suivreLUsage } from './evaluation';
 
 /**
  * Ce que l'app sait faire et que le site ne sait pas.
@@ -284,5 +286,41 @@ export async function ouvrirDehors(url: string): Promise<boolean> {
     return true;
   } catch {
     return false;
+  }
+}
+
+/**
+ * Le temps d'usage de l'app, compté pour savoir quand demander la note
+ * (`evaluation.ts`). Posé une fois par webview depuis `Coquille.astro`. Rend de
+ * quoi arrêter le suivi.
+ */
+export function suivreLUsageDeLApp(): () => void {
+  if (!POUR_APP) return () => {};
+  return suivreLUsage();
+}
+
+/**
+ * La fenêtre de note d'Apple, si le moment est bon : deux heures d'usage
+ * cumulé, et ni demandée depuis moins de 120 jours ni dans la même version
+ * majeure. À appeler à un moment de réussite (résultat d'un examen blanc
+ * reçu, fin de leçon), jamais en pleine épreuve. Le système plafonne de
+ * toute façon à trois affichages par an et peut ne rien montrer : on compte la
+ * demande, pas l'affichage.
+ */
+export function proposerLaNote(): Promise<void> | undefined {
+  if (!POUR_APP) return;
+  return proposerDansLApp();
+}
+
+async function proposerDansLApp(): Promise<void> {
+  try {
+    if (lireEtat().actifMs < SEUIL_MS) return;
+    const { App } = await import('@capacitor/app');
+    const majeure = Number.parseInt((await App.getInfo()).version, 10) || 0;
+    if (!noteDue(lireEtat(), aujourdhui(), majeure)) return;
+    marquerDemandee(aujourdhui(), majeure);
+    await avecGreffon('Note', (g) => g.demander());
+  } catch {
+    // Greffon absent, coquille plus ancienne : pas de fenêtre, et c'est tout.
   }
 }

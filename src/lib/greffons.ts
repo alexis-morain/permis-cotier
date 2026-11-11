@@ -1,9 +1,10 @@
 /**
- * Les deux greffons maison de la coquille, inscrits une seule fois.
+ * Les greffons maison de la coquille, inscrits une seule fois.
  *
  * `Son` (`ios/App/App/SonPlugin.swift`) joue les bruitages, `Ecran`
  * (`ios/App/App/EcranPlugin.swift`) cache la barre d'onglets pendant une
- * série. `son.ts` et `natif.ts` les appelaient chacun par son propre
+ * série, `Note` (`ios/App/App/NotePlugin.swift`) demande la note à l'App
+ * Store. `son.ts` et `natif.ts` les appelaient chacun par son propre
  * `registerPlugin` ; un nom mal tapé d'un côté n'aurait rien dit.
  *
  * `@capacitor/core` n'arrive qu'en `import()` : le site n'en emporte pas une
@@ -22,9 +23,15 @@ export interface GreffonEcran {
   onglet(options: { chemin: string }): Promise<{ bascule: boolean }>;
 }
 
+export interface GreffonNote {
+  /** La fenêtre de note d'Apple. Le système décide seul de l'afficher. */
+  demander(): Promise<void>;
+}
+
 interface Greffons {
   Son: GreffonSon;
   Ecran: GreffonEcran;
+  Note: GreffonNote;
 }
 
 const inscrits = new Map<keyof Greffons, unknown>();

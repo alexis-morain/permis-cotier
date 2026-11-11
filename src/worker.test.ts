@@ -430,3 +430,89 @@ describe('vie privée', () => {
     expect(reponse.headers.get('content-type')).toContain('application/json');
   });
 });
+
+describe('avis', () => {
+  const AVIS = {
+    genre: 'avis',
+    message: 'Les leçons sont claires.',
+    note: 5,
+    turnstile: 'jeton-visiteur',
+  };
+  const verdictAvis = { success: true, hostname: 'lepermiscotier.fr', action: 'avis' };
+  const avecMail = { RESEND_API_KEY: 'cle-resend', SIGNALEMENT_MAIL_TO: 'contact@x.fr', SIGNALEMENT_MAIL_FROM: 'signalement@x.fr' };
+
+  beforeEach(() => {
+    vi.stubGlobal('fetch', reseau({ turnstile: verdictAvis }));
+  });
+
+  it('part par courrier seulement : aucune issue GitHub, donc rien de public', async () => {
+    const reponse = await worker.fetch(poste(AVIS), env(avecMail));
+    expect(reponse.status).toBe(200);
+    expect(await reponse.json()).toEqual({ ok: true });
+    expect(appels.some((a) => a.url.includes('api.github.com'))).toBe(false);
+    const courrier = appels.find((a) => a.url.includes('api.resend.com'));
+    const charge = JSON.parse(String(courrier?.options.body)) as { subject: string; text: string; to: string };
+    expect(charge.subject).toBe('Avis sur le site — 5 sur 5');
+    expect(charge.text).toContain('Les leçons sont claires.');
+    expect(charge.to).toBe('contact@x.fr');
+  });
+
+  it('n’a pas besoin du jeton GitHub', async () => {
+    const reponse = await worker.fetch(
+      poste(AVIS),
+      env({ ...avecMail, GITHUB_BOT_TOKEN: undefined, GITHUB_REPO: undefined }),
+    );
+    expect(reponse.status).toBe(200);
+  });
+
+  it('rend 503 sans courrier configuré, pour que la page retombe sur mailto', async () => {
+    const reponse = await worker.fetch(poste(AVIS), env());
+    expect(reponse.status).toBe(503);
+    expect(appels).toHaveLength(0);
+  });
+
+  it('rend 503 si Resend refuse : un avis non remis n’est pas un avis reçu', async () => {
+    vi.stubGlobal('fetch', reseau({ turnstile: verdictAvis, resend: new Response('non', { status: 401 }) }));
+    const reponse = await worker.fetch(poste(AVIS), env(avecMail));
+    expect(reponse.status).toBe(503);
+  });
+
+  it('exige que le jeton vienne du widget des avis, pas de celui des signalements', async () => {
+    vi.stubGlobal('fetch', reseau({ turnstile: { ...verdictAvis, action: 'signalement' } }));
+    expect((await worker.fetch(poste(AVIS), env(avecMail))).status).toBe(403);
+    expect(appels.some((a) => a.url.includes('api.resend.com'))).toBe(false);
+  });
+
+  it('exige que le jeton d’un signalement vienne du widget des signalements', async () => {
+    vi.stubGlobal('fetch', reseau({ turnstile: verdictAvis }));
+    expect((await worker.fetch(poste(CORPS), env())).status).toBe(403);
+    expect(appels.some((a) => a.url.includes('api.github.com'))).toBe(false);
+  });
+
+  it('refuse un avis mal formé en 400, sans rien rendre de ce qui a été reçu', async () => {
+    const sonde = 'CANARI-z9y8';
+    for (const mauvais of [
+      { ...AVIS, message: '' },
+      { ...AVIS, note: 9 },
+      { ...AVIS, email: sonde },
+      { ...AVIS, question: 'balisage-0001' },
+      { ...AVIS, message: sonde.repeat(200) },
+    ]) {
+      const reponse = await worker.fetch(poste(mauvais), env(avecMail));
+      expect(reponse.status).toBe(400);
+      expect(await reponse.text()).not.toContain(sonde);
+    }
+    expect(appels).toHaveLength(0);
+  });
+
+  it('un avis ne passe jamais par la validation des signalements', async () => {
+    // Pas de genre : c'est un signalement, et il lui manque ses champs.
+    const { genre: _, ...sansGenre } = AVIS;
+    expect((await worker.fetch(poste(sansGenre), env(avecMail))).status).toBe(400);
+  });
+
+  it('POST {} rend toujours 400', async () => {
+    expect((await worker.fetch(poste({}), env(avecMail))).status).toBe(400);
+    expect((await worker.fetch(poste({ genre: 'avis' }), env(avecMail))).status).toBe(400);
+  });
+});
