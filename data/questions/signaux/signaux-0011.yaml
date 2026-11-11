@@ -15,10 +15,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 37 vise le navire « en détresse et qui demande assistance » : les deux conditions
-  vont ensemble. Ne plus être maître de sa manœuvre relève d'autres feux, marques et signaux
-  sonores. Piège classique : confondre la détresse avec la simple difficulté de manœuvre,
-  qui ne justifie pas un signal de détresse.
+  Les signaux de détresse s'emploient quand le navire est « en détresse et demande
+  assistance » : les deux conditions vont ensemble. Ne plus être maître de sa manœuvre
+  relève d'autres feux, marques et signaux sonores. Piège classique : confondre la détresse
+  avec la simple difficulté de manœuvre, qui ne justifie pas un signal de détresse.
 sources:
   - texte: RIPAM, règle 37
     ref: decret-77-733
