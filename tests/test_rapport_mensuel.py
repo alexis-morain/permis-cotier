@@ -134,6 +134,25 @@ def test_collecter_umami():
     assert any("type=event" in c and "limit=100" in c for c in appels)
 
 
+def test_un_mois_sans_aucune_visite_est_sans_donnee_pas_zero():
+    """Avant l'ouverture du site, Umami rend 0 : la moyenne ne doit pas s'en trouver écrasée."""
+    debut_septembre, _ = r.bornes_ms("2026-09")
+    plein = faux_umami([])
+
+    def get(chemin):
+        debut = int(chemin.split("startAt=")[1].split("&")[0])
+        if debut < debut_septembre:
+            return {"pageviews": 0, "visitors": 0, "visits": 0, "bounces": 0, "totaltime": 0} \
+                if "/stats" in chemin else []
+        return plein(chemin)
+
+    series, _ = r.collecter_umami(get, "2026-10")
+    assert series["visiteurs"]["2026-09"] == 100
+    assert "2026-08" not in series["visiteurs"]
+    assert "2026-08" not in series["evt:examen-termine"]
+    assert r.moyenne3(series["visiteurs"], "2026-10") is None
+
+
 def test_duree_et_rebond_sont_rapportes_aux_visites():
     series, _ = r.collecter_umami(faux_umami([]), "2026-10")
     assert series["duree_visite"]["2026-10"] == pytest.approx(100)

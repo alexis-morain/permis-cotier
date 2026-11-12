@@ -193,11 +193,17 @@ def collecter_umami(get, mois: str) -> tuple[dict[str, dict[str, float]], dict[s
         series.setdefault(cle, {})[m] = v
 
     base = f"/api/websites/{SITE_ID}"
+    # Un mois sans aucune visite est un mois d'avant le site : sans donnée, pas zéro,
+    # sinon la moyenne des trois mois d'avant s'effondre.
+    mois_vides: set[str] = set()
     for i in range(MOIS_TABLEAU):
         m = decaler(mois, -i)
         a, b = bornes_ms(m)
         stats = get(f"{base}/stats?startAt={a}&endAt={b}")
         visiteurs, visites = valeur(stats.get("visitors")), valeur(stats.get("visits"))
+        if not visites and not valeur(stats.get("pageviews")):
+            mois_vides.add(m)
+            continue
         poser("visiteurs", m, visiteurs)
         poser("visites", m, visites)
         poser("pages_vues", m, valeur(stats.get("pageviews")))
@@ -207,6 +213,8 @@ def collecter_umami(get, mois: str) -> tuple[dict[str, dict[str, float]], dict[s
 
     for i in range(MOIS_EVENEMENTS):
         m = decaler(mois, -i)
+        if m in mois_vides:
+            continue
         a, b = bornes_ms(m)
         evenements = {e["x"]: e["y"] for e in get(f"{base}/metrics?startAt={a}&endAt={b}&type=event&limit=100")}
         for nom, _ in EVENEMENTS:
