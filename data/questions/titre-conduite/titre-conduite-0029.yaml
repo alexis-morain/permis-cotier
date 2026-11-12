@@ -19,10 +19,9 @@ propositions:
 reponses:
   - d
 explication: >-
-  L'article 3 de l'arrêté fixe la part de conduite effective par candidat, celle où l'on
-  apprend la mise en route, la trajectoire, l'accostage, le mouillage et la récupération
-  d'une personne tombée à l'eau. Il ajoute que le nombre d'élèves embarqués ne doit pas
-  dépasser quatre.
+  Pendant la conduite effective, celle où l'on apprend la mise en route, la trajectoire,
+  l'accostage, le mouillage et la récupération d'une personne tombée à l'eau, le
+  bateau-école ne doit pas embarquer plus de quatre élèves.
 sources:
   - texte: Arrêté du 28 septembre 2007, article 3
     ref: arrete-2007-09-28
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

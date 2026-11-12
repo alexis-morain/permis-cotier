@@ -17,13 +17,12 @@ reponses:
   - a
 explication: >-
   Le radeau de survie gonflable, capable d'embarquer tout le monde, entre dans l'armement
-  semi-hauturier de l'article 240-2.05, pour une navigation de 6 à moins de 60 milles
-  d'un abri. L'armement côtier n'en demande pas.
+  semi-hauturier, de 6 à moins de 60 milles d'un abri. L'armement côtier n'en demande pas.
 sources:
   - texte: Division 240, article 240-2.05, point 3
     ref: division-240
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

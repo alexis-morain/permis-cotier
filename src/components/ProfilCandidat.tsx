@@ -21,6 +21,7 @@ import { dateLisible, jourDeLaSemaine } from '../lib/jour';
 import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
 import { surProgressionChangee } from '../lib/vivant';
+import { defilerSec } from '../lib/defilement';
 import Reglages from './profil/Reglages';
 import ListeThemes from './profil/ListeThemes';
 import DerniersExamens from './profil/DerniersExamens';
@@ -94,7 +95,7 @@ export default function ProfilCandidat({ banque, totalLecons }: Props) {
   // Après l'effacement, on repart du haut : la page a changé sous le bouton.
   useEffect(() => {
     if (!efface) return;
-    window.scrollTo({ top: 0 });
+    defilerSec(0);
     titre.current?.focus({ preventScroll: true });
   }, [efface]);
 

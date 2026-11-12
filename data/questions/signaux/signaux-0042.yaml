@@ -19,14 +19,14 @@ reponses:
   - a
   - b
 explication: >-
-  L'annexe IV retient la fumée orange et les battements lents et répétés des bras étendus
-  parmi les signaux de détresse. Les fusées de détresse projettent des étoiles rouges,
-  pas vertes, et le pavillon de détresse est un pavillon carré accompagné d'une boule.
+  La fumée orange et les battements lents et répétés des bras étendus sont des signaux de
+  détresse. Les fusées de détresse projettent des étoiles rouges, pas vertes, et le pavillon
+  de détresse est un pavillon carré accompagné d'une boule.
 sources:
   - texte: RIPAM, annexe IV, 1
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

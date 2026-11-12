@@ -17,13 +17,13 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 4 de l'arrêté du 18 mai 2005 exige que le candidat ait seize ans au moins
-  à la date de l'examen. C'est le même âge que celui de l'option côtière du permis plaisance.
+  Il faut avoir seize ans au moins à la date de l'examen. C'est le même âge que pour
+  l'option côtière du permis plaisance.
 sources:
   - texte: Arrêté du 18 mai 2005, article 4
     ref: arrete-2005-05-18
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

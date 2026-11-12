@@ -25,18 +25,17 @@ reponses:
   - a
   - b
 explication: >-
-  La règle 35 g) fait sonner la cloche rapidement au navire au mouillage, et le même
-  alinéa lui permet d'ajouter au sifflet un son bref, un son prolongé et un son bref
-  pour signaler sa position à un navire qui s'approche : c'est le signal de la question
-  qui précède. Retiens que la cloche est frappée, pas tenue : on entend une volée de
-  coups serrés, jamais un son prolongé, qui appartient au sifflet et à lui seul. Le navire
-  échoué sonne bien cette volée, mais il l'encadre de trois coups séparés et distincts,
-  d'après le paragraphe h) : sans ces coups de part et d'autre, le navire est au mouillage.
+  Le navire au mouillage fait sonner sa cloche rapidement, et peut ajouter au sifflet un son
+  bref, un son prolongé et un son bref pour signaler sa position à un navire qui s'approche.
+  La cloche est frappée, pas tenue : une volée de coups serrés, jamais un son prolongé, qui
+  appartient au sifflet seul. Le navire échoué sonne aussi cette volée, mais il l'encadre de
+  trois coups séparés et distincts : sans ces coups de part et d'autre, le navire est au
+  mouillage.
 sources:
   - texte: RIPAM, règle 35 g)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -42,6 +42,20 @@ afterEach(() => {
 });
 
 describe('la leçon dans l’app', () => {
+  // L'en-tête de la leçon colle sous l'heure : remonter au haut du bloc le
+  // faisait coller par-dessus le titre de l'écran. L'app remonte en haut de
+  // l'écran, là où est le bouton Retour, et jamais vers le bas.
+  it('remonte sec en haut de l’écran quand on change d’écran', () => {
+    monter();
+    window.scrollTo = vi.fn();
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 500 });
+    document.querySelector<HTMLElement>('.lecon')!.getBoundingClientRect = () => ({ top: 158 - 500 }) as DOMRect;
+    fireEvent.click(screen.getByRole('button', { name: 'Terminer la leçon' }));
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
+  });
+
   it('compte l’écran où l’on est : la barre n’est pas vide à la première leçon', () => {
     monter();
     const barre = document.querySelector<HTMLElement>('.lecon__barre span')!;

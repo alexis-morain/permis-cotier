@@ -3,7 +3,7 @@ import { annoncerDateExamen, aujourdhui, charger, enregistrerProfil, sauvegarder
 import type { Profil } from '../lib/progression';
 import { DEPARTS, MOTIVATIONS, RYTHMES, joursAvant, pointFinal, rappel } from '../lib/profil';
 import { evenement } from '../lib/mesure';
-import { douceur } from '../lib/douceur';
+import { defilerSec } from '../lib/defilement';
 import { POUR_APP } from '../lib/cible';
 import { ajusterRetourApp } from '../lib/retour';
 import './profil.css';
@@ -47,7 +47,7 @@ export default function Questionnaire({ totalQuestions }: Props) {
   // d'écran comme au pouce, on sait où on est.
   useEffect(() => {
     if (index === 0) return;
-    window.scrollTo({ top: 0, behavior: douceur() });
+    defilerSec(0);
     titre.current?.focus({ preventScroll: true });
   }, [index]);
 

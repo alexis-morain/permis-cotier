@@ -17,17 +17,14 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 240-2.12 fixe deux limites selon la conception du véhicule : 2 milles d'un
-  abri pour ceux conçus pour embarquer au maximum une personne, 6 milles pour ceux conçus
-  pour en embarquer plus d'une. Le tien est prévu pour trois personnes, la limite est
-  donc de 6 milles. Le piège est de retenir la valeur de 2 milles, qui ne vaut que pour
-  les monoplaces et qui sert par ailleurs de seuil entre le matériel d'armement basique
-  et le matériel côtier.
+  La limite dépend de la conception du véhicule : 2 milles d'un abri s'il est conçu pour une
+  seule personne, 6 milles s'il en embarque plus d'une. Le tien en prend trois, donc 6
+  milles. Piège : retenir les 2 milles, qui ne valent que pour les monoplaces.
 sources:
   - texte: Division 240, article 240-2.12
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

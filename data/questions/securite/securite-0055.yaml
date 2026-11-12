@@ -17,12 +17,12 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 2.1 étend la bande littorale de 300 mètres autour des îles et îlots du littoral,
-  y compris les rochers émergés, balisés ou non, ainsi qu'autour des ouvrages artificiels
-  gagnés sur la mer comme les digues et les jetées. Un rocher émergé sans balisage est
-  donc entouré d'une zone de vitesse réduite. L'arrêté de l'Atlantique dit la même chose
-  des îles, îlots, roches et bancs de sable émergés. Le piège consiste à croire que la
-  limitation ne vaut qu'à partir de la côte continentale.
+  La bande littorale de 300 mètres entoure aussi les îles et îlots du littoral, y compris
+  les rochers émergés, balisés ou non, ainsi que les ouvrages artificiels gagnés sur la mer
+  comme les digues et les jetées. Ton rocher sans balisage est donc entouré d'une zone de
+  vitesse réduite. L'Atlantique applique la même règle aux îles, îlots, roches et bancs de
+  sable émergés. Piège : croire que la limitation ne vaut qu'à partir de la côte
+  continentale.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.1
     ref: bande-300-metres
@@ -32,4 +32,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

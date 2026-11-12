@@ -20,12 +20,12 @@ reponses:
   - a
   - b
 explication: >-
-  Le décret énumère trois familles de motifs : l'inobservation des règlements de police
-  afférents à la circulation en eaux maritimes ou intérieures ; la négligence ou
-  l'imprudence grave de nature à compromettre la sécurité du conducteur, des passagers ou
-  des tiers ; et la conduite en état d'ébriété ou après consommation de stupéfiants.
-  L'assurance n'y figure pas, et ne pas présenter ses pièces sur place est autre chose : une
-  contravention de la 2e classe, article 18 du même décret, pas un motif de retrait.
+  Trois familles de motifs justifient un retrait : l'inobservation des règlements de police
+  de la circulation en eaux maritimes ou intérieures ; la négligence ou l'imprudence grave
+  qui compromet la sécurité du conducteur, des passagers ou des tiers ; la conduite en état
+  d'ébriété ou après consommation de stupéfiants. L'assurance n'en fait pas partie, et ne
+  pas présenter ses pièces sur place est une contravention de 2e classe, pas un motif de
+  retrait.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 6
     ref: decret-2007-1167
@@ -35,4 +35,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

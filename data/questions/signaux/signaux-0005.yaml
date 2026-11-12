@@ -19,16 +19,16 @@ propositions:
 reponses:
   - b
 explication: >-
-  La règle 35 a) prescrit un son prolongé à des intervalles ne dépassant pas deux minutes
-  pour le navire à propulsion mécanique qui a de l'erre, autrement dit qui avance sur
-  l'eau. Deux sons prolongés désigneraient au contraire un navire stoppé, et le son prolongé
-  suivi de deux sons brefs appartient aux navires du paragraphe c). Le second piège porte
-  sur la cadence : deux minutes au maximum, pas une.
+  Le navire à propulsion mécanique qui a de l'erre, c'est-à-dire qui avance sur l'eau, émet
+  un son prolongé à des intervalles de deux minutes au plus. Deux sons prolongés
+  désigneraient au contraire un navire stoppé, et le son prolongé suivi de deux sons brefs
+  appartient à d'autres navires. Deuxième piège, la cadence : deux minutes au maximum, pas
+  une.
 sources:
   - texte: RIPAM, règle 35 a)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

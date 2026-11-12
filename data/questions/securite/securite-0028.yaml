@@ -17,16 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 245-1.02, II. 9 décrit la catégorie D comme conçue pour des vents jusqu'à
-  la force 4 comprise et des vagues d'une hauteur significative jusqu'à 0,3 mètre compris,
-  avec des vagues occasionnelles d'une hauteur maximale de 0,5 mètre. Le tableau du même
-  point n'affiche que le 0,5 mètre : c'est la valeur occasionnelle, pas la valeur
-  courante. Retenir les deux chiffres évite de surestimer ce que la coque encaisse.
+  La catégorie D est conçue pour un vent jusqu'à la force 4 comprise et des vagues d'une
+  hauteur significative jusqu'à 0,3 mètre, avec des vagues occasionnelles de 0,5 mètre au
+  maximum. Le 0,5 mètre est la valeur occasionnelle, pas la valeur courante. Retenir les
+  deux chiffres évite de surestimer ce que la coque encaisse.
 sources:
   - texte: Division 245, article 245-1.02, II. 9
     ref: division-245
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

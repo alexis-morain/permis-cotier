@@ -18,15 +18,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article L. 945-4 du code rural et de la pêche maritime punit de 22 500 euros d'amende
-  le fait de pratiquer la pêche dans une zone ou à une profondeur interdite, ou de pêcher
-  certaines espèces dans une zone, à une profondeur ou à une période où leur pêche est
-  interdite. Les 100 000 euros sanctionnent les rejets nuisibles.
+  Pêcher dans une zone ou à une profondeur interdite, ou pêcher certaines espèces dans une
+  zone, à une profondeur ou à une période où leur pêche est interdite, est puni de 22 500
+  euros d'amende. Les 100 000 euros sanctionnent les rejets nuisibles.
 sources:
   - texte: Code rural et de la pêche maritime, article L. 945-4, I. 3°
     ref: peche-loisir
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

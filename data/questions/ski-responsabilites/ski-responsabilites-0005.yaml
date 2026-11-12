@@ -20,17 +20,16 @@ reponses:
   - a
   - b
 explication: >-
-  L'article 240-1.03 énumère ce dont le chef de bord s'assure : l'adéquation de sa
-  navigation avec les caractéristiques de son navire, la présence à bord, le bon état et
-  la validité des équipements et matériels de sécurité ainsi que leur adaptation aux
-  personnes embarquées, et leur mise en oeuvre quand les circonstances l'exigent. Un seul
-  permis suffit à bord, celui de la personne qui conduit : rien n'oblige les passagers à
-  en détenir un. Et aucune déclaration de sortie n'est exigée du plaisancier.
+  Avant d'appareiller, le chef de bord s'assure que sa navigation convient à son navire, et
+  que les équipements de sécurité sont à bord, en bon état, valides, adaptés aux personnes
+  embarquées et prêts à servir si besoin. Un seul permis suffit à bord, celui de la personne
+  qui conduit : rien n'oblige les passagers à en avoir un. Et aucune déclaration de sortie
+  n'est exigée du plaisancier.
 sources:
   - texte: Division 240, article 240-1.03
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

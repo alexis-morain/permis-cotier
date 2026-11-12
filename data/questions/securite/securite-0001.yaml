@@ -15,17 +15,16 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 240-2.01, alinéa 1, impose de ne jamais dépasser en navigation le nombre maximal
-  de personnes à bord ni la charge maximale recommandée, sauf force majeure. Il précise
-  où ces valeurs figurent : sur la plaque constructeur ou la plaque signalétique et, pour
-  les engins qui en sont dépourvus, dans le manuel d'utilisateur. Les documents administratifs
-  du bateau, acte de francisation ou pièces d'immatriculation, identifient le navire mais
-  ne portent pas ces valeurs.
+  En navigation, on ne dépasse jamais le nombre maximal de personnes à bord ni la charge
+  maximale recommandée, sauf force majeure. Ces valeurs figurent sur la plaque constructeur
+  ou la plaque signalétique et, pour les engins qui n'en ont pas, dans le manuel
+  d'utilisateur. L'acte de francisation et les pièces d'immatriculation identifient le
+  navire mais ne portent pas ces valeurs.
 sources:
   - texte: Division 240, article 240-2.01, alinéa 1
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

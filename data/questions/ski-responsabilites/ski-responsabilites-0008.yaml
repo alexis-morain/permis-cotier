@@ -18,17 +18,17 @@ reponses:
   - a
   - b
 explication: >-
-  Les brassières s'enfilent quand la situation se dégrade, pas quand elle est perdue : on
-  ne s'équipe pas correctement dans l'eau. Et un bateau même à demi rempli reste plus
-  flottant, plus visible et plus chaud qu'un équipage à l'eau : on ne monte au radeau ou à
-  l'annexe que lorsque le bateau s'enfonce sous soi. Quitter le bord trop tôt est l'erreur
-  classique ; se mettre en danger pour du matériel en est une autre, un objet se remplace,
-  pas un équipier.
+  Les brassières s'enfilent quand la situation se dégrade, pas quand elle est perdue : on ne
+  s'équipe pas correctement dans l'eau. Et un bateau même à demi rempli reste plus flottant,
+  plus visible et plus chaud qu'un équipage à l'eau : on ne monte au radeau ou à l'annexe
+  que lorsque le bateau s'enfonce sous soi. Quitter le bord trop tôt est l'erreur classique
+  ; se mettre en danger pour du matériel en est une autre, un objet se remplace, pas un
+  équipier.
 sources:
   - texte: Fiche conduite à tenir, section Le principe qui commande tous les cas
     ref: fiche-conduite-urgence
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

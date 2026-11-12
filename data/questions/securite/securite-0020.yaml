@@ -19,17 +19,16 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 240-3.01 impose deux choses de la copie du dernier rapport : elle est annexée
-  au contrat de location et elle est embarquée à bord des navires comportant un espace
-  habitable. Le registre des vérifications spéciales existe bien, il archive tous les
-  rapports et il est mis à ta disposition avant l'embarquement, mais il vient en plus,
-  pas à la place. La vérification, elle, est effectuée sous la responsabilité du propriétaire
-  ou de l'exploitant, pas de l'administration.
+  La copie du dernier rapport est annexée au contrat de location et embarquée à bord des
+  navires qui comportent un espace habitable. Le registre des vérifications spéciales
+  existe, archive tous les rapports et est mis à ta disposition avant l'embarquement, mais
+  il vient en plus, pas à la place. La vérification est faite sous la responsabilité du
+  propriétaire ou de l'exploitant, pas de l'administration.
 sources:
   - texte: Division 240, article 240-3.01, II
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

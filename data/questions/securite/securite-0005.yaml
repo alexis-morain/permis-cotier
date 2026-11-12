@@ -17,16 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le point 2 de l'article 240-2.03 laisse le choix entre un dispositif lumineux collectif
-  et un dispositif individuel. Le collectif est une lampe torche étanche d'au moins 6
-  heures d'autonomie. Le piège est la confusion de catégorie : la lampe flash, le cyalume
-  et la fixation sur l'équipement individuel de flottabilité relèvent du dispositif individuel,
-  pas du collectif. L'autonomie de 6 heures, elle, vaut dans les deux cas.
+  Le dispositif lumineux collectif est une lampe torche étanche d'au moins 6 heures
+  d'autonomie. Piège : la lampe flash, le cyalume et la fixation sur l'EIF relèvent du
+  dispositif individuel, pas du collectif. L'autonomie de 6 heures vaut dans les deux cas.
 sources:
   - texte: Division 240, article 240-2.03, point 2
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

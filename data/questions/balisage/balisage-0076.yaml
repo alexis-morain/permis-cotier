@@ -18,11 +18,10 @@ propositions:
 reponses:
   - d
 explication: >-
-  Le paragraphe 8.3.2 donne au feu d'un phare la couleur blanche, rouge ou verte, avec un
-  rythme choisi pour le rendre rapidement identifiable. Le jaune est la couleur du feu des
-  marques spéciales (6.2). Un phare n'est pas une marque latérale : c'est une tour ou une
-  structure de taille conséquente, érigée en un lieu remarquable, qui porte un feu de grande
-  ou moyenne portée (8.3.1).
+  Le feu d'un phare est blanc, rouge ou vert, avec un rythme choisi pour le rendre vite
+  identifiable. Le jaune est la couleur du feu des marques spéciales. Un phare n'est pas une
+  marque latérale : c'est une tour ou une structure de taille conséquente, érigée en un lieu
+  remarquable, qui porte un feu de grande ou moyenne portée.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 8.3.2
     ref: arrete-2017-11-30
@@ -32,4 +31,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

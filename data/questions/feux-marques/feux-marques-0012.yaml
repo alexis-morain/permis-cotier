@@ -17,10 +17,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 23 d) i) permet à un navire à propulsion mécanique de longueur inférieure à
-  12 mètres de remplacer les feux du paragraphe a) par un feu blanc visible sur tout l'horizon
-  accompagné de feux de côté. Les feux de côté restent dus : ce sont eux qui disent aux
-  autres de quel côté tu es vu. Le feu blanc seul relève d'une autre disposition, réservée
+  Un navire à propulsion mécanique de moins de 12 mètres peut remplacer ses feux ordinaires
+  par un feu blanc visible sur tout l'horizon accompagné de feux de côté. Les feux de côté
+  restent dus : ils disent aux autres de quel côté tu es vu. Le feu blanc seul est réservé
   aux plus petites unités et lentes.
 sources:
   - texte: RIPAM, règle 23 d) i)
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

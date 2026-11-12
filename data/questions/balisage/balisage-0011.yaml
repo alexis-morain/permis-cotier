@@ -15,15 +15,13 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'annexe I, paragraphe 2, précise que les bouées des limites latérales d'un chenal traversier
-  sont de forme cylindrique à bâbord et conique à tribord, en accédant au rivage. Le sens
-  de parcours compte : c'est en allant vers la plage que bâbord est bâbord, et l'inversion
-  est le piège classique de cette règle.
+  En allant vers le rivage, les bouées d'un chenal traversier sont cylindriques à bâbord
+  et coniques à tribord. En sortant vers le large, c'est l'inverse : c'est le piège classique.
 sources:
   - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 2
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

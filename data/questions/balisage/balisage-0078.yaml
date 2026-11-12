@@ -17,11 +17,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le paragraphe 1.2.2 dit que l'emploi des marques cardinales est associé à celui du compas
-  du navire : elles indiquent dans quel quadrant le navire peut trouver des eaux saines. Leurs
-  quadrants sont limités par des relèvements vrais pris depuis le point à marquer (3.1.1),
-  quel que soit le sens d'entrée au port. Ce sont les marques spéciales dont la nature se lit
-  dans les documents nautiques (6.1).
+  L'emploi des marques cardinales est associé au compas du navire : elles indiquent dans
+  quel quadrant il peut trouver des eaux saines. Leurs quadrants sont limités par des
+  relèvements vrais pris depuis le point à marquer, quel que soit le sens d'entrée au port.
+  Ce sont les marques spéciales dont la nature se lit dans les documents nautiques.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 1.2.2
     ref: arrete-2017-11-30
@@ -33,4 +32,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

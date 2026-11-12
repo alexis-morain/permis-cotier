@@ -17,16 +17,15 @@ propositions:
 reponses:
   - b
 explication: >-
-  Les navires proposés à la location dont la puissance propulsive dépasse 4,5 kW, dès
-  lors qu'ils naviguent à plus de 2 milles d'un abri, sont équipés en supplément d'un
-  émetteur-récepteur VHF conforme à l'article 240-2.20, d'un moyen de positionnement électronique
-  et d'un document d'instructions. La location abaisse donc le seuil : à trois milles,
-  une VHF que l'armement côtier n'exigerait pas devient obligatoire.
+  Un navire de location de plus de 4,5 kW qui s'éloigne à plus de 2 milles d'un abri doit en
+  plus avoir un émetteur-récepteur VHF, un moyen de positionnement électronique et un
+  document d'instructions. La location abaisse donc le seuil : à trois milles, une VHF que
+  l'armement côtier n'exigerait pas devient obligatoire.
 sources:
   - texte: Division 240, article 240-3.03
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

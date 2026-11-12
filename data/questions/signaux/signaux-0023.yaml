@@ -22,17 +22,16 @@ propositions:
 reponses:
   - a
 explication: >-
-  Une série rapide d'au moins cinq sons brefs est le signal du doute de la règle 34 d) :
-  celui qui l'émet ne comprend pas les intentions de l'autre, ou se demande s'il prend
-  des mesures suffisantes pour éviter l'abordage. Il peut y ajouter au moins cinq éclats
-  brefs et rapides. Ce n'est pas un signal de détresse, qui relève de l'annexe IV, et
-  ce n'est pas non plus une manœuvre annoncée : au-delà de trois sons brefs, tu n'es plus
-  dans la règle 34 a).
+  Cinq sons brefs au moins en série rapide, c'est le signal du doute : celui qui l'émet ne
+  comprend pas les intentions de l'autre, ou se demande s'il manœuvre assez pour éviter
+  l'abordage. Il peut y ajouter au moins cinq éclats brefs et rapides. Ce n'est ni un signal
+  de détresse, ni une manœuvre annoncée : au-delà de trois sons brefs, on n'est plus dans
+  les signaux de manœuvre.
 sources:
   - texte: RIPAM, règle 34 d)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -14,10 +14,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée dispose que « le ou
-  les skieurs doivent porter un équipement individuel de flottabilité conforme à la réglementation
-  ». L'Atlantique précise même un gilet de couleur vive. C'est une obligation, pas un
-  conseil : le niveau de natation du skieur ne la lève pas.
+  Le skieur doit porter un équipement individuel de flottabilité conforme à la
+  réglementation, et sur l'Atlantique un gilet de couleur vive. C'est une obligation, pas un
+  conseil : son niveau en natation ne la lève pas.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -27,4 +26,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

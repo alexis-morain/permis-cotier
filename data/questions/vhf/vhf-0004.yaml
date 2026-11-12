@@ -20,17 +20,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le 7) de l'article 1 dispense les titulaires de plusieurs brevets et certificats en
-  cours de validité, dont le certificat général d'opérateur, le certificat spécial d'opérateur
-  et le certificat restreint d'opérateur : ils manœuvrent une VHF en mer comme dans les
-  eaux intérieures sans avoir à détenir le certificat restreint de radiotéléphoniste,
-  maritime ou fluvial. Le piège est de croire que ces titres se cumulent, alors que le
-  plus élevé couvre le plus restreint.
+  Les titulaires du certificat général d'opérateur, du certificat spécial ou du certificat
+  restreint d'opérateur, en cours de validité, manœuvrent une VHF en mer comme dans les eaux
+  intérieures sans certificat restreint de radiotéléphoniste en plus. Piège : croire que ces
+  titres se cumulent, alors que le plus élevé couvre le plus restreint.
 sources:
   - texte: Arrêté du 18 mai 2005, article 1, 7)
     ref: arrete-2005-05-18
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

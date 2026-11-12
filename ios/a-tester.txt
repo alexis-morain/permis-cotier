@@ -1,7 +1,16 @@
-Petite version de suivi : un défaut de mise en page sur les fiches de révision. Le reste est celui de la 1.0.9.
+Cette version corrige les sauts de page : en avançant dans une leçon, d’une question à l’autre et d’un écran à l’autre.
 
-Fiches de révision
-• Ouvre un cours (Balisage par exemple), puis « La fiche de révision ». En haut, le chevron du bouton « Retour » doit tomber exactement à l’aplomb du titre et de l’étiquette du groupe, comme sur une leçon.
-• Sur iPad, c’était là que ça se voyait : dès que l’écran est large, le « Retour » restait vers le milieu, loin du titre. Vérifie-le en paysage et en portrait, et en fenêtre réduite.
-• Touche « Retour » : tu reviens au cours.
-• Touche « Télécharger le PDF » : le PDF n’a pas changé, il s’ouvre toujours dans Safari intégré.
+Leçons
+• Ouvre une leçon, descends jusqu’en bas du texte, puis touche « Continuer ». L’écran suivant doit s’afficher d’un coup, en haut, titre visible sous l’en-tête. Avant, la page sautait puis glissait, et le titre restait caché sous l’en-tête.
+• Depuis le haut d’un écran, touche « Continuer » : la page ne doit pas descendre.
+• Même chose dans la vérification de fin de leçon, à « Question suivante ».
+
+Entraînement et examen blanc
+• Réponds à une question, descends, puis touche « Question suivante » : la question suivante s’affiche en haut, sans glissade.
+• Sur une question avec image (Balisage, Feux et marques), les propositions ne doivent plus bouger quand l’image arrive. L’image a maintenant toujours la même hauteur.
+• À la fin d’une série, le résultat s’affiche en haut, sans glissade.
+
+D’un écran à l’autre
+• Onglet Entraînement, après avoir raté quelques questions : « Tes erreurs » doit être là dès l’arrivée sur l’écran, sans pousser la liste.
+• Ta fiche : rien ne doit bouger à l’ouverture.
+• Avec VoiceOver, à chaque nouvelle question, le focus va toujours sur l’énoncé.
