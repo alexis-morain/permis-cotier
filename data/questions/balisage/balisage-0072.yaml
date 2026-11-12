@@ -20,11 +20,10 @@ reponses:
   - a
   - c
 explication: >-
-  Le paragraphe 7.2.1 veut que les dangers nouveaux soient signalés par des marques
-  latérales, cardinales, de danger isolé, ou par la bouée spécifique de marquage des épaves
-  en cas d'urgence. La marque spéciale n'en fait pas partie : elle n'a pas pour but principal
-  d'aider la navigation (6.1). La marque d'eaux saines dit au contraire que les eaux sont
-  saines tout autour d'elle (5.1).
+  Un danger nouveau se signale par des marques latérales, cardinales, de danger isolé, ou
+  par la bouée spécifique de marquage des épaves en cas d'urgence. La marque spéciale n'en
+  fait pas partie : elle n'a pas pour but principal d'aider la navigation. La marque d'eaux
+  saines dit au contraire que les eaux sont saines tout autour d'elle.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.2.1
     ref: arrete-2017-11-30
@@ -36,4 +35,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

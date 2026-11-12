@@ -18,11 +18,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 10.5.1 de l'arrêté de la Méditerranée pose que, dans les chenaux réservés aux
-  navires et engins motorisés, la limitation générale de vitesse reste fixée à 5 nœuds,
-  sauf disposition particulière. Le chenal traversier sert à traverser la bande des
-  300 mètres, pas à y aller vite. C'est le chenal de vitesse, et lui seul, qui échappe à
-  la limite.
+  Dans les chenaux réservés aux navires et engins motorisés, la vitesse reste limitée à 5
+  nœuds, sauf disposition particulière. Le chenal traversier sert à traverser la bande des
+  300 mètres, pas à y aller vite. C'est le chenal de vitesse, et lui seul, qui échappe à la
+  limite.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 10.5.1
     ref: bande-300-metres
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

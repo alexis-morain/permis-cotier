@@ -15,16 +15,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  La planche à pagaie est une embarcation propulsée par l'énergie humaine. Dans le tableau
-  du point 8 de l'article 240-2.01, la ligne de ces embarcations ouvre bien la tranche
-  de 2 à moins de 6 milles avec l'armement côtier spécifique de l'article 240-2.10, mais
-  la case ajoute aussitôt « Navigation interdite aux planches à pagaie ». La planche s'arrête
-  donc à 2 milles, là où un kayak de mer peut continuer.
+  La planche à pagaie est une embarcation propulsée par l'énergie humaine. La tranche de 2 à
+  moins de 6 milles s'ouvre bien à ces embarcations avec un armement côtier spécifique, mais
+  la navigation y est expressément interdite aux planches à pagaie. La planche s'arrête donc
+  à 2 milles, là où un kayak de mer peut continuer.
 sources:
   - texte: Division 240, article 240-2.01, point 8
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

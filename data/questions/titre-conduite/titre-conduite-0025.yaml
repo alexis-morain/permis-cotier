@@ -20,17 +20,16 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 7 vise les conducteurs de navires de plaisance à moteur qui ne détiennent pas
-  de permis français. Pour les mêmes manquements que ceux qui font retirer un permis,
-  dont la conduite en état d'ébriété, ils peuvent se voir interdire temporairement ou
-  définitivement de naviguer à partir des ports français ou dans les eaux territoriales
-  françaises. Le piège est de croire que l'administration retire ou saisit un titre
-  étranger : le texte ne prévoit que l'interdiction de naviguer.
+  Un conducteur de navire de plaisance à moteur sans permis français peut se voir interdire
+  temporairement ou définitivement de naviguer à partir des ports français ou dans les eaux
+  territoriales françaises, pour les mêmes manquements que ceux qui font retirer un permis,
+  dont l'ébriété. Piège : croire que l'administration retire ou saisit un titre étranger.
+  Seule l'interdiction de naviguer est prévue.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 7
     ref: decret-2007-1167
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

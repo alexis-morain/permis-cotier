@@ -16,10 +16,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 3 de l'arrêté dit que la formation est réputée effectuée quand toutes les
-  compétences sont validées, et que l'établissement agréé délivre alors une attestation de
-  réussite. Mais cette attestation ne doit pas être délivrée avant la réussite à l'épreuve
-  théorique. La formation est finie, l'attestation attend la théorie.
+  La formation est réputée effectuée quand toutes les compétences sont validées, et
+  l'établissement agréé délivre alors une attestation de réussite. Mais il ne peut pas la
+  délivrer avant ta réussite à l'épreuve théorique. La formation est finie, l'attestation
+  attend la théorie.
 sources:
   - texte: Arrêté du 28 septembre 2007, article 3
     ref: arrete-2007-09-28
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

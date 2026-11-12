@@ -16,10 +16,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  MMSI veut dire Maritime Mobile Service Identity : le numéro qui identifie la station
-  dans le service mobile maritime. L'article 240-2.20 de la
-  division 240 l'écrit avec les deux premiers mots inversés, Mobile Maritime Service
-  Identity, sans que le sens change.
+  MMSI veut dire Maritime Mobile Service Identity : le numéro qui identifie la station dans
+  le service mobile maritime. Certains textes l'écrivent Mobile Maritime Service Identity,
+  sans que le sens change.
 sources:
   - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
     ref: fiche-vhf
@@ -29,4 +28,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

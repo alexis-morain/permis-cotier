@@ -10,6 +10,7 @@ import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
 import { POUR_APP } from '../lib/cible';
 import { vibrer } from '../lib/natif';
+import { defilerSec, remonterAuBloc } from '../lib/defilement';
 import { banqueGardee, chercherMiseAJour, plusRecente } from '../lib/banque-locale';
 import BoutonSignal from './BoutonSignal';
 import Depart from './quiz/Depart';
@@ -225,8 +226,15 @@ function Partie({
   // seulement. Une fonction de référence recréée à chaque rendu était
   // rappelée à chaque seconde du chrono, et reprenait le focus au bouton de
   // la confirmation d'arrêt. Tant que celle-ci est ouverte, il y reste.
+  // La page remonte d'abord, sec, au haut du jeu (en haut de l'écran dans
+  // l'app) ; le focus ne défile pas : laissé faire, le navigateur sautait au
+  // titre, puis la page raccourcie finissait le trajet en glissant.
   const focaliser = useCallback((noeud: HTMLElement | null) => {
-    if (!contexte.current.arretDemande) noeud?.focus();
+    if (!noeud || contexte.current.arretDemande) return;
+    const jeu = noeud.closest('.jeu');
+    if (POUR_APP) defilerSec(0);
+    else if (jeu) remonterAuBloc(jeu, 16);
+    noeud.focus({ preventScroll: true });
   }, []);
 
   const contexte = useRef<ContexteClavier>({ session, ordre, mode, arretDemande });
@@ -249,7 +257,7 @@ function Partie({
       type: 'restaurer',
       session: creerSession(mode, serieCourte(questions, charger().questions, aleaSeme(Date.now() >>> 0))),
     });
-    window.scrollTo({ top: 0 });
+    defilerSec(0);
   }, [mode, questions]);
 
   const reprendreDepuis = useCallback((reprise: Session) => {

@@ -16,15 +16,15 @@ propositions:
 reponses:
   - b
 explication: >-
-  Dans les écluses, les ancres doivent être en position complètement relevée. Une ancre
-  qui pend accroche le radier, le seuil ou les dispositifs de protection. La même exigence
-  vaut dans les garages, dès lors que les ancres n'y sont pas utilisées. Le même article
-  impose aussi des défenses, qui doivent être flottantes lorsqu'elles sont amovibles.
+  Dans une écluse, les ancres doivent être complètement relevées. Une ancre qui pend
+  accroche le radier, le seuil ou les dispositifs de protection. C'est pareil dans les
+  garages, tant que les ancres n'y servent pas. Les défenses sont aussi obligatoires, et
+  flottantes quand elles sont amovibles.
 sources:
   - texte: Code des transports, article A. 4241-53-30
     ref: rgpni-ecluses
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

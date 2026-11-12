@@ -15,10 +15,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 1er de l'arrêté du 28 septembre 2007 énumère le programme de l'épreuve théorique
-  de l'option côtière, et l'un de ses tirets porte des notions d'autonomie en matière
-  de carburant. En revanche, aucun texte ne fixe la règle des tiers : c'est un usage de
-  bonne pratique maritime, enseigné et interrogé, mais qui ne relève pas du droit.
+  Oui, le programme de l'épreuve théorique de l'option côtière comprend des notions
+  d'autonomie en carburant. En revanche, aucun texte ne fixe la règle des tiers : c'est un
+  usage de bonne pratique maritime, enseigné et interrogé, mais qui ne relève pas du droit.
 sources:
   - texte: Arrêté du 28 septembre 2007, article 1er, point 1.2
     ref: arrete-2007-09-28
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

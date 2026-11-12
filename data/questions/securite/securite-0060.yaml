@@ -17,10 +17,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 10.3 définit les chenaux traversiers comme des couloirs de transit qui permettent
-  un accès de la côte vers le large et inversement. Ils sont créés par le plan de balisage,
-  qui réserve aussi des zones aux activités nautiques. Ce ne sont ni des zones de baignade
-  ni des zones de mouillage.
+  Un chenal traversier est un couloir de transit qui permet d'aller de la côte vers le large
+  et inversement. Le plan de balisage le crée et réserve aussi des zones aux activités
+  nautiques. Ce n'est ni une zone de baignade ni une zone de mouillage.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 10.3
     ref: bande-300-metres
@@ -28,4 +27,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

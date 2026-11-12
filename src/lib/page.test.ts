@@ -49,6 +49,28 @@ describe('quandLaPageEstPrete', () => {
     document.dispatchEvent(new Event('astro:page-load'));
     expect(faire).toHaveBeenCalledTimes(2);
   });
+
+  // `astro:page-load` part après la capture du nouvel écran : ce que le script
+  // y pose (une reprise, « Tes erreurs ») poussait la page pendant le fondu.
+  // `astro:after-swap` part avant : l'écran entre déjà complet.
+  it('dans l’app, fait dès l’échange de l’écran, une seule fois par navigation', async () => {
+    const document = new EventTarget();
+    vi.stubGlobal('document', document);
+    const { quandLaPageEstPrete } = await chargerPage(true);
+
+    const faire = vi.fn();
+    quandLaPageEstPrete(faire);
+
+    document.dispatchEvent(new Event('astro:after-swap'));
+    expect(faire).toHaveBeenCalledTimes(1);
+    document.dispatchEvent(new Event('astro:page-load'));
+    expect(faire).toHaveBeenCalledTimes(1);
+
+    // L'écran d'après refait, par le même chemin.
+    document.dispatchEvent(new Event('astro:after-swap'));
+    document.dispatchEvent(new Event('astro:page-load'));
+    expect(faire).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('lienRetour', () => {

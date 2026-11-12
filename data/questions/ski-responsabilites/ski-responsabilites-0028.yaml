@@ -17,11 +17,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée permet aux titulaires
-  du brevet d'État de moniteur de ski nautique d'assurer seuls conduite et surveillance,
-  « sous réserve que le navire à moteur tractant soit équipé d'un rétroviseur ». Le nombre
-  de skieurs n'entre pas en compte. Le largage rapide est une exigence propre aux engins
-  pneumatiques tractés, pas une condition de cette dérogation.
+  Le moniteur titulaire du brevet d'État peut assurer seul conduite et surveillance, à
+  condition que le bateau tracteur soit équipé d'un rétroviseur. Le nombre de skieurs
+  n'entre pas en compte. Le largage rapide est une exigence des engins pneumatiques tractés,
+  pas de cette dérogation.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -31,4 +30,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

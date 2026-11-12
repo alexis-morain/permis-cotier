@@ -18,10 +18,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 1er de l'arrêté du 26 octobre 2012 dit qu'il s'applique aux navires de plaisance
-  battant pavillon français quelle que soit la zone de capture, et aux navires étrangers dans
-  les eaux françaises. Le pavillon emporte la règle avec lui. Le même article précise que des
-  règles plus contraignantes, internationales ou locales, s'appliquent par-dessus.
+  Les tailles minimales françaises s'appliquent aux navires de plaisance battant pavillon
+  français quelle que soit la zone de capture, et aux navires étrangers dans les eaux
+  françaises. Le pavillon emporte la règle avec lui. Des règles plus contraignantes,
+  internationales ou locales, s'appliquent par-dessus.
 sources:
   - texte: Arrêté du 26 octobre 2012, article 1er
     ref: arrete-2012-10-26
@@ -29,4 +29,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

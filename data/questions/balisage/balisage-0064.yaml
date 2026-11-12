@@ -19,11 +19,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  Le paragraphe 2.3.3 dit qu'en un point où un chenal se divise, « on peut indiquer » le
-  chenal à emprunter de préférence par une marque latérale modifiée, rouge à bande verte ou
-  verte à bande rouge. C'est une faculté, pas une obligation : une bifurcation peut rester
-  sans marque de chenal préféré. Le danger isolé et la marque spéciale ont d'autres usages,
-  fixés aux chapitres 4 et 6.
+  À une bifurcation, on peut indiquer le chenal à emprunter de préférence par une marque
+  latérale modifiée, rouge à bande verte ou verte à bande rouge. C'est une faculté, pas une
+  obligation : une bifurcation peut rester sans marque de chenal préféré. Le danger isolé et
+  la marque spéciale ont d'autres usages.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.3.3
     ref: arrete-2017-11-30
@@ -32,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

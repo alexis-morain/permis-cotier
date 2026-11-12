@@ -18,15 +18,15 @@ propositions:
 reponses:
   - b
 explication: >-
-  Le paragraphe 1 de l'annexe II décrit l'interdiction par une figure noire posée sur
-  un fond blanc, bordé et barré de rouge. L'autorisation, elle, se lit à la figure blanche
-  sur fond bleu. Les distracteurs jouent sur l'inversion des deux codes et sur des couleurs
-  voisines qui n'apparaissent pas dans le texte.
+  L'interdiction se montre par une figure noire sur un fond blanc, bordé et barré de rouge.
+  L'autorisation, elle, se lit à la figure blanche sur fond bleu. Les distracteurs jouent
+  sur l'inversion des deux codes et sur des couleurs voisines qui n'existent pas dans ce
+  balisage.
 sources:
   - texte: Arrêté du 27 mars 1991, annexe II, paragraphe 1
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

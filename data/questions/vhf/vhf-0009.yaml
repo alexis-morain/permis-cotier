@@ -17,15 +17,14 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'annexe IV du RIPAM énumère les signaux qui indiquent la détresse et le besoin d'assistance.
-  Le signal radiotéléphonique y est le mot MAYDAY. Le groupe SOS y figure aussi, mais
-  comme signal émis par tout système de signalisation en code Morse, pas comme mot prononcé
-  à la radio. PAN PAN n'est pas un signal de détresse : c'est le signal d'urgence.
+  Le signal radiotéléphonique de détresse est le mot MAYDAY. SOS existe aussi, mais comme
+  signal en code Morse, pas comme mot prononcé à la radio. PAN PAN n'est pas un signal de
+  détresse : c'est le signal d'urgence.
 sources:
   - texte: RIPAM, annexe IV, 1 e)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

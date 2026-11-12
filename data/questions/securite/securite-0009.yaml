@@ -23,16 +23,15 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 240-1.03 met quatre exigences sur la même ligne : le chef de bord s'assure
-  de la présence à bord, du bon état et de la validité de tous les équipements et matériels
-  de sécurité, ainsi que de leur adaptation aux personnes embarquées. Le piège consiste
-  à n'en retenir qu'une partie : aucune de ces vérifications n'est renvoyée au propriétaire,
-  à un contrôle administratif, ni réservée à une catégorie de passagers.
+  Le chef de bord s'assure de quatre choses : la présence à bord, le bon état, la validité
+  de tous les équipements et matériels de sécurité, et leur adaptation aux personnes
+  embarquées. Piège : n'en retenir qu'une partie. Aucune de ces vérifications n'est renvoyée
+  au propriétaire ou à un contrôle administratif, ni réservée à une catégorie de passagers.
 sources:
   - texte: Division 240, article 240-1.03
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -17,16 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 7 b) de l'arrêté du 28 septembre 2007 exige que le bateau utilisé pour la
-  formation pratique ait fait l'objet d'un marquage CE et soit au moins en catégorie de
-  conception C, ou qu'il soit d'un type approuvé au moins en 5e catégorie de navigation
-  de plaisance. Le même alinéa lui impose l'armement correspondant à la catégorie côtière,
-  une longueur d'au moins 5,50 mètres et une VHF.
+  Le bateau de formation pratique doit porter le marquage CE et être au moins en catégorie
+  de conception C, ou d'un type approuvé au moins en 5e catégorie de navigation de
+  plaisance. Il doit aussi avoir l'armement de la catégorie côtière, 5,50 mètres au moins et
+  une VHF.
 sources:
   - texte: Arrêté du 28 septembre 2007, article 7 b)
     ref: arrete-2007-09-28
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

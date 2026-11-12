@@ -19,17 +19,16 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 240-2.01, alinéa 7, exige que le coupe-circuit filaire soit relié au poignet,
-  à la jambe ou à un point fixe de l'équipement de flottabilité porté par le conducteur,
-  dès lors que le moteur est allumé. La règle ne dépend ni de la distance de l'abri, ni
-  de la vitesse, ni du nombre de personnes à bord. Le même alinéa interdit de rallonger
-  ou de déplacer le fil pour se déplacer plus librement, car l'hélice pourrait alors tourner
-  sans que le conducteur ait la main à portée de la commande.
+  Le coupe-circuit filaire se relie au poignet, à la jambe ou à un point fixe de
+  l'équipement de flottabilité du conducteur dès que le moteur est allumé. Ni la distance
+  d'un abri, ni la vitesse, ni le nombre de personnes à bord n'y changent rien. Il est
+  interdit de rallonger ou de déplacer le fil pour se déplacer plus librement : l'hélice
+  pourrait tourner sans que le conducteur ait la main à portée de la commande.
 sources:
   - texte: Division 240, article 240-2.01, alinéa 7
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-11-11'

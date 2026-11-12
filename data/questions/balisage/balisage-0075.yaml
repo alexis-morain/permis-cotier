@@ -17,10 +17,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  Le paragraphe 8.2.2 dit qu'un feu à secteurs employé pour marquer la limite d'un chenal suit
-  la convention de couleur de la région AISM indiquée à la section 2, celle des marques
-  latérales. En région A, c'est le rouge pour bâbord et le vert pour tribord (2.3.1 et 2.3.2).
-  Le jaune est la couleur du feu des marques spéciales (6.2).
+  Un feu à secteurs qui marque la limite d'un chenal suit la convention de couleur des
+  marques latérales de la région. En région A, c'est le rouge pour bâbord et le vert pour
+  tribord. Le jaune est la couleur du feu des marques spéciales.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 8.2.2
     ref: arrete-2017-11-30
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

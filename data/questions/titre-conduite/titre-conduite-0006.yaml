@@ -15,17 +15,16 @@ propositions:
 reponses:
   - b
 explication: >-
-  Le décret est explicite : en eaux maritimes, la conduite des bateaux de plaisance à
-  voile, même équipés d'un moteur auxiliaire, n'est pas subordonnée à la possession d'un
-  permis. La dispense tient au bateau, pas au mode de propulsion du moment : un voilier
-  qui avance au moteur reste un voilier au sens de ce texte. Attention, un bateau à propulsion
-  vélique dont le rapport entre voilure et masse est trop faible est classé bateau à moteur
-  par l'article 1er.
+  En eaux maritimes, conduire un bateau de plaisance à voile, même avec un moteur
+  auxiliaire, n'exige pas de permis. La dispense tient au bateau, pas au mode de propulsion
+  du moment : un voilier qui avance au moteur reste un voilier. Attention, un bateau à
+  propulsion vélique dont le rapport entre voilure et masse est trop faible est classé
+  bateau à moteur.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 2
     ref: decret-2007-1167
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

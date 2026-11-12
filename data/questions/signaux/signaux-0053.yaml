@@ -19,15 +19,14 @@ propositions:
 reponses:
   - c
 explication: >-
-  Le paragraphe 3 a) de l'annexe IV du RIPAM appelle l'attention sur un morceau de toile
-  de couleur orange portant un carré et un cercle de couleur noire, ou un autre symbole
-  approprié, pour le repérage aérien. Le même paragraphe cite aussi le colorant. Aucune
-  des autres toiles proposées n'y figure.
+  Pour le repérage aérien, le signal cité est un morceau de toile orange portant un carré et
+  un cercle noirs, ou un autre symbole approprié. La même liste cite aussi le colorant.
+  Aucune des autres toiles proposées n'y figure.
 sources:
   - texte: RIPAM, annexe IV, 3 a)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

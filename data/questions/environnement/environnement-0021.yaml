@@ -21,8 +21,8 @@ reponses:
   - a
   - b
 explication: >-
-  L'article L. 334-1 liste les aires marines protégées : parcs nationaux et réserves naturelles
-  ayant une partie maritime, parcs naturels marins, sites Natura 2000 en mer, arrêtés
+  Les aires marines protégées comprennent les parcs nationaux et réserves naturelles ayant
+  une partie maritime, les parcs naturels marins, les sites Natura 2000 en mer, les arrêtés
   de protection de biotope, et d'autres. Un mouillage organisé ou un chenal de plage n'en
   sont pas.
 sources:
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

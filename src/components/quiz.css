@@ -118,10 +118,13 @@
   /* Un lavis aussi large que la colonne, l'image au centre. Les SVG sont
      dessinés à deux cent quarante pixels et doivent grandir : `contain` les
      fait remplir la boîte sans la déformer, et la hauteur maximale, une
-     contrainte de téléphone, borne la boîte plutôt que le dessin. */
+     contrainte de téléphone, borne la boîte plutôt que le dessin.
+     La hauteur est fixée, pas laissée à l'image : sans dimensions connues
+     avant le chargement, la boîte naissait vide et poussait les propositions
+     en arrivant. Fixe, rien ne saute, et les boutons restent à leur place
+     d'une question à l'autre. */
   width: 100%;
-  height: auto;
-  max-height: min(34vh, 20rem);
+  height: min(34vh, 20rem);
   padding: 1.25rem;
   margin: 0;
   object-fit: contain;
@@ -141,6 +144,7 @@
   flex-direction: column;
   gap: 0.35rem;
   padding: 0.9rem 1rem;
+  height: auto;
   max-height: none;
   font-weight: 600;
   line-height: 1.4;
@@ -668,7 +672,7 @@ div.sources ul { margin: 0; }
   .jeu > .signal-ecoute-lieu { margin-top: 0; }
   .jeu > .propositions { grid-column: 2; grid-row: span 2; }
   .jeu__enonce { font-size: 1.2rem; max-width: none; }
-  .jeu__visuel:not(.jeu__visuel--absent) { max-height: 48vh; }
+  .jeu__visuel:not(.jeu__visuel--absent) { height: 48vh; }
   .propositions { gap: 0.5rem; }
   .proposition { min-height: 2.75rem; padding: 0.55rem 0.85rem; }
   /* La barre collée prenait 77 des 390 px : un bouton de 44 px et une marge

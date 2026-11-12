@@ -19,15 +19,15 @@ propositions:
 reponses:
   - d
 explication: >-
-  Le paragraphe 4.2 décrit la couleur de la marque de danger isolé : « noire avec une ou
-  plusieurs larges bandes horizontales rouges ». Le nombre de bandes n'est donc pas fixé,
-  ce qui compte est le noir barré de rouge et le voyant à deux sphères noires. Le piège est
-  de compter les bandes sur les deux sphères du voyant, qui n'ont rien à voir avec elles.
+  La marque de danger isolé est noire avec une ou plusieurs larges bandes horizontales
+  rouges : le nombre de bandes n'est pas fixé. Ce qui compte, c'est le noir barré de rouge
+  et le voyant à deux sphères noires. Piège : compter les bandes sur les sphères du voyant,
+  qui n'ont rien à voir.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 4.2
     ref: arrete-2017-11-30
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -14,11 +14,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  Le canal 70 est réservé à l'appel sélectif numérique. C'est une voie de données, sur
-  laquelle aucune phonie ne passe, jamais : c'est par elle que part l'alerte quand on
-  soulève le capot rouge. Le RIPAM la nomme d'ailleurs à son annexe IV, qui range parmi
-  les signaux de détresse l'alerte émise par ASN sur la voie 70 en ondes métriques. Une
-  fois l'alerte numérique partie, la parole se fait sur le canal 16.
+  Le canal 70 est réservé à l'appel sélectif numérique. C'est une voie de données, sans
+  aucune phonie : c'est par elle que part l'alerte quand on soulève le capot rouge. Une
+  alerte ASN sur la voie 70 compte d'ailleurs parmi les signaux de détresse. Une fois
+  l'alerte partie, la parole se fait sur le canal 16.
 sources:
   - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
     ref: fiche-vhf
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

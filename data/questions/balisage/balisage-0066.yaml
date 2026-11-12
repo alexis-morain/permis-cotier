@@ -20,10 +20,8 @@ reponses:
   - c
 explication: >-
   Le rythme d'une marque d'eaux saines peut indiquer le meilleur point de passage sous un
-  pont (paragraphe 5.1). L'annexe III le précise : ce point est montré par un ou plusieurs
-  feux blancs rythmés, portés par la travée, au rythme caractéristique d'une marque d'eaux
-  saines. Les travées pour très petits bateaux, elles, peuvent porter des feux jaunes de marque
-  spéciale.
+  pont : un ou plusieurs feux blancs rythmés, portés par la travée. Les travées pour très
+  petits bateaux peuvent porter des feux jaunes de marque spéciale.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 5.1
     ref: arrete-2017-11-30
@@ -32,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

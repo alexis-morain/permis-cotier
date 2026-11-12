@@ -15,10 +15,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'option côtière demande des notions élémentaires sur la marée et ses conséquences.
-  Le calcul par la règle des douzièmes relève de l'extension hauturière, article 4.2 de
-  l'arrêté du 28 septembre 2007. Savoir qu'une sonde est un minimum et lire un coefficient
-  suffit.
+  L'option côtière demande des notions élémentaires sur la marée et ses conséquences. Le
+  calcul par la règle des douzièmes relève de l'extension hauturière. Savoir qu'une sonde
+  est un minimum et lire un coefficient suffit.
 sources:
   - texte: Fiche lecture de carte marine, SHOM ouvrage 1D
     ref: fiche-carte-marine
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -18,16 +18,16 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article L. 218-73 punit le fait de jeter, déverser ou laisser écouler, directement
-  ou indirectement, des substances nuisibles pour la conservation ou la reproduction des
-  animaux et végétaux marins. Le mot qui compte est « indirectement » : les particules
-  de peinture emportées par l'eau de rinçage arrivent en mer par le caniveau, et cela
-  suffit. On n'a rien versé par-dessus bord, on a quand même laissé écouler.
+  Oui. Est puni le fait de jeter, déverser ou laisser écouler, directement ou indirectement,
+  des substances nuisibles pour la conservation ou la reproduction des animaux et végétaux
+  marins. Le mot qui compte est « indirectement » : les particules de peinture emportées par
+  l'eau de rinçage arrivent en mer par le caniveau, et cela suffit. Tu n'as rien versé
+  par-dessus bord, mais tu as laissé écouler.
 sources:
   - texte: Code de l'environnement, article L. 218-73
     ref: code-environnement
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

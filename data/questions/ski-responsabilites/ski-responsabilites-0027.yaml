@@ -17,10 +17,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée impose que le navire
-  tracteur soit « en mesure d'embarquer à son bord la totalité des skieurs en plus de
-  son équipage ». Si la séance tourne mal, tout le monde doit pouvoir monter à bord d'un
-  coup. L'arrêté de l'Atlantique ajoute que le navire doit disposer d'un accès adéquat.
+  Le bateau tracteur doit pouvoir embarquer la totalité des skieurs en plus de son équipage.
+  Si la séance tourne mal, tout le monde doit pouvoir monter à bord d'un coup. Sur
+  l'Atlantique, il doit aussi avoir un accès adéquat.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

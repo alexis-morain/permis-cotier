@@ -17,16 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 23 b) ajoute aux feux ordinaires du navire à propulsion mécanique un feu jaune
-  à éclats visible sur tout l'horizon, dès lors que l'aéroglisseur est exploité sans tirant
-  d'eau. Le feu rouge à éclats de forte intensité appartient au paragraphe suivant, celui
-  du navion qui décolle, atterrit ou vole près de la surface : c'est la confusion que
-  tendent les distracteurs.
+  Un aéroglisseur exploité sans tirant d'eau ajoute aux feux d'un navire à propulsion
+  mécanique un feu jaune à éclats visible sur tout l'horizon. Le feu rouge à éclats de forte
+  intensité est celui du navion qui décolle, atterrit ou vole près de la surface : c'est la
+  confusion que tendent les distracteurs.
 sources:
   - texte: RIPAM, règle 23 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

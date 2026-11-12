@@ -17,16 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'annexe I, paragraphe 2, échelonne les intervalles selon la distance au rivage : 50
-  mètres entre la ligne des 300 mètres et 150 mètres du rivage, 25 mètres entre 150 et
-  50 mètres, puis 10 mètres à moins de 50 mètres. Plus on approche de la plage, plus les
-  bouées se resserrent, et les trois valeurs de l'échelle servent de distracteurs les
-  unes aux autres.
+  Dans un chenal traversier, l'intervalle entre bouées se resserre vers la plage : 50 mètres
+  entre la ligne des 300 mètres et 150 mètres du rivage, 25 mètres entre 150 et 50 mètres,
+  10 mètres à moins de 50 mètres. Les trois valeurs servent de distracteurs les unes aux
+  autres.
 sources:
   - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 2
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'
