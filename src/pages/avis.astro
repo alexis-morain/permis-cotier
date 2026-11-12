@@ -55,13 +55,19 @@ const RAISONS = JSON.stringify({
         <textarea id="message" name="message" class="champ" rows="6" maxlength="1200" required
           placeholder="Les leçons sont claires, il me manque…"></textarea>
       </p>
+      {ENVOI_EN_LIGNE && (
+        <p>
+          <label for="adresse">Ton adresse e-mail, si tu veux une réponse</label>
+          <input id="adresse" name="adresse" class="champ" type="email" autocomplete="email"
+            inputmode="email" maxlength="254" spellcheck="false" autocapitalize="off" />
+          <span class="discret">Facultatif. Elle n’arrive que dans ma boîte et ne sert qu’à te répondre.</span>
+        </p>
+      )}
       {ENVOI_EN_LIGNE ? (
         <p class="discret">
-          L’avis part seul : ni adresse, ni adresse IP, ni cookie ne sont joints. La
-          vérification anti-robot ci-dessous et la mesure d’audience voient ta connexion,
-          comme tout site voit qui l’appelle ; l’avis, lui, n’en garde rien. Tu veux une
-          réponse ? Écris-moi plutôt à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> : c’est le
-          seul endroit où une adresse circule, et c’est toi qui la donnes.
+          Ni adresse IP ni cookie ne sont joints à l’avis, et ton adresse seulement si tu la
+          laisses. La vérification anti-robot ci-dessous et la mesure d’audience voient ta
+          connexion, comme tout site voit qui l’appelle ; l’avis, lui, n’en garde rien.
         </p>
       ) : (
         <p class="discret">
@@ -87,7 +93,11 @@ const RAISONS = JSON.stringify({
 
     <div class="confirmation" id="confirmation-envoi" role="status" tabindex="-1" hidden>
       <p class="confirmation__titre">C’est parti. Merci.</p>
-      <p>Ton avis est arrivé. Rien de personnel n’a été enregistré.</p>
+      <p>
+        Ton avis est arrivé.
+        <span id="confirmation-sans-adresse">Rien de personnel n’a été enregistré.</span>
+        <span id="confirmation-avec-adresse" hidden>Ton adresse n’est arrivée que dans ma boîte : je te réponds là.</span>
+      </p>
       <p>
         <a class="bouton bouton--discret" href="/">Revenir à l’accueil</a>
       </p>
@@ -157,6 +167,8 @@ const RAISONS = JSON.stringify({
       const note = valeurNote >= 1 && valeurNote <= 5 ? valeurNote : null;
       const message = (document.getElementById('message')?.value ?? '').trim();
       if (!message) return;
+      // Facultative, et seulement sur le site : voir `signaler.astro`.
+      const adresseVisiteur = (document.getElementById('adresse')?.value ?? '').trim();
 
       const jeton = cleTurnstile ? (window.turnstile?.getResponse() ?? '') : '';
       const envoi = formulaire?.dataset.envoi ?? '';
@@ -176,13 +188,25 @@ const RAISONS = JSON.stringify({
         const reponse = await fetch(envoi, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ genre: 'avis', message, note, turnstile: jeton }),
+          body: JSON.stringify({
+            genre: 'avis',
+            message,
+            note,
+            ...(adresseVisiteur ? { adresse: adresseVisiteur } : {}),
+            turnstile: jeton,
+          }),
           signal: controleur.signal,
         });
         if (!reponse.ok) throw Object.assign(new Error(`HTTP ${reponse.status}`), { statut: reponse.status });
         // La note seule part à la mesure : jamais le texte de l'avis.
         window.umami?.track('avis-envoye', note ? { note } : undefined);
         if (formulaire) formulaire.hidden = true;
+        if (adresseVisiteur) {
+          const sans = document.getElementById('confirmation-sans-adresse');
+          const avec = document.getElementById('confirmation-avec-adresse');
+          if (sans) sans.hidden = true;
+          if (avec) avec.hidden = false;
+        }
         if (confirmationEnvoi) {
           confirmationEnvoi.hidden = false;
           confirmationEnvoi.focus();

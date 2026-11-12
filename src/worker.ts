@@ -12,7 +12,8 @@
  *
  * L'endpoint suit une seule ligne de conduite : ne jamais accepter un envoi
  * non vérifié, ne jamais renvoyer au visiteur ce qu'il a envoyé, et ne jamais
- * garder trace de qui il est. À la moindre panne il rend un code hors 2xx, et
+ * garder trace de qui il est — sauf l'adresse qu'il donne lui-même pour une
+ * réponse, remise par courrier seulement, jamais dans l'issue. À la moindre panne il rend un code hors 2xx, et
  * la page retombe sur le `mailto:` qui n'a jamais quitté le formulaire.
  *
  * « Vérifié » veut dire trois choses, pas une : le jeton Turnstile est bon, il
@@ -25,6 +26,7 @@ import {
   SITE,
   TAILLE_CORPS_MAX,
   corpsAvis,
+  corpsCourrier,
   corpsIssue,
   titreAvis,
   titreIssue,
@@ -273,7 +275,12 @@ async function ouvrirIssue(
  * configuré. Pour un signalement il est facultatif (l'issue fait foi) ; pour
  * un avis, c'est la seule remise.
  */
-async function envoyerCourrier(sujet: string, texte: string, env: Env): Promise<boolean | null> {
+async function envoyerCourrier(
+  sujet: string,
+  texte: string,
+  env: Env,
+  repondreA: string | null = null,
+): Promise<boolean | null> {
   const { RESEND_API_KEY, SIGNALEMENT_MAIL_TO, SIGNALEMENT_MAIL_FROM } = env;
   if (!RESEND_API_KEY || !SIGNALEMENT_MAIL_TO || !SIGNALEMENT_MAIL_FROM) return null;
   try {
@@ -288,6 +295,9 @@ async function envoyerCourrier(sujet: string, texte: string, env: Env): Promise<
         to: SIGNALEMENT_MAIL_TO,
         subject: sujet,
         text: texte,
+        // L'adresse laissée par le visiteur, déjà passée par `valider` : un
+        // clic sur « Répondre » lui écrit, sans recopier quoi que ce soit.
+        ...(repondreA ? { reply_to: repondreA } : {}),
       }),
       signal: AbortSignal.timeout(DELAI_MS),
     });
@@ -385,7 +395,7 @@ export async function signaler(requete: Request, env: Env): Promise<Response> {
   if (issue === null) return refus(503, FERME);
 
   // Facultatif : l'issue est ouverte, c'est elle qui fait foi.
-  await envoyerCourrier(titreIssue(signalement), corpsIssue(signalement), env);
+  await envoyerCourrier(titreIssue(signalement), corpsCourrier(signalement), env, signalement.adresse ?? null);
 
   return json(200, { ok: true, url: issue.url });
 }
@@ -405,7 +415,7 @@ async function remettreAvis(
   if (verdict === null) return refus(503, FERME);
   if (!verdict) return refus(403, 'Vérification anti-robot échouée.');
 
-  if (!(await envoyerCourrier(titreAvis(avis), corpsAvis(avis), env))) return refus(503, FERME);
+  if (!(await envoyerCourrier(titreAvis(avis), corpsAvis(avis), env, avis.adresse ?? null))) return refus(503, FERME);
   return json(200, { ok: true });
 }
 
