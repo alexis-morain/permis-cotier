@@ -31,7 +31,7 @@ import { defilerSec, remonterAuBloc } from '../lib/defilement';
 import { cheminRetour, libelleRetour } from '../lib/retour';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import { POUR_APP } from '../lib/cible';
-import { proposerLaNote, vibrer } from '../lib/natif';
+import { vibrer } from '../lib/natif';
 import { ANNONCES_MONTREES, gagnerAuGeste, type BadgeAnnonce } from '../lib/badges-geste';
 
 /** Ce qui vient après la leçon : la suivante du cours, ou le cours d'après. */
@@ -408,7 +408,6 @@ export function monterLecon(doc: Document = document): void {
     sauvegarder(terminerLecon(charger(), code, resultat, aujourdhui()));
     evenement('lecon-terminee', { notion: code, cours: cours.code, ...resultat });
     void vibrer('lecon');
-    void proposerLaNote();
     // `parcouru` se gagne ici, `retenu` aussi par les réponses de la
     // vérification. L'annonce va dans la fin si elle est encore là.
     if (!theme || !Array.isArray(banque)) return;

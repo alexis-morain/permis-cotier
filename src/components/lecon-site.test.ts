@@ -460,14 +460,13 @@ describe('le retour de chaque geste', () => {
     expect(vi.mocked(vibrer).mock.calls).toEqual([['lecon']]);
   });
 
-  it('propose la note une seule fois, à la fin de la leçon', () => {
+  it('ne propose pas la note à la fin d’une leçon : elle attend un examen blanc réussi', () => {
     vi.mocked(proposerLaNote).mockClear();
     monter(courte, null);
-    expect(proposerLaNote).not.toHaveBeenCalled();
     cliquer('Terminer la leçon');
     cliquer('Tout lire d’une traite');
     cliquer('Reprendre pas à pas');
-    expect(proposerLaNote).toHaveBeenCalledTimes(1);
+    expect(proposerLaNote).not.toHaveBeenCalled();
   });
 });
 
