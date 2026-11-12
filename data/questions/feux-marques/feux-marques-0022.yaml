@@ -29,7 +29,7 @@ explication: >-
   est le navire à capacité de manœuvre restreinte, qui montre trois feux : rouge, blanc,
   rouge de haut en bas.
 sources:
-  - texte: RIPAM, règle 27 a) i) et iii)
+  - texte: RIPAM, règle 27 a) i)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
