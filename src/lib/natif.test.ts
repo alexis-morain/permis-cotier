@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { POUR_APP } from './cible';
-import { armerLesRappelsSurLaDate, modeConcentration, ouvrirDehors, partager, programmerRappels, proposerLaNote, surRetourAuPremierPlan, suivreLUsageDeLApp, vibrer } from './natif';
+import { armerLesRappelsSurLaDate, modeConcentration, ouvrirDehors, partager, programmerRappels, proposerLaNote, surRetourAuPremierPlan, vibrer } from './natif';
 
 /**
  * La couche native, vue du site.
@@ -58,10 +58,8 @@ describe('la couche native, hors de la coquille', () => {
     expect(rappel).not.toHaveBeenCalled();
   });
 
-  it('ne suit pas l’usage et ne demande pas la note', () => {
+  it('ne demande pas la note', () => {
     expect(proposerLaNote()).toBeUndefined();
-    const arreter = suivreLUsageDeLApp();
-    expect(() => arreter()).not.toThrow();
   });
 
   it('n’ouvre rien dehors, et le dit', async () => {
@@ -84,7 +82,6 @@ describe('la couche native, hors de la coquille', () => {
         'partager',
         'programmerRappels',
         'proposerLaNote',
-        'suivreLUsageDeLApp',
         'surRetourAuPremierPlan',
         'vibrer',
       ].sort(),

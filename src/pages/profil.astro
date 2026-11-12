@@ -5,7 +5,7 @@ import ProfilCandidat from '../components/ProfilCandidat.tsx';
 import { questionsPubliees, versionBanque } from '../lib/banque';
 import { leconsDuParcours } from '../lib/parcours';
 import { POUR_APP } from '../lib/cible';
-import { APP_STORE, DEPOT, DON } from '../lib/seo';
+import { APP_STORE, DEPOT } from '../lib/seo';
 
 // La fiche se construit dans le navigateur, depuis la progression locale.
 // Le serveur ne donne que la banque, réduite à l'identifiant, au thème et à
@@ -24,13 +24,14 @@ const liensApp = [
   { nom: 'Signaler une erreur', chemin: '/signaler' },
 ];
 
-// Les trois gestes pour soutenir le projet. La note ouvre l'application App
-// Store (`itms-apps`) : un lien https passerait par Safari intégré, qui
-// montrerait la page web de la fiche et non la fenêtre de note.
+// Les gestes pour soutenir le projet, dans l'app. La note ouvre l'application
+// App Store (`itms-apps`) : un lien https passerait par Safari intégré, qui
+// montrerait la page web de la fiche et non la fenêtre de note. Pas de don ici :
+// un don hors de l'achat intégré est un motif de refus d'Apple (3.1.1) ; il
+// reste sur le site (`a-propos.astro`).
 const gestes = [
   { nom: 'Noter l’app sur l’App Store', lien: APP_STORE.urlNoteApp, mesure: 'soutenir-note' },
   { nom: 'Donner un avis', lien: '/avis', mesure: 'soutenir-avis' },
-  { nom: 'Faire un don', lien: DON, mesure: 'soutenir-don' },
 ];
 ---
 
@@ -67,7 +68,7 @@ const gestes = [
       <p class="discret">
         L’app est 100 % gratuite et open source : le code est sous licence MIT, la banque de
         questions sous CC BY-SA 4.0, le tout sur <a href={DEPOT}>GitHub</a>. Si elle t’aide,
-        trois gestes comptent.
+        deux gestes comptent.
       </p>
       <ul class="cellules">
         {gestes.map((g) => (

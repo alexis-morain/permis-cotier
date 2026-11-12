@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { CLE_EVALUATION, SEUIL_MS, lireEtat } from './evaluation';
+import { lireEtat } from './evaluation';
 
 /**
  * La demande de note, dans la coquille. `POUR_APP` est figée au chargement :
@@ -30,19 +30,7 @@ describe('proposerLaNote', () => {
     vi.doUnmock('@capacitor/app');
   });
 
-  const usage = (ms: number) =>
-    localStorage.setItem(CLE_EVALUATION, JSON.stringify({ actifMs: ms, jusqua: 0, demande: null }));
-
-  it('ne demande rien avant deux heures d’usage', async () => {
-    usage(SEUIL_MS - 1);
-    const { proposerLaNote } = await import('./natif');
-    await proposerLaNote();
-    expect(demander).not.toHaveBeenCalled();
-    expect(lireEtat().demande).toBeNull();
-  });
-
-  it('demande une fois le seuil passé, et note la demande avec la version majeure', async () => {
-    usage(SEUIL_MS);
+  it('demande dès la première fois, et note la demande avec la version majeure', async () => {
     const { proposerLaNote } = await import('./natif');
     await proposerLaNote();
     expect(demander).toHaveBeenCalledTimes(1);
@@ -50,7 +38,6 @@ describe('proposerLaNote', () => {
   });
 
   it('ne redemande pas tout de suite', async () => {
-    usage(SEUIL_MS);
     const { proposerLaNote } = await import('./natif');
     await proposerLaNote();
     await proposerLaNote();
@@ -58,7 +45,6 @@ describe('proposerLaNote', () => {
   });
 
   it('se tait si le greffon manque, sans jeter', async () => {
-    usage(SEUIL_MS);
     demander.mockRejectedValueOnce(new Error('méthode inconnue'));
     const { proposerLaNote } = await import('./natif');
     await expect(proposerLaNote()).resolves.toBeUndefined();

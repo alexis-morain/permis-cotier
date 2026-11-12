@@ -1,15 +1,5 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import {
-  CLE_EVALUATION,
-  DELAI_JOURS,
-  PLAFOND_MS,
-  SEUIL_MS,
-  ajouterUsage,
-  lireEtat,
-  marquerDemandee,
-  noteDue,
-  suivreLUsage,
-} from './evaluation';
+import { describe, it, expect } from 'vitest';
+import { CLE_EVALUATION, DELAI_JOURS, lireEtat, marquerDemandee, noteDue } from './evaluation';
 import type { Stockage } from './stockage';
 
 function memoire(): Stockage & { valeurs: Map<string, string> } {
@@ -22,50 +12,23 @@ function memoire(): Stockage & { valeurs: Map<string, string> } {
   };
 }
 
-const HEURE = 3_600_000;
-
-describe('le temps d’usage', () => {
-  it('part de zéro', () => {
-    expect(lireEtat(memoire())).toEqual({ actifMs: 0, jusqua: 0, demande: null });
+describe('l’état rangé', () => {
+  it('part de rien', () => {
+    expect(lireEtat(memoire())).toEqual({ demande: null });
   });
 
-  it('cumule les intervalles successifs', () => {
+  it('lit l’état laissé par la 1.0.12, temps d’usage compris, sans s’en servir', () => {
     const s = memoire();
-    ajouterUsage(1000, 11_000, s);
-    ajouterUsage(11_000, 21_000, s);
-    expect(lireEtat(s).actifMs).toBe(20_000);
+    s.setItem(CLE_EVALUATION, JSON.stringify({ actifMs: 5, jusqua: 9, demande: { jour: '2026-11-11', majeure: 1 } }));
+    expect(lireEtat(s)).toEqual({ demande: { jour: '2026-11-11', majeure: 1 } });
   });
 
-  it('ne compte pas deux fois le même temps vu par deux webviews', () => {
-    const s = memoire();
-    ajouterUsage(0, 10_000, s);
-    ajouterUsage(0, 10_000, s);
-    ajouterUsage(5_000, 12_000, s);
-    expect(lireEtat(s).actifMs).toBe(12_000);
-  });
-
-  it('plafonne un intervalle trop long : une app suspendue n’a pas été utilisée', () => {
-    const s = memoire();
-    ajouterUsage(0, 10 * HEURE, s);
-    expect(lireEtat(s).actifMs).toBe(PLAFOND_MS);
-  });
-
-  it('ignore un intervalle nul, négatif ou illisible', () => {
-    const s = memoire();
-    ajouterUsage(10, 10, s);
-    ajouterUsage(10, 5, s);
-    ajouterUsage(NaN, 5, s);
-    expect(lireEtat(s).actifMs).toBe(0);
-  });
-
-  it('repart de zéro devant un stockage abîmé', () => {
+  it('repart de rien devant un stockage abîmé', () => {
     const s = memoire();
     s.setItem(CLE_EVALUATION, '{pas du json');
-    expect(lireEtat(s).actifMs).toBe(0);
-    s.setItem(CLE_EVALUATION, JSON.stringify({ actifMs: 'beaucoup', demande: { jour: 3 } }));
-    expect(lireEtat(s)).toEqual({ actifMs: 0, jusqua: 0, demande: null });
-    s.setItem(CLE_EVALUATION, JSON.stringify({ actifMs: -5 }));
-    expect(lireEtat(s).actifMs).toBe(0);
+    expect(lireEtat(s)).toEqual({ demande: null });
+    s.setItem(CLE_EVALUATION, JSON.stringify({ demande: { jour: 3 } }));
+    expect(lireEtat(s)).toEqual({ demande: null });
   });
 
   it('ne casse pas sans stockage', () => {
@@ -74,31 +37,28 @@ describe('le temps d’usage', () => {
       setItem: () => { throw new Error('non'); },
       removeItem: () => { throw new Error('non'); },
     };
-    expect(() => ajouterUsage(0, 1000, casse)).not.toThrow();
-    expect(lireEtat(casse).actifMs).toBe(0);
+    expect(() => marquerDemandee('2026-11-11', 1, casse)).not.toThrow();
+    expect(lireEtat(casse)).toEqual({ demande: null });
   });
 });
 
 describe('noteDue', () => {
-  const avecUsage = (actifMs: number, demande: { jour: string; majeure: number } | null = null) =>
-    ({ actifMs, jusqua: 0, demande });
+  const demandee = (jour: string, majeure = 1) => ({ demande: { jour, majeure } });
 
-  it('attend deux heures cumulées', () => {
-    expect(SEUIL_MS).toBe(2 * HEURE);
-    expect(noteDue(avecUsage(SEUIL_MS - 1), '2026-11-11', 1)).toBe(false);
-    expect(noteDue(avecUsage(SEUIL_MS), '2026-11-11', 1)).toBe(true);
+  it('demande dès la première occasion, sans temps d’usage à attendre', () => {
+    expect(noteDue({ demande: null }, '2026-11-12', 1)).toBe(true);
   });
 
   it('ne redemande pas avant 120 jours', () => {
     expect(DELAI_JOURS).toBe(120);
-    const etat = avecUsage(5 * HEURE, { jour: '2026-11-11', majeure: 1 });
+    const etat = demandee('2026-11-11');
     expect(noteDue(etat, '2026-11-12', 1)).toBe(false);
     expect(noteDue(etat, '2027-03-10', 1)).toBe(false); // 119 jours
     expect(noteDue(etat, '2027-03-11', 1)).toBe(true); // 120 jours
   });
 
   it('redemande dès qu’une version majeure nouvelle sort', () => {
-    const etat = avecUsage(5 * HEURE, { jour: '2026-11-11', majeure: 1 });
+    const etat = demandee('2026-11-11');
     expect(noteDue(etat, '2026-11-20', 2)).toBe(true);
     expect(noteDue(etat, '2026-11-20', 1)).toBe(false);
     // Une version plus ancienne que celle de la demande ne redemande pas.
@@ -106,66 +66,14 @@ describe('noteDue', () => {
   });
 
   it('ne redemande pas sur une date rangée illisible, plutôt que de harceler', () => {
-    const etat = avecUsage(5 * HEURE, { jour: 'hier', majeure: 1 });
-    expect(noteDue(etat, '2027-12-12', 1)).toBe(false);
+    expect(noteDue(demandee('hier'), '2027-12-12', 1)).toBe(false);
   });
 });
 
 describe('marquerDemandee', () => {
-  it('range le jour et la version, et garde le temps d’usage', () => {
+  it('range le jour et la version', () => {
     const s = memoire();
-    ajouterUsage(0, 20_000, s);
     marquerDemandee('2026-11-11', 1, s);
-    const etat = lireEtat(s);
-    expect(etat.demande).toEqual({ jour: '2026-11-11', majeure: 1 });
-    expect(etat.actifMs).toBe(20_000);
-  });
-});
-
-describe('suivreLUsage', () => {
-  afterEach(() => vi.useRealTimers());
-
-  function decor(visible = true) {
-    let etat: 'visible' | 'hidden' = visible ? 'visible' : 'hidden';
-    const ecouteurs = new Map<string, () => void>();
-    const doc = {
-      get visibilityState() { return etat; },
-      addEventListener: (n: 'visibilitychange', f: () => void) => void ecouteurs.set(n, f),
-      removeEventListener: (n: 'visibilitychange') => void ecouteurs.delete(n),
-    };
-    return {
-      doc,
-      masquer: () => { etat = 'hidden'; ecouteurs.get('visibilitychange')?.(); },
-      montrer: () => { etat = 'visible'; ecouteurs.get('visibilitychange')?.(); },
-    };
-  }
-
-  it('compte le temps où la page est visible, pas celui où elle est cachée', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(1_000_000);
-    const s = memoire();
-    const d = decor();
-    const arreter = suivreLUsage(d.doc, s, 10_000);
-    vi.advanceTimersByTime(30_000);
-    expect(lireEtat(s).actifMs).toBe(30_000);
-    vi.advanceTimersByTime(5_000);
-    d.masquer(); // 5 s de plus comptées au moment de cacher
-    vi.advanceTimersByTime(600_000);
-    expect(lireEtat(s).actifMs).toBe(35_000);
-    d.montrer();
-    vi.advanceTimersByTime(15_000);
-    expect(lireEtat(s).actifMs).toBe(50_000);
-    arreter();
-    vi.advanceTimersByTime(60_000);
-    expect(lireEtat(s).actifMs).toBe(50_000);
-  });
-
-  it('ne compte rien si la page démarre cachée', () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(1_000_000);
-    const s = memoire();
-    suivreLUsage(decor(false).doc, s, 10_000);
-    vi.advanceTimersByTime(60_000);
-    expect(lireEtat(s).actifMs).toBe(0);
+    expect(lireEtat(s).demande).toEqual({ jour: '2026-11-11', majeure: 1 });
   });
 });

@@ -10,8 +10,8 @@ import UIKit
 /// personne a coupé les demandes dans les Réglages, jamais en TestFlight. Le
 /// greffon résout donc toujours, fenêtre vue ou non.
 ///
-/// Le web ne l'appelle qu'à un bon moment, après deux heures d'usage cumulé
-/// et à intervalle d'au moins 120 jours (`proposerLaNote` dans
+/// Le web ne l'appelle qu'au verdict d'un examen blanc réussi, et à intervalle
+/// d'au moins 120 jours (`proposerLaNote` dans
 /// `src/lib/natif.ts`, `src/lib/evaluation.ts`). La même API vaut sur iPhone,
 /// iPad et Mac Catalyst (disponible depuis iOS 14 et Mac Catalyst 14) : la
 /// cible est iOS 16, aucun repli n'est nécessaire.
