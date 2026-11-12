@@ -281,6 +281,12 @@ html[data-app] .fiche__details summary::after {
 html[data-app] .fiche__details[open] summary::after { transform: translateY(0.15rem) rotate(225deg); }
 html[data-app] .fiche__details p { margin: 0 0 0.75rem; }
 
+/* Ce qui suit un îlot `client:only` attend qu'il soit monté. Rendu au
+   serveur, « L'app » s'affichait en haut de la Fiche, puis l'îlot arrivait
+   au-dessus et la poussait d'un écran : un saut à chaque retour sur la Fiche.
+   Vide, l'îlot n'a encore rien rendu. */
+html[data-app] .page:has(> astro-island:empty) ~ section { display: none; }
+
 /* La section « L'app » : ce que le pied de page du site disait partout. */
 html[data-app] .lapp { margin-top: 1rem; }
 html[data-app] .lapp h2 { margin: 0 0 0.5rem; }

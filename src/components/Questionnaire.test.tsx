@@ -8,6 +8,7 @@ import { jourPlus } from '../lib/jour';
 beforeEach(() => {
   localStorage.clear();
   window.scrollTo = vi.fn();
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
 });
 afterEach(() => cleanup());
 
@@ -16,6 +17,15 @@ function continuer() {
 }
 
 describe('questionnaire de départ', () => {
+  it('remonte sec en haut à chaque écran, sans glisser', () => {
+    render(<Questionnaire totalQuestions={483} />);
+    fireEvent.click(screen.getByRole('button', { name: /famille/ }));
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 400 });
+    continuer();
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+    expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1 }));
+  });
+
   it('commence par la raison, et l’écrit dès la case cochée', () => {
     render(<Questionnaire totalQuestions={483} />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('Pourquoi');

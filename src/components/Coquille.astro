@@ -43,6 +43,14 @@ import { ClientRouter } from 'astro:transitions';
   import { armerLesRappelsSurLaDate, basculerVersLOnglet, ongletVise, ouvrirDehors } from '../lib/natif';
   import { accorderBarreEtatALaPage } from '../lib/apparence';
   import { annoncerSiLaProgressionAChange } from '../lib/page';
+  import { aujourdhui, charger } from '../lib/progression';
+  import { poserLaListe } from './entrainement-app';
+
+  // Le script d'un écran ne tourne, à sa première visite, qu'après la capture
+  // du nouvel écran : « Tes erreurs », posé par lui, arrivait pendant le fondu
+  // et poussait toute la liste. La coquille est déjà là : elle la pose dès
+  // l'échange. Ailleurs, `poserLaListe` ne trouve pas la liste et ne fait rien.
+  document.addEventListener('astro:after-swap', () => poserLaListe(document, charger(), aujourdhui()));
 
   // Un script de module ne s'exécute qu'une fois par document, et le routeur
   // garde le document d'un écran à l'autre : les deux écouteurs ci-dessous
@@ -104,9 +112,14 @@ import { ClientRouter } from 'astro:transitions';
   // le pas à pas. Le routeur remplace les attributs de <html> à chaque
   // navigation : la classe tombe en quittant une leçon, et doit revenir à
   // chaque leçon, quel que soit le chemin pris pour y arriver.
-  document.addEventListener('astro:page-load', () => {
+  // Dès l'échange, avant que l'écran ne soit capturé : posée au chargement
+  // seulement, la leçon entrait avec tous ses écrans dépliés, puis se
+  // repliait pendant le fondu. `astro:page-load` couvre le premier chargement.
+  const marquerLaLecon = () => {
     if (document.querySelector('.lecon')) document.documentElement.classList.add('js');
-  });
+  };
+  document.addEventListener('astro:after-swap', marquerLaLecon);
+  document.addEventListener('astro:page-load', marquerLaLecon);
 
   // Un onglet qui revient à l'écran annonce la progression écrite ailleurs ;
   // les îlots de la racine la relisent (`surProgressionChangee`).

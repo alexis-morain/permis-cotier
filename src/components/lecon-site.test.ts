@@ -202,7 +202,48 @@ describe('l’écran de leçon', () => {
     cliquer('Continuer');
     vi.runAllTimers();
     expect(document.activeElement).toBe(courant());
-    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+  });
+
+  // Viser le haut de la leçon faisait descendre une page déjà en haut, et
+  // remonter une page lue jusqu'en bas par un saut puis une glissade.
+  describe('le défilement d’un écran à l’autre', () => {
+    /** La page défilée à `y`, la leçon commençant à `haut` px du haut de la page. */
+    function poser(y: number, haut: number) {
+      Object.defineProperty(window, 'scrollY', { configurable: true, value: y });
+      document.querySelector<HTMLElement>('.lecon')!.getBoundingClientRect = () => ({ top: haut - y }) as DOMRect;
+    }
+
+    it('remonte sec, sans glisser, au haut de la leçon quand on l’a lue jusqu’en bas', () => {
+      monter(ecrite);
+      poser(669, 158);
+      cliquer('Continuer');
+      expect(window.scrollTo).toHaveBeenCalledTimes(1);
+      expect(window.scrollTo).toHaveBeenCalledWith(0, 142);
+      vi.runAllTimers();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+      expect(window.scrollTo).toHaveBeenCalledTimes(1);
+    });
+
+    it('ne descend pas une page déjà en haut', () => {
+      monter(ecrite);
+      poser(0, 158);
+      cliquer('Continuer');
+      vi.runAllTimers();
+      expect(window.scrollTo).not.toHaveBeenCalled();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('remonte aussi à la question suivante de la vérification', () => {
+      monter(ecrite);
+      allerALaVerification();
+      fireEvent.click(document.querySelector('.ecran--verification .proposition')!);
+      cliquer('Valider');
+      vi.runAllTimers();
+      vi.mocked(window.scrollTo).mockClear();
+      poser(900, 158);
+      cliquer('Question suivante');
+      expect(window.scrollTo).toHaveBeenCalledWith(0, 142);
+    });
   });
 
   it('annonce la vérification sur le bouton du dernier écran de contenu', () => {

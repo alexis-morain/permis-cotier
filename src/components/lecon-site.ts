@@ -27,6 +27,7 @@ import type { QuestionAffichable } from '../lib/affichable';
 import { aujourdhui, charger, enregistrerReponse, sauvegarder, terminerLecon } from '../lib/progression';
 import { evenement } from '../lib/mesure';
 import { douceur } from '../lib/douceur';
+import { defilerSec, remonterAuBloc } from '../lib/defilement';
 import { cheminRetour, libelleRetour } from '../lib/retour';
 import { graineDeSession, lettreAffichee, melangerPropositions } from '../lib/melange';
 import { POUR_APP } from '../lib/cible';
@@ -142,6 +143,7 @@ function monterVerification(
   conteneur: HTMLElement,
   questions: readonly QuestionAffichable[],
   onFin: (score: Score) => void,
+  onQuestion: () => void,
 ): { reprendre: () => void } {
   let index = 0;
   let selection: string[] = [];
@@ -285,6 +287,7 @@ function monterVerification(
     selection = [];
     corrigee = false;
     afficher();
+    onQuestion();
   };
 
   afficher();
@@ -372,13 +375,26 @@ export function monterLecon(doc: Document = document): void {
 
   const courant = (): HTMLElement | null => (index === derniere ? fin : (sections[index] ?? null));
 
+  /**
+   * Après un changement d'écran, la page remonte sec, dans la même image :
+   * le fondu d'entrée de l'écran fait la transition (`lib/defilement.ts`).
+   * Dans l'app, en haut de l'écran : l'en-tête de la leçon colle sous
+   * l'heure, et viser le haut du bloc le faisait passer sur le titre. Sur le
+   * site, au haut de la leçon. Jamais vers le bas.
+   */
+  const remonter = () => {
+    if (POUR_APP) defilerSec(0);
+    else remonterAuBloc(racine, 16);
+  };
+
   const aller = (i: number) => {
     index = i;
     rendre();
     finir();
+    if (pasAPas) remonter();
     window.setTimeout(() => {
-      const cible = pasAPas ? racine : courant();
-      cible?.scrollIntoView({ block: 'start', behavior: douceur() });
+      // En lecture continue, tout est à la suite : on mène à l'écran visé.
+      if (!pasAPas) courant()?.scrollIntoView({ block: 'start', behavior: douceur() });
       courant()?.focus({ preventScroll: true });
     }, 0);
   };
@@ -409,7 +425,7 @@ export function monterLecon(doc: Document = document): void {
         return monterVerification(section, questions, (s) => {
           score = s;
           aller(derniere);
-        });
+        }, () => remonter());
       })()
     : null;
 

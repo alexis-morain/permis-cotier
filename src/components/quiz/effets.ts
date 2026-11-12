@@ -22,6 +22,7 @@ import {
 } from '../../lib/progression';
 import { evenement } from '../../lib/mesure';
 import { douceur } from '../../lib/douceur';
+import { defilerSec } from '../../lib/defilement';
 import { POUR_APP } from '../../lib/cible';
 import { modeConcentration, vibrer } from '../../lib/natif';
 import { rangDeLaTouche } from '../../lib/melange';
@@ -273,7 +274,9 @@ export function useVerdictEnVue(session: Session, verdict: MutableRefObject<HTML
 
   useEffect(() => {
     if (session.phase !== 'resultat') return;
-    window.scrollTo({ top: 0, behavior: douceur() });
+    // Sec : l'écran du score remplace la question, c'est son fondu qui fait
+    // la transition.
+    defilerSec(0);
   }, [session.phase]);
 }
 
