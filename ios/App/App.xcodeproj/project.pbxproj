@@ -16,6 +16,7 @@
 		A1B2C3D40000000000000R12 /* RouteurDuSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000R11 /* RouteurDuSite.swift */; };
 		A1B2C3D40000000000000E42 /* EcranPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000E41 /* EcranPlugin.swift */; };
 		A1B2C3D40000000000000F52 /* SonPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000F51 /* SonPlugin.swift */; };
+		A1B2C3D40000000000000A62 /* NotePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000A61 /* NotePlugin.swift */; };
 		A1B2C3D40000000000000M22 /* GreffonsMuets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000M21 /* GreffonsMuets.swift */; };
 		A1B2C3D40000000000000M32 /* MenusMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000M31 /* MenusMac.swift */; };
 		A1B2C3D40000000000000F54 /* Sons in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000F53 /* Sons */; };
@@ -36,6 +37,7 @@
 		A1B2C3D40000000000000R11 /* RouteurDuSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteurDuSite.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000E41 /* EcranPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcranPlugin.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000F51 /* SonPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SonPlugin.swift; sourceTree = "<group>"; };
+		A1B2C3D40000000000000A61 /* NotePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePlugin.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000M21 /* GreffonsMuets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreffonsMuets.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000M31 /* MenusMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenusMac.swift; sourceTree = "<group>"; };
 		A1B2C3D40000000000000M11 /* App-Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "App-Mac.entitlements"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				A1B2C3D40000000000000R11 /* RouteurDuSite.swift */,
 				A1B2C3D40000000000000E41 /* EcranPlugin.swift */,
 				A1B2C3D40000000000000F51 /* SonPlugin.swift */,
+				A1B2C3D40000000000000A61 /* NotePlugin.swift */,
 				A1B2C3D40000000000000M21 /* GreffonsMuets.swift */,
 				A1B2C3D40000000000000M31 /* MenusMac.swift */,
 				A1B2C3D40000000000000F53 /* Sons */,
@@ -192,6 +195,7 @@
 				A1B2C3D40000000000000R12 /* RouteurDuSite.swift in Sources */,
 				A1B2C3D40000000000000E42 /* EcranPlugin.swift in Sources */,
 				A1B2C3D40000000000000F52 /* SonPlugin.swift in Sources */,
+				A1B2C3D40000000000000A62 /* NotePlugin.swift in Sources */,
 				A1B2C3D40000000000000M22 /* GreffonsMuets.swift in Sources */,
 				A1B2C3D40000000000000M32 /* MenusMac.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,

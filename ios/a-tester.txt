@@ -1,4 +1,14 @@
-Cette version corrige les sauts de page : en avançant dans une leçon, d’une question à l’autre et d’un écran à l’autre.
+Deux nouveautés : tu peux soutenir le projet depuis l’app, et les sauts de page sont corrigés (leçons, questions, passage d’un écran à l’autre).
+
+Ta fiche
+• Sous « L’app », une section « Soutenir le projet » dit que l’app est gratuite et open source, avec un lien vers le code sur GitHub (Safari intégré).
+• « Noter l’app sur l’App Store » ouvre l’application App Store sur la fenêtre d’avis. Elle ne marche pas depuis TestFlight tant que l’app n’est pas en vente avec cette fiche : regarde seulement que l’App Store s’ouvre.
+• « Donner un avis » ouvre un formulaire (note facultative, message). Le bouton prépare un brouillon dans Mail, à envoyer toi-même. Le message n’est jamais publié.
+• « Faire un don » ouvre la page Buy Me a Coffee dans Safari intégré.
+
+La fenêtre de note d’Apple
+• Après environ deux heures d’usage cumulé, la fenêtre « Vous aimez … ? » avec les étoiles peut apparaître une fois : à la fin d’une leçon, ou après un examen blanc réussi. Jamais en plein examen, jamais après un échec. Elle ne revient pas avant 120 jours.
+• Apple ne l’affiche pas en TestFlight : il n’y a rien à voir dans ce build. Vérifie seulement que rien ne plante en finissant une leçon et un examen blanc.
 
 Leçons
 • Ouvre une leçon, descends jusqu’en bas du texte, puis touche « Continuer ». L’écran suivant doit s’afficher d’un coup, en haut, titre visible sous l’en-tête. Avant, la page sautait puis glissait, et le titre restait caché sous l’en-tête.

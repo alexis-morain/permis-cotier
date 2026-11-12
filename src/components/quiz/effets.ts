@@ -24,7 +24,7 @@ import { evenement } from '../../lib/mesure';
 import { douceur } from '../../lib/douceur';
 import { defilerSec } from '../../lib/defilement';
 import { POUR_APP } from '../../lib/cible';
-import { modeConcentration, vibrer } from '../../lib/natif';
+import { modeConcentration, proposerLaNote, vibrer } from '../../lib/natif';
 import { rangDeLaTouche } from '../../lib/melange';
 import type { QuestionAffichable } from '../../lib/banque';
 import { gagnerAuGeste, type BadgeAnnonce } from '../../lib/badges-geste';
@@ -168,7 +168,11 @@ export function useFinEtMesureDeLaSerie({ session, mode, nomSerie, theme, notion
         // Après un clic, cet effet part avant que le navigateur peigne : la
         // vibration aurait devancé le verdict écrit. La frame suivante est
         // celle qui le peint.
-        frame = requestAnimationFrame(() => void vibrer(r.reussi ? 'reussi' : 'echoue'));
+        frame = requestAnimationFrame(() => {
+          void vibrer(r.reussi ? 'reussi' : 'echoue');
+          // La note ne se demande qu'après un examen réussi : jamais sur un échec.
+          if (r.reussi) void proposerLaNote();
+        });
       }
       evenement('examen-termine', {
         bonnes: r.bonnes,

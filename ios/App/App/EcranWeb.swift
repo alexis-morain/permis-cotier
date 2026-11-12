@@ -58,6 +58,8 @@ class EcranWeb: CAPBridgeViewController {
         bridge?.registerPluginInstance(EcranPlugin())
         // Les bruitages, en session audio ambiante : voir `SonPlugin`.
         bridge?.registerPluginInstance(SonPlugin())
+        // La fenêtre de note d'Apple, demandée par le web à un bon moment.
+        bridge?.registerPluginInstance(NotePlugin())
         #if targetEnvironment(macCatalyst)
         // Vibration et barre d'état : sans objet sur Mac (`GreffonsMuets`).
         bridge?.registerPluginInstance(VibrationMuettePlugin())

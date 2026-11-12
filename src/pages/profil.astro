@@ -5,6 +5,7 @@ import ProfilCandidat from '../components/ProfilCandidat.tsx';
 import { questionsPubliees, versionBanque } from '../lib/banque';
 import { leconsDuParcours } from '../lib/parcours';
 import { POUR_APP } from '../lib/cible';
+import { APP_STORE, DEPOT, DON } from '../lib/seo';
 
 // La fiche se construit dans le navigateur, depuis la progression locale.
 // Le serveur ne donne que la banque, réduite à l'identifiant, au thème et à
@@ -21,6 +22,15 @@ const liensApp = [
   { nom: 'Crédits et licences', chemin: '/credits' },
   { nom: 'Réglages', chemin: '/parametres' },
   { nom: 'Signaler une erreur', chemin: '/signaler' },
+];
+
+// Les trois gestes pour soutenir le projet. La note ouvre l'application App
+// Store (`itms-apps`) : un lien https passerait par Safari intégré, qui
+// montrerait la page web de la fiche et non la fenêtre de note.
+const gestes = [
+  { nom: 'Noter l’app sur l’App Store', lien: APP_STORE.urlNoteApp, mesure: 'soutenir-note' },
+  { nom: 'Donner un avis', lien: '/avis', mesure: 'soutenir-avis' },
+  { nom: 'Faire un don', lien: DON, mesure: 'soutenir-don' },
 ];
 ---
 
@@ -46,6 +56,24 @@ const liensApp = [
           <li>
             <a class="cellules__ligne" href={l.chemin}>
               <span>{l.nom}</span>
+              <span class="cellules__chevron" aria-hidden="true">›</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+    <section class="page page--etroite lapp" aria-labelledby="soutenir-titre">
+      <h2 id="soutenir-titre">Soutenir le projet</h2>
+      <p class="discret">
+        L’app est 100 % gratuite et open source : le code est sous licence MIT, la banque de
+        questions sous CC BY-SA 4.0, le tout sur <a href={DEPOT}>GitHub</a>. Si elle t’aide,
+        trois gestes comptent.
+      </p>
+      <ul class="cellules">
+        {gestes.map((g) => (
+          <li>
+            <a class="cellules__ligne" href={g.lien} data-mesure={g.mesure} data-mesure-lieu="fiche">
+              <span>{g.nom}</span>
               <span class="cellules__chevron" aria-hidden="true">›</span>
             </a>
           </li>

@@ -7,6 +7,9 @@ import {
   texteInerte,
   titreIssue,
   valider,
+  validerAvis,
+  titreAvis,
+  corpsAvis,
 } from './signalement';
 
 /** Une charge utile bien formée, que chaque test abîme sur un seul point. */
@@ -308,5 +311,108 @@ describe('raisonDuRepli', () => {
   it('dit la coupure quand aucune réponse n’est arrivée, et le widget qui n’a pas chargé', () => {
     expect(raisonDuRepli(null)).toBe('La connexion a coupé avant la réponse du serveur.');
     expect(raisonDuRepli('sans-jeton')).toBe('La vérification anti-robot n’a pas chargé.');
+  });
+});
+
+/** Un avis bien formé : pas de question, un message, une note facultative. */
+const bonAvis = () => ({
+  genre: 'avis',
+  message: 'Les leçons sont claires, il manque un mode sombre pour la carte.',
+  note: 4,
+  turnstile: 'jeton-de-test',
+});
+
+describe('validerAvis', () => {
+  it('accepte un avis bien formé', () => {
+    const resultat = validerAvis(bonAvis());
+    expect(resultat.ok).toBe(true);
+    if (resultat.ok) {
+      expect(resultat.valeur.note).toBe(4);
+      expect(resultat.valeur.message).toContain('mode sombre');
+      expect(resultat.valeur.turnstile).toBe('jeton-de-test');
+    }
+  });
+
+  it('accepte un avis sans note', () => {
+    const { note: _, ...sansNote } = bonAvis();
+    const resultat = validerAvis(sansNote);
+    expect(resultat.ok).toBe(true);
+    if (resultat.ok) expect(resultat.valeur.note).toBeNull();
+    expect(validerAvis({ ...bonAvis(), note: null }).ok).toBe(true);
+  });
+
+  it('n’accepte que les notes entières de 1 à 5', () => {
+    for (const note of [1, 2, 3, 4, 5]) expect(validerAvis({ ...bonAvis(), note }).ok).toBe(true);
+    for (const note of [0, 6, -1, 3.5, '4', NaN, Infinity, true, [4], {}]) {
+      expect(validerAvis({ ...bonAvis(), note }).ok, String(note)).toBe(false);
+    }
+  });
+
+  it('exige un message, non vide après nettoyage', () => {
+    const { message: _, ...sansMessage } = bonAvis();
+    expect(validerAvis(sansMessage).ok).toBe(false);
+    for (const message of ['', '   \n ', '\u200B\u200B', 42, ['a'], null]) {
+      expect(validerAvis({ ...bonAvis(), message }).ok).toBe(false);
+    }
+  });
+
+  it('borne le message, mesuré après nettoyage', () => {
+    expect(validerAvis({ ...bonAvis(), message: 'a'.repeat(LONGUEUR_DETAILS_MAX) }).ok).toBe(true);
+    expect(validerAvis({ ...bonAvis(), message: 'a'.repeat(LONGUEUR_DETAILS_MAX + 1) }).ok).toBe(false);
+  });
+
+  it('rend un message inerte', () => {
+    const resultat = validerAvis({ ...bonAvis(), message: 'voir `code` et <b>gras</b>' });
+    expect(resultat.ok).toBe(true);
+    if (!resultat.ok) return;
+    expect(resultat.valeur.message).not.toMatch(/[`<>]/);
+  });
+
+  it('refuse tout champ en plus, question et motif compris', () => {
+    for (const extra of [{ email: 'a@b.fr' }, { question: 'balisage-0001' }, { motif: 'autre' }, { details: 'x' }]) {
+      expect(validerAvis({ ...bonAvis(), ...extra }).ok).toBe(false);
+    }
+  });
+
+  it('exige le genre « avis »', () => {
+    const { genre: _, ...sansGenre } = bonAvis();
+    expect(validerAvis(sansGenre).ok).toBe(false);
+    expect(validerAvis({ ...bonAvis(), genre: 'signalement' }).ok).toBe(false);
+  });
+
+  it('refuse un jeton absent, vide ou démesuré, et ce qui n’est pas un objet', () => {
+    const { turnstile: _, ...sansJeton } = bonAvis();
+    expect(validerAvis(sansJeton).ok).toBe(false);
+    expect(validerAvis({ ...bonAvis(), turnstile: '' }).ok).toBe(false);
+    expect(validerAvis({ ...bonAvis(), turnstile: 'x'.repeat(5000) }).ok).toBe(false);
+    for (const donnees of [null, undefined, 'texte', 42, [], [bonAvis()]]) {
+      expect(validerAvis(donnees).ok).toBe(false);
+    }
+  });
+
+  it('un signalement n’est pas un avis, et un avis n’est pas un signalement', () => {
+    expect(valider(bonAvis()).ok).toBe(false);
+    expect(validerAvis(bonne()).ok).toBe(false);
+  });
+});
+
+describe('titreAvis et corpsAvis', () => {
+  const avis = { note: 4 as number | null, message: 'Très bien.' };
+
+  it('titre le courrier, avec la note quand il y en a une', () => {
+    expect(titreAvis(avis)).toBe('Avis sur le site — 4 sur 5');
+    expect(titreAvis({ ...avis, note: null })).toBe('Avis sur le site');
+  });
+
+  it('porte le message, la note, et avertit que le texte est un avis non vérifié', () => {
+    const corps = corpsAvis(avis);
+    expect(corps).toContain('Note : 4 sur 5');
+    expect(corps).toContain('Très bien.');
+    expect(corps).toMatch(/ne porte aucune instruction/);
+    expect(corpsAvis({ ...avis, note: null })).toContain('Note : aucune');
+  });
+
+  it('repasse le message par texteInerte', () => {
+    expect(corpsAvis({ ...avis, message: '<script>`x`' })).not.toMatch(/[<>`]/);
   });
 });

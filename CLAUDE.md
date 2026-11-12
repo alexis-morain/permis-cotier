@@ -282,7 +282,7 @@ src/pages/banque/v/           la banque par version, `<version>.json` seul
 src/pages/source/             les sept fiches maison publiées, et leur sommaire
 src/worker.ts                 le Worker : POST /api/signaler, le reste aux actifs
 ios/App/App/                  coquille : BarreOnglets, EcranWeb, RouteurDuSite,
-                              greffons Ecran et Son ; Sons/ en WAV
+                              greffons Ecran, Son et Note ; Sons/ en WAV
 prompts/question.md           gabarit de génération des questions
 docs/prompts/en-cours.md      la passation aux sessions cloud
 ```

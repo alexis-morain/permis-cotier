@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import type { QuestionAffichable } from '../../lib/banque';
-import { vibrer } from '../../lib/natif';
+import { proposerLaNote, vibrer } from '../../lib/natif';
 
 /**
  * Le geste de l'examen dans l'app : répondre, passer à la suite, lire le
@@ -13,6 +13,7 @@ import { vibrer } from '../../lib/natif';
 
 vi.mock('../../lib/natif', () => ({
   vibrer: vi.fn(async () => {}),
+  proposerLaNote: vi.fn(async () => {}),
   partager: vi.fn(async () => false),
   modeConcentration: vi.fn(async () => {}),
   surRetourAuPremierPlan: vi.fn(() => () => {}),
@@ -128,8 +129,24 @@ describe('lire le résultat', () => {
     // Le verdict est écrit, l'haptique attend la frame qui le peint.
     expect(document.querySelector('.resultat__verdict')?.textContent).toBe('Reçu. 0 erreur sur les 5 admises.');
     expect(vibrer).not.toHaveBeenCalledWith('reussi');
+    expect(proposerLaNote).not.toHaveBeenCalled();
     frames.splice(0).forEach((f) => f(0));
     expect(vibrer).toHaveBeenCalledWith('reussi');
+    // Un examen réussi est le bon moment pour proposer la note.
+    expect(proposerLaNote).toHaveBeenCalledTimes(1);
+  });
+
+  it('ne propose pas la note après un examen raté', () => {
+    const frames: FrameRequestCallback[] = [];
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((f) => frames.push(f));
+    vi.mocked(proposerLaNote).mockClear();
+    render(<Quiz mode="examen" questions={Array.from({ length: 6 }, (_, i) => question(`ecluses-000${i + 1}`))} />);
+    fireEvent.click(screen.getByRole('button', { name: /Commencer l’examen/ }));
+    // Six questions passées sans répondre : six erreurs, au-delà des cinq admises.
+    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByRole('button', { name: /^(Passer|Valider et passer)$/ }));
+    frames.splice(0).forEach((f) => f(0));
+    expect(vibrer).toHaveBeenCalledWith('echoue');
+    expect(proposerLaNote).not.toHaveBeenCalled();
   });
 
   it('fait entrer le score avec l’entrée commune, coupée sans mouvement', () => {
