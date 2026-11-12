@@ -56,6 +56,20 @@ describe('accueil de l’app, premier lancement', () => {
   });
 });
 
+describe('les fiches de révision sur l’accueil de l’app', () => {
+  it('sont une rangée d’« Ensuite » qui mène à la liste des fiches', () => {
+    afficher();
+    expect(lien(/Fiches de révision/)).toBe('/fiches-revision');
+    expect(document.querySelector('a[href="/fiches-revision"] .accueilApp__sous')?.textContent).toBe(
+      'Quatorze PDF à garder sur ton téléphone',
+    );
+  });
+  it('ne prennent pas le bouton jaune : la prochaine chose à faire reste seule', () => {
+    afficher();
+    expect([...document.querySelectorAll('.accueilApp a.bouton--principal')]).toHaveLength(1);
+  });
+});
+
 describe('les libellés de l’accueil', () => {
   it('disent un verbe et ce qu’ils ouvrent, comme la fiche pour les mêmes destinations', () => {
     afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
@@ -63,7 +77,7 @@ describe('les libellés de l’accueil', () => {
     const libelles = [...document.querySelectorAll('.accueilApp a.bouton, .accueilApp a.accueilApp__rangee')].map(
       (a) => (a.classList.contains('bouton') ? a : a.querySelector('.accueilApp__txt'))?.firstChild?.textContent,
     );
-    expect(libelles).toEqual(['Faire ma série du jour', 'Commencer le cours', 'Examen blanc', 'Ton épreuve']);
+    expect(libelles).toEqual(['Faire ma série du jour', 'Commencer le cours', 'Examen blanc', 'Ton épreuve', 'Fiches de révision']);
     expect(document.querySelector('a[href="/parametres"] .accueilApp__sous')?.textContent).toBe('Pose la date de ton épreuve');
   });
 });
@@ -195,13 +209,13 @@ describe('accueil de l’app, la prochaine chose à faire', () => {
   it('rien de dû, pas de date : le cours en tête, seul bouton jaune', () => {
     afficher();
     expect(boutons()).toEqual(['Commencer le cours']);
-    expect(ordre()).toEqual(['Marques latérales', 'À revoir aujourd’hui', 'Examen blanc', 'Ton épreuve']);
+    expect(ordre()).toEqual(['Marques latérales', 'À revoir aujourd’hui', 'Examen blanc', 'Ton épreuve', 'Fiches de révision']);
   });
 
   it('des questions dues : la série en tête, le cours redescend en rangée', () => {
     afficher(enregistrerReponse(etatInitial(), 'q1', false, '2026-09-25'));
     expect(boutons()).toEqual(['Faire ma série du jour']);
-    expect(ordre()).toEqual(['À revoir aujourd’hui', 'Commencer le cours', 'Examen blanc', 'Ton épreuve']);
+    expect(ordre()).toEqual(['À revoir aujourd’hui', 'Commencer le cours', 'Examen blanc', 'Ton épreuve', 'Fiches de révision']);
     expect(screen.getAllByRole('link', { name: /Faire ma série du jour/ })).toHaveLength(1);
     expect(lien(/^Commencer le cours/)).toBe('/cours/balisage/a');
   });
@@ -212,7 +226,7 @@ describe('accueil de l’app, la prochaine chose à faire', () => {
     afficher(e);
     expect(boutons()).toEqual(['Faire un examen blanc']);
     expect(screen.getAllByRole('link', { name: /Examen blanc|Faire un examen blanc/ })).toHaveLength(1);
-    expect(ordre()).toEqual(['Examen blanc', 'Commencer le cours', 'À revoir aujourd’hui', 'Ton épreuve']);
+    expect(ordre()).toEqual(['Examen blanc', 'Commencer le cours', 'À revoir aujourd’hui', 'Ton épreuve', 'Fiches de révision']);
     expect(lien(/Faire ma série du jour/)).toBe('/revoir');
   });
 

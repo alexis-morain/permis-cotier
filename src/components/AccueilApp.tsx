@@ -135,6 +135,15 @@ export default function AccueilApp({ lecons, ids }: Props) {
       }
       valeur={date.etat !== 'sansDate' && etat.dateExamen ? dateLisible(etat.dateExamen) : undefined}
     />,
+    // La liste des fiches reste dans le bundle ; ses PDF s'ouvrent sur le site,
+    // dans Safari intégré (voir `fiches-revision/index.astro`).
+    <Rangee
+      key="fiches"
+      href="/fiches-revision"
+      icone={ICONES.fiches}
+      titre="Fiches de révision"
+      sous="Quatorze PDF à garder sur ton téléphone"
+    />,
   ];
 
   return (
@@ -225,6 +234,9 @@ const ICONES = {
   ),
   examen: (
     <svg {...trait}><rect x="4" y="3" width="12" height="14" rx="2" /><path d="M7 7h6M7 10h6M7 13h3" /></svg>
+  ),
+  fiches: (
+    <svg {...trait}><path d="M6 2.5h6l3 3V17H6z" /><path d="M12 2.5V6h3M8.5 10h4M8.5 13h4" /></svg>
   ),
   date: (
     <svg {...trait}><circle cx="10" cy="10" r="7" /><path d="M10 6v4l3 2" /></svg>
