@@ -16,16 +16,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le paragraphe 1 de l'annexe II ne connaît que deux codes : la figure blanche sur fond
-  bleu vaut autorisation, la figure noire sur fond blanc bordé et barré de rouge vaut
-  interdiction. Le fond bleu est donc le signe de l'autorisation. Le piège tient à l'inversion
-  des deux codes, et au réflexe qui associe un panneau à une contrainte plutôt qu'à une
-  permission.
+  Il n'y a que deux codes : figure blanche sur fond bleu pour l'autorisation, figure noire
+  sur fond blanc bordé et barré de rouge pour l'interdiction. Le fond bleu signifie donc que
+  l'activité est autorisée. Piège : inverser les deux codes, ou associer un panneau à une
+  contrainte plutôt qu'à une permission.
 sources:
   - texte: Arrêté du 27 mars 1991, annexe II, paragraphe 1
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

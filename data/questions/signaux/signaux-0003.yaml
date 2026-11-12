@@ -20,16 +20,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 34 b) iii) précise que le feu utilisé pour ces signaux, s'il existe, est un
-  feu blanc visible sur tout l'horizon à une distance de cinq milles au moins, conforme
-  à l'annexe I. Les distracteurs proposent la valeur voisine de trois milles, une autre
-  couleur, et le secteur de 225° qui est celui du feu de tête de mât, pas de ce feu de
-  manœuvre.
+  Le feu des signaux lumineux de manœuvre, s'il existe, est un feu blanc visible sur tout
+  l'horizon à cinq milles au moins. Les distracteurs proposent la valeur voisine de trois
+  milles, une autre couleur, et le secteur de 225°, qui est celui du feu de tête de mât, pas
+  de ce feu de manœuvre.
 sources:
   - texte: RIPAM, règle 34 b) iii)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-11-11'

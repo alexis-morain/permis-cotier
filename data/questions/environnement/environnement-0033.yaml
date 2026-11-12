@@ -15,9 +15,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  Pour l'oursin, l'annexe I précise à chaque ligne que la taille se mesure piquants exclus.
-  On mesure le test, c'est-à-dire la coquille seule. Compter les piquants ferait passer
-  pour réglementaire un oursin trop petit.
+  La taille de l'oursin se mesure piquants exclus. On mesure le test, c'est-à-dire la
+  coquille seule. Compter les piquants ferait passer pour réglementaire un oursin trop
+  petit.
 sources:
   - texte: Arrêté du 26 octobre 2012, annexe I, mollusques
     ref: arrete-2012-10-26
@@ -25,4 +25,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

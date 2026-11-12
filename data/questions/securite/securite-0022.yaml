@@ -17,17 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 27 e) ii) réserve cette reproduction rigide du pavillon « A », d'au moins un
-  mètre de hauteur et visible sur tout l'horizon, au navire participant à des opérations
-  de plongée que ses dimensions empêchent de montrer tous les feux et marques prescrits.
-  Le paragraphe h) de la même règle écarte le contresens le plus grave : les signaux de
-  la règle 27 ne sont pas des signaux de détresse. Le déminage, lui, se signale par trois
-  feux verts ou trois boules.
+  Une reproduction rigide du pavillon « A », d'au moins un mètre de hauteur et visible sur
+  tout l'horizon, signale un navire en opérations de plongée que ses dimensions empêchent de
+  montrer tous les feux et marques prescrits. Ce n'est pas un signal de détresse. Le
+  déminage, lui, se signale par trois feux verts ou trois boules.
 sources:
   - texte: RIPAM, règle 27 e) ii)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

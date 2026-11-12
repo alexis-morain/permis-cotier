@@ -17,15 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article L. 945-4 punit de 22 500 euros d'amende le fait de pratiquer la pêche dans
-  une zone ou à une profondeur interdite. La profondeur est bien un critère du texte,
-  au même rang que la zone et la période, et rien n'y distingue le plongeur du bateau.
-  Avant de mettre à l'eau, on vérifie l'arrêté en vigueur sur sa façade.
+  Pratiquer la pêche à une profondeur interdite est puni de 22 500 euros d'amende. La
+  profondeur est un critère au même rang que la zone et la période, et rien ne distingue le
+  plongeur du bateau. Avant de mettre à l'eau, vérifie l'arrêté en vigueur sur ta façade.
 sources:
   - texte: Code rural et de la pêche maritime, article L. 945-4, I, 3°
     ref: peche-loisir
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -18,16 +18,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le point 3 de l'article 240-2.03 impose un ou plusieurs extincteurs portatifs et renvoie
-  au manuel du propriétaire pour le type, l'emplacement et la signalisation. L'annexe
-  240-A3 ne s'applique qu'à défaut de manuel, elle vient donc en second. Le piège est
-  d'inverser cet ordre ou de croire que le chef de bord choisit librement, alors que la
-  règle lui impose une référence.
+  Le type, l'emplacement et la signalisation de l'extincteur se lisent dans le manuel du
+  propriétaire. À défaut de manuel, la réglementation donne des règles par défaut, qui
+  viennent donc en second. Piège : inverser cet ordre, ou croire que le chef de bord choisit
+  librement.
 sources:
   - texte: Division 240, article 240-2.03, point 3
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

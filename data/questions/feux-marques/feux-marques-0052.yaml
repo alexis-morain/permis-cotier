@@ -16,15 +16,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 25 c) autorise un voilier à ajouter en tête de mât un feu rouge au-dessus d'un
-  feu vert, visibles sur tout l'horizon, mais précise que ces feux ne doivent pas être
-  montrés en même temps que le fanal unique du paragraphe b). Ensemble, ils rendraient
-  le voilier illisible.
+  Un voilier peut ajouter en tête de mât un feu rouge au-dessus d'un feu vert, visibles sur
+  tout l'horizon, mais pas en même temps que le fanal unique. Ensemble, ils rendraient le
+  voilier illisible.
 sources:
   - texte: RIPAM, règle 25 c)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

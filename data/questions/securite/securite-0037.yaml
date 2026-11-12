@@ -20,9 +20,9 @@ reponses:
   - a
   - b
 explication: >-
-  L'article 240-2.04 exige les cartes marines officielles couvrant la zone, tenues à jour,
-  le RIPAM ou son résumé, éventuellement en plaquette autocollante, et un document décrivant
-  le balisage de la zone. Le journal de bord et le livre des feux n'arrivent qu'avec l'armement
+  L'armement côtier exige les cartes marines officielles de la zone, tenues à jour, le RIPAM
+  ou son résumé (une plaquette autocollante convient), et un document décrivant le balisage
+  de la zone. Le journal de bord et le livre des feux n'arrivent qu'avec l'armement
   semi-hauturier, à partir de six milles.
 sources:
   - texte: Division 240, article 240-2.04, points 6 à 8
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

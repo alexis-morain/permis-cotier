@@ -20,11 +20,10 @@ reponses:
   - a
   - b
 explication: >-
-  L'article 245-5.37, I, demande qu'un bateau équipé de toilettes comporte au moins l'un
-  des deux dispositifs : une rétention, ou un traitement des eaux usées. Les deux sont
-  admis, c'est un choix, pas un cumul. Si les réservoirs sont fixés à demeure, le même
-  alinéa exige en plus un raccord de vidange normalisé, pour que les installations de
-  réception à quai puissent s'y brancher.
+  Un bateau équipé de toilettes doit avoir au moins l'un des deux dispositifs : une
+  rétention ou un traitement des eaux usées. C'est un choix, pas un cumul. Si les réservoirs
+  sont fixés à demeure, il faut en plus un raccord de vidange normalisé, pour que les
+  installations de réception à quai puissent s'y brancher.
 sources:
   - texte: Division 245, article 245-5.37, I
     ref: division-245
@@ -32,4 +31,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

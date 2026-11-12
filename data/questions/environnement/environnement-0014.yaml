@@ -21,17 +21,17 @@ reponses:
   - a
   - b
 explication: >-
-  L'article L. 334-1 du code de l'environnement dresse la liste des aires marines
-  protégées : parcs nationaux et réserves naturelles ayant une partie maritime, arrêtés
-  de protection de biotope, parcs naturels marins, sites Natura 2000 en mer, et
-  plusieurs autres catégories. Le point commun est la protection du milieu. Les zones
-  de mouillages et les chenaux organisent la circulation et le stationnement des
-  bateaux : ce sont des outils de police portuaire, pas des aires protégées.
+  Les aires marines protégées comprennent les parcs nationaux et réserves naturelles ayant
+  une partie maritime, les arrêtés de protection de biotope, les parcs naturels marins, les
+  sites Natura 2000 en mer, et plusieurs autres catégories. Le point commun est la
+  protection du milieu. Les zones de mouillages et les chenaux organisent la circulation et
+  le stationnement des bateaux : ce sont des outils de police portuaire, pas des aires
+  protégées.
 sources:
   - texte: Code de l'environnement, article L. 334-1, 4° et 5°
     ref: code-environnement
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

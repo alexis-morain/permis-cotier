@@ -14,13 +14,30 @@ import { PROGRESSION_CHANGEE } from './vivant';
  *
  * Un seul point d'entrée pour les deux cas, pour qu'aucun script de page ne
  * doive connaître la cible.
+ *
+ * Mais `astro:page-load` part après la capture du nouvel écran : ce que le
+ * script y posait (la reprise d'un cours, « Tes erreurs ») arrivait pendant le
+ * fondu d'entrée et poussait la page. D'où `astro:after-swap`, qui part juste
+ * après l'échange du corps, avant que l'écran ne soit capturé ni peint.
+ * `astro:page-load` reste le filet : au premier chargement, qui n'a pas
+ * d'échange, et à la première visite d'un écran dont le module n'était pas
+ * encore chargé, et n'écoutait donc pas l'échange. Jamais deux fois pour un
+ * même écran.
  */
 export function quandLaPageEstPrete(faire: () => void): void {
   if (!POUR_APP) {
     faire();
     return;
   }
-  document.addEventListener('astro:page-load', () => faire());
+  let faitALEchange = false;
+  document.addEventListener('astro:after-swap', () => {
+    faitALEchange = true;
+    faire();
+  });
+  document.addEventListener('astro:page-load', () => {
+    if (!faitALEchange) faire();
+    faitALEchange = false;
+  });
 }
 
 /** Une miette du fil d'Ariane, telle que `Base.astro` la reçoit. */

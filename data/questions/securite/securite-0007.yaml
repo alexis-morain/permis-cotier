@@ -17,16 +17,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le point 7 de l'article 240-2.03 impose un moyen de connaître les heures et coefficients
-  de marée du jour et de la zone, puis précise que ce document n'est pas requis en Méditerranée,
-  où le marnage est négligeable. Toutes les autres lignes du matériel basique restent
-  dues, la Méditerranée ne dispensant de rien d'autre. La ligne de mouillage connaît bien
-  des dispenses, mais elles tiennent au navire, pas à la zone.
+  En Méditerranée, le moyen de connaître les heures et coefficients de marée n'est pas
+  requis, car le marnage y est négligeable. Tout le reste du matériel basique reste dû. La
+  ligne de mouillage connaît bien des dispenses, mais elles tiennent au navire, pas à la
+  zone.
 sources:
   - texte: Division 240, article 240-2.03, point 7
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

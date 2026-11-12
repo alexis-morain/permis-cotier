@@ -17,15 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le tableau du point 8 de l'article 240-2.01 n'ouvre aux annexes que la première tranche,
-  jusqu'à 300 mètres d'un abri, avec le matériel spécifique de l'article 240-2.09. Toutes
-  les tranches suivantes portent la mention « Navigation interdite ». Embarquer plus de
-  matériel ne rachète donc rien : la limite tient à l'embarcation, pas à son armement.
+  Une annexe ne peut naviguer que dans la première tranche, jusqu'à 300 mètres d'un abri,
+  avec son matériel spécifique. Au-delà, la navigation lui est interdite. Embarquer plus de
+  matériel ne rachète rien : la limite tient à l'embarcation, pas à son armement.
 sources:
   - texte: Division 240, article 240-2.01, point 8
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

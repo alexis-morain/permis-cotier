@@ -17,10 +17,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'annexe I de l'arrêté du 26 octobre 2012 fixe à 42 cm la taille minimale du bar commun
-  pour la pêche de loisir en mer du Nord, Manche et Atlantique. En dessous, le poisson
-  doit être remis à l'eau. Le piège est la valeur de 30 cm, qui est celle du bar en Méditerranée,
-  pas en Manche.
+  En mer du Nord, Manche et Atlantique, le bar commun se garde à partir de 42 cm en pêche de
+  loisir. En dessous, tu le remets à l'eau. Piège : la valeur de 30 cm est celle du bar en
+  Méditerranée, pas en Manche.
 sources:
   - texte: Arrêté du 26 octobre 2012, annexe I, I. Mer du Nord, Manche, Atlantique
     ref: arrete-2012-10-26
@@ -28,4 +27,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

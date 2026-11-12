@@ -17,11 +17,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  Pour les engins pneumatiques tractés, l'article 4.2 de l'arrêté de la Méditerranée exige
-  que le remorqueur dispose d'un système de largage rapide de la remorque, et que l'engin
-  comme la remorque soient de couleur vive. L'Atlantique et la Manche demandent la même
-  chose. Si la bouée se retourne, on largue tout de suite. Le rétroviseur n'est la condition
-  que du moniteur qui tracte seul un skieur.
+  Pour tracter un engin pneumatique, le bateau doit avoir un système de largage rapide de la
+  remorque, et l'engin comme la remorque doivent être de couleur vive. Si la bouée se
+  retourne, on largue tout de suite. Le rétroviseur ne concerne que le moniteur qui tracte
+  seul un skieur.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.2
     ref: fiche-ski-nautique
@@ -33,4 +32,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

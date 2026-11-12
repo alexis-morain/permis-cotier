@@ -19,10 +19,9 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'article 13 du décret garde valables les titres de conduite en mer délivrés avant lui.
-  La carte mer permet de piloter en eaux maritimes, de jour, un bateau de plaisance à moteur
-  d'une puissance inférieure ou égale à 37 kilowatts. Seule la carte mer dite « spéciale »
-  autorise aussi la conduite de nuit : c'est le piège de la première proposition.
+  La carte mer reste valable pour conduire en mer, de jour, un bateau de plaisance à moteur
+  de 37 kilowatts au plus. Seule la carte mer dite « spéciale » autorise aussi la conduite
+  de nuit : c'est le piège de la première proposition.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 13, I
     ref: decret-2007-1167
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

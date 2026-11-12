@@ -18,16 +18,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 24 a) iv) impose un feu de remorquage placé à la verticale au-dessus du feu
-  de poupe, en plus des deux feux de tête de mât superposés, des feux de côté et du feu
-  de poupe. Vue de l'arrière, la signature du remorqueur est donc ce couple de feux superposés
-  dans l'axe. La position « à l'endroit le plus visible » concerne la marque biconique
-  du paragraphe a) v), pas le feu.
+  Le feu de remorquage se place à la verticale au-dessus du feu de poupe, en plus des deux
+  feux de tête de mât superposés, des feux de côté et du feu de poupe. Vue de l'arrière, la
+  signature du remorqueur est ce couple de feux superposés dans l'axe. « À l'endroit le plus
+  visible » concerne la marque biconique, pas le feu.
 sources:
   - texte: RIPAM, règle 24 a) iv)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

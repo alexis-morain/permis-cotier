@@ -16,11 +16,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  Une fausse alerte engage des moyens humains et matériels qui manquent alors ailleurs,
-  là où quelqu'un est vraiment en danger. C'est pourquoi l'annexe IV du RIPAM interdit
-  tout signal de détresse hors d'un cas de détresse, pourquoi une alerte partie par
-  erreur s'annule aussitôt sur le canal 16, et pourquoi le programme de l'examen demande
-  d'en mesurer les conséquences.
+  Une fausse alerte engage des moyens humains et matériels qui manquent alors ailleurs, là
+  où quelqu'un est vraiment en danger. C'est pourquoi tout signal de détresse hors détresse
+  est interdit, et pourquoi une alerte partie par erreur s'annule aussitôt sur le canal 16.
 sources:
   - texte: 'Fiche VHF : voies, procédures d''appel et SMDSM'
     ref: fiche-vhf
@@ -30,4 +28,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

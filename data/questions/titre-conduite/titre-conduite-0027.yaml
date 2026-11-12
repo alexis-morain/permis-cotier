@@ -19,9 +19,8 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 6.1 de l'arrêté liste les pièces du dossier d'inscription à l'option côtière.
-  Il y range un certificat médical de moins de six mois, établi selon un modèle défini. Seul
-  le titulaire de la carte mer en est dispensé.
+  Le dossier d'inscription à l'option côtière comprend un certificat médical de moins de six
+  mois, établi selon un modèle défini. Seul le titulaire de la carte mer en est dispensé.
 sources:
   - texte: Arrêté du 28 septembre 2007, article 6, 6.1 d)
     ref: arrete-2007-09-28
@@ -29,4 +28,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

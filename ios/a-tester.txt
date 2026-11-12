@@ -9,3 +9,19 @@ Ta fiche
 La fenêtre de note d’Apple
 • Après environ deux heures d’usage cumulé, la fenêtre « Vous aimez … ? » avec les étoiles peut apparaître une fois : à la fin d’une leçon, ou après un examen blanc réussi. Jamais en plein examen, jamais après un échec. Elle ne revient pas avant 120 jours.
 • Apple ne l’affiche pas en TestFlight : il n’y a rien à voir dans ce build. Vérifie seulement que rien ne plante en finissant une leçon et un examen blanc.
+Cette version corrige les sauts de page : en avançant dans une leçon, d’une question à l’autre et d’un écran à l’autre.
+
+Leçons
+• Ouvre une leçon, descends jusqu’en bas du texte, puis touche « Continuer ». L’écran suivant doit s’afficher d’un coup, en haut, titre visible sous l’en-tête. Avant, la page sautait puis glissait, et le titre restait caché sous l’en-tête.
+• Depuis le haut d’un écran, touche « Continuer » : la page ne doit pas descendre.
+• Même chose dans la vérification de fin de leçon, à « Question suivante ».
+
+Entraînement et examen blanc
+• Réponds à une question, descends, puis touche « Question suivante » : la question suivante s’affiche en haut, sans glissade.
+• Sur une question avec image (Balisage, Feux et marques), les propositions ne doivent plus bouger quand l’image arrive. L’image a maintenant toujours la même hauteur.
+• À la fin d’une série, le résultat s’affiche en haut, sans glissade.
+
+D’un écran à l’autre
+• Onglet Entraînement, après avoir raté quelques questions : « Tes erreurs » doit être là dès l’arrivée sur l’écran, sans pousser la liste.
+• Ta fiche : rien ne doit bouger à l’ouverture.
+• Avec VoiceOver, à chaque nouvelle question, le focus va toujours sur l’énoncé.

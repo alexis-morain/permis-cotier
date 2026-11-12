@@ -15,10 +15,10 @@ propositions:
 reponses:
   - b
 explication: >-
-  Le paragraphe 7.1 appelle « danger nouveau » une obstruction découverte récemment et pas
-  encore indiquée dans les documents nautiques. Il y range les obstructions naturelles, comme
-  les bancs de sable ou les écueils, autant que les dangers dus à l'action humaine, comme les
-  épaves. Le nom de la bouée d'épave en cas d'urgence ne limite pas la notion aux épaves.
+  Un danger nouveau est une obstruction découverte récemment et pas encore indiquée dans les
+  documents nautiques. Elle peut être naturelle, comme un banc de sable ou un écueil, autant
+  que due à l'action humaine, comme une épave. Le nom de la bouée d'épave en cas d'urgence
+  ne limite pas la notion aux épaves.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 7.1
     ref: arrete-2017-11-30
@@ -26,4 +26,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-11'

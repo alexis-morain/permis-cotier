@@ -17,14 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  La navigation des annexes est limitée à 300 mètres d'un abri, et le navire porteur est
-  considéré comme un abri. Au-delà de 300 mètres d'un abri côtier, l'annexe embarque un
-  moyen de repérage lumineux et autant d'EIF de niveau 50 que de personnes.
+  Une annexe ne s'éloigne pas à plus de 300 mètres d'un abri, et le navire porteur compte
+  comme un abri. Au-delà de 300 mètres d'un abri côtier, elle embarque un moyen de repérage
+  lumineux et autant d'EIF de niveau 50 que de personnes.
 sources:
   - texte: Division 240, article 240-2.09
     ref: division-240
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

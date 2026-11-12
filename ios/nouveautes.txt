@@ -1,9 +1,6 @@
 Soutenir le projet : une section dans Ta fiche rappelle que l’app est gratuite et open source, et propose de la noter, de donner un avis ou de faire un don.
 
 Nouveau : une fiche de révision par chapitre, avec schémas et tableaux, à lire dans l’app ou à ouvrir en PDF pour l’imprimer ou la garder.
+Plus de sauts de page : dans une leçon, d’une question à l’autre et d’un écran à l’autre, l’écran suivant s’affiche en haut, sans à-coup ni glissade.
 
-L’app s’ouvre sur iPad. Sur grand écran, les cinq rubriques sont aussi dans une barre latérale (iPadOS 18 ou plus), la page tient dans une colonne confortable, et l’app suit toutes les orientations et le multitâche : Split View, Slide Over, fenêtres.
-
-Avec un clavier, les flèches passent d’une proposition à l’autre, et Échap propose d’arrêter l’examen blanc.
-
-Sur iPhone, rien ne change. Quelques textes parlent désormais de « ton appareil » plutôt que de « ton téléphone ».
+Les images des questions gardent toujours la même place : les propositions ne bougent plus quand l’image arrive.

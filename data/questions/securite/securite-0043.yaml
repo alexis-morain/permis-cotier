@@ -15,11 +15,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'annexe 240-A3, qui fixe les extincteurs des navires exclus du marquage CE, interdit
-  d'utiliser un agent extincteur contenant du Halon 1211, 1301, 2402 ou du perfluorocarbone.
-  Les extincteurs admis sont marqués barre à roue, MMF ou NF EN 3, et leur durée de vie est
-  fixée par le fabricant. Sur un navire marqué CE, c'est le manuel du propriétaire qui dit
-  lesquels embarquer.
+  Sur un navire exclu du marquage CE, les agents extincteurs au Halon 1211, 1301, 2402 ou au
+  perfluorocarbone sont interdits. Les extincteurs admis portent le marquage barre à roue,
+  MMF ou NF EN 3, et leur durée de vie est fixée par le fabricant. Sur un navire marqué CE,
+  c'est le manuel du propriétaire qui dit lesquels embarquer.
 sources:
   - texte: Division 240, annexe 240-A3, II. 1
     ref: division-240
@@ -27,4 +26,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

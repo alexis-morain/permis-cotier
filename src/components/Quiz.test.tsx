@@ -58,6 +58,7 @@ beforeEach(() => {
   localStorage.clear();
   Element.prototype.scrollIntoView = vi.fn();
   window.scrollTo = vi.fn();
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
 });
 
 afterEach(() => {
@@ -156,8 +157,43 @@ describe('correction en entraînement', () => {
     render(<Quiz mode="entrainement" questions={[question('ecluses-0001')]} theme="ecluses" />);
     fireEvent.click(screen.getByRole('button', { name: /Première proposition/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 700 });
     fireEvent.click(screen.getByRole('button', { name: 'Question suivante' }));
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    // Sec : un défilement doux finissait le trajet après le saut du
+    // navigateur, quand la page se raccourcit sous le score.
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+  });
+});
+
+describe('le défilement d’une question à l’autre', () => {
+  // Le focus sur l'énoncé faisait défiler le navigateur jusqu'au titre, puis
+  // la page se raccourcissait : un saut, puis une glissade.
+  function poser(y: number, haut: number) {
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: y });
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      return { top: this.classList.contains('jeu') ? haut - y : 0 } as DOMRect;
+    });
+  }
+
+  it('remonte sec au haut du jeu, et le focus ne fait pas défiler', () => {
+    const focus = vi.spyOn(HTMLElement.prototype, 'focus');
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'a' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    poser(800, 200);
+    focus.mockClear();
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 184);
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+  });
+
+  it('ne descend pas une page déjà en haut', () => {
+    poser(0, 200);
+    render(<Quiz mode="entrainement" questions={trois} theme="ecluses" />);
+    fireEvent.keyDown(document.body, { key: 'a' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    fireEvent.keyDown(document.body, { key: 'Enter' });
+    expect(window.scrollTo).not.toHaveBeenCalled();
   });
 });
 
