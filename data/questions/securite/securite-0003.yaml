@@ -18,16 +18,14 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 240-2.01, alinéa 6, impose aux enfants de 30 kg au maximum un EIF de niveau
-  de performance 100, dès lors que le bateau est soumis à l'emport d'un équipement individuel
-  de flottabilité. Le texte ajoute « quelle que soit la distance d'éloignement d'un abri
-  » : le niveau 50, suffisant pour un adulte près de la côte, ne convient donc jamais
-  pour cet enfant, et la distance ne change rien à l'exigence.
+  Un enfant de 30 kg au maximum doit porter un EIF de niveau 100, dès que le bateau est
+  soumis à l'emport d'un EIF, quelle que soit la distance d'éloignement d'un abri. Le niveau
+  50, suffisant pour un adulte près de la côte, ne convient donc jamais pour lui.
 sources:
   - texte: Division 240, article 240-2.01, alinéa 6
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

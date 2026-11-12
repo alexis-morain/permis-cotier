@@ -17,12 +17,11 @@ propositions:
 reponses:
   - a
 explication: >-
-  La règle 30 b) autorise un navire au mouillage de longueur inférieure à 50 mètres à
-  montrer un seul feu blanc visible sur tout l'horizon, à l'endroit le plus visible, au
-  lieu des deux feux du paragraphe a). Le piège vient des autres longueurs de la même
-  règle : 100 mètres est le seuil à partir duquel l'illumination des ponts devient obligatoire,
-  et 12 mètres celui en dessous duquel un navire échoué est dispensé des feux et marques
-  d'échouement, règle 30 f).
+  Un navire au mouillage de moins de 50 mètres peut montrer un seul feu blanc visible sur
+  tout l'horizon, à l'endroit le plus visible, au lieu de deux feux. Le piège vient des
+  autres longueurs : 100 mètres est le seuil à partir duquel l'illumination des ponts
+  devient obligatoire, et 12 mètres celui en dessous duquel un navire échoué est dispensé
+  des feux et marques d'échouement.
 sources:
   - texte: RIPAM, règle 30 b)
     ref: decret-77-733
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

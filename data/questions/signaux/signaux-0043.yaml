@@ -17,10 +17,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'annexe IV range parmi les signaux de détresse la fusée à parachute ou le feu à main
-  produisant une lumière rouge, ainsi que les fusées ou bombes projetant des étoiles rouges.
-  Le rouge est la couleur de la détresse, comme les trois feux rouges à main de l'armement
-  côtier, article 240-2.04.
+  La fusée à parachute et le feu à main de détresse produisent une lumière rouge, comme les
+  fusées ou bombes qui projettent des étoiles rouges. Le rouge est la couleur de la
+  détresse, comme les trois feux rouges à main de l'armement côtier.
 sources:
   - texte: RIPAM, annexe IV, 1 i)
     ref: decret-77-733
@@ -30,4 +29,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

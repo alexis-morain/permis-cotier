@@ -18,10 +18,10 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article L. 945-4 du code rural et de la pêche maritime punit de 22 500 euros d'amende le
-  fait de pêcher ou de détenir à bord des produits qui n'ont pas la taille, le calibre ou le
-  poids requis, au 15° de son I. C'est la même peine que pour la pêche d'une espèce en zone
-  ou en période interdite. Un poisson sous la taille se remet à l'eau tout de suite.
+  Pêcher ou détenir à bord des produits qui n'ont pas la taille, le calibre ou le poids
+  requis est puni de 22 500 euros d'amende. C'est la même peine que pour la pêche d'une
+  espèce en zone ou en période interdite. Un poisson sous la taille se remet à l'eau tout de
+  suite.
 sources:
   - texte: Code rural et de la pêche maritime, article L. 945-4, I, 15°
     ref: peche-loisir
@@ -29,4 +29,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

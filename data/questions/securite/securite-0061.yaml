@@ -17,10 +17,10 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'article 10.5.1 impose dans ces chenaux une navigation régulière, directe et continue,
-  et y interdit le stationnement et le mouillage. Le chenal s'emprunte à partir de l'une
-  ou l'autre de ses extrémités, côté terre ou côté mer, l'entrée côté mer est donc permise.
-  Aucune limite de puissance n'y est posée.
+  Dans ces chenaux, la navigation doit être régulière, directe et continue, et le
+  stationnement et le mouillage sont interdits. On y entre par l'une ou l'autre extrémité,
+  côté terre ou côté mer : l'entrée côté mer est donc permise. Aucune limite de puissance
+  n'y est posée.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 10.5.1
     ref: bande-300-metres
@@ -28,4 +28,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

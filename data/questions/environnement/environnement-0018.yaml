@@ -17,9 +17,8 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article L. 218-20 précise qu'un rejet se produisant au-delà des eaux territoriales
-  et provenant d'une avarie survenue au navire ou à son équipement n'est pas considéré
-  comme une infraction, sous les conditions posées par la convention MARPOL. Le rejet
+  Au-delà des eaux territoriales, un rejet qui vient d'une avarie du navire ou de son
+  équipement n'est pas une infraction, sous les conditions de la convention MARPOL. Le rejet
   volontaire, lui, reste puni.
 sources:
   - texte: Code de l'environnement, article L. 218-20
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -17,9 +17,9 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le vent frais est la force 6, 22 à 27 nœuds de vent moyen. La bonne brise est la force
-  5 et le grand frais la force 7, premier degré qui déclenche un avis. La force 6 est
-  déjà la limite de conception des bateaux de catégorie C, article 245-1.02.
+  Le vent frais est la force 6, 22 à 27 nœuds de vent moyen. La bonne brise est la force 5
+  et le grand frais la force 7, premier degré qui déclenche un avis. La force 6 est déjà la
+  limite de conception des bateaux de catégorie C.
 sources:
   - texte: 'Fiche météorologie : échelle de Beaufort et état de la mer'
     ref: fiche-meteo
@@ -29,4 +29,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

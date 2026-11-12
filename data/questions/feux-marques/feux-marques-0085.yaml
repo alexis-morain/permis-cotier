@@ -18,16 +18,15 @@ propositions:
 reponses:
   - b
 explication: >-
-  La règle 25 c) ouvre sur « en plus des feux prescrits au paragraphe a) » : le feu rouge
-  au-dessus du feu vert est un ajout facultatif, jamais un remplacement. Le fanal unique
-  de la règle 25 b), lui, réunit vraiment les feux de côté et le feu de poupe, et c'est
-  de cette confusion que vient le piège. La même règle 25 c) interdit d'ailleurs de montrer
-  le rouge et le vert en même temps que ce fanal.
+  Non : le feu rouge au-dessus du feu vert s'ajoute aux feux de côté et au feu de poupe, il
+  ne les remplace jamais. Seul le fanal unique en tête de mât les réunit vraiment, et c'est
+  de cette confusion que vient le piège. Il est d'ailleurs interdit de montrer le rouge et
+  le vert en même temps que ce fanal.
 sources:
   - texte: RIPAM, règle 25 c)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -14,16 +14,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 245-1.02, II. 9 attache à chaque catégorie une force de vent et une hauteur
-  significative de vagues : la catégorie dit ce que le bateau est conçu pour encaisser,
-  rien d'autre. C'est la confusion classique : elle ne t'autorise pas à t'éloigner plus
-  loin. L'éloignement dépend du matériel d'armement embarqué, fixé par la division 240,
-  et le nombre de personnes se lit sur la plaque signalétique.
+  La catégorie de conception dit quel vent et quelle hauteur de vagues le bateau est conçu
+  pour encaisser, rien d'autre. Piège classique : elle ne t'autorise pas à t'éloigner plus
+  loin. L'éloignement dépend du matériel d'armement embarqué, et le nombre de personnes se
+  lit sur la plaque signalétique.
 sources:
   - texte: Division 245, article 245-1.02, II. 9
     ref: division-245
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

@@ -17,15 +17,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  Le tableau du point 8 de l'article 240-2.01 découpe l'éloignement d'un abri en tranches.
-  De 2 à moins de 6 milles, un navire relève de l'armement côtier de l'article 240-2.04.
-  L'armement basique s'arrête à 2 milles, le semi-hauturier ne commence qu'à 6. Retiens
-  les trois bornes du tableau : 2, 6 et 60 milles.
+  À quatre milles d'un abri, tu es dans la tranche de 2 à moins de 6 milles : armement
+  côtier. L'armement basique s'arrête à 2 milles, le semi-hauturier ne commence qu'à 6.
+  Retiens les trois bornes : 2, 6 et 60 milles.
 sources:
   - texte: Division 240, article 240-2.01, point 8
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

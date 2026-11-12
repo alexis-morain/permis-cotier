@@ -16,15 +16,14 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 240-2.03 recommande que toute personne qui navigue en solitaire porte en permanence
-  un équipement individuel de flottabilité d'un niveau de performance d'au moins 50, auquel
-  est assujettie une VHF portable. Tombé à l'eau, le solitaire n'a que ce qu'il porte
-  sur lui.
+  Il est recommandé à qui navigue en solitaire de porter en permanence un EIF d'un niveau de
+  performance d'au moins 50, avec une VHF portable fixée dessus. Tombé à l'eau, le solitaire
+  n'a que ce qu'il porte sur lui.
 sources:
   - texte: Division 240, article 240-2.03, point 1
     ref: division-240
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

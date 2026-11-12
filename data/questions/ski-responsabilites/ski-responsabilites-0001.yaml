@@ -18,15 +18,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'article 240-2.12 pose que les véhicules nautiques à moteur effectuent une navigation
-  exclusivement diurne. Aucun feu et aucune distance d'abri ne lèvent cette limite : la
-  nuit venue, le scooter des mers doit être rentré. Le piège consiste à raisonner comme
-  pour un bateau de plaisance, qui lui peut faire route de nuit s'il porte ses feux réglementaires.
+  La navigation des véhicules nautiques à moteur est exclusivement diurne. Aucun feu et
+  aucune distance d'abri ne lèvent cette limite : la nuit venue, le scooter des mers doit
+  être rentré. Le piège est de raisonner comme pour un bateau de plaisance, qui peut faire
+  route de nuit avec ses feux réglementaires.
 sources:
   - texte: Division 240, article 240-2.12
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

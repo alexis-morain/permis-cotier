@@ -18,11 +18,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée exige « deux personnes
-  » à bord de tout navire remorquant un skieur : « l'une doit se consacrer exclusivement
-  à la conduite du navire, l'autre à la surveillance ». Le mot « exclusivement » exclut
-  le partage des rôles. Un pilote seul ne peut pas tenir la barre et suivre le skieur
-  du regard en même temps.
+  Il faut deux personnes à bord : l'une se consacre exclusivement à la conduite, l'autre à
+  la surveillance du skieur. « Exclusivement » exclut le partage des rôles. Un pilote seul
+  ne peut pas tenir la barre et suivre le skieur du regard en même temps.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -30,4 +28,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

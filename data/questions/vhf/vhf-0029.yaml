@@ -19,11 +19,10 @@ reponses:
   - a
   - b
 explication: >-
-  L'annexe IV protège les signaux de détresse de deux côtés : on ne les emploie que pour
-  indiquer une détresse ou un besoin d'assistance, et on n'emploie pas non plus d'autres
-  signaux qui pourraient être pris pour eux. Montrer plusieurs signaux ensemble est au
-  contraire prévu par le paragraphe 1, qui les prévoit utilisés ensemble ou séparément. Relayer
-  une détresse, c'est le MAYDAY RELAY, qui est un devoir.
+  Les signaux de détresse sont protégés des deux côtés : on ne les emploie que pour une
+  détresse ou un besoin d'assistance, et on n'emploie aucun autre signal qui pourrait leur
+  être confondu. En montrer plusieurs ensemble est au contraire permis. Relayer une
+  détresse, c'est le MAYDAY RELAY, et c'est un devoir.
 sources:
   - texte: RIPAM, annexe IV, 2
     ref: decret-77-733
@@ -31,4 +30,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

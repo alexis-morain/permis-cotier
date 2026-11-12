@@ -24,18 +24,16 @@ reponses:
   - a
   - b
 explication: >-
-  La règle 35 b) réserve les deux sons prolongés au navire à propulsion mécanique qui
-  fait route mais se trouve stoppé, sans erre : le signal dit donc deux choses à la fois,
-  le mode de propulsion et l'état de la marche. Le piège est le navire qui a encore de
-  l'erre, c'est-à-dire qui avance sur l'eau : il n'émet qu'un seul son prolongé, au titre
-  du paragraphe a). Faire route et être stoppé ne se contredisent pas, faire route veut
-  seulement dire n'être ni au mouillage, ni amarré, ni échoué. Le navire au mouillage,
-  lui, sonne la cloche.
+  Deux sons prolongés, c'est le navire à propulsion mécanique qui fait route mais est
+  stoppé, sans erre : le signal dit à la fois le mode de propulsion et l'état de la marche.
+  Piège : s'il a encore de l'erre, il n'émet qu'un seul son prolongé. Faire route et être
+  stoppé ne se contredisent pas, faire route veut seulement dire n'être ni au mouillage, ni
+  amarré, ni échoué. Le navire au mouillage, lui, sonne la cloche.
 sources:
   - texte: RIPAM, règle 35 b)
     ref: decret-77-733
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-11'

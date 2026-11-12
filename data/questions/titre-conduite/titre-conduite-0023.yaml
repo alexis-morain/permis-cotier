@@ -19,16 +19,15 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'article 10 permet aux personnes de plus de seize ans qui ne sont pas titulaires d'un
-  titre de conduite de pratiquer l'initiation à la conduite des véhicules nautiques à
-  moteur, et la randonnée à bord de ces véhicules encadrée par un moniteur diplômé, selon
-  des dispositions fixées par arrêté. Ce qui ouvre la conduite, c'est l'encadrement, pas
-  une distance au rivage ni l'heure du jour. Et rien n'oblige à attendre dix-huit ans.
+  Dès seize ans, sans titre de conduite, tu peux faire de l'initiation aux véhicules
+  nautiques à moteur, ou de la randonnée encadrée par un moniteur diplômé. Ce qui ouvre la
+  conduite, c'est l'encadrement, pas une distance au rivage ni l'heure du jour. Et rien
+  n'oblige à attendre dix-huit ans.
 sources:
   - texte: Décret n° 2007-1167 du 2 août 2007, article 10
     ref: decret-2007-1167
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-11'

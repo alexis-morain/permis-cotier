@@ -23,17 +23,16 @@ reponses:
   - a
   - b
 explication: >-
-  Le point 6 de l'article 240-2.03 dresse une liste de trois dispensés, sous la responsabilité
-  du chef de bord : le navire à voile de moins de 250 kg de déplacement lège, le navire
-  motorisé de moins de 250 kg dont la puissance propulsive ne dépasse pas 4,5 kW, et le
-  véhicule nautique à moteur. Pour un navire à moteur, le poids seul ne suffit donc pas,
-  c'est ce que la proposition c laisse tomber. Et la dispense ne tient jamais à la zone
-  de navigation.
+  Sont dispensés de ligne de mouillage trois types de navires, sous la responsabilité du
+  chef de bord : le navire à voile de moins de 250 kg de déplacement lège, le navire
+  motorisé de moins de 250 kg dont la puissance ne dépasse pas 4,5 kW, et le véhicule
+  nautique à moteur. Pour un navire à moteur, le poids seul ne suffit pas, c'est ce que la
+  proposition c oublie. Et la dispense ne tient jamais à la zone de navigation.
 sources:
   - texte: Division 240, article 240-2.03, point 6
     ref: division-240
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-11'

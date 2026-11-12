@@ -16,9 +16,8 @@ propositions:
 reponses:
   - c
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée impose au navire tracteur
-  « une flamme fluorescente orange de 2 mètres placée à une hauteur suffisante pour assurer
-  sa visibilité ». La règle est identique sur l'Atlantique et en Manche. Le pavillon A
+  Le bateau tracteur arbore une flamme fluorescente orange de 2 mètres, placée assez haut
+  pour être bien visible. C'est la même règle sur l'Atlantique et en Manche. Le pavillon A
   et le pavillon rouge à diagonale blanche signalent des plongeurs, pas un skieur.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
@@ -29,4 +28,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

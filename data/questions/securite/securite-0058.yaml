@@ -16,10 +16,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 2.3 exclut de la limitation de vitesse les chenaux de vitesse créés par arrêté
-  préfectoral dans le cadre du plan de balisage des communes littorales, ainsi que les
-  chenaux faisant l'objet d'une réglementation spécifique. C'est l'exception prévue par
-  l'arrêté à la règle générale de la bande des 300 mètres.
+  Les chenaux de vitesse créés par arrêté préfectoral dans le plan de balisage des communes
+  littorales, et ceux qui ont une réglementation spécifique, échappent à la limitation de
+  vitesse. C'est l'exception à la règle générale de la bande des 300 mètres.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 2.3
     ref: bande-300-metres
@@ -27,4 +26,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'

@@ -15,16 +15,15 @@ propositions:
 reponses:
   - a
 explication: >-
-  L'annexe I, paragraphe 1, prévoit que les bouées de la limite extérieure de la bande
-  des 300 mètres sont de forme sphérique, toutes de mêmes dimensions, avec un diamètre
-  d'au moins 0,80 mètre. Le piège vient du paragraphe suivant : c'est dans les chenaux
-  traversiers, et là seulement, que la forme change selon le bord, cylindrique à bâbord
-  et conique à tribord.
+  Les bouées de la limite extérieure de la bande des 300 mètres sont sphériques, toutes de
+  mêmes dimensions, avec un diamètre d'au moins 0,80 mètre. Piège : c'est dans les chenaux
+  traversiers, et là seulement, que la forme change selon le bord, cylindrique à bâbord et
+  conique à tribord.
 sources:
   - texte: Arrêté du 27 mars 1991, annexe I, paragraphe 1
     ref: arrete-1991-03-27
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-11'

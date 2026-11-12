@@ -15,10 +15,9 @@ propositions:
 reponses:
   - b
 explication: >-
-  L'article 4.1 de l'arrêté du préfet maritime de la Méditerranée impose que le ski nautique
-  et les disciplines associées soient pratiqués « exclusivement de jour ». Les arrêtés
-  de l'Atlantique et de la Manche disent la même chose. Les feux de route n'y changent
-  rien : ils rendent le bateau visible, pas le skieur ni sa remorque.
+  Le ski nautique se pratique exclusivement de jour, en Méditerranée comme sur l'Atlantique
+  et en Manche. Les feux de route n'y changent rien : ils rendent le bateau visible, pas le
+  skieur ni sa remorque.
 sources:
   - texte: Arrêté du préfet maritime de la Méditerranée n° 125/2013, article 4.1
     ref: fiche-ski-nautique
@@ -28,4 +27,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-11'
