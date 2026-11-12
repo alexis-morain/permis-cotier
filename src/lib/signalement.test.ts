@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   LONGUEUR_DETAILS_MAX,
   MOTIFS,
+  corpsCourrier,
   corpsIssue,
   raisonDuRepli,
   texteInerte,
@@ -414,5 +415,73 @@ describe('titreAvis et corpsAvis', () => {
 
   it('repasse le message par texteInerte', () => {
     expect(corpsAvis({ ...avis, message: '<script>`x`' })).not.toMatch(/[<>`]/);
+  });
+});
+
+describe('adresse de réponse', () => {
+  it('est facultative : absente, nulle ou vide, elle vaut null', () => {
+    for (const adresse of [undefined, null, '', '   ']) {
+      const corps = adresse === undefined ? bonne() : { ...bonne(), adresse };
+      const resultat = valider(corps);
+      expect(resultat.ok, String(adresse)).toBe(true);
+      if (resultat.ok) expect(resultat.valeur.adresse).toBeNull();
+    }
+  });
+
+  it('accepte une adresse ordinaire, rognée de ses bords', () => {
+    const resultat = valider({ ...bonne(), adresse: '  prenom.nom+permis@exemple.fr ' });
+    expect(resultat.ok).toBe(true);
+    if (resultat.ok) expect(resultat.valeur.adresse).toBe('prenom.nom+permis@exemple.fr');
+  });
+
+  it('refuse ce qui n’est pas une adresse, ou qui porterait autre chose', () => {
+    for (const adresse of [
+      'pas-une-adresse',
+      'a@b',
+      'a b@exemple.fr',
+      'a@exemple.fr\nBcc: x@y.fr',
+      '`a`@exemple.fr',
+      '<a@exemple.fr>',
+      'a@exemple.fr, b@exemple.fr',
+      '"a"@exemple.fr',
+      'a@-exemple.fr',
+      `${'a'.repeat(250)}@exemple.fr`,
+      42,
+      ['a@exemple.fr'],
+    ]) {
+      expect(valider({ ...bonne(), adresse }).ok, String(adresse)).toBe(false);
+      expect(validerAvis({ ...bonAvis(), adresse }).ok, String(adresse)).toBe(false);
+    }
+  });
+
+  it('n’entre jamais dans l’issue publique', () => {
+    const corps = corpsIssue({ question: 'balisage-0001', motif: 'autre', details: '', adresse: 'visiteur@exemple.fr' });
+    expect(corps).not.toContain('visiteur@exemple.fr');
+  });
+
+  it('arrive dans le courrier, qui dit qu’elle n’est pas dans l’issue', () => {
+    const corps = corpsCourrier({ question: 'balisage-0001', motif: 'autre', details: 'x', adresse: 'visiteur@exemple.fr' });
+    expect(corps).toContain('visiteur@exemple.fr');
+    expect(corps).toMatch(/pas dans l’issue publique/);
+    expect(corps).not.toMatch(/ni adresse,/);
+    expect(corps).toContain('````text');
+  });
+
+  it('sans adresse, le courrier est le corps de l’issue', () => {
+    const s = { question: 'balisage-0001', motif: 'autre' as const, details: 'x', adresse: null };
+    expect(corpsCourrier(s)).toBe(corpsIssue(s));
+  });
+
+  it('vaut aussi pour l’avis, qui la porte dans son courrier', () => {
+    const resultat = validerAvis({ ...bonAvis(), adresse: 'visiteur@exemple.fr' });
+    expect(resultat.ok).toBe(true);
+    if (!resultat.ok) return;
+    expect(resultat.valeur.adresse).toBe('visiteur@exemple.fr');
+    const corps = corpsAvis(resultat.valeur);
+    expect(corps).toContain('visiteur@exemple.fr');
+    expect(corps).not.toMatch(/ni adresse,/);
+    const sans = validerAvis(bonAvis());
+    expect(sans.ok && sans.valeur.adresse).toBeNull();
+    expect(corpsAvis({ note: 4, message: 'x' })).toMatch(/ni adresse,/);
   });
 });

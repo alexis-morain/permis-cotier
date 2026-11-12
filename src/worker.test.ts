@@ -364,6 +364,49 @@ describe('remise', () => {
   });
 });
 
+describe('adresse de réponse', () => {
+  const avecMail = {
+    RESEND_API_KEY: 'cle-resend',
+    SIGNALEMENT_MAIL_TO: 'contact@x.fr',
+    SIGNALEMENT_MAIL_FROM: 'signalement@x.fr',
+  };
+  const courrier = () =>
+    JSON.parse(String(appels.find((a) => a.url.includes('api.resend.com'))?.options.body)) as {
+      text: string;
+      reply_to?: string;
+    };
+
+  it('va dans le courrier, en adresse de réponse, et jamais dans l’issue publique', async () => {
+    const reponse = await worker.fetch(poste({ ...CORPS, adresse: 'visiteur@exemple.fr' }), env(avecMail));
+    expect(reponse.status).toBe(200);
+    const issue = appels.find((a) => a.url.includes('api.github.com'));
+    expect(String(issue?.options.body)).not.toContain('visiteur@exemple.fr');
+    expect(courrier().reply_to).toBe('visiteur@exemple.fr');
+    expect(courrier().text).toContain('visiteur@exemple.fr');
+  });
+
+  it('sans adresse, le courrier n’a pas d’adresse de réponse', async () => {
+    await worker.fetch(poste(CORPS), env(avecMail));
+    expect(courrier().reply_to).toBeUndefined();
+  });
+
+  it('une adresse mal formée fait refuser la requête, sans rien appeler dehors', async () => {
+    const reponse = await worker.fetch(poste({ ...CORPS, adresse: 'a@b.fr\nBcc: c@d.fr' }), env(avecMail));
+    expect(reponse.status).toBe(400);
+    expect(appels).toHaveLength(0);
+  });
+
+  it('vaut pour l’avis', async () => {
+    vi.stubGlobal('fetch', reseau({ turnstile: { success: true, hostname: 'lepermiscotier.fr', action: 'avis' } }));
+    const reponse = await worker.fetch(
+      poste({ genre: 'avis', message: 'Merci.', note: 5, adresse: 'visiteur@exemple.fr', turnstile: 'jeton-visiteur' }),
+      env(avecMail),
+    );
+    expect(reponse.status).toBe(200);
+    expect(courrier().reply_to).toBe('visiteur@exemple.fr');
+  });
+});
+
 describe('limitation de débit', () => {
   // Rien ne bornait cette adresse. Un script qui fabrique des jetons en série
   // ouvre autant d'issues publiques, et le jour où GitHub coupe sur sa limite

@@ -86,14 +86,21 @@ const RAISONS = JSON.stringify({
         <textarea id="details" name="details" class="champ" rows="5" maxlength="1200"
           placeholder="La règle 26 parle du chalutier, pas du navire à la traîne."></textarea>
       </p>
+      {ENVOI_EN_LIGNE && (
+        <p>
+          <label for="adresse">Ton adresse e-mail, si tu veux une réponse</label>
+          <input id="adresse" name="adresse" class="champ" type="email" autocomplete="email"
+            inputmode="email" maxlength="254" spellcheck="false" autocapitalize="off" />
+          <span class="discret">Facultatif. Elle n’arrive que dans ma boîte et ne sert qu’à te répondre.</span>
+        </p>
+      )}
       {ENVOI_EN_LIGNE ? (
         <p class="discret">
-          Le signalement part seul : ni adresse, ni adresse IP, ni cookie — rien de toi
-          n’entre dans la fiche publique qu’il devient. La vérification anti-robot
-          ci-dessous et la mesure d’audience voient ta connexion, comme tout site voit qui
-          l’appelle ; le signalement, lui, n’en garde rien. Tu veux une réponse
-          personnelle ? Écris-moi plutôt à <a href={`mailto:${ADRESSE}`}>{ADRESSE}</a> : c’est
-          le seul endroit où une adresse circule, et c’est toi qui la donnes.
+          Rien de toi n’entre dans la fiche publique que devient le signalement : ni adresse,
+          ni adresse IP, ni cookie. Si tu laisses ton adresse, elle m’arrive par courrier, à
+          part, et nulle part ailleurs. La vérification anti-robot ci-dessous et la mesure
+          d’audience voient ta connexion, comme tout site voit qui l’appelle ; le signalement,
+          lui, n’en garde rien.
         </p>
       ) : (
         <p class="discret">
@@ -122,7 +129,8 @@ const RAISONS = JSON.stringify({
       <p class="confirmation__titre">C’est parti. Merci.</p>
       <p>
         Le signalement est relu contre le texte cité, et la question est corrigée ou retirée.
-        Rien de personnel n’a été enregistré.
+        <span id="confirmation-sans-adresse">Rien de personnel n’a été enregistré.</span>
+        <span id="confirmation-avec-adresse" hidden>Ton adresse n’est arrivée que dans ma boîte : je te réponds là.</span>
       </p>
       <p class="discret" id="lien-issue-ligne" hidden>
         La correction est publique : <a id="lien-issue" href="#" rel="noopener noreferrer"
@@ -223,8 +231,14 @@ const RAISONS = JSON.stringify({
       location.href = lien;
     }
 
-    function annoncerEnvoi(url) {
+    function annoncerEnvoi(url, avecAdresse) {
       if (formulaire) formulaire.hidden = true;
+      if (avecAdresse) {
+        const sans = document.getElementById('confirmation-sans-adresse');
+        const avec = document.getElementById('confirmation-avec-adresse');
+        if (sans) sans.hidden = true;
+        if (avec) avec.hidden = false;
+      }
       const ligne = document.getElementById('lien-issue-ligne');
       const lien = document.getElementById('lien-issue');
       if (url && ligne && lien) {
@@ -242,6 +256,9 @@ const RAISONS = JSON.stringify({
       const question = (document.getElementById('question')?.value ?? '').trim();
       const motif = document.getElementById('motif')?.value ?? 'autre';
       const details = (document.getElementById('details')?.value ?? '').trim();
+      // Facultative, et seulement sur le site : dans le courrier de repli, elle
+      // est déjà l'expéditeur. Absente, elle ne part pas du tout.
+      const adresseVisiteur = (document.getElementById('adresse')?.value ?? '').trim();
 
       // Pas de clé publique au build, pas de widget chargé, pas de jeton :
       // l'endpoint refuserait de toute façon. Droit au courrier.
@@ -263,14 +280,20 @@ const RAISONS = JSON.stringify({
         const reponse = await fetch(envoi, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ question, motif, details, turnstile: jeton }),
+          body: JSON.stringify({
+            question,
+            motif,
+            details,
+            ...(adresseVisiteur ? { adresse: adresseVisiteur } : {}),
+            turnstile: jeton,
+          }),
           signal: controleur.signal,
         });
         if (!reponse.ok) throw Object.assign(new Error(`HTTP ${reponse.status}`), { statut: reponse.status });
         const rendu = await reponse.json().catch(() => ({}));
         // Le motif seul part à la mesure : jamais le texte du signalement.
         window.umami?.track('signalement-envoye', { motif });
-        annoncerEnvoi(typeof rendu.url === 'string' ? rendu.url : '');
+        annoncerEnvoi(typeof rendu.url === 'string' ? rendu.url : '', adresseVisiteur !== '');
       } catch (erreur) {
         window.turnstile?.reset();
         if (bouton) {
