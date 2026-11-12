@@ -1170,3 +1170,8 @@ entamée (une réponse fausse), le cadre de fenêtre gardé remplacé.
 1. Liens externes, Partager, rappels et sons à l'écran, au lot 3 avec les menus.
 2. CI : rien ne construit le Mac en CI. Posé au lot 4 : `app-mac.yml`, à la
    main seulement (voir « la publication Mac »).
+
+## Soutenir et noter (novembre 2026)
+
+- **Fiche** : section « Soutenir le projet » sous « L'app » (`profil.astro`) : note (`itms-apps://…?action=write-review`, ouvre l'application App Store, pas Safari intégré), avis (`/avis`, brouillon Mail, pas de Worker dans l'app), don (`DON` dans `src/lib/seo.ts`, Safari intégré). Le don dans l'app est un choix d'Alexis ; risque de revue Apple 3.1.1 assumé.
+- **Fenêtre de note d'Apple** : greffon `Note` (`NotePlugin.swift`, `SKStoreReviewController.requestReview(in:)`, iPhone, iPad et Mac Catalyst). Le web décide (`src/lib/evaluation.ts`) : 2 h d'usage actif cumulé (page visible, `localStorage`), appel en fin de leçon ou après un examen blanc réussi, jamais en épreuve, pas de redemande avant 120 jours sauf version majeure nouvelle. Apple plafonne à 3 par an et ne montre rien en TestFlight.

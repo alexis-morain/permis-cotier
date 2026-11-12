@@ -25,15 +25,35 @@ export const SITE = {
   langue: 'fr-FR',
 } as const;
 
+/** L'identifiant d'App Store Connect (`scripts/app_store.py`). */
+const ID_APP_STORE = '6818903859';
+
 /**
- * L'app iOS sur l'App Store. L'identifiant est celui d'App Store Connect
- * (`scripts/app_store.py`) ; il nourrit aussi la bannière que Safari pose en
- * haut de page sur iPhone.
+ * L'app iOS sur l'App Store. L'identifiant nourrit aussi la bannière que
+ * Safari pose en haut de page sur iPhone.
  */
 export const APP_STORE = {
-  id: '6818903859',
+  id: ID_APP_STORE,
   url: 'https://apps.apple.com/fr/app/le-permis-c%C3%B4tier/id6818903859',
+  /**
+   * La fenêtre « Écrire un avis » de l'App Store. Sur le site, une page web
+   * ordinaire. Dans l'app, `itms-apps` ouvre l'application App Store elle-même :
+   * un lien https passerait par Safari intégré, qui montre la page web de la
+   * fiche au lieu de la fenêtre de note.
+   */
+  urlNote: `https://apps.apple.com/app/id${ID_APP_STORE}?action=write-review`,
+  urlNoteApp: `itms-apps://apps.apple.com/app/id${ID_APP_STORE}?action=write-review`,
 } as const;
+
+/**
+ * Le don, sur Buy Me a Coffee. Une seule adresse pour tout le dépôt : le site
+ * et l'app la lisent ici.
+ */
+// Choisie par Alexis le 11 novembre : la page Buy Me a Coffee est à créer sous ce nom.
+export const DON = 'https://buymeacoffee.com/lepermiscotier';
+
+/** Le dépôt public : code sous licence MIT, banque sous CC BY-SA 4.0. */
+export const DEPOT = 'https://github.com/alexis-morain/permis-cotier';
 
 /**
  * Au-delà, Google coupe le titre dans la liste de résultats. La marque est

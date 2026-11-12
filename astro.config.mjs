@@ -159,7 +159,7 @@ export default defineConfig({
       // que le navigateur n'a pas lu sa progression, et déclarées `noindex` —
       // les annoncer au sitemap dirait le contraire.
       filter: (page) =>
-        !/\/(examen|revoir|parametres|signaler|recherche)(\.html)?$/.test(page) &&
+        !/\/(examen|revoir|parametres|signaler|avis|recherche)(\.html)?$/.test(page) &&
         !page.includes('/profil') &&
         !page.includes('/entrainement/') &&
         leconIndexable(page),

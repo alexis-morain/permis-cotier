@@ -40,7 +40,7 @@ import { ClientRouter } from 'astro:transitions';
 
 <script>
   import { navigate } from 'astro:transitions/client';
-  import { armerLesRappelsSurLaDate, basculerVersLOnglet, ongletVise, ouvrirDehors } from '../lib/natif';
+  import { armerLesRappelsSurLaDate, basculerVersLOnglet, ongletVise, ouvrirDehors, suivreLUsageDeLApp } from '../lib/natif';
   import { accorderBarreEtatALaPage } from '../lib/apparence';
   import { annoncerSiLaProgressionAChange } from '../lib/page';
   import { aujourdhui, charger } from '../lib/progression';
@@ -128,6 +128,9 @@ import { ClientRouter } from 'astro:transitions';
   // La date d'examen posée dans la Fiche ou le questionnaire arme les
   // rappels J-7, J-3, J-1 et le jour J ; effacée, elle les tait.
   armerLesRappelsSurLaDate();
+
+  // Le temps d'usage, pour savoir quand demander la note (`evaluation.ts`).
+  suivreLUsageDeLApp();
 
   void accorderBarreEtatALaPage();
   window

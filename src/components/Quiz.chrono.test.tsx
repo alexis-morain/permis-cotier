@@ -26,6 +26,7 @@ const retours: Array<() => void> = [];
 
 vi.mock('../lib/natif', () => ({
   vibrer: vi.fn(async () => {}),
+  proposerLaNote: vi.fn(async () => {}),
   partager: vi.fn(async () => false),
   programmerRappels: vi.fn(async () => {}),
   modeConcentration: vi.fn(async () => {}),

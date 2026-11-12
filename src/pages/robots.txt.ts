@@ -12,7 +12,7 @@ import type { APIRoute } from 'astro';
  */
 
 /** Écrans qui tirent des questions au hasard : rien à indexer, jamais. */
-const ECRANS_DE_JEU = ['/examen', '/entrainement/', '/revoir', '/signaler', '/parametres'];
+const ECRANS_DE_JEU = ['/examen', '/entrainement/', '/revoir', '/signaler', '/avis', '/parametres'];
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL('https://exemple.invalid');

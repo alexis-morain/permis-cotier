@@ -1,4 +1,5 @@
 Nouveau : une fiche de révision par chapitre, avec schémas et tableaux, à lire dans l’app ou à ouvrir en PDF pour l’imprimer ou la garder. Elles sont sur l’Accueil, et à la fin d’un examen blanc l’app te propose celle du thème où tu as le plus d’erreurs.
 Plus de sauts de page : dans une leçon, d’une question à l’autre et d’un écran à l’autre, l’écran suivant s’affiche en haut, sans à-coup ni glissade.
+Soutenir le projet : une section dans Ta fiche rappelle que l’app est gratuite et open source, et propose de la noter, de donner un avis ou de faire un don.
 
-Les images des questions gardent toujours la même place : les propositions ne bougent plus quand l’image arrive.
+Plus de sauts de page : dans une leçon, d’une question à l’autre et d’un écran à l’autre, l’écran suivant s’affiche en haut, sans à-coup ni glissade. Les images des questions gardent toujours la même place.
