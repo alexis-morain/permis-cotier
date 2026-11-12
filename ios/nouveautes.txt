@@ -1,4 +1,3 @@
-L’app ne change pas : cette version accompagne de nouvelles captures sur la fiche App Store, pour l’iPhone et l’iPad.
 Plus de sauts de page : dans une leçon, d’une question à l’autre et d’un écran à l’autre, l’écran suivant s’affiche en haut, sans à-coup ni glissade.
 
 Les images des questions gardent toujours la même place : les propositions ne bougent plus quand l’image arrive.
