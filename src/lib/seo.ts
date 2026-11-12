@@ -49,7 +49,7 @@ export const APP_STORE = {
  * Le don, sur Buy Me a Coffee. Une seule adresse pour tout le dépôt : le site
  * et l'app la lisent ici.
  */
-// À CONFIRMER par Alexis : valeur provisoire, l'adresse réelle de la page n'est pas connue.
+// Choisie par Alexis le 11 novembre : la page Buy Me a Coffee est à créer sous ce nom.
 export const DON = 'https://buymeacoffee.com/lepermiscotier';
 
 /** Le dépôt public : code sous licence MIT, banque sous CC BY-SA 4.0. */
