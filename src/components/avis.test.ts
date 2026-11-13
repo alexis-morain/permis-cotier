@@ -14,13 +14,15 @@ const page = readFileSync(join(process.cwd(), 'src/pages/avis.astro'), 'utf8');
 const script = /<script is:inline>\n([\s\S]*?)<\/script>/.exec(page)?.[1];
 if (!script) throw new Error('script en ligne introuvable dans avis.astro');
 
-function monter(avecTurnstile: boolean, envoi: string | null = avecTurnstile ? '/api/signaler' : null) {
+function monter(avecTurnstile: boolean, envoi: string | null = avecTurnstile ? '/api/signaler' : null, recherche = '') {
+  window.history.replaceState(null, '', `/avis${recherche}`);
   document.body.innerHTML = `
-    <form id="avis" data-adresse="contact@lepermiscotier.fr" data-turnstile="${avecTurnstile ? 'cle' : ''}"${envoi === null ? '' : ` data-envoi="${envoi}"`}>
+    <form id="avis" data-site="https://lepermiscotier.fr" data-adresse="contact@lepermiscotier.fr" data-turnstile="${avecTurnstile ? 'cle' : ''}"${envoi === null ? '' : ` data-envoi="${envoi}"`}>
       <select id="note"><option value="">-</option><option value="4" selected>4</option></select>
       <textarea id="message">Très clair.</textarea>
       <button id="envoyer" type="submit">Envoyer mon avis</button>
     </form>
+    <p id="page-origine" hidden>À propos de <a id="page-origine-lien" href="/"></a></p>
     <div id="confirmation-envoi" hidden tabindex="-1"></div>
     <div id="confirmation" hidden tabindex="-1"><p id="confirmation-raison" hidden></p></div>`;
   new Function(script!)();
@@ -115,6 +117,49 @@ describe('le formulaire d’avis', () => {
     await attendre();
     expect(courrier()).toBe(true);
     expect((document.getElementById('envoyer') as HTMLButtonElement).disabled).toBe(false);
+  });
+});
+
+describe('la page d’origine', () => {
+  const envoyer = async () => {
+    (window as { turnstile?: unknown }).turnstile = { getResponse: () => 'jeton', reset: vi.fn() };
+    const fetch = vi.fn(async (_url: string, _init?: RequestInit) => ({ ok: true, status: 200, json: async () => ({}) }));
+    vi.stubGlobal('fetch', fetch);
+    soumettre();
+    await attendre();
+    return JSON.parse(String(fetch.mock.calls[0]?.[1]?.body ?? 'null'));
+  };
+
+  it('lit ?page=, l’affiche et l’envoie avec l’avis', async () => {
+    monter(true, undefined, '?page=/guide/feux');
+    expect((document.getElementById('page-origine') as HTMLElement).hidden).toBe(false);
+    expect(document.getElementById('page-origine-lien')?.textContent).toBe('/guide/feux');
+    expect(document.getElementById('page-origine-lien')?.getAttribute('href')).toBe('/guide/feux');
+    expect((await envoyer()).page).toBe('/guide/feux');
+  });
+
+  it('ignore tout ce qui n’est pas un chemin du site', async () => {
+    for (const valeur of ['https://exemple.fr/x', '//exemple.fr', 'javascript:alert(1)', '/a?b=1', '/a/../b']) {
+      monter(true, undefined, `?page=${encodeURIComponent(valeur)}`);
+      expect((document.getElementById('page-origine') as HTMLElement).hidden, valeur).toBe(true);
+      expect(await envoyer(), valeur).not.toHaveProperty('page');
+    }
+  });
+
+  it('sans paramètre, rien ne change', async () => {
+    monter(true);
+    expect((document.getElementById('page-origine') as HTMLElement).hidden).toBe(true);
+    expect(await envoyer()).not.toHaveProperty('page');
+  });
+
+  it('figure dans le brouillon de courrier du repli', () => {
+    monter(false, null, '?page=/guide/feux');
+    const ouvrir = vi.fn();
+    const lieu = window.location;
+    Object.defineProperty(window, 'location', { configurable: true, value: { ...lieu, search: lieu.search, set href(v: string) { ouvrir(v); } } });
+    soumettre();
+    Object.defineProperty(window, 'location', { configurable: true, value: lieu });
+    expect(decodeURIComponent(String(ouvrir.mock.calls[0]?.[0]))).toContain('Page : https://lepermiscotier.fr/guide/feux');
   });
 });
 

@@ -103,6 +103,14 @@ const fondu: TransitionAnimationPair = {
   old: [],
   new: { name: 'astroFadeIn', duration: 140, easing: 'ease-out', fillMode: 'both' },
 };
+
+// « Une remarque sur cette page ? » : le pied de chaque page du site renvoie à
+// `/avis` avec le chemin d'où on vient. Pas sur les pages qui sont déjà un
+// formulaire de retour, ni sur la 404. Rien de tout ça dans l'app, qui n'a pas de
+// pied de page et garde « Donner un avis » dans ses réglages.
+const cheminRemarque = cheminServi(chemin);
+const remarquePossible = !['/avis', '/signaler', '/404'].includes(cheminRemarque);
+const lienRemarque = `/avis?page=${cheminRemarque}`;
 const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : null;
 ---
 
@@ -318,6 +326,11 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
             )
           } Une erreur ? Le bouton de signalement est sur chaque question.
         </p>
+        {remarquePossible && (
+          <p class="discret">
+            <a href={lienRemarque} rel="nofollow" data-mesure="pied-remarque">Une remarque sur cette page ?</a>
+          </p>
+        )}
         <nav class="pied__plan" aria-label="Plan du site">
           <a href="/cours">Le cours, leçon par leçon</a>
           <a href="/fiches-revision">Fiches de révision en PDF</a>
