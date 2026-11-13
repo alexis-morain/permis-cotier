@@ -500,6 +500,17 @@ describe('avis', () => {
     expect(charge.to).toBe('contact@x.fr');
   });
 
+  it('porte la page d’origine dans le courrier, et refuse une adresse qui n’est pas un chemin', async () => {
+    const reponse = await worker.fetch(poste({ ...AVIS, page: '/guide/feux' }), env(avecMail));
+    expect(reponse.status).toBe(200);
+    const courrier = appels.find((a) => a.url.includes('api.resend.com'));
+    expect(JSON.parse(String(courrier?.options.body)).text).toContain('Page : https://lepermiscotier.fr/guide/feux');
+    appels.length = 0;
+    const refusee = await worker.fetch(poste({ ...AVIS, page: 'https://exemple.fr/hameçon' }), env(avecMail));
+    expect(refusee.status).toBe(400);
+    expect(appels).toHaveLength(0);
+  });
+
   it('n’a pas besoin du jeton GitHub', async () => {
     const reponse = await worker.fetch(
       poste(AVIS),

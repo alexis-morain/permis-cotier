@@ -485,3 +485,50 @@ describe('adresse de réponse', () => {
     expect(corpsAvis({ note: 4, message: 'x' })).toMatch(/ni adresse,/);
   });
 });
+
+describe('la page d’où part l’avis', () => {
+  it('accepte un chemin du site, avec ou sans fin de dossier', () => {
+    for (const page of ['/', '/guide/feux-de-navigation', '/question/feux-marques-0022', '/cours/a/b.c', '/themes/']) {
+      const r = validerAvis({ ...bonAvis(), page });
+      expect(r.ok, page).toBe(true);
+      if (r.ok) expect(r.valeur.page).toBe(page);
+    }
+  });
+
+  it('est facultative : absente ou nulle, elle vaut null', () => {
+    const sans = validerAvis(bonAvis());
+    expect(sans.ok && sans.valeur.page).toBeNull();
+    const nulle = validerAvis({ ...bonAvis(), page: null });
+    expect(nulle.ok && nulle.valeur.page).toBeNull();
+  });
+
+  it('refuse tout ce qui n’est pas un chemin relatif du site', () => {
+    const refusees: unknown[] = [
+      'https://exemple.fr/x',
+      '//exemple.fr/x',
+      '/\\exemple.fr',
+      'guide',
+      '/guide?x=1',
+      '/guide#ancre',
+      '/guide/../secret',
+      '/guide//x',
+      '/guide x',
+      '/<script>',
+      '/guide/`x`',
+      '/guide\n/x',
+      '',
+      12,
+      {},
+      ['/guide'],
+      `/${'a'.repeat(200)}`,
+    ];
+    for (const page of refusees) expect(validerAvis({ ...bonAvis(), page }).ok, String(page)).toBe(false);
+  });
+
+  it('figure dans le courrier de l’avis, sous la forme d’une adresse du site', () => {
+    const corps = corpsAvis({ note: 4, message: 'x', page: '/guide/feux' });
+    expect(corps).toContain('Page : https://lepermiscotier.fr/guide/feux');
+    expect(corpsAvis({ note: 4, message: 'x', page: null })).not.toContain('Page :');
+    expect(corpsAvis({ note: 4, message: 'x' })).not.toContain('Page :');
+  });
+});

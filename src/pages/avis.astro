@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import { POUR_APP } from '../lib/cible';
-import { raisonDuRepli } from '../lib/signalement';
+import { raisonDuRepli, LONGUEUR_PAGE_MAX } from '../lib/signalement';
+import { SITE } from '../lib/seo';
 
 // Le pendant de `signaler.astro` pour un avis général, sans question à citer.
 // Même mécanique, deux différences qui comptent : le Worker ne l'ouvre jamais
@@ -38,7 +39,12 @@ const RAISONS = JSON.stringify({
     </p>
 
     <form class="avis" id="avis" method="post" enctype="text/plain"
-      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-turnstile={CLE_TURNSTILE} data-envoi={ENVOI} data-raisons={RAISONS}>
+      action={`mailto:${ADRESSE}`} data-adresse={ADRESSE} data-site={SITE.domaine} data-page-max={LONGUEUR_PAGE_MAX} data-turnstile={CLE_TURNSTILE} data-envoi={ENVOI} data-raisons={RAISONS}>
+      {/* Le pied de page du site renvoie ici avec `?page=<chemin>` : la page d'où
+          part la remarque, affichée pour que le visiteur sache ce qui est joint. */}
+      <p class="discret page-origine" id="page-origine" hidden>
+        À propos de la page <a id="page-origine-lien" href="/"></a>
+      </p>
       <p>
         <label for="note">Ta note, si tu veux en donner une</label>
         <select id="note" name="note" class="champ">
@@ -132,12 +138,34 @@ const RAISONS = JSON.stringify({
     const bouton = document.getElementById('envoyer');
     const raisons = JSON.parse(formulaire?.dataset.raisons ?? '{}');
 
+    // La page d'origine, `?page=/guide/feux`. Même forme que le Worker
+    // (`FORME_PAGE` de `src/lib/signalement.ts`), qui reste seul juge : ici on
+    // n'affiche et n'envoie que ce qu'il accepterait, jamais une adresse libre.
+    const lirePage = () => {
+      const brut = new URLSearchParams(location.search).get('page') ?? '';
+      const max = Number(formulaire?.dataset.pageMax ?? 160);
+      const forme = /^\/(?:[A-Za-z0-9._~-]+(?:\/[A-Za-z0-9._~-]+)*\/?)?$/;
+      if (brut.length > max || !forme.test(brut) || brut.split('/').includes('..')) return '';
+      return brut;
+    };
+    const pageOrigine = lirePage();
+    if (pageOrigine) {
+      const lien = document.getElementById('page-origine-lien');
+      const ligne = document.getElementById('page-origine');
+      if (lien && ligne) {
+        lien.textContent = pageOrigine;
+        lien.setAttribute('href', pageOrigine);
+        ligne.hidden = false;
+      }
+    }
+
     // Quinze secondes, puis le courrier : voir `signaler.astro`.
     const ATTENTE_WORKER = 15000;
 
     function replierSurCourrier(note, message, raison) {
       const corps = [
         `Note : ${note ? `${note} sur 5` : 'aucune'}`,
+        ...(pageOrigine ? [`Page : ${formulaire?.dataset.site ?? ''}${pageOrigine}`] : []),
         '',
         message,
       ].join('\n');
@@ -193,6 +221,7 @@ const RAISONS = JSON.stringify({
             message,
             note,
             ...(adresseVisiteur ? { adresse: adresseVisiteur } : {}),
+            ...(pageOrigine ? { page: pageOrigine } : {}),
             turnstile: jeton,
           }),
           signal: controleur.signal,
@@ -229,6 +258,7 @@ const RAISONS = JSON.stringify({
 </Base>
 
 <style>
+  .page-origine { margin-top: 1rem; overflow-wrap: anywhere; }
   .avis { margin-top: 2rem; max-width: 34rem; }
   .avis label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
   .avis textarea { min-height: 8rem; resize: vertical; }

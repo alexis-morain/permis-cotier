@@ -218,7 +218,26 @@ export function valider(donnees: unknown): Validation {
  * facultative de 1 à 5. Il suit les deux règles du fichier, et une troisième :
  * il ne devient jamais une issue. Le Worker le remet par courrier seulement.
  */
-const CHAMPS_AVIS = new Set(['genre', 'message', 'note', 'adresse', 'turnstile']);
+const CHAMPS_AVIS = new Set(['genre', 'message', 'note', 'adresse', 'page', 'turnstile']);
+
+export const LONGUEUR_PAGE_MAX = 160;
+
+/**
+ * Un chemin du site, rien d'autre : une barre, des segments d'ASCII sans espace,
+ * ni requête, ni ancre, ni `//`. Il finit dans un courrier sous la forme d'une
+ * adresse du site : aucune URL arbitraire ne doit y passer. `src/pages/avis.astro`
+ * en tient une copie pour ne pas afficher ce que le Worker refuserait.
+ */
+const FORME_PAGE = /^\/(?:[A-Za-z0-9._~-]+(?:\/[A-Za-z0-9._~-]+)*\/?)?$/;
+
+/** `null` si absente, le chemin si valide, `false` sinon (la requête est alors refusée). */
+function lirePage(brut: unknown): string | null | false {
+  if (brut === undefined || brut === null) return null;
+  if (typeof brut !== 'string') return false;
+  if (brut.length > LONGUEUR_PAGE_MAX || !FORME_PAGE.test(brut)) return false;
+  if (brut.split('/').some((segment) => segment === '..')) return false;
+  return brut;
+}
 
 export interface Avis {
   /** Déjà passé par `texteInerte`, jamais vide. */
@@ -227,6 +246,8 @@ export interface Avis {
   note: number | null;
   /** Où le visiteur veut une réponse, ou `null`. */
   adresse?: string | null;
+  /** Le chemin de la page d'où part l'avis, ou `null`. Jamais une URL. */
+  page?: string | null;
 }
 
 export type ValidationAvis =
@@ -265,7 +286,10 @@ export function validerAvis(donnees: unknown): ValidationAvis {
   const adresse = lireAdresse(brut.adresse);
   if (adresse === false) return { ok: false };
 
-  return { ok: true, valeur: { message, note, adresse, turnstile } };
+  const page = lirePage(brut.page);
+  if (page === false) return { ok: false };
+
+  return { ok: true, valeur: { message, note, adresse, page, turnstile } };
 }
 
 export function titreAvis(avis: Pick<Avis, 'note'>): string {
@@ -287,6 +311,7 @@ export function corpsAvis(avis: Avis): string {
       ];
   return [
     `Note : ${avis.note === null ? 'aucune' : `${avis.note} sur 5`}`,
+    ...(avis.page ? [`Page : ${SITE}${avis.page}`] : []),
     '',
     ...provenance,
     '',
