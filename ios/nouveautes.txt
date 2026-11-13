@@ -1,5 +1,3 @@
-Nouveau : une fiche de révision par chapitre, avec schémas et tableaux, à lire dans l’app ou à ouvrir en PDF pour l’imprimer ou la garder. Elles sont sur l’Accueil, et à la fin d’un examen blanc l’app te propose celle du thème où tu as le plus d’erreurs.
+Pour signaler une erreur ou donner ton avis, tu peux maintenant laisser ton adresse e-mail si tu veux une réponse. Elle n’est jamais publiée.
 
-Soutenir le projet : une section dans Ta fiche rappelle que l’app est gratuite et open source, et propose de la noter ou de donner un avis.
-
-Plus de sauts de page : dans une leçon, d’une question à l’autre et d’un écran à l’autre, l’écran suivant s’affiche en haut, sans à-coup ni glissade. Les images des questions gardent toujours la même place.
+Une question sur les feux de navire corrigée après un signalement : un navire qui ne montre pas ses feux de côté n’a pas d’erre.
