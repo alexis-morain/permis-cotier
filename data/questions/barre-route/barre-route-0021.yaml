@@ -5,8 +5,8 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 1
 enonce: >-
-  Tu navigues par beau temps, en plein jour, sur une mer vide. Quelle veille la règle 5
-  t'impose-t-elle ?
+  Tu navigues par beau temps, en plein jour, sur une mer vide. Quelle veille dois-tu
+  assurer ?
 propositions:
   - id: a
     texte: Une veille visuelle et auditive permanente, par tous les moyens disponibles.
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

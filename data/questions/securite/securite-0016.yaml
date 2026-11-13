@@ -5,8 +5,8 @@ notion: securite-limitations
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu veux emmener ton véhicule nautique à moteur à quatre milles d'un abri. Que demande
-  la division 240 en plus de l'armement ?
+  Tu veux emmener ton véhicule nautique à moteur à quatre milles d'un abri. Que demande la
+  réglementation en plus de l'armement ?
 propositions:
   - id: a
     texte: Que le véhicule compte au moins deux places
@@ -26,4 +26,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

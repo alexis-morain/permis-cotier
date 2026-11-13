@@ -5,7 +5,7 @@ notion: env-equipement-sanitaire
 statut: publie
 difficulte: 2
 enonce: >-
-  Ton bateau est équipé de toilettes. Quels dispositifs l'article 245-5.37 admet-il pour
+  Ton bateau est équipé de toilettes. Quels dispositifs la réglementation admet-elle pour
   les eaux usées ?
 propositions:
   - id: a
@@ -31,4 +31,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

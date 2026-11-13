@@ -5,8 +5,8 @@ notion: securite-limitations
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu pars en planche à pagaie depuis une plage. La division 240 t'autorise-t-elle à dépasser
-  deux milles d'un abri ?
+  Tu pars en planche à pagaie depuis une plage. La réglementation t'autorise-t-elle à
+  dépasser deux milles d'un abri ?
 propositions:
   - id: a
     texte: Non, la navigation y est interdite aux planches à pagaie
@@ -26,4 +26,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

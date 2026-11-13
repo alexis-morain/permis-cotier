@@ -5,9 +5,9 @@ notion: barre-routes-croisees
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu manœuvres seul pour éviter l'abordage avec un navire à propulsion mécanique dont
-  la route croise la tienne et qui est bâbord à toi. Que t'interdit la règle 17 c),
-  si les circonstances le permettent ?
+  Tu manœuvres seul pour éviter l'abordage avec un navire à propulsion mécanique dont la
+  route croise la tienne et qui est bâbord à toi. Que t'interdit le RIPAM, si les
+  circonstances le permettent ?
 propositions:
   - id: a
     texte: Abattre sur tribord.
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

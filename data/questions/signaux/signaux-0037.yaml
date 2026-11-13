@@ -9,7 +9,7 @@ enonce: >-
   ta manœuvre par un ou deux sons brefs ?
 propositions:
   - id: a
-    texte: Non, les signaux de manœuvre de la règle 34 a) sont ceux du navire à propulsion
+    texte: Non, les signaux de manœuvre sont ceux du navire à propulsion mécanique
       mécanique
   - id: b
     texte: Oui, tout navire qui change de cap en vue d'un autre doit le signaler
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

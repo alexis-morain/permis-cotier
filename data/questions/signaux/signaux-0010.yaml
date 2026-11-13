@@ -5,15 +5,15 @@ notion: signaux-detresse
 statut: publie
 difficulte: 1
 enonce: >-
-  Ton navire est en détresse et tu demandes assistance. Où le RIPAM décrit-il les signaux
-  que tu dois utiliser ou montrer ?
+  Ton navire est en détresse et tu demandes assistance. Dans quelle annexe le RIPAM
+  décrit-il les signaux que tu dois utiliser ou montrer ?
 propositions:
   - id: a
-    texte: à l'annexe II
+    texte: Dans l'annexe des signaux supplémentaires des navires de pêche
   - id: b
-    texte: à l'annexe III
+    texte: Dans l'annexe des appareils à signaux sonores
   - id: c
-    texte: à l'annexe IV
+    texte: Dans l'annexe des signaux de détresse
 reponses:
   - c
 explication: >-
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

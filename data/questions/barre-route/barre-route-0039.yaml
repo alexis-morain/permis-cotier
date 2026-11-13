@@ -5,8 +5,7 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 2
 enonce: >-
-  Quels facteurs la règle 6 te demande-t-elle de prendre en compte pour fixer ta vitesse
-  de sécurité ?
+  Quels facteurs dois-tu prendre en compte pour fixer ta vitesse de sécurité ?
 propositions:
   - id: a
     texte: La visibilité
@@ -30,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

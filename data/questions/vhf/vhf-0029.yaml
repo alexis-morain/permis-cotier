@@ -5,7 +5,7 @@ notion: vhf-fausses-alertes
 statut: publie
 difficulte: 2
 enonce: >-
-  Le paragraphe 2 de l'annexe IV du RIPAM interdit deux usages. Lesquels ?
+  Le RIPAM interdit certains usages des signaux de détresse. Lesquels ?
 propositions:
   - id: a
     texte: Émettre un signal de détresse hors détresse ou besoin d'assistance
@@ -30,4 +30,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

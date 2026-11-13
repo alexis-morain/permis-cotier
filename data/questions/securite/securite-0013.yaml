@@ -6,7 +6,8 @@ statut: publie
 difficulte: 2
 enonce: >-
   Le dispositif de repérage et d'assistance pour personne tombée à l'eau que tu embarques
-  doit porter un feu. Quelle autonomie et quelle portée la division 240 lui demande-t-elle ?
+  doit porter un feu. Quelle autonomie et quelle portée la réglementation lui
+  demande-t-elle ?
 propositions:
   - id: a
     texte: Au moins six heures d'autonomie, visible sur tout l'horizon jusqu'à un demi-mille.
@@ -28,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

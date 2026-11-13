@@ -5,8 +5,7 @@ notion: signaux-detresse
 statut: publie
 difficulte: 2
 enonce: >-
-  Dans quel cas la règle 37 du RIPAM demande-t-elle d'employer les signaux de détresse
-  ?
+  Dans quel cas le RIPAM demande-t-il d'employer les signaux de détresse ?
 propositions:
   - id: a
     texte: quand ton navire est en détresse et que tu demandes assistance
@@ -26,4 +25,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

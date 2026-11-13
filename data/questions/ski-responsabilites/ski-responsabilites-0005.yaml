@@ -5,7 +5,7 @@ notion: responsabilite-chef-de-bord
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu es chef de bord d'un bateau de plaisance. De quoi la division 240 te rend-elle
+  Tu es chef de bord d'un bateau de plaisance. De quoi la réglementation te rend-elle
   garant avant d'appareiller ?
 propositions:
   - id: a
@@ -32,4 +32,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu fais route près de l'extrémité d'un dispositif de séparation du trafic, là où les
-  navires s'y engagent et en sortent. Que te demande la règle 10 f) ?
+  navires s'y engagent et en sortent. Que te demande le RIPAM ?
 propositions:
   - id: a
     texte: Y réduire ta vitesse à cinq nœuds au plus.
@@ -15,7 +15,7 @@ propositions:
   - id: c
     texte: Y naviguer avec une vigilance particulière.
   - id: d
-    texte: Rien, la règle 10 ne vaut qu'à l'intérieur des voies de circulation.
+    texte: Rien, les règles sur les dispositifs de séparation du trafic ne valent qu'à l'intérieur des voies de circulation.
 reponses:
   - c
 explication: >-
@@ -32,4 +32,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

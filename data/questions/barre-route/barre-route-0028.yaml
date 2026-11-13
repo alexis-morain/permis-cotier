@@ -6,8 +6,8 @@ famille: barre-manoeuvre-franche
 statut: publie
 difficulte: 1
 enonce: >-
-  Tu es tenu de t'écarter de la route d'un autre navire. Comment la règle 16 te demande-t-elle
-  de manœuvrer ?
+  Tu es tenu de t'écarter de la route d'un autre navire. À quel moment et de quelle
+  manière dois-tu manœuvrer ?
 propositions:
   - id: a
     texte: De bonne heure et franchement, de manière à t'écarter largement.
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

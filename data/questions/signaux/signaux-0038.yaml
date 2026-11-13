@@ -5,7 +5,7 @@ notion: signaux-brume
 statut: publie
 difficulte: 2
 enonce: >-
-  Ton bateau de 6 mètres n'a ni sifflet ni cloche. Que t'impose la règle 33 ?
+  Ton bateau de 6 mètres n'a ni sifflet ni cloche. Que t'impose le RIPAM ?
 propositions:
   - id: a
     texte: Avoir à bord un autre moyen d'émettre un signal sonore efficace
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

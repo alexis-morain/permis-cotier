@@ -5,8 +5,8 @@ notion: feux-tirant-eau
 statut: publie
 difficulte: 3
 enonce: >-
-  Un navire handicapé par son tirant d'eau montre trois feux rouges superposés. Que dit
-  la règle 28 de cette signalisation ?
+  Un navire handicapé par son tirant d'eau montre trois feux rouges superposés. Que dit le
+  RIPAM de cette signalisation ?
 propositions:
   - id: a
     texte: Il doit la montrer dès qu'il navigue dans un chenal dragué
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

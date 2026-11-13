@@ -6,8 +6,8 @@ famille: securite-coupe-circuit-cordon
 statut: publie
 difficulte: 3
 enonce: >-
-  Ton hors-bord à barre franche est équipé d'un coupe-circuit filaire. Pourquoi la division
-  240 demande-t-elle un second coupe-circuit accessible à bord ?
+  Ton hors-bord à barre franche est équipé d'un coupe-circuit filaire. Pourquoi la
+  réglementation demande-t-elle un second coupe-circuit accessible à bord ?
 propositions:
   - id: a
     texte: Pour que ceux restés à bord puissent redémarrer et récupérer la personne à
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

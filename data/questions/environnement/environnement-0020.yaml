@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Ton bateau habitable a un réservoir fixe pour les eaux des toilettes. Quelle capacité
-  minimale la division 245 lui impose-t-elle ?
+  minimale la réglementation lui impose-t-elle ?
 propositions:
   - id: a
     texte: 1,5 litre par personne pouvant être embarquée
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

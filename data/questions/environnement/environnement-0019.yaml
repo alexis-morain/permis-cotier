@@ -5,7 +5,8 @@ notion: env-rejets
 statut: publie
 difficulte: 2
 enonce: >-
-  Que punit l'article L. 218-73 du code de l'environnement ?
+  Lequel de ces actes le code de l'environnement punit-il, au titre des rejets en mer,
+  d'une amende pouvant atteindre 100 000 euros ?
 propositions:
   - id: a
     texte: Le rejet en mer de substances nuisibles aux animaux et végétaux marins
@@ -26,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

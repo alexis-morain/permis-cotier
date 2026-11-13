@@ -5,8 +5,8 @@ notion: securite-charge-personnes
 statut: publie
 difficulte: 2
 enonce: >-
-  La plaque de ton bateau indique six personnes. Vous êtes sept pour une courte sortie
-  par beau temps. Que dit la division 240 ?
+  La plaque de ton bateau indique six personnes. Vous êtes sept pour une courte sortie par
+  beau temps. Que dit la réglementation ?
 propositions:
   - id: a
     texte: Sauf force majeure, le nombre maximal de personnes n'est jamais dépassé en
@@ -28,4 +28,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

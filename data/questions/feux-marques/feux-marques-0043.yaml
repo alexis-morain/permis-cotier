@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   De nuit, tu voudrais allumer une guirlande de lampes colorées sur le pont pour la fête.
-  Que dit la règle 20 ?
+  Que dit le RIPAM ?
 propositions:
   - id: a
     texte: Ne montrer aucun feu pouvant être confondu avec les feux prescrits ou gêner la
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Ton voilier croise la voie de circulation d'un dispositif de séparation du trafic qu'un
-  cargo remonte. Que t'impose la règle 10 ?
+  cargo remonte. Que t'impose le RIPAM ?
 propositions:
   - id: a
     texte: Ne pas gêner le passage du cargo qui suit la voie de circulation
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

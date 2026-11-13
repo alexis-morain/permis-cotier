@@ -5,8 +5,8 @@ notion: barre-manoeuvre-evitement
 statut: publie
 difficulte: 3
 enonce: >-
-  Appliquer une règle à la lettre te mènerait droit sur un danger immédiat. Que permet
-  la règle 2 ?
+  Appliquer une règle à la lettre te mènerait droit sur un danger immédiat. Que permet le
+  RIPAM ?
 propositions:
   - id: a
     texte: S'écarter des règles quand les circonstances l'obligent pour éviter un danger
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

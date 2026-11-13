@@ -78,6 +78,24 @@ RE_COMPTE_REPONSES = re.compile(
     r"\b(deux|trois)\s+(?:\w+\s+)?(r[ée]ponses?|affirmations?|propositions?|cases?)\b",
     re.I,
 )
+# L'épreuve ne demande jamais ce que contient la règle X, elle demande le fond.
+# Un énoncé ou une proposition qui nomme un numéro de règle, d'article, d'annexe
+# ou de division oblige à connaître le numéro pour comprendre la question. Un
+# nom de texte sans numéro (« le RIPAM ») reste permis ; la source se cite dans
+# `sources` et dans l'explication, pas ici.
+RE_NUMERO_DE_TEXTE = re.compile(
+    r"\br[èe]gles? \d"
+    r"|\barticles? (?:[LRD]\. ?)?\d"
+    r"|\bart\. ?\d"
+    r"|\bannexes? (?-i:(?:I{1,3}|IV|V|VI)\b)"
+    r"|\bdivisions? \d"
+    r"|\b[LRD]\. ?\d{2,}",
+    re.I,
+)
+# Exception explicite : identifiant de question -> pourquoi elle exige vraiment
+# le numéro. Vide aujourd'hui ; une entrée sans justification est refusée par
+# les tests.
+NUMERO_PERMIS: dict[str, str] = {}
 RE_FAMILLE = re.compile(r"^[a-z][a-z0-9-]*$")
 RE_CREDIT = re.compile(r"^(genere|code|auteur|commons:.+)$")
 RE_FICHIER_VISUEL = re.compile(r"^[a-z0-9][a-z0-9/_-]*\.(svg|png|webp|jpg)$")
@@ -200,6 +218,14 @@ def valider_question(q: Any, fichier: Path, racine: Path) -> list[Probleme]:
     if RE_COMPTE_REPONSES.search(_texte(q.get("enonce"))):
         ko("enonce", "l'énoncé annonce le nombre de bonnes réponses, "
                      "ce que l'épreuve ne fait jamais")
+
+    if statut == "publie" and ident not in NUMERO_PERMIS:
+        textes = [_texte(q.get("enonce"))]
+        if isinstance(propositions, list):
+            textes += [_texte(pr.get("texte")) for pr in propositions if isinstance(pr, dict)]
+        if any(RE_NUMERO_DE_TEXTE.search(t) for t in textes):
+            ko("numero-de-texte", "l'énoncé ou une proposition nomme un numéro de règle, d'article, "
+                                  "d'annexe ou de division : l'épreuve demande le fond, pas le numéro")
 
     sources = q.get("sources")
     if not isinstance(sources, list) or not sources:

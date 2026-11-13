@@ -5,8 +5,8 @@ notion: ski-conditions
 statut: publie
 difficulte: 2
 enonce: >-
-  Un ami sans permis veut essayer un engin à sustentation hydropropulsé. Que dit la division
-  240 ?
+  Un ami sans permis veut essayer un engin à sustentation hydropropulsé. Que dit la
+  réglementation ?
 propositions:
   - id: a
     texte: Il doit avoir le permis côtier ou être accompagné d'un titulaire de ce permis
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

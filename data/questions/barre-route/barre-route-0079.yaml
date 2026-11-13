@@ -7,7 +7,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Dans un chenal étroit, un navire qui te suit veut te dépasser, et il ne peut le faire en
-  sécurité que si tu manœuvres. Tu es d'accord. Que te demande la règle 9 e) i) ?
+  sécurité que si tu manœuvres. Tu es d'accord. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Maintenir ton cap et ta vitesse, c'est à lui seul de manœuvrer puisqu'il te rattrape.
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

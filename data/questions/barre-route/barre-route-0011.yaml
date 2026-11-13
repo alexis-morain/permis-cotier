@@ -5,8 +5,8 @@ notion: barre-routes-croisees
 statut: publie
 difficulte: 3
 enonce: >-
-  Tes routes se croisent avec un autre navire à propulsion mécanique que tu vois sur tribord.
-  Outre le fait de t'écarter, que t'impose la règle 15 ?
+  Tes routes se croisent avec un autre navire à propulsion mécanique que tu vois sur
+  tribord. Outre le fait de t'écarter, que t'impose le RIPAM ?
 propositions:
   - id: a
     texte: Éviter, si les circonstances le permettent, de croiser sa route sur l'avant.
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

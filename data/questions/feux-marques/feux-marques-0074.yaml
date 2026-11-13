@@ -5,8 +5,7 @@ notion: feux-portee
 statut: publie
 difficulte: 1
 enonce: >-
-  Les distances que la règle 22 attache à chaque feu, ce sont des distances de quelle
-  nature ?
+  Les portées prescrites pour chaque feu, ce sont des distances de quelle nature ?
 propositions:
   - id: a
     texte: Des distances minimales de visibilité
@@ -26,4 +25,4 @@ meta:
   cree_le: '2026-09-21'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

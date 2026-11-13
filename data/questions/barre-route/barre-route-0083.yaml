@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu fais route près d'un dispositif de séparation du trafic, que tu n'utilises pas. Que
-  te demande la règle 10 h) ?
+  te demande le RIPAM ?
 propositions:
   - id: a
     texte: Le longer au plus près, tant que tu restes hors de ses voies.
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

@@ -5,7 +5,7 @@ notion: barre-chenal-etroit
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu cherches un endroit pour mouiller et passer la nuit. Que dit la règle 9 du mouillage
+  Tu cherches un endroit pour mouiller et passer la nuit. Que dit le RIPAM du mouillage
   dans un chenal étroit ?
 propositions:
   - id: a
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

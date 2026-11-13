@@ -6,7 +6,7 @@ statut: publie
 difficulte: 1
 enonce: >-
   Tu décides d'emprunter un dispositif de séparation du trafic. Il compte deux voies de
-  circulation, de sens opposés. Laquelle suis-tu, selon la règle 10 b) ?
+  circulation, de sens opposés. Laquelle suis-tu ?
 propositions:
   - id: a
     texte: La voie la plus proche de toi, dans le sens où elle est dégagée.
@@ -29,4 +29,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

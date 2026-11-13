@@ -5,7 +5,7 @@ notion: barre-voiliers
 statut: publie
 difficulte: 3
 enonce: >-
-  Comment la règle 12 détermine-t-elle le bord d'où un voilier reçoit le vent ?
+  Comment le RIPAM détermine-t-il le bord d'où un voilier reçoit le vent ?
 propositions:
   - id: a
     texte: C'est le bord opposé à celui où la grand-voile est bordée
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -114,12 +114,19 @@ sources.
 - **Un doublon se cherche par règle citée, jamais par notion** : comparer à la
   banque sur l'énoncé **et** sur le texte de la bonne réponse ; « 2 milles » et
   « 1 mille » se ressemblent pour rien.
-- `verifier_conversion.py` connaît **cinq gestes** (conversion, relecture en
-  bloc, resourcement, rééquilibrage, illustration) et refuse de les mêler ; hors
+- `verifier_conversion.py` connaît **six gestes** (conversion, relecture en
+  bloc, resourcement, rééquilibrage, illustration, reformulation) et refuse de les mêler ; hors
   relecture, une question touchée redescend en `relu_par: claude`. **Une
   retouche d'explication n'en est aucun** : il la signale, par construction.
   L'illustration ne bouge que `enonce`, `visuel`, `famille` et `meta` ; retirer
   un visuel n'est aucun geste.
+  La reformulation réécrit `enonce` et/ou le texte des propositions (lettres,
+  nombre, réponses, explication, sources, visuel, notion, thème constants) et
+  rend `relu_par` à `claude`.
+- **Aucun énoncé ni proposition publié ne nomme un numéro de règle, d'article,
+  d'annexe ou de division** (l'épreuve demande le fond) : `valider.py` le
+  refuse, la source reste dans `sources` et l'explication. Exception au cas
+  par cas : `NUMERO_PERMIS` dans `valider.py`, avec sa justification.
 - Deux branches qui bumpent `data/VERSION` prennent le même numéro et fusionnent
   sans bruit : vérifier après tout merge. L'app cherche la banque **par
   version**, et `/banque/v/` est en cache long : tout texte publié qui change

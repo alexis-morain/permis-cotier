@@ -5,8 +5,8 @@ notion: barre-risque-abordage
 statut: publie
 difficulte: 3
 enonce: >-
-  Ton radar ne montre qu'un écho faible et intermittent sur l'avant. Que te dit la règle
-  7 sur la conclusion à en tirer ?
+  Ton radar ne montre qu'un écho faible et intermittent sur l'avant. Que te dit le RIPAM
+  sur la conclusion à en tirer ?
 propositions:
   - id: a
     texte: >-
@@ -32,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

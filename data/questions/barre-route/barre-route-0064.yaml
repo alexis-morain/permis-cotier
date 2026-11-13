@@ -6,7 +6,8 @@ statut: publie
 difficulte: 3
 enonce: >-
   Vous faites route au moteur tous les deux, vos routes ne sont pas exactement opposées
-  mais presque, et le risque d'abordage existe. Que dit la règle 14 a) ?
+  mais presque, et le risque d'abordage existe. La règle des routes directement opposées
+  s'applique-t-elle ?
 propositions:
   - id: a
     texte: Elle s'applique, des routes à peu près opposées lui suffisent.
@@ -28,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

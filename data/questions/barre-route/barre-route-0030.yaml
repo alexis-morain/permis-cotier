@@ -7,7 +7,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu es le bateau du bas, tu fais route au moteur, et le navire qui approche est lui aussi
-  à propulsion mécanique. L'abordage est à craindre. Que t'impose la règle 15 ?
+  à propulsion mécanique. L'abordage est à craindre. Que t'impose le RIPAM ?
 visuel:
   fichier: situations/routes-croisees-tribord.svg
   alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image. Un navire à moteur vient de la droite, cap vers la gauche, et coupera ta route devant toi."
@@ -37,4 +37,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'
