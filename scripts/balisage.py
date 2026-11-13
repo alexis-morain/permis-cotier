@@ -75,6 +75,33 @@ MARQUES: dict[str, dict] = {
         "alt": "Bouée conique rouge surmontée d'un voyant conique rouge, pointe en haut.",
         "regle": "AISM, système de balisage maritime, région B, marque latérale tribord",
     },
+    "chenal-prefere-tribord": {
+        # Annexe I, 2.3.3.1 : rouge à large bande horizontale verte, cylindrique,
+        # voyant d'un seul cylindre rouge.
+        "forme": "cylindre", "corps": ["rouge", "vert", "rouge"], "sens": "horizontal",
+        "voyant": "cylindre",
+        "voyant_couleur": "rouge",
+        "alt": "Bouée cylindrique rouge à large bande verte, surmontée d'un voyant cylindrique rouge.",
+        "regle": "Arrêté du 30 novembre 2017, annexe I, 2.3.3.1, chenal préféré à tribord, région A",
+    },
+    "chenal-prefere-babord-region-b": {
+        # Annexe I, 2.4.3.2 : rouge à large bande horizontale verte, conique,
+        # voyant d'un seul cône rouge pointe en haut.
+        "forme": "cone", "corps": ["rouge", "vert", "rouge"], "sens": "horizontal",
+        "voyant": "cone-haut",
+        "voyant_couleur": "rouge",
+        "alt": "Bouée conique rouge à large bande verte, surmontée d'un voyant conique rouge, pointe en haut.",
+        "regle": "Arrêté du 30 novembre 2017, annexe I, 2.4.3.2, chenal préféré à bâbord, région B",
+    },
+    "chenal-prefere-tribord-region-b": {
+        # Annexe I, 2.4.3.1 : verte à large bande horizontale rouge, cylindrique,
+        # voyant d'un seul cylindre vert.
+        "forme": "cylindre", "corps": ["vert", "rouge", "vert"], "sens": "horizontal",
+        "voyant": "cylindre",
+        "voyant_couleur": "vert",
+        "alt": "Bouée cylindrique verte à large bande rouge, surmontée d'un voyant cylindrique vert.",
+        "regle": "Arrêté du 30 novembre 2017, annexe I, 2.4.3.1, chenal préféré à tribord, région B",
+    },
     "cardinale-nord": {
         "forme": "pilier", "corps": ["noir", "jaune"], "sens": "horizontal",
         "voyant": "deux-cones-haut",
@@ -135,6 +162,18 @@ MARQUES: dict[str, dict] = {
         "voyant_couleur": "jaune",
         "alt": "Bouée à bandes verticales bleues et jaunes, surmontée d'une croix jaune droite.",
         "regle": "AISM, système de balisage maritime, marque de danger nouveau",
+    },
+}
+
+# Les panneaux de jour qui marquent un chenal sous un pont (annexe III, 2) : un
+# panneau sur une pile, une forme pleine peinte, sur fond blanc. En région A, le
+# carré rouge est le côté bâbord du chenal navigable, le triangle vert pointe en
+# haut le côté tribord ; seul le carré est dessiné, c'est le seul qu'on demande.
+PANNEAUX: dict[str, dict] = {
+    "pont-carre-rouge": {
+        "forme": "carre", "couleur": "rouge",
+        "alt": "Panneau blanc fixé en haut d'une pile de pont, portant un carré plein rouge.",
+        "regle": "Arrêté du 30 novembre 2017, annexe III, 2, région A, côté bâbord du chenal",
     },
 }
 
@@ -272,15 +311,40 @@ def svg_de_marque(nom: str) -> str:
     ]) + "\n"
 
 
+def svg_de_panneau(nom: str) -> str:
+    panneau = PANNEAUX[nom]
+    teinte = COULEURS[panneau["couleur"]]
+    hauteur, cote, moitie = 190, 64, 32
+    haut = 22
+    if panneau["forme"] == "carre":
+        forme = f'<rect x="{CENTRE - 22}" y="{haut + moitie - 22}" width="44" height="44" fill="{teinte}" />'
+    else:
+        forme = (f'<polygon points="{CENTRE},{haut + 8} {CENTRE + 24},{haut + cote - 8} '
+                 f'{CENTRE - 24},{haut + cote - 8}" fill="{teinte}" />')
+    return "\n".join([
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {LARGEUR} {hauteur}" '
+        f'width="{LARGEUR}" height="{hauteur}" role="img">',
+        f'<rect width="{LARGEUR}" height="{hauteur}" fill="{CIEL}" />',
+        # La pile, de pierre, descend dans l'eau ; le panneau est fixé à son sommet.
+        f'<rect x="{CENTRE - 26}" y="{haut + cote}" width="52" height="{hauteur - haut - cote}" fill="#8a8a85" />',
+        f'<rect x="{CENTRE - cote / 2}" y="{haut}" width="{cote}" height="{cote}" rx="3" '
+        f'fill="{COULEURS["blanc"]}" stroke="#2a2a2a" stroke-opacity="0.45" stroke-width="2" />',
+        forme,
+        f'<rect y="{hauteur - EAU}" width="{LARGEUR}" height="{EAU}" fill="{MER}" fill-opacity="0.92" />',
+        "</svg>",
+    ]) + "\n"
+
+
 def main(argv: list[str] | None = None) -> int:
     elements = {nom: svg_de_marque(nom) for nom in MARQUES}
+    elements.update({nom: svg_de_panneau(nom) for nom in PANNEAUX})
     return main_dessin(
         argv,
         racine=RACINE,
         sortie=SORTIE,
         elements=elements,
         commande_npm="balisage",
-        label="marque(s)",
+        label="marque(s) et panneau(x)",
     )
 
 

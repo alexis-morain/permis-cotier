@@ -6,9 +6,12 @@ famille: balisage-chenal-prefere-bande
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu remontes un chenal depuis le large. À l'endroit où il se divise en deux, tu relèves
-  une bouée cylindrique rouge portant une large bande horizontale verte. Que t'indique-t-elle
-  ?
+  Tu remontes un chenal depuis le large. À l'endroit où il se divise en deux, tu relèves cette
+  bouée. Que t'indique-t-elle ?
+visuel:
+  fichier: balisage/chenal-prefere-tribord.svg
+  alt: "Bouée cylindrique rouge à large bande verte, surmontée d'un voyant cylindrique rouge."
+  credit: code
 propositions:
   - id: a
     texte: Le chenal à emprunter de préférence est à tribord, tu la laisses sur bâbord
@@ -31,5 +34,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

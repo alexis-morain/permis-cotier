@@ -2,11 +2,15 @@ id: signaux-0031
 option: cotier
 theme: signaux
 notion: signaux-portuaires
+famille: signaux-portuaires-trois-feux
 statut: publie
 difficulte: 1
 enonce: >-
-  Tu approches de l'entrée d'un port et tu vois trois feux rouges disposés verticalement.
-  Que t'indiquent-ils ?
+  Tu approches de l'entrée d'un port et tu vois ce signal. Que t'indique-t-il ?
+visuel:
+  fichier: ecluses/port-trois-rouges-verticaux.svg
+  alt: "Trois feux rouges allumés, l'un au-dessus de l'autre."
+  credit: code
 propositions:
   - id: a
     texte: Le passage est interdit
@@ -27,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

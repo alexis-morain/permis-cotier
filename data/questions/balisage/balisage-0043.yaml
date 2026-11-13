@@ -2,11 +2,15 @@ id: balisage-0043
 option: cotier
 theme: balisage
 notion: balisage-cardinal
+famille: balisage-cardinale-de-jour
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu relèves une bouée dont le corps est jaune avec une seule large bande horizontale
-  noire. Quelle marque cardinale as-tu devant toi ?
+  Cette bouée se présente à toi. Quelle marque cardinale est-ce ?
+visuel:
+  fichier: balisage/cardinale-ouest.svg
+  alt: "Bouée jaune à bande noire, surmontée de deux cônes noirs pointes l'une contre l'autre."
+  credit: code
 propositions:
   - id: a
     texte: Une cardinale Ouest
@@ -26,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

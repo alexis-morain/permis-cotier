@@ -5,8 +5,12 @@ notion: balisage-lateral
 statut: publie
 difficulte: 2
 enonce: >-
-  En région A, tu remontes un chenal qui passe sous un pont. Sur une pile, un panneau
-  montre un carré plein peint en rouge. Que t'indique-t-il ?
+  En région A, tu remontes un chenal qui passe sous un pont. Sur une pile, tu relèves ce
+  panneau. Que t'indique-t-il ?
+visuel:
+  fichier: balisage/pont-carre-rouge.svg
+  alt: "Panneau blanc fixé en haut d'une pile de pont, portant un carré plein rouge."
+  credit: code
 propositions:
   - id: a
     texte: La limite tribord du chenal navigable
@@ -30,4 +34,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

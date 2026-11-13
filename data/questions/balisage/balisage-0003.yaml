@@ -2,11 +2,15 @@ id: balisage-0003
 option: cotier
 theme: balisage
 notion: balisage-feux
+famille: balisage-cardinale-de-nuit
 statut: publie
 difficulte: 3
 enonce: >-
-  De nuit, tu relèves un feu blanc à six scintillements suivis d'un éclat long, répété
-  toutes les quinze secondes. Quelle marque as-tu devant toi ?
+  De nuit, tu relèves ce feu. Quelle marque as-tu devant toi ?
+visuel:
+  fichier: rythmes/cardinale-sud.svg
+  alt: "Feu blanc à six scintillements groupés, suivis d'un éclat long nettement plus soutenu que les six premiers."
+  credit: code
 propositions:
   - id: a
     texte: Une cardinale Sud
@@ -28,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-11-13'

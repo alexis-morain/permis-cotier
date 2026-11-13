@@ -12,7 +12,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from balisage import COULEURS, MARQUES, svg_de_marque  # noqa: E402
+from balisage import COULEURS, MARQUES, PANNEAUX, svg_de_marque, svg_de_panneau  # noqa: E402
 
 
 def couleurs_du_corps(nom):
@@ -105,3 +105,47 @@ def test_le_svg_est_autonome():
 def test_une_marque_inconnue_est_refusee():
     with pytest.raises(KeyError):
         svg_de_marque("cardinale-nord-est")
+
+
+# Chenal préféré : l'annexe I (2.3.3 en région A, 2.4.3 en région B) décrit des
+# marques latérales modifiées, couleur de la latérale avec une large bande de
+# l'autre couleur, forme et voyant de la latérale du côté concerné.
+def test_le_chenal_prefere_a_tribord_region_a_est_rouge_a_bande_verte_cylindrique():
+    m = MARQUES["chenal-prefere-tribord"]
+    assert m["corps"] == ["rouge", "vert", "rouge"] and m["sens"] == "horizontal"
+    assert (m["forme"], m["voyant"], m["voyant_couleur"]) == ("cylindre", "cylindre", "rouge")
+
+
+def test_le_chenal_prefere_a_babord_region_b_est_rouge_a_bande_verte_conique():
+    m = MARQUES["chenal-prefere-babord-region-b"]
+    assert m["corps"] == ["rouge", "vert", "rouge"] and m["sens"] == "horizontal"
+    assert (m["forme"], m["voyant"], m["voyant_couleur"]) == ("cone", "cone-haut", "rouge")
+
+
+def test_le_chenal_prefere_a_tribord_region_b_est_vert_a_bande_rouge_cylindrique():
+    m = MARQUES["chenal-prefere-tribord-region-b"]
+    assert m["corps"] == ["vert", "rouge", "vert"] and m["sens"] == "horizontal"
+    assert (m["forme"], m["voyant"], m["voyant_couleur"]) == ("cylindre", "cylindre", "vert")
+
+
+def test_le_meme_rouge_a_bande_verte_change_de_sens_avec_la_forme():
+    # Région A, chenal préféré à tribord : cylindrique. Région B, à bâbord :
+    # conique. Mêmes couleurs, la forme seule les sépare.
+    a, b = MARQUES["chenal-prefere-tribord"], MARQUES["chenal-prefere-babord-region-b"]
+    assert a["corps"] == b["corps"] and a["forme"] != b["forme"]
+    assert svg_de_marque("chenal-prefere-tribord") != svg_de_marque("chenal-prefere-babord-region-b")
+
+
+def test_le_panneau_de_pont_a_babord_region_a_est_un_carre_rouge():
+    p = PANNEAUX["pont-carre-rouge"]
+    assert (p["forme"], p["couleur"]) == ("carre", "rouge")
+    svg = svg_de_panneau("pont-carre-rouge")
+    assert svg.startswith("<svg") and COULEURS["rouge"] in svg
+
+
+@pytest.mark.parametrize("nom, panneau", PANNEAUX.items())
+def test_chaque_panneau_est_completement_decrit(nom, panneau):
+    assert set(panneau) == {"forme", "couleur", "alt", "regle"}
+    assert panneau["couleur"] in COULEURS and panneau["forme"] in ("carre", "triangle")
+    assert panneau["regle"].startswith("Arrêté du 30 novembre 2017, annexe III")
+    assert "<text" not in svg_de_panneau(nom)

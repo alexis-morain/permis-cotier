@@ -5,8 +5,12 @@ notion: signaux-lumineux
 statut: publie
 difficulte: 1
 enonce: >-
-  De nuit, un navire complète son signal au sifflet par trois éclats de son feu blanc.
-  Que t'annonce-t-il ?
+  De nuit, un navire complète son signal au sifflet par ces éclats de son feu blanc. Que
+  t'annonce-t-il ?
+visuel:
+  fichier: rythmes/manoeuvre-trois-eclats.svg
+  alt: "Feu blanc qui donne trois éclats de même durée, séparés par des intervalles égaux, puis une pause plus longue."
+  credit: code
 propositions:
   - id: a
     texte: Il bat en arrière
@@ -26,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

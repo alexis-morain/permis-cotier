@@ -5,8 +5,12 @@ notion: feux-mouillage-echoue
 statut: publie
 difficulte: 3
 enonce: >-
-  Ton bateau de 9 mètres s'est échoué de nuit. Es-tu tenu de montrer les deux feux rouges
-  superposés du navire échoué ?
+  Ton bateau de 9 mètres s'est échoué de nuit. Es-tu tenu de montrer ces deux feux rouges
+  superposés ?
+visuel:
+  fichier: feux/non-maitre-de-sa-manoeuvre.svg
+  alt: "Deux feux rouges superposés visibles sur tout l'horizon."
+  credit: code
 propositions:
   - id: a
     texte: Non, sous 12 mètres un navire échoué en est dispensé
@@ -26,4 +30,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

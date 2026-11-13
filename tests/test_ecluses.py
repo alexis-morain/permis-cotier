@@ -37,7 +37,9 @@ def test_chaque_signal_est_completement_decrit(nom, signal):
     for ligne in signal["feux"]:
         assert ligne, f"{nom} porte une ligne vide"
         assert all(c in TEINTES for c in ligne), f"{nom} porte une couleur inconnue"
-    assert signal["regle"].startswith("Code des transports, article A. 4241-53-31")
+    assert signal["regle"].startswith(
+        ("Code des transports, article A. 4241-53-31", "Arrêté du 30 novembre 2017, annexe V, 6.15")
+    )
     assert svg_de_signal(nom).startswith("<svg")
 
 
@@ -52,7 +54,7 @@ def test_superpose_et_juxtapose_ne_se_dessinent_pas_pareil():
 
 
 def test_seuls_les_signaux_tout_verts_autorisent_l_acces():
-    autorisent = {"acces-vert-isole", "acces-deux-verts-juxtaposes"}
+    autorisent = {"acces-vert-isole", "acces-deux-verts-juxtaposes", "port-trois-verts-verticaux"}
     for nom, signal in SIGNAUX.items():
         couleurs = {c for ligne in signal["feux"] for c in ligne}
         sans_rouge = "rouge" not in couleurs
@@ -104,3 +106,11 @@ def test_le_svg_est_autonome():
 def test_un_signal_inconnu_est_refuse():
     with pytest.raises(KeyError):
         svg_de_signal("acces-orange-clignotant")
+
+
+def test_les_signaux_de_port_sont_trois_feux_verticaux_de_meme_couleur():
+    # Annexe V, 6.15 : « trois feux verticaux rouge » passage interdit, « trois
+    # feux verticaux vert » passage autorisé sous certaines conditions.
+    assert SIGNAUX["port-trois-rouges-verticaux"]["feux"] == [["rouge"], ["rouge"], ["rouge"]]
+    assert SIGNAUX["port-trois-verts-verticaux"]["feux"] == [["vert"], ["vert"], ["vert"]]
+    assert svg_de_signal("port-trois-rouges-verticaux") != svg_de_signal("port-trois-verts-verticaux")

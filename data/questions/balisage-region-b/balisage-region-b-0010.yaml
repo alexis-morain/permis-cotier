@@ -7,7 +7,11 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tu navigues en Martinique, en région de balisage B. Là où le chenal se divise, tu relèves
-  une bouée cylindrique verte portant une large bande horizontale rouge. Que t'indique-t-elle ?
+  cette bouée. Que t'indique-t-elle ?
+visuel:
+  fichier: balisage/chenal-prefere-tribord-region-b.svg
+  alt: "Bouée cylindrique verte à large bande rouge, surmontée d'un voyant cylindrique vert."
+  credit: code
 propositions:
   - id: a
     texte: Le chenal à emprunter de préférence est à bâbord
@@ -35,4 +39,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

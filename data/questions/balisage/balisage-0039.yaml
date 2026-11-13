@@ -5,8 +5,11 @@ notion: balisage-chenal-prefere
 statut: publie
 difficulte: 3
 enonce: >-
-  De nuit, en remontant un chenal, tu relèves un feu vert à éclats groupés deux plus un.
-  Quelle marque le porte ?
+  De nuit, en remontant un chenal, tu relèves ce feu vert. Quelle marque le porte ?
+visuel:
+  fichier: rythmes/chenal-prefere-babord.svg
+  alt: "Feu vert à éclats groupés, deux éclats rapprochés, un intervalle, un éclat isolé, puis une pause plus longue."
+  credit: code
 propositions:
   - id: a
     texte: Une marque de chenal préféré à bâbord, verte à bande rouge
@@ -27,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'
