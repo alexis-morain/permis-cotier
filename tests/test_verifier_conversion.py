@@ -149,9 +149,11 @@ def test_des_identifiants_a_trou_sont_refuses():
     assert any("identifiant" in p for p in verifier(AVANT, casse))
 
 
-def test_un_enonce_modifie_est_refuse():
-    casse = apres(enonce="Autre énoncé", meta={"relu_par": "claude"})
-    assert any("enonce" in p for p in verifier(AVANT, casse))
+def test_un_enonce_modifie_sans_rendre_la_relecture_est_refuse():
+    # Depuis la reformulation, un énoncé réécrit est un geste connu, à la seule
+    # condition de rendre la relecture à Claude.
+    casse = apres(enonce="Autre énoncé")
+    assert any("relu_par" in p for p in verifier(AVANT, casse))
 
 
 def test_une_conversion_qui_garde_la_relecture_humaine_est_signalee():
@@ -278,6 +280,93 @@ def test_illustrer_et_resourcer_dans_le_meme_geste_est_refuse():
     assert any("deux gestes" in p for p in verifier(AVANT, casse))
 
 
-def test_un_enonce_reecrit_sans_visuel_reste_refuse():
+def test_un_enonce_reecrit_sans_visuel_est_une_reformulation():
     casse = apres(enonce="De nuit, ce navire te montre ces feux. Que fait-il ?", meta={"relu_par": "claude"})
-    assert any("enonce" in p for p in verifier(AVANT, casse))
+    assert verifier(AVANT, casse) == []
+
+
+# Le sixième geste : reformuler. L'énoncé, ou le texte des propositions, ou les
+# deux, sont réécrits pour demander le fond au lieu d'un numéro de texte. Lettres,
+# nombre de propositions, réponses, explication, sources, visuel, notion et thème
+# ne bougent pas ; la relecture humaine portait sur des mots que le candidat ne
+# verra plus, elle retombe sur Claude.
+REFORMULEE = apres(
+    enonce="Le programme demande-t-il l'autonomie en carburant ?",
+    meta={"relu_par": "claude", "relu_le": "2026-10-03"},
+)
+REFORMULEE_AVEC_PROPOSITIONS = apres(
+    enonce="Le programme demande-t-il l'autonomie en carburant ?",
+    propositions=[
+        {"id": "a", "texte": "Non, elle relève de l'extension hauturière"},
+        {"id": "b", "texte": "Oui, le programme l'exige"},
+        {"id": "c", "texte": "Non, aucun texte ne s'en occupe"},
+        {"id": "d", "texte": "Oui, au-dessus de 6 mètres"},
+    ],
+    meta={"relu_par": "claude", "relu_le": "2026-10-03"},
+)
+
+
+def test_une_reformulation_propre_ne_pose_aucun_probleme():
+    assert verifier(AVANT, REFORMULEE) == []
+
+
+def test_une_reformulation_peut_reecrire_aussi_les_propositions():
+    assert verifier(AVANT, REFORMULEE_AVEC_PROPOSITIONS) == []
+
+
+def test_une_reformulation_qui_garde_la_relecture_humaine_est_signalee():
+    casse = {**REFORMULEE, "meta": {**REFORMULEE["meta"], "relu_par": "alexis"}}
+    assert any("relu_par" in p for p in verifier(AVANT, casse))
+
+
+def test_une_reformulation_ne_change_pas_la_lettre_de_la_bonne_reponse():
+    casse = {**REFORMULEE_AVEC_PROPOSITIONS, "reponses": ["a"]}
+    assert any("bonne réponse" in p for p in verifier(AVANT, casse))
+
+
+def test_une_reformulation_ne_donne_pas_a_la_bonne_reponse_le_texte_d_un_distracteur():
+    casse = {**REFORMULEE_AVEC_PROPOSITIONS, "propositions": [
+        {"id": "a", "texte": "Non, elle relève de l'extension hauturière"},
+        {"id": "b", "texte": "Non, aucun texte ne s'en occupe"},
+        {"id": "c", "texte": "Oui, le programme le demande"},
+        {"id": "d", "texte": "Oui, au-dessus de 6 mètres"},
+    ]}
+    assert any("bonne réponse" in p or "distracteur" in p for p in verifier(AVANT, casse))
+
+
+def test_une_reformulation_ne_touche_pas_l_explication():
+    casse = {**REFORMULEE, "explication": "Autre explication."}
+    assert any("explication" in p for p in verifier(AVANT, casse))
+
+
+def test_une_reformulation_ne_touche_ni_notion_ni_theme():
+    avant = {**AVANT, "notion": "carburant-autonomie", "theme": "carburant"}
+    assert any("notion" in p for p in verifier(avant, {**REFORMULEE, "theme": "carburant", "notion": "autre"}))
+    assert any("theme" in p for p in verifier(avant, {**REFORMULEE, "theme": "meteo", "notion": "carburant-autonomie"}))
+
+
+def test_reformuler_et_convertir_dans_le_meme_geste_est_refuse():
+    casse = {**REFORMULEE, "propositions": AVANT["propositions"][:2]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+def test_reformuler_et_resourcer_dans_le_meme_geste_est_refuse():
+    casse = {**REFORMULEE, "sources": [{"texte": "RIPAM, règle 26 c) i)", "ref": "decret-77-733"}]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+def test_reformuler_et_illustrer_dans_le_meme_geste_est_l_illustration():
+    # Un énoncé réécrit avec un visuel posé est une illustration : ses propres
+    # règles s'appliquent, dont celle de ne pas toucher aux propositions.
+    casse = {**ILLUSTREE, "propositions": [
+        {"id": "a", "texte": "Non, elle relève de l'extension hauturière"},
+        {"id": "b", "texte": "Oui, le programme l'exige"},
+        {"id": "c", "texte": "Non, aucun texte ne s'en occupe"},
+        {"id": "d", "texte": "Oui, au-dessus de 6 mètres"},
+    ]}
+    assert any("deux gestes" in p for p in verifier(AVANT, casse))
+
+
+def test_une_reformulation_ne_retire_pas_un_visuel():
+    avant = {**AVANT, "visuel": VISUEL}
+    assert any("visuel" in p for p in verifier(avant, REFORMULEE))

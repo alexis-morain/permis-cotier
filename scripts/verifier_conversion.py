@@ -8,7 +8,7 @@ seul un rapprochement avec la version d'avant le voit.
 
 Ce script compare la banque de travail à une référence git et refuse toute
 conversion qui ferait autre chose que retirer des propositions. Il connaît
-trois autres gestes légitimes : la relecture en bloc, qui ne touche que `meta` ;
+cinq autres gestes légitimes : la relecture en bloc, qui ne touche que `meta` ;
 le resourcement, qui remplace la citation affichée sans toucher à la question
 et rend la relecture à Claude ; le rééquilibrage, qui réécrit le texte des
 propositions à lettres, nombre et réponse constants, pour que la bonne réponse
@@ -16,7 +16,11 @@ ne se reconnaisse plus à sa longueur (`longueur.py`), et rend lui aussi la
 relecture à Claude ; l'illustration, qui pose ou remplace le visuel d'une
 question dont l'énoncé décrivait l'image en mots, réécrit cet énoncé pour
 désigner l'image, laisse propositions, réponse, explication et sources
-intactes, et rend la relecture à Claude. Un geste à la fois : convertir et
+intactes, et rend la relecture à Claude ; la reformulation, qui réécrit
+l'énoncé et/ou le texte des propositions pour demander le fond au lieu d'un
+numéro de règle, d'article, d'annexe ou de division, lettres, nombre de
+propositions, réponses, explication, sources, visuel, notion et thème constants,
+et rend elle aussi la relecture à Claude. Un geste à la fois : convertir et
 resourcer dans le même diff cache les deux vérifications l'une derrière l'autre.
 
     python3 scripts/verifier_conversion.py            # contre HEAD
@@ -62,8 +66,9 @@ def verifier(avant: dict, apres: dict) -> list[str]:
     illustree = visuel_change and apres.get("visuel") is not None
     if visuel_change and not illustree:
         problemes.append("le visuel a été retiré, aucun geste connu ne fait cela")
-    if avant.get("enonce") != apres.get("enonce") and not illustree:
-        problemes.append("le champ enonce a changé sans visuel posé, une conversion ne retire que des propositions")
+    # Sans visuel posé, un énoncé réécrit est une reformulation : le candidat
+    # doit y trouver le fond de la question, plus un numéro de texte.
+    reformulee = avant.get("enonce") != apres.get("enonce") and not visuel_change
 
     textes_avant, textes_apres = _textes(avant), _textes(apres)
     if len(textes_apres) > len(textes_avant):
@@ -85,6 +90,8 @@ def verifier(avant: dict, apres: dict) -> list[str]:
         problemes.append(f"identifiants attendus {attendus}, reçus {list(textes_apres)}")
 
     if reequilibree:
+        # Réécrire énoncé et propositions ensemble est une reformulation, pas
+        # deux gestes : mêmes garanties que le rééquilibrage.
         problemes.extend(_verifier_reequilibrage(avant, apres, textes_avant, textes_apres, relu_par))
     else:
         reponses_avant = sorted(textes_avant.get(r, r) for r in avant.get("reponses", []))
@@ -107,6 +114,17 @@ def verifier(avant: dict, apres: dict) -> list[str]:
             problemes.append(
                 f"deux gestes dans le même diff : la question est illustrée et {nom} à la fois, "
                 "chacun demande sa vérification, ils se relisent séparément"
+            )
+    if reformulee:
+        for autre, nom in ((converti, "convertie"), (resource, "resourcée")):
+            if autre:
+                problemes.append(
+                    f"deux gestes dans le même diff : la question est reformulée et {nom} à la fois, "
+                    "chacun demande sa vérification, ils se relisent séparément"
+                )
+        if relu_par != "claude":
+            problemes.append(
+                f"question reformulée mais meta.relu_par vaut {relu_par!r} : la relecture porte sur un énoncé que le candidat ne verra plus"
             )
     if illustree and relu_par != "claude":
         problemes.append(
@@ -133,7 +151,7 @@ def verifier(avant: dict, apres: dict) -> list[str]:
     # porterait alors sur une forme que personne n'a lue.
     substance = lambda q: {c: v for c, v in q.items() if c not in ("meta", "sources")}
     retouchee = substance(avant) != substance(apres)
-    if (not converti and not resource and not reequilibree and not illustree and retouchee
+    if (not converti and not resource and not reequilibree and not illustree and not reformulee and retouchee
             and relu_par != (avant.get("meta") or {}).get("relu_par")):
         problemes.append("meta.relu_par a changé sur une question retouchée")
 
