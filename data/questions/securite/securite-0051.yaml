@@ -5,8 +5,8 @@ notion: securite-plongeurs
 statut: publie
 difficulte: 3
 enonce: >-
-  Un bateau de 8 mètres participe à des opérations de plongée. Le RIPAM le dispense-t-il
-  de montrer ses feux et marques, comme les autres navires de moins de 12 mètres ?
+  Un bateau de 8 mètres participe à des opérations de plongée. Est-il dispensé de montrer
+  ses feux et marques, comme les autres navires de moins de 12 mètres ?
 propositions:
   - id: a
     texte: Non, les navires participant à des opérations de plongée font exception

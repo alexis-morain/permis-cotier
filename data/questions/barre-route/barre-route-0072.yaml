@@ -5,7 +5,7 @@ notion: barre-risque-abordage
 statut: publie
 difficulte: 2
 enonce: >-
-  Le RIPAM demande de recourir au balayage à longue portée du radar. À quoi sert-il ?
+  Ton radar a un balayage à longue portée. À quoi sert-il ?
 propositions:
   - id: a
     texte: À déceler à l'avance un risque d'abordage.

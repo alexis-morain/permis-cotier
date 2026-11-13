@@ -7,7 +7,7 @@ difficulte: 3
 enonce: >-
   Tu es le bateau du bas, au moteur. Le navire à moteur que tu vois doit s'écarter de ta
   route, mais il n'en prend visiblement pas le chemin et tu décides de manœuvrer seul. Que
-  t'interdit le RIPAM ?
+  dois-tu éviter ?
 visuel:
   fichier: situations/routes-croisees-babord.svg
   alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image. Un navire à moteur vient de la gauche, cap vers la droite, et coupera ta route devant toi."

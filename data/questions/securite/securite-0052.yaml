@@ -5,8 +5,8 @@ notion: securite-visibilite-restreinte
 statut: publie
 difficulte: 3
 enonce: >-
-  Dans la brume, ton radar te signale un navire que tu ne vois pas. Que te demande le
-  RIPAM avant même de manœuvrer ?
+  Dans la brume, ton radar te signale un navire que tu ne vois pas. Que dois-tu faire
+  avant même de manœuvrer ?
 propositions:
   - id: a
     texte: De déterminer si une situation très rapprochée se crée ou si un risque

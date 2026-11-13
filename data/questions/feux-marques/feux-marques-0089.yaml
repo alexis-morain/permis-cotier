@@ -6,8 +6,8 @@ statut: publie
 difficulte: 3
 enonce: >-
   De nuit, tu prends en remorque un voilier en panne qui demande assistance. Ton bateau ne
-  remorque jamais d'ordinaire et ne peut pas montrer les feux de remorquage. Que dit le
-  RIPAM ?
+  remorque jamais d'ordinaire et ne peut pas montrer les feux de remorquage. Que dois-tu
+  faire ?
 propositions:
   - id: a
     texte: Tu dois lâcher la remorque tant que tu ne peux pas montrer ces feux

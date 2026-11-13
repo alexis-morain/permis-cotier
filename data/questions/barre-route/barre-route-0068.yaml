@@ -5,7 +5,7 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 1
 enonce: >-
-  Le RIPAM t'impose une veille permanente. Dans quel but, selon son texte ?
+  Tu dois assurer une veille permanente. À quoi sert-elle ?
 propositions:
   - id: a
     texte: Pour tenir ton cap et relever ta route au compas.

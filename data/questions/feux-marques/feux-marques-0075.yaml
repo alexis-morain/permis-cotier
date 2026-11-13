@@ -5,15 +5,14 @@ notion: feux-tirant-eau
 statut: publie
 difficulte: 3
 enonce: >-
-  Un navire handicapé par son tirant d'eau montre trois feux rouges superposés. Que dit le
-  RIPAM de cette signalisation ?
+  Un navire handicapé par son tirant d'eau doit-il montrer trois feux rouges superposés ?
 propositions:
   - id: a
-    texte: Il doit la montrer dès qu'il navigue dans un chenal dragué
+    texte: Oui, dès qu'il navigue dans un chenal dragué
   - id: b
-    texte: Il peut la montrer, la règle ne l'y oblige pas
+    texte: Non, il peut les montrer, la règle ne l'y oblige pas
   - id: c
-    texte: Il doit la montrer dès que sa quille approche du fond
+    texte: Oui, dès que sa quille approche du fond
 reponses:
   - b
 explication: >-

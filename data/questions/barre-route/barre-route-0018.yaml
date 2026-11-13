@@ -6,8 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu barres un voilier de 8 mètres dans un chenal étroit et un cargo qui ne peut y
-  naviguer en sécurité qu'à l'intérieur du chenal remonte vers toi. Que t'impose le RIPAM
-  ?
+  naviguer en sécurité qu'à l'intérieur du chenal remonte vers toi. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Tu ne dois pas gêner son passage.

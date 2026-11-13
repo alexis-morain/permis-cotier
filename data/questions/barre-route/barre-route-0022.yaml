@@ -5,7 +5,7 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 2
 enonce: >-
-  Qu'est-ce qui définit la vitesse de sécurité au sens du RIPAM ?
+  Qu'est-ce qui définit la vitesse de sécurité ?
 propositions:
   - id: a
     texte: >-

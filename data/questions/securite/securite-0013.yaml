@@ -6,8 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Le dispositif de repérage et d'assistance pour personne tombée à l'eau que tu embarques
-  doit porter un feu. Quelle autonomie et quelle portée la réglementation lui
-  demande-t-elle ?
+  doit porter un feu. Quelle autonomie et quelle portée doit avoir ce feu ?
 propositions:
   - id: a
     texte: Au moins six heures d'autonomie, visible sur tout l'horizon jusqu'à un demi-mille.

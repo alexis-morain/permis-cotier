@@ -5,8 +5,8 @@ notion: vhf-emport
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu navigues à quatre milles d'un abri sur ton propre bateau à moteur. La réglementation
-  t'impose-t-elle d'embarquer une VHF ?
+  Tu navigues à quatre milles d'un abri sur ton propre bateau à moteur. Dois-tu embarquer
+  une VHF ?
 propositions:
   - id: a
     texte: Non, l'armement côtier n'en exige pas

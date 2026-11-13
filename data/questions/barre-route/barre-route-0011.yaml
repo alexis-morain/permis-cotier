@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tes routes se croisent avec un autre navire à propulsion mécanique que tu vois sur
-  tribord. Outre le fait de t'écarter, que t'impose le RIPAM ?
+  tribord. Outre le fait de t'écarter, que dois-tu faire ?
 propositions:
   - id: a
     texte: Éviter, si les circonstances le permettent, de croiser sa route sur l'avant.

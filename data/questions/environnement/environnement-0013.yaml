@@ -5,8 +5,8 @@ notion: env-equipement-sanitaire
 statut: publie
 difficulte: 2
 enonce: >-
-  Ton bateau est équipé de toilettes. Quels dispositifs la réglementation admet-elle pour
-  les eaux usées ?
+  Ton bateau est équipé de toilettes. Quels dispositifs peux-tu installer pour les eaux
+  usées ?
 propositions:
   - id: a
     texte: Un ensemble de capacités de rétention des eaux usées des toilettes

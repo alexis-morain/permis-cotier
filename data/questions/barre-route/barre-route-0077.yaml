@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Une règle impose à un autre navire de ne pas gêner ton passage. Vous vous rapprochez
-  pourtant au point qu'un risque d'abordage existe. Que dit le RIPAM de toi ?
+  pourtant au point qu'un risque d'abordage existe. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Tu gardes ton cap et ta vitesse jusqu'au bout, l'évitement lui revient en entier.

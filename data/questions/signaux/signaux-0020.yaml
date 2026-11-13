@@ -6,8 +6,8 @@ famille: signaux-brume-qui-emet
 statut: publie
 difficulte: 3
 enonce: >-
-  Dans une zone de visibilité réduite, tu entends ce signal au sifflet. Quels navires le
-  RIPAM autorise-t-il à l'émettre ?
+  Dans une zone de visibilité réduite, tu entends ce signal au sifflet. Quels navires
+  peuvent l'émettre ?
 visuel:
   fichier: sons/brume-manoeuvre-restreinte.svg
   alt: "Un son prolongé au sifflet, suivi de deux sons brefs."

@@ -114,12 +114,13 @@ sources.
 - **Un doublon se cherche par règle citée, jamais par notion** : comparer à la
   banque sur l'énoncé **et** sur le texte de la bonne réponse ; « 2 milles » et
   « 1 mille » se ressemblent pour rien.
-- `verifier_conversion.py` connaît **six gestes** (conversion, relecture en
-  bloc, resourcement, rééquilibrage, illustration, reformulation) et refuse de les mêler ; hors
+- `verifier_conversion.py` connaît **sept gestes** (conversion, relecture en
+  bloc, resourcement, rééquilibrage, illustration, reformulation, retrait) et refuse de les mêler ; hors
   relecture, une question touchée redescend en `relu_par: claude`. **Une
   retouche d'explication n'en est aucun** : il la signale, par construction.
   L'illustration ne bouge que `enonce`, `visuel`, `famille` et `meta` ; retirer
-  un visuel n'est aucun geste.
+  un visuel n'est aucun geste. Le retrait passe une question de `publie` à
+  `retire` sans rien y toucher d'autre que `meta`.
   La reformulation réécrit `enonce` et/ou le texte des propositions (lettres,
   nombre, réponses, explication, sources, visuel, notion, thème constants) et
   rend `relu_par` à `claude`.

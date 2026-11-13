@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Sur ton bateau à moteur de 6 mètres, il est impossible d'installer le feu blanc dans
-  l'axe longitudinal. Que permet le RIPAM ?
+  l'axe longitudinal. Que peux-tu faire ?
 propositions:
   - id: a
     texte: Le placer hors de l'axe, si les feux de côté forment un seul fanal dans l'axe

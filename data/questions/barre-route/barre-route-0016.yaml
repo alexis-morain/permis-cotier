@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tu fais route au moteur et tu aperçois un navire qui montre les signaux du navire
-  handicapé par son tirant d'eau. Que t'impose le RIPAM ?
+  handicapé par son tirant d'eau. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Éviter de gêner son libre passage, si les circonstances le permettent.

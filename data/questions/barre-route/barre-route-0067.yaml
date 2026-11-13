@@ -6,8 +6,8 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tu manœuvres seul pour éviter l'abordage avec un navire à propulsion mécanique dont la
-  route croise la tienne et qui est bâbord à toi. Que t'interdit le RIPAM, si les
-  circonstances le permettent ?
+  route croise la tienne et qui est bâbord à toi. Que dois-tu éviter, si les circonstances
+  le permettent ?
 propositions:
   - id: a
     texte: Abattre sur tribord.

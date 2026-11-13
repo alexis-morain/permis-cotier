@@ -5,8 +5,7 @@ notion: securite-armement-basique
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu ranges tes brassières et tes feux à main. Où la réglementation t'interdit-elle de les
-  conserver ?
+  Tu ranges tes brassières et tes feux à main. Où ne dois-tu jamais les ranger ?
 propositions:
   - id: a
     texte: Dans les locaux de machines

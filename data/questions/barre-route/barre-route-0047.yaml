@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu veux traverser un chenal étroit alors qu'un navire qui ne peut naviguer qu'à
-  l'intérieur de ce chenal arrive. Que t'impose le RIPAM ?
+  l'intérieur de ce chenal arrive. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Ne pas traverser si tu gênes son passage

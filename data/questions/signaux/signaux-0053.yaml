@@ -5,8 +5,8 @@ notion: signaux-detresse
 statut: publie
 difficulte: 2
 enonce: >-
-  Un aéronef des secours te recherche en mer. Quel signal le RIPAM cite-t-il pour
-  faciliter ton repérage aérien ?
+  Un aéronef des secours te recherche en mer. Quel signal facilite ton repérage depuis les
+  airs ?
 propositions:
   - id: a
     texte: Une toile blanche portant une croix rouge

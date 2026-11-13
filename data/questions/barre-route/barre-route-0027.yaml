@@ -5,7 +5,7 @@ notion: barre-privilegie-non-privilegie
 statut: publie
 difficulte: 2
 enonce: >-
-  Un autre navire doit s'écarter de ta route. Que t'impose le RIPAM, et que te permet-il ?
+  Un autre navire doit s'écarter de ta route. Que dois-tu faire ?
 propositions:
   - id: a
     texte: >-

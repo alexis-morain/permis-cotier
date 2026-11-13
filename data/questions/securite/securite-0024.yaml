@@ -6,8 +6,7 @@ famille: securite-dispense-mouillage
 statut: publie
 difficulte: 3
 enonce: >-
-  Au titre de l'armement basique, quels navires la réglementation dispense-t-elle de ligne
-  de mouillage ?
+  Au titre de l'armement basique, quels navires sont dispensés de ligne de mouillage ?
 propositions:
   - id: a
     texte: Les navires à voile dont le déplacement lège est inférieur à 250 kg

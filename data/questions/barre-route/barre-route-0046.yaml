@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu pêches à la ligne depuis ton bateau de 7 mètres dans un chenal étroit et un caboteur
-  remonte le chenal. Que dit le RIPAM ?
+  remonte le chenal. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Tu ne dois pas gêner le passage d'un navire qui ne peut naviguer en sécurité

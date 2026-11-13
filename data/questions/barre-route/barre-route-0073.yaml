@@ -5,8 +5,7 @@ notion: barre-risque-abordage
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu as à bord un équipement radar en état de marche. Le RIPAM t'impose-t-il de l'utiliser
-  ?
+  Tu as à bord un équipement radar en état de marche. Dois-tu l'utiliser ?
 propositions:
   - id: a
     texte: Non, son emploi reste au choix du chef de bord tant que la visibilité est bonne.

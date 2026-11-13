@@ -5,8 +5,7 @@ notion: barre-manoeuvre-evitement
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu manœuvres pour éviter l'abordage avec un navire qui s'approche. Que t'impose le RIPAM
-  ?
+  Tu manœuvres pour éviter l'abordage avec un navire qui s'approche. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Manœuvrer de manière à passer à une distance suffisante.

@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tu es privilégié, mais l'autre navire est maintenant si près que sa seule manœuvre ne
-  peut plus éviter l'abordage. Que t'impose le RIPAM ?
+  peut plus éviter l'abordage. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Faire de ton côté la manœuvre la meilleure pour aider à éviter l'abordage

@@ -8,7 +8,8 @@ seul un rapprochement avec la version d'avant le voit.
 
 Ce script compare la banque de travail à une référence git et refuse toute
 conversion qui ferait autre chose que retirer des propositions. Il connaît
-cinq autres gestes légitimes : la relecture en bloc, qui ne touche que `meta` ;
+six autres gestes légitimes : le retrait, qui passe une question publiée à
+`retire` sans rien toucher d'autre que `meta` ; la relecture en bloc, qui ne touche que `meta` ;
 le resourcement, qui remplace la citation affichée sans toucher à la question
 et rend la relecture à Claude ; le rééquilibrage, qui réécrit le texte des
 propositions à lettres, nombre et réponse constants, pour que la bonne réponse
@@ -54,6 +55,14 @@ def _textes(question: dict) -> dict[str, str]:
 def verifier(avant: dict, apres: dict) -> list[str]:
     """Les reproches à faire à `apres` au vu de `avant`. Liste vide si tout va bien."""
     problemes: list[str] = []
+
+    # Un retrait sort une question publiée de la banque, et rien d'autre : le
+    # statut passe à `retire`, la question reste telle qu'elle était, pour
+    # qu'on sache ce qui a été retiré. Le retrait ne se mêle d'aucun geste.
+    sans_statut = lambda q: {c: v for c, v in q.items() if c not in ("statut", "meta")}
+    if (avant.get("statut") == "publie" and apres.get("statut") == "retire"
+            and sans_statut(avant) == sans_statut(apres)):
+        return problemes
 
     for champ in INTOUCHABLES:
         if avant.get(champ) != apres.get(champ):

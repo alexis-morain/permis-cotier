@@ -370,3 +370,19 @@ def test_reformuler_et_illustrer_dans_le_meme_geste_est_l_illustration():
 def test_une_reformulation_ne_retire_pas_un_visuel():
     avant = {**AVANT, "visuel": VISUEL}
     assert any("visuel" in p for p in verifier(avant, REFORMULEE))
+
+
+def test_un_retrait_propre_ne_pose_aucun_probleme():
+    publiee = {**AVANT, "statut": "publie"}
+    assert verifier(publiee, {**publiee, "statut": "retire"}) == []
+
+
+def test_retirer_et_retoucher_dans_le_meme_geste_est_refuse():
+    publiee = {**AVANT, "statut": "publie"}
+    retiree = {**publiee, "statut": "retire", "enonce": "Autre chose ?"}
+    assert verifier(publiee, retiree)
+
+
+def test_republier_une_question_retiree_n_est_pas_un_retrait():
+    retiree = {**AVANT, "statut": "retire"}
+    assert verifier(retiree, {**retiree, "statut": "publie"})

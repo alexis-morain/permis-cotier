@@ -5,7 +5,7 @@ notion: barre-hierarchie-privileges
 statut: publie
 difficulte: 3
 enonce: >-
-  Un hydravion amerri manœuvre près de ton bateau. Que lui impose le RIPAM ?
+  Un hydravion amerri manœuvre près de ton bateau. Que doit-il faire ?
 propositions:
   - id: a
     texte: Se tenir largement à l'écart de tous les navires et éviter de gêner leur navigation

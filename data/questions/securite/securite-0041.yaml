@@ -5,7 +5,7 @@ notion: securite-equipement-individuel
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu pars naviguer seul. Que recommande la réglementation ?
+  Tu pars naviguer seul. Que t'est-il recommandé ?
 propositions:
   - id: a
     texte: Porter en permanence un EIF d'au moins 50 auquel est fixée une VHF portable

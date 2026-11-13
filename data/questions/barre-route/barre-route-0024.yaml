@@ -6,7 +6,7 @@ statut: publie
 difficulte: 1
 enonce: >-
   Tu hésites : tu n'arrives pas à décider s'il existe un risque d'abordage avec un navire
-  qui s'approche. Que dit le RIPAM dans ce doute ?
+  qui s'approche. Que fais-tu de ce doute ?
 propositions:
   - id: a
     texte: Tu dois considérer que ce risque existe.

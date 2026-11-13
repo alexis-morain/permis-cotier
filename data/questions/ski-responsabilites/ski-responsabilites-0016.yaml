@@ -5,13 +5,13 @@ notion: ski-conditions
 statut: publie
 difficulte: 2
 enonce: >-
-  Un ami sans permis veut essayer un engin à sustentation hydropropulsé. Que dit la
-  réglementation ?
+  Un ami sans permis veut essayer un engin à sustentation hydropropulsé. Peut-il le
+  conduire ?
 propositions:
   - id: a
     texte: Il doit avoir le permis côtier ou être accompagné d'un titulaire de ce permis
   - id: b
-    texte: Aucun titre n'est exigé, l'engin n'est pas un bateau au sens de la division
+    texte: Aucun titre n'est exigé, l'engin n'est pas un bateau au sens de la réglementation
   - id: c
     texte: Il lui faut le certificat restreint de radiotéléphoniste, sans autre titre
 reponses:

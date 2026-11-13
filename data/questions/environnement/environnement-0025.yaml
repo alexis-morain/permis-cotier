@@ -10,7 +10,6 @@ enonce: >-
 propositions:
   - id: a
     texte: Non, l'interdiction vise aussi les substances de nature à rendre ces animaux impropres à la consommation
-      à la consommation
   - id: b
     texte: Oui, il faut une atteinte à la conservation ou à la reproduction
   - id: c

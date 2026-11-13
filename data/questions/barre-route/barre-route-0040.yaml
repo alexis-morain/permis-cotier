@@ -5,8 +5,8 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 3
 enonce: >-
-  De nuit, tu approches d'un port dont les lumières éclairent tout l'horizon. Pourquoi le
-  RIPAM te demande-t-il de ralentir ?
+  De nuit, tu approches d'un port dont les lumières éclairent tout l'horizon. Pourquoi
+  dois-tu ralentir ?
 propositions:
   - id: a
     texte: Un arrière-plan lumineux gêne la détection des feux des autres navires

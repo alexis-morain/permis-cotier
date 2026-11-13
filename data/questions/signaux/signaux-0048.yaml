@@ -5,8 +5,8 @@ notion: signaux-attirer-attention
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu veux attirer l'attention d'un navire qui ne t'a pas vu. Quels signaux le RIPAM te
-  permet-il ?
+  Tu veux attirer l'attention d'un navire qui ne t'a pas vu. Quels signaux peux-tu
+  employer ?
 propositions:
   - id: a
     texte: Des signaux lumineux ou sonores qu'on ne peut confondre avec aucun autre

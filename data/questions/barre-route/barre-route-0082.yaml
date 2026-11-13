@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu suis la voie de circulation d'un dispositif de séparation du trafic. Qu'est-ce qui
-  peut te permettre d'entrer dans la zone de séparation, selon le RIPAM ?
+  peut te permettre d'entrer dans la zone de séparation ?
 propositions:
   - id: a
     texte: Une urgence, pour éviter un danger immédiat.

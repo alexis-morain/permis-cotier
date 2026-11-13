@@ -5,7 +5,7 @@ notion: vhf-fausses-alertes
 statut: publie
 difficulte: 2
 enonce: >-
-  Le RIPAM interdit certains usages des signaux de détresse. Lesquels ?
+  Que t'est-il interdit de faire avec les signaux de détresse ?
 propositions:
   - id: a
     texte: Émettre un signal de détresse hors détresse ou besoin d'assistance
