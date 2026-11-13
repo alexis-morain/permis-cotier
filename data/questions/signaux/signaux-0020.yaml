@@ -7,7 +7,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Dans une zone de visibilité réduite, tu entends ce signal au sifflet. Quels navires
-  la règle 35 c) autorise-t-elle à l'émettre ?
+  peuvent l'émettre ?
 visuel:
   fichier: sons/brume-manoeuvre-restreinte.svg
   alt: "Un son prolongé au sifflet, suivi de deux sons brefs."
@@ -37,4 +37,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

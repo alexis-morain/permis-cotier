@@ -7,7 +7,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Le cordon de ton coupe-circuit te gêne pour te déplacer à bord, moteur en marche. Que
-  permet la division 240 ?
+  peux-tu faire ?
 propositions:
   - id: a
     texte: Rien, le cordon ne se rallonge pas, on se déplace moteur éteint ou au point
@@ -29,5 +29,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

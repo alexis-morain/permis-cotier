@@ -5,8 +5,8 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu fixes ta vitesse de sécurité en t'aidant de ton radar. Que te rappelle la règle 6 b)
-  au sujet des petits bâtiments ?
+  Tu fixes ta vitesse de sécurité en t'aidant de ton radar. Que dois-tu savoir des petits
+  bateaux ?
 propositions:
   - id: a
     texte: Leur écho est net, tu les détectes avant les grands navires.
@@ -28,4 +28,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

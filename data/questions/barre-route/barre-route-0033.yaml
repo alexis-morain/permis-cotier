@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu es le bateau du bas et tu gagnes sur le navire qui te précède. Tu n'arrives pas à
-  décider si tu le rattrapes ou si vos routes se croisent. Que dit la règle 13 c) ?
+  décider si tu le rattrapes ou si vos routes se croisent. Que dois-tu faire ?
 visuel:
   fichier: situations/tu-rattrapes.svg
   alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image et gagne sur un navire à moteur plus lent qui le précède, légèrement sur sa droite."
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

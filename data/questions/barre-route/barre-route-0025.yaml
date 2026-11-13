@@ -6,8 +6,8 @@ famille: barre-manoeuvre-franche
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu dois t'écarter de la route d'un autre navire. Comment la règle 8 te demande-t-elle de
-  conduire ta manœuvre ?
+  Tu dois t'écarter de la route d'un autre navire. Comment dois-tu changer de cap pour que
+  l'autre le voie bien ?
 propositions:
   - id: a
     texte: >-
@@ -32,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

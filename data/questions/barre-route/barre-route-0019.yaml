@@ -5,9 +5,9 @@ notion: barre-visibilite-reduite
 statut: publie
 difficulte: 3
 enonce: >-
-  Par visibilité réduite, tu détectes au radar seulement la présence d'un navire sur l'avant
-  de ton travers et tu manœuvres largement à temps pour éviter une situation très rapprochée.
-  Quel changement de cap la règle 19 te demande d'éviter ?
+  Par visibilité réduite, tu détectes au radar seulement la présence d'un navire sur
+  l'avant de ton travers et tu manœuvres largement à temps pour éviter une situation très
+  rapprochée. Quel changement de cap dois-tu éviter ?
 propositions:
   - id: a
     texte: Un changement de cap sur bâbord, sauf si ce navire est en train d'être rattrapé.
@@ -31,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,8 +5,7 @@ notion: feux-voile-aviron
 statut: publie
 difficulte: 2
 enonce: >-
-  Un navire à l'aviron est-il tenu de montrer les feux que la règle 25 prescrit aux navires
-  à voile ?
+  Un navire à l'aviron est-il tenu de montrer les feux prescrits aux navires à voile ?
 propositions:
   - id: a
     texte: "Non, la règle dit qu'il peut les montrer : c'est une faculté"
@@ -29,4 +28,4 @@ meta:
   cree_le: '2026-09-21'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

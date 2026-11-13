@@ -5,8 +5,7 @@ notion: barre-risque-abordage
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu as à bord un équipement radar en état de marche. La règle 7 b) t'impose-t-elle de
-  l'utiliser ?
+  Tu as à bord un équipement radar en état de marche. Dois-tu l'utiliser ?
 propositions:
   - id: a
     texte: Non, son emploi reste au choix du chef de bord tant que la visibilité est bonne.
@@ -26,4 +25,4 @@ meta:
   cree_le: '2026-09-21'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

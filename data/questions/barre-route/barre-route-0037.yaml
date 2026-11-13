@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu barres le navire du dessin et un autre navire s'approche de toi depuis le secteur
-  ouvert derrière toi. De nuit, que voit-il de tes feux, selon la règle 13 b) ?
+  ouvert derrière toi. De nuit, que voit-il de tes feux ?
 visuel:
   fichier: situations/secteur-rattrapant.svg
   alt: "Vue de dessus d'un navire et du secteur qui s'ouvre derrière lui, de part et d'autre, au-delà de 22,5 degrés sur l'arrière de son travers."
@@ -35,4 +35,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

@@ -6,14 +6,14 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu carènes ton bateau au bord d'un canal dont les eaux sont salées, loin de la mer
-  ouverte. L'article L. 218-73 s'applique-t-il là ?
+  ouverte. L'interdiction de rejeter des substances nuisibles s'applique-t-elle là ?
 propositions:
   - id: a
-    texte: Oui, il vise aussi les cours d'eau, canaux ou plans d'eau aux eaux salées
+    texte: Oui, elle vise aussi les cours d'eau, canaux ou plans d'eau aux eaux salées
   - id: b
-    texte: Non, il ne vise que la mer, jamais les canaux ni les cours d'eau
+    texte: Non, elle ne vise que la mer, jamais les canaux ni les cours d'eau
   - id: c
-    texte: Non, il ne s'applique qu'au-delà des eaux territoriales
+    texte: Non, elle ne s'applique qu'au-delà des eaux territoriales
 reponses:
   - a
 explication: >-
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

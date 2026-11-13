@@ -5,8 +5,8 @@ notion: securite-limitations
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu veux emmener ton kayak de mer à quatre milles d'un abri. Que demande la division
-  240 ?
+  Tu veux emmener ton kayak de mer à quatre milles d'un abri. Est-ce possible, et à quelle
+  condition ?
 propositions:
   - id: a
     texte: Naviguer à deux embarcations de conserve au moins, avec une VHF étanche par
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

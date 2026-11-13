@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu suis la voie de circulation d'un dispositif de séparation du trafic. Qu'est-ce qui
-  peut te permettre d'entrer dans la zone de séparation, selon la règle 10 e) ?
+  peut te permettre d'entrer dans la zone de séparation ?
 propositions:
   - id: a
     texte: Une urgence, pour éviter un danger immédiat.
@@ -32,4 +32,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

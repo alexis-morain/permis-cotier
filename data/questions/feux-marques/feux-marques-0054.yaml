@@ -10,9 +10,9 @@ enonce: >-
   de ses feux de pêche ?
 propositions:
   - id: a
-    texte: Non, en pêche il ne montre que les feux et marques de la règle 26
+    texte: Non, en pêche il ne montre que les feux et marques de pêche
   - id: b
-    texte: Oui, tout navire au mouillage montre le feu de la règle 30
+    texte: Oui, tout navire au mouillage montre le feu blanc de mouillage
 reponses:
   - a
 explication: >-
@@ -25,5 +25,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

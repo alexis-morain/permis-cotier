@@ -7,7 +7,8 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tu barres un voilier qui fait route à la voile. Un autre voilier sous voiles arrive par
-  ta tribord, vos routes se croisent et l'abordage est à craindre. Que te dit la règle 15 ?
+  ta tribord, vos routes se croisent et l'abordage est à craindre. Que te dit la règle de
+  croisement des navires à moteur ?
 propositions:
   - id: a
     texte: Tu dois t'écarter, puisque tu le vois sur ta tribord.
@@ -33,5 +34,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,9 +5,9 @@ notion: feux-remorquage
 statut: publie
 difficulte: 3
 enonce: >-
-  De nuit, tu prends en remorque un voilier en panne qui demande assistance. Ton bateau
-  ne remorque jamais d'ordinaire et ne peut pas montrer les feux de remorquage. Que dit
-  la règle 24 ?
+  De nuit, tu prends en remorque un voilier en panne qui demande assistance. Ton bateau ne
+  remorque jamais d'ordinaire et ne peut pas montrer les feux de remorquage. Que dois-tu
+  faire ?
 propositions:
   - id: a
     texte: Tu dois lâcher la remorque tant que tu ne peux pas montrer ces feux
@@ -32,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,8 +5,8 @@ notion: barre-chenal-etroit
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu cherches un endroit pour mouiller et passer la nuit. Que dit la règle 9 du mouillage
-  dans un chenal étroit ?
+  Tu cherches un endroit pour mouiller et passer la nuit. Peux-tu mouiller dans un chenal
+  étroit ?
 propositions:
   - id: a
     texte: Tout navire doit, si les circonstances le permettent, éviter d'y mouiller
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

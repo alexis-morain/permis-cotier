@@ -331,3 +331,75 @@ def test_aucun_enonce_de_la_banque_n_annonce_le_compte():
     racine = Path(__file__).resolve().parents[1]
     fautifs = [p.fichier for p in valider_banque(racine) if p.code == "enonce"]
     assert fautifs == []
+
+
+# L'épreuve ne demande jamais ce que contient la règle X : elle demande le fond.
+# La source reste dans `sources` et l'explication, pas dans l'énoncé.
+def _codes_numero(q, tmp_path):
+    (tmp_path / "data" / "sources" / "decret-77-733").mkdir(parents=True, exist_ok=True)
+    return {pb.code for pb in valider_question(q, Path("q.yaml"), tmp_path)}
+
+
+@pytest.mark.parametrize("enonce", [
+    "Que t'impose la règle 15 ? Tu croises un navire à moteur.",
+    "Que punit l'article L. 218-73 du code de l'environnement ?",
+    "Que dit l'article 240-2.01 de la sécurité des navires ?",
+    "Que demande la division 240 pour un kayak ?",
+    "Que dit l'annexe IV du RIPAM des fusées ?",
+    "Que dit l'art. 12 ? Le texte est long, vraiment.",
+    "Quelles durées les règles 34 et 35 fixent-elles aux signaux ?",
+])
+def test_un_enonce_qui_nomme_un_numero_de_texte_est_refuse(enonce, tmp_path):
+    assert "numero-de-texte" in _codes_numero(avec(enonce=enonce), tmp_path)
+
+
+def test_une_proposition_qui_nomme_un_numero_de_texte_est_refusee(tmp_path):
+    propositions = [dict(p) for p in VALIDE["propositions"]]
+    propositions[1]["texte"] = "Dans le RIPAM, règle 34"
+    assert "numero-de-texte" in _codes_numero(avec(propositions=propositions), tmp_path)
+
+
+@pytest.mark.parametrize("enonce", [
+    "Que dit le RIPAM d'un navire qui manœuvre difficilement ?",
+    "Tu prends l'annexe de ton bateau pour rejoindre la plage. Où peux-tu aller ?",
+    "Cet article de pêche est-il autorisé sur ton bateau ? Réponds franchement.",
+    "Tu es au canal 16 et tu entends 3 appels. Que fais-tu ensuite ?",
+    "La règle de priorité à droite s'applique-t-elle en mer ? Réfléchis bien.",
+])
+def test_un_nom_de_texte_sans_numero_reste_permis(enonce, tmp_path):
+    assert "numero-de-texte" not in _codes_numero(avec(enonce=enonce), tmp_path)
+
+
+def test_le_numero_est_permis_dans_l_explication_et_les_sources(tmp_path):
+    q = avec(explication="La règle 15 du RIPAM vise deux navires à propulsion mécanique.")
+    assert "numero-de-texte" not in _codes_numero(q, tmp_path)
+
+
+def test_un_brouillon_n_est_pas_soumis_a_la_regle(tmp_path):
+    q = avec(statut="brouillon", enonce="Que dit la règle 15 du RIPAM de ce croisement ?")
+    assert "numero-de-texte" not in _codes_numero(q, tmp_path)
+
+
+def test_une_exception_explicite_et_justifiee_est_admise(tmp_path, monkeypatch):
+    import valider
+    q = avec(id="feux-marques-0012", enonce="Que dit la règle 15 du RIPAM de ce croisement ?")
+    monkeypatch.setattr(valider, "NUMERO_PERMIS", {"feux-marques-0012": "La question porte sur le numéro lui-même."})
+    assert "numero-de-texte" not in _codes_numero(q, tmp_path)
+
+
+def test_toute_exception_porte_une_justification_et_une_question_existante():
+    import valider
+    racine = Path(__file__).resolve().parents[1]
+    ids = {
+        yaml.safe_load(f.read_text(encoding="utf-8"))["id"]
+        for f in racine.glob("data/questions/*/*.yaml")
+    }
+    for ident, raison in valider.NUMERO_PERMIS.items():
+        assert ident in ids, ident
+        assert len(raison.strip()) >= 20, ident
+
+
+def test_aucune_question_publiee_ne_nomme_un_numero_de_texte():
+    racine = Path(__file__).resolve().parents[1]
+    fautifs = [p.fichier.name for p in valider_banque(racine) if p.code == "numero-de-texte"]
+    assert fautifs == []

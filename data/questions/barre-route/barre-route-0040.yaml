@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   De nuit, tu approches d'un port dont les lumières éclairent tout l'horizon. Pourquoi
-  la règle 6 te demande-t-elle de ralentir ?
+  dois-tu ralentir ?
 propositions:
   - id: a
     texte: Un arrière-plan lumineux gêne la détection des feux des autres navires
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,8 +5,8 @@ notion: env-peche-loisir
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu prends un thon rouge en pêche de loisir. Quel minimum l'annexe I fixe-t-elle pour
-  cette espèce ?
+  Tu prends un thon rouge en pêche de loisir. Quel minimum doit avoir ta prise pour être
+  gardée ?
 propositions:
   - id: a
     texte: 15 kg ou 100 cm
@@ -27,4 +27,4 @@ meta:
   cree_le: '2026-10-03'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

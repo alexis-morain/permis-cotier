@@ -6,8 +6,8 @@ famille: env-rejet-amende-100000
 statut: publie
 difficulte: 3
 enonce: >-
-  Les 100 000 euros d'amende de l'article L. 218-73 sont-ils un plafond que rien ne peut
-  dépasser ?
+  L'amende de 100 000 euros prévue pour le rejet en mer de substances nuisibles est-elle
+  un plafond que rien ne peut dépasser ?
 propositions:
   - id: a
     texte: Oui, c'est un maximum absolu, quel que soit le gain tiré de l'infraction
@@ -28,4 +28,4 @@ meta:
   cree_le: '2026-09-08'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

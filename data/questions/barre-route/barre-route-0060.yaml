@@ -5,8 +5,8 @@ notion: barre-visibilite-reduite
 statut: publie
 difficulte: 3
 enonce: >-
-  Dans la brume, ton radar montre un navire qui vient par ton travers bâbord. Tu décides de
-  changer de cap. Quelle manœuvre la règle 19 te demande-t-elle d'éviter ?
+  Dans la brume, ton radar montre un navire qui vient par ton travers bâbord. Tu décides
+  de changer de cap. Quelle manœuvre dois-tu éviter ?
 propositions:
   - id: a
     texte: Un changement de cap en direction de ce navire
@@ -29,4 +29,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-03'
+  relu_le: '2026-11-13'

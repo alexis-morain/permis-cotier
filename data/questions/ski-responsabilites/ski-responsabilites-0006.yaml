@@ -5,8 +5,8 @@ notion: responsabilite-chef-de-bord
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu as respecté à la lettre chaque règle de barre, et l'abordage a quand même eu lieu.
-  Que dit la règle 2 du RIPAM ?
+  Tu as respecté à la lettre chaque règle de barre, et l'abordage a quand même eu lieu. Ta
+  responsabilité peut-elle être engagée ?
 propositions:
   - id: a
     texte: Appliquer les règles ne t'exonère pas d'une négligence sur les précautions que
@@ -30,5 +30,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

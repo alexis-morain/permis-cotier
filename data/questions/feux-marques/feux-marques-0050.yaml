@@ -9,7 +9,7 @@ enonce: >-
   composite. Quels feux montrent-ils ?
 propositions:
   - id: a
-    texte: Ceux d'un seul navire à propulsion mécanique, prévus par la règle 23
+    texte: Ceux d'un seul navire à propulsion mécanique en route
   - id: b
     texte: Deux feux de tête de mât superposés et un feu de remorquage
   - id: c
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

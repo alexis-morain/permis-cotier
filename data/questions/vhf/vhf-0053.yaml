@@ -5,8 +5,8 @@ notion: vhf-emport
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu navigues à quatre milles d'un abri sur ton propre bateau à moteur. La division 240
-  t'impose-t-elle d'embarquer une VHF ?
+  Tu navigues à quatre milles d'un abri sur ton propre bateau à moteur. Dois-tu embarquer
+  une VHF ?
 propositions:
   - id: a
     texte: Non, l'armement côtier n'en exige pas
@@ -32,4 +32,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

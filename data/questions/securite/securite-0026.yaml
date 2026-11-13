@@ -12,8 +12,7 @@ propositions:
     texte: S'il porte effectivement un équipement individuel de flottabilité de niveau
       de performance d'au moins 50
   - id: b
-    texte: S'il porte effectivement une combinaison humide ou sèche répondant aux caractéristiques
-      fixées par l'article
+    texte: S'il porte effectivement une combinaison humide ou sèche aux caractéristiques réglementaires
   - id: c
     texte: S'il sait nager, cela suffit à le dispenser
   - id: d
@@ -34,4 +33,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'
