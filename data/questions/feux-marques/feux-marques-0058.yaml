@@ -8,7 +8,7 @@ enonce: >-
   Un navire montre deux feux rouges superposés. Est-ce un appel à l'assistance ?
 propositions:
   - id: a
-    texte: Non, les signaux de la règle 27 ne sont pas des signaux de détresse
+    texte: Non, les feux des navires non maîtres de leur manœuvre ne sont pas des signaux de détresse
   - id: b
     texte: Oui, deux feux rouges signifient toujours une détresse
 reponses:
@@ -24,4 +24,4 @@ meta:
   cree_le: '2026-09-05'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

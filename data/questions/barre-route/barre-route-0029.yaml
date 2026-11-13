@@ -6,7 +6,7 @@ statut: publie
 difficulte: 2
 enonce: >-
   Tu es le bateau du bas, tu fais route au moteur, et le navire qui vient à ta rencontre
-  est lui aussi à propulsion mécanique. Que prévoit la règle 14 a) pour cette rencontre ?
+  est lui aussi à propulsion mécanique. Que prévoit le RIPAM pour cette rencontre ?
 visuel:
   fichier: situations/routes-opposees.svg
   alt: "Vue de dessus. Ton bateau, en bas, fait route vers le haut de l'image. Un navire à moteur vient droit sur lui, étrave contre étrave."
@@ -35,5 +35,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

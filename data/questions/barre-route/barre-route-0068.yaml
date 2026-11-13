@@ -5,7 +5,7 @@ notion: barre-veille-vitesse
 statut: publie
 difficulte: 1
 enonce: >-
-  La règle 5 t'impose une veille permanente. Dans quel but, selon son texte ?
+  Tu dois assurer une veille permanente. À quoi sert-elle ?
 propositions:
   - id: a
     texte: Pour tenir ton cap et relever ta route au compas.
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,8 +5,8 @@ notion: barre-routes-opposees
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu fais route au moteur en plein jour. À quoi reconnais-tu, selon la règle 14 b),
-  que tu es dans une situation de routes directement opposées ?
+  Tu fais route au moteur en plein jour. À quoi reconnais-tu que tu es dans une situation
+  de routes directement opposées ?
 propositions:
   - id: a
     texte: Tu vois l'autre navire par le travers tribord, sa route croisant la tienne
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

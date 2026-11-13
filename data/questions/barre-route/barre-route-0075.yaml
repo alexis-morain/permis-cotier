@@ -5,8 +5,8 @@ notion: barre-visibilite-reduite
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu navigues en air clair, mais un banc de brume s'étend droit devant toi. La règle 19
-  s'applique-t-elle déjà ?
+  Tu navigues en air clair, mais un banc de brume s'étend droit devant toi. La règle de
+  conduite par visibilité réduite s'applique-t-elle déjà ?
 propositions:
   - id: a
     texte: Oui, elle vise aussi les navires qui naviguent à proximité de zones de visibilité
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

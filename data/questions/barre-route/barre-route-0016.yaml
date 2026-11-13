@@ -5,8 +5,8 @@ notion: barre-hierarchie-privileges
 statut: publie
 difficulte: 3
 enonce: >-
-  Tu fais route au moteur et tu aperçois un navire qui montre les signaux du navire handicapé
-  par son tirant d'eau prévus à la règle 28. Que t'impose la règle 18 ?
+  Tu fais route au moteur et tu aperçois un navire qui montre les signaux du navire
+  handicapé par son tirant d'eau. Que dois-tu faire ?
 propositions:
   - id: a
     texte: Éviter de gêner son libre passage, si les circonstances le permettent.
@@ -32,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-04'
+  relu_par: claude
+  relu_le: '2026-11-13'

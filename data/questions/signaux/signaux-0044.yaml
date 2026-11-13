@@ -5,8 +5,8 @@ notion: signaux-detresse
 statut: publie
 difficulte: 2
 enonce: >-
-  Pour fêter une arrivée, un équipier propose de tirer une fusée rouge périmée. Que dit
-  l'annexe IV du RIPAM ?
+  Pour fêter une arrivée, un équipier propose de tirer une fusée rouge périmée. Peut-il le
+  faire ?
 propositions:
   - id: a
     texte: C'est interdit, sauf en cas de détresse ou de besoin d'assistance
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

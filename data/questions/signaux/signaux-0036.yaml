@@ -5,7 +5,7 @@ notion: signaux-lumineux
 statut: publie
 difficulte: 3
 enonce: >-
-  Quelles durées la règle 34 fixe-t-elle aux signaux lumineux de manœuvre ?
+  Tu annonces ta manœuvre par des éclats lumineux. Quelles durées dois-tu respecter ?
 propositions:
   - id: a
     texte: Chaque éclat dure une seconde environ, séparé du suivant par une seconde environ
@@ -26,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,8 +5,7 @@ notion: securite-visibilite-restreinte
 statut: publie
 difficulte: 3
 enonce: >-
-  À quels navires la règle 19 sur la conduite par visibilité réduite s'applique-t-elle
-  ?
+  À quels navires les règles de conduite par visibilité réduite s'appliquent-elles ?
 propositions:
   - id: a
     texte: À ceux qui ne se voient pas et naviguent dans une zone de visibilité réduite
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-08'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

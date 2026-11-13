@@ -5,7 +5,7 @@ notion: barre-hierarchie-privileges
 statut: publie
 difficulte: 3
 enonce: >-
-  Un hydravion amerri manœuvre près de ton bateau. Que lui impose la règle 18 ?
+  Un hydravion amerri manœuvre près de ton bateau. Que doit-il faire ?
 propositions:
   - id: a
     texte: Se tenir largement à l'écart de tous les navires et éviter de gêner leur navigation
@@ -23,5 +23,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

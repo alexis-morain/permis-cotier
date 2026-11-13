@@ -5,15 +5,15 @@ notion: barre-manoeuvre-evitement
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu as besoin de plus de temps pour apprécier une situation qui se rapproche. Que te
-  permet la règle 8 ?
+  Tu as besoin de plus de temps pour apprécier une situation qui se rapproche. Que peux-tu
+  faire ?
 propositions:
   - id: a
     texte: Réduire ta vitesse, voire casser ton erre en stoppant ou en battant en arrière.
   - id: b
     texte: Maintenir ta vitesse, un navire qui ralentit devenant imprévisible.
   - id: c
-    texte: Rien de particulier, la règle 8 ne traite que des changements de cap.
+    texte: Rien de particulier, les règles de manœuvre ne traitent que des changements de cap.
 reponses:
   - a
 explication: >-
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-08'
+  relu_par: claude
+  relu_le: '2026-11-13'

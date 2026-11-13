@@ -5,8 +5,7 @@ notion: vhf-canaux
 statut: publie
 difficulte: 2
 enonce: >-
-  Ton bateau est équipé d'une VHF. Que t'impose la division 240 pendant que tu es en mer
-  ?
+  Ton bateau est équipé d'une VHF. Que dois-tu faire en mer ?
 propositions:
   - id: a
     texte: Rester à l'écoute du canal 16 en permanence, quand c'est possible, au poste
@@ -28,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-05'
+  relu_par: claude
+  relu_le: '2026-11-13'

@@ -5,7 +5,7 @@ notion: responsabilite-chef-de-bord
 statut: publie
 difficulte: 1
 enonce: >-
-  Comment la division 240 définit-elle le chef de bord ?
+  Qui est le chef de bord ?
 propositions:
   - id: a
     texte: Le membre d'équipage responsable de la conduite du navire et de la sécurité à
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

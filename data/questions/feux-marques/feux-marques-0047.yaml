@@ -6,7 +6,7 @@ statut: publie
 difficulte: 3
 enonce: >-
   Sur ton bateau à moteur de 6 mètres, il est impossible d'installer le feu blanc dans
-  l'axe longitudinal. Que permet la règle 23 ?
+  l'axe longitudinal. Que peux-tu faire ?
 propositions:
   - id: a
     texte: Le placer hors de l'axe, si les feux de côté forment un seul fanal dans l'axe
@@ -27,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

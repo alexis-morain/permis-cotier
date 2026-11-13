@@ -7,8 +7,8 @@ statut: publie
 difficulte: 2
 enonce: >-
   Une règle t'impose de ne pas gêner le passage d'un navire qui approche. Ta position va
-  lui retirer de la place, mais aucun risque d'abordage n'existe encore. Que te demande la
-  règle 8 f) i) ?
+  lui retirer de la place, mais aucun risque d'abordage n'existe encore. Que dois-tu faire
+  ?
 propositions:
   - id: a
     texte: Attendre qu'un risque d'abordage existe pour manœuvrer.
@@ -34,5 +34,5 @@ sources:
 meta:
   cree_le: '2026-09-26'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-26'
+  relu_par: claude
+  relu_le: '2026-11-13'

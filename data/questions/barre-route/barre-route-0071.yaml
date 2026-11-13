@@ -5,8 +5,7 @@ notion: barre-risque-abordage
 statut: publie
 difficulte: 1
 enonce: >-
-  Un navire s'approche. Avec quoi la règle 7 a) te demande-t-elle de déterminer s'il
-  existe un risque d'abordage ?
+  Un navire s'approche. Avec quoi dois-tu déterminer s'il existe un risque d'abordage ?
 propositions:
   - id: a
     texte: Avec le radar seul, dès que tu en as un à bord.
@@ -27,5 +26,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

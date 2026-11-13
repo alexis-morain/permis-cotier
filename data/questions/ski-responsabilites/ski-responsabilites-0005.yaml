@@ -5,8 +5,8 @@ notion: responsabilite-chef-de-bord
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu es chef de bord d'un bateau de plaisance. De quoi la division 240 te rend-elle
-  garant avant d'appareiller ?
+  Tu es chef de bord d'un bateau de plaisance. De quoi dois-tu t'assurer avant
+  d'appareiller ?
 propositions:
   - id: a
     texte: De l'adéquation de ta navigation avec les caractéristiques de ton navire
@@ -32,4 +32,4 @@ meta:
   cree_le: '2026-09-04'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

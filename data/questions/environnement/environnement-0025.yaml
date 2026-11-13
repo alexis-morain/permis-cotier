@@ -6,11 +6,10 @@ statut: publie
 difficulte: 3
 enonce: >-
   Un résidu de carénage ne tue ni poisson ni coquillage, mais il les rend impropres à la
-  consommation. Échappe-t-il à l'article L. 218-73 ?
+  consommation. Échappe-t-il à l'interdiction de rejeter en mer des substances nuisibles ?
 propositions:
   - id: a
-    texte: Non, l'article vise aussi les substances de nature à rendre ces animaux impropres
-      à la consommation
+    texte: Non, l'interdiction vise aussi les substances de nature à rendre ces animaux impropres à la consommation
   - id: b
     texte: Oui, il faut une atteinte à la conservation ou à la reproduction
   - id: c
@@ -29,4 +28,4 @@ meta:
   cree_le: '2026-09-08'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-11-11'
+  relu_le: '2026-11-13'

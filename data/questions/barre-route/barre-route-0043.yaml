@@ -5,8 +5,8 @@ notion: barre-manoeuvre-evitement
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu as de la place autour de toi et tu veux éviter une situation très rapprochée. Que
-  dit la règle 8 du seul changement de cap ?
+  Tu as de la place autour de toi et tu veux éviter une situation très rapprochée. Un
+  changement de cap seul peut-il suffire ?
 propositions:
   - id: a
     texte: >-
@@ -33,5 +33,5 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-10-02'
+  relu_par: claude
+  relu_le: '2026-11-13'

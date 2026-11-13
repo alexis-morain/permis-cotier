@@ -5,8 +5,7 @@ notion: barre-hierarchie-privileges
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu fais route au moteur. Selon la règle 18 a), de la route de quels navires dois-tu
-  t'écarter ?
+  Tu fais route au moteur. De la route de quels navires dois-tu t'écarter ?
 propositions:
   - id: a
     texte: Un navire à propulsion mécanique plus grand que le tien.
@@ -32,4 +31,4 @@ meta:
   cree_le: '2026-10-09'
   genere_par: claude
   relu_par: claude
-  relu_le: '2026-10-09'
+  relu_le: '2026-11-13'

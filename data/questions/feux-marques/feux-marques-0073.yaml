@@ -6,8 +6,8 @@ famille: feux-portee-valeur
 statut: publie
 difficulte: 3
 enonce: >-
-  Ton bateau à moteur mesure 18 mètres. Quelle portée minimale la règle 22 impose-t-elle
-  à son feu de tête de mât ?
+  Ton bateau à moteur mesure 18 mètres. Quelle portée minimale doit avoir son feu de tête
+  de mât ?
 propositions:
   - id: a
     texte: 5 milles
@@ -28,5 +28,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

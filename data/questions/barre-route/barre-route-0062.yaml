@@ -6,7 +6,8 @@ statut: publie
 difficulte: 3
 enonce: >-
   Tu fais route au moteur et un voilier qui marche à la voile vient droit sur toi, le
-  risque d'abordage est réel. La règle 14 te dit-elle quoi faire ?
+  risque d'abordage est réel. La règle des routes directement opposées te dit-elle quoi
+  faire ?
 propositions:
   - id: a
     texte: Oui, elle vaut pour toute rencontre étrave contre étrave.
@@ -26,5 +27,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'
