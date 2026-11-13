@@ -2,11 +2,15 @@ id: balisage-0009
 option: cotier
 theme: balisage
 notion: balisage-feux
+famille: balisage-eaux-saines-de-nuit
 statut: publie
 difficulte: 3
 enonce: >-
-  De nuit, tu relèves un feu blanc à deux éclats groupés. Quelle marque te signale-t-il
-  ?
+  De nuit, tu relèves ce feu. Quelle marque te signale-t-il ?
+visuel:
+  fichier: rythmes/danger-isole.svg
+  alt: "Feu blanc à deux éclats groupés, suivis d'une pause plus longue que l'intervalle qui sépare les deux éclats."
+  credit: code
 propositions:
   - id: a
     texte: Une marque de danger isolé
@@ -28,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-11-13'

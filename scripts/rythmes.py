@@ -164,6 +164,29 @@ RYTHMES: dict[str, dict] = {
                "court intervalle sombre.",
         "regle": "Arrêté du 30 novembre 2017, annexe I, 7.3, bouée d'épave en cas d'urgence",
     },
+    "chenal-prefere-babord": {
+        # 2.3.3.2 : feu vert, éclats diversement groupés (2 + 1). Seul le
+        # groupement est dessiné : deux éclats rapprochés, un intervalle plus
+        # long, un éclat isolé, puis la pause (abrégée, voir la note en tête).
+        "motif": [(0.5, "vert"), (0.9, None), (0.5, "vert"), (1.8, None),
+                  (0.5, "vert"), (2.4, None)],
+        "fenetre": 2,
+        "alt": "Feu vert à éclats groupés, deux éclats rapprochés, un intervalle, un éclat "
+               "isolé, puis une pause plus longue.",
+        "regle": "Arrêté du 30 novembre 2017, annexe I, 2.3.3.2, feu vert à éclats "
+                 "diversement groupés (2 + 1), pause abrégée au dessin",
+    },
+    "manoeuvre-trois-eclats": {
+        # Règle 34 b) : chaque éclat d'environ une seconde, intervalle d'environ
+        # une seconde ; l'intervalle d'au moins dix secondes entre deux signaux
+        # est abrégé.
+        "motif": [(1.0, "blanc"), (1.0, None), (1.0, "blanc"), (1.0, None),
+                  (1.0, "blanc"), (2.4, None)],
+        "fenetre": 2,
+        "alt": "Feu blanc qui donne trois éclats de même durée, séparés par des intervalles "
+               "égaux, puis une pause plus longue.",
+        "regle": "RIPAM, règle 34 b) i) et ii), trois éclats, intervalle entre signaux abrégé au dessin",
+    },
     "caractere-fixe": {
         "motif": [(1.0, "blanc")],
         "fenetre": 6,

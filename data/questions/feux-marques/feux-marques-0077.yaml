@@ -5,8 +5,11 @@ notion: feux-tirant-eau
 statut: publie
 difficulte: 2
 enonce: >-
-  Un navire handicapé par son tirant d'eau allume ses trois feux rouges superposés.
-  Quels feux porte-t-il en plus ?
+  Un navire handicapé par son tirant d'eau montre ces feux. Quels feux porte-t-il en plus ?
+visuel:
+  fichier: feux/handicape-par-son-tirant-d-eau.svg
+  alt: "Trois feux rouges superposés visibles sur tout l'horizon."
+  credit: code
 propositions:
   - id: a
     texte: Aucun, ces trois feux remplacent ses feux de route
@@ -29,5 +32,5 @@ sources:
 meta:
   cree_le: '2026-09-21'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-21'
+  relu_par: claude
+  relu_le: '2026-11-13'

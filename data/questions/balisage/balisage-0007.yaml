@@ -2,11 +2,15 @@ id: balisage-0007
 option: cotier
 theme: balisage
 notion: balisage-cardinal
+famille: balisage-cardinale-de-jour
 statut: publie
 difficulte: 2
 enonce: >-
-  Tu relèves une bouée dont le corps est noir dans sa partie haute et jaune dans sa partie
-  basse. Quelle marque cardinale as-tu devant toi ?
+  Tu relèves cette bouée. Quelle marque cardinale as-tu devant toi ?
+visuel:
+  fichier: balisage/cardinale-nord.svg
+  alt: "Bouée noire au-dessus, jaune en dessous, surmontée de deux cônes noirs pointes en haut."
+  credit: code
 propositions:
   - id: a
     texte: Une cardinale Nord
@@ -27,5 +31,5 @@ sources:
 meta:
   cree_le: '2026-09-04'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
+  relu_le: '2026-11-13'

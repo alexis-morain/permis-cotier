@@ -80,6 +80,19 @@ SIGNAUX: dict[str, dict] = {
         "alt": "Deux feux verts allumés, côte à côte.",
         "regle": "Code des transports, article A. 4241-53-31, 1 d) : accès autorisé",
     },
+    # Annexe V, 6.15 de l'arrêté du 30 novembre 2017 : le message principal des
+    # signaux de trafic portuaire, trois feux verticaux. Même panneau à feux que
+    # les écluses, d'où leur place ici.
+    "port-trois-rouges-verticaux": {
+        "feux": [["rouge"], ["rouge"], ["rouge"]],
+        "alt": "Trois feux rouges allumés, l'un au-dessus de l'autre.",
+        "regle": "Arrêté du 30 novembre 2017, annexe V, 6.15 : trois feux verticaux rouges, passage interdit",
+    },
+    "port-trois-verts-verticaux": {
+        "feux": [["vert"], ["vert"], ["vert"]],
+        "alt": "Trois feux verts allumés, l'un au-dessus de l'autre.",
+        "regle": "Arrêté du 30 novembre 2017, annexe V, 6.15 : trois feux verticaux verts, passage autorisé sous conditions",
+    },
 }
 
 TEINTES = {"rouge": ROUGE, "vert": VERT, "eteint": ETEINT}
