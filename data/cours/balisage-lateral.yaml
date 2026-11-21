@@ -60,6 +60,7 @@ piege: >-
 retenir:
   - Le balisage latéral se lit du large vers le port.
   - "Bâbord : rouge, cylindre, voyant cylindrique. Tribord : vert, cône, voyant conique."
+  - "Pour t’en souvenir : « Basi rouge, Tricot vert ». Ba-si, c’est bâbord et cylindre ; Tri-co, tribord et cône."
   - En sortant, tout s’inverse pour toi, pas pour la bouée.
 sources:
   - texte: Arrêté du 30 novembre 2017, annexe I, 2.5.1
@@ -86,5 +87,4 @@ sources:
 meta:
   cree_le: '2026-09-05'
   genere_par: claude
-  relu_par: alexis
-  relu_le: '2026-09-09'
+  relu_par: claude
