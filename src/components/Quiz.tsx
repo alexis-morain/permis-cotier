@@ -5,6 +5,7 @@ import { aleaSeme, erreursDeLExamen, estDue, questionsParIds, serieCourte, serie
 import { melangerPropositions } from '../lib/melange';
 import { charger, aujourdhui, CLE_STOCKAGE } from '../lib/progression';
 import type { QuestionAffichable } from '../lib/banque';
+import type { QuestionConnue } from '../lib/profil';
 import type { BadgeAnnonce } from '../lib/badges-geste';
 import { ATTENTE_BANQUE, chargerBanqueServie } from '../lib/banque-distante';
 import { nomDuTheme } from '../lib/themes-client';
@@ -42,6 +43,14 @@ interface Props {
    * l'écran attend le téléchargement, puis filtre sur `theme` s'il y en a un.
    */
   source?: string;
+  /**
+   * Quand `source` est le fichier d'un seul thème : la liste légère de toute la
+   * banque (badges et indice comptent la banque entière), et le fichier complet
+   * où se rabattre si celui du thème ne vient pas (premier lancement hors
+   * ligne : seul le complet est au précache du service worker).
+   */
+  sourceIndex?: string;
+  sourceRepli?: string;
   theme?: string;
   /**
    * L'entraînement d'une seule notion. Le nom vient de la page : les cent
@@ -87,7 +96,7 @@ function Partie({
   revoir = false,
   melange = false,
   premiereLecon,
-}: Props & { questions: QuestionAffichable[]; banque: QuestionAffichable[] }) {
+}: Props & { questions: QuestionAffichable[]; banque: readonly QuestionConnue[] }) {
   // La progression est lue au montage, puis relue seulement tant que l'examen
   // n'est pas lancé (voir l'effet `storage` plus bas) : le tirage et la reprise
   // partent du même état, pas d'un état qui bouge sous eux.
@@ -469,8 +478,11 @@ function Partie({
  * corps du jeu ne monte qu'une fois la banque là, sans quoi son tirage et sa
  * reprise partiraient d'un tableau vide.
  */
-export default function Quiz({ source, questions, ...reste }: Props) {
+export default function Quiz({ source, sourceIndex, sourceRepli, questions, ...reste }: Props) {
   const [chargees, setChargees] = useState<QuestionAffichable[] | null>(questions ?? null);
+  // La banque entière, `{ id, theme }` : les badges et l'indice la comptent.
+  // Quand la page charge tout, c'est `chargees` ; sinon la liste légère.
+  const [comptee, setComptee] = useState<readonly QuestionConnue[] | null>(null);
   const [echec, setEchec] = useState(false);
   // Change à chaque « Réessayer » : c'est ce qui relance l'effet.
   const [essai, setEssai] = useState(0);
@@ -493,7 +505,20 @@ export default function Quiz({ source, questions, ...reste }: Props) {
         // La banque que la page désigne. Sur le site elle vient du réseau ou
         // du service worker ; dans la coquille elle est dans le bundle, donc
         // locale et instantanée, et c'est elle qui fait tenir le mode avion.
-        const embarquee = await chargerBanqueServie(source, controleur.signal);
+        // Le fichier d'un thème, avec la liste légère en parallèle. S'il ne
+        // vient pas, la banque entière que le service worker précache : hors
+        // ligne au premier lancement, c'est la seule qu'il ait.
+        const liste = sourceIndex
+          ? chargerBanqueServie(sourceIndex, controleur.signal).then((b) => b.questions, () => null)
+          : Promise.resolve(null);
+        let embarquee;
+        try {
+          embarquee = await chargerBanqueServie(source, controleur.signal);
+        } catch (erreur) {
+          if (!sourceRepli) throw erreur;
+          embarquee = await chargerBanqueServie(sourceRepli, controleur.signal);
+        }
+        const comptees = await liste;
         // L'échéance ne couvre que le réseau : ce qui suit est local, et un
         // IndexedDB lent ne doit pas faire afficher une panne de connexion.
         clearTimeout(echeance);
@@ -505,6 +530,7 @@ export default function Quiz({ source, questions, ...reste }: Props) {
           gardee && plusRecente(gardee.version, embarquee.version) ? gardee : embarquee;
         if (!vivant) return;
         setChargees(retenue.questions);
+        setComptee(comptees);
 
         // Puis on demande au site s'il y a mieux, sans rien attendre : la
         // série qui commence joue ce qu'elle a en main, la suivante aura le
@@ -521,7 +547,7 @@ export default function Quiz({ source, questions, ...reste }: Props) {
       vivant = false;
       clearTimeout(echeance);
     };
-  }, [source, questions, essai]);
+  }, [source, sourceIndex, sourceRepli, questions, essai]);
 
   // Le JSON porte toute la banque, une seule fois pour les seize écrans de
   // jeu. L'entraînement par thème y taille sa part ici.
@@ -538,5 +564,5 @@ export default function Quiz({ source, questions, ...reste }: Props) {
   // Quatre propositions : c'est le format visé par la banque, et une silhouette
   // qui se trompe d'une ligne ne se remarque pas ; une qui saute, si.
   if (!servies) return <Silhouette propositions={4} examen={reste.mode === 'examen'} />;
-  return <Partie {...reste} questions={servies} banque={chargees!} />;
+  return <Partie {...reste} questions={servies} banque={comptee ?? chargees!} />;
 }

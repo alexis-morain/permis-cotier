@@ -295,7 +295,13 @@ data/sources/                 19 dossiers ; les `fiche-*` sont écrites à la ma
 data/visuels/navires.yaml     les situations que dessine scripts/navires.py
 src/lib/                      seo, guide, affichable (la banque servie en JSON),
                               cible et natif pour la coquille, jour, melange
-src/pages/banque/v/           la banque par version, `<version>.json` seul
+src/pages/banque/v/           la banque par version : `<version>.json` (complet, lu par l'app iOS,
+                              l'examen, les révisions : adresse et contenu inchangés) et, pour le
+                              site seul, `<version>/<thème>.json` + `<version>/index.json`
+                              (`{id, theme, notion}`, pour badges et indice). Les pages de thème et
+                              de notion chargent thème + index, le complet en repli hors ligne ;
+                              ces fichiers sont à la demande au service worker (CacheFirst, cache
+                              nommé par la version), jamais au précache.
 src/pages/source/             les sept fiches maison publiées, et leur sommaire
 src/worker.ts                 le Worker : POST /api/signaler, le reste aux actifs
 ios/App/App/                  coquille : BarreOnglets, EcranWeb, RouteurDuSite,

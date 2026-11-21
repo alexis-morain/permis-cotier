@@ -815,6 +815,80 @@ describe('la banque téléchargée', () => {
     expect(document.querySelector('.silhouette')).toBeNull();
   });
 
+  describe('par thème', () => {
+    const meteo = [question('meteo-0001', 'meteo'), question('meteo-0002', 'meteo')];
+    const index = [
+      { id: 'ecluses-0001', theme: 'ecluses' },
+      { id: 'meteo-0001', theme: 'meteo' },
+      { id: 'meteo-0002', theme: 'meteo' },
+    ];
+    /** Un serveur par adresse : une adresse absente répond 404. */
+    function parAdresse(corps: Record<string, unknown>) {
+      return vi.fn(async (url: string) =>
+        url in corps
+          ? { ok: true, status: 200, json: async () => corps[url] }
+          : { ok: false, status: 404, json: async () => ({}) },
+      ) as unknown as typeof fetch;
+    }
+
+    it('ne télécharge que le fichier du thème et l’index, pas la banque entière', async () => {
+      const appel = parAdresse({
+        '/banque/v/1.10.2/meteo.json': { version: '1.10.2', questions: meteo },
+        '/banque/v/1.10.2/index.json': { version: '1.10.2', questions: index },
+      });
+      vi.stubGlobal('fetch', appel);
+      render(
+        <Quiz
+          mode="entrainement"
+          theme="meteo"
+          source="/banque/v/1.10.2/meteo.json"
+          sourceIndex="/banque/v/1.10.2/index.json"
+          sourceRepli="/banque/v/1.10.2.json"
+        />,
+      );
+      await waitFor(() => expect(screen.getByText(/Énoncé de meteo-0001/)).toBeTruthy());
+      const urls = (appel as unknown as ReturnType<typeof vi.fn>).mock.calls.map((c) => c[0]);
+      expect(urls.sort()).toEqual(['/banque/v/1.10.2/index.json', '/banque/v/1.10.2/meteo.json']);
+    });
+
+    it('retombe sur la banque entière quand le fichier du thème manque (hors ligne, premier lancement)', async () => {
+      const entiere = [question('ecluses-0001', 'ecluses'), ...meteo];
+      vi.stubGlobal('fetch', parAdresse({ '/banque/v/1.10.2.json': { version: '1.10.2', questions: entiere } }));
+      render(
+        <Quiz
+          mode="entrainement"
+          theme="meteo"
+          source="/banque/v/1.10.2/meteo.json"
+          sourceIndex="/banque/v/1.10.2/index.json"
+          sourceRepli="/banque/v/1.10.2.json"
+        />,
+      );
+      await waitFor(() => expect(screen.getByText(/Énoncé de meteo-0001/)).toBeTruthy());
+      expect(screen.queryByText(/Énoncé de ecluses-0001/)).toBeNull();
+    });
+
+    it('joue sans l’index s’il manque : seuls les badges en pâtissent', async () => {
+      vi.stubGlobal('fetch', parAdresse({ '/banque/v/1.10.2/meteo.json': { version: '1.10.2', questions: meteo } }));
+      render(
+        <Quiz
+          mode="entrainement"
+          theme="meteo"
+          source="/banque/v/1.10.2/meteo.json"
+          sourceIndex="/banque/v/1.10.2/index.json"
+        />,
+      );
+      await waitFor(() => expect(screen.getByText(/Énoncé de meteo-0001/)).toBeTruthy());
+    });
+
+    it('affiche la panne si ni le thème ni le repli ne viennent', async () => {
+      vi.stubGlobal('fetch', parAdresse({}));
+      render(
+        <Quiz mode="entrainement" theme="meteo" source="/banque/v/1.10.2/meteo.json" sourceRepli="/banque/v/1.10.2.json" />,
+      );
+      await waitFor(() => expect(screen.getByText(/Les questions ne sont pas arrivées/)).toBeTruthy());
+    });
+  });
+
   it('taille la part du thème dans la banque entière', async () => {
     const melange = [
       question('ecluses-0001', 'ecluses'),

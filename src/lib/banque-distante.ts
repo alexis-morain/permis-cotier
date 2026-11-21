@@ -23,6 +23,25 @@ export function cheminDeVersion(version: string): string {
   return `/banque/v/${version}.json`;
 }
 
+/**
+ * Le fichier d'un seul thème, pour les pages d'entraînement : `{ version,
+ * theme, questions }`, les questions entières (explication et sources
+ * comprises). Il vit sous le dossier de la version, à côté du fichier complet
+ * qui, lui, ne change pas d'adresse : l'app iPhone ne lit que celui-là.
+ */
+export function cheminDeVersionTheme(version: string, theme: string): string {
+  return `/banque/v/${version}/${theme}.json`;
+}
+
+/**
+ * La liste légère de toute la banque, `{ version, questions: [{ id, theme,
+ * notion }] }` : ce qu'il faut aux badges et à l'indice pour compter la banque
+ * entière quand la page ne charge qu'un thème.
+ */
+export function cheminDeVersionIndex(version: string): string {
+  return `/banque/v/${version}/index.json`;
+}
+
 /** Ce que sert `dist/banque/v/<version>.json`. */
 export interface BanqueServie {
   version: string;
