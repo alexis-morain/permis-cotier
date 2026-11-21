@@ -1,0 +1,87 @@
+name: triage
+
+# Trie une PR une fois sa CI terminée : labels par zone touchée, label de
+# taille, un mot d'accueil au premier passage d'un contributeur extérieur.
+#
+# Pourquoi `workflow_run` et pas `pull_request_target` : GitHub bloque ce
+# dernier par défaut sur les dépôts publics à partir du 2 décembre 2026, et
+# `pull_request` n'a qu'un jeton en lecture sur un fork. Ici le workflow vient
+# de `main`, ne récupère aucun code de la PR et ne lit que des noms de fichiers
+# par l'API : rien du contributeur ne s'exécute avec le jeton en écriture.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  triage:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v9
+        with:
+          script: |
+            const PROPRIETAIRE = 'alexis-morain';
+            // Premier motif qui correspond, par fichier ; un fichier peut ne rien porter.
+            const ZONES = [
+              ['banque',   /^data\/questions\//],
+              ['cours',    /^data\/(cours|revision)\//],
+              ['sources',  /^data\/(sources|visuels)\/|^LICENSE-BANQUE$/],
+              ['front',    /^src\//],
+              ['ios',      /^ios\/|^capacitor\.config\.json$/],
+              ['scripts',  /^scripts\/|^tests\//],
+              ['ci',       /^\.github\//],
+              ['docs',     /^docs\/|\.md$/],
+            ];
+            // Fichiers regénérés, hors du compte de taille.
+            const DERIVES = /^public\/fiches-revision\/|^public\/.*\.(svg|wav)$|^data\/CREDITS\.md$|package-lock\.json$/;
+            const ACCUEIL = [
+              'Merci pour cette contribution !',
+              '',
+              'Ce qui va se passer :',
+              '- la CI vérifie la banque, les visuels et le build ; les fichiers dérivés (fiches PDF, dessins, crédits) sont regénérés automatiquement par **autofix.ci** si besoin ;',
+              '- Alexis relit lui-même chaque question avant publication. N\'écris pas `relu_par: alexis` : la CI le refuse sur une PR extérieure ;',
+              '- toute question doit citer sa source réglementaire (voir `CONTRIBUTING.md`).',
+              '',
+              'La banque est sous CC BY-SA 4.0 : en ouvrant cette PR, tu acceptes que ta contribution soit publiée sous cette licence.',
+            ].join('\n');
+            const MARQUE = '<!-- triage:accueil -->';
+
+            const { owner, repo } = context.repo;
+            const run = context.payload.workflow_run;
+            // `workflow_run.pull_requests` est vide pour un fork : on retrouve la PR par son commit.
+            const ouvertes = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', per_page: 100 });
+            const pr = ouvertes.find((p) => p.head.sha === run.head_sha);
+            if (!pr) { core.info(`aucune PR ouverte pour ${run.head_sha}`); return; }
+
+            const fichiers = await github.paginate(github.rest.pulls.listFiles, { owner, repo, pull_number: pr.number, per_page: 100 });
+            const labels = new Set();
+            let lignes = 0;
+            for (const f of fichiers) {
+              const zone = ZONES.find(([, re]) => re.test(f.filename));
+              if (zone) labels.add(zone[0]);
+              if (!DERIVES.test(f.filename)) lignes += f.additions + f.deletions;
+            }
+            // La règle du CLAUDE.md : ce qui touche au vrai, à l'app ou à l'écran se relit à l'œil.
+            const A_RELIRE = /^data\/(questions|sources)\/|^ios\/|^src\/(components|pages|styles)\/|\.css$|^public\//;
+            if (fichiers.some((f) => A_RELIRE.test(f.filename) && !DERIVES.test(f.filename))) labels.add('à-relire');
+            const taille = lignes < 10 ? 'XS' : lignes < 50 ? 'S' : lignes < 200 ? 'M' : lignes < 600 ? 'L' : 'XL';
+            const TAILLES = ['taille/XS', 'taille/S', 'taille/M', 'taille/L', 'taille/XL'];
+            const exterieur = pr.user.login !== PROPRIETAIRE && pr.user.type !== 'Bot';
+            if (exterieur) labels.add('contribution');
+
+            // Le label de taille change d'une poussée à l'autre : on retire l'ancien.
+            for (const l of pr.labels.map((l) => l.name).filter((n) => TAILLES.includes(n) && n !== `taille/${taille}`)) {
+              await github.rest.issues.removeLabel({ owner, repo, issue_number: pr.number, name: l }).catch(() => {});
+            }
+            await github.rest.issues.addLabels({ owner, repo, issue_number: pr.number, labels: [...labels, `taille/${taille}`] });
+
+            if (!exterieur) return;
+            const commentaires = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number: pr.number, per_page: 100 });
+            if (commentaires.some((c) => c.body?.includes(MARQUE))) return;
+            await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body: `${MARQUE}\n${ACCUEIL}` });
