@@ -1,0 +1,29 @@
+name: stale
+
+# Ne touche qu'aux PR qu'Alexis a marquées `attente-auteur` : une PR qui attend
+# une réponse du contributeur est relancée après 30 jours, fermée 14 jours plus
+# tard. Rien d'autre n'est relancé, ni les issues, ni les brouillons.
+on:
+  schedule:
+    - cron: '23 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v11
+        with:
+          only-pr-labels: attente-auteur
+          days-before-issue-stale: -1
+          days-before-issue-close: -1
+          days-before-pr-stale: 30
+          days-before-pr-close: 14
+          exempt-draft-pr: true
+          stale-pr-label: sans-nouvelles
+          stale-pr-message: "Pas de nouvelles depuis 30 jours. Sans réponse d'ici 14 jours, cette PR sera fermée ; elle pourra être rouverte à tout moment."
+          close-pr-message: "Fermée faute de réponse. Merci pour le travail déjà fait : rouvre-la quand tu veux."

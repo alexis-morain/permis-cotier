@@ -1,0 +1,46 @@
+# Le nom doit rester « autofix.ci » : le service ne pousse que le diff d'un
+# workflow qui porte ce nom.
+name: autofix.ci
+
+# Corrections mécaniques d'une PR, forks compris : dessins, crédits et fiches
+# PDF regénérés quand la PR a touché leur source. Le job tourne avec un jeton en
+# lecture seule ; c'est l'app autofix.ci qui pousse le commit, et elle refuse
+# tout changement sous `.github`.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: autofix-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      # Chrome est sur les runners Ubuntu : il imprime les fiches périmées.
+      - name: Regénérer ce qui est périmé
+        env:
+          CHROME: /usr/bin/google-chrome
+        run: scripts/regenerer.sh
+
+      - uses: autofix-ci/action@c5b2d67aa2274e7b5a18224e8171550871fc7e4a # v1.3.4
+        with:
+          commit-message: 'autofix : regénère les fichiers dérivés'

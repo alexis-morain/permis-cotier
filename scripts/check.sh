@@ -44,6 +44,9 @@ fi
 
 # --- Les étapes de ci.yml ---------------------------------------------------
 
+# Seule étape de ci.yml absente d'ici : « Relecture réservée à Alexis », qui lit
+# le diff d'une PR ouverte par quelqu'un d'autre et n'a pas de sens en local.
+
 etape "Valider la banque"                 "$PY" scripts/valider.py
 etape "Redites de la banque"              "$PY" scripts/doublons.py --verifier
 etape "Crédits des visuels"               "$PY" scripts/credits.py --verifier

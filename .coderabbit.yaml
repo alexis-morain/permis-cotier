@@ -1,0 +1,36 @@
+# Second avis sur les PR. Sous 10 étoiles, CodeRabbit ne relit que sur
+# demande : `@coderabbitai review` dans la PR.
+language: fr-FR
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: true
+  auto_review:
+    enabled: true
+    drafts: false
+  path_filters:
+    - "!public/fiches-revision/**"
+    - "!public/**/*.svg"
+    - "!public/**/*.wav"
+    - "!data/CREDITS.md"
+    - "!package-lock.json"
+    - "!dist/**"
+    - "!dist-app/**"
+  path_instructions:
+    - path: "data/questions/**"
+      instructions: >-
+        Banque de questions du permis côtier. Vérifie que chaque question cite
+        une source réglementaire précise, que la bonne réponse découle de cette
+        source, que les distracteurs sont faux sans ambiguïté, et que le format
+        respecte 1 à 2 bonnes réponses. Signale tout relu_par: alexis posé par
+        quelqu'un d'autre qu'Alexis.
+    - path: "data/cours/**"
+      instructions: >-
+        Leçon de cours. Vérifie l'exactitude réglementaire et la typographie
+        française (espaces insécables avant ; : ! ?). Ne propose pas de
+        reformulation de style.
+chat:
+  auto_reply: true
