@@ -23,27 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # `relu_par: alexis` dit qu'Alexis a relu la question : lui seul
-      # l'écrit. `valider.py` voit la valeur, pas qui l'a posée ; ce contrôle,
-      # lui, regarde le diff d'une PR ouverte par quelqu'un d'autre.
-      - name: Relecture réservée à Alexis
-        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'alexis-morain'
-        env:
-          BASE: ${{ github.event.pull_request.base.sha }}
-        run: |
-          git fetch --no-tags --depth=1 origin "$BASE"
-          if git diff --unified=0 "$BASE" HEAD -- data/ | grep -iE '^\+[^+].*\brelu_par\b.*alexis'; then
-            echo "::error::Cette PR pose relu_par: alexis. Seul Alexis l'écrit, après avoir relu la question."
-            exit 1
-          fi
-          # Retoucher une question déjà relue garde son `relu_par: alexis` :
-          # ce n'est pas une faute, mais la relecture est à refaire.
-          for f in $(git diff --name-only "$BASE" HEAD -- data/questions/); do
-            if [ -f "$f" ] && grep -qiE '\brelu_par\b.*alexis' "$f"; then
-              echo "::warning file=$f::Question déjà relue, retouchée par cette PR : relecture à refaire."
-            fi
-          done
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -55,6 +34,22 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -r requirements.txt
+
+      # `relu_par: alexis` dit qu'Alexis a relu la question : lui seul
+      # l'écrit. `valider.py` voit la valeur, pas qui l'a posée ; ce contrôle
+      # compare le YAML de la base et de la PR, sur les PR des autres.
+      - name: Relecture réservée à Alexis
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'alexis-morain'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE"
+          # Le script de la base, pas celui de la PR : une PR ne réécrit pas
+          # son propre contrôle. (Repli sur celui de la PR tant que la base
+          # ne l'a pas.)
+          git show "$BASE:scripts/garde_relu.py" > "$RUNNER_TEMP/garde_relu.py" 2>/dev/null \
+            || cp scripts/garde_relu.py "$RUNNER_TEMP/garde_relu.py"
+          python "$RUNNER_TEMP/garde_relu.py" "$BASE"
 
       # La banque d'abord : une question fausse de forme casse le déploiement.
       - name: Valider la banque
