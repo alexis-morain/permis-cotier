@@ -2,8 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import SansScript from '../../components/SansScript.astro';
 import Quiz from '../../components/Quiz.tsx';
+import { POUR_APP } from '../../lib/cible';
 import { silhouetteHtml } from '../../components/quiz/silhouette-statique';
-import { cheminBanque } from '../../lib/banque';
+import { cheminBanque, cheminBanqueTheme, cheminIndexBanque } from '../../lib/banque';
 import { THEMES } from '../../lib/themes';
 
 export async function getStaticPaths() {
@@ -11,22 +12,27 @@ export async function getStaticPaths() {
 }
 
 const { theme } = Astro.props;
-// Le JSON porte toute la banque, et l'écran y taille la part du thème : les
-// quatorze pages d'entraînement partagent ainsi un seul fichier déjà en cache
-// depuis l'examen blanc, au lieu d'embarquer chacune sa copie.
-const banque = cheminBanque();
+// Sur le site, la page ne charge que le fichier de son thème, plus la liste
+// légère de la banque (les badges et l'indice la comptent entière). Le fichier
+// complet reste le repli hors ligne, seul au précache. Dans l'app, la banque
+// est dans le bundle : le fichier complet, comme avant.
+const pleine = cheminBanque();
+const banque = POUR_APP ? pleine : cheminBanqueTheme(theme.code);
+const index = POUR_APP ? undefined : cheminIndexBanque();
+const repli = POUR_APP ? undefined : pleine;
+const precharge = POUR_APP ? true : [banque, index!];
 ---
 
 <Base
   titre={`Entraînement : ${theme.nom}`}
   description={`Questions du thème ${theme.nom}, avec correction immédiate et source.`}
   indexable={false}
-  prechargeBanque
+  prechargeBanque={precharge}
 >
   <div class="page page--etroite">
     <p class="chapitre web-seulement" style="padding-top:1.5rem"><a href="/entrainement">Entraînement</a> · {theme.nom}</p>
     <SansScript ecran="L’entraînement" />
-    <Quiz client:only="react" mode="entrainement" source={banque} theme={theme.code}>
+    <Quiz client:only="react" mode="entrainement" source={banque} sourceIndex={index} sourceRepli={repli} theme={theme.code}>
       <Fragment slot="fallback" set:html={silhouetteHtml({ examen: false })} />
     </Quiz>
   </div>

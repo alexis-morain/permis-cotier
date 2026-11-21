@@ -102,6 +102,16 @@ const INDEX_RECHERCHE = 'recherche.json';
  */
 const EXTENSIONS_NOYAU = ['js', 'css', 'html', 'svg', 'png', 'webp', 'woff2', 'json'] as const;
 
+/**
+ * La banque découpée par thème (`banque/v/<version>/<thème>.json`, et
+ * `index.json` à côté) : 14 fichiers et une liste qui, ensemble, pèsent autant
+ * que le fichier complet déjà au précache. Les précacher ferait payer deux fois
+ * la banque à l'installation. Ils se gardent à la lecture ; au premier lancement
+ * hors ligne, l'écran se rabat sur le fichier complet (`Quiz`, `sourceRepli`).
+ * Le complet `banque/v/<version>.json`, lui, reste au noyau et n'est pas touché.
+ */
+const BANQUE_PAR_THEME = 'banque/v/*/*.json';
+
 /** Motifs de fichiers pris au précache, relatifs à `dist/`. */
 export const GLOB_NOYAU: readonly string[] = [`**/*.{${EXTENSIONS_NOYAU.join(',')}}`];
 
@@ -110,6 +120,7 @@ export const GLOB_HORS_NOYAU: readonly string[] = [
   '**/node_modules/**/*',
   POINTEUR_FRAICHEUR,
   INDEX_RECHERCHE,
+  BANQUE_PAR_THEME,
   ...DOSSIERS_AU_RESEAU.map((d) => `${d}/**`),
   ...PAGES_A_LA_DEMANDE.map((d) => `${d}/**`),
 ];
@@ -132,6 +143,13 @@ export const MOTIF_A_LA_DEMANDE = new RegExp(`/(?:${PAGES_A_LA_DEMANDE.join('|')
  * confondre l'index avec `/recherche`, la page qui le lit.
  */
 export const MOTIF_RECHERCHE = /\/recherche\.json$/;
+
+/**
+ * La banque par thème, du point de vue de Workbox. Même garde (le motif
+ * commence par une barre). Le fichier complet `banque/v/<version>.json` n'a
+ * pas de dossier de version et n'est pas attrapé.
+ */
+export const MOTIF_BANQUE_PAR_THEME = /\/banque\/v\/[^/]+\/[^/]+\.json$/;
 
 /**
  * Les paramètres d'adresse que le précache doit ignorer pour retrouver sa page.
@@ -157,6 +175,7 @@ export function politique(chemin: string): Politique {
   const propre = chemin.replace(/[?#].*$/, '').replace(/^\//, '');
   if (propre === POINTEUR_FRAICHEUR) return 'reseau';
   if (propre === INDEX_RECHERCHE) return 'a-la-demande';
+  if (/^banque\/v\/[^/]+\/[^/]+\.json$/.test(propre)) return 'a-la-demande';
 
   const segments = propre === '' ? [] : propre.split('/');
   const tete = segments[0];
@@ -211,6 +230,18 @@ export function reglesALaDemande(versionBanque: string) {
           maxEntries: 200,
           maxAgeSeconds: 60 * 60 * 24 * 30,
         },
+        cacheableResponse: { statuses: [200] },
+      },
+    },
+    {
+      // Le nom porte la version et le fichier ne change jamais sous ce nom-là :
+      // d'abord le cache, sans revalider. Le cache porte aussi la version, donc
+      // un thème d'une version et un autre d'une autre ne se croisent pas.
+      urlPattern: MOTIF_BANQUE_PAR_THEME,
+      handler: 'CacheFirst' as const,
+      options: {
+        cacheName: `permis-cotier-banque-v${versionBanque}`,
+        expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 30 },
         cacheableResponse: { statuses: [200] },
       },
     },

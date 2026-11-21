@@ -2,8 +2,9 @@
 import Base from '../../../layouts/Base.astro';
 import SansScript from '../../../components/SansScript.astro';
 import Quiz from '../../../components/Quiz.tsx';
+import { POUR_APP } from '../../../lib/cible';
 import { silhouetteHtml } from '../../../components/quiz/silhouette-statique';
-import { cheminBanque, questionsPubliees } from '../../../lib/banque';
+import { cheminBanque, cheminBanqueTheme, cheminIndexBanque, questionsPubliees } from '../../../lib/banque';
 import { NOTIONS } from '../../../lib/notions';
 import { cheminLecon } from '../../../lib/parcours';
 import { themeParCode } from '../../../lib/themes';
@@ -32,14 +33,22 @@ export async function getStaticPaths() {
 const { notion, publiees } = Astro.props;
 const theme = themeParCode(notion.theme);
 const nomTheme = theme?.nom ?? notion.theme;
-const banque = cheminBanque();
+// Sur le site, la page ne charge que le fichier de son thème, plus la liste
+// légère de la banque (les badges et l'indice la comptent entière). Le fichier
+// complet reste le repli hors ligne, seul au précache. Dans l'app, la banque
+// est dans le bundle : le fichier complet, comme avant.
+const pleine = cheminBanque();
+const banque = POUR_APP ? pleine : cheminBanqueTheme(notion.theme);
+const index = POUR_APP ? undefined : cheminIndexBanque();
+const repli = POUR_APP ? undefined : pleine;
+const precharge = POUR_APP ? true : [banque, index!];
 ---
 
 <Base
   titre={`Entraînement : ${notion.nom}`}
   description={`Les questions de la notion ${notion.nom}, avec correction immédiate et source.`}
   indexable={false}
-  prechargeBanque
+  prechargeBanque={precharge}
 >
   <div class="page page--etroite">
     <p class="chapitre web-seulement" style="padding-top:1.5rem">
@@ -50,6 +59,8 @@ const banque = cheminBanque();
       client:only="react"
       mode="entrainement"
       source={banque}
+      sourceIndex={index}
+      sourceRepli={repli}
       theme={notion.theme}
       notion={{ code: notion.code, nom: notion.nom }}
     >

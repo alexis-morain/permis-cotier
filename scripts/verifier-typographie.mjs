@@ -100,7 +100,10 @@ for (const page of fichiers(racine, '.html')) {
 
 for (const fichier of fichiers(racine, '.json').filter((f) => f.includes(`${'banque'}/v/`))) {
   const banque = JSON.parse(readFileSync(fichier, 'utf-8'));
+  // `banque/v/<version>/index.json` ne porte que `id`, `theme` et `notion` : pas de
+  // texte à relire. Les fichiers de thème, eux, portent les questions entières.
   for (const q of banque.questions ?? []) {
+    if (!q.propositions) continue;
     const textes = [q.enonce, q.explication, ...q.propositions.map((p) => p.texte), ...q.sources.map((s) => s.texte)];
     for (const d of textes.flatMap(defauts)) problemes.push(`${relative(racine, fichier)} ${q.id} : ${d}`);
   }

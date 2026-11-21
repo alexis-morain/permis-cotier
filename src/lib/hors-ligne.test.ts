@@ -6,6 +6,7 @@ import {
   GLOB_NOYAU,
   GLOB_HORS_NOYAU,
   MOTIF_A_LA_DEMANDE,
+  MOTIF_BANQUE_PAR_THEME,
   IGNORER_PARAMETRES,
   reglesALaDemande,
   politique,
@@ -84,6 +85,22 @@ describe('politique', () => {
 
   it('garde la banque versionnée au noyau : sans elle, /examen ne tire rien', () => {
     expect(politique('/banque/v/1.11.0.json')).toBe('noyau');
+  });
+
+  it('garde les fichiers de thème de la banque à la demande : le précache a déjà le complet', () => {
+    // Les précacher doublerait le poids de la banque à l'installation. Hors
+    // ligne au premier lancement, l'écran se rabat sur le fichier complet.
+    expect(politique('/banque/v/1.22.4/feux-marques.json')).toBe('a-la-demande');
+    expect(politique('/banque/v/1.22.4/index.json')).toBe('a-la-demande');
+    expect(MOTIF_BANQUE_PAR_THEME.test('https://lepermiscotier.fr/banque/v/1.22.4/vhf.json')).toBe(true);
+    expect(MOTIF_BANQUE_PAR_THEME.test('https://lepermiscotier.fr/banque/v/1.22.4.json')).toBe(false);
+    expect(GLOB_HORS_NOYAU).toContain('banque/v/*/*.json');
+  });
+
+  it('range la banque par thème dans un cache nommé par la version, sans mélange possible', () => {
+    const regle = reglesALaDemande('1.22.4').find((r) => r.urlPattern === MOTIF_BANQUE_PAR_THEME);
+    expect(regle?.handler).toBe('CacheFirst');
+    expect(regle?.options.cacheName).toBe('permis-cotier-banque-v1.22.4');
   });
 
   it('laisse au réseau ce qui ne sert pas l’écran', () => {

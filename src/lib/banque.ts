@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
 import { versAffichable } from './affichable';
-import { cheminDeVersion } from './banque-distante';
+import { cheminDeVersion, cheminDeVersionIndex, cheminDeVersionTheme } from './banque-distante';
 import type { QuestionAffichable } from './affichable';
 import { THEMES, themeParCode } from './themes';
 
@@ -28,6 +28,16 @@ export function versionBanque(): string {
  */
 export function cheminBanque(): string {
   return cheminDeVersion(versionBanque());
+}
+
+/** Le fichier d'un thème, pour les pages d'entraînement du site. */
+export function cheminBanqueTheme(theme: string): string {
+  return cheminDeVersionTheme(versionBanque(), theme);
+}
+
+/** La liste légère de la banque entière (`id`, `theme`, `notion`). */
+export function cheminIndexBanque(): string {
+  return cheminDeVersionIndex(versionBanque());
 }
 
 /** Seules les questions publiées entrent dans le site. */

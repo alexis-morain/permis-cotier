@@ -47,7 +47,7 @@ interface Props {
    * `Quiz` au premier écran : sans elle, la banque part au quatrième
    * aller-retour, après le HTML, le runtime React et l'exécution du composant.
    */
-  prechargeBanque?: boolean;
+  prechargeBanque?: boolean | readonly string[];
   /** Image de partage, relative à la racine. */
   image?: string;
   imageAlt?: string;
@@ -144,8 +144,12 @@ const retour = POUR_APP ? (lienRetour(chemin, miettes) ?? retourApp ?? null) : n
       `client.js` et `Quiz.js`, puis l'exécution du composant, puis seulement
       le `fetch`. Un aller-retour de moins sur la première question.
     */}
+    {/* `true` : la banque entière. Une liste : ces adresses-là, quand la page
+        ne charge qu'un thème (`cheminBanqueTheme`, `cheminIndexBanque`). */}
     {prechargeBanque && (
-      <link rel="preload" as="fetch" type="application/json" href={cheminBanque()} crossorigin />
+      (Array.isArray(prechargeBanque) ? prechargeBanque : [cheminBanque()]).map((href) => (
+        <link rel="preload" as="fetch" type="application/json" href={href} crossorigin />
+      ))
     )}
 
     <title>{titreComplet}</title>
