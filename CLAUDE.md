@@ -62,11 +62,11 @@ s'arrête.
 
 **Les bots sur une PR.** `autofix.yml` lance `scripts/regenerer.sh`, qui ne
 relance que les générateurs dont le `--verifier` échoue, et autofix.ci pousse le
-diff dans la PR, forks compris. `triage.yml` (après la CI, par `workflow_run`)
-pose les labels de zone, de taille et `à-relire`. `claude.yml` ne répond qu'à
-un `@claude` d'Alexis ; CodeRabbit, en second avis, sur `@coderabbitai review`.
-Sur une PR extérieure, la CI refuse un `relu_par: alexis` ajouté. `stale.yml` ne
-relance que les PR marquées `attente-auteur`.
+diff dans la PR, forks compris. `triage.yml` (sur le signal de `pr-signal.yml`,
+par `workflow_run`) pose les labels de zone, de taille et `à-relire`.
+`claude.yml` ne répond qu'à un `@claude` d'Alexis ; CodeRabbit relit seul chaque PR,
+en second avis. Sur une PR extérieure, la CI refuse un `relu_par:
+alexis` ajouté. `stale.yml` ne relance que les PR marquées `attente-auteur`.
 
 **`main` est protégée** (ruleset « main protégée », 21 novembre 2026) : pas de
 poussée directe, tout passe par une PR, la fusion attend le job `verifier` de la
