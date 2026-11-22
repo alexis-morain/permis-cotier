@@ -55,4 +55,9 @@ const domaines = MESURE.domaines;
   import { brancherClics } from '../lib/mesure';
 
   brancherClics();
+  // Les vitaux réels (CLS, LCP, INP) vers Umami : un morceau à part, tiré après
+  // le chargement de la page. Hors ligne ou bloqué, il n'arrive pas, sans bruit.
+  const vitaux = () => import('../lib/vitals').then((m) => m.suivreVitals()).catch(() => {});
+  if (document.readyState === 'complete') vitaux();
+  else window.addEventListener('load', vitaux, { once: true });
 </script>
