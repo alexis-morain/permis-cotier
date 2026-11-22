@@ -74,6 +74,7 @@ fi
 
 etape "Types"                             npx astro check --minimumSeverity error
 etape "Build"                             npx astro build
+etape "CLS des écrans de jeu"              node scripts/verifier-cls.mjs dist
 etape "Rien de l'app dans le site"        node scripts/verifier-cible.mjs
 etape "Audit SEO du build"                node scripts/audit-seo.mjs
 etape "Pages indexables du build"         node scripts/verifier-indexation.mjs
