@@ -131,6 +131,12 @@ jobs:
       - name: Build
         run: npx astro build
 
+      # Le CLS des écrans de jeu, JavaScript de l'îlot retardé de 1,5 s, en
+      # Chrome mobile (412 px) : le pied de page ne doit pas sauter quand la
+      # question remplace la silhouette (#96). Le Chrome d'ubuntu-latest suffit.
+      - name: CLS des écrans de jeu
+        run: node scripts/verifier-cls.mjs dist
+
       # Le site ne doit rien payer pour l'app : `verifier-cible.mjs` refuse un
       # `dist/` où un greffon Capacitor aurait fui.
       - name: Vérifier que rien de l'app n'est dans le site

@@ -204,6 +204,8 @@ sources.
   changer avant passe par un script en ligne empaqueté au build
   (`virtual:bande-avant-rendu`, esbuild). CLS et images se mesurent en Chromium
   headless par CDP.
+  Le CLS des quatre écrans de jeu est gardé par `scripts/verifier-cls.mjs` (CI et `check.sh`, Chrome mobile,
+  JS de l'îlot retardé de 1,5 s, seuil 0,1, médiane de 3 passages) ; en local, `CHROME` désigne l'exécutable si Chrome n'est pas installé.
 - Le site est en format `file` (la coquille en `directory`) : avec
   `trailingSlash: never`, un dossier ferait rediriger /examen à chaque
   navigation. D'où `cheminServi()` dans `seo.ts` : une canonique qui désigne
