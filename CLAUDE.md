@@ -65,7 +65,11 @@ relance que les générateurs dont le `--verifier` échoue, et autofix.ci pousse
 diff dans la PR, forks compris. `triage.yml` (sur le signal de `pr-signal.yml`,
 par `workflow_run`) pose les labels de zone, de taille et `à-relire`.
 `claude.yml` ne répond qu'à un `@claude` d'Alexis ; CodeRabbit relit seul chaque PR,
-en second avis. Sur une PR extérieure, la CI refuse un `relu_par:
+en second avis. `ai-review.yml` relit les PR d'Alexis (branches du dépôt, hors
+`pr-*`, hors brouillon, 10 lignes ajoutées ou supprimées et plus) par une session Claude neuve, sans
+le contexte de la session qui a écrit : justesse d'abord, questions contre leur
+source comprises. Il commente, ne bloque rien ; le label `ai-review` redemande
+un passage après de nouveaux commits. Sur une PR extérieure, la CI refuse un `relu_par:
 alexis` ajouté. `stale.yml` ne relance que les PR marquées `attente-auteur`.
 
 **`main` est protégée** (ruleset « main protégée », 21 novembre 2026) : pas de
