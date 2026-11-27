@@ -26,10 +26,6 @@ permissions:
   contents: read
   pull-requests: write
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
-
 jobs:
   relire:
     # Sur `labeled`, seul le label `ai-review` posé par Alexis compte. Sinon, pas
@@ -45,6 +41,12 @@ jobs:
         (github.event.action != 'labeled' && !github.event.pull_request.draft &&
          (github.event.pull_request.additions >= 10 || github.event.pull_request.deletions >= 10))
       )
+    # Concurrence au niveau du job, pas du workflow : un label sans rapport
+    # lance un run dont le job est sauté, et ce run ne doit pas annuler une
+    # relecture en cours (relevé par ai-review lui-même sur #106).
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
