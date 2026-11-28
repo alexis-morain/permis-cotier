@@ -114,7 +114,7 @@ jobs:
   construire:
     needs: preparer
     if: needs.preparer.outputs.action == 'construire'
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     environment: app-store
     steps:
@@ -135,11 +135,14 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
 
-      # L'image porte plusieurs Xcode ; le SDK le plus récent est celui
-      # qu'App Store Connect exige en premier.
-      - name: Choisir Xcode 26
+      # L'image `xcode-27` ne porte qu'Xcode 27 (une majeure par image) :
+      # App Store Connect exige le SDK iOS 27 dès avril 2027 (ITMS-90725).
+      # On prend le dernier Xcode 27 non bêta.
+      - name: Choisir Xcode 27
         run: |
-          xcode=$(printf '%s\n' /Applications/Xcode_26*.app | grep -iv beta | sort -V | tail -1)
+          # Les liens Xcode_27.x.app peuvent viser une bêta : résoudre avant de filtrer.
+          xcode=$(for a in /Applications/Xcode_27*.app; do realpath "$a"; done | sort -u | grep -iv beta | sort -V | tail -1)
+          [ -n "$xcode" ] || { echo "::error::aucun Xcode 27 stable sur l'image"; exit 1; }
           sudo xcode-select -s "$xcode/Contents/Developer"
           xcodebuild -version
 
