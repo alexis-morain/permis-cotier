@@ -79,7 +79,7 @@ jobs:
   construire:
     needs: preparer
     if: needs.preparer.outputs.action == 'construire'
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     environment: app-store
     steps:
@@ -99,9 +99,9 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
 
-      - name: Choisir Xcode 26
+      - name: Choisir Xcode 27
         run: |
-          xcode=$(printf '%s\n' /Applications/Xcode_26*.app | grep -iv beta | sort -V | tail -1)
+          xcode=$(printf '%s\n' /Applications/Xcode_27*.app | grep -iv beta | sort -V | tail -1)
           sudo xcode-select -s "$xcode/Contents/Developer"
           xcodebuild -version
 

@@ -819,7 +819,7 @@ mise à jour, daté de ce jour.
 - **Chaque push sur `main` construit l'app** (`.github/workflows/app-ios.yml`,
   hors `docs/`, `plans/` et `*.md`), plus un passage quotidien à 6 h 17 UTC
   et un lancement à la main. Trois jobs : `preparer` décide, `construire`
-  archive sans signature sur `macos-26` puis exporte avec
+  archive sans signature sur `xcode-27` (SDK iOS 27, exigé dès avril 2027) puis exporte avec
   `ios/ExportOptions.plist`, signé dans le nuage et téléversé par la clé
   d'API, `soumettre` attend le traitement, écrit `main <sha court>` dans
   « À tester » de TestFlight et envoie en revue si c'est permis.
